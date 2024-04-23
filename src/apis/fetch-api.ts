@@ -16,7 +16,7 @@ interface FetchAPIParams {
 
 const DEFAULT_REVALIDATE = 0
 
-export const fetchAPI = async <T extends Response>(params: FetchAPIParams): Promise<T> => {
+export const fetchAPI = async <T = unknown>(params: FetchAPIParams): Promise<T> => {
   const { url, options } = params
   const query = QS.stringify(options?.queryOptions?.query ?? {}, options?.queryOptions?.options)
   const urlWithQuery = query ? `${url}?${query}` : url
