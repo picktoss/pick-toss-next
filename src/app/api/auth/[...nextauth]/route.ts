@@ -33,11 +33,9 @@ const handler = NextAuth({
     },
 
     session: ({ session, token }) => {
-      if (token && token.sub) {
-        session.user.id = token.sub
-        session.user.accessToken = token.accessToken as string
-        session.user.account = token.account as Account
-      }
+      session.user.id = token.sub || ''
+      session.user.accessToken = token.accessToken as string
+      session.user.account = token.account as Account
 
       return session
     },
