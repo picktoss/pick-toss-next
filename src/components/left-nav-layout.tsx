@@ -115,7 +115,7 @@ function PowerUpIcon({ isActive }: IconProps) {
       xmlns="http://www.w3.org/2000/svg"
       color={isActive ? '#FFAB40' : '#A2A6AB'}
     >
-      <g clip-path="url(#clip0_2028_62)">
+      <g clipPath="url(#clip0_2028_62)">
         <path
           d="M12.4548 5.5L10.1748 10.3598H14.4998L11.4998 15.5"
           stroke="currentColor"
@@ -149,7 +149,7 @@ function ReviewCheckIcon({ isActive }: IconProps) {
       xmlns="http://www.w3.org/2000/svg"
       color={isActive ? '#FFAB40' : '#A2A6AB'}
     >
-      <g clip-path="url(#clip0_2028_9)">
+      <g clipPath="url(#clip0_2028_9)">
         <path
           d="M12 13.0002L15.81 16.8102L21.71 10.9102"
           stroke="currentColor"
@@ -183,7 +183,7 @@ function StudyRepositoryIcon({ isActive }: IconProps) {
       xmlns="http://www.w3.org/2000/svg"
       color={isActive ? '#FFAB40' : '#A2A6AB'}
     >
-      <g clip-path="url(#clip0_2028_36)">
+      <g clipPath="url(#clip0_2028_36)">
         <path
           d="M1.5 14.97V3.595C1.5 2.435 2.44 1.5 3.595 1.5H16.4C17.56 1.5 18.495 2.44 18.495 3.595V20.37C18.495 21.53 17.555 22.465 16.4 22.465H3.595C2.435 22.465 1.5 21.525 1.5 20.37V18.275H14.25"
           stroke="currentColor"
@@ -194,7 +194,7 @@ function StudyRepositoryIcon({ isActive }: IconProps) {
           d="M5.52002 6.40527H14.5"
           stroke="currentColor"
           strokeWidth="3"
-          stroke-miterlimit="10"
+          strokeMiterlimit="10"
           strokeLinecap="round"
         />
       </g>
@@ -250,8 +250,8 @@ function LogoIcon() {
 function PlusIcon() {
   return (
     <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M10.2563 0V20" stroke="#F6FAFD" stroke-width="2" />
-      <path d="M20.5132 10L0.000361264 10" stroke="#F6FAFD" stroke-width="2" />
+      <path d="M10.2563 0V20" stroke="#F6FAFD" strokeWidth="2" />
+      <path d="M20.5132 10L0.000361264 10" stroke="#F6FAFD" strokeWidth="2" />
     </svg>
   )
 }
