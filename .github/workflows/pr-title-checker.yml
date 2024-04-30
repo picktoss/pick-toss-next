@@ -28,7 +28,7 @@ jobs:
             ci
             refactor
           requireScope: false
-          subjectPattern: ^[a-z].+[^\.]$
+          subjectPattern: ^[가-힣a-z].+[^\.]$
           subjectPatternError: |
-            The "subject" must start with a lower-case letter and must not
+            The "subject" must start with a lower-case letter or korean and must not
             end with a full-stop.
