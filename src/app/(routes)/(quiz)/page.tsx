@@ -41,7 +41,7 @@ export default function Quiz() {
           <div className="size-20 rounded-full bg-[#FFF0C8]" />
           <div className="flex flex-col justify-center px-8">
             <p className="text-2xl font-bold text-gray-60">
-              <span className="text-[#FF852C]">{todayQuizData.continuousSolvedDates}</span>일째
+              <span className="text-orange-50">{todayQuizData.continuousSolvedDates}</span>일째
               파워업 중!
             </p>
             <p className="text-gray-50">2024년 4월 25일 목요일</p>
@@ -55,13 +55,13 @@ export default function Quiz() {
           <div className="size-14 rounded-full bg-[#FFF0C8]" />
           <div>
             <p className="text-gray-60">별</p>
-            <p className="text-[#FF852C]">{userData.stars}개</p>
+            <p className="text-orange-50">{userData.stars}개</p>
           </div>
         </div>
       </div>
       <p className="text-gray-50">오늘의 퀴즈</p>
       <div className={cn(boxStyle, 'w-full h-[520px] flex flex-col justify-center items-center')}>
-        <h5 className="mb-4 text-xl font-bold text-[#FF852C]">INFORMATION</h5>
+        <h5 className="mb-4 text-xl font-bold text-orange-50">INFORMATION</h5>
         <h3 className="mb-8 text-2xl">{userData.nickname}님을 위한 퀴즈가 준비되었어요</h3>
         <div className="mb-14 flex items-center gap-10">
           <DocumentIcon />
@@ -77,7 +77,7 @@ export default function Quiz() {
             ))}
           </div>
         </div>
-        <Button className="h-[64px] w-[352px] rounded-full bg-[#FB7E20] text-xl font-bold hover:bg-[#FB7E20]/80">
+        <Button className="h-[64px] w-[352px] rounded-full bg-orange-50 text-xl font-bold hover:bg-orange-50/80">
           시작하기
         </Button>
       </div>
