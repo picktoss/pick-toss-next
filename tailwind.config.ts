@@ -22,9 +22,39 @@ const config = {
       fontFamily: {
         sans: ['var(--font-sans)', ...fontFamily.sans],
       },
+      fontSize: {
+        'page-title': [
+          '32px',
+          {
+            fontWeight: 'bold',
+            lineHeight: '-2%',
+          },
+        ],
+        'folder-name': [
+          '20px',
+          {
+            fontWeight: 'medium',
+            lineHeight: '-2%',
+          },
+        ],
+        button: [
+          '16px',
+          {
+            fontWeight: 'bold',
+            lineHeight: '0%',
+          },
+        ],
+        'gnb-name': [
+          '14px',
+          {
+            fontWeight: 'medium',
+            lineHeight: '-2%',
+          },
+        ],
+      },
       colors: {
         gray: {
-          '05': '#F6FAFD',
+          '01': '#F6FAFD',
           10: '#Eff1F3',
           20: '#D2D6DB',
           30: '',
@@ -86,6 +116,9 @@ const config = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
+      },
+      boxShadow: {
+        modal: '0px 4px 12px 0px #00000040',
       },
       borderRadius: {
         lg: 'var(--radius)',
