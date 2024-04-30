@@ -1,3 +1,4 @@
+import HeaderLayout from '@/components/header-layout'
 import { LeftNavLayout } from '@/components/left-nav-layout'
 import { Viewport } from 'next'
 import { PropsWithChildren } from 'react'
@@ -12,7 +13,14 @@ export const viewport: Viewport = {
 }
 
 const Layout = ({ children }: LayoutProps) => {
-  return <LeftNavLayout>{children}</LeftNavLayout>
+  return (
+    <LeftNavLayout>
+      <div className="mx-auto w-full max-w-[1440px] px-20 pb-8">
+        <HeaderLayout />
+        {children}
+      </div>
+    </LeftNavLayout>
+  )
 }
 
 export default Layout
