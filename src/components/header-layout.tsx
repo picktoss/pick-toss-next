@@ -26,18 +26,18 @@ export default function HeaderLayout() {
 function BellIcon() {
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <g clip-path="url(#clip0_44_99)">
+      <g clipPath="url(#clip0_44_99)">
         <path
           d="M19.695 14.8L18.76 6.835C18.435 4.08 16.1 2 13.325 2H11.025C8.25001 2 5.91001 4.08 5.59001 6.835L4.65501 14.8L3.66001 16.205C3.24501 16.79 3.66001 17.6 4.38501 17.6H20.015C20.74 17.6 21.16 16.77 20.725 16.185L19.695 14.8Z"
           stroke="#4B4F54"
-          stroke-width="2"
-          stroke-miterlimit="10"
+          strokeWidth="2"
+          strokeMiterlimit="10"
         />
         <path
           d="M14.9002 20.1601C14.3152 21.0301 13.3252 21.6001 12.2002 21.6001C10.4052 21.6001 8.9502 20.1451 8.9502 18.3501"
           stroke="#4B4F54"
-          stroke-width="2"
-          stroke-miterlimit="10"
+          strokeWidth="2"
+          strokeMiterlimit="10"
         />
         <circle cx="18" cy="6" r="4.5" fill="#FB7E20" stroke="white" />
       </g>
@@ -56,9 +56,9 @@ function ArrowDownIcon() {
       <path
         d="M1 1L6.5 6.5L12.5 1"
         stroke="#BFBFBF"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   )
