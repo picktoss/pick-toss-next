@@ -35,6 +35,23 @@ const config = {
           80: '#292B2C',
           90: '#1D1E1F',
         },
+        orange: {
+          '05': '#FFECD0',
+          10: '#FFE1AC',
+          20: '#FFD180',
+          30: '#FFAB40',
+          40: '#FF9100',
+          50: '#FB7E20',
+        },
+        red: {
+          50: '#F66444',
+        },
+        green: {
+          50: '#82E223',
+        },
+        blue: {
+          50: '#719EE3',
+        },
         white: '#FFFFFF',
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
