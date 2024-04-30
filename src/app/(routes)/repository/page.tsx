@@ -1,3 +1,10 @@
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 import { cn } from '@/lib/utils'
 
 interface StudyCategory {
@@ -95,9 +102,21 @@ export default function Repository() {
             <button className="mb-3 rounded-lg px-1 text-2xl hover:bg-gray-10">
               {studyCategory.emoji}
             </button>
-            <button className="absolute right-2 top-3 rounded-sm px-2 py-1 hover:bg-gray-10">
-              <DotsIcon />
-            </button>
+            <div className="absolute right-2 top-3">
+              <DropdownMenu>
+                <DropdownMenuTrigger className="focus:outline-none">
+                  <div className="rounded-sm px-2 py-1 hover:bg-gray-10">
+                    <DotsIcon />
+                  </div>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem>이름 바꾸기</DropdownMenuItem>
+                  <DropdownMenuItem>퀴즈 생성 끄기</DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem className="text-red-50">폴더 삭제하기</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
             <div className="mb-1 flex items-center gap-2">
               <div className="text-xl font-bold">{studyCategory.categoryName}</div>
               <span
