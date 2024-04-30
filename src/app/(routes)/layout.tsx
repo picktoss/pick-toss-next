@@ -1,6 +1,5 @@
 import HeaderLayout from '@/components/header-layout'
 import { LeftNavLayout } from '@/components/left-nav-layout'
-import Profile from '@/components/profile'
 import { Viewport } from 'next'
 import { PropsWithChildren } from 'react'
 
@@ -20,7 +19,6 @@ const Layout = ({ children }: LayoutProps) => {
         <HeaderLayout />
         {children}
       </div>
-      <Profile />
     </LeftNavLayout>
   )
 }
