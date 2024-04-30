@@ -9,6 +9,17 @@ import { NavItemsId, profileNav } from './config'
 export default function Profile() {
   const [selectedNavId, setSelectedNavId] = useState<NavItemsId>('my-account')
 
+  const ProfileContent = useCallback(() => {
+    switch (selectedNavId) {
+      case 'my-account':
+        return <MyAccount />
+      case 'notification-config':
+        return <NotificationConfig />
+      default:
+        return null
+    }
+  }, [selectedNavId])
+
   return (
     <Dialog>
       <DialogTrigger>Open</DialogTrigger>
@@ -71,28 +82,11 @@ export default function Profile() {
           <div className="mt-auto text-[10px] text-gray-06">버전 정보 2.1.1</div>
         </div>
 
-        <ProfileContent selectedNavId={selectedNavId} />
+        <div className="pb-[30px] pt-[32px]">
+          <ProfileContent />
+        </div>
       </DialogContent>
     </Dialog>
-  )
-}
-
-function ProfileContent({ selectedNavId }: { selectedNavId: NavItemsId }) {
-  const Content = useCallback(() => {
-    switch (selectedNavId) {
-      case 'my-account':
-        return <MyAccount />
-      case 'notification-config':
-        return <NotificationConfig />
-      default:
-        return null
-    }
-  }, [selectedNavId])
-
-  return (
-    <div className="pb-[30px] pt-[32px]">
-      <Content />
-    </div>
   )
 }
 
