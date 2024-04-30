@@ -1,12 +1,16 @@
 'use client'
 
-import { useCallback, useState } from 'react'
+import { ReactNode, useCallback, useState } from 'react'
 import { Button } from '../ui/button'
 import { Dialog, DialogContent, DialogTrigger } from '../ui/dialog'
 import { cn } from '@/lib/utils'
 import { NavItemsId, profileNav } from './config'
 
-export default function Profile() {
+interface ProfileProps {
+  trigger: ReactNode
+}
+
+export default function Profile({ trigger }: ProfileProps) {
   const [selectedNavId, setSelectedNavId] = useState<NavItemsId>('my-account')
 
   const ProfileContent = useCallback(() => {
@@ -22,7 +26,7 @@ export default function Profile() {
 
   return (
     <Dialog>
-      <DialogTrigger>Open</DialogTrigger>
+      <DialogTrigger>{trigger}</DialogTrigger>
       <DialogContent className="flex h-[560px] w-[800px] max-w-full overflow-hidden rounded-[12px] p-0 shadow-modal">
         <div className="flex h-full w-[200px] flex-col justify-between bg-gray-01 px-[12px] pb-[30px] pt-[32px]">
           <div className="mb-[27px] flex items-center gap-[8px] px-[10px]">
