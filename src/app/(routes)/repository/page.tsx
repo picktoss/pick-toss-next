@@ -80,7 +80,7 @@ const tagBadgeStyle = {
 export default function Repository() {
   return (
     <div>
-      <h2 className="mb-8 text-3xl text-gray-60">
+      <h2 className="mb-8 text-3xl text-gray-07">
         <span className="font-bold">{userData.nickname}</span> 님의 공부 창고
       </h2>
       <div className="mb-8 flex items-center gap-4 rounded-full bg-gray-10 px-8 py-4">
@@ -90,7 +90,7 @@ export default function Repository() {
           placeholder="파일명, 내용 검색"
         />
       </div>
-      <h5 className="mb-4 text-gray-60">
+      <h5 className="mb-4 text-gray-07">
         공부 폴더 <span className="font-bold">{studyCategoryData.length}개</span>
       </h5>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-4">
@@ -128,12 +128,12 @@ export default function Repository() {
                 {studyCategory.tag.name}
               </span>
             </div>
-            <div className="text-sm font-normal text-gray-60">
+            <div className="text-sm font-normal text-gray-07">
               문서 {studyCategory.documentCount}개
             </div>
           </div>
         ))}
-        <button className="flex min-h-[130px] items-center justify-center gap-2 rounded-xl border-2 border-dashed text-sm font-bold text-gray-60">
+        <button className="flex min-h-[130px] items-center justify-center gap-2 rounded-xl border-2 border-dashed text-sm font-bold text-gray-07">
           <div className="rounded-full bg-gray-10 p-2">
             <PlusIcon />
           </div>
