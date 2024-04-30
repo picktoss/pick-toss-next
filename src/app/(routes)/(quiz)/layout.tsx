@@ -3,7 +3,7 @@ import { PropsWithChildren } from 'react'
 
 export default function Layout({ children }: PropsWithChildren) {
   return (
-    <div className="w-full px-20 pb-8">
+    <div className="mx-auto w-full max-w-[1440px] px-20 pb-8">
       <HeaderLayout />
       {children}
     </div>
