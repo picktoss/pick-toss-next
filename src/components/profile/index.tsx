@@ -40,39 +40,33 @@ export default function Profile({ trigger }: ProfileProps) {
           </div>
 
           <div>
-            {profileNav.map((nav) => {
-              const { id, name, items, styles } = nav
-
-              return (
-                <div key={id} className={cn('border-b border-gray-04', styles)}>
-                  <div className="mb-[9px] px-[14px] text-[12px] font-[700] text-gray-06">
-                    {name}
-                  </div>
-                  <div className="flex flex-col *:text-gray-07">
-                    {items.map((item) => (
-                      <Button
-                        key={item.id}
-                        disabled={item.disabled}
-                        className={cn(
-                          'flex h-[32px] justify-start bg-inherit px-[12px] !text-[14px] hover:bg-gray-02 disabled:opacity-100',
-                          selectedNavId === item.id && 'bg-gray-02 font-[700]',
+            {profileNav.map(({ id, name, items, styles }) => (
+              <div key={id} className={cn('border-b border-gray-04', styles)}>
+                <div className="mb-[9px] px-[14px] text-[12px] font-[700] text-gray-06">{name}</div>
+                <div className="flex flex-col *:text-gray-07">
+                  {items.map((item) => (
+                    <Button
+                      key={item.id}
+                      disabled={item.disabled}
+                      className={cn(
+                        'flex h-[32px] justify-start bg-inherit px-[12px] !text-[14px] hover:bg-gray-02 disabled:opacity-100',
+                        selectedNavId === item.id && 'bg-gray-02 font-[700]',
+                      )}
+                      onClick={() => setSelectedNavId(item.id)}
+                    >
+                      <div className="flex items-center gap-[8px]">
+                        <span>{item.label}</span>
+                        {item.disabled && (
+                          <div className="w-[72px] rounded-[3px] bg-[#D9D9D9] text-[10px] text-gray-08">
+                            Coming soon
+                          </div>
                         )}
-                        onClick={() => setSelectedNavId(item.id)}
-                      >
-                        <div className="flex items-center gap-[8px]">
-                          <span>{item.label}</span>
-                          {item.disabled && (
-                            <div className="w-[72px] rounded-[3px] bg-[#D9D9D9] text-[10px] text-gray-08">
-                              Coming soon
-                            </div>
-                          )}
-                        </div>
-                      </Button>
-                    ))}
-                  </div>
+                      </div>
+                    </Button>
+                  ))}
                 </div>
-              )
-            })}
+              </div>
+            ))}
             <div className="flex gap-[10px] pt-[16px] *:text-gray-07">
               <Button className="h-[17px] w-full justify-start bg-inherit px-[12px] !text-[14px] text-gray-07 hover:bg-inherit">
                 <div className="flex items-center gap-[10px]">
