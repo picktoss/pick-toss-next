@@ -16,7 +16,7 @@ const mockData = {
 
 export default function HeaderLayout() {
   return (
-    <div className="flex items-center gap-11 py-[10px]">
+    <div className="flex h-[60px] items-center gap-11">
       <div className="flex flex-1 items-center justify-end gap-6">
         <div className="flex max-w-[360px] flex-1 items-center gap-4 rounded-full bg-gray-02 px-8 py-3">
           <Image src="/icons/search.svg" alt="search" width={16} height={16} />
@@ -34,7 +34,7 @@ export default function HeaderLayout() {
         </div>
       </div>
       <DropdownMenu>
-        <DropdownMenuTrigger className=" focus:outline-none">
+        <DropdownMenuTrigger className="focus:outline-none">
           <span className="flex items-center gap-[13px] rounded-xl p-1 hover:bg-gray-02">
             <div className="size-8 rounded-full bg-orange-04" />
             <span className="text-sm text-[#818181]">{mockData.name}님</span>
