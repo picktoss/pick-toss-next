@@ -5,13 +5,15 @@ import { Button } from '../ui/button'
 import { Dialog, DialogContent, DialogTrigger } from '../ui/dialog'
 import { cn } from '@/lib/utils'
 import { NavItemsId, profileNav } from './config'
+import { Switch } from '../ui/switch'
+import Image from 'next/image'
 
 interface ProfileProps {
   trigger: ReactNode
 }
 
 export default function Profile({ trigger }: ProfileProps) {
-  const [selectedNavId, setSelectedNavId] = useState<NavItemsId>('my-account')
+  const [selectedNavId, setSelectedNavId] = useState<NavItemsId>('notification-config')
 
   const ProfileContent = useCallback(() => {
     switch (selectedNavId) {
@@ -26,8 +28,8 @@ export default function Profile({ trigger }: ProfileProps) {
 
   return (
     <Dialog>
-      <DialogTrigger>{trigger}</DialogTrigger>
-      <DialogContent className="flex h-[560px] w-[800px] max-w-full overflow-hidden rounded-[12px] p-0 shadow-modal">
+      <DialogTrigger asChild>{trigger}</DialogTrigger>
+      <DialogContent className="flex max-w-full overflow-hidden rounded-[12px] p-0 shadow-modal md:h-[560px] md:w-[800px]">
         <div className="flex h-full w-[200px] flex-col justify-between bg-gray-01 px-[12px] pb-[30px] pt-[32px]">
           <div className="mb-[27px] flex items-center gap-[8px] px-[10px]">
             <LogoIcon />
@@ -80,7 +82,7 @@ export default function Profile({ trigger }: ProfileProps) {
           <div className="mt-auto text-[10px] text-gray-06">버전 정보 2.1.1</div>
         </div>
 
-        <div className="pb-[30px] pt-[32px]">
+        <div className="w-full px-[40px] pb-[30px] pt-[32px]">
           <ProfileContent />
         </div>
       </DialogContent>
@@ -93,7 +95,98 @@ function MyAccount() {
 }
 
 function NotificationConfig() {
-  return <div>NotificationConfig</div>
+  const [notificationState, setNotificationState] = useState(true)
+  const [updateNotificationState, setUpdateNotificationState] = useState(false)
+  const [eventNotificationState, setEventNotificationState] = useState(false)
+
+  return (
+    <div>
+      <div className="border-b border-gray-02 pb-[15px]">
+        <div className="mb-[18px]">
+          <div className="text-[20px] font-[700] text-gray-08">퀴즈 알림</div>
+          <div className="text-[12px] font-[400] text-gray-06">
+            연동된 이메일로 매일 오늘의 퀴즈 링크를 받을 수 있어요
+          </div>
+        </div>
+        <div className="mb-[16px] flex h-[28px] items-center gap-[12px]">
+          <span className="text-[12px] font-[500] text-gray-07">퀴즈 알림</span>
+          <div className="flex items-center gap-[10px]">
+            <span
+              className={cn(
+                'text-[15px] font-[700] text-gray-07',
+                notificationState && 'text-orange-05',
+              )}
+            >
+              {notificationState ? 'ON' : 'OFF'}
+            </span>
+            <Switch checked={notificationState} onCheckedChange={setNotificationState} />
+          </div>
+        </div>
+        <div className="mb-[24px] flex flex-col gap-[8px]">
+          <span className="text-[12px] font-[500] text-gray-07">알림 시간</span>
+          <div className="flex w-[195px] items-center justify-between rounded-[4px] bg-gray-01 px-[11px] py-[8px]">
+            <div className="text-[16px] font-[500] text-gray-08">오전 09시 12분</div>
+            <Button className="h-[23px] w-[45px] bg-orange-02 text-[12px] font-[700] text-orange-06 hover:bg-orange-02/80">
+              변경
+            </Button>
+          </div>
+        </div>
+        {/** TODO: bg-blue-01 적용. 현재 figma상의 blue-01은 white에 가깝다 */}
+        <div className="flex h-[64px] w-full items-center gap-[13.7px] overflow-hidden rounded-[8px] bg-blue-02 px-[11px]">
+          <div className="relative h-full w-[50.32px]">
+            <Image src="/icons/mobile.svg" alt="" fill />
+          </div>
+          <div className="flex flex-col">
+            <span className="text-[12px] font-[500] text-gray-07">
+              모바일로도 퀴즈 알림을 받고 싶다면?
+            </span>
+            <span className="text-[14px] font-[700] text-blue-05 underline">
+              픽토스 앱 다운로드
+            </span>
+          </div>
+        </div>
+      </div>
+      <div className="mt-[24px]">
+        <div className="mb-[20px]">
+          <div className="text-[20px] font-[700] text-gray-08">픽토스 소식 알림</div>
+          <div className="text-[12px] font-[400] text-gray-06">
+            픽토스에 새롭게 추가된 기능과 이벤트 소식을 받을 수 있어요
+          </div>
+        </div>
+        <div className="mb-[8px] flex h-[28px] w-[162px] items-center justify-between gap-[12px] pr-[5px]">
+          <span className="text-[12px] font-[500] text-gray-07">업데이트 알림</span>
+          <div className="flex items-center gap-[10px]">
+            <span
+              className={cn(
+                'text-[15px] font-[700] text-gray-07',
+                updateNotificationState && 'text-orange-05',
+              )}
+            >
+              {updateNotificationState ? 'ON' : 'OFF'}
+            </span>
+            <Switch
+              checked={updateNotificationState}
+              onCheckedChange={setUpdateNotificationState}
+            />
+          </div>
+        </div>
+        <div className="flex h-[28px] w-[162px] items-center justify-between gap-[12px] pr-[5px]">
+          <span className="text-[12px] font-[500] text-gray-07">이벤트 알림</span>
+          <div className="flex items-center gap-[10px]">
+            <span
+              className={cn(
+                'text-[15px] font-[700] text-gray-07',
+                eventNotificationState && 'text-orange-05',
+              )}
+            >
+              {eventNotificationState ? 'ON' : 'OFF'}
+            </span>
+            <Switch checked={eventNotificationState} onCheckedChange={setEventNotificationState} />
+          </div>
+        </div>
+      </div>
+    </div>
+  )
 }
 
 function LogoIcon() {
