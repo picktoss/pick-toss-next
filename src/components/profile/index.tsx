@@ -79,7 +79,7 @@ export default function Profile({ trigger }: ProfileProps) {
             </div>
           </div>
 
-          <div className="mt-auto text-[10px] text-gray-06">버전 정보 2.1.1</div>
+          <div className="mt-auto px-[12px] text-[10px] text-gray-06">버전 정보 2.1.1</div>
         </div>
 
         <div className="w-full px-[40px] pb-[30px] pt-[32px]">
