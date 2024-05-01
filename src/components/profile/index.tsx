@@ -131,8 +131,7 @@ function NotificationConfig() {
             </Button>
           </div>
         </div>
-        {/** TODO: bg-blue-01 적용. 현재 figma상의 blue-01은 white에 가깝다 */}
-        <div className="flex h-[64px] w-full items-center gap-[13.7px] overflow-hidden rounded-[8px] bg-blue-02 px-[11px]">
+        <div className="flex h-[64px] w-full items-center gap-[13.7px] overflow-hidden rounded-[8px] bg-blue-01 px-[11px]">
           <div className="relative h-full w-[50.32px]">
             <Image src="/icons/mobile.svg" alt="" fill />
           </div>

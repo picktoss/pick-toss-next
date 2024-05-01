@@ -78,7 +78,7 @@ const config = {
           green: '63CF75',
         },
         blue: {
-          '01': '#FOF4FF',
+          '01': '#F0F4FF',
           '02': '#D7E2FF',
           '03': '#BCCFFF',
           '04': '#95BOF8',
