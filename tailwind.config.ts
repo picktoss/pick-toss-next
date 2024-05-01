@@ -22,35 +22,68 @@ const config = {
       fontFamily: {
         sans: ['var(--font-sans)', ...fontFamily.sans],
       },
+      fontSize: {
+        'page-title': [
+          '32px',
+          {
+            fontWeight: 'bold',
+            lineHeight: '-2%',
+          },
+        ],
+        'folder-name': [
+          '20px',
+          {
+            fontWeight: 'medium',
+            lineHeight: '-2%',
+          },
+        ],
+        button: [
+          '16px',
+          {
+            fontWeight: 'bold',
+            lineHeight: '0%',
+          },
+        ],
+        'gnb-name': [
+          '14px',
+          {
+            fontWeight: 'medium',
+            lineHeight: '-2%',
+          },
+        ],
+      },
       colors: {
         gray: {
-          '05': '#F6FAFD',
-          10: '#Eff1F3',
-          20: '#D2D6DB',
-          30: '',
-          40: '#A2A6AB',
-          50: '#797D81',
-          60: '#4B4F54',
-          70: '',
-          80: '#292B2C',
-          90: '#1D1E1F',
+          '01': '#F6FAFD',
+          '02': '#EFF1F3',
+          '03': '#D2D6DB',
+          '04': '',
+          '05': '#A2A6AB',
+          '06': '#797D81',
+          '07': '#4B4F54',
+          '08': '',
+          '09': '#292B2C',
+          '10': '#1D1E1F',
         },
         orange: {
-          '05': '#FFECD0',
-          10: '#FFE1AC',
-          20: '#FFD180',
-          30: '#FFAB40',
-          40: '#FF9100',
-          50: '#FB7E20',
+          '01': '#FFECD0',
+          '02': '#FFE1AC',
+          '03': '#FFD180',
+          '04': '#FFAB40',
+          '05': '#FF9100',
+          '06': '#FB7E20',
         },
-        red: {
-          50: '#F66444',
-        },
-        green: {
-          50: '#82E223',
+        notice: {
+          red: '#F66444',
+          green: '63CF75',
         },
         blue: {
-          50: '#719EE3',
+          '01': '#FOF4FF',
+          '02': '#D7E2FF',
+          '03': '#BCCFFF',
+          '04': '#95BOF8',
+          '05': '#7095F8',
+          '06': '#577CFF',
         },
         white: '#FFFFFF',
         border: 'hsl(var(--border))',
@@ -86,6 +119,9 @@ const config = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
+      },
+      boxShadow: {
+        modal: '0px 4px 12px 0px #00000040',
       },
       borderRadius: {
         lg: 'var(--radius)',

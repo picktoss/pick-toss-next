@@ -48,9 +48,9 @@ export const LeftNavLayout = ({ children }: PropsWithChildren) => {
   return (
     <div className={cn('flex', activeItem && 'pl-[240px]')}>
       {activeItem && (
-        <div className="fixed left-0 z-50 flex h-screen w-[240px] flex-col items-center border-r border-gray-20 bg-white p-5">
+        <div className="fixed left-0 z-50 flex h-screen w-[240px] flex-col items-center border-r border-gray-03 bg-white p-5">
           <div className="flex items-center gap-[14px]">
-            <div className="size-9 rounded-lg bg-gray-20" />
+            <div className="size-9 rounded-lg bg-gray-03" />
             <LogoIcon />
           </div>
           <div className="mb-[26px] mt-[30px] w-full">

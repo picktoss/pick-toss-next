@@ -35,12 +35,12 @@ const boxStyle = 'rounded-2xl bg-white p-5'
 export default function Quiz() {
   return (
     <div className="flex flex-col gap-4">
-      <h2 className="text-3xl text-gray-60">파워업 퀴즈</h2>
+      <h2 className="text-3xl text-gray-07">파워업 퀴즈</h2>
       <div className="flex gap-4">
         <div className={cn(boxStyle, 'flex place-content-center flex-[12]')}>
           <div className="size-20 rounded-full bg-[#FFF0C8]" />
           <div className="flex flex-col justify-center px-8">
-            <p className="text-2xl font-bold text-gray-60">
+            <p className="text-2xl font-bold text-gray-07">
               <span className="text-orange-50">{todayQuizData.continuousSolvedDates}</span>일째
               파워업 중!
             </p>
@@ -48,13 +48,13 @@ export default function Quiz() {
           </div>
         </div>
         <div className={cn(boxStyle, 'flex flex-col flex-[8] gap-3 justify-center')}>
-          <h6 className="text-gray-60">오늘의 퀴즈 점수</h6>
+          <h6 className="text-gray-07">오늘의 퀴즈 점수</h6>
           <p className="font-normal text-gray-50">아직 오늘 퀴즈를 풀지 않았어요.</p>
         </div>
         <div className={cn(boxStyle, 'flex items-center gap-4 flex-[6]')}>
           <div className="size-14 rounded-full bg-[#FFF0C8]" />
           <div>
-            <p className="text-gray-60">별</p>
+            <p className="text-gray-07">별</p>
             <p className="text-orange-50">{userData.stars}개</p>
           </div>
         </div>

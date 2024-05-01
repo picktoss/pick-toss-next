@@ -7,7 +7,7 @@ export default function HeaderLayout() {
   return (
     <div className="flex items-center justify-end gap-6 py-7">
       <span className="flex items-center gap-2 rounded-full bg-[#EFF1F3] px-3 py-1">
-        <span className="size-4 rounded-full bg-orange-40" />
+        <span className="size-4 rounded-full bg-orange-05" />
         {mockData.stars}
       </span>
       <button className="rounded-full p-2 hover:bg-[#ebebeb] ">
