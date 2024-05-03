@@ -17,7 +17,7 @@ const Layout = ({ children }: LayoutProps) => {
     <LeftNavLayout>
       <div className="relative mx-auto w-full max-w-[calc(1032px+40px)] px-[20px]">
         <HeaderLayout />
-        <div className="pb-[48px]">{children}</div>
+        {children}
       </div>
     </LeftNavLayout>
   )
