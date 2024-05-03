@@ -5,8 +5,7 @@ interface FetchAPIParams {
   url: string
   options?: {
     queryOptions?: {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      query?: Record<string, any>
+      query?: Record<string, unknown>
       options?: QS.IStringifyOptions
     }
     fetchOption?: Omit<RequestInit, 'next'>
@@ -23,10 +22,11 @@ export const fetchAPI = async <T = unknown>(params: FetchAPIParams): Promise<T> 
 
   try {
     const res = await fetch(urlWithQuery, {
+      ...options?.fetchOption,
       headers: {
         'Context-Type': 'application/json',
+        ...params?.options?.fetchOption?.headers,
       },
-      ...options?.fetchOption,
       next: {
         ...options?.nextCache,
         revalidate: options?.nextCache?.revalidate || DEFAULT_REVALIDATE,
