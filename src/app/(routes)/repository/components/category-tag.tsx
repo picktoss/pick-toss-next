@@ -38,11 +38,12 @@ const tagVariant: {
 
 interface Props {
   tag: CategoryTagType
+  className?: string
 }
 
-export default function CategoryTag({ tag }: Props) {
+export default function CategoryTag({ tag, className }: Props) {
   return (
-    <span className={cn('rounded-md px-2 py-1 text-[10px]', tagVariant.style[tag])}>
+    <span className={cn('rounded-md px-2 py-1 text-[10px]', tagVariant.style[tag], className)}>
       {tagVariant.text[tag]}
     </span>
   )
