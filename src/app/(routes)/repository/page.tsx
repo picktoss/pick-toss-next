@@ -8,6 +8,7 @@ import {
 import CategoryTag from './components/category-tag'
 import { studyCategoryData, userData } from './mock-data'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function Repository() {
   return (
@@ -25,44 +26,46 @@ export default function Repository() {
             key={studyCategory.id}
             className="relative cursor-pointer rounded-xl border bg-white p-4"
           >
-            <div className="mb-3 text-2xl">{studyCategory.emoji}</div>
-            <div className="absolute right-1 top-3">
-              <DropdownMenu>
-                <DropdownMenuTrigger className="focus:outline-none">
-                  <div className="rounded-sm px-3 py-1 hover:bg-gray-02">
-                    <Image src="/icons/kebab.svg" alt="" width={3} height={15} />
-                  </div>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuItem>
-                    <div className="flex gap-4">
-                      <Image src="/icons/modify-pencil.svg" alt="" width={16} height={16} />
-                      <span>이름 바꾸기</span>
+            <Link href={`/repository/${studyCategory.id}`}>
+              <div className="mb-3 text-2xl">{studyCategory.emoji}</div>
+              <div className="absolute right-[6px] top-[10px]">
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="focus:outline-none">
+                    <div className="flex size-[25px] items-center justify-center rounded-full hover:bg-gray-02">
+                      <Image src="/icons/kebab.svg" alt="" width={3} height={15} />
                     </div>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <div className="flex gap-4">
-                      <Image src="/icons/no-chat.svg" alt="" width={16} height={16} />
-                      <span>퀴즈 생성 끄기</span>
-                    </div>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>
-                    <div className="flex gap-4">
-                      <Image src="/icons/trashcan-red.svg" alt="" width={16} height={16} />
-                      <span className="text-notice-red">폴더 삭제하기</span>
-                    </div>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
-            <div className="mb-1 flex items-center gap-2">
-              <div className="text-xl font-bold">{studyCategory.name}</div>
-              <CategoryTag tag={studyCategory.tag} />
-            </div>
-            <div className="text-sm font-normal text-gray-07">
-              문서 {studyCategory.documents.length}개
-            </div>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuItem>
+                      <div className="flex gap-4">
+                        <Image src="/icons/modify-pencil.svg" alt="" width={16} height={16} />
+                        <span>이름 바꾸기</span>
+                      </div>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <div className="flex gap-4">
+                        <Image src="/icons/no-chat.svg" alt="" width={16} height={16} />
+                        <span>퀴즈 생성 끄기</span>
+                      </div>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>
+                      <div className="flex gap-4">
+                        <Image src="/icons/trashcan-red.svg" alt="" width={16} height={16} />
+                        <span className="text-notice-red">폴더 삭제하기</span>
+                      </div>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+              <div className="mb-1 flex items-center gap-2">
+                <div className="text-xl font-bold">{studyCategory.name}</div>
+                <CategoryTag tag={studyCategory.tag} />
+              </div>
+              <div className="text-sm font-normal text-gray-07">
+                문서 {studyCategory.documents.length}개
+              </div>
+            </Link>
           </div>
         ))}
         <button className="flex min-h-[130px] items-center justify-center gap-2 rounded-xl border-2 border-dashed text-sm font-bold text-gray-07">
