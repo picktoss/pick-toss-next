@@ -12,15 +12,15 @@ export const viewport: Viewport = {
   minimumScale: 1.0,
 }
 
-const Layout = ({ children }: LayoutProps) => {
+const TabsLayout = ({ children }: LayoutProps) => {
   return (
     <LeftNavLayout>
       <div className="relative mx-auto w-full max-w-[calc(1032px+40px)] px-[20px]">
         <HeaderLayout />
-        <div className="pb-[48px]">{children}</div>
+        <div>{children}</div>
       </div>
     </LeftNavLayout>
   )
 }
 
-export default Layout
+export default TabsLayout
