@@ -47,14 +47,14 @@ export default function HeaderLayout() {
             <div className="flex gap-4 rounded-lg bg-blue-01 p-3">
               <div className="size-10 rounded-full bg-orange-04" />
               <div>
-                <div className="mb-1 text-sm font-normal text-gray-07">
-                  <strong>{mockData.name}</strong>님
+                <div className="mb-1 text-body2-regular text-gray-08">
+                  <span className="font-bold">{mockData.name}</span>님
                 </div>
-                <div className="text-sm font-normal text-gray-06">{mockData.email}</div>
+                <div className="text-body2-regular-eng text-gray-07">{mockData.email}</div>
               </div>
             </div>
           </DropdownMenuLabel>
-          <div className="px-2 py-1 font-bold text-gray-06">
+          <div className="px-2 py-1 text-body1-bold text-gray-07">
             <DropdownMenuItem>
               <span className="text-base">설정</span>
             </DropdownMenuItem>
