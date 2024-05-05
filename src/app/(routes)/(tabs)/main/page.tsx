@@ -2,9 +2,9 @@ import { Button } from '@/components/ui/button'
 import icons from '@/constants/icons'
 import Image from 'next/image'
 
-export default function Quiz() {
+export default function Main() {
   return (
-    <main className="flex flex-col lg:gap-[28px]">
+    <main className="flex flex-col pb-[48px] lg:gap-[28px]">
       <div className="flex items-center gap-[8px]">
         <Image src={icons.powerUpQuiz} width={34.69} height={30} alt="" />
         <h1 className="text-[32px] font-[500] text-gray-08">파워업 퀴즈</h1>
