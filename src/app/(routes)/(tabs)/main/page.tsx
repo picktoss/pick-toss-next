@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button'
 import icons from '@/constants/icons'
 import Image from 'next/image'
 
-export default function PowerUp() {
+export default function Main() {
   return (
     <main className="flex flex-col pb-[48px] lg:gap-[28px]">
       <div className="flex items-center gap-[8px]">

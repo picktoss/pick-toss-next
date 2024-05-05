@@ -22,10 +22,10 @@ export const LeftNavLayout = ({ children }: PropsWithChildren) => {
   const navItems: NavItem[] = useMemo(
     () => [
       {
-        href: '/power-up',
+        href: '/main',
         title: '파워업 퀴즈',
         Icon: PowerUpIcon,
-        segments: [['power-up']],
+        segments: [['main']],
       },
       {
         href: '/review',
