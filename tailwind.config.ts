@@ -40,7 +40,7 @@ const config = {
           },
         ],
         'h2-medium': [
-          '36px',
+          '32px',
           {
             lineHeight: 'normal',
             fontWeight: 'medium',
