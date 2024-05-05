@@ -40,27 +40,29 @@ export default function Category({ params: { categoryId } }: Props) {
   return (
     <div>
       <CategoryTag tag={tag} className="mb-3 inline-block" />
-      <h2 className="mb-16 text-[32px] font-bold text-gray-08">
+      <h2 className="mb-16 text-h2-bold text-gray-08">
         {emoji} {name}
       </h2>
       <div className="mb-6 flex items-center justify-between">
-        <div className="text-gray-08">
+        <div className="text-body1-medium text-gray-08">
           문서 <span className="font-bold text-orange-06">{documents.length}</span>개
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger>
-            <div className="flex gap-2">
+            <div className="flex gap-2 text-body2-medium text-gray-07">
               {sortType} <Image src="/icons/chevron-down.svg" alt="" width={16} height={16} />
             </div>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <div className="text-gray-07">
-              {SORT_TYPE.map((type) => (
-                <DropdownMenuItem key={type} onClick={() => setSortType(type)}>
-                  {type}
-                </DropdownMenuItem>
-              ))}
-            </div>
+            {SORT_TYPE.map((type) => (
+              <DropdownMenuItem
+                key={type}
+                onClick={() => setSortType(type)}
+                className="text-body2-medium text-gray-07"
+              >
+                {type}
+              </DropdownMenuItem>
+            ))}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
@@ -74,24 +76,24 @@ export default function Category({ params: { categoryId } }: Props) {
               <div className="mr-4 flex size-12 items-center justify-center rounded-full bg-gray-01">
                 <Image src="/icons/file.svg" alt="" width={24} height={24} />
               </div>
-              <div className="text-gray-09">{document.name}</div>
+              <div className="text-body1-medium text-gray-09">{document.name}</div>
             </div>
             <div className="flex items-center gap-12">
               {/* TODO: 서버 API 데이터에 따라 구현 달라질 예정 */}
-              <div className="text-sm font-normal text-gray-06">
+              <div className="text-body2-regular text-gray-06">
                 {document.quizCreation === 'PREPARING' ? (
                   <div className="px-[34.5px]">문서 요약 중</div>
                 ) : (
                   <div className="flex items-center gap-[6px]">
                     <span>퀴즈 생성</span>
-                    <span className="text-base font-bold text-orange-05">
+                    <span className="text-body1-bold-eng text-orange-05">
                       {document.quizCreation}
                     </span>
                     <Switch checked={document.quizCreation === 'ON'} />
                   </div>
                 )}
               </div>
-              <div className="text-sm font-normal text-gray-06">{document.createdAt}</div>
+              <div className="text-body2-regular text-gray-06">{document.createdAt}</div>
               <DropdownMenu>
                 <DropdownMenuTrigger>
                   <div className="flex size-[25px] items-center justify-center rounded-full hover:bg-gray-02">
@@ -99,8 +101,8 @@ export default function Category({ params: { categoryId } }: Props) {
                   </div>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
-                  <DropdownMenuItem>temp1</DropdownMenuItem>
-                  <DropdownMenuItem>temp2</DropdownMenuItem>
+                  <DropdownMenuItem>문서 이름 변경하기</DropdownMenuItem>
+                  <DropdownMenuItem>문서 삭제하기</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
