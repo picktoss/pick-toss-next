@@ -37,7 +37,7 @@ export const LeftNavLayout = ({ children }: PropsWithChildren) => {
         href: '/repository',
         title: '공부 창고',
         Icon: StudyRepositoryIcon,
-        segments: [['repository']],
+        segments: [['repository'], ['document']],
       },
     ],
     [],

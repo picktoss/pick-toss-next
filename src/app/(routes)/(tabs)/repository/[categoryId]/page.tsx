@@ -11,6 +11,8 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Switch } from '@/components/ui/switch'
+import Link from 'next/link'
+import icons from '@/constants/icons'
 
 interface Props {
   params: {
@@ -68,7 +70,8 @@ export default function Category({ params: { categoryId } }: Props) {
       </div>
       <div className="flex flex-col gap-2">
         {documents.map((document) => (
-          <div
+          <Link
+            href={`/document/${document.id}`}
             key={document.id}
             className="flex h-[78px] items-center justify-between rounded-lg border bg-white px-[27px] py-[15px]"
           >
@@ -97,7 +100,7 @@ export default function Category({ params: { categoryId } }: Props) {
               <DropdownMenu>
                 <DropdownMenuTrigger>
                   <div className="flex size-[25px] items-center justify-center rounded-full hover:bg-gray-02">
-                    <Image src="/icons/kebab.svg" alt="" width={3} height={15} />
+                    <Image src={icons.kebab} alt="" width={15} height={3} />
                   </div>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
@@ -106,7 +109,7 @@ export default function Category({ params: { categoryId } }: Props) {
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>
