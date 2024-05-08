@@ -9,6 +9,7 @@ import CategoryTag from './components/category-tag'
 import { studyCategoryData, userData } from './mock-data'
 import Image from 'next/image'
 import Link from 'next/link'
+import icons from '@/constants/icons'
 
 export default function Repository() {
   return (
@@ -34,7 +35,7 @@ export default function Repository() {
                 <DropdownMenu>
                   <DropdownMenuTrigger className="focus:outline-none">
                     <div className="flex size-[25px] items-center justify-center rounded-full hover:bg-gray-02">
-                      <Image src="/icons/kebab.svg" alt="" width={3} height={15} />
+                      <Image src={icons.kebab} alt="" width={15} height={3} />
                     </div>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
