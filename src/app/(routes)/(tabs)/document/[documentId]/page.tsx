@@ -21,7 +21,25 @@ const fetchDocument = (documentId: number) => {
         id: 0,
         question: '식물기반 단백질 시장에서 대기업의 참여가 늘어나는 이유는 무엇인가요?',
         answer:
-          '기존의 배양육이 기존 축산방식에서 생산되는 육류보다 토지 사용량은 99&, 가스 배출량은 96%를 감소시킬 수 있어',
+          '기존의 배양육이 기존 축산방식에서 생산되는 육류보다 토지 사용량은 99%, 가스 배출량은 96%, 에너지 소비량은 45%를 감소시킬 수 있어 환경오염에 대한 논란에서 상대적으로 자유로울수 있다는 의견이 배양육 개발 초기 제시된 바 있다',
+      },
+      {
+        id: 1,
+        question: '식물기반 단백질 시장에서 구이 방식으로 섭취하기에는 어떤 한계가 있을까요?',
+        answer:
+          '기존의 배양육이 기존 축산방식에서 생산되는 육류보다 토지 사용량은 99%, 가스 배출량은 96%, 에너지 소비량은 45%를 감소시킬 수 있어 환경오염에 대한 논란에서 상대적으로 자유로울수 있다는 의견이 배양육 개발 초기 제시된 바 있다',
+      },
+      {
+        id: 2,
+        question: '식물기반 단백질 시장에서 대기업의 참여가 늘어나는 이유는 무엇인가요?',
+        answer:
+          '기존의 배양육이 기존 축산방식에서 생산되는 육류보다 토지 사용량은 99%, 가스 배출량은 96%, 에너지 소비량은 45%를 감소시킬 수 있어 환경오염에 대한 논란에서 상대적으로 자유로울수 있다는 의견이 배양육 개발 초기 제시된 바 있다',
+      },
+      {
+        id: 3,
+        question: '식물기반 단백질 시장에서?',
+        answer:
+          '기존의 배양육이 기존 축산방식에서 생산되는 육류보다 토지 사용량은 99%, 가스 배출량은 96%, 에너지 소비량은 45%를 감소시킬 수 있어 환경오염에 대한 논란에서 상대적으로 자유로울수 있다는 의견이 배양육 개발 초기 제시된 바 있다',
       },
     ],
     content: `
@@ -79,10 +97,10 @@ interface Props {
 }
 
 export default function Document({ params: { documentId } }: Props) {
-  const { documentName, createdAt, content } = fetchDocument(Number(documentId))
+  const { documentName, createdAt, content, keyPoints } = fetchDocument(Number(documentId))
   return (
-    <main className="">
-      <div className="w-full">
+    <main className="flex h-[calc(100vh-60px)]">
+      <div className="flex-1 overflow-scroll">
         <div className="mb-[45px] flex items-center justify-between">
           <div>
             <h3 className="mb-2 text-h3-bold text-gray-08">{documentName}</h3>
@@ -92,31 +110,55 @@ export default function Document({ params: { documentId } }: Props) {
             <Image src={icons.kebab} alt="" width={15} height={3} />
           </div>
         </div>
+        <div className="prose max-w-none">
+          <Markdown
+            remarkPlugins={[remarkGfm]}
+            components={{
+              // markdown 내 코드 블럭 문법 처리
+              code(props) {
+                // style, node, ref는 사용하지 않음
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                const { children, className, style, node, ref, ...rest } = props
+                const match = /language-(\w+)/.exec(className || '')
+                return match ? (
+                  <SyntaxHighlighter {...rest} style={dracula} language={match[1]} PreTag="div">
+                    {String(children).replace(/\n$/, '')}
+                  </SyntaxHighlighter>
+                ) : (
+                  <code {...props} className={className}>
+                    {children}
+                  </code>
+                )
+              },
+            }}
+          >
+            {content}
+          </Markdown>
+        </div>
       </div>
-      <div className="prose max-w-none">
-        <Markdown
-          remarkPlugins={[remarkGfm]}
-          components={{
-            // markdown 내 코드 블럭 문법 처리
-            code(props) {
-              // style, node, ref는 사용하지 않음
-              // eslint-disable-next-line @typescript-eslint/no-unused-vars
-              const { children, className, style, node, ref, ...rest } = props
-              const match = /language-(\w+)/.exec(className || '')
-              return match ? (
-                <SyntaxHighlighter {...rest} style={dracula} language={match[1]} PreTag="div">
-                  {String(children).replace(/\n$/, '')}
-                </SyntaxHighlighter>
-              ) : (
-                <code {...props} className={className}>
-                  {children}
-                </code>
-              )
-            },
-          }}
-        >
-          {content}
-        </Markdown>
+      <div className="my-[12px] w-[400px] rounded-[16px] border border-blue-02 bg-blue-01 drop-shadow-lg">
+        <div className="flex h-[72px] items-center rounded-t-[16px] border-b border-blue-02 bg-white px-[23px]">
+          <div className="flex items-end gap-[6px]">
+            <Image src={icons.pin} alt="" width={27} />
+            <h3 className="text-h3-bold text-gray-08">핵심 pick</h3>
+            <p className="pb-1 text-small1-regular text-gray-06">
+              질문을 통해 핵심 내용을 되돌아보세요
+            </p>
+          </div>
+        </div>
+        <div className="flex flex-col gap-[32px] px-[16px] py-[23px]">
+          {keyPoints.map((keyPoint, index) => (
+            <div key={keyPoint.id} className="flex items-center justify-between">
+              <div className="flex flex-1 gap-1">
+                <span className="text-body2-bold text-blue-06">{index + 1}</span>
+                <span className="text-body2-medium text-gray-09">{keyPoint.question}</span>
+              </div>
+              <div className="flex size-[24px] items-center justify-center rounded-full bg-blue-02">
+                <Image src={icons.chevronDownBlue} alt="" />
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </main>
   )
