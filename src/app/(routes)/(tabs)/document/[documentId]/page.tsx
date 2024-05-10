@@ -1,3 +1,9 @@
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion'
 import icons from '@/constants/icons'
 import { formatDateKorean } from '@/utils/date'
 import Image from 'next/image'
@@ -136,7 +142,7 @@ export default function Document({ params: { documentId } }: Props) {
           </Markdown>
         </div>
       </div>
-      <div className="my-[12px] w-[400px] rounded-[16px] border border-blue-02 bg-blue-01 drop-shadow-lg">
+      <div className="my-[12px] flex w-[400px] flex-col rounded-[16px] border border-blue-02 bg-blue-01 drop-shadow-lg">
         <div className="flex h-[72px] items-center rounded-t-[16px] border-b border-blue-02 bg-white px-[23px]">
           <div className="flex items-end gap-[6px]">
             <Image src={icons.pin} alt="" width={27} />
@@ -146,18 +152,31 @@ export default function Document({ params: { documentId } }: Props) {
             </p>
           </div>
         </div>
-        <div className="flex flex-col gap-[32px] px-[16px] py-[23px]">
-          {keyPoints.map((keyPoint, index) => (
-            <div key={keyPoint.id} className="flex items-center justify-between">
-              <div className="flex flex-1 gap-1">
-                <span className="text-body2-bold text-blue-06">{index + 1}</span>
-                <span className="text-body2-medium text-gray-09">{keyPoint.question}</span>
-              </div>
-              <div className="flex size-[24px] items-center justify-center rounded-full bg-blue-02">
-                <Image src={icons.chevronDownBlue} alt="" />
-              </div>
-            </div>
-          ))}
+        <div className="flex-1 overflow-scroll">
+          <Accordion type="multiple" className="flex flex-col px-[16px] py-[7px]">
+            {keyPoints.map((keyPoint, index) => (
+              <AccordionItem value={keyPoint.id.toString()} key={keyPoint.id}>
+                <AccordionTrigger
+                  className="flex items-center justify-between"
+                  chevronDownIcon={
+                    <div className="flex size-[24px] items-center justify-center rounded-full bg-blue-02">
+                      <Image src={icons.chevronDownBlue} alt="" />
+                    </div>
+                  }
+                >
+                  <div className="flex flex-1 gap-1">
+                    <span className="text-body2-bold text-blue-06">{index + 1}</span>
+                    <span className="text-left text-body2-medium text-gray-09">
+                      {keyPoint.question}
+                    </span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="px-[14px] text-body2-regular text-gray-08">
+                  {keyPoint.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
         </div>
       </div>
     </main>
