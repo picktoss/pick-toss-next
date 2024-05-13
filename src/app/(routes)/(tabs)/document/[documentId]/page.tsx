@@ -4,6 +4,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion'
+import { Switch } from '@/components/ui/switch'
 import icons from '@/constants/icons'
 import { formatDateKorean } from '@/utils/date'
 import Image from 'next/image'
@@ -106,14 +107,18 @@ export default function Document({ params: { documentId } }: Props) {
   const { documentName, createdAt, content, keyPoints } = fetchDocument(Number(documentId))
   return (
     <main className="flex h-[calc(100vh-60px)]">
-      <div className="flex-1 overflow-scroll">
+      <div className="flex-1 overflow-scroll pr-[30px]">
         <div className="mb-[45px] flex items-center justify-between">
           <div>
             <h3 className="mb-2 text-h3-bold text-gray-08">{documentName}</h3>
             <p className="text-body2-regular text-gray-06">{formatDateKorean(createdAt)}</p>
           </div>
-          <div className="flex size-[25px] items-center justify-center rounded-full hover:bg-gray-02">
-            <Image src={icons.kebab} alt="" width={15} height={3} />
+          <div className="flex items-center">
+            <span className="mr-[4px] text-body2-regular text-gray-06">퀴즈 생성</span>
+            <Switch displayStatus />
+            <div className="ml-[23px] flex size-[25px] items-center justify-center rounded-full hover:bg-gray-02">
+              <Image src={icons.kebab} alt="" width={15} height={3} />
+            </div>
           </div>
         </div>
         <div className="prose max-w-none">
