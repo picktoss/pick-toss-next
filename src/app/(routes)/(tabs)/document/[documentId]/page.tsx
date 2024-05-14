@@ -9,7 +9,8 @@ import icons from '@/constants/icons'
 import { formatDateKorean } from '@/utils/date'
 import { ChevronDown } from 'lucide-react'
 import Image from 'next/image'
-import Markdown from 'react-markdown'
+import { ClassAttributes, HTMLAttributes } from 'react'
+import Markdown, { ExtraProps } from 'react-markdown'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import remarkGfm from 'remark-gfm'
@@ -123,27 +124,7 @@ export default function Document({ params: { documentId } }: Props) {
           </div>
         </div>
         <div className="prose max-w-none">
-          <Markdown
-            remarkPlugins={[remarkGfm]}
-            components={{
-              // markdown 내 코드 블럭 문법 처리
-              code(props) {
-                // style, node, ref는 사용하지 않음
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                const { children, className, style, node, ref, ...rest } = props
-                const match = /language-(\w+)/.exec(className || '')
-                return match ? (
-                  <SyntaxHighlighter {...rest} style={dracula} language={match[1]} PreTag="div">
-                    {String(children).replace(/\n$/, '')}
-                  </SyntaxHighlighter>
-                ) : (
-                  <code {...props} className={className}>
-                    {children}
-                  </code>
-                )
-              },
-            }}
-          >
+          <Markdown remarkPlugins={[remarkGfm]} components={{ code: handleMarkDownCodeBlock }}>
             {content}
           </Markdown>
         </div>
@@ -186,5 +167,23 @@ export default function Document({ params: { documentId } }: Props) {
         </div>
       </div>
     </main>
+  )
+}
+
+const handleMarkDownCodeBlock = (
+  props: ClassAttributes<HTMLElement> & HTMLAttributes<HTMLElement> & ExtraProps,
+) => {
+  // style, node, ref는 사용하지 않음
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { children, className, style, node, ref, ...rest } = props
+  const match = /language-(\w+)/.exec(className || '')
+  return match ? (
+    <SyntaxHighlighter {...rest} style={dracula} language={match[1]} PreTag="div">
+      {String(children).replace(/\n$/, '')}
+    </SyntaxHighlighter>
+  ) : (
+    <code {...props} className={className}>
+      {children}
+    </code>
   )
 }
