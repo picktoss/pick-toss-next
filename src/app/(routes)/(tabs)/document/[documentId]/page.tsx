@@ -7,6 +7,7 @@ import {
 import { Switch } from '@/components/ui/switch'
 import icons from '@/constants/icons'
 import { formatDateKorean } from '@/utils/date'
+import { ChevronDown } from 'lucide-react'
 import Image from 'next/image'
 import Markdown from 'react-markdown'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
@@ -165,7 +166,7 @@ export default function Document({ params: { documentId } }: Props) {
                   className="flex items-center justify-between"
                   chevronDownIcon={
                     <div className="flex size-[24px] items-center justify-center rounded-full bg-blue-02">
-                      <Image src={icons.chevronDownBlue} alt="" />
+                      <ChevronDown size={16} color="#7095F8" strokeWidth={3} />
                     </div>
                   }
                 >
