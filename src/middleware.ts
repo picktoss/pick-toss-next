@@ -11,21 +11,20 @@ const publicOnlyUrls: Routes = {
   '/sign-in': true,
 }
 
-/**
- * TODO: protect route (Auth 적용 후 적용)
- */
 export async function middleware(request: NextRequest) {
-  //   const session = await auth()
-  //   const exists = publicOnlyUrls[request.nextUrl.pathname]
-  //   if (!session?.user.id) {
-  //     if (!exists) {
-  //       return NextResponse.redirect(new URL('/', request.url))
-  //     }
-  //   } else {
-  //     if (exists) {
-  //       return NextResponse.redirect(new URL('/quiz', request.url))
-  //     }
-  //   }
+  const session = await auth()
+  const exists = publicOnlyUrls[request.nextUrl.pathname]
+  // 로그인 되어 있지 않은 상태
+  if (!session?.user.id) {
+    if (!exists) {
+      return NextResponse.redirect(new URL('/', request.url))
+    }
+    // 로그인 상태
+  } else {
+    if (exists) {
+      return NextResponse.redirect(new URL('/main', request.url))
+    }
+  }
 }
 
 export const config = {
