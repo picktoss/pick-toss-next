@@ -9,10 +9,7 @@ export enum HttpMethod {
   DELETE = 'DELETE',
 }
 
-export interface ApiResponse {
-  statusCode: number
-  message?: string
-}
+export interface ApiResponse {}
 
 interface Config {
   baseUrl: string
@@ -33,7 +30,7 @@ interface FetchParams {
 class ApiClient {
   constructor(private readonly config: Config) {}
 
-  async fetch<T extends ApiResponse>(params: FetchParams): Promise<T> {
+  async fetch<T extends ApiResponse>(params: FetchParams) {
     const response = await fetch(this.getUrl(params), {
       headers: this.getHeaders(params.headers),
       next: this.getNextOptions(params.next),
@@ -41,7 +38,9 @@ class ApiClient {
       method: params.method,
     })
 
-    return this.handleResponse<T>(params, response)
+    return {
+      data: await this.handleResponse<T>(params, response),
+    }
   }
 
   private getUrl({ url, query }: Pick<FetchParams, 'url' | 'query'>): string {
@@ -78,12 +77,7 @@ class ApiClient {
         url,
       })
     }
-    if (res.status === 204) {
-      return {
-        statusCode: 204,
-        message: '',
-      } as T
-    }
+
     const data = (await res.json()) as T
     return data
   }
