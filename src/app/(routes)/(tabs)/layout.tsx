@@ -1,5 +1,5 @@
-import HeaderLayout from '@/components/header-layout'
-import { LeftNavLayout } from '@/components/left-nav-layout'
+import { LeftSidebar } from '@/components/left-sidebar'
+import { TabNavigation } from '@/components/tab-nav'
 import { Viewport } from 'next'
 import { PropsWithChildren } from 'react'
 
@@ -14,12 +14,17 @@ export const viewport: Viewport = {
 
 const TabsLayout = ({ children }: LayoutProps) => {
   return (
-    <LeftNavLayout>
-      <div className="relative mx-auto w-full max-w-[calc(1032px+40px)] px-[20px]">
-        <HeaderLayout />
-        <div>{children}</div>
+    <>
+      <div className="hidden justify-center lg:flex">
+        <LeftSidebar />
+        <div className="ml-[240px] w-full max-w-[1032px] px-[20px]">{children}</div>
       </div>
-    </LeftNavLayout>
+
+      <div className="lg:hidden">
+        <div className="px-[20px] pb-[124px]">{children}</div>
+        <TabNavigation />
+      </div>
+    </>
   )
 }
 
