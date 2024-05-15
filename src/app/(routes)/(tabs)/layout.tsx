@@ -21,7 +21,7 @@ const TabsLayout = ({ children }: LayoutProps) => {
       </div>
 
       <div className="lg:hidden">
-        <div className="px-[20px] pb-[124px]">{children}</div>
+        <div className="flex min-h-[calc(100vh-84px)] flex-col pb-[84px]">{children}</div>
         <TabNavigation />
       </div>
     </>

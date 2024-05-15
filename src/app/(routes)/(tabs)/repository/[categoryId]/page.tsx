@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import CategoryTag from '../components/category-tag'
-import { studyCategoryData } from '../mock-data'
+import { categories } from '../mock-data'
 import Image from 'next/image'
 import {
   DropdownMenu,
@@ -22,7 +22,7 @@ interface Props {
 
 // 임시 category fetch 함수
 const fetchCategory = (categoryId: number) => {
-  const targetData = studyCategoryData.find((data) => data.id === categoryId)
+  const targetData = categories.find((data) => data.id === categoryId)
 
   if (targetData === undefined) {
     throw new Error('category id가 잘못 되었습니다')

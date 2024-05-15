@@ -43,7 +43,7 @@ const config = {
           '32px',
           {
             lineHeight: 'normal',
-            fontWeight: 'medium',
+            fontWeight: '500',
             letterSpacing: '0.02em',
           },
         ],
@@ -59,7 +59,7 @@ const config = {
           '24px',
           {
             lineHeight: 'normal',
-            fontWeight: 'medium',
+            fontWeight: '500',
             letterSpacing: '0.02em',
           },
         ],
@@ -99,7 +99,7 @@ const config = {
           '16px',
           {
             lineHeight: '120%',
-            fontWeight: 'medium',
+            fontWeight: '500',
             letterSpacing: '0.02em',
           },
         ],
@@ -115,7 +115,7 @@ const config = {
           '14px',
           {
             lineHeight: '120%',
-            fontWeight: 'medium',
+            fontWeight: '500',
             letterSpacing: '0.02em',
           },
         ],
@@ -139,7 +139,7 @@ const config = {
           '14px',
           {
             lineHeight: '150%',
-            fontWeight: 'medium',
+            fontWeight: '500',
             letterSpacing: '0.02em',
           },
         ],
