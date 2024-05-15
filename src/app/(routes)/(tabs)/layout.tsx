@@ -17,7 +17,7 @@ const TabsLayout = ({ children }: LayoutProps) => {
     <>
       <div className="hidden justify-center lg:flex">
         <LeftSidebar />
-        <div className="ml-[240px] w-full max-w-[1032px] px-[20px]">{children}</div>
+        <div className="ml-[240px] w-full max-w-[1072px] px-[20px]">{children}</div>
       </div>
 
       <div className="lg:hidden">
