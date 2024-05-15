@@ -1,32 +1,23 @@
-import { ServerEnv } from '@/apis/server-env'
-
-enum Method {
-  GET = 'GET',
-  POST = 'POST',
-  PATCH = 'PATCH',
-  DELETE = 'DELETE',
-}
-
-const baseUrl = ServerEnv.apiUrl()
+import { HttpMethod } from '@/lib/api-client'
 
 export const API_ENDPOINT = {
   // 퀴즈
   quiz: {
     getTodayQuiz: () => ({
-      url: `${baseUrl}/todayQuiz`,
-      method: Method.GET,
+      url: `/todayQuiz`,
+      method: HttpMethod.GET,
     }),
     getBookmarks: () => ({
-      url: `${baseUrl}/bookmark`,
-      method: Method.GET,
+      url: `/bookmark`,
+      method: HttpMethod.GET,
     }),
     postBookmark: (quizId: number) => ({
-      url: `${baseUrl}/bookmark/${quizId}`,
-      method: Method.POST,
+      url: `/bookmark/${quizId}`,
+      method: HttpMethod.POST,
     }),
     deleteBookmark: (quizId: number) => ({
-      url: `${baseUrl}/bookmark/${quizId}`,
-      method: Method.DELETE,
+      url: `/bookmark/${quizId}`,
+      method: HttpMethod.DELETE,
     }),
   },
 
@@ -36,32 +27,32 @@ export const API_ENDPOINT = {
   // 재화 관련 API
   star: {
     getStarEvent: () => ({
-      url: `${baseUrl}/starEvent`,
-      method: Method.GET,
+      url: `/starEvent`,
+      method: HttpMethod.GET,
     }),
   },
 
   // 사용자 관련 API
   user: {
     getUser: () => ({
-      url: `${baseUrl}/user`,
-      method: Method.GET,
+      url: `/user`,
+      method: HttpMethod.GET,
     }),
   },
 
   // auth 관련 API
   auth: {
     signIn: () => ({
-      url: `${baseUrl}/auth`,
-      method: Method.POST,
+      url: `/auth`,
+      method: HttpMethod.POST,
     }),
     verifyEmail: () => ({
-      url: `${baseUrl}/auth/verification`,
-      method: Method.POST,
+      url: `/auth/verification`,
+      method: HttpMethod.POST,
     }),
     checkVerification: () => ({
-      url: `${baseUrl}/auth/verification/check`,
-      method: Method.POST,
+      url: `/auth/verification/check`,
+      method: HttpMethod.POST,
     }),
   },
 }
