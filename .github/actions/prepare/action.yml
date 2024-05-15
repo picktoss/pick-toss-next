@@ -14,10 +14,6 @@ runs:
         node-version: 20
         registry-url: 'https://registry.npmjs.org'
 
-    - name: Set up environment variables
-      shell: bash
-      run: echo "NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}" >> $GITHUB_ENV
-
     - name: Install dependencies
       shell: bash
       run: npm ci
