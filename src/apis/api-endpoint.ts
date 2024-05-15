@@ -35,7 +35,7 @@ export const API_ENDPOINT = {
   // 사용자 관련 API
   user: {
     getUser: () => ({
-      url: `/user`,
+      url: `/members/info`,
       method: HttpMethod.GET,
     }),
   },
@@ -43,7 +43,7 @@ export const API_ENDPOINT = {
   // auth 관련 API
   auth: {
     signIn: () => ({
-      url: `/auth`,
+      url: `/login`,
       method: HttpMethod.POST,
     }),
     verifyEmail: () => ({
