@@ -1,21 +1,33 @@
 import { Button } from './ui/button'
 import { TabNavigation } from './tab-nav'
+import { CategoryAccordion } from './category-accordion'
+import { categories } from '@/app/(routes)/(tabs)/repository/mock-data'
 
 export const LeftSidebar = () => {
   return (
-    <div className="flex">
-      <div className="fixed left-0 z-50 flex h-screen w-[240px] flex-col items-center border-r border-gray-04 bg-white p-5">
-        <div className="flex items-center gap-[14px]">
-          <div className="size-9 rounded-lg bg-gray-04" />
-          <LogoIcon />
-        </div>
-        <div className="mb-[26px] mt-[30px] w-full">
-          <Button className="h-[56px] w-full items-center gap-[13.3px] rounded-full bg-[#FB7E20] shadow-lg hover:bg-[#FB7E20]/80">
-            <PlusIcon />
-            <span className="text-sm">문서 추가하기</span>
-          </Button>
-        </div>
-        <TabNavigation />
+    <div className="fixed left-0 z-50 flex h-screen w-[240px] flex-col items-center border-r border-gray-04 bg-white py-[30px]">
+      <div className="flex items-center gap-[14px]">
+        <div className="size-9 rounded-lg bg-gray-04" />
+        <LogoIcon />
+      </div>
+      <div className="mb-[24px] mt-[35px]">
+        <Button className="h-[47px] w-[151px] gap-[13px] rounded-[16px] bg-[#FB7E20] text-gray-01 shadow-lg hover:bg-[#FB7E20]/80">
+          <span className="text-body2-bold">노트 추가하기</span>
+          <PlusIcon />
+        </Button>
+      </div>
+      <TabNavigation />
+      <CategoryAccordion
+        categories={categories}
+        hasBorder={false}
+        showChevron={false}
+        className="w-full flex-1 overflow-y-scroll pl-[49px]"
+        triggerStyles="!text-body-2-medium py-[8px]"
+        contentStyles="!text-body2-medium h-[32px]"
+      />
+      <div className="mt-[20px] w-full pl-[29px]">
+        <div>남은 AI pick 생성 횟수</div>
+        <div>나의 노트 창고</div>
       </div>
     </div>
   )
@@ -64,7 +76,7 @@ function LogoIcon() {
 
 function PlusIcon() {
   return (
-    <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="16" height="16" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M10.2563 0V20" stroke="#F6FAFD" strokeWidth="2" />
       <path d="M20.5132 10L0.000361264 10" stroke="#F6FAFD" strokeWidth="2" />
     </svg>

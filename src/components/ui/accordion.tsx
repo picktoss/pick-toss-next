@@ -18,27 +18,32 @@ AccordionItem.displayName = 'AccordionItem'
 
 interface TriggerProps extends React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger> {
   chevronDownIcon?: React.ReactNode
+  showChevron?: boolean
 }
 
 const AccordionTrigger = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Trigger>,
   TriggerProps
->(({ className, children, chevronDownIcon, ...props }, ref) => (
+>(({ className, children, chevronDownIcon, showChevron = true, ...props }, ref) => (
   <AccordionPrimitive.Header className="flex">
     <AccordionPrimitive.Trigger
       ref={ref}
       className={cn(
-        'flex flex-1 items-center py-4 font-medium transition-all [&[data-state=open]>svg]:rotate-180 [&[data-state=open]>span:last-child]:rotate-180',
+        'flex flex-1 items-center py-4 font-medium transition-all',
+        showChevron &&
+          '[&[data-state=open]>svg]:rotate-180 [&[data-state=open]>span:last-child]:rotate-180',
         className,
       )}
       {...props}
     >
       {children}
-      {chevronDownIcon ? (
-        <span className="shrink-0 transition-transform duration-200">{chevronDownIcon}</span>
-      ) : (
-        <ChevronDown className="size-4 shrink-0 transition-transform duration-200" />
-      )}
+      {showChevron ? (
+        chevronDownIcon ? (
+          <span className="shrink-0 transition-transform duration-200">{chevronDownIcon}</span>
+        ) : (
+          <ChevronDown className="size-4 shrink-0 transition-transform duration-200" />
+        )
+      ) : null}
     </AccordionPrimitive.Trigger>
   </AccordionPrimitive.Header>
 ))

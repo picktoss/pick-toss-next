@@ -63,15 +63,12 @@ export const TabNavigation = () => {
           const { href, Icon, title } = item
           const isActive = activeItem == item
           return (
-            <Link key={title} href={href} className="flex h-[64px] items-center gap-4">
+            <Link key={title} href={href} className="flex h-[64px] items-center gap-4 pl-[45px]">
               <Icon isActive={isActive} />
               <span className={cn('text-gray-40', isActive && 'text-[#FB7E20]')}>{title}</span>
             </Link>
           )
         })}
-        {/**
-         * TODO: 폴더 구조 표시
-         */}
       </div>
 
       <div className="fixed bottom-0 flex h-[84px] w-full justify-around border-t border-gray-02 bg-white px-[20px] lg:hidden">

@@ -15,6 +15,7 @@ import kebab from '../../public/icons/kebab.svg'
 import pin from '../../public/icons/pin.svg'
 import google from '../../public/icons/google.svg'
 import file from '../../public/icons/file.svg'
+import plus from '../../public/icons/plus.svg'
 
 const icons = {
   check,
@@ -32,6 +33,7 @@ const icons = {
   pin,
   google,
   file,
+  plus,
 }
 
 export default icons as Record<keyof typeof icons, StaticImport>
