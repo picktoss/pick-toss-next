@@ -2,6 +2,7 @@
 import { StaticImport } from 'next/dist/shared/lib/get-img-props'
 import check from '../../public/icons/check.svg'
 import chevronDown from '../../public/icons/chevron-down.svg'
+import chevronRight from '../../public/icons/chevron-right.svg'
 import bell from '../../public/icons/bell.svg'
 import calendar from '../../public/icons/calendar.svg'
 import kakao from '../../public/icons/kakao.svg'
@@ -18,6 +19,7 @@ import file from '../../public/icons/file.svg'
 import plus from '../../public/icons/plus.svg'
 import quizReady from '../../public/icons/quiz-ready.svg'
 import arrowRight from '../../public/icons/arrow-right.svg'
+import logOut from '../../public/icons/log-out.svg'
 
 const icons = {
   check,
@@ -38,6 +40,8 @@ const icons = {
   plus,
   quizReady,
   arrowRight,
+  logOut,
+  chevronRight,
 }
 
 export default icons as Record<keyof typeof icons, StaticImport>
