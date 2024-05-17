@@ -11,12 +11,8 @@ export default function Main() {
       </div>
 
       <section className="mb-[56px] flex flex-col gap-[24px]">
-        <div className="flex min-h-[240px] w-full flex-col justify-between rounded-[12px] bg-orange-02 px-[20px] pb-[16px] pt-[20px]">
-          <div
-            style={{
-              width: 'calc(100%-150px)',
-            }}
-          >
+        <div className="relative flex min-h-[240px] w-full flex-col justify-between rounded-[12px] bg-orange-02 p-[20px]">
+          <div className="w-[calc(100%-160px)]">
             <div className="mb-[12px] text-body1-bold-eng text-orange-06">TODAY&apos;s QUIZ</div>
             <div className="mb-[39px] flex flex-col gap-[8px]">
               <div className="text-h4-bold text-gray-09">픽토스님을 위한 퀴즈가 준비되었어요</div>
@@ -24,7 +20,7 @@ export default function Main() {
             </div>
           </div>
 
-          <Image src={icons.quizReady} width={148} className="absolute right-[28px]" alt="" />
+          <Image src={icons.quizReady} width={148} className="absolute right-[18px]" alt="" />
 
           <Button className="flex w-full gap-[8px] rounded-[8px]">
             <div>오늘의 퀴즈 시작하기</div>
