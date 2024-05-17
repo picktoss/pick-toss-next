@@ -171,7 +171,7 @@ const config = {
           '10px',
           {
             lineHeight: 'normal',
-            fontWeight: 'normal',
+            fontWeight: 'bold',
             letterSpacing: '0.02em',
           },
         ],
