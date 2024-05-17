@@ -16,6 +16,8 @@ import pin from '../../public/icons/pin.svg'
 import google from '../../public/icons/google.svg'
 import file from '../../public/icons/file.svg'
 import plus from '../../public/icons/plus.svg'
+import quizReady from '../../public/icons/quiz-ready.svg'
+import arrowRight from '../../public/icons/arrow-right.svg'
 
 const icons = {
   check,
@@ -34,6 +36,8 @@ const icons = {
   google,
   file,
   plus,
+  quizReady,
+  arrowRight,
 }
 
 export default icons as Record<keyof typeof icons, StaticImport>

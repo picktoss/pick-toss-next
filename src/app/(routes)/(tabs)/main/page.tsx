@@ -4,103 +4,108 @@ import Image from 'next/image'
 
 export default function Main() {
   return (
-    <main className="flex flex-col pb-[48px] lg:gap-[28px]">
-      <div className="flex items-center gap-[8px]">
-        <Image src={icons.powerUpQuiz} width={34.69} height={30} alt="" />
-        <h1 className="text-[32px] font-[500] text-gray-08">파워업 퀴즈</h1>
+    <main className="flex flex-col px-[20px] pb-[40px] lg:gap-[28px]">
+      <div className="mb-[26px] flex items-start gap-[8px]">
+        <h1 className="text-h3-bold text-gray-09">파워업 퀴즈</h1>
+        <Image src={icons.powerUpQuiz} width={26} height={26} alt="" />
       </div>
 
-      <div className="flex gap-[16px]">
-        {/** TODO: 배너 컴포넌트 구현 (대기, 완료, disabled) */}
-        <div className="relative size-full h-[240px] flex-1 rounded-[16px] bg-orange-02 px-[40px] pb-[28px] pt-[30px]">
-          <div className="flex flex-col">
-            <div className="mb-[12px] text-[16px] font-[700] text-orange-06">TODAY&apos;s QUIZ</div>
-            <div className="mb-[29px] gap-[8px] text-[32px] font-[700] text-gray-09">
-              <span className="text-orange-06">픽토스님</span>을 위한 퀴즈가 준비되었어요
-              <div className="text-[16px] font-[500] text-gray-08">4월 25일 목요일</div>
+      <section className="mb-[56px] flex flex-col gap-[24px]">
+        <div className="flex min-h-[240px] w-full flex-col justify-between rounded-[12px] bg-orange-02 px-[20px] pb-[16px] pt-[20px]">
+          <div
+            style={{
+              width: 'calc(100%-150px)',
+            }}
+          >
+            <div className="mb-[12px] text-body1-bold-eng text-orange-06">TODAY&apos;s QUIZ</div>
+            <div className="mb-[39px] flex flex-col gap-[8px]">
+              <div className="text-h4-bold text-gray-09">픽토스님을 위한 퀴즈가 준비되었어요</div>
+              <div className="text-body2-medium text-gray-08">4월 25일 목요일</div>
             </div>
-            <Button className="h-[52px] w-[240px] rounded-[12px] bg-orange-06 font-[700] text-gray-01 hover:bg-orange-06/90">
-              <div>오늘의 퀴즈 시작하기</div>
-            </Button>
           </div>
-          <div className="absolute right-[18px] top-[19px]">
-            <QuizReadyIcon />
-          </div>
+
+          <Image src={icons.quizReady} width={148} className="absolute right-[28px]" alt="" />
+
+          <Button className="flex w-full gap-[8px] rounded-[8px]">
+            <div>오늘의 퀴즈 시작하기</div>
+            <Image src={icons.arrowRight} width={20.25} height={13.5} alt="" />
+          </Button>
         </div>
 
-        <div className="flex flex-col gap-[7px]">
-          <div className="flex h-full w-[176px] flex-col items-center justify-between rounded-[16px] bg-white p-[15px] pt-[20px]">
-            <Image src={icons.calendar} width={53} height={53} alt="" />
-            <div className="text-[16px] font-[700] text-gray-08">
-              <span className="text-orange-06">25</span>일 연속으로 푸는 중!
+        <div className="flex h-[80px] gap-[7px]">
+          <div className="flex min-w-[164px] flex-1 justify-center gap-[26px] rounded-[12px] bg-white">
+            <div className="flex flex-col gap-[4px] pt-[16px]">
+              <div className="text-body2-medium text-gray-08">퀴즈 연속일</div>
+              <div className="text-h4-bold text-gray-08">
+                <span className="text-orange-06">25</span>일
+              </div>
             </div>
+            <Image src={icons.calendar} width={40} height={40} alt="" />
           </div>
-          <div className="flex h-full w-[176px] flex-col items-center justify-between rounded-[16px] bg-white p-[15px] pt-[20px]">
-            <Image src={icons.star} width={45} height={43} alt="" />
-            <div className="text-[16px] font-[700] text-gray-08">
-              현재 별 <span className="text-orange-06">16</span>개
+          <div className="flex min-w-[164px] flex-1 justify-center gap-[26px] rounded-[12px] bg-white">
+            <div className="flex flex-col gap-[4px] pt-[16px]">
+              <div className="text-body2-medium text-gray-08">나의 별</div>
+              <div className="text-h4-bold text-gray-08">
+                <span className="text-orange-06">16</span>개
+              </div>
             </div>
+            <Image src={icons.star} width={40} height={40} alt="" />
           </div>
         </div>
-      </div>
+      </section>
 
-      <div className="flex h-[456px] flex-col gap-[28px] bg-white p-[32px]">
-        <div className="flex flex-col gap-[8px]">
-          <div className="flex items-center gap-[4px]">
-            <h2 className="text-[20px] font-[700]">퀴즈 만들기</h2>
-            {/** TODO: Tool Tip */}
+      <section className="flex flex-col gap-[24px]">
+        <div>
+          <div className="flex gap-[8px]">
+            <div className="text-h4-bold text-gray-08">퀴즈 만들기</div>
             <Image src={icons.circleQuestion} width={20} height={20} alt="" />
           </div>
-          <p className="text-[14px] font-[400] text-gray-06">
-            원하는 문서로부터 퀴즈를 만들어보세요
-          </p>
+          <div className="text-body2-regular text-gray-07">
+            원하는 노트에서 퀴즈를 만들고 풀어보세요
+          </div>
         </div>
 
-        <ul className="flex h-[290px] flex-wrap gap-[16px] border-gray-02">
-          <li className="flex flex-1 flex-col justify-between rounded-[16px] border px-[24px] pb-[21px] pt-[23px]">
-            <div className="flex flex-col gap-[8px]">
-              <h3 className="text-[20px] font-[700] text-gray-09">객관식</h3>
-              <p className="text-[14px] font-[500] text-gray-07">
-                4가지 선택지 중 정답을 고르는 퀴즈
-              </p>
-            </div>
-            <div className="flex justify-center">
+        <div className="flex flex-col gap-[16px]">
+          <div className="w-full rounded-[12px]">
+            <div className="flex h-[120px] items-center justify-center bg-blue-01">
               <Icon1 />
             </div>
-            <Button className="h-[41px] w-full bg-orange-01 text-[14px] font-[700] text-orange-06 hover:bg-orange-01/80">
-              만들기
-            </Button>
-          </li>
-          <li className="flex flex-1 flex-col justify-between rounded-[16px] border px-[24px] pb-[21px] pt-[23px]">
-            <div className="flex flex-col gap-[8px]">
-              <h3 className="text-[20px] font-[700] text-gray-09">O/X</h3>
-              <p className="text-[14px] font-[500] text-gray-07">
-                4가지 선택지 중 정답을 고르는 퀴즈
-              </p>
+            <div className="bg-white px-[24px] pb-[18px] pt-[16px]">
+              <div className="flex items-center gap-[8px] text-h4-bold text-gray-09">객관식</div>
+              <div className="text-body2-medium text-gray-06">
+                <span>4가지 선택지 중 정답을 고르는 퀴즈</span>
+              </div>
             </div>
-            <div className="flex justify-center">
+          </div>
+          <div className="w-full rounded-[12px]">
+            <div className="flex h-[120px] items-center justify-center bg-blue-01">
               <Icon2 />
             </div>
-            <Button className="h-[41px] w-full bg-orange-01 text-[14px] font-[700] text-orange-06 hover:bg-orange-01/80">
-              만들기
-            </Button>
-          </li>
-          <li className="flex flex-1 flex-col justify-between rounded-[16px] border px-[24px] pb-[21px] pt-[23px]">
-            <div className="flex flex-col gap-[8px]">
-              <h3 className="text-[20px] font-[700] text-gray-09">빈칸 채우기</h3>
-              <p className="text-[14px] font-[500] text-gray-07">
-                4가지 선택지 중 정답을 고르는 퀴즈
-              </p>
+            <div className="bg-white px-[24px] pb-[18px] pt-[16px]">
+              <div className="flex items-center gap-[8px] text-h4-bold text-gray-09">O/X</div>
+              <div className="text-body2-medium text-gray-06">
+                <span>참인지 거짓인지 판단하는 양자택일 퀴즈</span>
+              </div>
             </div>
-            <div className="flex justify-center">
+          </div>
+          <div className="w-full rounded-[12px]">
+            <div className="flex h-[120px] items-center justify-center bg-blue-01">
               <Icon3 />
             </div>
-            <Button className="h-[41px] w-full bg-orange-01 text-[14px] font-[700] text-orange-06 hover:bg-orange-01/80">
-              만들기
-            </Button>
-          </li>
-        </ul>
-      </div>
+            <div className="bg-white px-[24px] pb-[18px] pt-[16px]">
+              <div className="flex items-center gap-[8px] text-h4-bold text-gray-09">
+                <span>빈칸 채우기</span>
+                <span className="block h-fit rounded-[3px] bg-gray-02 px-[6px] pb-[2px] pt-px text-[10px] text-gray-08">
+                  Coming soon
+                </span>
+              </div>
+              <div className="text-body2-medium text-gray-06">
+                주어진 문장의 빈 곳을 채우는 퀴즈
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
   )
 }
@@ -109,25 +114,25 @@ export default function Main() {
 function Icon1() {
   return (
     <svg
-      width="157"
-      height="99"
-      viewBox="0 0 157 99"
+      width="127"
+      height="80"
+      viewBox="0 0 127 80"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <rect x="25.939" width="97.2717" height="21.3315" rx="4.86359" fill="#D7E2FF" />
-      <rect x="25.939" y="25.1289" width="97.2717" height="21.3315" rx="4.86359" fill="#D7E2FF" />
-      <rect x="36.4771" y="50.2568" width="97.2717" height="21.3315" rx="4.86359" fill="#95B0F8" />
-      <rect x="25.939" y="75.3857" width="97.2717" height="21.3315" rx="4.86359" fill="#D7E2FF" />
-      <circle cx="48.5204" cy="60.9349" r="7.17957" fill="#F6FAFD" />
+      <rect x="21.3516" y="0.800049" width="77.8174" height="17.0652" rx="3.89087" fill="#D7E2FF" />
+      <rect x="21.3516" y="20.9031" width="77.8174" height="17.0652" rx="3.89087" fill="#D7E2FF" />
+      <rect x="29.7812" y="41.0056" width="77.8174" height="17.0652" rx="3.89087" fill="#95B0F8" />
+      <rect x="21.3516" y="61.1086" width="77.8174" height="17.0652" rx="3.89087" fill="#D7E2FF" />
+      <circle cx="39.4155" cy="49.5481" r="5.74366" fill="#F5F7F9" />
       <path
-        d="M45.6484 60.8423L47.8023 62.9962L52.1101 58.6885"
+        d="M37.1182 49.4738L38.8413 51.1969L42.2875 47.7507"
         stroke="#577CFF"
-        strokeWidth="1.43591"
+        strokeWidth="1.14873"
         strokeLinecap="round"
       />
       <path
-        d="M135.199 82.9414L126.718 69.798C125.551 67.989 127.002 65.6348 129.143 65.8651L144.569 67.5245C146.8 67.7645 147.665 70.5554 145.96 72.0145L142.114 75.3051C141.719 75.6434 141.436 76.0943 141.303 76.5975L139.825 82.206C139.258 84.3574 136.405 84.8109 135.199 82.9414Z"
+        d="M108.759 67.1532L101.974 56.6385C101.04 55.1913 102.201 53.3079 103.914 53.4921L116.255 54.8197C118.04 55.0117 118.732 57.2444 117.367 58.4117L114.291 61.0441C113.975 61.3148 113.749 61.6755 113.642 62.0781L112.46 66.5649C112.006 68.2861 109.724 68.6488 108.759 67.1532Z"
         fill="#FF9100"
       />
     </svg>
@@ -137,26 +142,32 @@ function Icon1() {
 function Icon2() {
   return (
     <svg
-      width="198"
-      height="68"
-      viewBox="0 0 198 68"
+      width="176"
+      height="112"
+      viewBox="0 0 176 112"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <rect x="101.583" width="95.6944" height="67.7222" rx="11.7778" fill="#95B0F8" />
-      <rect x="14" y="5" width="81" height="57.3231" rx="9.96923" fill="#D7E2FF" />
-      <circle cx="55.1239" cy="33.6615" r="14.9538" stroke="#95B0F8" strokeWidth="4.98462" />
+      <rect x="90.0664" y="28.8" width="76.5556" height="54.1778" rx="9.42222" fill="#95B0F8" />
+      <rect x="20" y="32.8" width="64.8" height="45.8585" rx="7.97538" fill="#D7E2FF" />
+      <circle cx="52.8993" cy="55.7291" r="11.9631" stroke="#95B0F8" strokeWidth="3.98769" />
       <path
-        d="M135.444 19.1392L163.417 47.1114"
+        d="M117.155 44.1113L139.533 66.4891"
         stroke="#F0F4FF"
-        strokeWidth="7.36111"
+        strokeWidth="5.88889"
         strokeLinecap="round"
       />
       <path
-        d="M163.417 19.1392L135.444 47.1114"
+        d="M139.533 44.1113L117.155 66.4891"
         stroke="#F0F4FF"
-        strokeWidth="7.36111"
+        strokeWidth="5.88889"
         strokeLinecap="round"
+      />
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M124.628 20.9633C125.738 20.8553 126.862 20.8 128 20.8C129.137 20.8 130.262 20.8553 131.371 20.9633C132.089 21.0331 132.615 21.6719 132.545 22.39C132.475 23.1081 131.836 23.6335 131.118 23.5636C130.092 23.4638 129.052 23.4127 128 23.4127C126.947 23.4127 125.907 23.4638 124.881 23.5636C124.163 23.6335 123.524 23.1081 123.454 22.39C123.385 21.6719 123.91 21.0331 124.628 20.9633ZM119.64 23.1444C119.849 23.8349 119.459 24.5642 118.769 24.7734C116.759 25.3823 114.833 26.1849 113.013 27.1597C112.377 27.5004 111.586 27.2609 111.245 26.6249C110.904 25.989 111.144 25.1973 111.78 24.8566C113.75 23.8015 115.835 22.9324 118.011 22.273C118.701 22.0638 119.431 22.454 119.64 23.1444ZM136.359 23.1444C136.568 22.454 137.298 22.0638 137.988 22.273C140.165 22.9324 142.249 23.8015 144.219 24.8566C144.855 25.1972 145.095 25.989 144.754 26.6249C144.414 27.2609 143.622 27.5003 142.986 27.1597C141.166 26.1849 139.24 25.3823 137.231 24.7734C136.54 24.5642 136.15 23.8349 136.359 23.1444ZM147.985 28.788C148.443 28.2306 149.266 28.15 149.824 28.608C151.564 30.038 153.162 31.6355 154.592 33.376C155.05 33.9335 154.969 34.7567 154.412 35.2147C153.854 35.6727 153.031 35.5921 152.573 35.0346C151.251 33.4256 149.774 31.9487 148.165 30.6267C147.608 30.1686 147.527 29.3455 147.985 28.788ZM108.014 28.788C108.472 29.3455 108.392 30.1687 107.834 30.6267C106.225 31.9487 104.748 33.4256 103.426 35.0346C102.968 35.5921 102.145 35.6727 101.588 35.2147C101.03 34.7567 100.95 33.9335 101.408 33.376C102.838 31.6355 104.435 30.038 106.176 28.608C106.733 28.15 107.556 28.2306 108.014 28.788ZM156.575 38.4455C157.211 38.1048 158.002 38.3442 158.343 38.9802C159.398 40.9502 160.267 43.0351 160.927 45.2114C161.136 45.9019 160.746 46.6312 160.055 46.8404C159.365 47.0496 158.635 46.6595 158.426 45.969C157.817 43.9594 157.015 42.0338 156.04 40.2138C155.699 39.5778 155.939 38.7861 156.575 38.4455ZM99.4245 38.4455C100.06 38.7861 100.3 39.5778 99.9593 40.2138C98.9845 42.0338 98.1819 43.9594 97.573 45.969C97.3638 46.6595 96.6345 47.0496 95.944 46.8404C95.2535 46.6312 94.8634 45.9019 95.0726 45.2114C95.7319 43.0351 96.601 40.9502 97.6562 38.9802C97.9968 38.3443 98.7885 38.1048 99.4245 38.4455ZM95.1895 50.6549C95.9076 50.7247 96.4331 51.3635 96.3632 52.0816C96.2634 53.1072 96.2123 54.1475 96.2123 55.2001C96.2123 56.2526 96.2634 57.2929 96.3632 58.3185C96.4331 59.0366 95.9076 59.6754 95.1895 59.7452C94.4715 59.8151 93.8327 59.2897 93.7628 58.5716C93.6548 57.462 93.5996 56.3373 93.5996 55.2001C93.5996 54.0628 93.6548 52.9381 93.7628 51.8285C93.8327 51.1104 94.4715 50.585 95.1895 50.6549ZM160.81 50.6549C161.528 50.585 162.167 51.1104 162.236 51.8285C162.344 52.9381 162.4 54.0628 162.4 55.2001C162.4 56.3373 162.344 57.462 162.236 58.5716C162.167 59.2897 161.528 59.8151 160.81 59.7452C160.092 59.6754 159.566 59.0366 159.636 58.3185C159.736 57.2929 159.787 56.2526 159.787 55.2001C159.787 54.1475 159.736 53.1072 159.636 52.0816C159.566 51.3635 160.092 50.7247 160.81 50.6549ZM95.944 63.5597C96.6345 63.3505 97.3638 63.7406 97.573 64.4311C98.1819 66.4407 98.9845 68.3663 99.9593 70.1863C100.3 70.8223 100.06 71.614 99.4245 71.9546C98.7885 72.2953 97.9968 72.0558 97.6562 71.4199C96.601 69.4499 95.7319 67.365 95.0726 65.1887C94.8634 64.4982 95.2535 63.7689 95.944 63.5597ZM160.055 63.5597C160.746 63.7689 161.136 64.4982 160.927 65.1887C160.267 67.365 159.398 69.4499 158.343 71.4199C158.002 72.0558 157.211 72.2953 156.575 71.9546C155.939 71.614 155.699 70.8223 156.04 70.1863C157.015 68.3663 157.817 66.4407 158.426 64.4311C158.635 63.7406 159.365 63.3505 160.055 63.5597ZM154.412 75.1854C154.969 75.6434 155.05 76.4666 154.592 77.0241C153.162 78.7646 151.564 80.3621 149.824 81.7921C149.266 82.2501 148.443 82.1695 147.985 81.6121C147.527 81.0546 147.608 80.2314 148.165 79.7734C149.774 78.4514 151.251 76.9745 152.573 75.3655C153.031 74.808 153.854 74.7274 154.412 75.1854ZM101.588 75.1854C102.145 74.7274 102.968 74.808 103.426 75.3655C104.748 76.9745 106.225 78.4514 107.834 79.7734C108.392 80.2314 108.472 81.0546 108.014 81.6121C107.556 82.1695 106.733 82.2501 106.176 81.7921C104.435 80.3621 102.838 78.7646 101.408 77.0241C100.95 76.4666 101.03 75.6434 101.588 75.1854ZM111.245 83.7752C111.586 83.1392 112.377 82.8997 113.013 83.2404C114.833 84.2152 116.759 85.0178 118.769 85.6267C119.459 85.8359 119.849 86.5652 119.64 87.2557C119.431 87.9461 118.701 88.3363 118.011 88.1271C115.835 87.4677 113.75 86.5986 111.78 85.5435C111.144 85.2029 110.904 84.4111 111.245 83.7752ZM144.754 83.7752C145.095 84.4111 144.855 85.2028 144.219 85.5435C142.249 86.5986 140.165 87.4677 137.988 88.1271C137.298 88.3363 136.568 87.9461 136.359 87.2557C136.15 86.5652 136.54 85.8359 137.231 85.6267C139.24 85.0178 141.166 84.2152 142.986 83.2404C143.622 82.8997 144.414 83.1392 144.754 83.7752ZM123.454 88.0101C123.524 87.292 124.163 86.7666 124.881 86.8365C125.907 86.9363 126.947 86.9874 128 86.9874C129.052 86.9874 130.092 86.9363 131.118 86.8365C131.836 86.7666 132.475 87.292 132.545 88.0101C132.615 88.7282 132.089 89.367 131.371 89.4368C130.262 89.5448 129.137 89.6001 128 89.6001C126.862 89.6001 125.738 89.5448 124.628 89.4368C123.91 89.3669 123.385 88.7282 123.454 88.0101Z"
+        fill="#FF9100"
       />
     </svg>
   )
@@ -165,129 +176,23 @@ function Icon2() {
 function Icon3() {
   return (
     <svg
-      width="210"
-      height="81"
-      viewBox="0 0 210 81"
+      width="176"
+      height="112"
+      viewBox="0 0 176 112"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <rect x="14" y="21" width="182.556" height="40" rx="5.88889" fill="#D7E2FF" />
+      <rect x="15.2002" y="40.8" width="146.044" height="32" rx="4.71111" fill="#D7E2FF" />
       <path
-        d="M31.1067 37.192H40.4187V38.76H38.9947V43.496H40.6267V45.08H30.9147V43.496H32.5627V38.76H31.1067V37.192ZM34.5147 43.496H37.0267V38.76H34.5147V43.496ZM44.691 37.176H53.747V38.76H46.675V40.232H53.619V41.8H46.675V43.384H53.875V44.968H44.691V37.176ZM61.7634 37H63.7474V39.144C63.7474 41.24 65.0594 43.016 67.9554 43.624L67.0114 45.192C64.9634 44.696 63.5394 43.624 62.7554 42.152C61.9714 43.624 60.5474 44.696 58.4994 45.192L57.5554 43.624C60.4354 43.016 61.7634 41.24 61.7634 39.144V37ZM71.9398 37.048H80.8998V45.08H78.8998V42.072L71.7958 42.552L71.5558 40.84L78.8998 40.52V38.632H71.9398V37.048ZM85.2682 37.064H94.3882V38.648H90.7722V39.08C90.7722 41.192 92.0362 42.984 94.7722 43.624L93.8602 45.128C91.8762 44.6 90.5162 43.48 89.7802 41.96C89.0602 43.48 87.6842 44.6 85.7002 45.128L84.7882 43.624C87.5402 42.984 88.7882 41.192 88.7882 39.08V38.648H85.2682V37.064Z"
-        fill="#95B0F8"
-      />
-      <path d="M24.3057 28.5693V52.5693" stroke="#7095F8" strokeWidth="2" strokeLinecap="round" />
-    </svg>
-  )
-}
-
-function QuizReadyIcon() {
-  return (
-    <svg
-      width="287"
-      height="215"
-      viewBox="0 0 287 215"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M89.0856 22.5205C84.7997 22.5205 81.3252 25.995 81.3252 30.281V55.5024C81.3252 59.7884 84.7997 63.2629 89.0857 63.2629H130.991L144.106 74.1921C145.37 75.2452 147.288 74.3466 147.288 72.7017L147.288 63.2629H149.229C153.515 63.2629 156.99 59.7884 156.99 55.5024V30.281C156.99 25.995 153.515 22.5205 149.229 22.5205H89.0856Z"
+        d="M28.8857 53.9536H36.3353V55.208H35.1961V58.9968H36.5017V60.264H28.7321V58.9968H30.0505V55.208H28.8857V53.9536ZM31.6121 58.9968H33.6217V55.208H31.6121V58.9968ZM39.7532 53.9408H46.998V55.208H41.3404V56.3856H46.8956V57.64H41.3404V58.9072H47.1004V60.1744H39.7532V53.9408ZM53.4111 53.8H54.9983V55.5152C54.9983 57.192 56.0479 58.6128 58.3647 59.0992L57.6095 60.3536C55.9711 59.9568 54.8319 59.0992 54.2047 57.9216C53.5775 59.0992 52.4383 59.9568 50.7999 60.3536L50.0447 59.0992C52.3487 58.6128 53.4111 57.192 53.4111 55.5152V53.8ZM61.5522 53.8384H68.7202V60.264H67.1202V57.8576L61.437 58.2416L61.245 56.872L67.1202 56.616V55.1056H61.5522V53.8384ZM72.2149 53.8512H79.5109V55.1184H76.6181V55.464C76.6181 57.1536 77.6293 58.5872 79.8181 59.0992L79.0885 60.3024C77.5013 59.88 76.4133 58.984 75.8245 57.768C75.2485 58.984 74.1477 59.88 72.5605 60.3024L71.8309 59.0992C74.0325 58.5872 75.0309 57.1536 75.0309 55.464V55.1184H72.2149V53.8512Z"
         fill="#95B0F8"
       />
       <path
-        d="M92.9663 34.1616L145.349 34.1616"
-        stroke="#F6FAFD"
-        strokeWidth="3.88023"
+        d="M23.2002 45.6001L23.2002 68.0001"
+        stroke="#FF9100"
+        strokeWidth="1.6"
         strokeLinecap="round"
       />
-      <path
-        d="M92.9663 41.9219L145.349 41.9219"
-        stroke="#F6FAFD"
-        strokeWidth="3.88023"
-        strokeLinecap="round"
-      />
-      <path
-        d="M92.9663 49.6821L116.248 49.6821"
-        stroke="#F6FAFD"
-        strokeWidth="3.88023"
-        strokeLinecap="round"
-      />
-      <path
-        d="M172.896 23.692C173.412 22.7693 174.588 22.7693 175.104 23.692L177.1 27.2615C177.184 27.4116 177.291 27.5434 177.415 27.6507L180.478 30.298C181.174 30.9 181.174 32.1 180.478 32.702L177.415 35.3493C177.291 35.4566 177.184 35.5884 177.1 35.7385L175.104 39.308C174.588 40.2307 173.412 40.2307 172.896 39.308L170.9 35.7385C170.816 35.5884 170.709 35.4566 170.585 35.3493L167.522 32.702C166.826 32.1 166.826 30.9 167.522 30.298L170.585 27.6507C170.709 27.5434 170.816 27.4116 170.9 27.2615L172.896 23.692Z"
-        fill="#FFAB40"
-      />
-      <path
-        d="M65.4752 49.692C65.9544 48.7693 67.0456 48.7693 67.5248 49.692L69.3786 53.2615C69.4566 53.4116 69.5555 53.5434 69.6708 53.6507L72.5149 56.298C73.1617 56.9 73.1617 58.1 72.5149 58.702L69.6708 61.3493C69.5555 61.4566 69.4566 61.5884 69.3786 61.7385L67.5248 65.308C67.0456 66.2307 65.9544 66.2307 65.4752 65.308L63.6214 61.7385C63.5434 61.5884 63.4445 61.4566 63.3292 61.3493L60.4851 58.702C59.8383 58.1 59.8383 56.9 60.4851 56.298L63.3292 53.6507C63.4445 53.5434 63.5434 53.4116 63.6214 53.2615L65.4752 49.692Z"
-        fill="#FFAB40"
-      />
-      <path
-        d="M161.423 0.936282C162.161 -0.312094 163.839 -0.312094 164.577 0.936283L167.429 5.76559C167.549 5.96868 167.701 6.14699 167.878 6.29218L172.254 9.87377C173.249 10.6883 173.249 12.3117 172.254 13.1262L167.878 16.7078C167.701 16.853 167.549 17.0313 167.429 17.2344L164.577 22.0637C163.839 23.3121 162.161 23.3121 161.423 22.0637L158.571 17.2344C158.451 17.0313 158.299 16.853 158.122 16.7078L153.746 13.1262C152.751 12.3117 152.751 10.6883 153.746 9.87377L158.122 6.29218C158.299 6.14699 158.451 5.96868 158.571 5.76559L161.423 0.936282Z"
-        fill="#FFAB40"
-      />
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M15.5208 75C6.94881 75 -0.0001297 81.9489 -0.0001297 90.5209V110.584C-0.0001297 119.156 6.9488 126.105 15.5208 126.105H89.8695L112.38 136.24C113.919 136.933 115.548 135.465 115.019 133.862L109.885 118.315C111.195 116.039 111.945 113.399 111.945 110.584V90.5209C111.945 81.9489 104.996 75 96.4237 75H15.5208Z"
-        fill="url(#paint0_linear_2039_309)"
-      />
-      <circle
-        cx="3.65037"
-        cy="3.65037"
-        r="3.65037"
-        transform="matrix(-1 0 0 1 77.873 96.9028)"
-        fill="#F6FAFD"
-      />
-      <circle
-        cx="3.65037"
-        cy="3.65037"
-        r="3.65037"
-        transform="matrix(-1 0 0 1 58.4048 96.9028)"
-        fill="#F6FAFD"
-      />
-      <circle
-        cx="3.65037"
-        cy="3.65037"
-        r="3.65037"
-        transform="matrix(-1 0 0 1 38.937 96.9028)"
-        fill="#F6FAFD"
-      />
-      <path
-        d="M264.491 48.1147C264.491 48.1147 264.299 48.1457 264.212 48.1829C224.422 58.2802 182.047 72.3423 150.709 100.15C137.395 111.986 126.805 127.406 125.706 145.71C123.986 174.341 145.704 198.943 174.212 200.656C185.948 201.361 197.718 197.969 207.307 191.112C216.522 184.509 222.8 174.692 227.915 164.529C235.818 148.778 257.789 105.818 257.789 105.818C258.554 104.356 257.11 102.698 255.572 103.306C248.29 104.844 231.961 109.852 225.714 113.512C224.859 114.013 223.831 113.186 224.12 112.248C226.893 103.049 233.225 94.0846 238.214 86.3565C246.54 73.4346 255.918 61.6377 266.502 50.5504C266.839 50.2096 267.181 49.8054 267.21 49.3187C267.28 48.1548 265.686 47.9317 264.49 48.1359L264.491 48.1147Z"
-        fill="#FB7E20"
-      />
-      <circle
-        cx="38"
-        cy="38"
-        r="38"
-        transform="matrix(1 0 0.000990467 1 139.825 113.094)"
-        fill="url(#paint1_linear_2039_309)"
-      />
-      <defs>
-        <linearGradient
-          id="paint0_linear_2039_309"
-          x1="56.1303"
-          y1="75"
-          x2="56.1303"
-          y2="140.49"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor="#FF9100" />
-          <stop offset="1" stopColor="#F2C180" />
-        </linearGradient>
-        <linearGradient
-          id="paint1_linear_2039_309"
-          x1="38"
-          y1="0"
-          x2="38"
-          y2="76"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor="#FFAB40" />
-          <stop offset="1" stopColor="#FFDDB2" />
-        </linearGradient>
-      </defs>
     </svg>
   )
 }
