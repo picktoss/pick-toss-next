@@ -24,6 +24,19 @@ export const API_ENDPOINT = {
   // 문서 관련 API
   document: {},
 
+  // 카테고리 관련 API
+  category: {
+    getCategories: () => ({
+      url: `/categories`,
+      method: HttpMethod.GET,
+    }),
+
+    createCategory: () => ({
+      url: `/categories`,
+      method: HttpMethod.POST,
+    }),
+  },
+
   // 재화 관련 API
   star: {
     getStarEvent: () => ({

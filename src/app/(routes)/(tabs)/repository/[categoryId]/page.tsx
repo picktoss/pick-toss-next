@@ -81,21 +81,6 @@ export default function Category({ params: { categoryId } }: Props) {
               <div className="text-body1-medium text-gray-09">{document.name}</div>
             </div>
             <div className="flex items-center gap-12">
-              {/* TODO: 서버 API 데이터에 따라 구현 달라질 예정 */}
-              {/* <div className="text-body2-regular text-gray-06">
-                {document.quizCreation === 'PREPARING' ? (
-                  <div className="px-[34.5px]">문서 요약 중</div>
-                ) : (
-                  <div className="flex items-center gap-[6px]">
-                    <span>퀴즈 생성</span>
-                    <span className="text-body1-bold-eng text-orange-05">
-                      {document.quizCreation}
-                    </span>
-                    <Switch checked={document.quizCreation === 'ON'} />
-                  </div>
-                )}
-              </div>
-              <div className="text-body2-regular text-gray-06">{document.createdAt}</div> */}
               <DropdownMenu>
                 <DropdownMenuTrigger>
                   <div className="flex size-[25px] items-center justify-center rounded-full hover:bg-gray-02">
