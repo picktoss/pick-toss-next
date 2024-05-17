@@ -175,6 +175,14 @@ const config = {
             letterSpacing: '0.02em',
           },
         ],
+        'tag-eng': [
+          '10px',
+          {
+            lineHeight: '150%',
+            fontWeight: 'normal',
+            letterSpacing: '0.03em',
+          },
+        ],
       },
       colors: {
         white: '#FFFFFF',
