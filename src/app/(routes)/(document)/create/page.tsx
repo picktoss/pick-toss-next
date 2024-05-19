@@ -1,4 +1,8 @@
-import CreateDocumentForm from './components/create-document-form'
+import dynamic from 'next/dynamic'
+
+const CreateDocumentForm = dynamic(() => import('./components/create-document-form'), {
+  ssr: false,
+})
 
 export default function CreateDocument() {
   return (
