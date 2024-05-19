@@ -5,8 +5,8 @@ interface CreateDocumentParams extends NextFetchRequestConfig {
   accessToken: string
 
   file: File
-  userDocumentName: string
-  categoryId: string
+  documentName: string
+  categoryId: number
 }
 
 interface CreateDocumentResponse {
@@ -14,15 +14,15 @@ interface CreateDocumentResponse {
 }
 
 export const createDocument = async (params: CreateDocumentParams) => {
+  const formData = new FormData()
+  formData.append('file', params.file)
+  formData.append('documentName', params.documentName)
+  formData.append('categoryId', String(params.categoryId))
+
   return await apiClient.fetch<CreateDocumentResponse>({
     ...API_ENDPOINT.document.createDocument(),
-    body: {
-      file: params.file,
-      userDocumentName: params.userDocumentName,
-      categoryId: String(params.categoryId),
-    },
+    body: formData,
     headers: {
-      'Content-Type': 'application/json',
       Authorization: `Bearer ${params.accessToken}`,
     },
   })

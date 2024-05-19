@@ -27,22 +27,21 @@ export default function CreateDocumentForm() {
     <form
       onSubmit={async (e) => {
         e.preventDefault()
-
         if (!title || !editorContent) return
         const documentBlob = new Blob([editorContent], { type: 'text/markdown' })
         const file = new File([documentBlob], `${title}.md`, { type: 'text/markdown' })
-        const categoryId = '5'
+        const categoryId = 2
 
         await mutateAsync({
           accessToken: session.data?.user.accessToken || '',
-          userDocumentName: title,
+          documentName: title,
           file,
           categoryId,
         })
       }}
     >
       <Input
-        name="userDocumentName"
+        name="documentName"
         placeholder="제목 추가"
         value={title}
         onChange={(e) => setTitle(e.target.value)}

@@ -32,7 +32,7 @@ class ApiClient {
 
   async fetch<T extends ApiResponse>(params: FetchParams) {
     const response = await fetch(this.getUrl(params), {
-      headers: this.getHeaders(params.headers),
+      headers: this.getHeaders(params.headers, params.body),
       next: this.getNextOptions(params.next),
       body: this.getBody(params.body),
       method: params.method,
@@ -48,10 +48,16 @@ class ApiClient {
     return `${this.config.baseUrl}${url}${searchParamsUrl}`
   }
 
-  private getHeaders(headers?: FetchParams['headers']): HeadersInit {
+  private getHeaders(headers?: FetchParams['headers'], body?: FetchParams['body']): HeadersInit {
+    if (body instanceof FormData) {
+      return {
+        ...(headers || {}),
+      }
+    }
+
     return {
-      ...(headers || {}),
       'Content-Type': 'application/json',
+      ...(headers || {}),
     }
   }
 
@@ -62,9 +68,12 @@ class ApiClient {
     }
   }
 
-  private getBody(body?: FetchParams['body']): string | undefined {
+  private getBody(body?: FetchParams['body']): string | FormData | undefined {
     if (!body) {
       return undefined
+    }
+    if (body instanceof FormData) {
+      return body
     }
     return JSON.stringify(body)
   }
