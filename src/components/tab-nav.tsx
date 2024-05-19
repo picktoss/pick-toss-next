@@ -51,7 +51,7 @@ export const TabNavigation = () => {
         segments: [['/profile']],
       },
     ],
-    [],
+    []
   )
 
   const activeItem = useMemo(() => findActiveNav(navItems, segments), [navItems, segments])
