@@ -3,8 +3,12 @@ import { HttpMethod } from '@/lib/api-client'
 export const API_ENDPOINT = {
   // 퀴즈
   quiz: {
-    getTodayQuiz: () => ({
-      url: `/todayQuiz`,
+    getTodayQuizSetId: () => ({
+      url: `/quiz-sets/today`,
+      method: HttpMethod.GET,
+    }),
+    getQuizSets: (quizSetId: string) => ({
+      url: `/quiz-sets/${quizSetId}`,
       method: HttpMethod.GET,
     }),
     getBookmarks: () => ({
