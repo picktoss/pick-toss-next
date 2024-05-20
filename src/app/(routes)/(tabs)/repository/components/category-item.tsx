@@ -28,16 +28,12 @@ export default function CategoryItem({ id, emoji, name, tag, documents }: Props)
   }
 
   return (
-    <Link href={`/repository/${id}`}>
+    <Link href={`/repository/${id}`} ref={setNodeRef} style={style} {...attributes} {...listeners}>
       <div
-        ref={setNodeRef}
-        style={style}
         className={cn(
           'relative cursor-pointer rounded-xl bg-white p-4 min-w[240px] hover:drop-shadow-[0_4px_12px_rgba(0,0,0,0.1)] transition duration-200',
           isDragging && 'opacity-50',
         )}
-        {...attributes}
-        {...listeners}
       >
         <div className="mb-3 text-2xl">{emoji}</div>
         <div className="absolute right-[12px] top-[8px]">

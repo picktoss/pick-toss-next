@@ -25,16 +25,12 @@ export default function DocumentItem({ id, name }: Props) {
   }
 
   return (
-    <Link href={`/document/${id}`}>
+    <Link href={`/document/${id}`} ref={setNodeRef} style={style} {...attributes} {...listeners}>
       <div
-        ref={setNodeRef}
-        style={style}
         className={cn(
           'flex h-[78px] items-center justify-between rounded-lg bg-white px-[27px] py-[15px] transition duration-200 hover:drop-shadow-[0_2px_8px_rgba(0,0,0,0.1)]',
           isDragging && 'opacity-50',
         )}
-        {...attributes}
-        {...listeners}
       >
         <div className="flex items-center">
           <div className="mr-4 flex size-12 items-center justify-center rounded-full bg-gray-01">
