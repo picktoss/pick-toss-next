@@ -1,7 +1,7 @@
 import { CategoryTagType } from './components/category-tag'
 
 // TODO: data interface 백엔드와 협의 필요
-interface Document {
+export interface Document {
   id: number
   name: string
   order: number
@@ -31,12 +31,12 @@ export const mockCategories: Category[] = [
     name: '코딩 아카데미',
     documents: [
       {
-        id: 0,
+        id: 1,
         name: '모던 리액트 딥다이브 정리',
         order: 0,
       },
       {
-        id: 1,
+        id: 2,
         name: '모던 자바스크립트 딥다이브 정리',
         order: 1,
       },

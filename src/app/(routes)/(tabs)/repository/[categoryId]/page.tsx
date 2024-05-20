@@ -1,16 +1,7 @@
-'use client'
-
-import { useState } from 'react'
+import Image from 'next/image'
 import CategoryTag from '../components/category-tag'
 import { mockCategories } from '../mock-data'
-import Image from 'next/image'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import Link from 'next/link'
+import DocumentList from './components/document-list'
 import icons from '@/constants/icons'
 
 interface Props {
@@ -30,72 +21,26 @@ const fetchCategory = (categoryId: number) => {
   return targetData
 }
 
-const SORT_TYPE = ['업로드한 날짜', '이름', '마지막으로 열어본 시간'] as const
-
 export default function Category({ params: { categoryId } }: Props) {
   const category = fetchCategory(Number(categoryId))
   const { emoji, name, tag, documents } = category
 
-  const [sortType, setSortType] = useState<(typeof SORT_TYPE)[number]>('업로드한 날짜')
-
   return (
     <div>
-      <CategoryTag tag={tag} className="mb-3 inline-block" />
-      <h2 className="mb-16 text-h2-bold text-gray-08">
-        {emoji} {name}
-      </h2>
-      <div className="mb-6 flex items-center justify-between">
-        <div className="text-body1-medium text-gray-08">
-          문서 <span className="font-bold text-orange-06">{documents.length}</span>개
-        </div>
-        <DropdownMenu>
-          <DropdownMenuTrigger>
-            <div className="flex gap-2 text-body2-medium text-gray-07">
-              {sortType} <Image src="/icons/chevron-down.svg" alt="" width={16} height={16} />
-            </div>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {SORT_TYPE.map((type) => (
-              <DropdownMenuItem
-                key={type}
-                onClick={() => setSortType(type)}
-                className="text-body2-medium text-gray-07"
-              >
-                {type}
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
+      <div className="mb-[34px] flex items-center gap-[8px]">
+        <h2 className="text-h3-bold text-gray-08">
+          {emoji} {name}
+        </h2>
+        <CategoryTag tag={tag} />
       </div>
-      <div className="flex flex-col gap-2">
-        {documents.map((document) => (
-          <Link
-            href={`/document/${document.id}`}
-            key={document.id}
-            className="flex h-[78px] items-center justify-between rounded-lg border bg-white px-[27px] py-[15px]"
-          >
-            <div className="flex items-center">
-              <div className="mr-4 flex size-12 items-center justify-center rounded-full bg-gray-01">
-                <Image src="/icons/file.svg" alt="" width={24} height={24} />
-              </div>
-              <div className="text-body1-medium text-gray-09">{document.name}</div>
-            </div>
-            <div className="flex items-center gap-12">
-              <DropdownMenu>
-                <DropdownMenuTrigger>
-                  <div className="flex size-[25px] items-center justify-center rounded-full hover:bg-gray-02">
-                    <Image src={icons.kebab} alt="" width={15} height={3} />
-                  </div>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuItem>문서 이름 변경하기</DropdownMenuItem>
-                  <DropdownMenuItem>문서 삭제하기</DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
-          </Link>
-        ))}
+      <div className="mb-[40px] flex items-center gap-4 rounded-full bg-gray-02 px-8 py-3">
+        <Image src={icons.search} alt="search" width={16} height={16} />
+        <input
+          className="w-full bg-transparent focus:outline-none"
+          placeholder="노트명, 노트 내용 검색"
+        />
       </div>
+      <DocumentList documents={documents} />
     </div>
   )
 }
