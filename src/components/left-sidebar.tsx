@@ -1,7 +1,7 @@
 import { Button } from './ui/button'
 import { TabNavigation } from './tab-nav'
 import { CategoryAccordion } from './category-accordion'
-import { categories } from '@/app/(routes)/(tabs)/repository/mock-data'
+import { mockCategories } from '@/app/(routes)/(tabs)/repository/mock-data'
 
 export const LeftSidebar = () => {
   return (
@@ -18,7 +18,7 @@ export const LeftSidebar = () => {
       </div>
       <TabNavigation />
       <CategoryAccordion
-        categories={categories}
+        categories={mockCategories}
         hasBorder={false}
         showChevron={false}
         className="w-full flex-1 overflow-y-scroll pl-[49px]"

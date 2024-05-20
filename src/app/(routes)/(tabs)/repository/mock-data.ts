@@ -16,14 +16,14 @@ export interface Category {
   documents: Document[]
 }
 
-export const userData = {
+export const mockUserData = {
   id: 1,
   nickname: '픽토스',
   email: 'pictoss@pick.com',
   stars: 20,
 }
 
-export const categories: Category[] = [
+export const mockCategories: Category[] = [
   {
     id: 1,
     tag: 'IT',
