@@ -21,9 +21,6 @@ export default function Repository() {
             placeholder="노트명, 노트 내용 검색"
           />
         </div>
-        <p className="mb-[16px] text-body1-medium text-gray-08">
-          공부 폴더 <span className="font-bold text-orange-06">{mockCategories.length}</span>개
-        </p>
         <CategoryList />
       </div>
       <div className="min-h-40 w-full rounded-t-[20px] bg-white p-[20px] pb-[70px] lg:hidden">

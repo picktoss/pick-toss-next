@@ -28,14 +28,17 @@ export default function CategoryItem({ id, emoji, name, tag, documents }: Props)
   }
 
   return (
-    <div
-      style={style}
-      className={cn(
-        'relative cursor-pointer rounded-xl bg-white p-4 min-w[240px] hover:drop-shadow-[0_4px_12px_rgba(0,0,0,0.1)] transition duration-200',
-        isDragging && 'opacity-50',
-      )}
-    >
-      <Link href={`/repository/${id}`} ref={setNodeRef} {...attributes} {...listeners}>
+    <Link href={`/repository/${id}`}>
+      <div
+        ref={setNodeRef}
+        {...attributes}
+        {...listeners}
+        style={style}
+        className={cn(
+          'relative cursor-pointer rounded-xl bg-white p-4 min-w[240px] hover:drop-shadow-[0_4px_12px_rgba(0,0,0,0.1)] transition duration-200',
+          isDragging && 'opacity-50',
+        )}
+      >
         <div className="mb-3 text-2xl">{emoji}</div>
         <div className="absolute right-[12px] top-[8px]">
           <DropdownMenu>
@@ -72,7 +75,7 @@ export default function CategoryItem({ id, emoji, name, tag, documents }: Props)
           <CategoryTag tag={tag} />
         </div>
         <div className="text-small1-regular text-gray-08">문서 {documents.length}개</div>
-      </Link>
-    </div>
+      </div>
+    </Link>
   )
 }
