@@ -53,7 +53,7 @@ export default function Profile({ trigger }: ProfileProps) {
                       disabled={item.disabled}
                       className={cn(
                         'flex h-[32px] justify-start bg-inherit px-[12px] !text-[14px] hover:bg-gray-02 disabled:opacity-100',
-                        selectedNavId === item.id && 'bg-gray-02 font-[700]',
+                        selectedNavId === item.id && 'bg-gray-02 font-[700]'
                       )}
                       onClick={() => setSelectedNavId(item.id)}
                     >
@@ -115,7 +115,7 @@ function NotificationConfig() {
             <span
               className={cn(
                 'text-[15px] font-[700] text-gray-07',
-                notificationState && 'text-orange-05',
+                notificationState && 'text-orange-05'
               )}
             >
               {notificationState ? 'ON' : 'OFF'}
@@ -159,7 +159,7 @@ function NotificationConfig() {
             <span
               className={cn(
                 'text-[15px] font-[700] text-gray-07',
-                updateNotificationState && 'text-orange-05',
+                updateNotificationState && 'text-orange-05'
               )}
             >
               {updateNotificationState ? 'ON' : 'OFF'}
@@ -176,7 +176,7 @@ function NotificationConfig() {
             <span
               className={cn(
                 'text-[15px] font-[700] text-gray-07',
-                eventNotificationState && 'text-orange-05',
+                eventNotificationState && 'text-orange-05'
               )}
             >
               {eventNotificationState ? 'ON' : 'OFF'}

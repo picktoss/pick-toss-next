@@ -171,7 +171,7 @@ export default function Document({ params: { documentId } }: Props) {
 }
 
 const handleMarkDownCodeBlock = (
-  props: ClassAttributes<HTMLElement> & HTMLAttributes<HTMLElement> & ExtraProps,
+  props: ClassAttributes<HTMLElement> & HTMLAttributes<HTMLElement> & ExtraProps
 ) => {
   // style, node, ref는 사용하지 않음
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

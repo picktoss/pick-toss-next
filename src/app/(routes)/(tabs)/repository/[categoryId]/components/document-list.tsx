@@ -38,7 +38,7 @@ export default function DocumentList({ documents }: Props) {
       activationConstraint: {
         distance: 10,
       },
-    }),
+    })
   )
 
   const handleDragStart = (event: DragStartEvent) => {

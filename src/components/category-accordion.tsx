@@ -38,7 +38,7 @@ export const CategoryAccordion = ({
               className={cn(
                 'py-[12px] !text-body1-bold text-gray-08',
                 hasBorder && 'border-b border-gray-02',
-                triggerStyles,
+                triggerStyles
               )}
               showChevron={showChevron}
             >
@@ -51,7 +51,7 @@ export const CategoryAccordion = ({
                 className={cn(
                   'flex h-[51px] items-center p-0 !text-body1-medium',
                   hasBorder && 'border-b border-gray-02',
-                  contentStyles,
+                  contentStyles
                 )}
               >
                 <Link href="#" className="flex items-start gap-[8px] pl-[15px] text-gray-07">

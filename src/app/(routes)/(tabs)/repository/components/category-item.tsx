@@ -32,7 +32,7 @@ export default function CategoryItem({ id, emoji, name, tag, documents }: Props)
       <div
         className={cn(
           'relative cursor-pointer rounded-xl bg-white p-4 min-w[240px] hover:drop-shadow-[0_4px_12px_rgba(0,0,0,0.1)] transition duration-200',
-          isDragging && 'opacity-50',
+          isDragging && 'opacity-50'
         )}
       >
         <div className="mb-3 text-2xl">{emoji}</div>

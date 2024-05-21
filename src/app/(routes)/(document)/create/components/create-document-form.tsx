@@ -1,27 +1,52 @@
-import { createDocument } from '@/apis/fetchers/document/create-document'
+'use client'
+
 import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
+import { useRemirror } from '@remirror/react'
+import { extensions } from '../libs/extensions'
+import { VisualEditor } from './editor'
+import { useState } from 'react'
+import { createDocument } from '@/apis/fetchers/document/create-document'
+import { useMutation } from '@tanstack/react-query'
+import { useSession } from 'next-auth/react'
 
 export default function CreateDocumentForm() {
+  const session = useSession()
+
+  const [title, setTitle] = useState('')
+  const visual = useRemirror({
+    extensions,
+    stringHandler: 'markdown',
+    content: '**Markdown** content is the _best_',
+  })
+  const editorContent = visual.state as unknown as string
+  const { mutateAsync } = useMutation({
+    mutationFn: createDocument,
+  })
+
   return (
     <form
-      action={async (formData) => {
-        'use server'
-        const userDocumentName = formData.get('userDocumentName') as string
-        const file = formData.get('file') as string
-        const categoryId = '5'
-        if (!userDocumentName || !file || !categoryId) {
-          return
-        }
-        await createDocument({
-          userDocumentName,
+      onSubmit={async (e) => {
+        e.preventDefault()
+        if (!title || !editorContent) return
+        const documentBlob = new Blob([editorContent], { type: 'text/markdown' })
+        const file = new File([documentBlob], `${title}.md`, { type: 'text/markdown' })
+        const categoryId = 2
+
+        await mutateAsync({
+          accessToken: session.data?.user.accessToken || '',
+          documentName: title,
           file,
           categoryId,
         })
       }}
     >
-      <Input name="userDocumentName" placeholder="제목 추가" />
-      <Textarea name="file" />
+      <Input
+        name="documentName"
+        placeholder="제목 추가"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+      />
+      <VisualEditor visual={visual} />
       <button>문서 생성하기</button>
     </form>
   )

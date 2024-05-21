@@ -1,11 +1,12 @@
 import { API_ENDPOINT } from '@/apis/api-endpoint'
-import { auth } from '@/app/api/auth/[...nextauth]/auth'
 import { apiClient } from '@/lib/api-client'
 
 interface CreateDocumentParams extends NextFetchRequestConfig {
-  file: string
-  userDocumentName: string
-  categoryId: string
+  accessToken: string
+
+  file: File
+  documentName: string
+  categoryId: number
 }
 
 interface CreateDocumentResponse {
@@ -13,17 +14,16 @@ interface CreateDocumentResponse {
 }
 
 export const createDocument = async (params: CreateDocumentParams) => {
-  const session = await auth()
+  const formData = new FormData()
+  formData.append('file', params.file)
+  formData.append('documentName', params.documentName)
+  formData.append('categoryId', String(params.categoryId))
 
   return await apiClient.fetch<CreateDocumentResponse>({
     ...API_ENDPOINT.document.createDocument(),
-    body: {
-      file: params.file,
-      userDocumentName: params.userDocumentName,
-      categoryId: String(params.categoryId),
-    },
+    body: formData,
     headers: {
-      Authorization: `Bearer ${session?.user.accessToken}`,
+      Authorization: `Bearer ${params.accessToken}`,
     },
   })
 }

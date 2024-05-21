@@ -29,7 +29,7 @@ export default function DocumentItem({ id, name }: Props) {
       <div
         className={cn(
           'flex h-[78px] items-center justify-between rounded-lg bg-white px-[27px] py-[15px] transition duration-200 hover:drop-shadow-[0_2px_8px_rgba(0,0,0,0.1)]',
-          isDragging && 'opacity-50',
+          isDragging && 'opacity-50'
         )}
       >
         <div className="flex items-center">

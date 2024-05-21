@@ -25,7 +25,7 @@ export default function CategoryList() {
       activationConstraint: {
         distance: 10,
       },
-    }),
+    })
   )
 
   const handleDragStart = (event: DragStartEvent) => {

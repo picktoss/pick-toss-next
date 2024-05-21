@@ -15,14 +15,14 @@ const Switch = React.forwardRef<React.ElementRef<typeof SwitchPrimitives.Root>, 
       <SwitchPrimitives.Root
         className={cn(
           'peer inline-flex h-[20px] w-[40px] shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 data-[state=unchecked]:bg-gray-04 data-[state=checked]:bg-orange-05',
-          className,
+          className
         )}
         {...props}
         ref={ref}
       >
         <SwitchPrimitives.Thumb
           className={cn(
-            'pointer-events-none size-4 rounded-full bg-gray-01 shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0 block *:data-[state=unchecked]:hidden relative',
+            'pointer-events-none size-4 rounded-full bg-gray-01 shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0 block *:data-[state=unchecked]:hidden relative'
           )}
         >
           <Image
@@ -44,7 +44,7 @@ const Switch = React.forwardRef<React.ElementRef<typeof SwitchPrimitives.Root>, 
     ) : (
       switchContent
     )
-  },
+  }
 )
 Switch.displayName = SwitchPrimitives.Root.displayName
 
