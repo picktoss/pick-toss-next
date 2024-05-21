@@ -1,17 +1,24 @@
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
+import { HTMLAttributes } from 'react'
 
-export default function QuizHeader() {
+interface QuizHeaderProps {
+  className?: HTMLAttributes<HTMLDivElement>['className']
+}
+
+export default function QuizHeader({ className }: QuizHeaderProps) {
   const router = useRouter()
 
   return (
-    <div className="flex items-center justify-between">
-      <Button variant="ghost" size="icon" className="flex flex-col" onClick={() => router.back()}>
-        <ExitIcon />
-      </Button>
-      <div className="flex items-end gap-[8px]">
-        <TimerIcon />
-        <span className="text-body2-medium text-gray-07">00:04:12</span>
+    <div className={className}>
+      <div className="flex items-center justify-between">
+        <Button variant="ghost" size="icon" className="flex flex-col" onClick={() => router.back()}>
+          <ExitIcon />
+        </Button>
+        <div className="flex items-end gap-[8px]">
+          <TimerIcon />
+          <span className="text-body2-medium text-gray-07">00:04:12</span>
+        </div>
       </div>
     </div>
   )
