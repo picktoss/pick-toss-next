@@ -1,5 +1,6 @@
 import { getQuizSets } from '@/apis/fetchers/quiz/get-quiz-sets'
 import Quiz from './components/quiz'
+import { quizzes } from './mocks'
 
 interface QuizProps {
   searchParams: {
@@ -8,7 +9,8 @@ interface QuizProps {
 }
 
 export default async function QuizPage({ searchParams }: QuizProps) {
-  const { quizzes } = await getQuizSets({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { quizzes: ignore } = await getQuizSets({
     quizSetId: searchParams.quizSetId,
   })
 
