@@ -7,6 +7,7 @@ import QuizHeader from './quiz-header'
 import AnswerOption, { optionVariants } from './answer-option'
 import { VariantProps } from 'class-variance-authority'
 import Explanation from './explanation'
+import Question from './question'
 
 interface QuizProps {
   quizzes: QuizDTO[]
@@ -69,23 +70,12 @@ export default function Quiz({ quizzes }: QuizProps) {
       ) : (
         <div>
           <QuizHeader className="mb-[32px] px-[20px]" />
-          <div className="mb-[24px] px-[20px]">
-            <div className="w-full overflow-hidden rounded-[12px]">
-              <div className="relative h-[8px] *:h-[8px]">
-                <div className="bg-gray-02" />
-                <div className="absolute left-0 top-0 w-1/4 bg-orange-04" />
-              </div>
-              <div className="flex flex-col gap-[8px] bg-white px-[20px] pb-[40px] pt-[32px]">
-                <div className="text-small1-regular text-gray-07">
-                  {curQuiz.category.name} {'>'} {curQuiz.document.name}
-                </div>
-                <div className="flex items-start gap-[8px]">
-                  <div className="text-h3-bold text-orange-06">Q</div>
-                  <div className="text-h4-bold text-gray-09">{curQuiz.question}</div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <Question
+            categoryName={curQuiz.category.name}
+            documentName={curQuiz.document.name}
+            question={curQuiz.question}
+            className="mb-[24px]"
+          />
           {curQuiz.quizType === 'MULTIPLE_CHOICE' ? (
             <div className="flex flex-col gap-[20px] px-[20px]">
               {curQuiz.options.map((option, idx) => (
