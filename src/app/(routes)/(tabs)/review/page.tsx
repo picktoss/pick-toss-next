@@ -4,7 +4,7 @@ import Profile from '@/components/profile'
 import { Button } from '@/components/ui/button'
 
 export default async function Review() {
-  const { data: categories } = await getCategories()
+  const categories = await getCategories()
 
   return (
     <div>
