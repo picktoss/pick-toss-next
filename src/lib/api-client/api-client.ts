@@ -30,7 +30,7 @@ interface FetchParams {
 class ApiClient {
   constructor(private readonly config: Config) {}
 
-  async fetch<T extends ApiResponse>(params: FetchParams) {
+  async fetch<T extends ApiResponse>(params: FetchParams): Promise<T> {
     const response = await fetch(this.getUrl(params), {
       headers: this.getHeaders(params.headers, params.body),
       next: this.getNextOptions(params.next),
@@ -38,9 +38,7 @@ class ApiClient {
       method: params.method,
     })
 
-    return {
-      data: await this.handleResponse<T>(params, response),
-    }
+    return await this.handleResponse<T>(params, response)
   }
 
   private getUrl({ url, query }: Pick<FetchParams, 'url' | 'query'>): string {

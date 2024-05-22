@@ -8,9 +8,7 @@ interface QuizProps {
 }
 
 export default async function QuizPage({ searchParams }: QuizProps) {
-  const {
-    data: { quizzes },
-  } = await getQuizSets({
+  const { quizzes } = await getQuizSets({
     quizSetId: searchParams.quizSetId,
   })
 
