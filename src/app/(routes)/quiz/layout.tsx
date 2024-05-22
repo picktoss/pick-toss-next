@@ -13,7 +13,7 @@ export const viewport: Viewport = {
 const QuizLayout = ({ children }: LayoutProps) => {
   return (
     <div className="flex justify-center">
-      <div className="w-full max-w-[1072px] px-[20px]">{children}</div>
+      <div className="w-full max-w-[1072px]">{children}</div>
     </div>
   )
 }

@@ -3,7 +3,7 @@ import { getCurrentDate } from '@/utils/date'
 
 export default function QuizIntro({ quizzes }: { quizzes: QuizDTO[] }) {
   return (
-    <div className="mt-[43px] flex flex-col items-center gap-[55px] rounded-[16px] bg-white pb-[115px] pt-[99px]">
+    <div className="mx-[20px] mt-[43px] flex flex-col items-center gap-[55px] rounded-[16px] bg-white pb-[115px] pt-[99px]">
       <div className="flex flex-col items-center gap-[8px]">
         <div className="text-h3-bold text-gray-08">오늘의 퀴즈</div>
         <div className="text-body1-medium text-gray-07">{getCurrentDate()}</div>
