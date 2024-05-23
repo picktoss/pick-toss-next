@@ -4,7 +4,7 @@ import { QuizDTO } from '@/apis/types/dto/quiz.dto'
 import QuizIntro from './quiz-intro'
 import { useEffect, useState } from 'react'
 import QuizHeader from './quiz-header'
-import AnswerOption, { optionVariants } from './answer-option'
+import MultipleOption, { optionVariants } from './multiple-option'
 import { VariantProps } from 'class-variance-authority'
 import Explanation from './explanation'
 import Question from './question'
@@ -79,7 +79,7 @@ export default function Quiz({ quizzes }: QuizProps) {
           {curQuiz.quizType === 'MULTIPLE_CHOICE' ? (
             <div className="flex flex-col gap-[20px] px-[20px]">
               {curQuiz.options.map((option, idx) => (
-                <AnswerOption
+                <MultipleOption
                   key={idx}
                   option={option}
                   onClick={() => onSelectAnswer(idx)}

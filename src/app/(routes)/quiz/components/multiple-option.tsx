@@ -16,20 +16,20 @@ export const optionVariants = cva('', {
   },
 })
 
-interface AnswerOptionProps extends VariantProps<typeof optionVariants> {
+interface MultipleOptionProps extends VariantProps<typeof optionVariants> {
   onClick: () => void
   option: string
   order: string
   disabled?: boolean
 }
 
-export default function AnswerOption({
+export default function MultipleOption({
   onClick,
   option,
   order,
   variant,
   disabled,
-}: AnswerOptionProps) {
+}: MultipleOptionProps) {
   return (
     <button
       className="flex items-center gap-[16px] rounded-[12px] border border-gray-02 bg-white py-[12px] pl-[11px] pr-[8px] text-start"
