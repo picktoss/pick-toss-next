@@ -9,9 +9,17 @@ import { VariantProps } from 'class-variance-authority'
 import Explanation from './explanation'
 import Question from './question'
 import MixUpOption from './mix-up-option'
+import { delay } from '@/utils/delay'
 
 interface QuizProps {
   quizzes: QuizDTO[]
+}
+
+interface QuizProgress {
+  quizIndex: number
+  selectedMultipleQuizAnswer: number | null
+  selectedMixUpQuizAnswer: 'correct' | 'incorrect' | null
+  progress: 'idle' | 'choose' | 'result'
 }
 
 export default function Quiz({ quizzes }: QuizProps) {
@@ -25,64 +33,77 @@ export default function Quiz({ quizzes }: QuizProps) {
     return () => clearTimeout(timer)
   }, [])
 
-  const [quizIndex, setQuizIndex] = useState(0)
-  const [selectedOrder, setSelectedOrder] = useState<number | null>(null)
-  const [selectedOX, setSelectedOX] = useState<'correct' | 'incorrect' | null>(null)
-  const [showResult, setShowResult] = useState(false)
-  const [variants, setVariants] = useState<VariantProps<typeof optionVariants>['variant'][]>([])
-  const [isCorrect, setIsCorrect] = useState<boolean | null>(null)
+  const [multipleOptionVariants, setMultipleOptionVariants] = useState<
+    VariantProps<typeof optionVariants>['variant'][]
+  >([])
 
-  const curQuiz = quizzes[quizIndex]
+  const [quizProgress, setQuizProgress] = useState<QuizProgress>({
+    quizIndex: 0,
+    selectedMultipleQuizAnswer: null,
+    selectedMixUpQuizAnswer: null,
+    progress: 'idle',
+  })
 
-  const onSelectAnswer = (answer: number | 'correct' | 'incorrect') => {
+  const curQuiz = quizzes[quizProgress.quizIndex]
+  const isCorrect =
+    curQuiz.quizType === 'MULTIPLE_CHOICE'
+      ? curQuiz.options[quizProgress.selectedMultipleQuizAnswer!] === curQuiz.answer
+      : quizProgress.selectedMixUpQuizAnswer === curQuiz.answer
+
+  const onSelectAnswer = async (answer: number | 'correct' | 'incorrect') => {
     if (typeof answer === 'number') {
-      setSelectedOrder(answer)
-      setIsCorrect(curQuiz.options[answer] === curQuiz.answer)
+      setQuizProgress((prev) => ({
+        ...prev,
+        progress: 'choose',
+        selectedMultipleQuizAnswer: answer,
+      }))
     } else {
-      setSelectedOX(answer)
-      setIsCorrect(curQuiz.answer === answer)
+      setQuizProgress((prev) => ({
+        ...prev,
+        progress: 'choose',
+        selectedMixUpQuizAnswer: answer,
+      }))
     }
 
-    setTimeout(() => {
-      setShowResult(true)
-    }, 1500)
+    await delay(1500)
+
+    setQuizProgress((prev) => ({
+      ...prev,
+      progress: 'result',
+    }))
   }
 
   const next = () => {
-    if (quizIndex === quizzes.length - 1) {
+    if (quizProgress.quizIndex === quizzes.length - 1) {
       return
     }
 
-    setSelectedOrder(null)
-    setSelectedOX(null)
-    setShowResult(false)
-    setVariants([])
-    setIsCorrect(null)
-
-    setQuizIndex((prev) => prev + 1)
+    setQuizProgress((prev) => ({
+      ...prev,
+      quizIndex: prev.quizIndex + 1,
+    }))
   }
 
   useEffect(() => {
-    if (selectedOrder == null) {
-      setVariants(Array(curQuiz.options.length).fill('idle'))
-    } else {
-      const newVariants = curQuiz.options.map((option, idx) => {
-        if (!showResult) {
-          return selectedOrder === idx ? 'choose' : 'idle'
-        } else {
+    const newMultipleOptionVariants = curQuiz.options.map((option, idx) => {
+      switch (quizProgress.progress) {
+        case 'idle':
+          return 'idle'
+        case 'choose':
+          return quizProgress.selectedMultipleQuizAnswer === idx ? 'choose' : 'idle'
+        case 'result':
           if (curQuiz.answer === option) {
             return 'correct'
           }
-          if (selectedOrder === idx && curQuiz.answer !== option) {
+          if (quizProgress.selectedMultipleQuizAnswer === idx && curQuiz.answer !== option) {
             return 'incorrect'
           }
-
           return 'disabled'
-        }
-      })
-      setVariants(newVariants)
-    }
-  }, [selectedOrder, showResult, curQuiz])
+      }
+    })
+
+    setMultipleOptionVariants(newMultipleOptionVariants)
+  }, [curQuiz, quizProgress])
 
   return (
     <div className="pt-[12px]">
@@ -104,8 +125,8 @@ export default function Quiz({ quizzes }: QuizProps) {
                   option={option}
                   onClick={() => onSelectAnswer(idx)}
                   order={String.fromCharCode(65 + idx)}
-                  variant={variants[idx]}
-                  disabled={selectedOrder != null}
+                  variant={multipleOptionVariants[idx]}
+                  disabled={quizProgress.selectedMultipleQuizAnswer != null}
                 />
               ))}
             </div>
@@ -114,22 +135,22 @@ export default function Quiz({ quizzes }: QuizProps) {
               <MixUpOption
                 variant="correct"
                 onClick={() => onSelectAnswer('correct')}
-                disabled={selectedOX != null}
-                hidden={!selectedOX ? null : selectedOX !== 'correct'}
-                isCorrect={!showResult || !selectedOX ? null : selectedOX === curQuiz.answer}
+                progress={quizProgress.progress}
+                isSelected={quizProgress.selectedMixUpQuizAnswer === 'correct'}
+                isCorrect={quizProgress.selectedMixUpQuizAnswer === curQuiz.answer}
               />
               <MixUpOption
                 variant="incorrect"
                 onClick={() => onSelectAnswer('incorrect')}
-                disabled={selectedOX != null}
-                hidden={!selectedOX ? null : selectedOX !== 'incorrect'}
-                isCorrect={!showResult || !selectedOX ? null : selectedOX === curQuiz.answer}
+                progress={quizProgress.progress}
+                isSelected={quizProgress.selectedMixUpQuizAnswer === 'incorrect'}
+                isCorrect={quizProgress.selectedMixUpQuizAnswer === curQuiz.answer}
               />
             </div>
           )}
-          {showResult ? (
+          {quizProgress.progress === 'result' ? (
             <Explanation
-              isCorrect={isCorrect!}
+              isCorrect={isCorrect}
               correctItem={
                 curQuiz.quizType === 'MULTIPLE_CHOICE'
                   ? String.fromCharCode(

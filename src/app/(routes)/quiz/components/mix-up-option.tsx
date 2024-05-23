@@ -2,17 +2,17 @@ import { cn } from '@/lib/utils'
 
 interface MixUpOptionProps {
   variant: 'correct' | 'incorrect'
-  onClick: () => void
-  disabled: boolean
+  progress: 'idle' | 'choose' | 'result'
+  isSelected: boolean
   isCorrect: boolean | null
-  hidden: boolean | null
+  onClick: () => void
 }
 
 export default function MixUpOption({
   variant,
+  progress,
+  isSelected,
   isCorrect,
-  disabled,
-  hidden,
   onClick,
 }: MixUpOptionProps) {
   return (
@@ -20,11 +20,11 @@ export default function MixUpOption({
       className={cn(
         'flex h-[126px] flex-1 max-w-[165px] lg:max-w-[215px] items-center justify-center rounded-[16px] lg:h-[144px]',
         variant === 'correct' ? 'bg-blue-05' : 'bg-orange-05',
-        isCorrect != null && !isCorrect && 'bg-gray-04',
-        hidden != null && hidden && 'hidden'
+        progress === 'result' && !isCorrect && 'bg-gray-04',
+        progress === 'result' && !isSelected && 'hidden'
       )}
       onClick={onClick}
-      disabled={disabled}
+      disabled={progress !== 'idle'}
     >
       {variant === 'correct' ? <CircleIcon /> : <XIcon />}
     </button>
