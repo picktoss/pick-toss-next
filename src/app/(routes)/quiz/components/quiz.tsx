@@ -86,6 +86,8 @@ export default function Quiz({ quizzes }: QuizProps) {
             categoryName={curQuiz.category.name}
             documentName={curQuiz.document.name}
             question={curQuiz.question}
+            curQuizIndex={quizProgress.quizIndex}
+            totalQuizCount={quizzes.length}
           />
           {curQuiz.quizType === 'MULTIPLE_CHOICE' ? (
             <MultipleOptions
