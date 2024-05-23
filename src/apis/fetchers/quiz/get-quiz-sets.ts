@@ -12,25 +12,30 @@ interface Category {
   name: string
 }
 
-type Quiz<T> = {
+interface BaseQuiz<T> {
   id: number
   question: string
-  answer: T
-  options: string[]
-  quizType: 'MIX_UP' | 'MULTIPLE_CHOICE'
+  quizType: T
   document: Document
   category: Category
 }
 
-type MultipleChoiceQuiz = Quiz<string> & { quizType: 'MULTIPLE_CHOICE' }
-type MixUpQuiz = Quiz<'correct' | 'incorrect'> & { quizType: 'MIX_UP' }
+interface MixUpQuiz extends BaseQuiz<'MIX_UP'> {
+  answer: 'correct' | 'incorrect'
+  options: []
+}
+
+interface MultipleChoiceQuiz extends BaseQuiz<'MULTIPLE_CHOICE'> {
+  answer: string
+  options: string[]
+}
 
 interface GetQuizSetsParams extends NextFetchRequestConfig {
   quizSetId: string
 }
 
 export interface GetQuizSetsResponse {
-  quizzes: (MultipleChoiceQuiz | MixUpQuiz)[]
+  quizzes: (MixUpQuiz | MultipleChoiceQuiz)[]
 }
 
 export const getQuizSets = async (params: GetQuizSetsParams) => {

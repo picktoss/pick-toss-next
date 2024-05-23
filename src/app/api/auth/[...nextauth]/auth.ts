@@ -27,19 +27,19 @@ export const {
     jwt: async ({ token, account }) => {
       if (account) {
         try {
-          const { data } = await signInAPI({
+          const { accessToken } = await signInAPI({
             socialPlatform: account.provider.toUpperCase() as 'GOOGLE' | 'KAKAO',
             accessToken: account.access_token as string,
           })
           token.account = account
-          token.accessToken = data.accessToken
+          token.accessToken = accessToken
         } catch (error) {
           throw new Error('Failed to get backend access token')
         }
       }
 
       try {
-        const { data: user } = await getUser({
+        const user = await getUser({
           accessToken: token.accessToken as string,
         })
         token.userDTO = user

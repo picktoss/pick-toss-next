@@ -208,7 +208,7 @@ const config = {
         },
         notice: {
           red: '#F66444',
-          green: '63CF75',
+          green: '#63CF75',
         },
         blue: {
           '01': '#F0F4FF',
