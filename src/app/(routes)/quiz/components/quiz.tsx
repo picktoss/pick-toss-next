@@ -4,22 +4,15 @@ import { QuizDTO } from '@/apis/types/dto/quiz.dto'
 import QuizIntro from './quiz-intro'
 import { useEffect, useState } from 'react'
 import QuizHeader from './quiz-header'
-import MultipleOption, { optionVariants } from './multiple-option'
-import { VariantProps } from 'class-variance-authority'
 import Explanation from './explanation'
 import Question from './question'
-import MixUpOption from './mix-up-option'
 import { delay } from '@/utils/delay'
+import MultipleOptions from './multiple-options'
+import MixUpOptions from './mix-up-options'
+import { QuizProgress } from '../types'
 
 interface QuizProps {
   quizzes: QuizDTO[]
-}
-
-interface QuizProgress {
-  quizIndex: number
-  selectedMultipleQuizAnswer: number | null
-  selectedMixUpQuizAnswer: 'correct' | 'incorrect' | null
-  progress: 'idle' | 'choose' | 'result'
 }
 
 export default function Quiz({ quizzes }: QuizProps) {
@@ -32,10 +25,6 @@ export default function Quiz({ quizzes }: QuizProps) {
 
     return () => clearTimeout(timer)
   }, [])
-
-  const [multipleOptionVariants, setMultipleOptionVariants] = useState<
-    VariantProps<typeof optionVariants>['variant'][]
-  >([])
 
   const [quizProgress, setQuizProgress] = useState<QuizProgress>({
     quizIndex: 0,
@@ -84,27 +73,6 @@ export default function Quiz({ quizzes }: QuizProps) {
     }))
   }
 
-  useEffect(() => {
-    const newMultipleOptionVariants = curQuiz.options.map((option, idx) => {
-      switch (quizProgress.progress) {
-        case 'idle':
-          return 'idle'
-        case 'choose':
-          return quizProgress.selectedMultipleQuizAnswer === idx ? 'choose' : 'idle'
-        case 'result':
-          if (curQuiz.answer === option) {
-            return 'correct'
-          }
-          if (quizProgress.selectedMultipleQuizAnswer === idx && curQuiz.answer !== option) {
-            return 'incorrect'
-          }
-          return 'disabled'
-      }
-    })
-
-    setMultipleOptionVariants(newMultipleOptionVariants)
-  }, [curQuiz, quizProgress])
-
   return (
     <div className="pt-[12px]">
       {state === 'intro' ? (
@@ -118,35 +86,19 @@ export default function Quiz({ quizzes }: QuizProps) {
             question={curQuiz.question}
           />
           {curQuiz.quizType === 'MULTIPLE_CHOICE' ? (
-            <div className="mt-[24px] flex flex-col gap-[20px] px-[20px]">
-              {curQuiz.options.map((option, idx) => (
-                <MultipleOption
-                  key={idx}
-                  option={option}
-                  onClick={() => onSelectAnswer(idx)}
-                  order={String.fromCharCode(65 + idx)}
-                  variant={multipleOptionVariants[idx]}
-                  disabled={quizProgress.selectedMultipleQuizAnswer != null}
-                />
-              ))}
-            </div>
+            <MultipleOptions
+              quizProgress={quizProgress}
+              curQuiz={curQuiz}
+              onSelectAnswer={onSelectAnswer}
+              className="mt-[24px]"
+            />
           ) : (
-            <div className="mt-[40px] flex w-full justify-center gap-[10px] px-[20px] lg:gap-[24px]">
-              <MixUpOption
-                variant="correct"
-                onClick={() => onSelectAnswer('correct')}
-                progress={quizProgress.progress}
-                isSelected={quizProgress.selectedMixUpQuizAnswer === 'correct'}
-                isCorrect={quizProgress.selectedMixUpQuizAnswer === curQuiz.answer}
-              />
-              <MixUpOption
-                variant="incorrect"
-                onClick={() => onSelectAnswer('incorrect')}
-                progress={quizProgress.progress}
-                isSelected={quizProgress.selectedMixUpQuizAnswer === 'incorrect'}
-                isCorrect={quizProgress.selectedMixUpQuizAnswer === curQuiz.answer}
-              />
-            </div>
+            <MixUpOptions
+              quizProgress={quizProgress}
+              curQuiz={curQuiz}
+              onSelectAnswer={onSelectAnswer}
+              className="mt-[40px]"
+            />
           )}
           {quizProgress.progress === 'result' ? (
             <Explanation

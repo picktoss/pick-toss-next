@@ -1,8 +1,11 @@
+'use client'
+
 import { cn } from '@/lib/utils'
+import { QuizProgress } from '../../../types'
 
 interface MixUpOptionProps {
   variant: 'correct' | 'incorrect'
-  progress: 'idle' | 'choose' | 'result'
+  progress: QuizProgress['progress']
   isSelected: boolean
   isCorrect: boolean | null
   onClick: () => void
