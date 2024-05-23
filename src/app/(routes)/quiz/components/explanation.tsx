@@ -9,6 +9,7 @@ interface ExplanationProps {
   correctItem: string
   explanation: string
   next: () => void
+  isLast: boolean
   className?: HTMLAttributes<HTMLDivElement>['className']
 }
 
@@ -17,6 +18,7 @@ export default function Explanation({
   correctItem,
   explanation,
   next,
+  isLast,
   className,
 }: ExplanationProps) {
   return (
@@ -24,7 +26,7 @@ export default function Explanation({
       <div
         className={cn(
           'px-[20px] pb-[148px] pt-[25px] flex flex-col',
-          isCorrect ? 'bg-notice-green/40' : 'bg-gray-02'
+          isCorrect ? 'bg-notice-green/20' : 'bg-gray-02'
         )}
       >
         <div className="mb-[24px] flex items-center gap-[16px]">
@@ -35,11 +37,11 @@ export default function Explanation({
         </div>
         <div className="mb-[48px] flex flex-col text-gray-08">
           <div className="text-body1-bold">정답: {correctItem}</div>
-          <div className="">{explanation}</div>
+          <div className="text-text-regular">{explanation}</div>
         </div>
         <div className="flex justify-end">
           <Button className="w-fit" onClick={next}>
-            다음 -
+            {isLast ? '결과보기' : '다음'}
           </Button>
         </div>
       </div>
