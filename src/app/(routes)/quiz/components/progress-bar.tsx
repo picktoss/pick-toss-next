@@ -8,6 +8,8 @@ interface ProgressBarProps {
   totalQuizCount: number
 }
 
+const markerWidth = 48
+
 export default function ProgressBar({ curQuizIndex, totalQuizCount }: ProgressBarProps) {
   const [isOutOfContainer, setIsOutOfContainer] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -20,7 +22,7 @@ export default function ProgressBar({ curQuizIndex, totalQuizCount }: ProgressBa
         const containerRect = containerRef.current.getBoundingClientRect()
         const tolerance = 1
         if (isOutOfContainer) {
-          setIsOutOfContainer(markerRect.right + 48 > containerRect.right + tolerance)
+          setIsOutOfContainer(markerRect.right + markerWidth > containerRect.right + tolerance)
         } else {
           setIsOutOfContainer(markerRect.right > containerRect.right + tolerance)
         }
@@ -44,9 +46,10 @@ export default function ProgressBar({ curQuizIndex, totalQuizCount }: ProgressBa
         }}
       >
         <div
-          className="absolute flex h-[24px] w-[48px] items-center justify-center bg-orange-04 text-small1-bold text-white transition-all"
+          className="absolute flex h-[24px] items-center justify-center bg-orange-04 text-small1-bold text-white transition-all"
           style={{
-            right: isOutOfContainer ? 0 : -48,
+            width: markerWidth,
+            right: isOutOfContainer ? 0 : -markerWidth,
             top: -24,
             borderRadius: isOutOfContainer ? '9999px 9999px 0 9999px' : '9999px 9999px 9999px 0',
           }}
