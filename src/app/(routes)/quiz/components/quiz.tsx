@@ -68,8 +68,10 @@ export default function Quiz({ quizzes }: QuizProps) {
     }
 
     setQuizProgress((prev) => ({
-      ...prev,
       quizIndex: prev.quizIndex + 1,
+      selectedMultipleQuizAnswer: null,
+      selectedMixUpQuizAnswer: null,
+      progress: 'idle',
     }))
   }
 
