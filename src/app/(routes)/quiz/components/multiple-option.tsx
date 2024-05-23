@@ -1,20 +1,23 @@
 import { cn } from '@/lib/utils'
 import { VariantProps, cva } from 'class-variance-authority'
 
-export const optionVariants = cva('', {
-  variants: {
-    variant: {
-      idle: '',
-      choose: '',
-      disabled: '',
-      correct: '',
-      incorrect: '',
+export const optionVariants = cva(
+  'flex items-center gap-[16px] rounded-[12px] border py-[12px] pl-[11px] pr-[8px] text-start !text-text-medium',
+  {
+    variants: {
+      variant: {
+        idle: 'border-gray-02 bg-white text-gray-08',
+        choose: 'border-orange-05 bg-orange-01 !text-text-bold text-orange-06',
+        disabled: 'border-gray-02 bg-gray-02 text-gray-06',
+        correct: 'border-notice-green bg-white !text-text-bold text-notice-green',
+        incorrect: 'border-gray-02 bg-gray-02 text-gray-07',
+      },
     },
-  },
-  defaultVariants: {
-    variant: 'idle',
-  },
-})
+    defaultVariants: {
+      variant: 'idle',
+    },
+  }
+)
 
 interface MultipleOptionProps extends VariantProps<typeof optionVariants> {
   onClick: () => void
@@ -31,15 +34,11 @@ export default function MultipleOption({
   disabled,
 }: MultipleOptionProps) {
   return (
-    <button
-      className="flex items-center gap-[16px] rounded-[12px] border border-gray-02 bg-white py-[12px] pl-[11px] pr-[8px] text-start"
-      onClick={onClick}
-      disabled={disabled}
-    >
+    <button className={cn(optionVariants({ variant }))} onClick={onClick} disabled={disabled}>
       <div className="size-[36px] shrink-0">
         <OrderIcon variant={variant} order={order} />
       </div>
-      <div className="text-text-medium text-gray-08">{option}</div>
+      <div>{option}</div>
     </button>
   )
 }
@@ -54,8 +53,9 @@ function OrderIcon({ variant, order }: VariantProps<typeof optionVariants> & { o
       return (
         <div
           className={cn(
-            'flex size-full items-center justify-center rounded-full bg-gray-02 text-body1-bold-eng text-gray-07',
-            variant === 'choose' && 'bg-orange-05 text-white'
+            'flex size-full items-center justify-center rounded-full bg-gray-02 text-body1-bold-eng',
+            variant === 'choose' && 'bg-orange-05 text-white',
+            variant === 'disabled' && 'bg-gray-04 text-gray-07'
           )}
         >
           {order}

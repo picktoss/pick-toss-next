@@ -14,7 +14,7 @@ interface QuizProps {
 }
 
 export default function Quiz({ quizzes }: QuizProps) {
-  const [state, setState] = useState<'intro' | 'solving'>('intro')
+  const [state, setState] = useState<'intro' | 'solving'>('solving')
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [quizIndex, setQuizIndex] = useState(1)
   const [selectedOrder, setSelectedOrder] = useState<number | null>(null)
