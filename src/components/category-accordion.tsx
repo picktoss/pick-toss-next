@@ -5,12 +5,12 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion'
 
-import { Category } from '@/app/(routes)/(tabs)/repository/mock-data'
 import Image from 'next/image'
 import Link from 'next/link'
 import icons from '@/constants/icons'
 import { cn } from '@/lib/utils'
 import { HTMLAttributes } from 'react'
+import { Category } from '@/apis/fetchers/category/get-categories'
 
 interface CategoryAccordionProps {
   categories: Category[]

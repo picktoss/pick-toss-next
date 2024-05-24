@@ -17,6 +17,7 @@ import { SortableContext, arrayMove } from '@dnd-kit/sortable'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { Category, getCategories } from '@/apis/fetchers/category/get-categories'
 import { useSession } from 'next-auth/react'
+import CreateCategoryModal from './create-category-modal'
 
 export default function CategoryList() {
   const [draggedItem, setDraggedItem] = useState<Category | null>(null)
@@ -24,7 +25,8 @@ export default function CategoryList() {
   const { data: session } = useSession()
   const { data: categories } = useQuery({
     queryKey: ['categories'],
-    queryFn: () => getCategories(session?.user.accessToken).then((res) => res.categories),
+    queryFn: () =>
+      getCategories({ accessToken: session?.user.accessToken || '' }).then((res) => res.categories),
     enabled: !!session,
   })
   const queryClient = useQueryClient()
@@ -77,12 +79,16 @@ export default function CategoryList() {
             {categories.map((studyCategory) => (
               <CategoryItem key={studyCategory.id} {...studyCategory} />
             ))}
-            <button className="flex min-h-[120px] items-center justify-center gap-2 rounded-xl border-2 border-dashed text-body2-bold text-gray-08">
-              폴더 추가하기
-              <div className="rounded-full bg-gray-02 p-2">
-                <Image src="/icons/plus.svg" alt="" width={18} height={18} />
-              </div>
-            </button>
+            <CreateCategoryModal
+              trigger={
+                <button className="flex min-h-[120px] items-center justify-center gap-2 rounded-xl border-2 border-dashed text-body2-bold text-gray-08">
+                  폴더 추가하기
+                  <div className="rounded-full bg-gray-02 p-2">
+                    <Image src="/icons/plus.svg" alt="" width={18} height={18} />
+                  </div>
+                </button>
+              }
+            />
           </div>
         </SortableContext>
         <DragOverlay>{draggedItem && <CategoryItem {...draggedItem} />}</DragOverlay>

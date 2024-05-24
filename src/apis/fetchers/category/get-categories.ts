@@ -1,7 +1,9 @@
 import { API_ENDPOINT } from '@/apis/api-endpoint'
 import { apiClient } from '@/lib/api-client'
 
-// interface GetCategoriesParams extends NextFetchRequestConfig {}
+interface GetCategoriesParams extends NextFetchRequestConfig {
+  accessToken: string
+}
 
 export type CategoryTagType =
   | 'IT'
@@ -30,7 +32,7 @@ interface GetCategoriesResponse {
   categories: Category[]
 }
 
-export const getCategories = async (accessToken: string | undefined) => {
+export const getCategories = async ({ accessToken }: GetCategoriesParams) => {
   return await apiClient.fetch<GetCategoriesResponse>({
     ...API_ENDPOINT.category.getCategories(),
     headers: {
