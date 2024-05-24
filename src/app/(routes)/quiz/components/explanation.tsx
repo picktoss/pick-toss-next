@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-import { HTMLAttributes } from 'react'
+import { HTMLAttributes, useEffect, useRef } from 'react'
 
 interface ExplanationProps {
   isCorrect: boolean
@@ -21,8 +21,22 @@ export default function Explanation({
   isLast,
   className,
 }: ExplanationProps) {
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!containerRef.current) {
+      return
+    }
+
+    const timer = setTimeout(() => {
+      containerRef.current!.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }, 600)
+
+    return () => clearTimeout(timer)
+  }, [])
+
   return (
-    <div className={className}>
+    <div className={className} ref={containerRef}>
       <div
         className={cn(
           'px-[20px] pb-[148px] pt-[25px] flex flex-col',
