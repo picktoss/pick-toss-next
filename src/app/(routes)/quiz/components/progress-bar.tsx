@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import debounce from 'lodash.debounce'
+import { motion } from 'framer-motion'
 
 interface ProgressBarProps {
   curQuizIndex: number
@@ -39,11 +40,11 @@ export default function ProgressBar({ curQuizIndex, totalQuizCount }: ProgressBa
   return (
     <div className="relative h-[8px] rounded-t-[12px] *:h-[8px]" ref={containerRef}>
       <div className="rounded-t-[12px] bg-gray-02" />
-      <div
+      <motion.div
         className="absolute left-0 top-0 rounded-tl-[12px] bg-orange-04"
-        style={{
-          width: `${((curQuizIndex + 1) / totalQuizCount) * 100}%`,
-        }}
+        initial={{ width: `${(curQuizIndex / totalQuizCount) * 100}%` }}
+        animate={{ width: `${((curQuizIndex + 1) / totalQuizCount) * 100}%` }}
+        transition={{ duration: 0.5, delay: 0.2 }}
       >
         <div
           className="absolute flex h-[24px] items-center justify-center bg-orange-04 text-small1-bold text-white transition-all"
@@ -57,7 +58,7 @@ export default function ProgressBar({ curQuizIndex, totalQuizCount }: ProgressBa
         >
           {curQuizIndex + 1}/{totalQuizCount}
         </div>
-      </div>
+      </motion.div>
     </div>
   )
 }

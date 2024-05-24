@@ -1,9 +1,15 @@
 import { QuizDTO } from '@/apis/types/dto/quiz.dto'
 import { getCurrentDate } from '@/utils/date'
+import { motion } from 'framer-motion'
 
 export default function QuizIntro({ quizzes }: { quizzes: QuizDTO[] }) {
   return (
-    <div className="mx-[20px] mt-[43px] flex flex-col items-center gap-[55px] rounded-[16px] bg-white pb-[115px] pt-[99px]">
+    <motion.div
+      className="mx-[20px] mt-[43px] flex flex-col items-center gap-[55px] rounded-[16px] bg-white pb-[115px] pt-[99px]"
+      initial={{ y: 60, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       <div className="flex flex-col items-center gap-[8px]">
         <div className="text-h3-bold text-gray-08">오늘의 퀴즈</div>
         <div className="text-body1-medium text-gray-07">{getCurrentDate()}</div>
@@ -20,7 +26,7 @@ export default function QuizIntro({ quizzes }: { quizzes: QuizDTO[] }) {
           </div>
         ))}
       </div>
-    </div>
+    </motion.div>
   )
 }
 

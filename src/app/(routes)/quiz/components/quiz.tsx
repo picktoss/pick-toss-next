@@ -10,6 +10,7 @@ import { delay } from '@/utils/delay'
 import MultipleOptions from './multiple-options'
 import MixUpOptions from './mix-up-options'
 import { QuizProgress } from '../types'
+import { INTRO_DURATION } from '../constants'
 
 interface QuizProps {
   quizzes: QuizDTO[]
@@ -21,7 +22,7 @@ export default function Quiz({ quizzes }: QuizProps) {
   useEffect(() => {
     const timer = setTimeout(() => {
       setState('solving')
-    }, 2000)
+    }, INTRO_DURATION)
 
     return () => clearTimeout(timer)
   }, [])
