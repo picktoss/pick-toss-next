@@ -10,6 +10,7 @@ interface ProgressBarProps {
 }
 
 const markerWidth = 48
+const markerHeight = 24
 
 export default function ProgressBar({ curQuizIndex, totalQuizCount }: ProgressBarProps) {
   const [isOutOfContainer, setIsOutOfContainer] = useState(false)
@@ -50,11 +51,12 @@ export default function ProgressBar({ curQuizIndex, totalQuizCount }: ProgressBa
         transition={{ duration: 0.5, delay: 0.2 }}
       >
         <div
-          className="absolute flex h-[24px] items-center justify-center bg-orange-04 text-small1-bold text-white transition-all"
+          className="absolute flex items-center justify-center bg-orange-04 text-small1-bold text-white transition-all"
           style={{
             width: markerWidth,
+            height: markerHeight,
             right: isOutOfContainer ? 0 : -markerWidth,
-            top: -24,
+            top: -markerHeight,
             borderRadius: isOutOfContainer ? '9999px 9999px 0 9999px' : '9999px 9999px 9999px 0',
           }}
           ref={markerRef}

@@ -1,32 +1,39 @@
 import { QuizDTO } from '@/apis/types/dto/quiz.dto'
 import { getCurrentDate } from '@/utils/date'
 import { motion } from 'framer-motion'
+import { HTMLAttributes } from 'react'
 
-export default function QuizIntro({ quizzes }: { quizzes: QuizDTO[] }) {
+interface Props extends HTMLAttributes<HTMLDivElement> {
+  quizzes: QuizDTO[]
+}
+
+export default function QuizIntro({ quizzes, className }: Props) {
   return (
-    <motion.div
-      className="mx-[20px] mt-[43px] flex flex-col items-center gap-[55px] rounded-[16px] bg-white pb-[115px] pt-[99px]"
-      initial={{ y: 60, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5 }}
-    >
-      <div className="flex flex-col items-center gap-[8px]">
-        <div className="text-h3-bold text-gray-08">오늘의 퀴즈</div>
-        <div className="text-body1-medium text-gray-07">{getCurrentDate()}</div>
-      </div>
-      <DocumentListIcon />
-      <div className="flex flex-col gap-[8px]">
-        {Object.entries(getEachCategoryCount(quizzes)).map(([key, value]) => (
-          <div
-            key={key}
-            className="flex min-w-[198px] justify-between rounded-[48px] bg-gray-01 px-[24px] py-[12px]"
-          >
-            <div className="text-body2-medium text-gray-08">{key}</div>
-            <div className="text-body1-bold text-orange-06">{value}개</div>
-          </div>
-        ))}
-      </div>
-    </motion.div>
+    <div className={className}>
+      <motion.div
+        className="flex flex-col items-center gap-[55px] rounded-[16px] bg-white pb-[115px] pt-[99px]"
+        initial={{ y: 60, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex flex-col items-center gap-[8px]">
+          <div className="text-h3-bold text-gray-08">오늘의 퀴즈</div>
+          <div className="text-body1-medium text-gray-07">{getCurrentDate()}</div>
+        </div>
+        <DocumentListIcon />
+        <div className="flex flex-col gap-[8px]">
+          {Object.entries(getEachCategoryCount(quizzes)).map(([key, value]) => (
+            <div
+              key={key}
+              className="flex min-w-[198px] justify-between rounded-[48px] bg-gray-01 px-[24px] py-[12px]"
+            >
+              <div className="text-body2-medium text-gray-08">{key}</div>
+              <div className="text-body1-bold text-orange-06">{value}개</div>
+            </div>
+          ))}
+        </div>
+      </motion.div>
+    </div>
   )
 }
 

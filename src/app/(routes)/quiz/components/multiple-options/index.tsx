@@ -29,11 +29,10 @@ const item = {
   },
 }
 
-interface MultipleOptionsProps {
+interface MultipleOptionsProps extends HTMLAttributes<HTMLDivElement> {
   quizProgress: QuizProgress
   curQuiz: QuizDTO
   onSelectAnswer: (answer: number) => Promise<void>
-  className?: HTMLAttributes<HTMLDivElement>['className']
 }
 
 export default function MultipleOptions({

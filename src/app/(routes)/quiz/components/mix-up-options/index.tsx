@@ -5,11 +5,10 @@ import MixUpOption from './components/option'
 import { HTMLAttributes } from 'react'
 import { QuizProgress } from '../../types'
 
-interface MixUpOptionsProps {
+interface MixUpOptionsProps extends HTMLAttributes<HTMLDivElement> {
   quizProgress: QuizProgress
   curQuiz: QuizDTO
   onSelectAnswer: (answer: 'correct' | 'incorrect') => Promise<void>
-  className?: HTMLAttributes<HTMLDivElement>['className']
 }
 
 export default function MixUpOptions({

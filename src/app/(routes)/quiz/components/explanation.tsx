@@ -5,12 +5,11 @@ import { cn } from '@/lib/utils'
 import { HTMLAttributes, useEffect, useRef } from 'react'
 import { SCROLL_TO_EXPLANATION_DURATION } from '../constants'
 
-interface ExplanationProps {
+interface ExplanationProps extends HTMLAttributes<HTMLDivElement> {
   isCorrect: boolean
   correctItem: string
   explanation: string
   next: () => void
-  className?: HTMLAttributes<HTMLDivElement>['className']
 }
 
 export default function Explanation({
