@@ -1,14 +1,5 @@
+import { CategoryTagType } from '@/apis/fetchers/category/get-categories'
 import { cn } from '@/lib/utils'
-
-export type CategoryTagType =
-  | 'IT'
-  | 'ECONOMY'
-  | 'HISTORY'
-  | 'LANGUAGE'
-  | 'MATH'
-  | 'ETC'
-  | 'ART'
-  | 'MEDICINE'
 
 const tagVariant: {
   style: Record<CategoryTagType, string>

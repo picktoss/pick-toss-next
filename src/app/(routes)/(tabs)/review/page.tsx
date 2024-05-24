@@ -1,10 +1,12 @@
 import { createCategory } from '@/apis/fetchers/category/create-category'
 import { getCategories } from '@/apis/fetchers/category/get-categories'
+import { auth } from '@/app/api/auth/[...nextauth]/auth'
 import Profile from '@/components/profile'
 import { Button } from '@/components/ui/button'
 
 export default async function Review() {
-  const categories = await getCategories()
+  const session = await auth()
+  const categories = await getCategories(session?.user.accessToken)
 
   return (
     <div>

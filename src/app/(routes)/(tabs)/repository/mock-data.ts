@@ -1,4 +1,4 @@
-import { CategoryTagType } from './components/category-tag'
+import { Category } from '@/apis/fetchers/category/get-categories'
 
 // TODO: data interface 백엔드와 협의 필요
 export interface Document {
@@ -6,14 +6,6 @@ export interface Document {
   name: string
   order: number
   // quizCreation: 'PREPARING' | 'ON' | 'OFF'
-}
-
-export interface Category {
-  id: number
-  tag: CategoryTagType
-  emoji: string
-  name: string
-  documents: Document[]
 }
 
 export const mockUserData = {
@@ -29,6 +21,7 @@ export const mockCategories: Category[] = [
     tag: 'IT',
     emoji: '✈️',
     name: '코딩 아카데미',
+    order: 0,
     documents: [
       {
         id: 1,
@@ -47,6 +40,7 @@ export const mockCategories: Category[] = [
     tag: 'ECONOMY',
     emoji: '📌',
     name: '전공 공부',
+    order: 1,
     documents: [
       {
         id: 2,
@@ -65,6 +59,7 @@ export const mockCategories: Category[] = [
     tag: 'IT',
     emoji: '💻',
     name: '알고리즘 공부',
+    order: 2,
     documents: [
       {
         id: 4,
@@ -74,12 +69,12 @@ export const mockCategories: Category[] = [
       {
         id: 5,
         name: '카카오 기출 문제',
-        order: 0,
+        order: 1,
       },
       {
         id: 6,
         name: '피보나치 수열',
-        order: 0,
+        order: 2,
       },
     ],
   },
@@ -88,6 +83,7 @@ export const mockCategories: Category[] = [
     tag: 'HISTORY',
     emoji: '💩',
     name: '철학입문',
+    order: 3,
     documents: [
       {
         id: 7,
@@ -97,7 +93,7 @@ export const mockCategories: Category[] = [
       {
         id: 8,
         name: '서양 미학사의 거장들',
-        order: 0,
+        order: 1,
       },
     ],
   },

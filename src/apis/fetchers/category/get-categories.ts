@@ -1,13 +1,22 @@
 import { API_ENDPOINT } from '@/apis/api-endpoint'
-import { auth } from '@/app/api/auth/[...nextauth]/auth'
 import { apiClient } from '@/lib/api-client'
 
 // interface GetCategoriesParams extends NextFetchRequestConfig {}
 
+export type CategoryTagType =
+  | 'IT'
+  | 'ECONOMY'
+  | 'HISTORY'
+  | 'LANGUAGE'
+  | 'MATH'
+  | 'ETC'
+  | 'ART'
+  | 'MEDICINE'
+
 export interface Category {
   id: number
   name: string
-  tag: string
+  tag: CategoryTagType
   order: number
   emoji: string
   documents: {
@@ -18,16 +27,14 @@ export interface Category {
 }
 
 interface GetCategoriesResponse {
-  category: Category[]
+  categories: Category[]
 }
 
-export const getCategories = async (/* params?: GetCategoriesParams */) => {
-  const session = await auth()
-
+export const getCategories = async (accessToken: string | undefined) => {
   return await apiClient.fetch<GetCategoriesResponse>({
     ...API_ENDPOINT.category.getCategories(),
     headers: {
-      Authorization: `Bearer ${session?.user.accessToken}`,
+      Authorization: `Bearer ${accessToken}`,
     },
   })
 }
