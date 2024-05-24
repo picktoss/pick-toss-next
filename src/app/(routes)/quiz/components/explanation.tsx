@@ -3,6 +3,7 @@
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { HTMLAttributes, useEffect, useRef } from 'react'
+import { SCROLL_TO_EXPLANATION_DURATION } from '../constants'
 
 interface ExplanationProps {
   isCorrect: boolean
@@ -28,7 +29,7 @@ export default function Explanation({
 
     const timer = setTimeout(() => {
       containerRef.current!.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }, 400)
+    }, SCROLL_TO_EXPLANATION_DURATION)
 
     return () => clearTimeout(timer)
   }, [])
