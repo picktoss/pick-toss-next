@@ -17,7 +17,7 @@ interface QuizProps {
 }
 
 export default function Quiz({ quizzes }: QuizProps) {
-  const [state, setState] = useState<'intro' | 'solving'>('solving')
+  const [state, setState] = useState<'intro' | 'solving'>('intro')
 
   useEffect(() => {
     const timer = setTimeout(() => {
