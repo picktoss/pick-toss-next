@@ -1,1 +1,3 @@
 export const INTRO_DURATION = 2500
+
+export const SHOW_RESULT_DURATION = 1000

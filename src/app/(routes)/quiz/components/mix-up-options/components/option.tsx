@@ -2,35 +2,35 @@
 
 import { cn } from '@/lib/utils'
 import { QuizProgress } from '../../../types'
+import { motion } from 'framer-motion'
 
 interface MixUpOptionProps {
   variant: 'correct' | 'incorrect'
   progress: QuizProgress['progress']
-  isSelected: boolean
   isCorrect: boolean | null
   onClick: () => void
 }
 
-export default function MixUpOption({
-  variant,
-  progress,
-  isSelected,
-  isCorrect,
-  onClick,
-}: MixUpOptionProps) {
+export default function MixUpOption({ variant, progress, isCorrect, onClick }: MixUpOptionProps) {
   return (
-    <button
+    <motion.button
       className={cn(
         'flex h-[126px] flex-1 max-w-[165px] lg:max-w-[215px] items-center justify-center rounded-[16px] lg:h-[144px]',
         variant === 'correct' ? 'bg-blue-05' : 'bg-orange-05',
-        progress === 'result' && !isCorrect && 'bg-gray-04',
-        progress === 'result' && !isSelected && 'hidden'
+        progress === 'result' && !isCorrect && 'bg-gray-04'
       )}
       onClick={onClick}
       disabled={progress !== 'idle'}
+      initial={{ y: 30, opacity: 0 }}
+      animate={{
+        y: 0,
+        opacity: 1,
+        transition: { duration: 0.5, delay: 0.2 },
+      }}
+      layout
     >
       {variant === 'correct' ? <CircleIcon /> : <XIcon />}
-    </button>
+    </motion.button>
   )
 }
 

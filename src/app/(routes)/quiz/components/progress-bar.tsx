@@ -42,6 +42,9 @@ export default function ProgressBar({ curQuizIndex, totalQuizCount }: ProgressBa
       <div className="rounded-t-[12px] bg-gray-02" />
       <motion.div
         className="absolute left-0 top-0 rounded-tl-[12px] bg-orange-04"
+        style={{
+          width: `${((curQuizIndex + 1) / totalQuizCount) * 100}%`,
+        }}
         initial={{ width: `${(curQuizIndex / totalQuizCount) * 100}%` }}
         animate={{ width: `${((curQuizIndex + 1) / totalQuizCount) * 100}%` }}
         transition={{ duration: 0.5, delay: 0.2 }}

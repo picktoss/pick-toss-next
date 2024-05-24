@@ -10,7 +10,7 @@ import { delay } from '@/utils/delay'
 import MultipleOptions from './multiple-options'
 import MixUpOptions from './mix-up-options'
 import { QuizProgress } from '../types'
-import { INTRO_DURATION } from '../constants'
+import { INTRO_DURATION, SHOW_RESULT_DURATION } from '../constants'
 
 interface QuizProps {
   quizzes: QuizDTO[]
@@ -28,7 +28,7 @@ export default function Quiz({ quizzes }: QuizProps) {
   }, [])
 
   const [quizProgress, setQuizProgress] = useState<QuizProgress>({
-    quizIndex: 1,
+    quizIndex: 0,
     selectedMultipleQuizAnswer: null,
     selectedMixUpQuizAnswer: null,
     progress: 'idle',
@@ -55,7 +55,7 @@ export default function Quiz({ quizzes }: QuizProps) {
       }))
     }
 
-    await delay(1500)
+    await delay(SHOW_RESULT_DURATION)
 
     setQuizProgress((prev) => ({
       ...prev,
