@@ -49,6 +49,11 @@ export const API_ENDPOINT = {
       url: `/categories`,
       method: HttpMethod.POST,
     }),
+
+    deleteCategory: (categoryId: number) => ({
+      url: `/categories/${categoryId}`,
+      method: HttpMethod.DELETE,
+    }),
   },
 
   // 재화 관련 API

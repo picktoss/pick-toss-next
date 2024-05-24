@@ -85,7 +85,7 @@ class ApiClient {
       })
     }
 
-    const data = (await res.json()) as T
+    const data = (await res.json().catch(() => ({}))) as T
     return data
   }
 }

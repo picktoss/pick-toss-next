@@ -47,7 +47,8 @@ export default function CreateCategoryModal({ trigger }: Props) {
         <p className="mb-[32px] text-small1-regular text-gray-07">
           폴더 아이콘, 카테고리, 폴더 이름을 설정해주세요
         </p>
-
+        {/* TODO: emoji, tag 설정 기능 */}
+        {/* 현재는 name 수정만 가능 */}
         <div className="mb-[34px] flex items-center gap-[10px]">
           <div className="flex size-[32px] items-center justify-center rounded-md border bg-gray-01">
             {categoryInfo.emoji}

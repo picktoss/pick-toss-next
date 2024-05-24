@@ -2,7 +2,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import CategoryTag from './category-tag'
@@ -13,10 +12,13 @@ import { Category } from '@/apis/fetchers/category/get-categories'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { cn } from '@/lib/utils'
+import DeleteCategoryModal from './delete-category-modal'
+import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 
 interface Props extends Category {}
 
-export default function CategoryItem({ id, emoji, name, tag, documents }: Props) {
+export default function CategoryItem(props: Props) {
+  const { id, emoji, name, tag, documents } = props
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: id,
   })
@@ -36,34 +38,32 @@ export default function CategoryItem({ id, emoji, name, tag, documents }: Props)
       >
         <div className="mb-3 text-2xl">{emoji}</div>
         <div className="absolute right-[12px] top-[8px]">
-          <DropdownMenu>
-            <DropdownMenuTrigger className="focus:outline-none">
-              <div className="flex size-[25px] items-center justify-center rounded-full hover:bg-gray-02">
-                <Image src={icons.kebab} alt="" width={15} height={3} />
-              </div>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuItem>
-                <div className="flex gap-4">
-                  <Image src="/icons/modify-pencil.svg" alt="" width={16} height={16} />
-                  <span className="text-gray-09">이름 바꾸기</span>
+          <Dialog>
+            <DropdownMenu>
+              <DropdownMenuTrigger className="focus:outline-none">
+                <div className="flex size-[25px] items-center justify-center rounded-full hover:bg-gray-02">
+                  <Image src={icons.kebab} alt="" width={15} height={3} />
                 </div>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <div className="flex gap-4">
-                  <Image src="/icons/no-chat.svg" alt="" width={16} height={16} />
-                  <span className="text-gray-09">퀴즈 생성 끄기</span>
-                </div>
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <div className="flex gap-4">
-                  <Image src="/icons/trashcan-red.svg" alt="" width={16} height={16} />
-                  <span className="text-notice-red">폴더 삭제하기</span>
-                </div>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem onClick={(event) => event.stopPropagation()}>
+                  <div className="flex gap-4">
+                    <Image src="/icons/modify-pencil.svg" alt="" width={16} height={16} />
+                    <span className="text-gray-09">정보 수정하기</span>
+                  </div>
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={(event) => event.stopPropagation()}>
+                  <DialogTrigger asChild>
+                    <div className="flex gap-4">
+                      <Image src="/icons/trashcan-red.svg" alt="" width={16} height={16} />
+                      <span className="text-notice-red">폴더 삭제하기</span>
+                    </div>
+                  </DialogTrigger>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <DeleteCategoryModal {...props} />
+          </Dialog>
         </div>
         <div className="mb-1 flex items-center gap-2">
           <div className="text-h4-bold text-gray-09">{name}</div>
