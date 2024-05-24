@@ -9,7 +9,6 @@ interface ExplanationProps {
   correctItem: string
   explanation: string
   next: () => void
-  isLast: boolean
   className?: HTMLAttributes<HTMLDivElement>['className']
 }
 
@@ -18,7 +17,6 @@ export default function Explanation({
   correctItem,
   explanation,
   next,
-  isLast,
   className,
 }: ExplanationProps) {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -30,7 +28,7 @@ export default function Explanation({
 
     const timer = setTimeout(() => {
       containerRef.current!.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }, 600)
+    }, 400)
 
     return () => clearTimeout(timer)
   }, [])
@@ -54,8 +52,9 @@ export default function Explanation({
           <div className="text-text-regular">{explanation}</div>
         </div>
         <div className="flex justify-end">
-          <Button className="w-fit" onClick={next}>
-            {isLast ? '결과보기' : '다음'}
+          <Button className="flex w-[116px] gap-[8px]" onClick={next}>
+            <div>다음</div>
+            <ArrowRightIcon />
           </Button>
         </div>
       </div>
@@ -84,6 +83,21 @@ function IncorrectIcon() {
       <circle cx="24" cy="24" r="24" fill="#F66444" />
       <path d="M16 16L32 32" stroke="#F6FAFD" strokeWidth="4" strokeLinecap="round" />
       <path d="M32 16L16 32" stroke="#F6FAFD" strokeWidth="4" strokeLinecap="round" />
+    </svg>
+  )
+}
+
+function ArrowRightIcon() {
+  return (
+    <svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 7.72998H20.25" stroke="white" strokeWidth="2" strokeLinejoin="round" />
+      <path
+        d="M12.8862 1.25L20.2499 8L12.8862 14.75"
+        stroke="white"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   )
 }
