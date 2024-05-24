@@ -36,7 +36,11 @@ export default function MultipleOption({
   disabled,
 }: MultipleOptionProps) {
   return (
-    <button className={cn(optionVariants({ variant }))} onClick={onClick} disabled={disabled}>
+    <button
+      className={cn(optionVariants({ variant }), 'w-full')}
+      onClick={onClick}
+      disabled={disabled}
+    >
       <div className="size-[36px] shrink-0">
         <OrderIcon variant={variant} order={order} />
       </div>

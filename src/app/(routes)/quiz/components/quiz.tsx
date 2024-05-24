@@ -17,7 +17,7 @@ interface QuizProps {
 }
 
 export default function Quiz({ quizzes }: QuizProps) {
-  const [state, setState] = useState<'intro' | 'solving'>('intro')
+  const [state, setState] = useState<'intro' | 'solving'>('solving')
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -28,7 +28,7 @@ export default function Quiz({ quizzes }: QuizProps) {
   }, [])
 
   const [quizProgress, setQuizProgress] = useState<QuizProgress>({
-    quizIndex: 0,
+    quizIndex: 1,
     selectedMultipleQuizAnswer: null,
     selectedMixUpQuizAnswer: null,
     progress: 'idle',
