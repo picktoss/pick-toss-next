@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import icons from '@/constants/icons'
-import { Document } from '../../mock-data'
 import Image from 'next/image'
 import {
   DropdownMenu,
@@ -11,6 +10,7 @@ import {
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { cn } from '@/lib/utils'
+import { Document } from '@/apis/fetchers/document/get-documents-for-category'
 
 interface Props extends Document {}
 

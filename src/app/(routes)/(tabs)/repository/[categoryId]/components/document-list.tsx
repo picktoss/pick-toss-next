@@ -8,7 +8,6 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { useState } from 'react'
-import { Document } from '../../mock-data'
 import DocumentItem from './document-item'
 import {
   DndContext,
@@ -21,17 +20,43 @@ import {
   useSensors,
 } from '@dnd-kit/core'
 import { SortableContext, arrayMove } from '@dnd-kit/sortable'
+import {
+  Document,
+  getDocumentsForCategory,
+} from '@/apis/fetchers/document/get-documents-for-category'
+import { useSession } from 'next-auth/react'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 
-const SORT_TYPE = ['업로드한 날짜', '이름', '마지막으로 열어본 시간'] as const
+const SORT_OPTION_TYPE = ['createdAt', 'name', 'updatedAt'] as const
 
-interface Props {
-  documents: Document[]
+const sortOptionLabel = {
+  createdAt: '업로드한 날짜',
+  name: '이름',
+  updatedAt: '마지막으로 수정한 시간',
 }
 
-export default function DocumentList({ documents }: Props) {
-  const [sortType, setSortType] = useState<(typeof SORT_TYPE)[number]>('업로드한 날짜')
-  const [documentList, setDocumentList] = useState(documents)
+interface Props {
+  categoryId: number
+}
+
+export default function DocumentList({ categoryId }: Props) {
+  const [sortOption, setSortOption] = useState<(typeof SORT_OPTION_TYPE)[number]>('createdAt')
   const [draggedItem, setDraggedItem] = useState<Document | null>(null)
+
+  const { data: session } = useSession()
+  const { data: documents } = useQuery({
+    queryKey: ['documents', categoryId, sortOption],
+    queryFn: () =>
+      getDocumentsForCategory({
+        accessToken: session?.user.accessToken || '',
+        categoryId,
+        sortOption,
+      }).then((res) => res.documents),
+    enabled: !!session,
+    staleTime: Infinity,
+    gcTime: Infinity,
+  })
+  const queryClient = useQueryClient()
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -41,9 +66,11 @@ export default function DocumentList({ documents }: Props) {
     })
   )
 
+  if (documents === undefined) return <div>loading</div>
+
   const handleDragStart = (event: DragStartEvent) => {
     const { active } = event
-    const draggedItem = documentList.find((document) => document.id === active.id) || null
+    const draggedItem = documents.find((document) => document.id === active.id) || null
 
     setDraggedItem(draggedItem)
   }
@@ -52,12 +79,12 @@ export default function DocumentList({ documents }: Props) {
     const { active, over } = event
 
     if (active.id !== over?.id) {
-      setDocumentList((documentList) => {
-        const oldIndex = documentList.findIndex((document) => document.id === active.id)
-        const newIndex = documentList.findIndex((document) => document.id === over?.id)
+      const oldIndex = documents.findIndex((document) => document.id === active.id)
+      const newIndex = documents.findIndex((document) => document.id === over?.id)
 
-        return arrayMove(documentList, oldIndex, newIndex)
-      })
+      queryClient.setQueryData(['documents', categoryId], (prevCategories: Document[]) =>
+        arrayMove(prevCategories, oldIndex, newIndex)
+      )
     }
 
     setDraggedItem(null)
@@ -72,17 +99,18 @@ export default function DocumentList({ documents }: Props) {
         <DropdownMenu>
           <DropdownMenuTrigger>
             <div className="flex gap-2 text-body2-medium text-gray-07">
-              {sortType} <Image src="/icons/chevron-down.svg" alt="" width={16} height={16} />
+              {sortOptionLabel[sortOption]}{' '}
+              <Image src="/icons/chevron-down.svg" alt="" width={16} height={16} />
             </div>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            {SORT_TYPE.map((type) => (
+            {SORT_OPTION_TYPE.map((type) => (
               <DropdownMenuItem
                 key={type}
-                onClick={() => setSortType(type)}
+                onClick={() => setSortOption(type)}
                 className="text-body2-medium text-gray-07"
               >
-                {type}
+                {sortOptionLabel[type]}
               </DropdownMenuItem>
             ))}
           </DropdownMenuContent>
@@ -94,9 +122,9 @@ export default function DocumentList({ documents }: Props) {
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
       >
-        <SortableContext items={documentList}>
+        <SortableContext items={documents}>
           <div className="flex flex-col gap-2">
-            {documentList.map((document) => (
+            {documents.map((document) => (
               <DocumentItem key={document.id} {...document} />
             ))}
           </div>

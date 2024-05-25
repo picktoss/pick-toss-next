@@ -1,8 +1,12 @@
+'use client'
+
 import Image from 'next/image'
 import CategoryTag from '../components/category-tag'
-import { mockCategories } from '../mock-data'
 import DocumentList from './components/document-list'
 import icons from '@/constants/icons'
+import { useQuery } from '@tanstack/react-query'
+import { getCategories } from '@/apis/fetchers/category/get-categories'
+import { useSession } from 'next-auth/react'
 
 interface Props {
   params: {
@@ -11,19 +15,31 @@ interface Props {
 }
 
 // 임시 category fetch 함수
-const fetchCategory = (categoryId: number) => {
-  const targetData = mockCategories.find((data) => data.id === categoryId)
+// const fetchCategory = (categoryId: number) => {
+//   const targetData = mockCategories.find((data) => data.id === categoryId)
 
-  if (targetData === undefined) {
-    throw new Error('category id가 잘못 되었습니다')
-  }
+//   if (targetData === undefined) {
+//     throw new Error('category id가 잘못 되었습니다')
+//   }
 
-  return targetData
-}
+//   return targetData
+// }
 
 export default function Category({ params: { categoryId } }: Props) {
-  const category = fetchCategory(Number(categoryId))
-  const { emoji, name, tag, documents } = category
+  const { data: session } = useSession()
+  const { data: categories } = useQuery({
+    queryKey: ['categories'],
+    queryFn: () =>
+      getCategories({ accessToken: session?.user.accessToken || '' }).then((res) => res.categories),
+    enabled: !!session,
+    staleTime: Infinity,
+    gcTime: Infinity,
+  })
+  const category = categories?.find((category) => category.id === Number(categoryId))
+
+  if (category === undefined) return <div>loading</div>
+
+  const { emoji, name, tag } = category
 
   return (
     <div>
@@ -40,7 +56,7 @@ export default function Category({ params: { categoryId } }: Props) {
           placeholder="노트명, 노트 내용 검색"
         />
       </div>
-      <DocumentList documents={documents} />
+      <DocumentList categoryId={Number(categoryId)} />
     </div>
   )
 }

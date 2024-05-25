@@ -28,6 +28,8 @@ export default function CategoryList() {
     queryFn: () =>
       getCategories({ accessToken: session?.user.accessToken || '' }).then((res) => res.categories),
     enabled: !!session,
+    staleTime: Infinity,
+    gcTime: Infinity,
   })
   const queryClient = useQueryClient()
 
