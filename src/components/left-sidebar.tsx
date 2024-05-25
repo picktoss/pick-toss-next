@@ -2,6 +2,7 @@ import { Button } from './ui/button'
 import { TabNavigation } from './tab-nav'
 import { CategoryAccordion } from './category-accordion'
 import { mockCategories } from '@/app/(routes)/(tabs)/repository/mock-data'
+import Link from 'next/link'
 
 export const LeftSidebar = () => {
   return (
@@ -11,10 +12,12 @@ export const LeftSidebar = () => {
         <LogoIcon />
       </div>
       <div className="mb-[24px] mt-[35px]">
-        <Button className="h-[47px] w-[151px] gap-[13px] rounded-[16px] bg-[#FB7E20] text-gray-01 shadow-lg hover:bg-[#FB7E20]/80">
-          <span className="text-body2-bold">노트 추가하기</span>
-          <PlusIcon />
-        </Button>
+        <Link href="/create">
+          <Button className="h-[47px] w-[151px] gap-[13px] rounded-[16px] bg-[#FB7E20] text-gray-01 shadow-lg hover:bg-[#FB7E20]/80">
+            <span className="text-body2-bold">노트 추가하기</span>
+            <PlusIcon />
+          </Button>
+        </Link>
       </div>
       <TabNavigation />
       <CategoryAccordion
