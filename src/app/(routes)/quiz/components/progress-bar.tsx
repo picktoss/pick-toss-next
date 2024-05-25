@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import debounce from 'lodash.debounce'
+import { motion } from 'framer-motion'
 
 interface ProgressBarProps {
   curQuizIndex: number
@@ -9,6 +10,7 @@ interface ProgressBarProps {
 }
 
 const markerWidth = 48
+const markerHeight = 24
 
 export default function ProgressBar({ curQuizIndex, totalQuizCount }: ProgressBarProps) {
   const [isOutOfContainer, setIsOutOfContainer] = useState(false)
@@ -39,25 +41,29 @@ export default function ProgressBar({ curQuizIndex, totalQuizCount }: ProgressBa
   return (
     <div className="relative h-[8px] rounded-t-[12px] *:h-[8px]" ref={containerRef}>
       <div className="rounded-t-[12px] bg-gray-02" />
-      <div
+      <motion.div
         className="absolute left-0 top-0 rounded-tl-[12px] bg-orange-04"
         style={{
           width: `${((curQuizIndex + 1) / totalQuizCount) * 100}%`,
         }}
+        initial={{ width: `${(curQuizIndex / totalQuizCount) * 100}%` }}
+        animate={{ width: `${((curQuizIndex + 1) / totalQuizCount) * 100}%` }}
+        transition={{ duration: 0.5, delay: 0.2 }}
       >
         <div
-          className="absolute flex h-[24px] items-center justify-center bg-orange-04 text-small1-bold text-white transition-all"
+          className="absolute flex items-center justify-center bg-orange-04 text-small1-bold text-white transition-all"
           style={{
             width: markerWidth,
+            height: markerHeight,
             right: isOutOfContainer ? 0 : -markerWidth,
-            top: -24,
+            top: -markerHeight,
             borderRadius: isOutOfContainer ? '9999px 9999px 0 9999px' : '9999px 9999px 9999px 0',
           }}
           ref={markerRef}
         >
           {curQuizIndex + 1}/{totalQuizCount}
         </div>
-      </div>
+      </motion.div>
     </div>
   )
 }

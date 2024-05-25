@@ -4,9 +4,7 @@ import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 import { HTMLAttributes } from 'react'
 
-interface QuizHeaderProps {
-  className?: HTMLAttributes<HTMLDivElement>['className']
-}
+interface QuizHeaderProps extends HTMLAttributes<HTMLDivElement> {}
 
 export default function QuizHeader({ className }: QuizHeaderProps) {
   const router = useRouter()

@@ -1,5 +1,5 @@
-import { HTMLAttributes } from 'react'
 import ProgressBar from './progress-bar'
+import { motion } from 'framer-motion'
 
 interface QuestionProps {
   categoryName: string
@@ -7,7 +7,6 @@ interface QuestionProps {
   question: string
   curQuizIndex: number
   totalQuizCount: number
-  className?: HTMLAttributes<HTMLDivElement>['className']
 }
 
 export default function Question({
@@ -16,13 +15,17 @@ export default function Question({
   question,
   curQuizIndex,
   totalQuizCount,
-  className,
 }: QuestionProps) {
   return (
-    <div className={className}>
-      <div className="w-full px-[20px]">
-        <ProgressBar curQuizIndex={curQuizIndex} totalQuizCount={totalQuizCount} />
-        <div className="flex flex-col gap-[8px] rounded-b-[12px] bg-white px-[20px] pb-[40px] pt-[32px]">
+    <div key={curQuizIndex} className="w-full px-[20px]">
+      <ProgressBar curQuizIndex={curQuizIndex} totalQuizCount={totalQuizCount} />
+      <div className="rounded-b-[12px] bg-white px-[20px] pb-[40px] pt-[32px]">
+        <motion.div
+          className="flex flex-col gap-[8px]"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
           <div className="text-small1-regular text-gray-07">
             {categoryName} {'>'} {documentName}
           </div>
@@ -30,7 +33,7 @@ export default function Question({
             <div className="text-h3-bold text-orange-06">Q</div>
             <div className="text-h4-bold text-gray-09">{question}</div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   )

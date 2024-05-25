@@ -1,5 +1,6 @@
 'use client'
 
+import { SwitchCase } from '@/components/react/switch-case'
 import { cn } from '@/lib/utils'
 import { VariantProps, cva } from 'class-variance-authority'
 
@@ -36,34 +37,34 @@ export default function MultipleOption({
   disabled,
 }: MultipleOptionProps) {
   return (
-    <button className={cn(optionVariants({ variant }))} onClick={onClick} disabled={disabled}>
+    <button
+      className={cn(optionVariants({ variant }), 'w-full')}
+      onClick={onClick}
+      disabled={disabled}
+    >
       <div className="size-[36px] shrink-0">
-        <OrderIcon variant={variant} order={order} />
+        <SwitchCase
+          value={variant!}
+          caseBy={{
+            correct: <CorrectIcon />,
+            incorrect: <IncorrectIcon />,
+          }}
+          defaultComponent={
+            <div
+              className={cn(
+                'flex size-full items-center justify-center rounded-full bg-gray-02 text-body1-bold-eng',
+                variant === 'choose' && 'bg-orange-05 text-white',
+                variant === 'disabled' && 'bg-gray-04 text-gray-07'
+              )}
+            >
+              {order}
+            </div>
+          }
+        />
       </div>
       <div>{option}</div>
     </button>
   )
-}
-
-function OrderIcon({ variant, order }: VariantProps<typeof optionVariants> & { order: string }) {
-  switch (variant) {
-    case 'correct':
-      return <CorrectIcon />
-    case 'incorrect':
-      return <IncorrectIcon />
-    default:
-      return (
-        <div
-          className={cn(
-            'flex size-full items-center justify-center rounded-full bg-gray-02 text-body1-bold-eng',
-            variant === 'choose' && 'bg-orange-05 text-white',
-            variant === 'disabled' && 'bg-gray-04 text-gray-07'
-          )}
-        >
-          {order}
-        </div>
-      )
-  }
 }
 
 function CorrectIcon() {
