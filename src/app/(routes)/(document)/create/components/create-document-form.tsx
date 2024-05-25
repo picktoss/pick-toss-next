@@ -54,6 +54,7 @@ export default function CreateDocumentForm() {
           categoryId: selectedCategoryId,
         })
         await queryClient.invalidateQueries({ queryKey: ['categories'] })
+        await queryClient.invalidateQueries({ queryKey: ['documents'] })
       }}
     >
       <Input

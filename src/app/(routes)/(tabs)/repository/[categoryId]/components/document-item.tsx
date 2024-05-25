@@ -11,10 +11,24 @@ import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { cn } from '@/lib/utils'
 import { Document } from '@/apis/fetchers/document/get-documents-for-category'
+import { deleteDocument } from '@/apis/fetchers/document/delete-document'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useSession } from 'next-auth/react'
 
 interface Props extends Document {}
 
 export default function DocumentItem({ id, name }: Props) {
+  const { data: session } = useSession()
+  const queryClient = useQueryClient()
+
+  const { mutate } = useMutation({
+    mutationFn: deleteDocument,
+    onSuccess: () =>
+      Promise.all([
+        queryClient.invalidateQueries({ queryKey: ['documents'] }),
+        queryClient.invalidateQueries({ queryKey: ['categories'] }),
+      ]),
+  })
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: id,
   })
@@ -22,6 +36,10 @@ export default function DocumentItem({ id, name }: Props) {
   const style = {
     transform: CSS.Transform.toString(transform),
     transition: transition,
+  }
+
+  const handleDeleteDocument = () => {
+    mutate({ accessToken: session?.user.accessToken || '', documentId: id })
   }
 
   return (
@@ -46,8 +64,17 @@ export default function DocumentItem({ id, name }: Props) {
               </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuItem>문서 이름 변경하기</DropdownMenuItem>
-              <DropdownMenuItem>문서 삭제하기</DropdownMenuItem>
+              <DropdownMenuItem onClick={(event) => event.stopPropagation()}>
+                문서 이름 변경하기
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={(event) => {
+                  event.stopPropagation()
+                  handleDeleteDocument()
+                }}
+              >
+                문서 삭제하기
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
