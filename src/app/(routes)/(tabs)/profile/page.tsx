@@ -6,8 +6,21 @@ import { profileConfig } from './config'
 import SignOut from './components/sign-out'
 import Section from './components/section'
 import ProTag from '@/components/pro-tag'
+import { auth } from '@/app/api/auth/[...nextauth]/auth'
+import { cn } from '@/lib/utils'
 
-export default function Profile() {
+export default async function Profile() {
+  const session = await auth()
+
+  if (!session) throw new Error('로그인이 필요합니다.')
+
+  const { name, documentUsage } = session.user.dto
+  const { possibleUploadedDocumentCount, possessDocumentCount, freePlanMaxPossessDocumentCount } =
+    documentUsage
+
+  const uploadableCount = freePlanMaxPossessDocumentCount - possessDocumentCount
+  const uploadableRate = Math.floor((possessDocumentCount / freePlanMaxPossessDocumentCount) * 100)
+
   return (
     <main className="px-[20px] pb-[66px]">
       <Section
@@ -22,28 +35,33 @@ export default function Profile() {
               </button>
             </div>
             <div className="flex flex-col gap-[24px] pb-[33px] pt-[55px]">
-              <div className="px-[4px] text-h4-bold text-gray-09">픽토스</div>
+              <div className="px-[4px] text-h4-bold text-gray-09">{name}</div>
               <div className="h-px w-full rounded-full bg-gray-02" />
               <div className="flex flex-col gap-[8px]">
                 <div className="flex gap-[7px]">
                   <span className="text-small1-regular text-gray-07">남은 AI pick 생성 횟수</span>
                   <Image src={icons.circleQuestion} width={16} height={16} alt="" />
                 </div>
-                <div className="text-h4-bold text-orange-05">8회</div>
+                <div className="text-h4-bold text-orange-05">{possibleUploadedDocumentCount}회</div>
               </div>
               <div className="relative flex flex-col gap-[8px]">
                 <div className="text-small1-regular text-gray-07">나의 노트 창고</div>
-                <div className="text-h4-bold text-orange-05">12/20</div>
+                <div className="text-h4-bold text-orange-05">
+                  {possessDocumentCount}/{freePlanMaxPossessDocumentCount}
+                </div>
                 <button className="absolute right-[4px] top-[6px] flex w-fit items-center gap-[8px] rounded-[16px] bg-gray-01 px-[12px] py-[6px]">
                   <ProTag />
                   <div className="text-small1-bold text-gray-08">시작하기</div>
                 </button>
                 <div className="relative h-[8px] overflow-hidden rounded-full *:h-full">
                   <div className="w-full bg-gray-02" />
-                  <div className="absolute left-0 top-0 w-1/3 bg-orange-05" />
+                  <div
+                    className={cn('absolute left-0 top-0 bg-orange-05', `w-[${uploadableRate}%]`)}
+                  />
                 </div>
                 <div className="text-small1-regular text-gray-07">
-                  8개의 노트를 더 저장할 수 있습니다
+                  {uploadableCount}
+                  개의 노트를 더 저장할 수 있습니다
                 </div>
               </div>
             </div>

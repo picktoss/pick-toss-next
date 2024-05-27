@@ -9,6 +9,7 @@ export interface GetUserResponse {
   name: string
   email: string
   point: number
+  continuousQuizDatesCount: number
   subscription: {
     plan: 'PRO' | 'FREE'
     purchasedDate: string
@@ -21,6 +22,7 @@ export interface GetUserResponse {
     freePlanMonthlyDocumentCount: number
     proPlanMonthlyDocumentCount: number
   }
+  quizNotificationEnabled: boolean
 }
 
 export const getUser = async (params: GetUserParams) => {
