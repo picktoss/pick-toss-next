@@ -7,7 +7,6 @@ import SignOut from './components/sign-out'
 import Section from './components/section'
 import ProTag from '@/components/pro-tag'
 import { auth } from '@/app/api/auth/[...nextauth]/auth'
-import { cn } from '@/lib/utils'
 
 export default async function Profile() {
   const session = await auth()
@@ -29,10 +28,12 @@ export default async function Profile() {
           <div className="relative bg-white px-[20px]">
             <div>
               <div className="absolute left-[16px] top-[-40px] size-[80px] rounded-full bg-orange-03" />
-              <button className="absolute right-[18px] top-[15px] flex h-[32px] w-[120px] items-center justify-center gap-[8px] rounded-[4px] bg-orange-01 text-small1-bold text-orange-06 hover:bg-orange-02/80">
-                <EditPencilIcon />
-                <div>정보 수정하기</div>
-              </button>
+              <Link href="/profile/edit">
+                <button className="absolute right-[18px] top-[15px] flex h-[32px] w-[120px] items-center justify-center gap-[8px] rounded-[4px] bg-orange-01 text-small1-bold text-orange-06 hover:bg-orange-02/80">
+                  <EditPencilIcon />
+                  <div>정보 수정하기</div>
+                </button>
+              </Link>
             </div>
             <div className="flex flex-col gap-[24px] pb-[33px] pt-[55px]">
               <div className="px-[4px] text-h4-bold text-gray-09">{name}</div>
@@ -56,7 +57,8 @@ export default async function Profile() {
                 <div className="relative h-[8px] overflow-hidden rounded-full *:h-full">
                   <div className="w-full bg-gray-02" />
                   <div
-                    className={cn('absolute left-0 top-0 bg-orange-05', `w-[${uploadableRate}%]`)}
+                    className="absolute left-0 top-0 bg-orange-05"
+                    style={{ width: `${uploadableRate}%` }}
                   />
                 </div>
                 <div className="text-small1-regular text-gray-07">
