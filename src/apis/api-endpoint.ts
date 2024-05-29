@@ -87,6 +87,10 @@ export const API_ENDPOINT = {
       url: `/members/update-name`,
       method: HttpMethod.PATCH,
     }),
+    updateQuizNotification: () => ({
+      url: `/members/update-quiz-notification`,
+      method: HttpMethod.PATCH,
+    }),
   },
 
   // auth 관련 API

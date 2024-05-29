@@ -5,7 +5,7 @@ export const profileConfig = {
       {
         id: 'notification-config',
         label: '알림 설정',
-        href: '/notification',
+        href: '/profile/notification',
         disabled: false,
       },
       {
