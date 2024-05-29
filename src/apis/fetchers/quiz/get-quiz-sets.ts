@@ -18,6 +18,7 @@ interface BaseQuiz<T> {
   quizType: T
   document: Document
   category: Category
+  explanation: string
 }
 
 interface MixUpQuiz extends BaseQuiz<'MIX_UP'> {
