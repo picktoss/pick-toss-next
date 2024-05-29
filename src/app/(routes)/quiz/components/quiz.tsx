@@ -9,26 +9,39 @@ import Question from './question'
 import { delay } from '@/utils/delay'
 import MultipleOptions from './multiple-options'
 import MixUpOptions from './mix-up-options'
-import { QuizProgress } from '../types'
+import { QuizProgress, SolvingData } from '../types'
 import { INTRO_DURATION, SHOW_RESULT_DURATION } from '../constants'
 import { SwitchCase } from '@/components/react/switch-case'
 import { useTimer } from '../hooks/use-timer'
+import { useMutation } from '@tanstack/react-query'
+import { patchQuizResult } from '@/apis/fetchers/quiz/patch-quiz-result'
+import { useSearchParams } from 'next/navigation'
+import { useSession } from 'next-auth/react'
+import QuizResult from './quiz-result'
 
 interface QuizProps {
   quizzes: QuizDTO[]
 }
 
 export default function Quiz({ quizzes }: QuizProps) {
-  const [state, setState] = useState<'intro' | 'solving'>('intro')
+  const quizSetId = useSearchParams().get('quizSetId') || ''
+  const session = useSession()
+
+  const [state, setState] = useState<'intro' | 'solving' | 'end'>('end')
   const { totalElapsedTime, runTimer, stopTimer } = useTimer()
+  const [solvingData, setSolvingData] = useState<SolvingData>([])
 
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setState('solving')
-    }, INTRO_DURATION)
-
-    return () => clearTimeout(timeoutId)
-  }, [])
+  const { mutate: patchQuizResultMutate } = useMutation({
+    mutationKey: ['patchQuizResult'],
+    mutationFn: (solvingData: SolvingData) =>
+      patchQuizResult({
+        data: {
+          quizSetId,
+          quizzes: solvingData,
+        },
+        accessToken: session.data?.user.accessToken || '',
+      }),
+  })
 
   const [quizProgress, setQuizProgress] = useState<QuizProgress>({
     quizIndex: 0,
@@ -69,10 +82,25 @@ export default function Quiz({ quizzes }: QuizProps) {
   }
 
   const next = () => {
+    const newSolvingData = [
+      ...solvingData,
+      {
+        id: curQuiz.id,
+        answer: isCorrect,
+        elapsedTime: totalElapsedTime,
+      },
+    ]
+
     if (quizProgress.quizIndex === quizzes.length - 1) {
+      patchQuizResultMutate(newSolvingData, {
+        onSuccess: () => {
+          setState('end')
+        },
+      })
       return
     }
 
+    setSolvingData(newSolvingData)
     setQuizProgress((prev) => ({
       quizIndex: prev.quizIndex + 1,
       selectedMultipleQuizAnswer: null,
@@ -80,6 +108,14 @@ export default function Quiz({ quizzes }: QuizProps) {
       progress: 'idle',
     }))
   }
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setState('solving')
+    }, INTRO_DURATION)
+
+    return () => clearTimeout(timeoutId)
+  }, [])
 
   return (
     <SwitchCase
@@ -138,6 +174,7 @@ export default function Quiz({ quizzes }: QuizProps) {
             ) : null}
           </div>
         ),
+        end: <QuizResult />,
       }}
     />
   )

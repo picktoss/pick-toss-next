@@ -11,6 +11,10 @@ export const API_ENDPOINT = {
       url: `/quiz-sets/${quizSetId}`,
       method: HttpMethod.GET,
     }),
+    patchQuizResult: () => ({
+      url: `/quiz/result`,
+      method: HttpMethod.PATCH,
+    }),
     getBookmarks: () => ({
       url: `/bookmark`,
       method: HttpMethod.GET,
