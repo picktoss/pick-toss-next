@@ -33,6 +33,7 @@ interface MultipleOptionsProps extends HTMLAttributes<HTMLDivElement> {
   quizProgress: QuizProgress
   curQuiz: QuizDTO
   onSelectAnswer: (answer: number) => Promise<void>
+  onVisibleAnimationEnd: () => void
 }
 
 export default function MultipleOptions({
@@ -40,6 +41,7 @@ export default function MultipleOptions({
   curQuiz,
   onSelectAnswer,
   className,
+  onVisibleAnimationEnd,
 }: MultipleOptionsProps) {
   const [multipleOptionVariants, setMultipleOptionVariants] = useState<
     VariantProps<typeof optionVariants>['variant'][]
@@ -73,6 +75,7 @@ export default function MultipleOptions({
         variants={container}
         initial="hidden"
         animate="visible"
+        onAnimationComplete={onVisibleAnimationEnd}
       >
         {curQuiz.options.map((option, idx) => (
           <motion.li key={idx} variants={item}>

@@ -4,9 +4,11 @@ import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 import { HTMLAttributes } from 'react'
 
-interface QuizHeaderProps extends HTMLAttributes<HTMLDivElement> {}
+interface QuizHeaderProps extends HTMLAttributes<HTMLDivElement> {
+  totalElapsedTime: number
+}
 
-export default function QuizHeader({ className }: QuizHeaderProps) {
+export default function QuizHeader({ className, totalElapsedTime }: QuizHeaderProps) {
   const router = useRouter()
 
   return (
@@ -17,11 +19,22 @@ export default function QuizHeader({ className }: QuizHeaderProps) {
         </Button>
         <div className="flex items-end gap-[8px]">
           <TimerIcon />
-          <span className="text-body2-medium text-gray-07">00:04:12</span>
+          <span className="text-body2-medium text-gray-07">
+            {msToTimerFormat(totalElapsedTime)}
+          </span>
         </div>
       </div>
     </div>
   )
+}
+
+function msToTimerFormat(ms: number) {
+  const totalSeconds = Math.floor(ms / 1000)
+  const hours = String(Math.floor(totalSeconds / 3600)).padStart(2, '0')
+  const minutes = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, '0')
+  const seconds = String(Math.floor(totalSeconds % 60)).padStart(2, '0')
+
+  return `${hours}:${minutes}:${seconds}`
 }
 
 function ExitIcon() {

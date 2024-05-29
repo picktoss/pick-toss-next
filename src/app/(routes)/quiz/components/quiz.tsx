@@ -12,6 +12,7 @@ import MixUpOptions from './mix-up-options'
 import { QuizProgress } from '../types'
 import { INTRO_DURATION, SHOW_RESULT_DURATION } from '../constants'
 import { SwitchCase } from '@/components/react/switch-case'
+import { useTimer } from '../hooks/use-timer'
 
 interface QuizProps {
   quizzes: QuizDTO[]
@@ -19,13 +20,14 @@ interface QuizProps {
 
 export default function Quiz({ quizzes }: QuizProps) {
   const [state, setState] = useState<'intro' | 'solving'>('intro')
+  const { totalElapsedTime, runTimer, stopTimer } = useTimer()
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       setState('solving')
     }, INTRO_DURATION)
 
-    return () => clearTimeout(timer)
+    return () => clearTimeout(timeoutId)
   }, [])
 
   const [quizProgress, setQuizProgress] = useState<QuizProgress>({
@@ -42,6 +44,8 @@ export default function Quiz({ quizzes }: QuizProps) {
       : quizProgress.selectedMixUpQuizAnswer === curQuiz.answer
 
   const onSelectAnswer = async (answer: number | 'correct' | 'incorrect') => {
+    stopTimer()
+
     if (typeof answer === 'number') {
       setQuizProgress((prev) => ({
         ...prev,
@@ -84,7 +88,7 @@ export default function Quiz({ quizzes }: QuizProps) {
         intro: <QuizIntro quizzes={quizzes} className="mx-[20px] mt-[43px]" />,
         solving: (
           <div className="pt-[12px]">
-            <QuizHeader className="mb-[32px] px-[20px]" />
+            <QuizHeader className="mb-[32px] px-[20px]" totalElapsedTime={totalElapsedTime} />
             <Question
               categoryName={curQuiz.category.name}
               documentName={curQuiz.document.name}
@@ -100,6 +104,7 @@ export default function Quiz({ quizzes }: QuizProps) {
                     quizProgress={quizProgress}
                     curQuiz={curQuiz}
                     onSelectAnswer={onSelectAnswer}
+                    onVisibleAnimationEnd={() => runTimer()}
                     className="mt-[24px]"
                   />
                 ),
@@ -108,6 +113,7 @@ export default function Quiz({ quizzes }: QuizProps) {
                     quizProgress={quizProgress}
                     curQuiz={curQuiz}
                     onSelectAnswer={onSelectAnswer}
+                    onVisibleAnimationEnd={() => runTimer()}
                     className="mt-[40px]"
                   />
                 ),

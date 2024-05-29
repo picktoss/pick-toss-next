@@ -4,22 +4,34 @@ import { QuizDTO } from '@/apis/types/dto/quiz.dto'
 import MixUpOption from './components/option'
 import { HTMLAttributes } from 'react'
 import { QuizProgress } from '../../types'
+import { motion } from 'framer-motion'
 
 interface MixUpOptionsProps extends HTMLAttributes<HTMLDivElement> {
   quizProgress: QuizProgress
   curQuiz: QuizDTO
   onSelectAnswer: (answer: 'correct' | 'incorrect') => Promise<void>
+  onVisibleAnimationEnd: () => void
 }
 
 export default function MixUpOptions({
   quizProgress,
   curQuiz,
   onSelectAnswer,
+  onVisibleAnimationEnd,
   className,
 }: MixUpOptionsProps) {
   return (
     <div className={className}>
-      <div className="flex w-full justify-center gap-[10px] px-[20px] lg:gap-[24px]">
+      <motion.div
+        className="flex w-full justify-center gap-[10px] px-[20px] lg:gap-[24px]"
+        initial={{ y: 30, opacity: 0 }}
+        animate={{
+          y: 0,
+          opacity: 1,
+          transition: { duration: 0.5, delay: 0.2 },
+        }}
+        onAnimationComplete={onVisibleAnimationEnd}
+      >
         {quizProgress.progress === 'idle' || quizProgress.selectedMixUpQuizAnswer === 'correct' ? (
           <MixUpOption
             key={`correct-${curQuiz.id}`}
@@ -39,7 +51,7 @@ export default function MixUpOptions({
             isCorrect={quizProgress.selectedMixUpQuizAnswer === curQuiz.answer}
           />
         ) : null}
-      </div>
+      </motion.div>
     </div>
   )
 }
