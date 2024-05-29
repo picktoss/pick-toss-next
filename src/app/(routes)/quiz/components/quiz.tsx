@@ -27,7 +27,7 @@ export default function Quiz({ quizzes }: QuizProps) {
   const quizSetId = useSearchParams().get('quizSetId') || ''
   const session = useSession()
 
-  const [state, setState] = useState<'intro' | 'solving' | 'end'>('end')
+  const [state, setState] = useState<'intro' | 'solving' | 'end'>('intro')
   const { totalElapsedTime, runTimer, stopTimer } = useTimer()
   const [solvingData, setSolvingData] = useState<SolvingData>([])
 
@@ -174,7 +174,7 @@ export default function Quiz({ quizzes }: QuizProps) {
             ) : null}
           </div>
         ),
-        end: <QuizResult />,
+        end: <QuizResult totalElapsedTime={totalElapsedTime} />,
       }}
     />
   )
