@@ -18,6 +18,7 @@ import { patchQuizResult } from '@/apis/fetchers/quiz/patch-quiz-result'
 import { useSearchParams } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import QuizResult from './quiz-result'
+import QuizFireworks from './quiz-fireworks'
 
 interface QuizProps {
   quizzes: QuizDTO[]
@@ -123,56 +124,59 @@ export default function Quiz({ quizzes }: QuizProps) {
       caseBy={{
         intro: <QuizIntro quizzes={quizzes} className="mx-[20px] mt-[43px]" />,
         solving: (
-          <div className="pt-[12px]">
-            <QuizHeader className="mb-[32px] px-[20px]" totalElapsedTime={totalElapsedTime} />
-            <Question
-              categoryName={curQuiz.category.name}
-              documentName={curQuiz.document.name}
-              question={curQuiz.question}
-              curQuizIndex={quizProgress.quizIndex}
-              totalQuizCount={quizzes.length}
-            />
-            <SwitchCase
-              value={curQuiz.quizType}
-              caseBy={{
-                MULTIPLE_CHOICE: (
-                  <MultipleOptions
-                    quizProgress={quizProgress}
-                    curQuiz={curQuiz}
-                    onSelectAnswer={onSelectAnswer}
-                    onVisibleAnimationEnd={() => runTimer()}
-                    className="mt-[24px]"
-                  />
-                ),
-                MIX_UP: (
-                  <MixUpOptions
-                    quizProgress={quizProgress}
-                    curQuiz={curQuiz}
-                    onSelectAnswer={onSelectAnswer}
-                    onVisibleAnimationEnd={() => runTimer()}
-                    className="mt-[40px]"
-                  />
-                ),
-              }}
-            />
-            {quizProgress.progress === 'result' ? (
-              <Explanation
-                isCorrect={isCorrect}
-                correctItem={
-                  curQuiz.quizType === 'MULTIPLE_CHOICE'
-                    ? String.fromCharCode(
-                        65 + curQuiz.options.findIndex((option) => curQuiz.answer === option)
-                      )
-                    : curQuiz.answer === 'correct'
-                    ? 'O'
-                    : 'X'
-                }
-                explanation={curQuiz.explanation}
-                next={next}
-                className="mt-[48px]"
+          <>
+            <div className="pt-[12px]">
+              <QuizHeader className="mb-[32px] px-[20px]" totalElapsedTime={totalElapsedTime} />
+              <Question
+                categoryName={curQuiz.category.name}
+                documentName={curQuiz.document.name}
+                question={curQuiz.question}
+                curQuizIndex={quizProgress.quizIndex}
+                totalQuizCount={quizzes.length}
               />
-            ) : null}
-          </div>
+              <SwitchCase
+                value={curQuiz.quizType}
+                caseBy={{
+                  MULTIPLE_CHOICE: (
+                    <MultipleOptions
+                      quizProgress={quizProgress}
+                      curQuiz={curQuiz}
+                      onSelectAnswer={onSelectAnswer}
+                      onVisibleAnimationEnd={() => runTimer()}
+                      className="mt-[24px]"
+                    />
+                  ),
+                  MIX_UP: (
+                    <MixUpOptions
+                      quizProgress={quizProgress}
+                      curQuiz={curQuiz}
+                      onSelectAnswer={onSelectAnswer}
+                      onVisibleAnimationEnd={() => runTimer()}
+                      className="mt-[40px]"
+                    />
+                  ),
+                }}
+              />
+              {quizProgress.progress === 'result' ? (
+                <Explanation
+                  isCorrect={isCorrect}
+                  correctItem={
+                    curQuiz.quizType === 'MULTIPLE_CHOICE'
+                      ? String.fromCharCode(
+                          65 + curQuiz.options.findIndex((option) => curQuiz.answer === option)
+                        )
+                      : curQuiz.answer === 'correct'
+                      ? 'O'
+                      : 'X'
+                  }
+                  explanation={curQuiz.explanation}
+                  next={next}
+                  className="mt-[48px]"
+                />
+              ) : null}
+            </div>
+            {isCorrect && <QuizFireworks duration={SHOW_RESULT_DURATION} />}
+          </>
         ),
         end: <QuizResult totalElapsedTime={totalElapsedTime} />,
       }}
