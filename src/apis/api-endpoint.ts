@@ -103,7 +103,7 @@ export const API_ENDPOINT = {
       url: `/auth/verification`,
       method: HttpMethod.POST,
     }),
-    checkVerification: () => ({
+    verifyEmailCheck: () => ({
       url: `/auth/verification/check`,
       method: HttpMethod.POST,
     }),
