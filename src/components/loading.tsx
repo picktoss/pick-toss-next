@@ -96,8 +96,8 @@ function LoadingSkeletonIcon({ className }: { className: HTMLElement['className'
           y2="107.022"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FF9C28" />
-          <stop offset="1" stop-color="#FFD298" />
+          <stop stopColor="#FF9C28" />
+          <stop offset="1" stopColor="#FFD298" />
         </linearGradient>
       </defs>
     </svg>
