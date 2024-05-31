@@ -77,6 +77,6 @@
 
 @layer utilities {
   .center {
-    @apply absolute bottom-1/2 right-1/2 w-full translate-x-1/2 translate-y-1/2;
+    @apply absolute bottom-1/2 right-1/2 translate-x-1/2 translate-y-1/2;
   }
 }
