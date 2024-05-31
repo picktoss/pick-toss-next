@@ -36,15 +36,15 @@ export const {
         } catch (error) {
           throw new Error('Failed to get backend access token')
         }
-      }
 
-      try {
-        const user = await getUser({
-          accessToken: token.accessToken as string,
-        })
-        token.userDTO = user
-      } catch (error) {
-        throw new Error('Failed to get user')
+        try {
+          const user = await getUser({
+            accessToken: token.accessToken as string,
+          })
+          token.userDTO = user
+        } catch (error) {
+          throw new Error('Failed to get user')
+        }
       }
 
       return token
