@@ -6,7 +6,7 @@ import { apiClient } from '@/lib/api-client'
 
 interface GetTodayQuizSetIdResponse {
   quizSetId: string
-  message: string
+  type: 'ready' | 'done' | 'notReady'
 }
 
 export const getTodayQuizSetId = async (/* params?: GetTodayQuizIdParams */) => {

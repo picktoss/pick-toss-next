@@ -18,6 +18,8 @@ import google from '../../public/icons/google.svg'
 import file from '../../public/icons/file.svg'
 import plus from '../../public/icons/plus.svg'
 import quizReady from '../../public/icons/quiz-ready.svg'
+import quizNotReady from '../../public/icons/quiz-not-ready.svg'
+import quizDone from '../../public/icons/quiz-done.svg'
 import arrowRight from '../../public/icons/arrow-right.svg'
 import logOut from '../../public/icons/log-out.svg'
 
@@ -39,6 +41,8 @@ const icons = {
   file,
   plus,
   quizReady,
+  quizNotReady,
+  quizDone,
   arrowRight,
   logOut,
   chevronRight,
