@@ -4,8 +4,8 @@ import { PropsWithChildren, createContext, useCallback, useContext, useMemo, use
 interface CreateDocumentContextValues {
   selectedCategoryId: CategoryDTO['id']
   selectCategory: (categoryId: CategoryDTO['id']) => void
-  title: string
-  changeTitle: (title: string) => void
+  documentName: string
+  changeDocumentName: (title: string) => void
 }
 
 const CreateDocumentContext = createContext<CreateDocumentContextValues | null>(null)
@@ -15,24 +15,24 @@ export function CreateDocumentProvider({
   initCategoryId,
 }: PropsWithChildren<{ initCategoryId: CategoryDTO['id'] }>) {
   const [selectedCategoryId, setSelectedCategoryId] = useState(initCategoryId)
-  const [title, setTitle] = useState('')
+  const [documentName, setDocumentName] = useState('')
 
   const selectCategory = useCallback((categoryId: CategoryDTO['id']) => {
     setSelectedCategoryId(categoryId)
   }, [])
 
-  const changeTitle = useCallback((title: string) => {
-    setTitle(title)
+  const changeDocumentName = useCallback((title: string) => {
+    setDocumentName(title)
   }, [])
 
   const values = useMemo(
     () => ({
       selectedCategoryId,
       selectCategory,
-      title,
-      changeTitle,
+      documentName,
+      changeDocumentName,
     }),
-    [selectedCategoryId, selectCategory, title, changeTitle]
+    [selectedCategoryId, selectCategory, documentName, changeDocumentName]
   )
 
   return <CreateDocumentContext.Provider value={values}>{children}</CreateDocumentContext.Provider>

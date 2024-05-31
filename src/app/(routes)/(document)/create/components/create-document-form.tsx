@@ -1,22 +1,18 @@
 'use client'
 
-import { Input } from '@/components/ui/input'
 import { useRemirror } from '@remirror/react'
 import { extensions } from '../libs/extensions'
 import { VisualEditor } from './editor'
-import { useState } from 'react'
 import { createDocument } from '@/apis/fetchers/document/create-document'
 import { useMutation } from '@tanstack/react-query'
 import { Button } from '@/components/ui/button'
-import Link from 'next/link'
 import { useCreateDocumentContext } from '../contexts/create-document-context'
 
 interface Props {}
 
 export default function CreateDocumentForm({}: Props) {
-  const { selectedCategoryId } = useCreateDocumentContext()
+  const { selectedCategoryId, documentName } = useCreateDocumentContext()
 
-  const [documentName, setDocumentName] = useState('')
   const visual = useRemirror({
     extensions,
     stringHandler: 'markdown',
@@ -44,16 +40,9 @@ export default function CreateDocumentForm({}: Props) {
         })
       }}
     >
-      <Input
-        name="documentName"
-        placeholder="제목 추가"
-        value={documentName}
-        onChange={(e) => setDocumentName(e.target.value)}
-      />
       <VisualEditor visual={visual} />
 
       <Button>문서 생성하기</Button>
-      <Link href="/repository">노트 창고로 이동하기</Link>
     </form>
   )
 }
