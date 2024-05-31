@@ -1,3 +1,5 @@
+'use client'
+
 import '@remirror/styles/all.css'
 import '../styles/remirror-custom.css'
 
@@ -5,19 +7,22 @@ import { css } from '@emotion/css'
 import React from 'react'
 import {
   // MarkdownToolbar,
-  ReactExtensions,
   Remirror,
   ThemeProvider,
-  UseRemirrorReturn,
+  useRemirror,
 } from '@remirror/react'
+import { useCreateDocumentContext } from '../contexts/create-document-context'
+import { extensions } from '../libs/extensions'
 
-interface VisualEditorProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  visual: UseRemirrorReturn<ReactExtensions<any>>
-}
+interface VisualEditorProps {}
 
-export const VisualEditor = ({ visual }: VisualEditorProps) => {
-  const { manager, state, setState } = visual
+export default function VisualEditor({}: VisualEditorProps) {
+  const { manager } = useRemirror({
+    extensions,
+    stringHandler: 'markdown',
+    // content: '**Markdown** content is the _best_',
+  })
+  const { changeMarkdownContent } = useCreateDocumentContext()
 
   return (
     <ThemeProvider>
@@ -25,8 +30,7 @@ export const VisualEditor = ({ visual }: VisualEditorProps) => {
         manager={manager}
         autoRender="end"
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        onChange={({ helpers, state }) => setState(helpers.getMarkdown(state))}
-        initialContent={state}
+        onChange={({ helpers, state }) => changeMarkdownContent(helpers.getMarkdown(state))}
         placeholder="본문을 작성해보세요!"
         classNames={[
           css`
@@ -51,6 +55,7 @@ export const VisualEditor = ({ visual }: VisualEditorProps) => {
             }
           `,
           'prose prose-h1:text-4xl dark:prose-invert prose-p:my-0 prose-sm !shadow-none sm:prose-base lg:prose-lg xl:prose-md focus:outline-none',
+          'min-h-[100vh]',
         ]}
       >
         {/* <MarkdownToolbar /> */}
