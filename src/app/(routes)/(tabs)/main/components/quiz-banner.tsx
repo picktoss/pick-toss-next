@@ -12,7 +12,7 @@ interface QuizBannerProps {
   quizSetId: string | null
 }
 
-export default function QuizBanner({ type, quizSetId }: QuizBannerProps) {
+export default function QuizBanner({ type = 'notReady', quizSetId }: QuizBannerProps) {
   const router = useRouter()
 
   return (
