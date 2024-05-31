@@ -5,7 +5,6 @@ import { extensions } from '../libs/extensions'
 import { VisualEditor } from './editor'
 import { createDocument } from '@/apis/fetchers/document/create-document'
 import { useMutation } from '@tanstack/react-query'
-import { Button } from '@/components/ui/button'
 import { useCreateDocumentContext } from '../contexts/create-document-context'
 
 interface Props {}
@@ -16,7 +15,7 @@ export default function CreateDocumentForm({}: Props) {
   const visual = useRemirror({
     extensions,
     stringHandler: 'markdown',
-    content: '**Markdown** content is the _best_',
+    // content: '**Markdown** content is the _best_',
   })
   const editorContent = visual.state as unknown as string
   const { mutateAsync } = useMutation({
@@ -41,8 +40,6 @@ export default function CreateDocumentForm({}: Props) {
       }}
     >
       <VisualEditor visual={visual} />
-
-      <Button>문서 생성하기</Button>
     </form>
   )
 }

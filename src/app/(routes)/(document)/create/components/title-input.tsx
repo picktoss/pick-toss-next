@@ -5,12 +5,13 @@ export function TitleInput() {
   const { documentName, changeDocumentName } = useCreateDocumentContext()
 
   return (
-    <div className="mx-[20px] mb-[16px] border-b pt-[25px]">
+    <div className="mx-[20px] border-b pt-[25px]">
       <Input
         value={documentName}
         onChange={(e) => changeDocumentName(e.target.value)}
         placeholder="제목 추가"
         className="border-b border-none border-gray-04 bg-inherit !text-h3-bold placeholder:text-gray-04"
+        autoFocus
       />
     </div>
   )

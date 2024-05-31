@@ -33,8 +33,10 @@ export default function CreateDocument() {
   return (
     <CreateDocumentProvider initCategoryId={categories[0].id}>
       <Header categories={categories} />
-      <TitleInput />
-      <CreateDocumentForm />
+      <div className="mt-[22px] min-h-screen rounded-t-[20px] bg-white shadow-sm">
+        <TitleInput />
+        <CreateDocumentForm />
+      </div>
     </CreateDocumentProvider>
   )
 }
