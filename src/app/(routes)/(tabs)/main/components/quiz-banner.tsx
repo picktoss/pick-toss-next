@@ -1,5 +1,6 @@
 'use client'
 
+import { TodayQuizSetType } from '@/apis/fetchers/quiz/get-today-quiz-set-id'
 import { SwitchCase } from '@/components/react/switch-case'
 import { Button } from '@/components/ui/button'
 import icons from '@/constants/icons'
@@ -8,29 +9,29 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
 interface QuizBannerProps {
-  type: 'ready' | 'done' | 'notReady'
+  type: TodayQuizSetType
   quizSetId: string | null
 }
 
-export default function QuizBanner({ type = 'notReady', quizSetId }: QuizBannerProps) {
+export default function QuizBanner({ type = 'NOT_READY', quizSetId }: QuizBannerProps) {
   const router = useRouter()
 
   return (
     <div
       className={cn(
         'relative flex min-h-[240px] w-full flex-col justify-between rounded-[12px] p-[20px] lg:min-h-[248px] lg:max-w-[840px] text-body1-bold-eng',
-        type === 'ready' && 'bg-orange-02',
-        type === 'notReady' && 'bg-gray-02',
-        type === 'done' && 'bg-blue-02'
+        type === 'READY' && 'bg-orange-02',
+        type === 'NOT_READY' && 'bg-gray-02',
+        type === 'DONE' && 'bg-blue-02'
       )}
     >
       <div className="w-[calc(100%-160px)]">
         <div
           className={cn(
             'mb-[12px] text-body1-bold-eng',
-            type === 'ready' && 'text-orange-06',
-            type === 'notReady' && 'text-gray-06',
-            type === 'done' && 'text-blue-06'
+            type === 'READY' && 'text-orange-06',
+            type === 'NOT_READY' && 'text-gray-06',
+            type === 'DONE' && 'text-blue-06'
           )}
         >
           TODAY&apos;s QUIZ
@@ -40,9 +41,9 @@ export default function QuizBanner({ type = 'notReady', quizSetId }: QuizBannerP
             <SwitchCase
               value={type}
               caseBy={{
-                ready: <div>픽토스님을 위한 퀴즈가 준비되었어요</div>,
-                notReady: <div>아직 만들어진 퀴즈가 없어요</div>,
-                done: <div>오늘의 퀴즈 완료!</div>,
+                READY: <div>픽토스님을 위한 퀴즈가 준비되었어요</div>,
+                NOT_READY: <div>아직 만들어진 퀴즈가 없어요</div>,
+                DONE: <div>오늘의 퀴즈 완료!</div>,
               }}
             />
           </div>
@@ -50,13 +51,13 @@ export default function QuizBanner({ type = 'notReady', quizSetId }: QuizBannerP
             <SwitchCase
               value={type}
               caseBy={{
-                ready: <div className="text-body2-medium">4월 25일 목요일</div>,
-                notReady: (
+                READY: <div className="text-body2-medium">4월 25일 목요일</div>,
+                NOT_READY: (
                   <div className="text-small1-regular">
                     퀴즈를 만들 수 있을 정도로 노트 양이 충분하지 않거나, 현재 퀴즈를 생성중입니다
                   </div>
                 ),
-                done: <div className="text-body2-medium">나의 점수: 80점</div>,
+                DONE: <div className="text-body2-medium">나의 점수: 80점</div>,
               }}
             />
           </div>
@@ -66,20 +67,20 @@ export default function QuizBanner({ type = 'notReady', quizSetId }: QuizBannerP
       <SwitchCase
         value={type}
         caseBy={{
-          ready: (
+          READY: (
             <Image src={icons.quizReady} width={148} className="absolute right-[18px]" alt="" />
           ),
-          notReady: (
+          NOT_READY: (
             <Image src={icons.quizNotReady} width={148} className="absolute right-[18px]" alt="" />
           ),
-          done: <Image src={icons.quizDone} width={148} className="absolute right-[18px]" alt="" />,
+          DONE: <Image src={icons.quizDone} width={148} className="absolute right-[18px]" alt="" />,
         }}
       />
 
       <SwitchCase
         value={type}
         caseBy={{
-          ready: (
+          READY: (
             <Button
               className="flex w-full gap-[8px] rounded-[8px]"
               onClick={() => router.push(`/quiz?quizSetId=${quizSetId}`)}
@@ -88,7 +89,7 @@ export default function QuizBanner({ type = 'notReady', quizSetId }: QuizBannerP
               <Image src={icons.arrowRight} width={20.25} height={13.5} alt="" />
             </Button>
           ),
-          notReady: (
+          NOT_READY: (
             <Button
               className="flex w-full gap-[8px] rounded-[8px]"
               onClick={() => router.push('/create')}
@@ -97,7 +98,7 @@ export default function QuizBanner({ type = 'notReady', quizSetId }: QuizBannerP
               <Image src={icons.arrowRight} width={20.25} height={13.5} alt="" />
             </Button>
           ),
-          done: (
+          DONE: (
             <Button className="flex w-full cursor-default gap-[8px] rounded-[8px] bg-blue-03 text-blue-06 hover:bg-blue-03">
               <div>내일 퀴즈까지 00:00분 남음</div>
             </Button>

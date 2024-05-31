@@ -4,9 +4,11 @@ import { apiClient } from '@/lib/api-client'
 
 // interface GetTodayQuizSetIdParams extends NextFetchRequestConfig {}
 
+export type TodayQuizSetType = 'READY' | 'NOT_READY' | 'DONE'
+
 interface GetTodayQuizSetIdResponse {
   quizSetId: string
-  type: 'ready' | 'done' | 'notReady'
+  type: TodayQuizSetType
 }
 
 export const getTodayQuizSetId = async (/* params?: GetTodayQuizIdParams */) => {
