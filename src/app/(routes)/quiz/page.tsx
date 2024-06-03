@@ -12,6 +12,10 @@ interface QuizProps {
 
 // eslint-disable-next-line @typescript-eslint/require-await
 export default async function QuizPage({ searchParams }: QuizProps) {
+  if (!searchParams.quizSetId) {
+    notFound()
+  }
+
   // const { quizzes: ignore } = await getQuizSets({
   //   quizSetId: searchParams.quizSetId,
   // })
