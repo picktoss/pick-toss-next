@@ -22,13 +22,7 @@ export default function Loading({ center, size = 'small', className }: Props) {
       {!isReady && (
         <LoadingSkeletonIcon className={cn(size === 'large' ? 'size-[262px]' : 'size-[104.5px]')} />
       )}
-      <div
-        className={cn('relative overflow-hidden', !isReady && 'hidden')}
-        style={{
-          width: size === 'large' ? 262 : 104.5,
-          height: size === 'large' ? 262 : 104.5,
-        }}
-      >
+      <div className={cn('relative overflow-hidden', !isReady && 'hidden')}>
         <Lottie
           onLoad={() => setIsCirclesDataLoaded(true)}
           loop
@@ -37,8 +31,8 @@ export default function Loading({ center, size = 'small', className }: Props) {
           speed={0.8}
           className="center absolute"
           style={{
-            width: size === 'large' ? 600 : 240,
-            height: size === 'large' ? 600 : 240,
+            width: size === 'large' ? 262 : 104.5,
+            height: size === 'large' ? 262 : 104.5,
           }}
         />
         <Lottie
