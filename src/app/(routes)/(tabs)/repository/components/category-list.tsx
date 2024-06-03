@@ -12,14 +12,16 @@ import {
   DragStartEvent,
   DragOverlay,
 } from '@dnd-kit/core'
-import { useState } from 'react'
+import { HTMLAttributes, useState } from 'react'
 import { SortableContext, arrayMove } from '@dnd-kit/sortable'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { Category, getCategories } from '@/apis/fetchers/category/get-categories'
 import { useSession } from 'next-auth/react'
 import CreateCategoryModal from './create-category-modal'
 
-export default function CategoryList() {
+interface Props extends HTMLAttributes<HTMLDivElement> {}
+
+export default function CategoryList({ className }: Props) {
   const [draggedItem, setDraggedItem] = useState<Category | null>(null)
 
   const { data: session } = useSession()
@@ -66,7 +68,7 @@ export default function CategoryList() {
   }
 
   return (
-    <>
+    <div className={className}>
       <p className="mb-[16px] text-body1-medium text-gray-08">
         공부 폴더 <span className="font-bold text-orange-06">{categories.length}</span>개
       </p>
@@ -95,6 +97,6 @@ export default function CategoryList() {
         </SortableContext>
         <DragOverlay>{draggedItem && <CategoryItem {...draggedItem} />}</DragOverlay>
       </DndContext>
-    </>
+    </div>
   )
 }
