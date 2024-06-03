@@ -48,7 +48,7 @@ export function CommonLayout({ title, hideHeader, mobileOptions, children }: Com
     if (hideHeader) return children
 
     return (
-      <>
+      <div className="flex flex-col">
         <div className="px-[20px]">
           <div className="ml-auto flex h-[60px] w-full items-center justify-end gap-[32px]">
             <BellIcon />
@@ -65,7 +65,7 @@ export function CommonLayout({ title, hideHeader, mobileOptions, children }: Com
         </div>
 
         {children}
-      </>
+      </div>
     )
   }
 
@@ -73,7 +73,7 @@ export function CommonLayout({ title, hideHeader, mobileOptions, children }: Com
     mobileOptions?.hasNotifications || mobileOptions?.hasSearch || mobileOptions?.hasStars
 
   return (
-    <>
+    <div className="flex flex-col">
       <div className="relative flex h-[48px] items-center px-[20px]">
         {mobileOptions?.hasBackButton && (
           <div className="flex items-center">
@@ -104,7 +104,7 @@ export function CommonLayout({ title, hideHeader, mobileOptions, children }: Com
       </div>
 
       {children}
-    </>
+    </div>
   )
 }
 
