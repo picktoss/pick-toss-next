@@ -109,18 +109,20 @@ export function CommonLayout({ title, hideHeader, mobileOptions, children }: Com
 }
 
 const Title = ({ title, center }: { title: TitleType; center?: boolean }) => {
-  if (title instanceof String) {
-    return <h2 className={cn(center && 'center')}>{title}</h2>
-  }
-
-  if (title instanceof Object) {
+  if (typeof title === 'string') {
     return (
-      <div className={cn('flex items-start gap-[8px] *:shrink-0', center && 'center')}>
-        <h2 className="text-h3-bold text-gray-09 lg:text-h2-medium">{title.label}</h2>
-        {title.icon}
-      </div>
+      <h2 className={cn('!text-h3-bold text-gray-09 lg:text-h2-medium', center && 'center')}>
+        {title}
+      </h2>
     )
   }
+
+  return (
+    <div className={cn('flex items-start gap-[8px] *:shrink-0', center && 'center')}>
+      <h2 className="text-h3-bold text-gray-09 lg:text-h2-medium">{title.label}</h2>
+      {title.icon}
+    </div>
+  )
 }
 
 const BackButton = () => {
