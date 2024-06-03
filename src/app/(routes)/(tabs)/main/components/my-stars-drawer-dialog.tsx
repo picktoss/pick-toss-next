@@ -66,8 +66,8 @@ function MyStarsContent({ stars }: { stars: number; continuousQuizDatesCount: nu
           오늘의 퀴즈를 풀 때마다 별 5개를 드리고, 5일 연속 퀴즈를 풀면 20개를 드려요
         </div>
 
-        <div className="flex w-[376px] justify-center rounded-[12px] bg-gray-01 pb-[28px] pt-[21px] text-small1-bold text-gray-07">
-          <div className="relative flex w-[324px] justify-between overflow-hidden">
+        <div className="flex w-full max-w-[376px] justify-center rounded-[12px] bg-gray-01 pb-[28px] pt-[21px] text-small1-bold text-gray-07">
+          <div className="relative mx-[20px] flex w-full max-w-[324px] justify-between overflow-hidden">
             <div className="absolute bottom-[20px] w-full border border-dashed" />
 
             <div className="flex flex-col items-center gap-[8px]">
