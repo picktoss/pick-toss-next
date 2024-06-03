@@ -1,5 +1,4 @@
 import { LeftSidebar } from '@/components/left-sidebar'
-import { TabNavigation } from '@/components/tab-nav'
 import { Viewport } from 'next'
 import { PropsWithChildren } from 'react'
 
@@ -12,22 +11,21 @@ export const viewport: Viewport = {
   minimumScale: 1.0,
 }
 
-const TabsLayout = ({ children }: LayoutProps) => {
+const DocumentLayout = ({ children }: LayoutProps) => {
   return (
     <>
       <div className="hidden justify-end lg:flex">
         <LeftSidebar />
         <div className="flex w-[calc(100vw-240px)] justify-center">
-          <div className="w-full max-w-[1072px]">{children}</div>
+          <div className="w-full">{children}</div>
         </div>
       </div>
 
       <div className="lg:hidden">
         <div className="flex min-h-screen flex-col pb-[84px]">{children}</div>
-        <TabNavigation />
       </div>
     </>
   )
 }
 
-export default TabsLayout
+export default DocumentLayout
