@@ -26,7 +26,7 @@ export default async function Achievements() {
         stars={userDTO!.point}
         continuousQuizDatesCount={userDTO!.continuousQuizDatesCount}
         trigger={
-          <div className="flex min-w-[164px] flex-1 justify-center gap-[26px] rounded-[12px] bg-white p-[16px] lg:justify-between lg:gap-0">
+          <div className="flex min-w-[164px] flex-1 cursor-pointer justify-center gap-[26px] rounded-[12px] bg-white p-[16px] lg:justify-between lg:gap-0">
             <div className="flex flex-col gap-[4px]">
               <div className="text-body2-medium text-gray-08">나의 별</div>
               <div className="text-h4-bold text-gray-08 lg:text-h3-bold">
