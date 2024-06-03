@@ -9,9 +9,9 @@ export default function QuizFireworks({ duration }: Props) {
     <Fireworks
       onInit={async ({ confetti, conductor }) => {
         await confetti({
-          particleCount: 200,
+          particleCount: 60,
           ticks: duration,
-          spread: 100,
+          spread: 80,
           startVelocity: 50,
           origin: { x: 0.5, y: 0.7 },
           gravity: 2,
