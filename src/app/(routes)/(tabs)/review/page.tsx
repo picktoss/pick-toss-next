@@ -20,7 +20,7 @@ export default function Review() {
       }}
     >
       <main className="mt-[18px] pb-[50px] lg:mt-[24px] lg:px-[20px]">
-        <div className="flex flex-col gap-[12px] px-[20px] lg:px-0">
+        <div className="flex flex-col gap-[12px] px-[20px] lg:flex-row lg:px-0">
           <ArchiveLink
             redirectUrl="#"
             title="퀴즈 기록"
@@ -44,7 +44,7 @@ export default function Review() {
           />
         </div>
 
-        <div className="mt-[32px] flex flex-col gap-[24px]">
+        <div className="mt-[32px] flex flex-col gap-[24px] lg:mt-[16px] lg:gap-[16px]">
           <section className="flex flex-col gap-[24px] rounded-[12px] p-[20px] pb-[22px] lg:bg-white">
             <div className="flex flex-col gap-[8px]">
               <h2 className="flex items-center gap-[8px] text-h4-bold text-gray-09">
@@ -129,8 +129,11 @@ function ArchiveLink({
   isPro?: boolean
 }) {
   return (
-    <Link href={redirectUrl} className="flex justify-between rounded-[12px] bg-white p-[20px]">
-      <div className="flex items-center gap-[16px]">
+    <Link
+      href={redirectUrl}
+      className="flex justify-between rounded-[12px] bg-white p-[20px] lg:w-full"
+    >
+      <div className="flex items-center gap-[16px] lg:gap-[10px]">
         {icon}
         <div className="flex flex-col gap-[4px]">
           <div className="flex items-center gap-[8px]">
@@ -140,7 +143,7 @@ function ArchiveLink({
           <div className="text-body1-medium text-gray-06">{count}개</div>
         </div>
       </div>
-      <Image src={icons.chevronRight} width={6} height={10} alt="" />
+      <Image src={icons.chevronRight} width={6} height={10} alt="" className="lg:hidden" />
     </Link>
   )
 }
