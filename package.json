@@ -46,6 +46,7 @@
     "remark-gfm": "^4.0.0",
     "remirror": "^2.0.39",
     "tailwind-merge": "^2.2.2",
+    "tailwind-scrollbar-hide": "^1.1.7",
     "tailwindcss-animate": "^1.0.7",
     "vaul": "^0.9.1"
   },

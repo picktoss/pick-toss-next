@@ -22,6 +22,10 @@ import quizNotReady from '../../public/icons/quiz-not-ready.svg'
 import quizDone from '../../public/icons/quiz-done.svg'
 import arrowRight from '../../public/icons/arrow-right.svg'
 import logOut from '../../public/icons/log-out.svg'
+import ranking from '../../public/icons/ranking.svg'
+import quizArchive from '../../public/icons/quiz-archive.svg'
+import savePick from '../../public/icons/save-pick.svg'
+import timer from '../../public/icons/timer.svg'
 
 const icons = {
   check,
@@ -46,6 +50,10 @@ const icons = {
   arrowRight,
   logOut,
   chevronRight,
+  ranking,
+  quizArchive,
+  savePick,
+  timer,
 }
 
 export default icons as Record<keyof typeof icons, StaticImport>
