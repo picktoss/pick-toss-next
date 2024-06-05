@@ -23,6 +23,7 @@ export default function MixUpOptions({
   return (
     <div className={className}>
       <motion.div
+        key={curQuiz.id}
         className="flex w-full justify-center gap-[10px] px-[20px] lg:gap-[24px]"
         initial={{ y: 30, opacity: 0 }}
         animate={{
@@ -34,7 +35,6 @@ export default function MixUpOptions({
       >
         {quizProgress.progress === 'idle' || quizProgress.selectedMixUpQuizAnswer === 'correct' ? (
           <MixUpOption
-            key={`correct-${curQuiz.id}`}
             variant="correct"
             onClick={() => onSelectAnswer('correct')}
             progress={quizProgress.progress}
@@ -44,7 +44,6 @@ export default function MixUpOptions({
         {quizProgress.progress === 'idle' ||
         quizProgress.selectedMixUpQuizAnswer === 'incorrect' ? (
           <MixUpOption
-            key={`incorrect-${curQuiz.id}`}
             variant="incorrect"
             onClick={() => onSelectAnswer('incorrect')}
             progress={quizProgress.progress}
