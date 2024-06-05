@@ -2,7 +2,6 @@ import { mockCategories, mockUserData } from './mock-data'
 import Image from 'next/image'
 import { CategoryAccordion } from '@/components/category-accordion'
 import CategoryList from './components/category-list'
-import icons from '@/constants/icons'
 
 export default function Repository() {
   return (
@@ -14,13 +13,6 @@ export default function Repository() {
           </div>
           <Image src="/icons/book.svg" alt="" width={32} height={32} />
         </h2>
-        <div className="mb-[24px] flex items-center gap-4 rounded-full bg-gray-02 px-8 py-3">
-          <Image src={icons.search} alt="search" width={16} height={16} />
-          <input
-            className="w-full bg-transparent focus:outline-none"
-            placeholder="노트명, 노트 내용 검색"
-          />
-        </div>
         <CategoryList />
       </div>
       <div className="min-h-40 w-full rounded-t-[20px] bg-white p-[20px] pb-[70px] lg:hidden">

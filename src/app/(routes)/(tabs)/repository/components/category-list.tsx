@@ -18,6 +18,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { Category, getCategories } from '@/apis/fetchers/category/get-categories'
 import { useSession } from 'next-auth/react'
 import CreateCategoryModal from './create-category-modal'
+import icons from '@/constants/icons'
 
 export default function CategoryList() {
   const [draggedItem, setDraggedItem] = useState<Category | null>(null)
@@ -67,6 +68,13 @@ export default function CategoryList() {
 
   return (
     <>
+      <div className="mb-[24px] flex items-center gap-4 rounded-full bg-gray-02 px-8 py-3">
+        <Image src={icons.search} alt="search" width={16} height={16} />
+        <input
+          className="w-full bg-transparent focus:outline-none"
+          placeholder="노트명, 노트 내용 검색"
+        />
+      </div>
       <p className="mb-[16px] text-body1-medium text-gray-08">
         공부 폴더 <span className="font-bold text-orange-06">{categories.length}</span>개
       </p>
