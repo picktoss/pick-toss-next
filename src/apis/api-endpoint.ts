@@ -58,6 +58,11 @@ export const API_ENDPOINT = {
       url: `/documents/${documentId}/ai-pick`,
       method: HttpMethod.POST,
     }),
+
+    updateDocumentName: (documentId: number) => ({
+      url: `/documents/${documentId}/update-name`,
+      method: HttpMethod.PATCH,
+    }),
   },
 
   // 카테고리 관련 API

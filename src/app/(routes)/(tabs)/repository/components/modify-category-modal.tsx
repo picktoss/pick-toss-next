@@ -61,7 +61,7 @@ export default function ModifyCategoryModal({ id, name, emoji, tag }: Props) {
       />
       <div className="flex justify-center">
         <DialogClose asChild>
-          <Button className="w-[280px]" onClick={handleCreateCategory}>
+          <Button className="w-[160px]" onClick={handleCreateCategory}>
             완료
           </Button>
         </DialogClose>

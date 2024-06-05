@@ -11,35 +11,24 @@ import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { cn } from '@/lib/utils'
 import { Document } from '@/apis/fetchers/document/get-documents-for-category'
-import { deleteDocument } from '@/apis/fetchers/document/delete-document'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useSession } from 'next-auth/react'
+import { useState } from 'react'
+import { Dialog, DialogTrigger } from '@/components/ui/dialog'
+import DeleteDocumentModal from './delete-document.modal'
+import ModifyDocumentNameModal from './modify-document-name-modal'
 
 interface Props extends Document {}
 
-export default function DocumentItem({ id, name }: Props) {
-  const { data: session } = useSession()
-  const queryClient = useQueryClient()
-
-  const { mutate } = useMutation({
-    mutationFn: deleteDocument,
-    onSuccess: () =>
-      Promise.all([
-        queryClient.invalidateQueries({ queryKey: ['documents'] }),
-        queryClient.invalidateQueries({ queryKey: ['categories'] }),
-      ]),
-  })
+export default function DocumentItem(document: Props) {
+  const { id, name } = document
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: id,
   })
 
+  const [dialogStatus, setDialogStatus] = useState<'modify' | 'delete' | null>(null)
+
   const style = {
     transform: CSS.Transform.toString(transform),
     transition: transition,
-  }
-
-  const handleDeleteDocument = () => {
-    mutate({ accessToken: session?.user.accessToken || '', documentId: id })
   }
 
   return (
@@ -57,26 +46,45 @@ export default function DocumentItem({ id, name }: Props) {
           <div className="text-body1-medium text-gray-09">{name}</div>
         </div>
         <div className="flex items-center gap-12">
-          <DropdownMenu>
-            <DropdownMenuTrigger>
-              <div className="flex size-[25px] items-center justify-center rounded-full hover:bg-gray-02">
-                <Image src={icons.kebab} alt="" width={15} height={3} />
-              </div>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuItem onClick={(event) => event.stopPropagation()}>
-                문서 이름 변경하기
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={(event) => {
-                  event.stopPropagation()
-                  handleDeleteDocument()
-                }}
-              >
-                문서 삭제하기
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <Dialog>
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <div className="flex size-[25px] items-center justify-center rounded-full hover:bg-gray-02">
+                  <Image src={icons.kebab} alt="" width={15} height={3} />
+                </div>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem
+                  onClick={(event) => {
+                    event.stopPropagation()
+                    setDialogStatus('modify')
+                  }}
+                >
+                  <DialogTrigger asChild>
+                    <div className="flex gap-4">
+                      <Image src="/icons/modify-pencil.svg" alt="" width={16} height={16} />
+                      <span className="text-gray-09">이름 바꾸기</span>
+                    </div>
+                  </DialogTrigger>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={(event) => {
+                    event.stopPropagation()
+                    setDialogStatus('delete')
+                  }}
+                >
+                  <DialogTrigger asChild>
+                    <div className="flex gap-4">
+                      <Image src="/icons/trashcan-red.svg" alt="" width={16} height={16} />
+                      <span className="text-notice-red">노트 삭제하기</span>
+                    </div>
+                  </DialogTrigger>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            {dialogStatus === 'delete' && <DeleteDocumentModal {...document} />}
+            {dialogStatus === 'modify' && <ModifyDocumentNameModal {...document} />}
+          </Dialog>
         </div>
       </div>
     </Link>
