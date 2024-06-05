@@ -17,7 +17,7 @@ export interface GetUserResponse {
   }
   documentUsage: {
     possessDocumentCount: number
-    possibleUploadedDocumentCount: number
+    availableAiPickCount: number
     freePlanMaxPossessDocumentCount: number
     freePlanMonthlyDocumentCount: number
     proPlanMonthlyDocumentCount: number

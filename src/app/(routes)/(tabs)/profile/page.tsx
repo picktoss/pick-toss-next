@@ -14,7 +14,7 @@ export default async function Profile() {
   if (!session) throw new Error('로그인이 필요합니다.')
 
   const { name, documentUsage } = session.user.dto
-  const { possibleUploadedDocumentCount, possessDocumentCount, freePlanMaxPossessDocumentCount } =
+  const { availableAiPickCount, possessDocumentCount, freePlanMaxPossessDocumentCount } =
     documentUsage
 
   const uploadableCount = freePlanMaxPossessDocumentCount - possessDocumentCount
@@ -43,7 +43,7 @@ export default async function Profile() {
                   <span className="text-small1-regular text-gray-07">남은 AI pick 생성 횟수</span>
                   <Image src={icons.circleQuestion} width={16} height={16} alt="" />
                 </div>
-                <div className="text-h4-bold text-orange-05">{possibleUploadedDocumentCount}회</div>
+                <div className="text-h4-bold text-orange-05">{availableAiPickCount}회</div>
               </div>
               <div className="relative flex flex-col gap-[8px]">
                 <div className="text-small1-regular text-gray-07">나의 노트 창고</div>
