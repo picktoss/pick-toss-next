@@ -62,6 +62,11 @@ export const API_ENDPOINT = {
 
   // 카테고리 관련 API
   category: {
+    getCategory: (categoryId: number) => ({
+      url: `/categories/${categoryId}`,
+      method: HttpMethod.GET,
+    }),
+
     getCategories: () => ({
       url: `/categories`,
       method: HttpMethod.GET,
