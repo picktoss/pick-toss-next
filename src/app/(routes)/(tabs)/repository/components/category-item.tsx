@@ -36,7 +36,7 @@ export default function CategoryItem(props: Props) {
           isDragging && 'opacity-50'
         )}
       >
-        <div className="mb-3 text-2xl">{emoji}</div>
+        <div className="mb-3 text-2xl">{emoji || '📁'}</div>
         <div className="absolute right-[12px] top-[8px]">
           <Dialog>
             <DropdownMenu>

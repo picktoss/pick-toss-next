@@ -13,7 +13,7 @@ const tagVariant: {
     MATH: 'bg-[#E0FBF5] text-[#5BC2C2]',
     ART: 'bg-[#EFDBFF] text-[#B663DD]',
     MEDICINE: 'bg-[#E7FFDB] text-[#5F9F0D]',
-    ETC: 'bg-[#D9D9D9] text-[#000000]',
+    DEFAULT: 'bg-[#D9D9D9] text-[#000000]',
   },
   text: {
     IT: 'IT·개발',
@@ -23,7 +23,7 @@ const tagVariant: {
     MATH: '수학',
     ART: '예술',
     MEDICINE: '의료·과학',
-    ETC: '기타',
+    DEFAULT: '기타',
   },
 }
 
