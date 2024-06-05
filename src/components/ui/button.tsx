@@ -10,6 +10,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default: 'bg-orange-06 text-gray-01 hover:bg-orange-06/90',
+        gradation: 'bg-gradient-to-r from-[#93B0FF] to-[#FF8428] !text-white',
         destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
         outline: 'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
         secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
@@ -18,7 +19,7 @@ const buttonVariants = cva(
       },
       size: {
         default: 'h-[52px] px-4 py-[16px] !text-button',
-        sm: 'h-9 rounded-md px-3',
+        sm: 'h-[36px] min-w-[120px] rounded-[24px] px-[19px] text-small1-bold',
         lg: 'h-11 rounded-md px-8',
         icon: 'size-10',
       },

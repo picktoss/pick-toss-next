@@ -14,7 +14,7 @@ interface Props {
 
 export default async function Document({ params: { documentId } }: Props) {
   const session = await auth()
-  const { documentName, createdAt, content, keyPoints } = await getDocument({
+  const { documentName, createdAt, content, keyPoints, status } = await getDocument({
     accessToken: session?.user.accessToken || '',
     documentId: Number(documentId),
   })
@@ -31,7 +31,7 @@ export default async function Document({ params: { documentId } }: Props) {
           <main className="flex h-screen justify-center">
             <Viewer documentName={documentName} createdAt={createdAt} content={content} />
 
-            <AiPick keyPoints={keyPoints} />
+            <AiPick keyPoints={keyPoints} status={status} />
           </main>
         </DocumentDetailProvider>
       </CommonLayout>
