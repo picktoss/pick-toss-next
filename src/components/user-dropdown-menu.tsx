@@ -46,7 +46,7 @@ export function UserDropdownMenu() {
           </div>
         </DropdownMenuLabel>
         <div className="px-2 py-1 text-body1-bold text-gray-07 *:cursor-pointer">
-          <DropdownMenuItem onClick={() => router.push('profile')}>
+          <DropdownMenuItem onClick={() => router.push('/profile')}>
             <span className="text-base">설정</span>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
