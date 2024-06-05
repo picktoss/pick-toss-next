@@ -15,13 +15,15 @@ export const viewport: Viewport = {
 const TabsLayout = ({ children }: LayoutProps) => {
   return (
     <>
-      <div className="hidden justify-center lg:flex">
+      <div className="hidden justify-end lg:flex">
         <LeftSidebar />
-        <div className="ml-[240px] w-full max-w-[1072px] px-[20px]">{children}</div>
+        <div className="flex w-[calc(100vw-240px)] justify-center">
+          <div className="w-full max-w-[1072px]">{children}</div>
+        </div>
       </div>
 
       <div className="lg:hidden">
-        <div className="flex min-h-[calc(100vh-84px)] flex-col pb-[84px]">{children}</div>
+        <div className="flex min-h-screen flex-col pb-[84px]">{children}</div>
         <TabNavigation />
       </div>
     </>

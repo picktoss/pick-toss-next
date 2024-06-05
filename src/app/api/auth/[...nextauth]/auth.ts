@@ -27,24 +27,32 @@ export const {
     jwt: async ({ token, account }) => {
       if (account) {
         try {
-          const { accessToken } = await signInAPI({
+          const { accessToken, accessTokenExpiration } = await signInAPI({
             socialPlatform: account.provider.toUpperCase() as 'GOOGLE' | 'KAKAO',
             accessToken: account.access_token as string,
           })
           token.account = account
           token.accessToken = accessToken
+          token.accessTokenExpiration = accessTokenExpiration
         } catch (error) {
           throw new Error('Failed to get backend access token')
         }
+        // 회원가입 했을 때만 첫 사용자인지 알 수 있다
+        try {
+          const user = await getUser({
+            accessToken: token.accessToken as string,
+          })
+          token.userDTO = user
+        } catch (error) {
+          throw new Error('Failed to get user')
+        }
       }
 
-      try {
-        const user = await getUser({
-          accessToken: token.accessToken as string,
-        })
-        token.userDTO = user
-      } catch (error) {
-        throw new Error('Failed to get user')
+      if (
+        token.accessTokenExpiration &&
+        Date.now() > new Date(token.accessTokenExpiration as string).getTime()
+      ) {
+        throw new Error('server token expired')
       }
 
       return token

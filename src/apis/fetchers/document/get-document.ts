@@ -4,7 +4,7 @@ import { apiClient } from '@/lib/api-client'
 export interface DocumentInfo {
   id: number
   documentName: string
-  status: 'UNPROCESSED' | 'PROCESSED'
+  status: 'UNPROCESSED' | 'PROCESSED' | 'PROCESSING' | 'KEYPOINT_UPDATE_POSSIBLE'
   quizGenerationStatus: boolean
   category: {
     id: number

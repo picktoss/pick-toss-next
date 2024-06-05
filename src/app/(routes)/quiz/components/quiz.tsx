@@ -18,7 +18,7 @@ import { patchQuizResult } from '@/apis/fetchers/quiz/patch-quiz-result'
 import { useSearchParams } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import QuizResult from './quiz-result'
-import QuizFireworks from './quiz-fireworks'
+import { ChoiceReact } from './choice-react'
 
 interface QuizProps {
   quizzes: QuizDTO[]
@@ -175,7 +175,12 @@ export default function Quiz({ quizzes }: QuizProps) {
                 />
               ) : null}
             </div>
-            {isCorrect && <QuizFireworks duration={SHOW_RESULT_DURATION} />}
+
+            <ChoiceReact
+              duration={SHOW_RESULT_DURATION}
+              isCorrect={isCorrect}
+              condition={quizProgress.progress === 'choose'}
+            />
           </>
         ),
         end: <QuizResult totalElapsedTime={totalElapsedTime} />,

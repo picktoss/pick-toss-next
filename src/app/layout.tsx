@@ -4,7 +4,6 @@ import './globals.css'
 import { cn } from '@/lib/utils'
 import { SessionProvider } from 'next-auth/react'
 import TanstackProvider from '@/providers/tanstack-provider'
-import '@/components/loading'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' })
 

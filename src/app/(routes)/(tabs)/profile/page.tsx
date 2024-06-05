@@ -86,7 +86,7 @@ export default async function Profile() {
                   <span>{item.label}</span>
                   {item.disabled && <ComingSoon />}
                 </div>
-                <Image src={icons.chevronRight} width={16} height={16} alt="" />
+                <Image src={icons.chevronRight} width={6} height={10} alt="" />
               </Link>
             ))}
           </div>
@@ -108,27 +108,7 @@ export default async function Profile() {
                   <span>{item.label}</span>
                   {item.disabled && <ComingSoon />}
                 </div>
-                <Image src={icons.chevronRight} width={16} height={16} alt="" />
-              </Link>
-            ))}
-          </div>
-        }
-      />
-
-      <Section
-        className="mb-[18px]"
-        content={
-          <div className="flex flex-col rounded-[12px] bg-white py-[12px] text-gray-08 *:px-[20px]">
-            {profileConfig.appConfig.items.map((item) => (
-              <Link
-                key={item.id}
-                href={item.href}
-                className="flex items-center justify-between py-[12px]"
-              >
-                <div className="flex items-start gap-[8px]">
-                  <span>{item.label}</span>
-                  <Image src={icons.link} width={16} height={16} alt="" />
-                </div>
+                <Image src={icons.chevronRight} width={6} height={10} alt="" />
               </Link>
             ))}
           </div>

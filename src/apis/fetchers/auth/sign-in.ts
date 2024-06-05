@@ -8,6 +8,7 @@ interface SignInParams extends NextFetchRequestConfig {
 
 interface SignInResponse {
   accessToken: string
+  accessTokenExpiration: string
 }
 
 export const signIn = async (params: SignInParams) => {
