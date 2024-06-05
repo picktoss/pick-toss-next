@@ -17,6 +17,10 @@ import { useEffect, useState } from 'react'
 import { cn } from '@/lib/utils'
 import { motion, AnimatePresence } from 'framer-motion'
 import { SwitchCase } from '@/components/react/switch-case'
+import { useMutation } from '@tanstack/react-query'
+import { createAiPick } from '@/apis/fetchers/document/create-ai-pick'
+import { useSession } from 'next-auth/react'
+import { useParams } from 'next/navigation'
 
 interface Props {
   keyPoints: {
@@ -49,6 +53,17 @@ export function AiPick({ keyPoints, status }: Props) {
   const isDesktop = useMediaQuery('(min-width: 1024px)')
   const { isPickOpen, setIsPickOpen } = useDocumentDetailContext()
   const [showToggle, setShowToggle] = useState(false)
+  const session = useSession()
+  const documentId = useParams().documentId as string
+
+  const { mutate: mutateAiPick } = useMutation({
+    mutationKey: ['create-ai-pick'],
+    mutationFn: () =>
+      createAiPick({
+        documentId: Number(documentId),
+        accessToken: session.data?.user.accessToken || '',
+      }),
+  })
 
   useEffect(() => {
     if (isDesktop) {
@@ -95,7 +110,7 @@ export function AiPick({ keyPoints, status }: Props) {
         <AnimatePresence>
           {isPickOpen && (
             <motion.div
-              className="relative top-0 flex h-screen w-[420px] flex-col overflow-scroll bg-white"
+              className="relative top-0 flex h-screen w-[420px] flex-col bg-white"
               initial="initial"
               animate="animate"
               exit="exit"
@@ -103,7 +118,7 @@ export function AiPick({ keyPoints, status }: Props) {
               onAnimationStart={() => setShowToggle(false)}
               onAnimationComplete={() => setShowToggle(true)}
             >
-              <div className="flex flex-col gap-[15px] pt-[23px]">
+              <div className="mb-[20px] flex flex-col gap-[15px] pt-[23px]">
                 <div className="flex h-[48px] items-center px-[19px]">
                   <h3 className="text-h3-bold text-gray-08">AI pick</h3>
                 </div>
@@ -113,7 +128,7 @@ export function AiPick({ keyPoints, status }: Props) {
                 </div>
               </div>
 
-              <div className="flex-1 py-[40px]">
+              <div className="flex-1 overflow-scroll">
                 {status === 'UNPROCESSED' ? (
                   <div className="relative h-full">
                     <div className="absolute bottom-1/2 flex w-full flex-col items-center gap-[24px] text-center text-text-medium text-gray-08">
@@ -122,34 +137,66 @@ export function AiPick({ keyPoints, status }: Props) {
                         <br />
                         노트 요약을 확인해보세요
                       </p>
-                      <Button variant="gradation" size="sm" className="w-fit gap-[4px]">
+                      <Button
+                        variant="gradation"
+                        size="sm"
+                        className="w-fit gap-[4px]"
+                        onClick={() => mutateAiPick()}
+                      >
                         <StarsIcon />
                         pick 시작
                       </Button>
                     </div>
                   </div>
                 ) : (
-                  <div className="flex-1 overflow-scroll px-[20px]">
-                    <Accordion type="multiple" className="flex flex-col px-[16px] py-[7px]">
+                  <div className="pb-[60px] pl-[16px] pr-[18px]">
+                    <Accordion type="multiple" className="flex flex-col gap-[19px]">
                       {keyPoints.map((keyPoint, index) => (
                         <AccordionItem value={keyPoint.id.toString()} key={keyPoint.id}>
                           <AccordionTrigger
-                            className="flex items-center justify-between"
+                            className="flex items-center justify-between py-[12px]"
                             chevronDownIcon={
                               <div className="flex size-[24px] items-center justify-center rounded-full bg-blue-02">
                                 <ChevronDown size={16} color="#7095F8" strokeWidth={3} />
                               </div>
                             }
                           >
-                            <div className="flex flex-1 gap-1">
-                              <span className="text-body2-bold text-blue-06">{index + 1}</span>
-                              <span className="text-left text-body2-medium text-gray-09">
+                            <div className="flex gap-[4px]">
+                              <div className="flex w-[16px] shrink-0 text-text-bold text-blue-06">
+                                {index + 1}
+                              </div>
+                              <span className="pr-[8px] text-left text-text-medium text-gray-09">
                                 {keyPoint.question}
                               </span>
                             </div>
                           </AccordionTrigger>
-                          <AccordionContent className="px-[14px] text-body2-regular text-gray-08">
-                            {keyPoint.answer}
+                          <AccordionContent className="p-0 pl-[20px]">
+                            <div className="flex flex-col gap-[12px]">
+                              <div className="!text-text-regular text-gray-08">
+                                {keyPoint.answer}
+                              </div>
+                              <div
+                                role="button"
+                                className={cn(
+                                  'h-[31px] w-[69px] rounded-[24px] border flex justify-center items-center !text-small1-bold',
+                                  index % 2
+                                    ? 'border-gray-04 text-gray-06'
+                                    : 'border-blue-03 bg-blue-02 text-blue-06'
+                                )}
+                              >
+                                {index % 2 ? (
+                                  <div className="flex items-center gap-[4px]">
+                                    <AddBookMarkIcon />
+                                    <span>저장</span>
+                                  </div>
+                                ) : (
+                                  <div className="flex items-center gap-[4px]">
+                                    <FilledBookMarkIcon />
+                                    <span>저장됨</span>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
                           </AccordionContent>
                         </AccordionItem>
                       ))}
@@ -157,45 +204,6 @@ export function AiPick({ keyPoints, status }: Props) {
                   </div>
                 )}
               </div>
-
-              {/* <div className="flex flex-col gap-[36px] px-[16px] pb-[80px]">
-                <div className="flex items-center justify-between rounded-[8px] bg-blue-01 py-[16px] pl-[14px] pr-[18px]">
-                  <div className="flex items-center gap-[8px]">
-                    <Image src={icons.pin} width={24} height={24} alt="" />
-                    <div className="text-text-bold text-blue-06">
-                      픽토스 AI의 질문을 통해 내용을 돌아보세요
-                    </div>
-                  </div>
-                  <div className="text-small1-regular text-orange-06 underline">가이드 보기</div>
-                </div>
-
-                <div className="flex-1 overflow-scroll px-[20px]">
-                  <Accordion type="multiple" className="flex flex-col px-[16px] py-[7px]">
-                    {keyPoints.map((keyPoint, index) => (
-                      <AccordionItem value={keyPoint.id.toString()} key={keyPoint.id}>
-                        <AccordionTrigger
-                          className="flex items-center justify-between"
-                          chevronDownIcon={
-                            <div className="flex size-[24px] items-center justify-center rounded-full bg-blue-02">
-                              <ChevronDown size={16} color="#7095F8" strokeWidth={3} />
-                            </div>
-                          }
-                        >
-                          <div className="flex flex-1 gap-1">
-                            <span className="text-body2-bold text-blue-06">{index + 1}</span>
-                            <span className="text-left text-body2-medium text-gray-09">
-                              {keyPoint.question}
-                            </span>
-                          </div>
-                        </AccordionTrigger>
-                        <AccordionContent className="px-[14px] text-body2-regular text-gray-08">
-                          {keyPoint.answer}
-                        </AccordionContent>
-                      </AccordionItem>
-                    ))}
-                  </Accordion>
-                </div>
-              </div> */}
             </motion.div>
           )}
         </AnimatePresence>
@@ -378,6 +386,43 @@ function GradientStarsIcon() {
           <stop offset="1" stopColor="#93B0FF" />
         </linearGradient>
       </defs>
+    </svg>
+  )
+}
+
+function AddBookMarkIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M7.5549 3.11035C4.63809 3.11035 6.73723 3.11035 3.82042 3.11035C3.18329 3.11035 2.66602 3.58891 2.66602 4.17836V14.9431C2.66602 15.2524 3.03505 15.4362 3.31576 15.2699L7.5549 12.7399L11.794 15.2699V15.267C12.0748 15.4362 12.4438 15.2495 12.4438 14.9402V7.99924"
+        stroke="#A2A6AB"
+        strokeWidth="1.33329"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M10 3.11035L14.8889 3.11035"
+        stroke="#A2A6AB"
+        strokeWidth="1.33329"
+        strokeLinecap="round"
+      />
+      <path
+        d="M12.4434 0.666016L12.4434 5.5549"
+        stroke="#A2A6AB"
+        strokeWidth="1.33329"
+        strokeLinecap="round"
+      />
+    </svg>
+  )
+}
+
+function FilledBookMarkIcon() {
+  return (
+    <svg width="10" height="13" viewBox="0 0 10 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M9.33548 12.9333L5 10.2424L0.664516 12.9333C0.377419 13.1103 0 12.9147 0 12.5857V1.13597C0 0.509016 0.529032 0 1.18064 0H8.81935C9.47097 0 10 0.509016 10 1.13597V12.5826C10 12.9116 9.62258 13.1103 9.33548 12.9302V12.9333Z"
+        fill="#577CFF"
+      />
     </svg>
   )
 }

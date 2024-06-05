@@ -53,6 +53,11 @@ export const API_ENDPOINT = {
       url: `/documents/${documentId}`,
       method: HttpMethod.DELETE,
     }),
+
+    postAiPick: (documentId: number) => ({
+      url: `/documents/${documentId}/ai-pick`,
+      method: HttpMethod.POST,
+    }),
   },
 
   // 카테고리 관련 API
