@@ -31,7 +31,7 @@ export default async function Document({ params: { documentId } }: Props) {
           <main className="flex h-screen justify-center">
             <Viewer documentName={documentName} createdAt={createdAt} content={content} />
 
-            <AiPick keyPoints={keyPoints} status={status} />
+            <AiPick initKeyPoints={keyPoints} initStatus={status} />
           </main>
         </DocumentDetailProvider>
       </CommonLayout>
