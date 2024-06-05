@@ -2,8 +2,10 @@ import { deleteCategory } from '@/apis/fetchers/category/delete-category'
 import { Category } from '@/apis/fetchers/category/get-categories'
 import { Button } from '@/components/ui/button'
 import { DialogClose, DialogContent } from '@/components/ui/dialog'
+import icons from '@/constants/icons'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
+import Image from 'next/image'
 
 interface Props extends Category {}
 
@@ -23,6 +25,7 @@ export default function DeleteCategoryModal({ id, name, documents }: Props) {
   return (
     <DialogContent className="flex w-[320px] flex-col items-center" displayCloseButton={false}>
       <h4 className="mb-[20px] text-h4-bold text-gray-09">폴더 삭제하기</h4>
+      <Image src={icons.deleteFolder} alt="" className="mb-[16px]" />
       <p className="text-text-medium text-gray-08">
         {name} 폴더와 <span className="text-orange-05">{documents.length}개의 노트</span>가 모두
         삭제됩니다
