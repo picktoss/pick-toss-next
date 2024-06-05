@@ -11,16 +11,16 @@ export type CategoryTagType =
   | 'HISTORY'
   | 'LANGUAGE'
   | 'MATH'
-  | 'ETC'
   | 'ART'
   | 'MEDICINE'
+  | 'DEFAULT'
 
 export interface Category {
   id: number
   name: string
   tag: CategoryTagType
   order: number
-  emoji: string
+  emoji?: string
   documents: {
     id: number
     name: string

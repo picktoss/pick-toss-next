@@ -26,7 +26,11 @@ export default function CategoryList({ className }: Props) {
   const [draggedItem, setDraggedItem] = useState<Category | null>(null)
 
   const { data: session } = useSession()
-  const { data: categories } = useQuery({
+  const {
+    data: categories,
+    isError,
+    isPending,
+  } = useQuery({
     queryKey: ['categories'],
     queryFn: () =>
       getCategories({ accessToken: session?.user.accessToken || '' }).then((res) => res.categories),
@@ -44,7 +48,9 @@ export default function CategoryList({ className }: Props) {
     })
   )
 
-  if (categories === undefined) return <div>loading</div>
+  if (isPending) return <div>loading</div>
+
+  if (isError) return <div>error</div>
 
   const handleDragStart = (event: DragStartEvent) => {
     const { active } = event
@@ -70,41 +76,60 @@ export default function CategoryList({ className }: Props) {
 
   return (
     <div className={className}>
-      <div className="bg-gray-02 mb-[24px] flex items-center gap-4 rounded-full px-8 py-3">
-        <Image src={icons.search} alt="search" width={16} height={16} />
-        <input
-          className="w-full bg-transparent focus:outline-none"
-          placeholder="노트명, 노트 내용 검색"
-        />
-      </div>
-      <p className="text-body1-medium text-gray-08 mb-[16px]">
-        공부 폴더 <span className="text-orange-06 font-bold">{categories.length}</span>개
-      </p>
-      <DndContext
-        sensors={sensors}
-        collisionDetection={closestCenter}
-        onDragStart={handleDragStart}
-        onDragEnd={handleDragEnd}
-      >
-        <SortableContext items={categories}>
-          <div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-4">
-            {categories.map((studyCategory) => (
-              <CategoryItem key={studyCategory.id} {...studyCategory} />
-            ))}
-            <CreateCategoryModal
-              trigger={
-                <button className="text-body2-bold text-gray-08 flex min-h-[120px] items-center justify-center gap-2 rounded-xl border-2 border-dashed">
-                  폴더 추가하기
-                  <div className="bg-gray-02 rounded-full p-2">
-                    <Image src="/icons/plus.svg" alt="" width={18} height={18} />
-                  </div>
-                </button>
-              }
+      {categories.length === 0 ? (
+        <div className="flex h-[70vh] flex-col items-center justify-center">
+          <Image className="mb-[20px]" src={icons.folderEmpty} alt="" />
+          <h3 className="mb-[8px] text-h3-bold text-gray-08">아직 폴더가 없어요</h3>
+          <p className="mb-[30px] text-body2-medium text-gray-07">
+            폴더를 만들고 노트를 추가해보세요
+          </p>
+          <AddCategoryButton />
+        </div>
+      ) : (
+        <>
+          <div className="mb-[24px] flex items-center gap-4 rounded-full bg-gray-02 px-8 py-3">
+            <Image src={icons.search} alt="search" width={16} height={16} />
+            <input
+              className="w-full bg-transparent focus:outline-none"
+              placeholder="노트명, 노트 내용 검색"
             />
           </div>
-        </SortableContext>
-        <DragOverlay>{draggedItem && <CategoryItem {...draggedItem} />}</DragOverlay>
-      </DndContext>
+          <p className="mb-[16px] text-body1-medium text-gray-08">
+            공부 폴더 <span className="font-bold text-orange-06">{categories.length}</span>개
+          </p>
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragStart={handleDragStart}
+            onDragEnd={handleDragEnd}
+          >
+            <SortableContext items={categories}>
+              <div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-4">
+                {categories.map((studyCategory) => (
+                  <CategoryItem key={studyCategory.id} {...studyCategory} />
+                ))}
+                <AddCategoryButton />
+              </div>
+            </SortableContext>
+            <DragOverlay>{draggedItem && <CategoryItem {...draggedItem} />}</DragOverlay>
+          </DndContext>
+        </>
+      )}
     </div>
+  )
+}
+
+function AddCategoryButton() {
+  return (
+    <CreateCategoryModal
+      trigger={
+        <button className="flex min-h-[120px] min-w-[240px] items-center justify-center gap-2 rounded-xl border-2 border-dashed text-body2-bold text-gray-08">
+          폴더 추가하기
+          <div className="rounded-full bg-gray-02 p-2">
+            <Image src="/icons/plus.svg" alt="" width={18} height={18} />
+          </div>
+        </button>
+      }
+    />
   )
 }
