@@ -42,7 +42,11 @@ export default function CreateCategoryModal({ trigger }: Props) {
   return (
     <Dialog>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
-      <DialogContent displayCloseButton={false} className="w-[560px]">
+      <DialogContent
+        displayCloseButton={false}
+        className="w-[560px]"
+        onOpenAutoFocus={(e) => e.preventDefault()}
+      >
         <h4 className="mb-[8px] text-h4-bold text-gray-09">폴더 만들기</h4>
         <p className="mb-[32px] text-small1-regular text-gray-07">
           폴더 아이콘, 카테고리, 폴더 이름을 설정해주세요
@@ -63,13 +67,13 @@ export default function CreateCategoryModal({ trigger }: Props) {
             onChange={(event) => setCategoryInfo((prev) => ({ ...prev, name: event.target.value }))}
           />
         </div>
-        <DialogClose asChild>
-          <div className="flex justify-center">
+        <div className="flex justify-center">
+          <DialogClose asChild>
             <Button className="w-[280px]" onClick={handleCreateCategory}>
               폴더 만들기
             </Button>
-          </div>
-        </DialogClose>
+          </DialogClose>
+        </div>
       </DialogContent>
     </Dialog>
   )

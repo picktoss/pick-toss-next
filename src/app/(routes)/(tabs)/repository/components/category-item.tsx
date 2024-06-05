@@ -14,6 +14,8 @@ import { CSS } from '@dnd-kit/utilities'
 import { cn } from '@/lib/utils'
 import DeleteCategoryModal from './delete-category-modal'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
+import { useState } from 'react'
+import ModifyCategoryModal from './modify-category-modal'
 
 interface Props extends Category {}
 
@@ -22,6 +24,8 @@ export default function CategoryItem(props: Props) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: id,
   })
+
+  const [dialogStatus, setDialogStatus] = useState<'modify' | 'delete' | null>(null)
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -46,13 +50,25 @@ export default function CategoryItem(props: Props) {
                 </div>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuItem onClick={(event) => event.stopPropagation()}>
-                  <div className="flex gap-4">
-                    <Image src="/icons/modify-pencil.svg" alt="" width={16} height={16} />
-                    <span className="text-gray-09">정보 수정하기</span>
-                  </div>
+                <DropdownMenuItem
+                  onClick={(event) => {
+                    event.stopPropagation()
+                    setDialogStatus('modify')
+                  }}
+                >
+                  <DialogTrigger asChild>
+                    <div className="flex gap-4">
+                      <Image src="/icons/modify-pencil.svg" alt="" width={16} height={16} />
+                      <span className="text-gray-09">정보 수정하기</span>
+                    </div>
+                  </DialogTrigger>
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={(event) => event.stopPropagation()}>
+                <DropdownMenuItem
+                  onClick={(event) => {
+                    event.stopPropagation()
+                    setDialogStatus('delete')
+                  }}
+                >
                   <DialogTrigger asChild>
                     <div className="flex gap-4">
                       <Image src="/icons/trashcan-red.svg" alt="" width={16} height={16} />
@@ -62,7 +78,8 @@ export default function CategoryItem(props: Props) {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-            <DeleteCategoryModal {...props} />
+            {dialogStatus === 'delete' && <DeleteCategoryModal {...props} />}
+            {dialogStatus === 'modify' && <ModifyCategoryModal {...props} />}
           </Dialog>
         </div>
         <div className="mb-1 flex items-center gap-2">
