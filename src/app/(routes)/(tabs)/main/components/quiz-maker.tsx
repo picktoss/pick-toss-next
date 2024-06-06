@@ -27,7 +27,7 @@ export default function QuizMaker({ categories }: Props) {
       <div className="flex flex-col gap-[16px] lg:flex-row">
         <MakeQuizDrawerDialog
           categories={categories}
-          quizType="multiple"
+          quizType="MULTIPLE_CHOICE"
           trigger={
             <MakerTrigger
               title="객관식"
@@ -38,7 +38,7 @@ export default function QuizMaker({ categories }: Props) {
         />
         <MakeQuizDrawerDialog
           categories={categories}
-          quizType="mixUp"
+          quizType="MIX_UP"
           trigger={
             <MakerTrigger
               title="O/X"
@@ -49,7 +49,6 @@ export default function QuizMaker({ categories }: Props) {
         />
         <MakeQuizDrawerDialog
           categories={categories}
-          quizType="blank"
           trigger={
             <MakerTrigger
               title="빈칸 채우기"

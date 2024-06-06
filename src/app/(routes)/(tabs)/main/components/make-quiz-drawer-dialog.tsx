@@ -9,24 +9,54 @@ import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { CategoryDTO } from '@/apis/types/dto/category.dto'
 import { useCheckList } from '@/hooks/use-check-list'
+import { UseMutateFunction, useMutation } from '@tanstack/react-query'
+import { CreateQuizzesResponse, createQuizzes } from '@/apis/fetchers/quiz/create-quizzes'
+import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
+
+const DEFAULT_POINT = 1
 
 interface Props {
   categories: CategoryDTO[]
   trigger: ReactNode
-  quizType: 'multiple' | 'mixUp' | 'blank'
+  quizType?: 'MIX_UP' | 'MULTIPLE_CHOICE'
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export default function MakeQuizDrawerDialog({ trigger, categories, quizType }: Props) {
+export default function MakeQuizDrawerDialog({ trigger, categories, quizType = 'MIX_UP' }: Props) {
+  const session = useSession()
+  const router = useRouter()
   const [open, setOpen] = useState(false)
   const isDesktop = useMediaQuery('(min-width: 1024px)')
+  const [startedCreate, setStartedState] = useState(false)
+
+  const { mutate: mutateCreateQuizzes } = useMutation({
+    mutationKey: ['create-quizzes'],
+    mutationFn: (documentIds: number[]) => {
+      setStartedState(true)
+
+      return createQuizzes({
+        documentIds,
+        point: DEFAULT_POINT,
+        quizType,
+        accessToken: session.data?.user.accessToken || '',
+      })
+    },
+    onSuccess: ({ quizSetId }) => {
+      router.push(`/quiz?quizSetId=${quizSetId}`)
+    },
+  })
 
   if (isDesktop) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{trigger}</DialogTrigger>
         <DialogContent className="min-w-[560px] pb-[31px] pt-[26px]">
-          <MakeQuizDialogContent categories={categories} />
+          {startedCreate ? (
+            <div className="center">생성중...</div>
+          ) : (
+            <MakeQuizDialogContent categories={categories} />
+          )}
         </DialogContent>
       </Dialog>
     )
@@ -38,18 +68,34 @@ export default function MakeQuizDrawerDialog({ trigger, categories, quizType }: 
         {trigger}
       </DrawerTrigger>
       <DrawerContent className="min-h-[510px]">
-        <MakeQuizDrawerContent categories={categories} />
+        {startedCreate ? (
+          <div className="center">생성중...</div>
+        ) : (
+          <MakeQuizDrawerContent categories={categories} createQuizzes={mutateCreateQuizzes} />
+        )}
       </DrawerContent>
     </Drawer>
   )
 }
 
-function MakeQuizDialogContent({ categories }: { categories: CategoryDTO[] }) {
+function MakeQuizDialogContent({
+  categories,
+}: // createQuizzes,
+{
+  categories: CategoryDTO[]
+  // createQuizzes: () => void
+}) {
   console.error(categories)
   return <div>OK</div>
 }
 
-function MakeQuizDrawerContent({ categories }: { categories: CategoryDTO[] }) {
+function MakeQuizDrawerContent({
+  categories,
+  createQuizzes,
+}: {
+  categories: CategoryDTO[]
+  createQuizzes: UseMutateFunction<CreateQuizzesResponse, Error, number[], unknown>
+}) {
   const [step, setStep] = useState<'folder' | 'document'>('folder')
 
   const {
@@ -67,7 +113,7 @@ function MakeQuizDrawerContent({ categories }: { categories: CategoryDTO[] }) {
     isAllChecked: isDocumentAllChecked,
     checkAll: checkDocumentAll,
     unCheckAll: unCheckDocumentAll,
-    // getCheckedIds: getDocumentCheckedIds,
+    getCheckedIds: getDocumentCheckedIds,
     toggle: toggleDocumentChecked,
   } = useCheckList([{ id: 0, name: '', order: 0, checked: false }])
 
@@ -124,7 +170,12 @@ function MakeQuizDrawerContent({ categories }: { categories: CategoryDTO[] }) {
             >
               초기화
             </Button>
-            <Button className="flex-[230]">완료</Button>
+            <Button
+              className="flex-[230]"
+              onClick={() => createQuizzes(getDocumentCheckedIds() as number[])}
+            >
+              완료
+            </Button>
           </div>
         )}
       </div>
