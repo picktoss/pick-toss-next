@@ -1,10 +1,11 @@
 import { getCategories } from '@/apis/fetchers/category/get-categories'
 import { auth } from '@/app/api/auth/[...nextauth]/auth'
 import { CommonLayout } from '@/components/common-layout'
-import { CategorySelect } from './components/category-select'
 import { getBookmarks } from '@/apis/fetchers/key-point/get-bookmarks'
 import Link from 'next/link'
-import { Button } from '@/components/ui/button'
+import { HTMLAttributes } from 'react'
+// import { Button } from '@/components/ui/button'
+// import { CategorySelect } from './components/category-select'
 
 export default async function Picks() {
   const session = await auth()
@@ -25,14 +26,19 @@ export default async function Picks() {
     >
       <div className="mt-[18px] px-[20px] pb-[70px]">
         <div className="flex items-center justify-between">
-          <CategorySelect categories={categories} />
+          {/** TODO: 폴더 별 북마크 */}
+          {/* <CategorySelect categories={categories} /> */}
+          <div className="flex items-center gap-[8px] text-body1-bold text-gray-09">모든 문서</div>
           <div className="text-text-medium text-gray-06">{categories.length}개 저장됨</div>
         </div>
-        <div className="mt-[16px] flex flex-col gap-[24px]">
+        <div className="mt-[16px] flex flex-col gap-[24px] lg:grid lg:grid-cols-2 lg:gap-[16px]">
           {keyPoints.map((keyPoint) => (
-            <div key={keyPoint.id} className="overflow-hidden rounded-[12px] bg-white pb-[12px]">
-              <div className="flex h-[48px] items-center justify-between border-b border-gray-02 px-[16px]">
-                <div className="text-small1-regular text-gray-06">
+            <div
+              key={keyPoint.id}
+              className="overflow-hidden rounded-[12px] bg-white pb-[12px] lg:pb-[32px]"
+            >
+              <div className="flex h-[48px] items-center justify-between border-b border-gray-02 px-[16px] lg:h-[56px] lg:pl-[32px]">
+                <div className="text-small1-regular text-gray-06 lg:text-body2-regular">
                   전공 공부 {'>'}{' '}
                   <Link
                     href={`/document/${keyPoint.document.id}`}
@@ -44,22 +50,27 @@ export default async function Picks() {
                 <div>쩜</div>
               </div>
 
-              <div className="flex flex-col gap-[8px] pb-[4px] pt-[16px]">
+              <div className="flex flex-col gap-[8px] pt-[16px] lg:gap-[16px]">
                 <div className="flex gap-[3px] px-[16px]">
-                  <PinIcon />
-                  <h4 className="text-body1-bold text-gray-09">{keyPoint.question}</h4>
+                  <PinIcon className="shrink-0 lg:size-[24px]" />
+                  <h4 className="text-body1-bold text-gray-09 lg:text-h4-bold">
+                    {keyPoint.question}
+                  </h4>
                 </div>
-                <p className="px-[20px] text-text-regular text-gray-08">{keyPoint.answer}</p>
+                <p className="px-[20px] text-text-regular text-gray-08 lg:pl-[32px]">
+                  {keyPoint.answer}
+                </p>
               </div>
 
-              <div className="px-[12px]">
+              {/** TODO: 펼치기 */}
+              {/* <div className="px-[12px]">
                 <Button
                   variant="outline"
                   className="h-[36px] w-full rounded-[8px] border-gray-02 !text-small1-bold text-gray-07"
                 >
                   펼치기
                 </Button>
-              </div>
+              </div> */}
             </div>
           ))}
         </div>
@@ -68,9 +79,16 @@ export default async function Picks() {
   )
 }
 
-function PinIcon() {
+function PinIcon({ className }: { className: HTMLAttributes<HTMLDivElement>['className'] }) {
   return (
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width="20"
+      height="20"
+      className={className}
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <path
         d="M8.73828 11.2344L10.3877 10.2821L14.3555 17.1546C14.6185 17.61 14.4624 18.1925 14.0069 18.4554C13.5515 18.7184 12.9691 18.5623 12.7061 18.1069L8.73828 11.2344Z"
         fill="#D2D6DB"
