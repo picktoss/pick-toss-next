@@ -8,7 +8,7 @@ interface ToggleBookmarkParams extends NextFetchRequestConfig {
   accessToken: string
 }
 
-interface ToggleBookmarkResponse {}
+export interface ToggleBookmarkResponse {}
 
 export const toggleBookmark = async ({
   keypointId,

@@ -1,3 +1,6 @@
+'use client'
+
+import { toggleBookmark } from '@/apis/fetchers/key-point/toggle-bookmark'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -5,8 +8,34 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { useMutation } from '@tanstack/react-query'
+import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 
-export default function DeleteDropdown() {
+interface Props {
+  keyPointId: number
+}
+
+export default function DeleteDropdown({ keyPointId }: Props) {
+  const session = useSession()
+  const router = useRouter()
+
+  const { mutate: deleteBookmark } = useMutation({
+    mutationKey: ['toggle-bookmark', keyPointId],
+    mutationFn: () =>
+      toggleBookmark({
+        keypointId: keyPointId,
+        bookmark: false,
+        accessToken: session.data?.user.accessToken || '',
+      }),
+    onSuccess: () => {
+      router.refresh()
+    },
+    onError: () => {
+      /** TODO: 에러 Toast */
+    },
+  })
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -16,7 +45,10 @@ export default function DeleteDropdown() {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="absolute right-[-10px] top-[-10px] h-[41px] w-[152px] rounded-[8px] p-0 shadow-lg">
         <DropdownMenuItem asChild>
-          <button className="flex size-full cursor-pointer justify-start gap-[16px] pl-[21px] !text-body2-medium">
+          <button
+            className="flex size-full cursor-pointer justify-start gap-[16px] pl-[21px] !text-body2-medium"
+            onClick={() => deleteBookmark()}
+          >
             <WastebasketIcon />
             <div className="text-notice-red">삭제하기</div>
           </button>

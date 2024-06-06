@@ -47,7 +47,7 @@ export default async function Picks() {
                     최근 이슈
                   </Link>
                 </div>
-                <DeleteDropdown />
+                <DeleteDropdown keyPointId={keyPoint.id} />
               </div>
 
               <div className="flex flex-col gap-[8px] pt-[16px] lg:gap-[16px]">
