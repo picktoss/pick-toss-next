@@ -7,8 +7,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { useSortable } from '@dnd-kit/sortable'
-import { CSS } from '@dnd-kit/utilities'
 import { cn } from '@/lib/utils'
 import { Document } from '@/apis/fetchers/document/get-documents-for-category'
 import { useState } from 'react'
@@ -21,25 +19,12 @@ interface Props extends Document {}
 
 export default function DocumentItem(document: Props) {
   const { id, name, status, createdAt } = document
-  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
-    id: id,
-  })
 
   const [dialogStatus, setDialogStatus] = useState<'modify' | 'delete' | null>(null)
 
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition: transition,
-  }
-
   return (
-    <Link href={`/document/${id}`} ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      <div
-        className={cn(
-          'flex h-[78px] items-center justify-between rounded-lg bg-white px-[27px] py-[15px] transition duration-200 hover:drop-shadow-[0_2px_8px_rgba(0,0,0,0.1)]',
-          isDragging && 'opacity-50'
-        )}
-      >
+    <Link href={`/document/${id}`}>
+      <div className="flex h-[78px] items-center justify-between rounded-lg bg-white px-[27px] py-[15px] transition duration-200 hover:drop-shadow-[0_2px_8px_rgba(0,0,0,0.1)]">
         <div className="flex items-center">
           <div className="mr-4 flex size-12 items-center justify-center rounded-full bg-gray-01">
             <Image src="/icons/file.svg" alt="" width={24} height={24} />

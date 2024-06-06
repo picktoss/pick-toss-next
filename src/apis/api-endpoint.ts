@@ -63,6 +63,11 @@ export const API_ENDPOINT = {
       url: `/documents/${documentId}/update-name`,
       method: HttpMethod.PATCH,
     }),
+
+    reorderDocument: () => ({
+      url: `/documents/reorder`,
+      method: HttpMethod.PATCH,
+    }),
   },
 
   // 카테고리 관련 API
@@ -89,6 +94,11 @@ export const API_ENDPOINT = {
 
     updateCategory: (categoryId: number) => ({
       url: `/categories/${categoryId}`,
+      method: HttpMethod.PATCH,
+    }),
+
+    reorderCategory: () => ({
+      url: `/categories/reorder`,
       method: HttpMethod.PATCH,
     }),
   },

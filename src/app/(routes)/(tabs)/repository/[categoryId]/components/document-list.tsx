@@ -9,23 +9,9 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { HTMLAttributes, useState } from 'react'
 import DocumentItem from './document-item'
-import {
-  DndContext,
-  DragEndEvent,
-  DragOverlay,
-  DragStartEvent,
-  PointerSensor,
-  closestCenter,
-  useSensor,
-  useSensors,
-} from '@dnd-kit/core'
-import { SortableContext, arrayMove } from '@dnd-kit/sortable'
-import {
-  Document,
-  getDocumentsForCategory,
-} from '@/apis/fetchers/document/get-documents-for-category'
+import { getDocumentsForCategory } from '@/apis/fetchers/document/get-documents-for-category'
 import { useSession } from 'next-auth/react'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import icons from '@/constants/icons'
 import Link from 'next/link'
 
@@ -41,10 +27,10 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
 }
 
 export default function DocumentList({ categoryId, className }: Props) {
-  const [sortOption, setSortOption] = useState<(typeof SORT_OPTION_TYPE)[number]>('createdAt')
-  const [draggedItem, setDraggedItem] = useState<Document | null>(null)
-
   const { data: session } = useSession()
+
+  const [sortOption, setSortOption] = useState<(typeof SORT_OPTION_TYPE)[number]>('createdAt')
+
   const {
     data: documents,
     isError,
@@ -61,41 +47,10 @@ export default function DocumentList({ categoryId, className }: Props) {
     staleTime: Infinity,
     gcTime: Infinity,
   })
-  const queryClient = useQueryClient()
-
-  const sensors = useSensors(
-    useSensor(PointerSensor, {
-      activationConstraint: {
-        distance: 10,
-      },
-    })
-  )
 
   if (isPending) return <div>loading</div>
 
   if (isError) return <div>error</div>
-
-  const handleDragStart = (event: DragStartEvent) => {
-    const { active } = event
-    const draggedItem = documents.find((document) => document.id === active.id) || null
-
-    setDraggedItem(draggedItem)
-  }
-
-  const handleDragEnd = (event: DragEndEvent) => {
-    const { active, over } = event
-
-    if (active.id !== over?.id) {
-      const oldIndex = documents.findIndex((document) => document.id === active.id)
-      const newIndex = documents.findIndex((document) => document.id === over?.id)
-
-      queryClient.setQueryData(['documents', categoryId], (prevCategories: Document[]) =>
-        arrayMove(prevCategories, oldIndex, newIndex)
-      )
-    }
-
-    setDraggedItem(null)
-  }
 
   return (
     <div className={className}>
@@ -141,22 +96,12 @@ export default function DocumentList({ categoryId, className }: Props) {
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-          <DndContext
-            sensors={sensors}
-            collisionDetection={closestCenter}
-            onDragStart={handleDragStart}
-            onDragEnd={handleDragEnd}
-          >
-            <SortableContext items={documents}>
-              <div className="flex flex-col gap-2">
-                {documents.map((document) => (
-                  <DocumentItem key={document.id} {...document} />
-                ))}
-                <AddNoteButton />
-              </div>
-            </SortableContext>
-            <DragOverlay>{draggedItem && <DocumentItem {...draggedItem} />}</DragOverlay>
-          </DndContext>
+          <div className="flex flex-col gap-2">
+            {documents.map((document) => (
+              <DocumentItem key={document.id} {...document} />
+            ))}
+            <AddNoteButton />
+          </div>
         </>
       )}
     </div>

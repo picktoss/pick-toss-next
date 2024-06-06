@@ -14,18 +14,19 @@ import {
 } from '@dnd-kit/core'
 import { HTMLAttributes, useState } from 'react'
 import { SortableContext, arrayMove } from '@dnd-kit/sortable'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Category, getCategories } from '@/apis/fetchers/category/get-categories'
 import { useSession } from 'next-auth/react'
 import CreateCategoryModal from './create-category-modal'
 import icons from '@/constants/icons'
+import { reorderCategory } from '@/apis/fetchers/category/reorder-category'
 
 interface Props extends HTMLAttributes<HTMLDivElement> {}
 
 export default function CategoryList({ className }: Props) {
-  const [draggedItem, setDraggedItem] = useState<Category | null>(null)
-
   const { data: session } = useSession()
+  const queryClient = useQueryClient()
+
   const {
     data: categories,
     isError,
@@ -38,7 +39,11 @@ export default function CategoryList({ className }: Props) {
     staleTime: Infinity,
     gcTime: Infinity,
   })
-  const queryClient = useQueryClient()
+  const { mutate: mutateReorder } = useMutation({
+    mutationFn: reorderCategory,
+  })
+
+  const [draggedItem, setDraggedItem] = useState<Category | null>(null)
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -65,6 +70,13 @@ export default function CategoryList({ className }: Props) {
     if (active.id !== over?.id) {
       const oldIndex = categories.findIndex((category) => category.id === active.id)
       const newIndex = categories.findIndex((category) => category.id === over?.id)
+
+      mutateReorder({
+        categoryId: Number(active.id),
+        preDragCategoryOrder: oldIndex + 1,
+        afterDragCategoryOrder: newIndex + 1,
+        accessToken: session?.user.accessToken || '',
+      })
 
       queryClient.setQueryData(['categories'], (prevCategories: Category[]) =>
         arrayMove(prevCategories, oldIndex, newIndex)
