@@ -14,7 +14,7 @@ import { CreateQuizzesResponse, createQuizzes } from '@/apis/fetchers/quiz/creat
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 
-const DEFAULT_POINT = 1
+const DEFAULT_POINT = 5
 
 interface Props {
   categories: CategoryDTO[]
