@@ -21,7 +21,7 @@ export const updateCategory = async ({
     ...API_ENDPOINT.category.updateCategory(categoryId),
     body: {
       name: name,
-      tag: tag,
+      categoryTag: tag,
       emoji: emoji,
     },
     headers: {

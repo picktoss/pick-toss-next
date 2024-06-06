@@ -7,10 +7,15 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 import { Document } from '@/apis/fetchers/document/get-documents-for-category'
 import { updateDocumentName } from '@/apis/fetchers/document/update-document-name'
+import { useParams } from 'next/navigation'
+import { SortOption } from './document-list'
 
-interface Props extends Document {}
+interface Props extends Document {
+  sortOption: SortOption
+}
 
-export default function ModifyDocumentNameModal({ id, name }: Props) {
+export default function ModifyDocumentNameModal({ id, name, sortOption }: Props) {
+  const { categoryId } = useParams<{ categoryId: string }>()
   const [documentName, setDocumentName] = useState(name)
 
   const { data: session } = useSession()
@@ -18,10 +23,37 @@ export default function ModifyDocumentNameModal({ id, name }: Props) {
 
   const { mutate } = useMutation({
     mutationFn: updateDocumentName,
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: ['documents', Number(categoryId), sortOption] })
+
+      const prevDocuments = queryClient.getQueryData<Document[]>([
+        'documents',
+        Number(categoryId),
+        sortOption,
+      ])
+
+      queryClient.setQueryData(
+        ['documents', Number(categoryId), sortOption],
+        (prevDocuments: Document[]) =>
+          prevDocuments.map((document) => {
+            if (id !== document.id) return document
+
+            return {
+              ...document,
+              name: documentName,
+            }
+          })
+      )
+
+      return prevDocuments
+    },
+    onError: (_, __, context) => {
+      queryClient.setQueryData(['documents', Number(categoryId), sortOption], context)
+    },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['documents'] }),
   })
 
-  const handleCreateCategory = () => {
+  const handleModifyName = () => {
     mutate({ documentId: id, name: documentName, accessToken: session?.user.accessToken || '' })
   }
 
@@ -44,7 +76,7 @@ export default function ModifyDocumentNameModal({ id, name }: Props) {
       </div>
       <div className="flex justify-center">
         <DialogClose asChild>
-          <Button className="w-[160px]" onClick={handleCreateCategory}>
+          <Button className="w-[160px]" onClick={handleModifyName}>
             완료
           </Button>
         </DialogClose>

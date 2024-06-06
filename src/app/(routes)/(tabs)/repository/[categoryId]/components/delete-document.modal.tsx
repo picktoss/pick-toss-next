@@ -6,15 +6,39 @@ import icons from '@/constants/icons'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
+import { SortOption } from './document-list'
+import { useParams } from 'next/navigation'
 
-interface Props extends Document {}
+interface Props extends Document {
+  sortOption: SortOption
+}
 
-export default function DeleteDocumentModal({ id, name }: Props) {
+export default function DeleteDocumentModal({ id, sortOption, name }: Props) {
+  const { categoryId } = useParams<{ categoryId: string }>()
   const { data: session } = useSession()
   const queryClient = useQueryClient()
 
   const { mutate } = useMutation({
     mutationFn: deleteDocument,
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: ['documents', Number(categoryId), sortOption] })
+
+      const prevDocuments = queryClient.getQueryData<Document[]>([
+        'documents',
+        Number(categoryId),
+        sortOption,
+      ])
+
+      queryClient.setQueryData(
+        ['documents', Number(categoryId), sortOption],
+        (prevDocuments: Document[]) => prevDocuments.filter((document) => document.id !== id)
+      )
+
+      return prevDocuments
+    },
+    onError: (_, __, context) => {
+      queryClient.setQueryData(['documents', Number(categoryId), sortOption], context)
+    },
     onSuccess: () =>
       Promise.all([
         queryClient.invalidateQueries({ queryKey: ['documents'] }),

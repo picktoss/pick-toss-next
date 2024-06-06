@@ -15,6 +15,20 @@ export default function DeleteCategoryModal({ id, name, documents }: Props) {
 
   const { mutate } = useMutation({
     mutationFn: deleteCategory,
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: ['categories'] })
+
+      const prevCategories = queryClient.getQueryData<Category[]>(['categories'])
+
+      queryClient.setQueryData(['categories'], (prevCategories: Category[]) =>
+        prevCategories.filter((category) => id !== category.id)
+      )
+
+      return prevCategories
+    },
+    onError: (_, __, context) => {
+      queryClient.setQueryData(['categories'], context)
+    },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['categories'] }),
   })
 

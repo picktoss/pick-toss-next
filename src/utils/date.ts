@@ -22,3 +22,37 @@ export const getCurrentDate = () => {
 
   return formattedDate
 }
+
+export const getRelativeTime = (time: string) => {
+  const inputTime = new Date(time)
+  const currentTime = new Date()
+
+  const relativeTime = currentTime.getTime() - inputTime.getTime()
+  const relativeMinutes = Math.floor(relativeTime / (1000 * 60))
+  const relativeHours = Math.floor(relativeMinutes / 60)
+  const relativeDays = Math.floor(relativeHours / 24)
+
+  if (relativeMinutes < 10) {
+    return '방금 전'
+  }
+  if (relativeMinutes < 60) {
+    return `${relativeMinutes}분 전`
+  }
+  if (relativeHours < 24) {
+    return `${relativeHours}시간 전`
+  }
+  if (relativeDays === 1) {
+    return `하루 전`
+  }
+  if (relativeDays === 2) {
+    return `이틀 전`
+  }
+  if (relativeDays < 4) {
+    return `${relativeDays}일 전`
+  }
+
+  const months = inputTime.getMonth() + 1
+  const days = inputTime.getDate()
+
+  return `${months}월 ${days}일`
+}
