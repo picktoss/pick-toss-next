@@ -34,7 +34,13 @@ interface Props {
 
 export default function CategoryTag({ tag, className }: Props) {
   return (
-    <span className={cn('rounded-md px-2 py-1 text-[10px]', tagVariant.style[tag], className)}>
+    <span
+      className={cn(
+        'flex justify-center items-center h-[19px] rounded-[4px] px-2 text-[10px]',
+        tagVariant.style[tag],
+        className
+      )}
+    >
       {tagVariant.text[tag]}
     </span>
   )

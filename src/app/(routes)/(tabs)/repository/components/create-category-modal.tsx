@@ -7,24 +7,22 @@ import { Button } from '@/components/ui/button'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { createCategory } from '@/apis/fetchers/category/create-category'
 import { useSession } from 'next-auth/react'
-import { CategoryTagType } from '@/apis/fetchers/category/get-categories'
-
-interface CategoryInfo {
-  name: string
-  emoji: string
-  tag: CategoryTagType
-}
+import { CATEGORY_TAG_TYPE, CategoryTagType } from '@/apis/fetchers/category/get-categories'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 
 interface Props {
   trigger: ReactNode
 }
 
 export default function CreateCategoryModal({ trigger }: Props) {
-  const [categoryInfo, setCategoryInfo] = useState<CategoryInfo>({
-    name: '',
-    emoji: '😀',
-    tag: 'IT',
-  })
+  const [name, setName] = useState('')
+  const [emoji, setEmoji] = useState('📁')
+  const [tag, setTag] = useState<CategoryTagType>('IT')
 
   const { data: session } = useSession()
   const queryClient = useQueryClient()
@@ -35,8 +33,11 @@ export default function CreateCategoryModal({ trigger }: Props) {
   })
 
   const handleCreateCategory = () => {
-    mutate({ ...categoryInfo, accessToken: session?.user.accessToken || '' })
-    setCategoryInfo((prev) => ({ ...prev, name: '' }))
+    mutate({ name, emoji, tag, accessToken: session?.user.accessToken || '' })
+
+    setName('')
+    setEmoji('📁')
+    setTag('IT')
   }
 
   return (
@@ -52,19 +53,29 @@ export default function CreateCategoryModal({ trigger }: Props) {
           폴더 아이콘, 카테고리, 폴더 이름을 설정해주세요
         </p>
         {/* TODO: emoji, tag 설정 기능 */}
-        {/* 현재는 name 수정만 가능 */}
         <div className="mb-[34px] flex items-center gap-[10px]">
           <div className="flex size-[32px] items-center justify-center rounded-md border bg-gray-01">
-            {categoryInfo.emoji}
+            {emoji}
           </div>
-          <div className="flex h-[32px] w-[103px] items-center justify-between rounded-md border bg-gray-01 px-[14px]">
-            <CategoryTag tag={categoryInfo.tag} />
-            <Image src={icons.chevronDown} alt="" width={16} height={16} />
-          </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <div className="flex h-[32px] w-[103px] items-center justify-between rounded-md border bg-gray-01 px-[14px]">
+                <CategoryTag tag={tag} />
+                <Image src={icons.chevronDown} alt="" width={16} height={16} />
+              </div>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              {CATEGORY_TAG_TYPE.map((tag) => (
+                <DropdownMenuItem key={tag} onClick={() => setTag(tag)}>
+                  <CategoryTag tag={tag} />
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
           <input
             className="h-[32px] flex-1 rounded-md border bg-gray-01 px-[12px] text-body2-regular outline-none"
-            value={categoryInfo.name}
-            onChange={(event) => setCategoryInfo((prev) => ({ ...prev, name: event.target.value }))}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
         </div>
         <div className="flex justify-center">
