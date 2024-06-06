@@ -14,6 +14,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import EmojiPicker from 'emoji-picker-react'
 
 interface Props {
   trigger: ReactNode
@@ -32,16 +33,19 @@ export default function CreateCategoryModal({ trigger }: Props) {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['categories'] }),
   })
 
-  const handleCreateCategory = () => {
-    mutate({ name, emoji, tag, accessToken: session?.user.accessToken || '' })
-
+  const resetState = () => {
     setName('')
     setEmoji('📁')
     setTag('IT')
   }
 
+  const handleCreateCategory = () => {
+    mutate({ name, emoji, tag, accessToken: session?.user.accessToken || '' })
+    resetState()
+  }
+
   return (
-    <Dialog>
+    <Dialog onOpenChange={resetState}>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent
         displayCloseButton={false}
@@ -54,9 +58,23 @@ export default function CreateCategoryModal({ trigger }: Props) {
         </p>
         {/* TODO: emoji, tag 설정 기능 */}
         <div className="mb-[34px] flex items-center gap-[10px]">
-          <div className="flex size-[32px] items-center justify-center rounded-md border bg-gray-01">
-            {emoji}
-          </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <div className="flex size-[32px] items-center justify-center rounded-md border bg-gray-01">
+                {emoji}
+              </div>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <EmojiPicker
+                skinTonesDisabled
+                width={320}
+                height={400}
+                onEmojiClick={(emojiData) => {
+                  setEmoji(emojiData.emoji)
+                }}
+              />
+            </DropdownMenuContent>
+          </DropdownMenu>
           <DropdownMenu>
             <DropdownMenuTrigger>
               <div className="flex h-[32px] w-[103px] items-center justify-between rounded-md border bg-gray-01 px-[14px]">

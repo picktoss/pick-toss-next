@@ -18,12 +18,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import EmojiPicker from 'emoji-picker-react'
 
 interface Props extends Category {}
 
 export default function ModifyCategoryModal({ id, name, emoji, tag }: Props) {
   const [newName, setNewName] = useState(name)
-  const [newEmoji] = useState(emoji || '📁')
+  const [newEmoji, setNewEmoji] = useState(emoji || '📁')
   const [newTag, setNewTag] = useState<CategoryTagType>(tag)
 
   const { data: session } = useSession()
@@ -77,9 +78,23 @@ export default function ModifyCategoryModal({ id, name, emoji, tag }: Props) {
       {/* TODO: emoji, tag 설정 기능 */}
       {/* 현재는 name 수정만 가능 */}
       <div className="mb-[24px] flex items-center gap-[10px]">
-        <div className="flex size-[32px] items-center justify-center rounded-md border bg-gray-01">
-          {emoji || '📁'}
-        </div>
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <div className="flex size-[32px] items-center justify-center rounded-md border bg-gray-01">
+              {newEmoji}
+            </div>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <EmojiPicker
+              skinTonesDisabled
+              width={320}
+              height={400}
+              onEmojiClick={(emojiData) => {
+                setNewEmoji(emojiData.emoji)
+              }}
+            />
+          </DropdownMenuContent>
+        </DropdownMenu>
         <DropdownMenu>
           <DropdownMenuTrigger>
             <div className="flex h-[32px] w-[103px] items-center justify-between rounded-md border bg-gray-01 px-[14px]">
