@@ -75,8 +75,6 @@ export default function ModifyCategoryModal({ id, name, emoji, tag }: Props) {
       onOpenAutoFocus={(e) => e.preventDefault()}
     >
       <h4 className="mb-[30px] text-h4-bold text-gray-09">폴더 정보 수정하기</h4>
-      {/* TODO: emoji, tag 설정 기능 */}
-      {/* 현재는 name 수정만 가능 */}
       <div className="mb-[24px] flex items-center gap-[10px]">
         <DropdownMenu>
           <DropdownMenuTrigger>

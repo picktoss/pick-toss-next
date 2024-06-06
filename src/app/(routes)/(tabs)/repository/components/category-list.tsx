@@ -5,12 +5,13 @@ import CategoryItem from './category-item'
 import {
   DndContext,
   closestCenter,
-  PointerSensor,
   useSensor,
   useSensors,
   DragEndEvent,
   DragStartEvent,
   DragOverlay,
+  TouchSensor,
+  MouseSensor,
 } from '@dnd-kit/core'
 import { HTMLAttributes, useState } from 'react'
 import { SortableContext, arrayMove } from '@dnd-kit/sortable'
@@ -46,9 +47,15 @@ export default function CategoryList({ className }: Props) {
   const [draggedItem, setDraggedItem] = useState<Category | null>(null)
 
   const sensors = useSensors(
-    useSensor(PointerSensor, {
+    useSensor(MouseSensor, {
       activationConstraint: {
         distance: 10,
+      },
+    }),
+    useSensor(TouchSensor, {
+      activationConstraint: {
+        tolerance: 10,
+        delay: 300,
       },
     })
   )
