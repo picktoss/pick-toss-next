@@ -14,10 +14,13 @@ import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 import DeleteDocumentModal from './delete-document.modal'
 import ModifyDocumentNameModal from './modify-document-name-modal'
 import { getRelativeTime } from '@/utils/date'
+import { SortOption } from './document-list'
 
-interface Props extends Document {}
+interface Props extends Document {
+  sortOption: SortOption
+}
 
-export default function DocumentItem(document: Props) {
+export default function DocumentItem({ sortOption, ...document }: Props) {
   const { id, name, status, createdAt } = document
 
   const [dialogStatus, setDialogStatus] = useState<'modify' | 'delete' | null>(null)
@@ -81,8 +84,12 @@ export default function DocumentItem(document: Props) {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-            {dialogStatus === 'delete' && <DeleteDocumentModal {...document} />}
-            {dialogStatus === 'modify' && <ModifyDocumentNameModal {...document} />}
+            {dialogStatus === 'delete' && (
+              <DeleteDocumentModal sortOption={sortOption} {...document} />
+            )}
+            {dialogStatus === 'modify' && (
+              <ModifyDocumentNameModal sortOption={sortOption} {...document} />
+            )}
           </Dialog>
         </div>
       </div>

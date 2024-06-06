@@ -93,7 +93,7 @@ export const API_ENDPOINT = {
     }),
 
     updateCategory: (categoryId: number) => ({
-      url: `/categories/${categoryId}`,
+      url: `/categories/info/${categoryId}`,
       method: HttpMethod.PATCH,
     }),
 

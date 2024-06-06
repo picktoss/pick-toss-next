@@ -17,6 +17,8 @@ import Link from 'next/link'
 
 const SORT_OPTION_TYPE = ['createdAt', 'name', 'updatedAt'] as const
 
+export type SortOption = (typeof SORT_OPTION_TYPE)[number]
+
 const sortOptionLabel = {
   createdAt: '업로드한 날짜',
   name: '이름',
@@ -29,7 +31,7 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
 export default function DocumentList({ categoryId, className }: Props) {
   const { data: session } = useSession()
 
-  const [sortOption, setSortOption] = useState<(typeof SORT_OPTION_TYPE)[number]>('createdAt')
+  const [sortOption, setSortOption] = useState<SortOption>('createdAt')
 
   const {
     data: documents,
@@ -47,6 +49,10 @@ export default function DocumentList({ categoryId, className }: Props) {
     staleTime: Infinity,
     gcTime: Infinity,
   })
+
+  const handleSortOptionClick = (option: SortOption) => {
+    setSortOption(option)
+  }
 
   if (isPending) return <div>loading</div>
 
@@ -87,7 +93,7 @@ export default function DocumentList({ categoryId, className }: Props) {
                 {SORT_OPTION_TYPE.map((type) => (
                   <DropdownMenuItem
                     key={type}
-                    onClick={() => setSortOption(type)}
+                    onClick={() => handleSortOptionClick(type)}
                     className="text-body2-medium text-gray-07"
                   >
                     {sortOptionLabel[type]}
@@ -98,7 +104,7 @@ export default function DocumentList({ categoryId, className }: Props) {
           </div>
           <div className="flex flex-col gap-2">
             {documents.map((document) => (
-              <DocumentItem key={document.id} {...document} />
+              <DocumentItem key={document.id} sortOption={sortOption} {...document} />
             ))}
             <AddNoteButton />
           </div>

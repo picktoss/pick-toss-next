@@ -29,6 +29,27 @@ export default function ModifyCategoryModal({ id, name, emoji, tag }: Props) {
 
   const { mutate } = useMutation({
     mutationFn: updateCategory,
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: ['categories'] })
+
+      const prevCategories = queryClient.getQueryData<Category[]>(['categories'])
+
+      queryClient.setQueryData(['categories'], (prevCategories: Category[]) =>
+        prevCategories.map((category) => {
+          if (id !== category.id) return category
+
+          return {
+            ...category,
+            ...categoryInfo,
+          }
+        })
+      )
+
+      return prevCategories
+    },
+    onError: (_, __, context) => {
+      queryClient.setQueryData(['categories'], context)
+    },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['categories'] }),
   })
 
