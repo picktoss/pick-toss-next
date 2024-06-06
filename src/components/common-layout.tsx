@@ -8,6 +8,7 @@ import icons from '@/constants/icons'
 import { useMediaQuery } from '@/hooks/use-media-query'
 import { useSession } from 'next-auth/react'
 import { UserDropdownMenu } from './user-dropdown-menu'
+import { NotificationDialogPage } from './notification-dialog-page'
 
 type TitleType =
   | string
@@ -51,7 +52,7 @@ export function CommonLayout({ title, hideHeader, mobileOptions, children }: Com
       <div className="flex flex-col">
         <div className="px-[20px]">
           <div className="ml-auto flex h-[60px] w-full items-center justify-end gap-[32px]">
-            <BellIcon />
+            <NotificationDialogPage trigger={<BellIcon />} />
 
             <div className="flex items-center gap-[8px] rounded-[16px] bg-gray-02 px-[10px] py-[3.5px]">
               <Image src={icons.star} alt="" width={16} height={16} />
@@ -94,11 +95,7 @@ export function CommonLayout({ title, hideHeader, mobileOptions, children }: Com
               </div>
             )}
             {mobileOptions.hasSearch && <SearchIcon />}
-            {mobileOptions.hasNotifications && (
-              <div>
-                <BellIcon />
-              </div>
-            )}
+            {mobileOptions.hasNotifications && <NotificationDialogPage trigger={<BellIcon />} />}
           </div>
         )}
       </div>
