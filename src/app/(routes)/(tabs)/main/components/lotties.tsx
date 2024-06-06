@@ -23,9 +23,9 @@ export function MultipleLottie() {
   return (
     <div className="size-full" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       {hover ? (
-        <Lottie animationData={multipleHoverData} className="h-full p-[24px]" />
+        <Lottie animationData={multipleHoverData} className="h-full p-[24px] lg:p-[40px]" />
       ) : (
-        <Lottie animationData={multipleLeaveData} className="h-full p-[24px]" />
+        <Lottie animationData={multipleLeaveData} className="h-full p-[24px] lg:p-[40px]" />
       )}
     </div>
   )
@@ -45,9 +45,9 @@ export function OXLottie() {
   return (
     <div className="size-full" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       {hover ? (
-        <Lottie animationData={oxLeaveData} className="h-full p-[24px]" />
+        <Lottie animationData={oxLeaveData} className="h-full p-[24px] lg:p-[40px]" />
       ) : (
-        <Lottie animationData={oxHoverData} className="h-full p-[24px]" />
+        <Lottie animationData={oxHoverData} className="h-full p-[24px] lg:p-[40px]" />
       )}
     </div>
   )
@@ -66,9 +66,9 @@ export function BlackLottie() {
   return (
     <div className="size-full" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       {hover ? (
-        <Lottie animationData={blankLeaveData} className="h-full p-[24px]" />
+        <Lottie animationData={blankLeaveData} className="h-full p-[26px] lg:p-[50px]" />
       ) : (
-        <Lottie animationData={blankHoverData} className="h-full p-[24px]" />
+        <Lottie animationData={blankHoverData} className="h-full p-[26px] lg:p-[50px]" />
       )}
     </div>
   )

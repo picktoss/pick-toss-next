@@ -3,9 +3,15 @@
 import icons from '@/constants/icons'
 import Image from 'next/image'
 import { BlackLottie, MultipleLottie, OXLottie } from './lotties'
-import { ReactNode } from 'react'
+import { ReactNode, forwardRef } from 'react'
+import MakeQuizDrawerDialog from './make-quiz-drawer-dialog'
+import { CategoryDTO } from '@/apis/types/dto/category.dto'
 
-export default function QuizMaker() {
+interface Props {
+  categories: CategoryDTO[]
+}
+
+export default function QuizMaker({ categories }: Props) {
   return (
     <section className="flex flex-col gap-[24px]">
       <div>
@@ -19,40 +25,58 @@ export default function QuizMaker() {
       </div>
 
       <div className="flex flex-col gap-[16px] lg:flex-row">
-        <MakerTrigger
-          title="객관식"
-          description="4가지 선택지 중 정답을 고르는 퀴즈"
-          lottie={<MultipleLottie />}
+        <MakeQuizDrawerDialog
+          categories={categories}
+          quizType="multiple"
+          trigger={
+            <MakerTrigger
+              title="객관식"
+              description="4가지 선택지 중 정답을 고르는 퀴즈"
+              lottie={<MultipleLottie />}
+            />
+          }
         />
-        <MakerTrigger
-          title="O/X"
-          description="참인지 거짓인지 판단하는 양자택일 퀴즈"
-          lottie={<OXLottie />}
+        <MakeQuizDrawerDialog
+          categories={categories}
+          quizType="mixUp"
+          trigger={
+            <MakerTrigger
+              title="O/X"
+              description="참인지 거짓인지 판단하는 양자택일 퀴즈"
+              lottie={<OXLottie />}
+            />
+          }
         />
-        <MakerTrigger
-          title="빈칸 채우기"
-          description="주어진 문장의 빈 곳을 채우는 퀴즈"
-          comingSoon
-          lottie={<BlackLottie />}
+        <MakeQuizDrawerDialog
+          categories={categories}
+          quizType="blank"
+          trigger={
+            <MakerTrigger
+              title="빈칸 채우기"
+              description="주어진 문장의 빈 곳을 채우는 퀴즈"
+              comingSoon
+              lottie={<BlackLottie />}
+            />
+          }
         />
       </div>
     </section>
   )
 }
 
-function MakerTrigger({
-  lottie,
-  title,
-  description,
-  comingSoon,
-}: {
+interface MakerTriggerProps {
   lottie: ReactNode
   title: string
   description: string
   comingSoon?: boolean
-}) {
+}
+
+// eslint-disable-next-line react/display-name
+const MakerTrigger = forwardRef<HTMLDivElement, MakerTriggerProps>((props, ref) => {
+  const { lottie, title, description, comingSoon, ...rest } = props
+
   return (
-    <div className="w-full overflow-hidden rounded-[12px]">
+    <div ref={ref} {...rest} role="button" className="w-full overflow-hidden rounded-[12px]">
       <div className="flex h-[120px] items-center justify-center bg-blue-01 lg:h-[180px]">
         {lottie}
       </div>
@@ -71,4 +95,4 @@ function MakerTrigger({
       </div>
     </div>
   )
-}
+})
