@@ -8,6 +8,7 @@ import icons from '@/constants/icons'
 import { useMediaQuery } from '@/hooks/use-media-query'
 import { useSession } from 'next-auth/react'
 import { UserDropdownMenu } from './user-dropdown-menu'
+import { NotificationDialogPage } from './notification-dialog-page'
 
 type TitleType =
   | string
@@ -51,7 +52,7 @@ export function CommonLayout({ title, hideHeader, mobileOptions, children }: Com
       <div className="flex flex-col">
         <div className="px-[20px]">
           <div className="ml-auto flex h-[60px] w-full items-center justify-end gap-[32px]">
-            <BellIcon />
+            <NotificationDialogPage trigger={<BellIcon />} />
 
             <div className="flex items-center gap-[8px] rounded-[16px] bg-gray-02 px-[10px] py-[3.5px]">
               <Image src={icons.star} alt="" width={16} height={16} />
@@ -94,11 +95,7 @@ export function CommonLayout({ title, hideHeader, mobileOptions, children }: Com
               </div>
             )}
             {mobileOptions.hasSearch && <SearchIcon />}
-            {mobileOptions.hasNotifications && (
-              <div>
-                <BellIcon />
-              </div>
-            )}
+            {mobileOptions.hasNotifications && <NotificationDialogPage trigger={<BellIcon />} />}
           </div>
         )}
       </div>
@@ -111,7 +108,7 @@ export function CommonLayout({ title, hideHeader, mobileOptions, children }: Com
 const Title = ({ title, center }: { title: TitleType; center?: boolean }) => {
   if (typeof title === 'string') {
     return (
-      <h2 className={cn('!text-h3-bold text-gray-09 lg:text-h2-medium', center && 'center')}>
+      <h2 className={cn('!text-body1-bold text-gray-09 lg:!text-h2-medium', center && 'center')}>
         {title}
       </h2>
     )
@@ -119,7 +116,7 @@ const Title = ({ title, center }: { title: TitleType; center?: boolean }) => {
 
   return (
     <div className={cn('flex items-start gap-[8px] *:shrink-0', center && 'center')}>
-      <h2 className="text-h3-bold text-gray-09 lg:text-h2-medium">{title.label}</h2>
+      <h2 className="!text-body1-bold text-gray-09 lg:!text-h2-medium">{title.label}</h2>
       {title.icon}
     </div>
   )

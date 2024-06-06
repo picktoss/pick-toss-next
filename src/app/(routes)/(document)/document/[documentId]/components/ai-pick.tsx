@@ -17,18 +17,21 @@ import { useEffect, useState } from 'react'
 import { cn } from '@/lib/utils'
 import { motion, AnimatePresence } from 'framer-motion'
 import { SwitchCase } from '@/components/react/switch-case'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { createAiPick } from '@/apis/fetchers/document/create-ai-pick'
 import { useSession } from 'next-auth/react'
 import { useParams } from 'next/navigation'
+import { getDocument } from '@/apis/fetchers/document/get-document'
+import { toggleBookmark } from '@/apis/fetchers/key-point/toggle-bookmark'
 
 interface Props {
-  keyPoints: {
+  initKeyPoints: {
     id: number
     question: string
     answer: string
+    bookmark: boolean
   }[]
-  status: 'UNPROCESSED' | 'PROCESSED' | 'PROCESSING' | 'KEYPOINT_UPDATE_POSSIBLE'
+  initStatus: 'UNPROCESSED' | 'PROCESSED' | 'PROCESSING' | 'KEYPOINT_UPDATE_POSSIBLE'
 }
 
 const slideInOutVariants = {
@@ -49,12 +52,44 @@ const slideInOutVariants = {
   },
 }
 
-export function AiPick({ keyPoints, status }: Props) {
+export function AiPick({ initKeyPoints, initStatus }: Props) {
   const isDesktop = useMediaQuery('(min-width: 1024px)')
   const { isPickOpen, setIsPickOpen } = useDocumentDetailContext()
   const [showToggle, setShowToggle] = useState(false)
   const session = useSession()
   const documentId = useParams().documentId as string
+  const queryClient = useQueryClient()
+
+  const {
+    data: { status, keyPoints },
+  } = useQuery({
+    queryKey: ['get-key-points'],
+    /** TODO: key-point endpoint로 변경 예정 */
+    queryFn: () =>
+      getDocument({
+        accessToken: session.data?.user.accessToken || '',
+        documentId: Number(documentId),
+      }),
+    select: (data) => ({
+      status: data.status,
+      keyPoints: data.keyPoints,
+    }),
+    initialData: {
+      status: initStatus,
+      keyPoints: initKeyPoints,
+
+      /** TODO: key-point endpoint로 변경 후 제거 */
+      quizGenerationStatus: false,
+      category: {
+        id: 1,
+        name: '',
+      },
+      createdAt: '',
+      documentName: '',
+      content: '',
+      id: 1,
+    },
+  })
 
   const { mutate: mutateAiPick } = useMutation({
     mutationKey: ['create-ai-pick'],
@@ -63,6 +98,53 @@ export function AiPick({ keyPoints, status }: Props) {
         documentId: Number(documentId),
         accessToken: session.data?.user.accessToken || '',
       }),
+  })
+
+  const { mutate: mutateToggleBookmark } = useMutation({
+    mutationKey: ['patch-toggle-bookmark'],
+    mutationFn: (data: { keypointId: number; bookmark: boolean }) => {
+      queryClient.setQueryData<{
+        id: number
+        documentName: string
+        status: 'UNPROCESSED' | 'PROCESSED' | 'PROCESSING' | 'KEYPOINT_UPDATE_POSSIBLE'
+        quizGenerationStatus: boolean
+        category: {
+          id: number
+          name: string
+        }
+        keyPoints: {
+          id: number
+          question: string
+          answer: string
+          bookmark: boolean
+        }[]
+        content: string
+        createdAt: string
+      }>(['get-key-points'], (oldData) => {
+        if (!oldData) return oldData
+
+        return {
+          ...oldData,
+          keyPoints: oldData?.keyPoints.map((keypoint) =>
+            keypoint.id !== data.keypointId ? keypoint : { ...keypoint, bookmark: data.bookmark }
+          ),
+        }
+      })
+
+      return toggleBookmark({
+        ...data,
+        accessToken: session.data?.user.accessToken || '',
+      })
+    },
+    onSettled: async () => {
+      await queryClient.refetchQueries({
+        queryKey: ['get-key-points'],
+        exact: true,
+      })
+    },
+    onError: async () => {
+      /** TODO: 실패 안내 */
+    },
   })
 
   useEffect(() => {
@@ -149,7 +231,7 @@ export function AiPick({ keyPoints, status }: Props) {
                     </div>
                   </div>
                 ) : (
-                  <div className="pb-[60px] pl-[16px] pr-[18px]">
+                  <div className="flex flex-col pb-[60px] pl-[16px] pr-[18px]">
                     <Accordion type="multiple" className="flex flex-col gap-[19px]">
                       {keyPoints.map((keyPoint, index) => (
                         <AccordionItem value={keyPoint.id.toString()} key={keyPoint.id}>
@@ -177,22 +259,28 @@ export function AiPick({ keyPoints, status }: Props) {
                               </div>
                               <div
                                 role="button"
+                                onClick={() =>
+                                  mutateToggleBookmark({
+                                    keypointId: keyPoint.id,
+                                    bookmark: !keyPoint.bookmark,
+                                  })
+                                }
                                 className={cn(
                                   'h-[31px] w-[69px] rounded-[24px] border flex justify-center items-center !text-small1-bold',
-                                  index % 2
-                                    ? 'border-gray-04 text-gray-06'
-                                    : 'border-blue-03 bg-blue-02 text-blue-06'
+                                  keyPoint.bookmark
+                                    ? 'border-blue-03 bg-blue-02 text-blue-06'
+                                    : 'border-gray-04 text-gray-06'
                                 )}
                               >
-                                {index % 2 ? (
-                                  <div className="flex items-center gap-[4px]">
-                                    <AddBookMarkIcon />
-                                    <span>저장</span>
-                                  </div>
-                                ) : (
+                                {keyPoint.bookmark ? (
                                   <div className="flex items-center gap-[4px]">
                                     <FilledBookMarkIcon />
                                     <span>저장됨</span>
+                                  </div>
+                                ) : (
+                                  <div className="flex items-center gap-[4px]">
+                                    <AddBookMarkIcon />
+                                    <span>저장</span>
                                   </div>
                                 )}
                               </div>
@@ -201,6 +289,11 @@ export function AiPick({ keyPoints, status }: Props) {
                         </AccordionItem>
                       ))}
                     </Accordion>
+                    {status === 'PROCESSING' && (
+                      <div className="py-[12px] text-center text-text-bold text-orange-400">
+                        AI Pick을 생성하고 있어요!
+                      </div>
+                    )}
                   </div>
                 )}
               </div>

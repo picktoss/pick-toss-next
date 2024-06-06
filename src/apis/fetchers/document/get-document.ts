@@ -1,5 +1,6 @@
 import { API_ENDPOINT } from '@/apis/api-endpoint'
 import { apiClient } from '@/lib/api-client'
+import { notFound } from 'next/navigation'
 
 export interface DocumentInfo {
   id: number
@@ -14,6 +15,7 @@ export interface DocumentInfo {
     id: number
     question: string
     answer: string
+    bookmark: boolean
   }[]
   content: string
   createdAt: string
@@ -27,10 +29,17 @@ interface GetDocumentParams extends NextFetchRequestConfig {
 interface GetDocumentResponse extends DocumentInfo {}
 
 export const getDocument = async ({ accessToken, documentId }: GetDocumentParams) => {
-  return await apiClient.fetch<GetDocumentResponse>({
-    ...API_ENDPOINT.document.getDocument(documentId),
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  })
+  try {
+    return await apiClient.fetch<GetDocumentResponse>({
+      ...API_ENDPOINT.document.getDocument(documentId),
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+  } catch (error) {
+    if ((error as { status: number }).status === 400) {
+      notFound()
+    }
+    throw new Error()
+  }
 }

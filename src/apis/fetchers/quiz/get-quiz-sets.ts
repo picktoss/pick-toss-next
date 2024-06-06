@@ -42,10 +42,15 @@ export interface GetQuizSetsResponse {
 export const getQuizSets = async (params: GetQuizSetsParams) => {
   const session = await auth()
 
-  return await apiClient.fetch<GetQuizSetsResponse>({
-    ...API_ENDPOINT.quiz.getQuizSets(params.quizSetId),
-    headers: {
-      Authorization: `Bearer ${session?.user.accessToken}`,
-    },
-  })
+  try {
+    return await apiClient.fetch<GetQuizSetsResponse>({
+      ...API_ENDPOINT.quiz.getQuizSets(params.quizSetId),
+      headers: {
+        Authorization: `Bearer ${session?.user.accessToken}`,
+      },
+    })
+  } catch (error) {
+    console.error(error)
+    throw new Error()
+  }
 }
