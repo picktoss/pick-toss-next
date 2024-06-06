@@ -4,7 +4,7 @@ import { CommonLayout } from '@/components/common-layout'
 import { getBookmarks } from '@/apis/fetchers/key-point/get-bookmarks'
 import Link from 'next/link'
 import { HTMLAttributes } from 'react'
-// import { Button } from '@/components/ui/button'
+import DeleteDropdown from './components/delete-dropdown'
 // import { CategorySelect } from './components/category-select'
 
 export default async function Picks() {
@@ -35,7 +35,7 @@ export default async function Picks() {
           {keyPoints.map((keyPoint) => (
             <div
               key={keyPoint.id}
-              className="overflow-hidden rounded-[12px] bg-white pb-[12px] lg:pb-[32px]"
+              className="overflow-hidden rounded-[12px] bg-white pb-[13px] lg:pb-[32px]"
             >
               <div className="flex h-[48px] items-center justify-between border-b border-gray-02 px-[16px] lg:h-[56px] lg:pl-[32px]">
                 <div className="text-small1-regular text-gray-06 lg:text-body2-regular">
@@ -47,7 +47,7 @@ export default async function Picks() {
                     최근 이슈
                   </Link>
                 </div>
-                <div>쩜</div>
+                <DeleteDropdown />
               </div>
 
               <div className="flex flex-col gap-[8px] pt-[16px] lg:gap-[16px]">
