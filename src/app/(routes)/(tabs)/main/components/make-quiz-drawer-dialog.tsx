@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { CategoryDTO } from '@/apis/types/dto/category.dto'
+import { useCheckList } from '@/hooks/use-check-list'
 
 interface Props {
   categories: CategoryDTO[]
@@ -49,57 +50,144 @@ function MakeQuizDialogContent({ categories }: { categories: CategoryDTO[] }) {
 }
 
 function MakeQuizDrawerContent({ categories }: { categories: CategoryDTO[] }) {
+  const [step, setStep] = useState<'folder' | 'document'>('folder')
+
+  const {
+    list: categoryList,
+    isAllChecked: isCategoryAllChecked,
+    checkAll: checkCategoryAll,
+    unCheckAll: unCheckCategoryAll,
+    getCheckedIds: getCategoryCheckedIds,
+    toggle: toggleCategoryChecked,
+  } = useCheckList([...categories.map((category) => ({ ...category, checked: false }))])
+
+  const {
+    list: documentList,
+    set: setDocumentList,
+    isAllChecked: isDocumentAllChecked,
+    checkAll: checkDocumentAll,
+    unCheckAll: unCheckDocumentAll,
+    // getCheckedIds: getDocumentCheckedIds,
+    toggle: toggleDocumentChecked,
+  } = useCheckList([{ id: 0, name: '', order: 0, checked: false }])
+
   return (
     <div className="flex flex-1 flex-col justify-between pb-[22px] pt-[40px]">
       <div>
         <div className="flex gap-[21px] px-[24px] text-h4-bold text-gray-09">
-          <div role="button" className={cn(true ? 'text-gray-09' : 'text-gray-06')}>
+          <div role="button" className={cn(step === 'folder' ? 'text-gray-09' : 'text-gray-06')}>
             폴더
           </div>
-          <div role="button" className={cn(false ? 'text-gray-09' : 'text-gray-06')}>
-            노트
-          </div>
+          {step === 'document' && (
+            <div role="button" className="text-gray-09">
+              노트
+            </div>
+          )}
         </div>
 
-        <div className="mt-[24px]">
-          <div className="flex h-[38px] items-end gap-[16px] px-[27px] py-[9px]">
-            <Checkbox id="allFolder" className="size-[20px]" />
-            <label htmlFor="allFolder" className="text-body2-regular text-gray-08">
-              전체 <span className="text-orange-06">{categories.length}</span>개
-            </label>
-          </div>
-
-          <div className="mb-[7px] px-[19px]">
-            <div className="h-px w-full rounded-full bg-gray-01" />
-          </div>
-
-          <div className="flex flex-col gap-[3px]">
-            {categories.map((category) => (
-              <div
-                key={category.id}
-                className="flex h-[38px] items-end gap-[16px] px-[27px] py-[9px]"
-              >
-                <Checkbox id={String(category.id)} className="size-[20px]" />
-                <label htmlFor={String(category.id)} className="text-body2-regular text-gray-08">
-                  {category.emoji} {category.name}
-                </label>
-              </div>
-            ))}
-          </div>
-        </div>
+        <SelectCheckItems
+          items={step === 'folder' ? categoryList : documentList}
+          isAllChecked={step === 'folder' ? isCategoryAllChecked() : isDocumentAllChecked()}
+          unCheckAll={step === 'folder' ? unCheckCategoryAll : unCheckDocumentAll}
+          checkAll={step === 'folder' ? checkCategoryAll : checkDocumentAll}
+          toggle={step === 'folder' ? toggleCategoryChecked : toggleDocumentChecked}
+        />
       </div>
 
       <div className="px-[20px]">
-        {true ? (
-          <Button className="w-full">노트 선택</Button>
+        {step === 'folder' ? (
+          <Button
+            className="w-full"
+            onClick={() => {
+              const checkedCategoryIds = getCategoryCheckedIds()
+              setDocumentList(
+                categories
+                  .filter((category) => checkedCategoryIds.includes(category.id))
+                  .flatMap((category) =>
+                    category.documents.map((document) => ({ ...document, checked: false }))
+                  )
+              )
+              setStep('document')
+            }}
+          >
+            노트 선택
+          </Button>
         ) : (
           <div className="flex w-full gap-[6px]">
-            <Button className="flex-[100]" variant="secondary">
+            <Button
+              className="flex-[100]"
+              variant="secondary"
+              onClick={() => {
+                unCheckCategoryAll()
+                setStep('folder')
+              }}
+            >
               초기화
             </Button>
             <Button className="flex-[230]">완료</Button>
           </div>
         )}
+      </div>
+    </div>
+  )
+}
+
+type CheckItem = {
+  id: number
+  name: string
+  checked: boolean
+  emoji?: string
+}
+
+function SelectCheckItems(props: {
+  items: CheckItem[]
+  isAllChecked: boolean
+  unCheckAll: () => void
+  checkAll: () => void
+  toggle: (id: number) => void
+}) {
+  const { items, isAllChecked, unCheckAll, checkAll, toggle } = props
+
+  return (
+    <div className="mt-[24px]">
+      <div className="flex h-[38px] items-end gap-[16px] px-[27px] py-[9px]">
+        <Checkbox
+          id="allFolder"
+          className="size-[20px]"
+          checked={isAllChecked}
+          onClick={() => {
+            isAllChecked ? unCheckAll() : checkAll()
+          }}
+        />
+        <label
+          htmlFor="allFolder"
+          className="flex h-[20px] items-end text-body2-regular text-gray-08"
+        >
+          전체 <span className="text-orange-06">{items.length}</span>개
+        </label>
+      </div>
+
+      <div className="mb-[7px] px-[19px]">
+        <div className="h-px w-full rounded-full bg-gray-01" />
+      </div>
+
+      <div className="flex flex-col gap-[3px]">
+        {items.map((item) => (
+          <div key={item.id} className="flex h-[38px] items-end gap-[16px] px-[27px] py-[9px] ">
+            <Checkbox
+              id={String(item.id)}
+              className="size-[20px]"
+              checked={item.checked}
+              onClick={() => toggle(item.id)}
+            />
+            <label
+              htmlFor={String(item.id)}
+              className="flex h-[20px] items-end text-body2-regular text-gray-08"
+            >
+              {item.emoji ? item.emoji : ''} {item.name}
+            </label>
+          </div>
+        ))}
       </div>
     </div>
   )
