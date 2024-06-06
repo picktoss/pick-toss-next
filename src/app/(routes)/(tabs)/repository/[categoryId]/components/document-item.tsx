@@ -15,11 +15,12 @@ import { useState } from 'react'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 import DeleteDocumentModal from './delete-document.modal'
 import ModifyDocumentNameModal from './modify-document-name-modal'
+import { getRelativeTime } from '@/utils/date'
 
 interface Props extends Document {}
 
 export default function DocumentItem(document: Props) {
-  const { id, name } = document
+  const { id, name, status, createdAt } = document
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: id,
   })
@@ -46,6 +47,19 @@ export default function DocumentItem(document: Props) {
           <div className="text-body1-medium text-gray-09">{name}</div>
         </div>
         <div className="flex items-center gap-12">
+          <div className="w-[200px] text-body2-regular text-gray-06">
+            마지막 수정: {getRelativeTime(createdAt)}
+          </div>
+          <div className="flex w-[93px] justify-center">
+            <div
+              className={cn(
+                'flex items-center h-[19px] px-[9px] rounded-[4px] text-[10px] font-medium',
+                pickStatus[status].style
+              )}
+            >
+              {pickStatus[status].label}
+            </div>
+          </div>
           <Dialog>
             <DropdownMenu>
               <DropdownMenuTrigger>
@@ -89,4 +103,23 @@ export default function DocumentItem(document: Props) {
       </div>
     </Link>
   )
+}
+
+const pickStatus = {
+  PROCESSED: {
+    style: 'bg-gray-02 text-gray-07',
+    label: '최신 상태',
+  },
+  UNPROCESSED: {
+    style: 'bg-orange-01 text-orange-06',
+    label: 'pick 생성 가능',
+  },
+  PROCESSING: {
+    style: 'bg-gray-02 text-gray-07',
+    label: 'pick 생성 중',
+  },
+  KEYPOINT_UPDATE_POSSIBLE: {
+    style: 'bg-orange-01 text-orange-06',
+    label: 'pick 갱신 필요',
+  },
 }
