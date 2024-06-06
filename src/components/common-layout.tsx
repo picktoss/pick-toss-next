@@ -108,7 +108,7 @@ export function CommonLayout({ title, hideHeader, mobileOptions, children }: Com
 const Title = ({ title, center }: { title: TitleType; center?: boolean }) => {
   if (typeof title === 'string') {
     return (
-      <h2 className={cn('!text-h3-bold text-gray-09 lg:text-h2-medium', center && 'center')}>
+      <h2 className={cn('!text-body1-bold text-gray-09 lg:!text-h2-medium', center && 'center')}>
         {title}
       </h2>
     )
@@ -116,7 +116,7 @@ const Title = ({ title, center }: { title: TitleType; center?: boolean }) => {
 
   return (
     <div className={cn('flex items-start gap-[8px] *:shrink-0', center && 'center')}>
-      <h2 className="text-h3-bold text-gray-09 lg:text-h2-medium">{title.label}</h2>
+      <h2 className="!text-body1-bold text-gray-09 lg:!text-h2-medium">{title.label}</h2>
       {title.icon}
     </div>
   )

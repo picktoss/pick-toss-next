@@ -66,6 +66,11 @@ export const API_ENDPOINT = {
   },
 
   keypoint: {
+    getBookmark: () => ({
+      url: `/key-point/bookmark`,
+      method: HttpMethod.GET,
+    }),
+
     patchBookmark: (keypointId: number) => ({
       url: `/key-point/${keypointId}/bookmark`,
       method: HttpMethod.PATCH,

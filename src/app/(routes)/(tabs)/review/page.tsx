@@ -34,7 +34,7 @@ export default function Review() {
               isPro
             />
             <ArchiveLink
-              redirectUrl="#"
+              redirectUrl="/review/picks"
               title="저장한 pick"
               icon={
                 <div className="flex size-[56px] items-center justify-center rounded-full bg-orange-01">

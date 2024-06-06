@@ -36,7 +36,7 @@ export const TabNavigation = () => {
         href: '/review',
         title: '복습 체크',
         Icon: ReviewCheckIcon,
-        segments: [['review']],
+        segments: [['review', 'picks']],
       },
       {
         href: '/profile',
