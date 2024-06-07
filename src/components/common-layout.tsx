@@ -22,6 +22,7 @@ interface MobileOptions {
   hasStars?: boolean
   hasSearch?: boolean
   hasNotifications?: boolean
+  mobileTitle?: TitleType
 }
 
 interface CommonLayoutProps extends React.PropsWithChildren {
@@ -73,6 +74,15 @@ export function CommonLayout({ title, hideHeader, mobileOptions, children }: Com
   const hasRightContent =
     mobileOptions?.hasNotifications || mobileOptions?.hasSearch || mobileOptions?.hasStars
 
+  const titleContent = () => {
+    if (mobileOptions?.mobileTitle)
+      return <Title title={mobileOptions.mobileTitle} center={mobileOptions?.hasBackButton} />
+
+    if (title) return <Title title={title} center={mobileOptions?.hasBackButton} />
+
+    return null
+  }
+
   return (
     <div className="flex flex-col">
       <div className="relative flex h-[48px] items-center px-[20px]">
@@ -82,7 +92,7 @@ export function CommonLayout({ title, hideHeader, mobileOptions, children }: Com
           </div>
         )}
 
-        {title && <Title title={title} center={mobileOptions?.hasBackButton} />}
+        {titleContent()}
 
         {hasRightContent && (
           <div className="ml-auto flex items-center gap-[16px]">
@@ -108,7 +118,12 @@ export function CommonLayout({ title, hideHeader, mobileOptions, children }: Com
 const Title = ({ title, center }: { title: TitleType; center?: boolean }) => {
   if (typeof title === 'string') {
     return (
-      <h2 className={cn('!text-body1-bold text-gray-09 lg:!text-h2-medium', center && 'center')}>
+      <h2
+        className={cn(
+          '!text-h3-bold text-gray-09 lg:!text-h2-medium',
+          center && 'center !text-body1-bold'
+        )}
+      >
         {title}
       </h2>
     )
@@ -116,7 +131,14 @@ const Title = ({ title, center }: { title: TitleType; center?: boolean }) => {
 
   return (
     <div className={cn('flex items-start gap-[8px] *:shrink-0', center && 'center')}>
-      <h2 className="!text-body1-bold text-gray-09 lg:!text-h2-medium">{title.label}</h2>
+      <h2
+        className={cn(
+          '!text-h3-bold text-gray-09 lg:!text-h2-medium',
+          center && '!text-body1-bold'
+        )}
+      >
+        {title.label}
+      </h2>
       {title.icon}
     </div>
   )

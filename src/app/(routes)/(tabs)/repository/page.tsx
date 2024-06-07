@@ -17,6 +17,10 @@ export default async function Repository() {
       mobileOptions={{
         hasSearch: true,
         hasNotifications: true,
+        mobileTitle: {
+          label: '노트 창고',
+          icon: <Image src="/icons/book.svg" alt="" width={24} height={24} />,
+        },
       }}
     >
       <main className="mt-[28px] flex flex-col gap-[40px] lg:mt-[40px]">
