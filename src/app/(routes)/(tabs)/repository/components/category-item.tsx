@@ -36,11 +36,11 @@ export default function CategoryItem(props: Props) {
     <Link href={`/repository/${id}`} ref={setNodeRef} style={style} {...attributes} {...listeners}>
       <div
         className={cn(
-          'relative cursor-pointer rounded-xl bg-white p-4 min-w[240px] hover:drop-shadow-[0_4px_12px_rgba(0,0,0,0.1)] transition duration-200',
+          'relative w-[150px] cursor-pointer rounded-xl bg-white p-4 hover:drop-shadow-[0_4px_12px_rgba(0,0,0,0.1)] transition duration-200 lg:w-auto lg:min-w[240px]',
           isDragging && 'opacity-50'
         )}
       >
-        <div className="mb-3 text-2xl">{emoji || '📁'}</div>
+        <div className="mb-2 text-2xl lg:mb-3">{emoji || '📁'}</div>
         <div className="absolute right-[12px] top-[8px]">
           <Dialog>
             <DropdownMenu>
@@ -82,11 +82,13 @@ export default function CategoryItem(props: Props) {
             {dialogStatus === 'modify' && <ModifyCategoryModal {...props} />}
           </Dialog>
         </div>
-        <div className="mb-1 flex items-center gap-2">
-          <div className="text-h4-bold text-gray-09">{name}</div>
+        <div className="mb-[32px] flex flex-col items-start gap-2 lg:mb-[6px] lg:flex-row lg:items-center">
+          <div className="w-[118px] truncate text-body1-bold text-gray-09 lg:w-auto lg:text-h4-bold">
+            {name}
+          </div>
           <CategoryTag tag={tag} />
         </div>
-        <div className="text-small1-regular text-gray-08">문서 {documents.length}개</div>
+        <div className="text-small1-regular text-gray-08">노트 {documents.length}개</div>
       </div>
     </Link>
   )

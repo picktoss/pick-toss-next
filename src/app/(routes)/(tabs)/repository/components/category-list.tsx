@@ -13,7 +13,7 @@ import {
   TouchSensor,
   MouseSensor,
 } from '@dnd-kit/core'
-import { HTMLAttributes, useState } from 'react'
+import { ButtonHTMLAttributes, HTMLAttributes, useState } from 'react'
 import { SortableContext, arrayMove } from '@dnd-kit/sortable'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Category, getCategories } from '@/apis/fetchers/category/get-categories'
@@ -21,6 +21,7 @@ import { useSession } from 'next-auth/react'
 import CreateCategoryModal from './create-category-modal'
 import icons from '@/constants/icons'
 import { reorderCategory } from '@/apis/fetchers/category/reorder-category'
+import { cn } from '@/lib/utils'
 
 interface Props extends HTMLAttributes<HTMLDivElement> {}
 
@@ -106,16 +107,28 @@ export default function CategoryList({ className }: Props) {
         </div>
       ) : (
         <>
-          <div className="mb-[24px] flex items-center gap-4 rounded-full bg-gray-02 px-8 py-3">
+          <div className="mb-[24px] hidden items-center gap-4 rounded-full bg-gray-02 px-8 py-3 lg:flex">
             <Image src={icons.search} alt="search" width={16} height={16} />
             <input
               className="w-full bg-transparent focus:outline-none"
               placeholder="노트명, 노트 내용 검색"
             />
           </div>
-          <p className="mb-[16px] text-body1-medium text-gray-08">
-            공부 폴더 <span className="font-bold text-orange-06">{categories.length}</span>개
-          </p>
+          <div className="mb-[16px] flex items-center justify-between">
+            <p className="text-body2-medium text-gray-08 lg:text-body1-medium">
+              폴더 <span className="font-bold text-orange-06">{categories.length}</span>개
+            </p>
+            <CreateCategoryModal
+              trigger={
+                <button className="flex items-center gap-[8px] text-body2-medium text-gray-08 lg:hidden lg:text-body1-medium">
+                  폴더 추가
+                  <div className="flex size-[24px] items-center justify-center rounded-full bg-gray-02">
+                    <Image src={icons.plus} alt="" width={11} height={11} />
+                  </div>
+                </button>
+              }
+            />
+          </div>
           <DndContext
             sensors={sensors}
             collisionDetection={closestCenter}
@@ -123,11 +136,11 @@ export default function CategoryList({ className }: Props) {
             onDragEnd={handleDragEnd}
           >
             <SortableContext items={categories}>
-              <div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-4">
+              <div className="flex gap-3 overflow-x-scroll scrollbar-hide lg:grid lg:grid-cols-[repeat(auto-fill,minmax(240px,1fr))] lg:gap-4">
                 {categories.map((studyCategory) => (
                   <CategoryItem key={studyCategory.id} {...studyCategory} />
                 ))}
-                <AddCategoryButton />
+                <AddCategoryButton className="hidden lg:flex" />
               </div>
             </SortableContext>
             <DragOverlay>{draggedItem && <CategoryItem {...draggedItem} />}</DragOverlay>
@@ -138,11 +151,18 @@ export default function CategoryList({ className }: Props) {
   )
 }
 
-function AddCategoryButton() {
+interface AddCategoryButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {}
+
+function AddCategoryButton({ className }: AddCategoryButtonProps) {
   return (
     <CreateCategoryModal
       trigger={
-        <button className="flex min-h-[120px] min-w-[240px] items-center justify-center gap-2 rounded-xl border-2 border-dashed text-body2-bold text-gray-08">
+        <button
+          className={cn(
+            'flex min-h-[120px] min-w-[240px] items-center justify-center gap-2 rounded-xl border-2 border-dashed !text-body2-bold text-gray-08',
+            className
+          )}
+        >
           폴더 추가하기
           <div className="rounded-full bg-gray-02 p-2">
             <Image src="/icons/plus.svg" alt="" width={18} height={18} />
