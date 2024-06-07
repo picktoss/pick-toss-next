@@ -7,13 +7,14 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { HTMLAttributes, useState } from 'react'
+import { ButtonHTMLAttributes, HTMLAttributes, useState } from 'react'
 import DocumentItem from './document-item'
 import { getDocumentsForCategory } from '@/apis/fetchers/document/get-documents-for-category'
 import { useSession } from 'next-auth/react'
 import { useQuery } from '@tanstack/react-query'
 import icons from '@/constants/icons'
 import Link from 'next/link'
+import { cn } from '@/lib/utils'
 
 const SORT_OPTION_TYPE = ['createdAt', 'name', 'updatedAt'] as const
 
@@ -46,8 +47,6 @@ export default function DocumentList({ categoryId, className }: Props) {
         sortOption,
       }).then((res) => res.documents),
     enabled: !!session,
-    staleTime: Infinity,
-    gcTime: Infinity,
   })
 
   const handleSortOptionClick = (option: SortOption) => {
@@ -71,7 +70,7 @@ export default function DocumentList({ categoryId, className }: Props) {
         </div>
       ) : (
         <>
-          <div className="mb-[40px] flex items-center gap-4 rounded-full bg-gray-02 px-8 py-3">
+          <div className="mb-[40px] hidden items-center gap-4 rounded-full bg-gray-02 px-8 py-3 lg:flex">
             <Image src={icons.search} alt="search" width={16} height={16} />
             <input
               className="w-full bg-transparent focus:outline-none"
@@ -106,7 +105,7 @@ export default function DocumentList({ categoryId, className }: Props) {
             {documents.map((document) => (
               <DocumentItem key={document.id} sortOption={sortOption} {...document} />
             ))}
-            <AddNoteButton />
+            <AddNoteButton className="hidden lg:flex" />
           </div>
         </>
       )}
@@ -114,11 +113,16 @@ export default function DocumentList({ categoryId, className }: Props) {
   )
 }
 
-function AddNoteButton() {
+interface AddNoteButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {}
+
+function AddNoteButton({ className }: AddNoteButtonProps) {
   return (
     <Link
       href="/create"
-      className="flex h-[78px] w-full items-center justify-center gap-2 rounded-xl border-2 border-dashed text-body2-bold text-gray-08"
+      className={cn(
+        'flex h-[78px] w-full items-center justify-center gap-2 rounded-xl border-2 border-dashed !text-body2-bold text-gray-08',
+        className
+      )}
     >
       노트 추가하기
       <div className="rounded-full bg-gray-02 p-2">
