@@ -17,11 +17,11 @@ import { useEffect, useState } from 'react'
 import { cn } from '@/lib/utils'
 import { motion, AnimatePresence } from 'framer-motion'
 import { SwitchCase } from '@/components/react/switch-case'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { UseMutateFunction, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { createAiPick } from '@/apis/fetchers/document/create-ai-pick'
 import { useSession } from 'next-auth/react'
 import { useParams } from 'next/navigation'
-import { toggleBookmark } from '@/apis/fetchers/key-point/toggle-bookmark'
+import { ToggleBookmarkResponse, toggleBookmark } from '@/apis/fetchers/key-point/toggle-bookmark'
 import { DocumentStatus } from '@/apis/types/dto/document.dto'
 import {
   GetKeyPointsByIdResponse,
@@ -236,63 +236,10 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
                   </div>
                 ) : (
                   <div className="flex flex-col gap-[40px] pb-[60px] pl-[16px] pr-[18px]">
-                    <Accordion type="multiple" className="flex flex-col gap-[19px]">
-                      {keyPoints.map((keyPoint, index) => (
-                        <AccordionItem value={keyPoint.id.toString()} key={keyPoint.id}>
-                          <AccordionTrigger
-                            className="flex items-center justify-between py-[12px]"
-                            chevronDownIcon={
-                              <div className="flex size-[24px] items-center justify-center rounded-full bg-blue-02">
-                                <ChevronDown size={16} color="#7095F8" strokeWidth={3} />
-                              </div>
-                            }
-                          >
-                            <div className="flex gap-[4px]">
-                              <div className="flex w-[16px] shrink-0 text-text-bold text-blue-06">
-                                {index + 1}
-                              </div>
-                              <span className="pr-[8px] text-left text-text-medium text-gray-09">
-                                {keyPoint.question}
-                              </span>
-                            </div>
-                          </AccordionTrigger>
-                          <AccordionContent className="p-0 pl-[20px]">
-                            <div className="flex flex-col gap-[12px]">
-                              <div className="!text-text-regular text-gray-08">
-                                {keyPoint.answer}
-                              </div>
-                              <div
-                                role="button"
-                                onClick={() =>
-                                  mutateToggleBookmark({
-                                    keypointId: keyPoint.id,
-                                    bookmark: !keyPoint.bookmark,
-                                  })
-                                }
-                                className={cn(
-                                  'h-[31px] w-[69px] rounded-[24px] border flex justify-center items-center !text-small1-bold',
-                                  keyPoint.bookmark
-                                    ? 'border-blue-03 bg-blue-02 text-blue-06'
-                                    : 'border-gray-04 text-gray-06'
-                                )}
-                              >
-                                {keyPoint.bookmark ? (
-                                  <div className="flex items-center gap-[4px]">
-                                    <FilledBookMarkIcon />
-                                    <span>저장됨</span>
-                                  </div>
-                                ) : (
-                                  <div className="flex items-center gap-[4px]">
-                                    <AddBookMarkIcon />
-                                    <span>저장</span>
-                                  </div>
-                                )}
-                              </div>
-                            </div>
-                          </AccordionContent>
-                        </AccordionItem>
-                      ))}
-                    </Accordion>
+                    <PickAccordion
+                      keyPoints={keyPoints}
+                      mutateToggleBookmark={mutateToggleBookmark}
+                    />
                     {status === 'PROCESSING' && <GeneratingPicks />}
                   </div>
                 )}
@@ -307,55 +254,37 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
   return (
     <Drawer open={isPickOpen} onOpenChange={setIsPickOpen}>
       <DrawerTrigger asChild>
-        <Button className="absolute bottom-[109px] right-1/2 flex h-[40px] w-[144px] translate-x-1/2 gap-[8px] rounded-full bg-blue-06 !text-body2-bold hover:bg-blue-06">
-          <Image src={icons.pin} width={16.6} height={20.4} alt="" />
-          AI pick 보기
-        </Button>
+        {status === 'UNPROCESSED' ? (
+          <Button
+            variant="gradation"
+            size="sm"
+            className="absolute bottom-[50px] right-1/2 flex h-[40px] w-[144px] translate-x-1/2 gap-[4px] rounded-full !text-body2-bold text-white"
+          >
+            <StarsIcon />
+            pick 시작
+          </Button>
+        ) : (
+          <Button className="absolute bottom-[50px] right-1/2 flex h-[40px] w-[144px] translate-x-1/2 gap-[8px] rounded-full bg-blue-06 !text-body2-bold hover:bg-blue-06">
+            <Image src={icons.pin} width={16.6} height={20.4} alt="" />
+            AI pick 보기
+          </Button>
+        )}
       </DrawerTrigger>
 
-      <DrawerContent hideSidebar>
-        <div className="flex h-[95vh] w-full flex-col rounded-[16px] bg-blue-01">
-          <div className="flex h-[64px] items-center justify-between rounded-t-[16px] border-b border-blue-02 bg-white px-[18px]">
-            <div className="flex items-end gap-[6px]">
-              <Image src={icons.pin} width={32} height={32} alt="" />
-              <h3 className="text-h3-bold text-gray-08">AI pick</h3>
+      <DrawerContent className="rounded-t-[20px]">
+        <div className="mt-[10px] flex h-[90vh] flex-col">
+          <div className="flex flex-col gap-[15px]">
+            <h3 className="pl-[24px] text-h3-bold text-gray-08">AI pick</h3>
+
+            <div className="px-[15px]">
+              <PickBanner status={status} />
             </div>
-            <Button className="mr-[46px] h-[28px] w-[96px] rounded-full">pick 시작</Button>
           </div>
 
-          <div className="flex-1 overflow-scroll pb-[168px]">
-            <Accordion type="multiple" className="flex flex-col px-[16px] py-[7px]">
-              {keyPoints.map((keyPoint, index) => (
-                <AccordionItem value={keyPoint.id.toString()} key={keyPoint.id}>
-                  <AccordionTrigger
-                    className="flex items-center justify-between"
-                    chevronDownIcon={
-                      <div className="flex size-[24px] items-center justify-center rounded-full bg-blue-02">
-                        <ChevronDown size={16} color="#7095F8" strokeWidth={3} />
-                      </div>
-                    }
-                  >
-                    <div className="flex flex-1 gap-1">
-                      <span className="text-body2-bold text-blue-06">{index + 1}</span>
-                      <span className="text-left text-body2-medium text-gray-09">
-                        {keyPoint.question}
-                      </span>
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent className="px-[14px] text-body2-regular text-gray-08">
-                    {keyPoint.answer}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
+          <div className="mt-[12px] flex flex-col gap-[40px] overflow-auto pb-[60px] pl-[16px] pr-[24px]">
+            <PickAccordion keyPoints={keyPoints} mutateToggleBookmark={mutateToggleBookmark} />
+            {status === 'PROCESSING' && <GeneratingPicks />}
           </div>
-
-          <Button
-            className="absolute bottom-[109px] right-1/2 h-[40px] w-[144px] translate-x-1/2 rounded-full bg-blue-06 !text-body2-bold hover:bg-blue-06"
-            onClick={() => setIsPickOpen(false)}
-          >
-            노트로 돌아가기
-          </Button>
         </div>
       </DrawerContent>
     </Drawer>
@@ -375,18 +304,17 @@ function PickBanner({
           <div className="flex items-center justify-between rounded-[8px] bg-blue-01 py-[16px] pl-[14px] pr-[18px]">
             <div className="flex items-center gap-[8px]">
               <Image src={icons.pin} width={24} height={24} alt="" />
-              <div className="text-text-bold text-blue-06">
+              <div className="text-small1-bold text-blue-06 lg:text-text-bold">
                 픽토스 AI의 질문을 통해 내용을 돌아보세요
               </div>
             </div>
-            {/* <div className="text-small1-regular text-orange-06 underline">가이드 보기</div> */}
           </div>
         ),
         KEYPOINT_UPDATE_POSSIBLE: (
           <div className="flex items-center justify-between rounded-[8px] bg-gray-01 px-[16px] py-[21px]">
             <div className="flex items-center gap-[8px]">
               <GradientStarsIcon />
-              <div className="text-text-medium text-gray-08">
+              <div className="text-small1-bold text-gray-08 lg:text-text-medium">
                 퀴즈와 요약에 수정한 내용을 반영해보세요
               </div>
             </div>
@@ -398,6 +326,83 @@ function PickBanner({
       }}
       defaultComponent={null}
     />
+  )
+}
+
+function PickAccordion({
+  keyPoints,
+  mutateToggleBookmark,
+}: {
+  keyPoints: {
+    id: number
+    question: string
+    answer: string
+    bookmark: boolean
+  }[]
+  mutateToggleBookmark: UseMutateFunction<
+    ToggleBookmarkResponse,
+    Error,
+    {
+      keypointId: number
+      bookmark: boolean
+    },
+    unknown
+  >
+}) {
+  return (
+    <Accordion type="multiple" className="flex flex-col gap-[19px]">
+      {keyPoints.map((keyPoint, index) => (
+        <AccordionItem value={keyPoint.id.toString()} key={keyPoint.id}>
+          <AccordionTrigger
+            className="flex items-center justify-between py-[12px]"
+            chevronDownIcon={
+              <div className="flex size-[24px] items-center justify-center rounded-full bg-blue-02">
+                <ChevronDown size={16} color="#7095F8" strokeWidth={3} />
+              </div>
+            }
+          >
+            <div className="flex gap-[4px]">
+              <div className="flex w-[16px] shrink-0 text-text-bold text-blue-06">{index + 1}</div>
+              <span className="pr-[8px] text-left text-text-medium text-gray-09">
+                {keyPoint.question}
+              </span>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="p-0 pl-[20px]">
+            <div className="flex flex-col gap-[12px]">
+              <div className="!text-text-regular text-gray-08">{keyPoint.answer}</div>
+              <div
+                role="button"
+                onClick={() =>
+                  mutateToggleBookmark({
+                    keypointId: keyPoint.id,
+                    bookmark: !keyPoint.bookmark,
+                  })
+                }
+                className={cn(
+                  'h-[31px] w-[69px] rounded-[24px] border flex justify-center items-center !text-small1-bold',
+                  keyPoint.bookmark
+                    ? 'border-blue-03 bg-blue-02 text-blue-06'
+                    : 'border-gray-04 text-gray-06'
+                )}
+              >
+                {keyPoint.bookmark ? (
+                  <div className="flex items-center gap-[4px]">
+                    <FilledBookMarkIcon />
+                    <span>저장됨</span>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-[4px]">
+                    <AddBookMarkIcon />
+                    <span>저장</span>
+                  </div>
+                )}
+              </div>
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+      ))}
+    </Accordion>
   )
 }
 
