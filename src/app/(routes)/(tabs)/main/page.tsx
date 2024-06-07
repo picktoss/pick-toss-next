@@ -5,9 +5,17 @@ import Achievements from './components/achievements'
 import { getTodayQuizSetId } from '@/apis/fetchers/quiz/get-today-quiz-set-id'
 import { CommonLayout } from '@/components/common-layout'
 import Image from 'next/image'
+import { auth } from '@/app/api/auth/[...nextauth]/auth'
+import { getCategories } from '@/apis/fetchers/category/get-categories'
 
 export default async function Main() {
-  const { quizSetId, type } = await getTodayQuizSetId()
+  const session = await auth()
+  const { quizSetId, type } = await getTodayQuizSetId({
+    accessToken: session?.user.accessToken || '',
+  })
+  const { categories } = await getCategories({
+    accessToken: session?.user.accessToken || '',
+  })
 
   return (
     <CommonLayout
@@ -30,7 +38,7 @@ export default async function Main() {
           <Achievements />
         </section>
 
-        <QuizMaker />
+        <QuizMaker categories={categories} />
       </main>
     </CommonLayout>
   )

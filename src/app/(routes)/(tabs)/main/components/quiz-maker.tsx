@@ -3,8 +3,15 @@
 import icons from '@/constants/icons'
 import Image from 'next/image'
 import { BlackLottie, MultipleLottie, OXLottie } from './lotties'
+import { ReactNode, forwardRef } from 'react'
+import MakeQuizDrawerDialog from './make-quiz-drawer-dialog'
+import { CategoryDTO } from '@/apis/types/dto/category.dto'
 
-export default function QuizMaker() {
+interface Props {
+  categories: CategoryDTO[]
+}
+
+export default function QuizMaker({ categories }: Props) {
   return (
     <section className="flex flex-col gap-[24px]">
       <div>
@@ -18,43 +25,73 @@ export default function QuizMaker() {
       </div>
 
       <div className="flex flex-col gap-[16px] lg:flex-row">
-        <div className="w-full rounded-[12px]">
-          <div className="flex h-[120px] items-center justify-center bg-blue-01">
-            <MultipleLottie />
-          </div>
-          <div className="bg-white px-[24px] pb-[18px] pt-[16px]">
-            <div className="flex items-center gap-[8px] text-h4-bold text-gray-09">객관식</div>
-            <div className="text-body2-medium text-gray-06">
-              <span>4가지 선택지 중 정답을 고르는 퀴즈</span>
-            </div>
-          </div>
-        </div>
-        <div className="w-full rounded-[12px]">
-          <div className="flex h-[120px] items-center justify-center bg-blue-01">
-            <OXLottie />
-          </div>
-          <div className="bg-white px-[24px] pb-[18px] pt-[16px]">
-            <div className="flex items-center gap-[8px] text-h4-bold text-gray-09">O/X</div>
-            <div className="text-body2-medium text-gray-06">
-              <span>참인지 거짓인지 판단하는 양자택일 퀴즈</span>
-            </div>
-          </div>
-        </div>
-        <div className="w-full rounded-[12px]">
-          <div className="flex h-[120px] items-center justify-center bg-blue-01">
-            <BlackLottie />
-          </div>
-          <div className="bg-white px-[24px] pb-[18px] pt-[16px]">
-            <div className="flex items-center gap-[8px] text-h4-bold text-gray-09">
-              <span>빈칸 채우기</span>
-              <span className="block h-fit rounded-[3px] bg-gray-02 px-[6px] pb-[2px] pt-px text-[10px] text-gray-08">
-                Coming soon
-              </span>
-            </div>
-            <div className="text-body2-medium text-gray-06">주어진 문장의 빈 곳을 채우는 퀴즈</div>
-          </div>
-        </div>
+        <MakeQuizDrawerDialog
+          categories={categories}
+          quizType="MULTIPLE_CHOICE"
+          trigger={
+            <MakerTrigger
+              title="객관식"
+              description="4가지 선택지 중 정답을 고르는 퀴즈"
+              lottie={<MultipleLottie />}
+            />
+          }
+        />
+        <MakeQuizDrawerDialog
+          categories={categories}
+          quizType="MIX_UP"
+          trigger={
+            <MakerTrigger
+              title="O/X"
+              description="참인지 거짓인지 판단하는 양자택일 퀴즈"
+              lottie={<OXLottie />}
+            />
+          }
+        />
+        <MakeQuizDrawerDialog
+          categories={categories}
+          trigger={
+            <MakerTrigger
+              title="빈칸 채우기"
+              description="주어진 문장의 빈 곳을 채우는 퀴즈"
+              comingSoon
+              lottie={<BlackLottie />}
+            />
+          }
+        />
       </div>
     </section>
   )
 }
+
+interface MakerTriggerProps {
+  lottie: ReactNode
+  title: string
+  description: string
+  comingSoon?: boolean
+}
+
+// eslint-disable-next-line react/display-name
+const MakerTrigger = forwardRef<HTMLDivElement, MakerTriggerProps>((props, ref) => {
+  const { lottie, title, description, comingSoon, ...rest } = props
+
+  return (
+    <div ref={ref} {...rest} role="button" className="w-full overflow-hidden rounded-[12px]">
+      <div className="flex h-[120px] items-center justify-center bg-blue-01 lg:h-[180px]">
+        {lottie}
+      </div>
+      <div className="flex h-[80px] flex-col justify-center gap-[4px] bg-white px-[24px] lg:h-[100px] lg:gap-[8px]">
+        <div className="flex items-center gap-[8px] text-h4-bold text-gray-09">
+          <span>{title}</span>
+          {comingSoon && (
+            <span className="block h-fit rounded-[3px] bg-gray-02 px-[6px] pb-[2px] pt-px text-[10px] text-gray-08">
+              Coming soon
+            </span>
+          )}
+        </div>
+        <div className="text-body2-medium text-gray-06">
+          <span>{description}</span>
+        </div>
+      </div>
+    </div>
+  )
+})

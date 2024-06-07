@@ -27,6 +27,10 @@ export const API_ENDPOINT = {
       url: `/bookmark/${quizId}`,
       method: HttpMethod.DELETE,
     }),
+    postQuizzes: () => ({
+      url: `/quizzes`,
+      method: HttpMethod.POST,
+    }),
   },
 
   // 문서 관련 API
