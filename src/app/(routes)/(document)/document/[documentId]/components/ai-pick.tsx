@@ -21,9 +21,12 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { createAiPick } from '@/apis/fetchers/document/create-ai-pick'
 import { useSession } from 'next-auth/react'
 import { useParams } from 'next/navigation'
-import { getDocument } from '@/apis/fetchers/document/get-document'
 import { toggleBookmark } from '@/apis/fetchers/key-point/toggle-bookmark'
 import { DocumentStatus } from '@/apis/types/dto/document.dto'
+import {
+  GetKeyPointsByIdResponse,
+  getKeyPointsById,
+} from '@/apis/fetchers/key-point/get-key-points'
 
 interface Props {
   initKeyPoints: {
@@ -53,6 +56,8 @@ const slideInOutVariants = {
   },
 }
 
+const GET_KEY_POINTS_BY_ID_QUERY_KEY = 'get-key-points-by-id'
+
 export function AiPick({ initKeyPoints, initStatus }: Props) {
   const isDesktop = useMediaQuery('(min-width: 1024px)')
   const { isPickOpen, setIsPickOpen } = useDocumentDetailContext()
@@ -62,75 +67,66 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
   const queryClient = useQueryClient()
 
   const {
-    data: { status, keyPoints },
+    data: { documentStatus: status, keyPoints },
   } = useQuery({
-    queryKey: ['get-key-points'],
-    /** TODO: key-point endpoint로 변경 예정 */
+    queryKey: [GET_KEY_POINTS_BY_ID_QUERY_KEY, documentId],
     queryFn: () =>
-      getDocument({
+      getKeyPointsById({
         accessToken: session.data?.user.accessToken || '',
         documentId: Number(documentId),
       }),
-    select: (data) => ({
-      status: data.status,
-      keyPoints: data.keyPoints,
-    }),
     initialData: {
-      status: initStatus,
+      documentStatus: initStatus,
       keyPoints: initKeyPoints,
-
-      /** TODO: key-point endpoint로 변경 후 제거 */
-      quizGenerationStatus: false,
-      category: {
-        id: 1,
-        name: '',
-      },
-      createdAt: '',
-      documentName: '',
-      content: '',
-      id: 1,
     },
   })
 
-  const { mutate: mutateAiPick } = useMutation({
+  useEffect(() => {
+    if (status !== 'PROCESSING') return
+
+    const refetchKeyPoints = async () => {
+      await queryClient.refetchQueries({ queryKey: [GET_KEY_POINTS_BY_ID_QUERY_KEY, documentId] })
+      if (status === 'PROCESSING') {
+        timerId = setTimeout(refetchKeyPoints, 4000)
+      }
+    }
+
+    let timerId = setTimeout(refetchKeyPoints, 4000)
+
+    return () => clearTimeout(timerId)
+  }, [status, queryClient, documentId])
+
+  const { mutate: mutateCreateAiPick } = useMutation({
     mutationKey: ['create-ai-pick'],
     mutationFn: () =>
       createAiPick({
         documentId: Number(documentId),
         accessToken: session.data?.user.accessToken || '',
       }),
+    onSuccess: async () => {
+      await queryClient.refetchQueries({
+        queryKey: [GET_KEY_POINTS_BY_ID_QUERY_KEY, documentId],
+        exact: true,
+      })
+    },
   })
 
   const { mutate: mutateToggleBookmark } = useMutation({
     mutationKey: ['patch-toggle-bookmark'],
     mutationFn: (data: { keypointId: number; bookmark: boolean }) => {
-      queryClient.setQueryData<{
-        id: number
-        documentName: string
-        status: DocumentStatus
-        quizGenerationStatus: boolean
-        category: {
-          id: number
-          name: string
-        }
-        keyPoints: {
-          id: number
-          question: string
-          answer: string
-          bookmark: boolean
-        }[]
-        content: string
-        createdAt: string
-      }>(['get-key-points'], (oldData) => {
-        if (!oldData) return oldData
+      queryClient.setQueryData<GetKeyPointsByIdResponse>(
+        [GET_KEY_POINTS_BY_ID_QUERY_KEY, documentId],
+        (oldData) => {
+          if (!oldData) return oldData
 
-        return {
-          ...oldData,
-          keyPoints: oldData?.keyPoints.map((keypoint) =>
-            keypoint.id !== data.keypointId ? keypoint : { ...keypoint, bookmark: data.bookmark }
-          ),
+          return {
+            ...oldData,
+            keyPoints: oldData?.keyPoints.map((keypoint) =>
+              keypoint.id !== data.keypointId ? keypoint : { ...keypoint, bookmark: data.bookmark }
+            ),
+          }
         }
-      })
+      )
 
       return toggleBookmark({
         ...data,
@@ -139,7 +135,7 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
     },
     onSettled: async () => {
       await queryClient.refetchQueries({
-        queryKey: ['get-key-points'],
+        queryKey: [GET_KEY_POINTS_BY_ID_QUERY_KEY, documentId],
         exact: true,
       })
     },
@@ -224,7 +220,7 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
                         variant="gradation"
                         size="sm"
                         className="w-fit gap-[4px]"
-                        onClick={() => mutateAiPick()}
+                        onClick={() => mutateCreateAiPick()}
                       >
                         <StarsIcon />
                         pick 시작

@@ -80,6 +80,11 @@ export const API_ENDPOINT = {
       method: HttpMethod.GET,
     }),
 
+    getPickPointsById: (documentId: number) => ({
+      url: `/documents/${documentId}/key-point`,
+      method: HttpMethod.GET,
+    }),
+
     patchBookmark: (keypointId: number) => ({
       url: `/key-point/${keypointId}/bookmark`,
       method: HttpMethod.PATCH,
