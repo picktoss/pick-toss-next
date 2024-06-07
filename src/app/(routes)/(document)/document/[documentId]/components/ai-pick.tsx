@@ -98,15 +98,22 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
 
   const { mutate: mutateCreateAiPick } = useMutation({
     mutationKey: ['create-ai-pick'],
-    mutationFn: () =>
-      createAiPick({
+    mutationFn: () => {
+      queryClient.setQueryData<GetKeyPointsByIdResponse>(
+        [GET_KEY_POINTS_BY_ID_QUERY_KEY, documentId],
+        (oldData) => {
+          if (!oldData) return oldData
+
+          return {
+            ...oldData,
+            documentStatus: 'PROCESSING',
+          }
+        }
+      )
+
+      return createAiPick({
         documentId: Number(documentId),
         accessToken: session.data?.user.accessToken || '',
-      }),
-    onSuccess: async () => {
-      await queryClient.refetchQueries({
-        queryKey: [GET_KEY_POINTS_BY_ID_QUERY_KEY, documentId],
-        exact: true,
       })
     },
   })
