@@ -13,6 +13,7 @@ export const CATEGORY_TAG_TYPE = [
   'MATH',
   'ART',
   'MEDICINE',
+  'ETC',
   'DEFAULT',
 ] as const
 

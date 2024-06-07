@@ -114,4 +114,8 @@ const pickStatus = {
     style: 'bg-orange-01 text-orange-06',
     label: 'pick 갱신 필요',
   },
+  DEFAULT_DOCUMENT: {
+    style: 'bg-gray-02 text-gray-07',
+    label: '기본 노트',
+  },
 }

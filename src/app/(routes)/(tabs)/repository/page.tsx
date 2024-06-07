@@ -12,7 +12,7 @@ export default async function Repository() {
     <CommonLayout
       title={{
         label: `${session?.user.dto.name}님의 노트 창고`,
-        icon: <Image src="/icons/book.svg" alt="" width={32} height={32} />,
+        icon: <Image src="/icons/book.svg" alt="" width={24} height={24} />,
       }}
       mobileOptions={{
         hasSearch: true,

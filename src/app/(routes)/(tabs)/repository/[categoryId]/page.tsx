@@ -23,7 +23,7 @@ export default async function Category({ params: { categoryId } }: Props) {
     <CommonLayout
       mobileOptions={{
         hasSearch: true,
-        hasNotifications: true,
+        hasBackButton: true,
       }}
     >
       <div className="mb-[34px] flex items-center gap-[8px] px-[20px]">

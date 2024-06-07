@@ -4,7 +4,12 @@ import { apiClient } from '@/lib/api-client'
 export interface Document {
   id: number
   name: string
-  status: 'UNPROCESSED' | 'PROCESSED' | 'PROCESSING' | 'KEYPOINT_UPDATE_POSSIBLE'
+  status:
+    | 'UNPROCESSED'
+    | 'PROCESSED'
+    | 'PROCESSING'
+    | 'KEYPOINT_UPDATE_POSSIBLE'
+    | 'DEFAULT_DOCUMENT'
   quizGenerationStatus: boolean
   createdAt: string
 }

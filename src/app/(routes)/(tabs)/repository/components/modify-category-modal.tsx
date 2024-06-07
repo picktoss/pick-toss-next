@@ -58,7 +58,7 @@ export default function ModifyCategoryModal({ id, name, emoji, tag }: Props) {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['categories'] }),
   })
 
-  const handleCreateCategory = () => {
+  const handleUpdateCategory = () => {
     mutate({
       name: newName,
       emoji: newEmoji,
@@ -96,7 +96,7 @@ export default function ModifyCategoryModal({ id, name, emoji, tag }: Props) {
         <DropdownMenu>
           <DropdownMenuTrigger>
             <div className="flex h-[32px] w-[103px] items-center justify-between rounded-md border bg-gray-01 px-[14px]">
-              <CategoryTag tag={tag} />
+              <CategoryTag tag={newTag} />
               <Image src={icons.chevronDown} alt="" width={16} height={16} />
             </div>
           </DropdownMenuTrigger>
@@ -116,7 +116,7 @@ export default function ModifyCategoryModal({ id, name, emoji, tag }: Props) {
       />
       <div className="flex justify-center">
         <DialogClose asChild>
-          <Button className="w-[160px]" onClick={handleCreateCategory}>
+          <Button className="w-[160px]" onClick={handleUpdateCategory}>
             완료
           </Button>
         </DialogClose>
