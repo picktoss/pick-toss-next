@@ -23,6 +23,7 @@ import { useSession } from 'next-auth/react'
 import { useParams } from 'next/navigation'
 import { getDocument } from '@/apis/fetchers/document/get-document'
 import { toggleBookmark } from '@/apis/fetchers/key-point/toggle-bookmark'
+import { DocumentStatus } from '@/apis/types/dto/document.dto'
 
 interface Props {
   initKeyPoints: {
@@ -31,7 +32,7 @@ interface Props {
     answer: string
     bookmark: boolean
   }[]
-  initStatus: 'UNPROCESSED' | 'PROCESSED' | 'PROCESSING' | 'KEYPOINT_UPDATE_POSSIBLE'
+  initStatus: DocumentStatus
 }
 
 const slideInOutVariants = {
@@ -106,7 +107,7 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
       queryClient.setQueryData<{
         id: number
         documentName: string
-        status: 'UNPROCESSED' | 'PROCESSED' | 'PROCESSING' | 'KEYPOINT_UPDATE_POSSIBLE'
+        status: DocumentStatus
         quizGenerationStatus: boolean
         category: {
           id: number
@@ -231,7 +232,7 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
                     </div>
                   </div>
                 ) : (
-                  <div className="flex flex-col pb-[60px] pl-[16px] pr-[18px]">
+                  <div className="flex flex-col gap-[40px] pb-[60px] pl-[16px] pr-[18px]">
                     <Accordion type="multiple" className="flex flex-col gap-[19px]">
                       {keyPoints.map((keyPoint, index) => (
                         <AccordionItem value={keyPoint.id.toString()} key={keyPoint.id}>
@@ -289,11 +290,7 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
                         </AccordionItem>
                       ))}
                     </Accordion>
-                    {status === 'PROCESSING' && (
-                      <div className="py-[12px] text-center text-text-bold text-orange-400">
-                        AI Pick을 생성하고 있어요!
-                      </div>
-                    )}
+                    {status === 'PROCESSING' && <GeneratingPicks />}
                   </div>
                 )}
               </div>
@@ -401,6 +398,17 @@ function PickBanner({
   )
 }
 
+function GeneratingPicks() {
+  return (
+    <div className="flex flex-col items-center justify-center gap-[16px]">
+      <OrangeStarsIcon />
+      <div className="bg-gradient-to-r from-[#93B0FF] to-[#FF8428] bg-clip-text text-text-medium text-transparent">
+        AI가 pick을 생성하고 있어요...
+      </div>
+    </div>
+  )
+}
+
 function ChevronRightIcon() {
   return (
     <svg width="7" height="14" viewBox="0 0 7 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -439,6 +447,21 @@ function StarsIcon() {
       <path
         d="M5.34395 5.86637C5.63885 5.37788 6.31037 5.37788 6.60527 5.86637L7.74605 7.7561C7.79403 7.83557 7.85491 7.90535 7.92586 7.96216L9.67609 9.36365C10.0741 9.68237 10.0741 10.3176 9.67609 10.6364L7.92586 12.0378C7.85491 12.0947 7.79403 12.1644 7.74605 12.2439L6.60526 14.1336C6.31037 14.6221 5.63885 14.6221 5.34395 14.1336L4.20316 12.2439C4.15519 12.1644 4.0943 12.0947 4.02335 12.0378L2.27313 10.6364C1.8751 10.3176 1.8751 9.68237 2.27313 9.36365L4.02335 7.96216C4.0943 7.90535 4.15519 7.83557 4.20317 7.7561L5.34395 5.86637Z"
         fill="white"
+      />
+    </svg>
+  )
+}
+
+function OrangeStarsIcon() {
+  return (
+    <svg width="25" height="36" viewBox="0 0 25 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M16.9669 4.957C17.2796 4.42058 17.9916 4.42058 18.3043 4.957L19.5138 7.03209C19.5647 7.11936 19.6292 7.19597 19.7045 7.25836L21.5602 8.79732C21.9822 9.1473 21.9822 9.84488 21.5602 10.1949L19.7045 11.7338C19.6292 11.7962 19.5647 11.8728 19.5138 11.9601L18.3043 14.0352C17.9916 14.5716 17.2796 14.5716 16.9669 14.0352L15.7574 11.9601C15.7065 11.8728 15.642 11.7962 15.5668 11.7338L13.711 10.1949C13.289 9.84488 13.289 9.1473 13.711 8.79732L15.5667 7.25836C15.642 7.19597 15.7065 7.11936 15.7574 7.03209L16.9669 4.957Z"
+        fill="#FB7E20"
+      />
+      <path
+        d="M9.11801 14.6636C9.75981 13.6551 11.2213 13.6551 11.8631 14.6636L14.3458 18.5652C14.4502 18.7292 14.5827 18.8733 14.7371 18.9906L18.5462 21.8841C19.4125 22.5421 19.4125 23.8537 18.5462 24.5117L14.7371 27.4052C14.5827 27.5225 14.4502 27.6666 14.3458 27.8307L11.8631 31.7322C11.2213 32.7407 9.75981 32.7407 9.11801 31.7322L6.63527 27.8307C6.53085 27.6666 6.39835 27.5225 6.24393 27.4052L2.43484 24.5117C1.5686 23.8537 1.5686 22.5421 2.43484 21.8841L6.24393 18.9906C6.39835 18.8733 6.53085 18.7292 6.63527 18.5652L9.11801 14.6636Z"
+        fill="#FB7E20"
       />
     </svg>
   )
