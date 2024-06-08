@@ -17,12 +17,16 @@ import { useEffect, useState } from 'react'
 import { cn } from '@/lib/utils'
 import { motion, AnimatePresence } from 'framer-motion'
 import { SwitchCase } from '@/components/react/switch-case'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { UseMutateFunction, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { createAiPick } from '@/apis/fetchers/document/create-ai-pick'
 import { useSession } from 'next-auth/react'
 import { useParams } from 'next/navigation'
-import { getDocument } from '@/apis/fetchers/document/get-document'
-import { toggleBookmark } from '@/apis/fetchers/key-point/toggle-bookmark'
+import { ToggleBookmarkResponse, toggleBookmark } from '@/apis/fetchers/key-point/toggle-bookmark'
+import { DocumentStatus } from '@/apis/types/dto/document.dto'
+import {
+  GetKeyPointsByIdResponse,
+  getKeyPointsById,
+} from '@/apis/fetchers/key-point/get-key-points'
 
 interface Props {
   initKeyPoints: {
@@ -31,7 +35,7 @@ interface Props {
     answer: string
     bookmark: boolean
   }[]
-  initStatus: 'UNPROCESSED' | 'PROCESSED' | 'PROCESSING' | 'KEYPOINT_UPDATE_POSSIBLE'
+  initStatus: DocumentStatus
 }
 
 const slideInOutVariants = {
@@ -52,6 +56,8 @@ const slideInOutVariants = {
   },
 }
 
+const GET_KEY_POINTS_BY_ID_QUERY_KEY = 'get-key-points-by-id'
+
 export function AiPick({ initKeyPoints, initStatus }: Props) {
   const isDesktop = useMediaQuery('(min-width: 1024px)')
   const { isPickOpen, setIsPickOpen } = useDocumentDetailContext()
@@ -61,75 +67,73 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
   const queryClient = useQueryClient()
 
   const {
-    data: { status, keyPoints },
+    data: { documentStatus: status, keyPoints },
   } = useQuery({
-    queryKey: ['get-key-points'],
-    /** TODO: key-point endpoint로 변경 예정 */
+    queryKey: [GET_KEY_POINTS_BY_ID_QUERY_KEY, documentId],
     queryFn: () =>
-      getDocument({
+      getKeyPointsById({
         accessToken: session.data?.user.accessToken || '',
         documentId: Number(documentId),
       }),
-    select: (data) => ({
-      status: data.status,
-      keyPoints: data.keyPoints,
-    }),
     initialData: {
-      status: initStatus,
+      documentStatus: initStatus,
       keyPoints: initKeyPoints,
-
-      /** TODO: key-point endpoint로 변경 후 제거 */
-      quizGenerationStatus: false,
-      category: {
-        id: 1,
-        name: '',
-      },
-      createdAt: '',
-      documentName: '',
-      content: '',
-      id: 1,
     },
   })
 
-  const { mutate: mutateAiPick } = useMutation({
+  useEffect(() => {
+    if (status !== 'PROCESSING') return
+
+    const refetchKeyPoints = async () => {
+      await queryClient.refetchQueries({ queryKey: [GET_KEY_POINTS_BY_ID_QUERY_KEY, documentId] })
+      if (status === 'PROCESSING') {
+        timerId = setTimeout(refetchKeyPoints, 4000)
+      }
+    }
+
+    let timerId = setTimeout(refetchKeyPoints, 4000)
+
+    return () => clearTimeout(timerId)
+  }, [status, queryClient, documentId])
+
+  const { mutate: mutateCreateAiPick } = useMutation({
     mutationKey: ['create-ai-pick'],
-    mutationFn: () =>
-      createAiPick({
+    mutationFn: () => {
+      queryClient.setQueryData<GetKeyPointsByIdResponse>(
+        [GET_KEY_POINTS_BY_ID_QUERY_KEY, documentId],
+        (oldData) => {
+          if (!oldData) return oldData
+
+          return {
+            ...oldData,
+            documentStatus: 'PROCESSING',
+          }
+        }
+      )
+
+      return createAiPick({
         documentId: Number(documentId),
         accessToken: session.data?.user.accessToken || '',
-      }),
+      })
+    },
   })
 
   const { mutate: mutateToggleBookmark } = useMutation({
     mutationKey: ['patch-toggle-bookmark'],
     mutationFn: (data: { keypointId: number; bookmark: boolean }) => {
-      queryClient.setQueryData<{
-        id: number
-        documentName: string
-        status: 'UNPROCESSED' | 'PROCESSED' | 'PROCESSING' | 'KEYPOINT_UPDATE_POSSIBLE'
-        quizGenerationStatus: boolean
-        category: {
-          id: number
-          name: string
-        }
-        keyPoints: {
-          id: number
-          question: string
-          answer: string
-          bookmark: boolean
-        }[]
-        content: string
-        createdAt: string
-      }>(['get-key-points'], (oldData) => {
-        if (!oldData) return oldData
+      queryClient.setQueryData<GetKeyPointsByIdResponse>(
+        [GET_KEY_POINTS_BY_ID_QUERY_KEY, documentId],
+        (oldData) => {
+          if (!oldData) return oldData
 
-        return {
-          ...oldData,
-          keyPoints: oldData?.keyPoints.map((keypoint) =>
-            keypoint.id !== data.keypointId ? keypoint : { ...keypoint, bookmark: data.bookmark }
-          ),
+          return {
+            ...oldData,
+            keyPoints: oldData?.keyPoints.map((keypoint) =>
+              keypoint.id !== data.keypointId ? keypoint : { ...keypoint, bookmark: data.bookmark }
+            ),
+          }
         }
-      })
+      )
 
       return toggleBookmark({
         ...data,
@@ -138,7 +142,7 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
     },
     onSettled: async () => {
       await queryClient.refetchQueries({
-        queryKey: ['get-key-points'],
+        queryKey: [GET_KEY_POINTS_BY_ID_QUERY_KEY, documentId],
         exact: true,
       })
     },
@@ -223,7 +227,7 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
                         variant="gradation"
                         size="sm"
                         className="w-fit gap-[4px]"
-                        onClick={() => mutateAiPick()}
+                        onClick={() => mutateCreateAiPick()}
                       >
                         <StarsIcon />
                         pick 시작
@@ -231,69 +235,12 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
                     </div>
                   </div>
                 ) : (
-                  <div className="flex flex-col pb-[60px] pl-[16px] pr-[18px]">
-                    <Accordion type="multiple" className="flex flex-col gap-[19px]">
-                      {keyPoints.map((keyPoint, index) => (
-                        <AccordionItem value={keyPoint.id.toString()} key={keyPoint.id}>
-                          <AccordionTrigger
-                            className="flex items-center justify-between py-[12px]"
-                            chevronDownIcon={
-                              <div className="flex size-[24px] items-center justify-center rounded-full bg-blue-02">
-                                <ChevronDown size={16} color="#7095F8" strokeWidth={3} />
-                              </div>
-                            }
-                          >
-                            <div className="flex gap-[4px]">
-                              <div className="flex w-[16px] shrink-0 text-text-bold text-blue-06">
-                                {index + 1}
-                              </div>
-                              <span className="pr-[8px] text-left text-text-medium text-gray-09">
-                                {keyPoint.question}
-                              </span>
-                            </div>
-                          </AccordionTrigger>
-                          <AccordionContent className="p-0 pl-[20px]">
-                            <div className="flex flex-col gap-[12px]">
-                              <div className="!text-text-regular text-gray-08">
-                                {keyPoint.answer}
-                              </div>
-                              <div
-                                role="button"
-                                onClick={() =>
-                                  mutateToggleBookmark({
-                                    keypointId: keyPoint.id,
-                                    bookmark: !keyPoint.bookmark,
-                                  })
-                                }
-                                className={cn(
-                                  'h-[31px] w-[69px] rounded-[24px] border flex justify-center items-center !text-small1-bold',
-                                  keyPoint.bookmark
-                                    ? 'border-blue-03 bg-blue-02 text-blue-06'
-                                    : 'border-gray-04 text-gray-06'
-                                )}
-                              >
-                                {keyPoint.bookmark ? (
-                                  <div className="flex items-center gap-[4px]">
-                                    <FilledBookMarkIcon />
-                                    <span>저장됨</span>
-                                  </div>
-                                ) : (
-                                  <div className="flex items-center gap-[4px]">
-                                    <AddBookMarkIcon />
-                                    <span>저장</span>
-                                  </div>
-                                )}
-                              </div>
-                            </div>
-                          </AccordionContent>
-                        </AccordionItem>
-                      ))}
-                    </Accordion>
-                    {status === 'PROCESSING' && (
-                      <div className="py-[12px] text-center text-text-bold text-orange-400">
-                        AI Pick을 생성하고 있어요!
-                      </div>
-                    )}
+                  <div className="flex flex-col gap-[40px] pb-[60px] pl-[16px] pr-[18px]">
+                    <PickAccordion
+                      keyPoints={keyPoints}
+                      mutateToggleBookmark={mutateToggleBookmark}
+                    />
+                    {status === 'PROCESSING' && <GeneratingPicks />}
                   </div>
                 )}
               </div>
@@ -307,55 +254,37 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
   return (
     <Drawer open={isPickOpen} onOpenChange={setIsPickOpen}>
       <DrawerTrigger asChild>
-        <Button className="absolute bottom-[109px] right-1/2 flex h-[40px] w-[144px] translate-x-1/2 gap-[8px] rounded-full bg-blue-06 !text-body2-bold hover:bg-blue-06">
-          <Image src={icons.pin} width={16.6} height={20.4} alt="" />
-          AI pick 보기
-        </Button>
+        {status === 'UNPROCESSED' ? (
+          <Button
+            variant="gradation"
+            size="sm"
+            className="absolute bottom-[50px] right-1/2 flex h-[40px] w-[144px] translate-x-1/2 gap-[4px] rounded-full !text-body2-bold text-white"
+          >
+            <StarsIcon />
+            pick 시작
+          </Button>
+        ) : (
+          <Button className="absolute bottom-[50px] right-1/2 flex h-[40px] w-[144px] translate-x-1/2 gap-[8px] rounded-full bg-blue-06 !text-body2-bold hover:bg-blue-06">
+            <Image src={icons.pin} width={16.6} height={20.4} alt="" />
+            AI pick 보기
+          </Button>
+        )}
       </DrawerTrigger>
 
-      <DrawerContent hideSidebar>
-        <div className="flex h-[95vh] w-full flex-col rounded-[16px] bg-blue-01">
-          <div className="flex h-[64px] items-center justify-between rounded-t-[16px] border-b border-blue-02 bg-white px-[18px]">
-            <div className="flex items-end gap-[6px]">
-              <Image src={icons.pin} width={32} height={32} alt="" />
-              <h3 className="text-h3-bold text-gray-08">AI pick</h3>
+      <DrawerContent className="rounded-t-[20px]">
+        <div className="mt-[10px] flex h-[90vh] flex-col">
+          <div className="flex flex-col gap-[15px]">
+            <h3 className="pl-[24px] text-h3-bold text-gray-08">AI pick</h3>
+
+            <div className="px-[15px]">
+              <PickBanner status={status} />
             </div>
-            <Button className="mr-[46px] h-[28px] w-[96px] rounded-full">pick 시작</Button>
           </div>
 
-          <div className="flex-1 overflow-scroll pb-[168px]">
-            <Accordion type="multiple" className="flex flex-col px-[16px] py-[7px]">
-              {keyPoints.map((keyPoint, index) => (
-                <AccordionItem value={keyPoint.id.toString()} key={keyPoint.id}>
-                  <AccordionTrigger
-                    className="flex items-center justify-between"
-                    chevronDownIcon={
-                      <div className="flex size-[24px] items-center justify-center rounded-full bg-blue-02">
-                        <ChevronDown size={16} color="#7095F8" strokeWidth={3} />
-                      </div>
-                    }
-                  >
-                    <div className="flex flex-1 gap-1">
-                      <span className="text-body2-bold text-blue-06">{index + 1}</span>
-                      <span className="text-left text-body2-medium text-gray-09">
-                        {keyPoint.question}
-                      </span>
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent className="px-[14px] text-body2-regular text-gray-08">
-                    {keyPoint.answer}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
+          <div className="mt-[12px] flex flex-col gap-[40px] overflow-auto pb-[60px] pl-[16px] pr-[24px]">
+            <PickAccordion keyPoints={keyPoints} mutateToggleBookmark={mutateToggleBookmark} />
+            {status === 'PROCESSING' && <GeneratingPicks />}
           </div>
-
-          <Button
-            className="absolute bottom-[109px] right-1/2 h-[40px] w-[144px] translate-x-1/2 rounded-full bg-blue-06 !text-body2-bold hover:bg-blue-06"
-            onClick={() => setIsPickOpen(false)}
-          >
-            노트로 돌아가기
-          </Button>
         </div>
       </DrawerContent>
     </Drawer>
@@ -375,18 +304,17 @@ function PickBanner({
           <div className="flex items-center justify-between rounded-[8px] bg-blue-01 py-[16px] pl-[14px] pr-[18px]">
             <div className="flex items-center gap-[8px]">
               <Image src={icons.pin} width={24} height={24} alt="" />
-              <div className="text-text-bold text-blue-06">
+              <div className="text-small1-bold text-blue-06 lg:text-text-bold">
                 픽토스 AI의 질문을 통해 내용을 돌아보세요
               </div>
             </div>
-            {/* <div className="text-small1-regular text-orange-06 underline">가이드 보기</div> */}
           </div>
         ),
         KEYPOINT_UPDATE_POSSIBLE: (
           <div className="flex items-center justify-between rounded-[8px] bg-gray-01 px-[16px] py-[21px]">
             <div className="flex items-center gap-[8px]">
               <GradientStarsIcon />
-              <div className="text-text-medium text-gray-08">
+              <div className="text-small1-bold text-gray-08 lg:text-text-medium">
                 퀴즈와 요약에 수정한 내용을 반영해보세요
               </div>
             </div>
@@ -398,6 +326,94 @@ function PickBanner({
       }}
       defaultComponent={null}
     />
+  )
+}
+
+function PickAccordion({
+  keyPoints,
+  mutateToggleBookmark,
+}: {
+  keyPoints: {
+    id: number
+    question: string
+    answer: string
+    bookmark: boolean
+  }[]
+  mutateToggleBookmark: UseMutateFunction<
+    ToggleBookmarkResponse,
+    Error,
+    {
+      keypointId: number
+      bookmark: boolean
+    },
+    unknown
+  >
+}) {
+  return (
+    <Accordion type="multiple" className="flex flex-col gap-[19px]">
+      {keyPoints.map((keyPoint, index) => (
+        <AccordionItem value={keyPoint.id.toString()} key={keyPoint.id}>
+          <AccordionTrigger
+            className="flex items-center justify-between py-[12px]"
+            chevronDownIcon={
+              <div className="flex size-[24px] items-center justify-center rounded-full bg-blue-02">
+                <ChevronDown size={16} color="#7095F8" strokeWidth={3} />
+              </div>
+            }
+          >
+            <div className="flex gap-[4px]">
+              <div className="flex w-[16px] shrink-0 text-text-bold text-blue-06">{index + 1}</div>
+              <span className="pr-[8px] text-left text-text-medium text-gray-09">
+                {keyPoint.question}
+              </span>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="p-0 pl-[20px]">
+            <div className="flex flex-col gap-[12px]">
+              <div className="!text-text-regular text-gray-08">{keyPoint.answer}</div>
+              <div
+                role="button"
+                onClick={() =>
+                  mutateToggleBookmark({
+                    keypointId: keyPoint.id,
+                    bookmark: !keyPoint.bookmark,
+                  })
+                }
+                className={cn(
+                  'h-[31px] w-[69px] rounded-[24px] border flex justify-center items-center !text-small1-bold',
+                  keyPoint.bookmark
+                    ? 'border-blue-03 bg-blue-02 text-blue-06'
+                    : 'border-gray-04 text-gray-06'
+                )}
+              >
+                {keyPoint.bookmark ? (
+                  <div className="flex items-center gap-[4px]">
+                    <FilledBookMarkIcon />
+                    <span>저장됨</span>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-[4px]">
+                    <AddBookMarkIcon />
+                    <span>저장</span>
+                  </div>
+                )}
+              </div>
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+      ))}
+    </Accordion>
+  )
+}
+
+function GeneratingPicks() {
+  return (
+    <div className="flex flex-col items-center justify-center gap-[16px]">
+      <OrangeStarsIcon />
+      <div className="bg-gradient-to-r from-[#93B0FF] to-[#FF8428] bg-clip-text text-text-medium text-transparent">
+        AI가 pick을 생성하고 있어요...
+      </div>
+    </div>
   )
 }
 
@@ -439,6 +455,21 @@ function StarsIcon() {
       <path
         d="M5.34395 5.86637C5.63885 5.37788 6.31037 5.37788 6.60527 5.86637L7.74605 7.7561C7.79403 7.83557 7.85491 7.90535 7.92586 7.96216L9.67609 9.36365C10.0741 9.68237 10.0741 10.3176 9.67609 10.6364L7.92586 12.0378C7.85491 12.0947 7.79403 12.1644 7.74605 12.2439L6.60526 14.1336C6.31037 14.6221 5.63885 14.6221 5.34395 14.1336L4.20316 12.2439C4.15519 12.1644 4.0943 12.0947 4.02335 12.0378L2.27313 10.6364C1.8751 10.3176 1.8751 9.68237 2.27313 9.36365L4.02335 7.96216C4.0943 7.90535 4.15519 7.83557 4.20317 7.7561L5.34395 5.86637Z"
         fill="white"
+      />
+    </svg>
+  )
+}
+
+function OrangeStarsIcon() {
+  return (
+    <svg width="25" height="36" viewBox="0 0 25 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M16.9669 4.957C17.2796 4.42058 17.9916 4.42058 18.3043 4.957L19.5138 7.03209C19.5647 7.11936 19.6292 7.19597 19.7045 7.25836L21.5602 8.79732C21.9822 9.1473 21.9822 9.84488 21.5602 10.1949L19.7045 11.7338C19.6292 11.7962 19.5647 11.8728 19.5138 11.9601L18.3043 14.0352C17.9916 14.5716 17.2796 14.5716 16.9669 14.0352L15.7574 11.9601C15.7065 11.8728 15.642 11.7962 15.5668 11.7338L13.711 10.1949C13.289 9.84488 13.289 9.1473 13.711 8.79732L15.5667 7.25836C15.642 7.19597 15.7065 7.11936 15.7574 7.03209L16.9669 4.957Z"
+        fill="#FB7E20"
+      />
+      <path
+        d="M9.11801 14.6636C9.75981 13.6551 11.2213 13.6551 11.8631 14.6636L14.3458 18.5652C14.4502 18.7292 14.5827 18.8733 14.7371 18.9906L18.5462 21.8841C19.4125 22.5421 19.4125 23.8537 18.5462 24.5117L14.7371 27.4052C14.5827 27.5225 14.4502 27.6666 14.3458 27.8307L11.8631 31.7322C11.2213 32.7407 9.75981 32.7407 9.11801 31.7322L6.63527 27.8307C6.53085 27.6666 6.39835 27.5225 6.24393 27.4052L2.43484 24.5117C1.5686 23.8537 1.5686 22.5421 2.43484 21.8841L6.24393 18.9906C6.39835 18.8733 6.53085 18.7292 6.63527 18.5652L9.11801 14.6636Z"
+        fill="#FB7E20"
       />
     </svg>
   )
