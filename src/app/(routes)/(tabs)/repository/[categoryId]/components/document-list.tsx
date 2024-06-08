@@ -101,7 +101,7 @@ export default function DocumentList({ categoryId, className }: Props) {
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-          <div className="flex flex-col gap-2">
+          <div className="mb-[30px] flex flex-col gap-2">
             {documents.map((document) => (
               <DocumentItem key={document.id} sortOption={sortOption} {...document} />
             ))}
