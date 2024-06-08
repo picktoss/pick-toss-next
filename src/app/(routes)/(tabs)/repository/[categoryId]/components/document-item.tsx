@@ -10,7 +10,6 @@ import {
 import { cn } from '@/lib/utils'
 import { Document } from '@/apis/fetchers/document/get-documents-for-category'
 import { useState } from 'react'
-import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 import DeleteDocumentModal from './delete-document.modal'
 import ModifyDocumentNameModal from './modify-document-name-modal'
 import { getRelativeTime } from '@/utils/date'
@@ -53,41 +52,37 @@ export default function DocumentItem({ sortOption, ...document }: Props) {
               </div>
             </div>
           </div>
-          <Dialog>
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <div className="flex size-[25px] items-center justify-center rounded-full hover:bg-gray-02">
-                  <Image src={icons.kebab} alt="" width={15} height={3} />
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <div className="flex size-[25px] items-center justify-center rounded-full hover:bg-gray-02">
+                <Image src={icons.kebab} alt="" width={15} height={3} />
+              </div>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem
+                onClick={(event) => {
+                  event.stopPropagation()
+                  setModifyDialogOpen(true)
+                }}
+              >
+                <div className="flex gap-4">
+                  <Image src="/icons/modify-pencil.svg" alt="" width={16} height={16} />
+                  <span className="text-gray-09">이름 바꾸기</span>
                 </div>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuItem
-                  onClick={(event) => {
-                    event.stopPropagation()
-                    setModifyDialogOpen(true)
-                  }}
-                >
-                  <div className="flex gap-4">
-                    <Image src="/icons/modify-pencil.svg" alt="" width={16} height={16} />
-                    <span className="text-gray-09">이름 바꾸기</span>
-                  </div>
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={(event) => {
-                    event.stopPropagation()
-                    setDeleteDialogOpen(true)
-                  }}
-                >
-                  <DialogTrigger asChild>
-                    <div className="flex gap-4">
-                      <Image src="/icons/trashcan-red.svg" alt="" width={16} height={16} />
-                      <span className="text-notice-red">노트 삭제하기</span>
-                    </div>
-                  </DialogTrigger>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </Dialog>
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={(event) => {
+                  event.stopPropagation()
+                  setDeleteDialogOpen(true)
+                }}
+              >
+                <div className="flex gap-4">
+                  <Image src="/icons/trashcan-red.svg" alt="" width={16} height={16} />
+                  <span className="text-notice-red">노트 삭제하기</span>
+                </div>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </Link>
       <ModifyDocumentNameModal
