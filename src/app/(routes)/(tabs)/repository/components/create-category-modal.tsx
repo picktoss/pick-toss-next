@@ -40,6 +40,8 @@ export default function CreateCategoryModal({ trigger }: Props) {
   }
 
   const handleCreateCategory = () => {
+    if (name === '') return alert('폴더 이름을 설정해주세요.')
+
     mutate({ name, emoji, tag, accessToken: session?.user.accessToken || '' })
     resetState()
   }
@@ -49,50 +51,53 @@ export default function CreateCategoryModal({ trigger }: Props) {
       <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent
         displayCloseButton={false}
-        className="w-[560px]"
+        className="w-[335px] lg:w-[560px]"
         onOpenAutoFocus={(e) => e.preventDefault()}
       >
         <h4 className="mb-[8px] text-h4-bold text-gray-09">폴더 만들기</h4>
         <p className="mb-[32px] text-small1-regular text-gray-07">
           폴더 아이콘, 카테고리, 폴더 이름을 설정해주세요
         </p>
-        <div className="mb-[34px] flex items-center gap-[10px]">
-          <DropdownMenu>
-            <DropdownMenuTrigger>
-              <div className="flex size-[32px] items-center justify-center rounded-md border bg-gray-01">
-                {emoji}
-              </div>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <EmojiPicker
-                skinTonesDisabled
-                width={320}
-                height={400}
-                onEmojiClick={(emojiData) => {
-                  setEmoji(emojiData.emoji)
-                }}
-              />
-            </DropdownMenuContent>
-          </DropdownMenu>
-          <DropdownMenu>
-            <DropdownMenuTrigger>
-              <div className="flex h-[32px] w-[103px] items-center justify-between rounded-md border bg-gray-01 px-[14px]">
-                <CategoryTag tag={tag} />
-                <Image src={icons.chevronDown} alt="" width={16} height={16} />
-              </div>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              {CATEGORY_TAG_TYPE.map((tag) => (
-                <DropdownMenuItem key={tag} onClick={() => setTag(tag)}>
+        <div className="mb-[34px] lg:flex lg:items-center lg:gap-[10px]">
+          <div className="mb-[24px] flex items-center gap-[10px] lg:mb-0">
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <div className="flex size-[32px] items-center justify-center rounded-md border bg-gray-01">
+                  {emoji}
+                </div>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <EmojiPicker
+                  skinTonesDisabled
+                  width={320}
+                  height={400}
+                  onEmojiClick={(emojiData) => {
+                    setEmoji(emojiData.emoji)
+                  }}
+                />
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <div className="flex h-[32px] w-[103px] items-center justify-between rounded-md border bg-gray-01 px-[14px]">
                   <CategoryTag tag={tag} />
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
+                  <Image src={icons.chevronDown} alt="" width={16} height={16} />
+                </div>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                {CATEGORY_TAG_TYPE.map((tag) => (
+                  <DropdownMenuItem key={tag} onClick={() => setTag(tag)}>
+                    <CategoryTag tag={tag} />
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
           <input
-            className="h-[32px] flex-1 rounded-md border bg-gray-01 px-[12px] text-body2-regular outline-none"
+            className="h-[48px] w-full rounded-md border bg-gray-01 px-[12px] text-body2-regular outline-none lg:h-[32px] lg:w-auto lg:flex-1"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            placeholder="폴더 이름"
           />
         </div>
         <div className="flex justify-center">

@@ -13,7 +13,6 @@ import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { cn } from '@/lib/utils'
 import DeleteCategoryModal from './delete-category-modal'
-import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 import { useState } from 'react'
 import ModifyCategoryModal from './modify-category-modal'
 
@@ -25,7 +24,8 @@ export default function CategoryItem(props: Props) {
     id: id,
   })
 
-  const [dialogStatus, setDialogStatus] = useState<'modify' | 'delete' | null>(null)
+  const [modifyDialogOpen, setModifyDialogOpen] = useState(false)
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -33,16 +33,22 @@ export default function CategoryItem(props: Props) {
   }
 
   return (
-    <Link href={`/repository/${id}`} ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      <div
-        className={cn(
-          'relative w-[150px] cursor-pointer rounded-xl bg-white p-4 hover:drop-shadow-[0_4px_12px_rgba(0,0,0,0.1)] transition duration-200 lg:w-auto lg:min-w[240px]',
-          isDragging && 'opacity-50'
-        )}
+    <>
+      <Link
+        href={`/repository/${id}`}
+        ref={setNodeRef}
+        style={style}
+        {...attributes}
+        {...listeners}
       >
-        <div className="mb-2 text-2xl lg:mb-3">{emoji || '📁'}</div>
-        <div className="absolute right-[12px] top-[8px]">
-          <Dialog>
+        <div
+          className={cn(
+            'relative w-[150px] cursor-pointer rounded-xl bg-white p-4 hover:drop-shadow-[0_4px_12px_rgba(0,0,0,0.1)] transition duration-200 lg:w-auto lg:min-w[240px]',
+            isDragging && 'opacity-50'
+          )}
+        >
+          <div className="mb-2 text-2xl lg:mb-3">{emoji || '📁'}</div>
+          <div className="absolute right-[12px] top-[8px]">
             <DropdownMenu>
               <DropdownMenuTrigger className="focus:outline-none">
                 <div className="flex size-[25px] items-center justify-center rounded-full hover:bg-gray-02">
@@ -53,43 +59,39 @@ export default function CategoryItem(props: Props) {
                 <DropdownMenuItem
                   onClick={(event) => {
                     event.stopPropagation()
-                    setDialogStatus('modify')
+                    setModifyDialogOpen(true)
                   }}
                 >
-                  <DialogTrigger asChild>
-                    <div className="flex gap-4">
-                      <Image src="/icons/modify-pencil.svg" alt="" width={16} height={16} />
-                      <span className="text-gray-09">정보 수정하기</span>
-                    </div>
-                  </DialogTrigger>
+                  <div className="flex gap-4">
+                    <Image src="/icons/modify-pencil.svg" alt="" width={16} height={16} />
+                    <span className="text-gray-09">정보 수정하기</span>
+                  </div>
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={(event) => {
                     event.stopPropagation()
-                    setDialogStatus('delete')
+                    setDeleteDialogOpen(true)
                   }}
                 >
-                  <DialogTrigger asChild>
-                    <div className="flex gap-4">
-                      <Image src="/icons/trashcan-red.svg" alt="" width={16} height={16} />
-                      <span className="text-notice-red">폴더 삭제하기</span>
-                    </div>
-                  </DialogTrigger>
+                  <div className="flex gap-4">
+                    <Image src="/icons/trashcan-red.svg" alt="" width={16} height={16} />
+                    <span className="text-notice-red">폴더 삭제하기</span>
+                  </div>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-            {dialogStatus === 'delete' && <DeleteCategoryModal {...props} />}
-            {dialogStatus === 'modify' && <ModifyCategoryModal {...props} />}
-          </Dialog>
-        </div>
-        <div className="mb-[32px] flex flex-col items-start gap-2 lg:mb-[6px] lg:flex-row lg:items-center">
-          <div className="w-[118px] truncate text-body1-bold text-gray-09 lg:w-auto lg:text-h4-bold">
-            {name}
           </div>
-          <CategoryTag tag={tag} />
+          <div className="mb-[32px] flex flex-col items-start gap-2 lg:mb-[6px] lg:flex-row lg:items-center">
+            <div className="w-[118px] truncate text-body1-bold text-gray-09 lg:w-auto lg:text-h4-bold">
+              {name}
+            </div>
+            <CategoryTag tag={tag} />
+          </div>
+          <div className="text-small1-regular text-gray-08">노트 {documents.length}개</div>
         </div>
-        <div className="text-small1-regular text-gray-08">노트 {documents.length}개</div>
-      </div>
-    </Link>
+      </Link>
+      <DeleteCategoryModal open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen} {...props} />
+      <ModifyCategoryModal open={modifyDialogOpen} onOpenChange={setModifyDialogOpen} {...props} />
+    </>
   )
 }
