@@ -67,7 +67,7 @@ export default function MakeQuizDrawerDialog({ trigger, categories, quizType = '
       <DrawerTrigger asChild className="cursor-pointer">
         {trigger}
       </DrawerTrigger>
-      <DrawerContent className="min-h-[510px]">
+      <DrawerContent className="h-[510px]">
         {startedCreate ? (
           <div className="center">생성중...</div>
         ) : (
@@ -222,7 +222,7 @@ function SelectCheckItems(props: {
         <div className="h-px w-full rounded-full bg-gray-01" />
       </div>
 
-      <div className="flex flex-col gap-[3px]">
+      <div className="flex max-h-[280px] flex-col gap-[3px] overflow-auto">
         {items.map((item) => (
           <div key={item.id} className="flex h-[38px] items-end gap-[16px] px-[27px] py-[9px] ">
             <Checkbox
