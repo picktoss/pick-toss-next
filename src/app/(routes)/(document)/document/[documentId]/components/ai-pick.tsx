@@ -281,10 +281,29 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
             </div>
           </div>
 
-          <div className="mt-[12px] flex flex-col gap-[40px] overflow-auto pb-[60px] pl-[16px] pr-[24px]">
-            <PickAccordion keyPoints={keyPoints} mutateToggleBookmark={mutateToggleBookmark} />
-            {status === 'PROCESSING' && <GeneratingPicks />}
-          </div>
+          {status === 'UNPROCESSED' ? (
+            <div className="absolute bottom-1/2 flex w-full flex-col items-center gap-[24px] text-center text-text2-bold text-gray-08">
+              <p>
+                AI pick으로 퀴즈 내용을 선정하고
+                <br />
+                노트 요약을 확인해보세요
+              </p>
+              <Button
+                variant="gradation"
+                size="sm"
+                className="w-fit gap-[4px]"
+                onClick={() => mutateCreateAiPick()}
+              >
+                <StarsIcon />
+                pick 시작
+              </Button>
+            </div>
+          ) : (
+            <div className="mt-[12px] flex flex-col gap-[40px] overflow-auto pb-[60px] pl-[16px] pr-[24px]">
+              <PickAccordion keyPoints={keyPoints} mutateToggleBookmark={mutateToggleBookmark} />
+              {status === 'PROCESSING' && <GeneratingPicks />}
+            </div>
+          )}
         </div>
       </DrawerContent>
     </Drawer>

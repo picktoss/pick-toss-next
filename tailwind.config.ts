@@ -151,6 +151,14 @@ const config = {
             letterSpacing: '0.02em',
           },
         ],
+        'text2-bold': [
+          '16px',
+          {
+            lineHeight: '150%',
+            fontWeight: 'bold',
+            letterSpacing: '0.02em',
+          },
+        ],
         'text-regular': [
           '14px',
           {
