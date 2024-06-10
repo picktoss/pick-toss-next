@@ -3,7 +3,7 @@
 import { useMediaQuery } from '@/hooks/use-media-query'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer'
-import { ReactNode, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -24,10 +24,16 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { FakeSelectTrigger } from '@/components/fake-select-trigger'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 
 const DEFAULT_POINT = 5
 
 const QUIZ_COUNT_OPTIONS = [3, 5, 10, 15, 20]
+const DEFAULT_QUIZ_COUNT = 5
 
 interface Props {
   categories: CategoryDTO[]
@@ -94,7 +100,37 @@ function MakeQuizDialogContent({
   categories: CategoryDTO[]
   // createQuizzes: () => void
 }) {
-  console.error(categories)
+  const session = useSession()
+
+  const [openSelectCategory, setOpenSelectCategory] = useState(false)
+  const [selectCategoryId, setSelectCategoryId] = useState<number>(categories[0].id)
+
+  const [openSelectDocuments, setOpenSelectDocuments] = useState(false)
+  const {
+    list: documentList,
+    set: setDocumentList,
+    isAllChecked: isDocumentAllChecked,
+    checkAll: checkDocumentAll,
+    unCheckAll: unCheckDocumentAll,
+    getCheckedIds: getDocumentCheckedIds,
+    toggle: toggleDocumentChecked,
+  } = useCheckList([] as { id: number; name: string; order: number; checked: false }[])
+
+  const curCategory = categories.find((category) => category.id === selectCategoryId)!
+
+  useEffect(() => {
+    const category = categories.find((category) => category.id === selectCategoryId)!
+
+    setDocumentList(
+      category.documents.map((document) => ({
+        ...document,
+        checked: false,
+      }))
+    )
+  }, [categories, setDocumentList, selectCategoryId])
+
+  const [quizCount, setQuizCount] = useState(DEFAULT_QUIZ_COUNT)
+
   return (
     <div className="">
       <div className="flex flex-col gap-[8px] text-center">
@@ -106,19 +142,57 @@ function MakeQuizDialogContent({
         <div className="flex flex-1 flex-col justify-around">
           <div className="flex items-center">
             <div className="w-[52px] shrink-0 text-body2-medium text-gray-08">폴더</div>
-            <FakeSelectTrigger emoji={categories[0].emoji} value={categories[0].name} />
+            <DropdownMenu open={openSelectCategory} onOpenChange={setOpenSelectCategory}>
+              <DropdownMenuTrigger className="w-full">
+                <FakeSelectTrigger emoji={curCategory.emoji} value={curCategory.name} />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="flex flex-col gap-[8px] pb-[10px] pt-[18px]">
+                <div className="px-[18px] text-body2-medium">전체</div>
+                <div className="flex flex-col">
+                  {categories.map((category) => (
+                    <button
+                      key={category.id}
+                      className="flex items-center gap-[8px] rounded-[8px] px-[18px] py-[8px] text-body2-regular hover:bg-gray-01"
+                      onClick={() => {
+                        setOpenSelectCategory(false)
+                        setSelectCategoryId(category.id)
+                      }}
+                    >
+                      {category.emoji && <div>{category.emoji}</div>}
+                      <div>{category.name}</div>
+                    </button>
+                  ))}
+                </div>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
 
           <div className="flex items-center">
             <div className="w-[52px] shrink-0 text-body2-medium text-gray-08">노트</div>
-            <FakeSelectTrigger value="10개" className="w-[95px]" />
+            <DropdownMenu open={openSelectDocuments} onOpenChange={setOpenSelectDocuments}>
+              <DropdownMenuTrigger className="w-[95px]">
+                <FakeSelectTrigger value={`${getDocumentCheckedIds().length}개`} />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <SelectCheckItems
+                  items={documentList}
+                  isAllChecked={isDocumentAllChecked()}
+                  unCheckAll={unCheckDocumentAll}
+                  checkAll={checkDocumentAll}
+                  toggle={toggleDocumentChecked}
+                />
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
 
           <div className="flex items-center">
             <div className="w-[52px] text-body2-medium text-gray-08">퀴즈 수</div>
-            <Select defaultValue="5">
+            <Select
+              defaultValue={String(DEFAULT_QUIZ_COUNT)}
+              onValueChange={(value) => setQuizCount(+value)}
+            >
               <SelectTrigger className="w-[85px] border-none bg-gray-01 pl-[14px] text-body1-bold outline-none">
-                <SelectValue placeholder="10" />
+                <SelectValue placeholder={quizCount} />
               </SelectTrigger>
               <SelectContent className="flex min-w-[85px]">
                 {QUIZ_COUNT_OPTIONS.map((option) => (
@@ -140,15 +214,13 @@ function MakeQuizDialogContent({
             선택된 노트
           </div>
           <ul className="flex flex-1 flex-col gap-[8px] overflow-auto px-[19px] py-[13px]">
-            <li className="text-text-medium text-gray-08">
-              <span className="line-clamp-1">대충 매우 긴 문서 이름을 가진 문서</span>
-            </li>
-            <li className="text-text-medium text-gray-08">
-              <span>최근 이슈</span>
-            </li>
-            <li className="text-text-medium text-gray-08">
-              <span>회계원리</span>
-            </li>
+            {documentList
+              .filter((document) => getDocumentCheckedIds().includes(document.id))
+              .map((document) => (
+                <li key={document.id} className="text-text-medium text-gray-08">
+                  <span className="line-clamp-1">{document.name}</span>
+                </li>
+              ))}
           </ul>
         </div>
       </div>
@@ -156,13 +228,13 @@ function MakeQuizDialogContent({
       <div className="flex flex-col items-center gap-[8px]">
         <div className="text-center text-small1-regular">
           <span className="text-gray-06">나의 별: </span>
-          <span className="text-gray-08">16개</span>
+          <span className="text-gray-08">{session.data?.user.dto.point}개</span>
         </div>
         <Button variant="gradation" className="flex w-[335px] gap-[10px] text-white">
           <div>퀴즈 시작</div>
           <div className="flex items-start gap-[8px] rounded-[16px] px-[10px] py-[3px]">
             <Image src={icons.star} width={16} height={16} alt="" className="mt-px" />
-            <div className="text-text-bold">5</div>
+            <div className="text-text-bold">{quizCount}</div>
           </div>
         </Button>
       </div>
@@ -196,7 +268,7 @@ function MakeQuizDrawerContent({
     unCheckAll: unCheckDocumentAll,
     getCheckedIds: getDocumentCheckedIds,
     toggle: toggleDocumentChecked,
-  } = useCheckList([{ id: 0, name: '', order: 0, checked: false }])
+  } = useCheckList([] as { id: number; name: string; order: number; checked: false }[])
 
   return (
     <div className="flex flex-1 flex-col justify-between pb-[22px] pt-[40px]">
@@ -212,13 +284,15 @@ function MakeQuizDrawerContent({
           )}
         </div>
 
-        <SelectCheckItems
-          items={step === 'folder' ? categoryList : documentList}
-          isAllChecked={step === 'folder' ? isCategoryAllChecked() : isDocumentAllChecked()}
-          unCheckAll={step === 'folder' ? unCheckCategoryAll : unCheckDocumentAll}
-          checkAll={step === 'folder' ? checkCategoryAll : checkDocumentAll}
-          toggle={step === 'folder' ? toggleCategoryChecked : toggleDocumentChecked}
-        />
+        <div className="mt-[24px]">
+          <SelectCheckItems
+            items={step === 'folder' ? categoryList : documentList}
+            isAllChecked={step === 'folder' ? isCategoryAllChecked() : isDocumentAllChecked()}
+            unCheckAll={step === 'folder' ? unCheckCategoryAll : unCheckDocumentAll}
+            checkAll={step === 'folder' ? checkCategoryAll : checkDocumentAll}
+            toggle={step === 'folder' ? toggleCategoryChecked : toggleDocumentChecked}
+          />
+        </div>
       </div>
 
       <div className="px-[20px]">
@@ -281,7 +355,7 @@ function SelectCheckItems(props: {
   const { items, isAllChecked, unCheckAll, checkAll, toggle } = props
 
   return (
-    <div className="mt-[24px]">
+    <div>
       <div className="flex h-[38px] items-end gap-[16px] px-[27px] py-[9px]">
         <Checkbox
           id="allFolder"
@@ -299,28 +373,32 @@ function SelectCheckItems(props: {
         </label>
       </div>
 
-      <div className="mb-[7px] px-[19px]">
-        <div className="h-px w-full rounded-full bg-gray-01" />
-      </div>
-
-      <div className="flex max-h-[280px] flex-col gap-[3px] overflow-auto">
-        {items.map((item) => (
-          <div key={item.id} className="flex h-[38px] items-end gap-[16px] px-[27px] py-[9px] ">
-            <Checkbox
-              id={String(item.id)}
-              className="size-[20px]"
-              checked={item.checked}
-              onClick={() => toggle(item.id)}
-            />
-            <label
-              htmlFor={String(item.id)}
-              className="flex h-[20px] items-end text-body2-regular text-gray-08"
-            >
-              {item.emoji ? item.emoji : ''} {item.name}
-            </label>
+      {items.length > 0 && (
+        <>
+          <div className="mb-[7px] px-[19px]">
+            <div className="h-px w-full rounded-full bg-gray-01" />
           </div>
-        ))}
-      </div>
+
+          <div className="flex max-h-[280px] flex-col gap-[3px] overflow-auto">
+            {items.map((item) => (
+              <div key={item.id} className="flex h-[38px] items-end gap-[16px] px-[27px] py-[9px] ">
+                <Checkbox
+                  id={String(item.id)}
+                  className="size-[20px]"
+                  checked={item.checked}
+                  onClick={() => toggle(item.id)}
+                />
+                <label
+                  htmlFor={String(item.id)}
+                  className="flex h-[20px] items-end text-body2-regular text-gray-08"
+                >
+                  {item.emoji ? item.emoji : ''} {item.name}
+                </label>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
     </div>
   )
 }
