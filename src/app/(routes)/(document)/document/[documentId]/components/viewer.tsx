@@ -41,7 +41,7 @@ export function Viewer({ documentName, createdAt, content }: Props) {
           </div>
         </div>
 
-        <div className="prose max-w-none">
+        <div className="prose max-w-none pb-[80px] lg:pb-0">
           <Markdown remarkPlugins={[remarkGfm]} components={{ code: handleMarkDownCodeBlock }}>
             {content}
           </Markdown>

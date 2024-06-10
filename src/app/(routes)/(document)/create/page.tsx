@@ -9,6 +9,8 @@ import { CreateDocumentProvider } from './contexts/create-document-context'
 import { Header } from './components/header'
 import { TitleInput } from './components/title-input'
 import { createDocument } from '@/apis/fetchers/document/create-document'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
 const VisualEditor = dynamic(() => import('./components/visual-editor'), {
   ssr: false,
@@ -17,6 +19,8 @@ const VisualEditor = dynamic(() => import('./components/visual-editor'), {
 
 export default function CreateDocument() {
   const session = useSession()
+  const router = useRouter()
+  const [isLoading, setIsLoading] = useState(false)
 
   const { data: categories } = useQuery({
     queryKey: ['categories'],
@@ -40,17 +44,27 @@ export default function CreateDocument() {
     documentName: string
     editorContent: string
   }) => {
-    if (!categoryId) return
-    if (!documentName || !editorContent) return
+    if (isLoading || !categoryId || !documentName || !editorContent) {
+      return
+    }
+    setIsLoading(true)
+
     const documentBlob = new Blob([editorContent], { type: 'text/markdown' })
     const file = new File([documentBlob], `${documentName}.md`, { type: 'text/markdown' })
 
-    await mutateAsync({
-      accessToken: session.data?.user.accessToken || '',
-      documentName: documentName,
-      file,
-      categoryId,
-    })
+    await mutateAsync(
+      {
+        accessToken: session.data?.user.accessToken || '',
+        documentName: documentName,
+        file,
+        categoryId,
+      },
+      {
+        onSuccess: (data) => {
+          router.push(`/document/${data.id}`)
+        },
+      }
+    )
   }
 
   if (!categories) {
@@ -64,6 +78,7 @@ export default function CreateDocument() {
         <TitleInput />
         <VisualEditor />
       </div>
+      {isLoading && <Loading center />}
     </CreateDocumentProvider>
   )
 }
