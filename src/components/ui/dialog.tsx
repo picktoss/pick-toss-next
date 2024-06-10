@@ -114,8 +114,8 @@ export {
 function XIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M1 17L17 1" stroke="#797D81" stroke-width="2" stroke-linecap="round" />
-      <path d="M17 17L1 1" stroke="#797D81" stroke-width="2" stroke-linecap="round" />
+      <path d="M1 17L17 1" stroke="#797D81" strokeWidth="2" strokeLinecap="round" />
+      <path d="M17 17L1 1" stroke="#797D81" strokeWidth="2" strokeLinecap="round" />
     </svg>
   )
 }

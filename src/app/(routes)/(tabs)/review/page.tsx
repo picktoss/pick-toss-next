@@ -309,9 +309,9 @@ function CheckIcon() {
       <path
         d="M2 5.42857L6.2 10L14 2"
         stroke="#63CF75"
-        stroke-width="3"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   )

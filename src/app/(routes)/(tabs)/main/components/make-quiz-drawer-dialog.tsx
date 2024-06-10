@@ -9,8 +9,8 @@ import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { CategoryDTO } from '@/apis/types/dto/category.dto'
 import { useCheckList } from '@/hooks/use-check-list'
-import { UseMutateFunction, useMutation } from '@tanstack/react-query'
-import { CreateQuizzesResponse, createQuizzes } from '@/apis/fetchers/quiz/create-quizzes'
+import { useMutation } from '@tanstack/react-query'
+import { createQuizzes } from '@/apis/fetchers/quiz/create-quizzes'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import Loading from '@/components/loading'
@@ -31,8 +31,6 @@ import {
 } from '@/components/ui/dropdown-menu'
 import Link from 'next/link'
 
-const DEFAULT_POINT = 5
-
 const QUIZ_COUNT_OPTIONS = [3, 5, 10, 15, 20]
 const DEFAULT_QUIZ_COUNT = 5
 
@@ -50,29 +48,65 @@ export default function MakeQuizDrawerDialog({ trigger, categories, quizType = '
   const isDesktop = useMediaQuery('(min-width: 1024px)')
   const [startedCreate, setStartedState] = useState(false)
 
+  const userPoints = session.data?.user.dto.point || 0
+
   const { mutate: mutateCreateQuizzes } = useMutation({
     mutationKey: ['create-quizzes'],
-    mutationFn: (documentIds: number[]) => {
-      setStartedState(true)
-
-      return createQuizzes({
+    mutationFn: ({ documentIds, count }: { documentIds: number[]; count: number }) =>
+      createQuizzes({
         documentIds,
-        point: DEFAULT_POINT,
+        point: count,
         quizType,
         accessToken: session.data?.user.accessToken || '',
-      })
-    },
-    onSuccess: ({ quizSetId }) => {
-      router.push(`/quiz?quizSetId=${quizSetId}`)
-    },
+      }),
   })
+
+  const handleCreateQuizzes = ({
+    documentIds,
+    count,
+  }: {
+    documentIds: number[]
+    count: number
+  }) => {
+    if (documentIds.length < 1) {
+      /** TODO: Toast 메시지로 대체 */
+      alert('문서를 선택 해 주세요.')
+      return
+    }
+    if (userPoints < count) {
+      /** TODO: Toast 메시지로 대체 */
+      alert('보유 별이 부족합니다.')
+      return
+    }
+
+    setStartedState(true)
+
+    mutateCreateQuizzes(
+      {
+        documentIds,
+        count,
+      },
+      {
+        onSuccess: ({ quizSetId }) => {
+          router.push(`/quiz?quizSetId=${quizSetId}`)
+        },
+      }
+    )
+  }
 
   if (isDesktop) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{trigger}</DialogTrigger>
         <DialogContent className="min-h-[480px] min-w-[560px] rounded-[12px] border-none py-[26px]">
-          {startedCreate ? <Loading center /> : <MakeQuizDialogContent categories={categories} />}
+          {startedCreate ? (
+            <Loading center />
+          ) : (
+            <MakeQuizDialogContent
+              categories={categories}
+              handleCreateQuizzes={handleCreateQuizzes}
+            />
+          )}
         </DialogContent>
       </Dialog>
     )
@@ -87,7 +121,10 @@ export default function MakeQuizDrawerDialog({ trigger, categories, quizType = '
         {startedCreate ? (
           <Loading center />
         ) : (
-          <MakeQuizDrawerContent categories={categories} createQuizzes={mutateCreateQuizzes} />
+          <MakeQuizDrawerContent
+            categories={categories}
+            handleCreateQuizzes={handleCreateQuizzes}
+          />
         )}
       </DrawerContent>
     </Drawer>
@@ -96,10 +133,10 @@ export default function MakeQuizDrawerDialog({ trigger, categories, quizType = '
 
 function MakeQuizDialogContent({
   categories,
-}: // createQuizzes,
-{
+  handleCreateQuizzes,
+}: {
   categories: CategoryDTO[]
-  // createQuizzes: () => void
+  handleCreateQuizzes: ({ documentIds, count }: { documentIds: number[]; count: number }) => void
 }) {
   const session = useSession()
 
@@ -131,6 +168,8 @@ function MakeQuizDialogContent({
   }, [categories, setDocumentList, selectCategoryId])
 
   const [quizCount, setQuizCount] = useState(DEFAULT_QUIZ_COUNT)
+
+  const userPoints = session.data?.user.dto.point || 0
 
   return (
     <div className="">
@@ -230,9 +269,19 @@ function MakeQuizDialogContent({
       <div className="flex flex-col items-center gap-[8px]">
         <div className="text-center text-small1-regular">
           <span className="text-gray-06">나의 별: </span>
-          <span className="text-gray-08">{session.data?.user.dto.point}개</span>
+          <span className="text-gray-08">{userPoints}개</span>
         </div>
-        <Button variant="gradation" className="flex w-[335px] gap-[10px] text-white">
+        <Button
+          variant="gradation"
+          className="flex w-[335px] gap-[10px] text-white"
+          onClick={() => {
+            const documentCheckedIds = getDocumentCheckedIds() as number[]
+            handleCreateQuizzes({
+              documentIds: documentCheckedIds,
+              count: quizCount,
+            })
+          }}
+        >
           <div>퀴즈 시작</div>
           <div className="flex items-start gap-[8px] rounded-[16px] px-[10px] py-[3px]">
             <Image src={icons.star} width={16} height={16} alt="" className="mt-px" />
@@ -246,10 +295,10 @@ function MakeQuizDialogContent({
 
 function MakeQuizDrawerContent({
   categories,
-  createQuizzes,
+  handleCreateQuizzes,
 }: {
   categories: CategoryDTO[]
-  createQuizzes: UseMutateFunction<CreateQuizzesResponse, Error, number[], unknown>
+  handleCreateQuizzes: ({ documentIds, count }: { documentIds: number[]; count: number }) => void
 }) {
   const [step, setStep] = useState<'folder' | 'document'>('folder')
 
@@ -330,7 +379,13 @@ function MakeQuizDrawerContent({
             </Button>
             <Button
               className="flex-[230]"
-              onClick={() => createQuizzes(getDocumentCheckedIds() as number[])}
+              onClick={() => {
+                const documentCheckedIds = getDocumentCheckedIds() as number[]
+                handleCreateQuizzes({
+                  documentIds: documentCheckedIds,
+                  count: 3,
+                })
+              }}
             >
               완료
             </Button>

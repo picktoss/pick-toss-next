@@ -31,9 +31,9 @@ function ChevronDown() {
       <path
         d="M1 1L5 5L9 1"
         stroke="#A2A6AB"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   )
