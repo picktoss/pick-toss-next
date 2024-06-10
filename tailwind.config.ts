@@ -21,6 +21,9 @@ const config = {
     extend: {
       fontFamily: {
         sans: ['var(--font-sans)', ...fontFamily.sans],
+        suit: ['var(--font-suit)'],
+        'dm-sans': ['var(--font-dm-sans'],
+        'dm-suit': ['var(--font-dm-sans)', 'var(--font-suit)'],
       },
       fontSize: {
         h1: [

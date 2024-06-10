@@ -1,11 +1,9 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import './globals.css'
 import { cn } from '@/lib/utils'
 import { SessionProvider } from 'next-auth/react'
 import TanstackProvider from '@/providers/tanstack-provider'
-
-const inter = Inter({ subsets: ['latin'], variable: '--font-sans' })
+import { dmSans, suit } from '@/lib/fonts'
 
 export const metadata: Metadata = {
   title: 'Picktoss',
@@ -19,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn(inter.variable, 'bg-gray-01')}>
+      <body className={cn(suit.variable, dmSans.variable, 'bg-gray-01 font-dm-suit')}>
         <SessionProvider>
           <TanstackProvider>{children}</TanstackProvider>
         </SessionProvider>
