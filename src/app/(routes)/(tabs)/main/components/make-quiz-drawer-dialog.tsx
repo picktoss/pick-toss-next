@@ -29,6 +29,7 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import Link from 'next/link'
 
 const DEFAULT_POINT = 5
 
@@ -173,13 +174,14 @@ function MakeQuizDialogContent({
               <DropdownMenuTrigger className="w-[95px]">
                 <FakeSelectTrigger value={`${getDocumentCheckedIds().length}개`} />
               </DropdownMenuTrigger>
-              <DropdownMenuContent>
+              <DropdownMenuContent className="w-[320px]">
                 <SelectCheckItems
                   items={documentList}
                   isAllChecked={isDocumentAllChecked()}
                   unCheckAll={unCheckDocumentAll}
                   checkAll={checkDocumentAll}
                   toggle={toggleDocumentChecked}
+                  selectType="document"
                 />
               </DropdownMenuContent>
             </DropdownMenu>
@@ -291,6 +293,7 @@ function MakeQuizDrawerContent({
             unCheckAll={step === 'folder' ? unCheckCategoryAll : unCheckDocumentAll}
             checkAll={step === 'folder' ? checkCategoryAll : checkDocumentAll}
             toggle={step === 'folder' ? toggleCategoryChecked : toggleDocumentChecked}
+            selectType={step === 'folder' ? 'category' : 'document'}
           />
         </div>
       </div>
@@ -351,12 +354,13 @@ function SelectCheckItems(props: {
   unCheckAll: () => void
   checkAll: () => void
   toggle: (id: number) => void
+  selectType?: 'category' | 'document'
 }) {
-  const { items, isAllChecked, unCheckAll, checkAll, toggle } = props
+  const { items, isAllChecked, unCheckAll, checkAll, toggle, selectType = 'category' } = props
 
   return (
     <div>
-      <div className="flex h-[38px] items-end gap-[16px] px-[27px] py-[9px]">
+      <div className="flex gap-[16px] px-[27px] py-[9px]">
         <Checkbox
           id="allFolder"
           className="size-[20px]"
@@ -379,21 +383,34 @@ function SelectCheckItems(props: {
             <div className="h-px w-full rounded-full bg-gray-01" />
           </div>
 
-          <div className="flex max-h-[280px] flex-col gap-[3px] overflow-auto">
+          <div className="flex max-h-[280px] flex-col gap-[3px] overflow-auto pb-[10px]">
             {items.map((item) => (
-              <div key={item.id} className="flex h-[38px] items-end gap-[16px] px-[27px] py-[9px] ">
-                <Checkbox
-                  id={String(item.id)}
-                  className="size-[20px]"
-                  checked={item.checked}
-                  onClick={() => toggle(item.id)}
-                />
-                <label
-                  htmlFor={String(item.id)}
-                  className="flex h-[20px] items-end text-body2-regular text-gray-08"
-                >
-                  {item.emoji ? item.emoji : ''} {item.name}
-                </label>
+              <div key={item.id} className="flex justify-between gap-[12px] px-[27px] py-[9px]">
+                <div className="flex gap-[16px]">
+                  <Checkbox
+                    id={String(item.id)}
+                    className="size-[20px]"
+                    checked={item.checked}
+                    onClick={() => toggle(item.id)}
+                  />
+                  <label
+                    htmlFor={String(item.id)}
+                    className="flex h-[20px] items-end text-body2-regular text-gray-08"
+                  >
+                    <span className="line-clamp-1">
+                      {item.emoji ? item.emoji : ''} {item.name}
+                    </span>
+                  </label>
+                </div>
+
+                {selectType === 'document' && (
+                  <Link
+                    href={`/document/${item.id}`}
+                    className="mt-[3px] shrink-0 text-small1-regular text-blue-05 underline underline-offset-2"
+                  >
+                    노트 보기
+                  </Link>
+                )}
               </div>
             ))}
           </div>
