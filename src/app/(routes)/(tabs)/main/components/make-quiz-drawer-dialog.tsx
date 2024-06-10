@@ -13,8 +13,21 @@ import { UseMutateFunction, useMutation } from '@tanstack/react-query'
 import { CreateQuizzesResponse, createQuizzes } from '@/apis/fetchers/quiz/create-quizzes'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
+import Loading from '@/components/loading'
+import Image from 'next/image'
+import icons from '@/constants/icons'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import { FakeSelectTrigger } from '@/components/fake-select-trigger'
 
 const DEFAULT_POINT = 5
+
+const QUIZ_COUNT_OPTIONS = [3, 5, 10, 15, 20]
 
 interface Props {
   categories: CategoryDTO[]
@@ -51,12 +64,8 @@ export default function MakeQuizDrawerDialog({ trigger, categories, quizType = '
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{trigger}</DialogTrigger>
-        <DialogContent className="min-w-[560px] pb-[31px] pt-[26px]">
-          {startedCreate ? (
-            <div className="center">생성중...</div>
-          ) : (
-            <MakeQuizDialogContent categories={categories} />
-          )}
+        <DialogContent className="min-h-[480px] min-w-[560px] rounded-[12px] border-none py-[26px]">
+          {startedCreate ? <Loading center /> : <MakeQuizDialogContent categories={categories} />}
         </DialogContent>
       </Dialog>
     )
@@ -69,7 +78,7 @@ export default function MakeQuizDrawerDialog({ trigger, categories, quizType = '
       </DrawerTrigger>
       <DrawerContent className="h-[510px]">
         {startedCreate ? (
-          <div className="center">생성중...</div>
+          <Loading center />
         ) : (
           <MakeQuizDrawerContent categories={categories} createQuizzes={mutateCreateQuizzes} />
         )}
@@ -86,7 +95,79 @@ function MakeQuizDialogContent({
   // createQuizzes: () => void
 }) {
   console.error(categories)
-  return <div>OK</div>
+  return (
+    <div className="">
+      <div className="flex flex-col gap-[8px] text-center">
+        <h4 className="text-h4-bold text-gray-09">객관식 퀴즈</h4>
+        <p className="text-text-medium text-gray-07">원하는 폴더와 노트, 퀴즈 수를 선택해주세요</p>
+      </div>
+
+      <div className="mb-[33px] mt-[40px] flex h-[226px] justify-between gap-[19px] pl-[46px] pr-[17px]">
+        <div className="flex flex-1 flex-col justify-around">
+          <div className="flex items-center">
+            <div className="w-[52px] shrink-0 text-body2-medium text-gray-08">폴더</div>
+            <FakeSelectTrigger emoji={categories[0].emoji} value={categories[0].name} />
+          </div>
+
+          <div className="flex items-center">
+            <div className="w-[52px] shrink-0 text-body2-medium text-gray-08">노트</div>
+            <FakeSelectTrigger value="10개" className="w-[95px]" />
+          </div>
+
+          <div className="flex items-center">
+            <div className="w-[52px] text-body2-medium text-gray-08">퀴즈 수</div>
+            <Select defaultValue="5">
+              <SelectTrigger className="w-[85px] border-none bg-gray-01 pl-[14px] text-body1-bold outline-none">
+                <SelectValue placeholder="10" />
+              </SelectTrigger>
+              <SelectContent className="flex min-w-[85px]">
+                {QUIZ_COUNT_OPTIONS.map((option) => (
+                  <SelectItem
+                    key={option}
+                    value={String(option)}
+                    className="flex justify-center px-0"
+                  >
+                    {option}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+
+        <div className="flex h-[226px] w-[192px] flex-col overflow-hidden rounded-[12px] border border-gray-02 bg-gray-01">
+          <div className="bg-gray-06 pb-[12px] pt-[14px] text-center text-small1-bold text-white">
+            선택된 노트
+          </div>
+          <ul className="flex flex-1 flex-col gap-[8px] overflow-auto px-[19px] py-[13px]">
+            <li className="text-text-medium text-gray-08">
+              <span className="line-clamp-1">대충 매우 긴 문서 이름을 가진 문서</span>
+            </li>
+            <li className="text-text-medium text-gray-08">
+              <span>최근 이슈</span>
+            </li>
+            <li className="text-text-medium text-gray-08">
+              <span>회계원리</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div className="flex flex-col items-center gap-[8px]">
+        <div className="text-center text-small1-regular">
+          <span className="text-gray-06">나의 별: </span>
+          <span className="text-gray-08">16개</span>
+        </div>
+        <Button variant="gradation" className="flex w-[335px] gap-[10px] text-white">
+          <div>퀴즈 시작</div>
+          <div className="flex items-start gap-[8px] rounded-[16px] px-[10px] py-[3px]">
+            <Image src={icons.star} width={16} height={16} alt="" className="mt-px" />
+            <div className="text-text-bold">5</div>
+          </div>
+        </Button>
+      </div>
+    </div>
+  )
 }
 
 function MakeQuizDrawerContent({
