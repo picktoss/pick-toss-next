@@ -18,7 +18,7 @@ export function CategorySelect({ categories }: Props) {
   const defaultCategory = categories.find((category) => category.id === selectedCategoryId)
 
   return (
-    <Select>
+    <Select onValueChange={(value) => selectCategory(+value)}>
       <SelectTrigger className="center flex w-[180px] justify-center gap-[20px] border-none bg-inherit">
         <SelectValue
           placeholder={
@@ -30,12 +30,7 @@ export function CategorySelect({ categories }: Props) {
           className=""
         />
       </SelectTrigger>
-      <SelectContent
-        defaultValue={selectedCategoryId}
-        onChange={(value) => {
-          selectCategory(+value)
-        }}
-      >
+      <SelectContent defaultValue={selectedCategoryId}>
         {categories.map((category) => (
           <SelectItem key={category.id} value={String(category.id)}>
             <div className="flex items-center gap-[8px] text-body1-bold text-gray-09">
