@@ -2,11 +2,11 @@ import { cn } from '@/lib/utils'
 import { forwardRef } from 'react'
 
 export const FakeSelectTrigger = forwardRef<
-  HTMLButtonElement,
-  { value: string; emoji?: string; className?: HTMLButtonElement['className'] }
+  HTMLDivElement,
+  { value: string; emoji?: string; className?: HTMLDivElement['className'] }
 >(({ emoji, value, className }, ref) => {
   return (
-    <button
+    <div
       ref={ref}
       className={cn(
         'flex h-[40px] w-full items-center outline-none justify-between rounded-md bg-gray-01 pl-[14px] pr-[7px] !text-body1-bold text-gray-08',
@@ -20,7 +20,7 @@ export const FakeSelectTrigger = forwardRef<
       <div className="flex size-[16px] items-center justify-center">
         <ChevronDown />
       </div>
-    </button>
+    </div>
   )
 })
 FakeSelectTrigger.displayName = 'FakeSelectTrigger'
