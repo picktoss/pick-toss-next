@@ -142,7 +142,7 @@ function MakeQuizDialogContent({
   const session = useSession()
 
   const [openSelectCategory, setOpenSelectCategory] = useState(false)
-  const [selectCategoryId, setSelectCategoryId] = useState<number>(categories[0].id)
+  const [selectCategoryId, setSelectCategoryId] = useState<CategoryDTO['id']>(categories[0].id)
 
   const [openSelectDocuments, setOpenSelectDocuments] = useState(false)
   const {
@@ -154,32 +154,34 @@ function MakeQuizDialogContent({
     getCheckedIds: getDocumentCheckedIds,
     toggle: toggleDocumentChecked,
   } = useCheckList([] as SelectDocumentItem[])
-  const [allSelectedDocuments, setAllSelectedDocuments] = useState<SelectDocumentItem[]>([])
+
+  const [documentMap, setDocumentMap] = useState<Record<CategoryDTO['id'], SelectDocumentItem[]>>(
+    () => {
+      return categories.reduce((acc, category) => {
+        acc[category.id] = [
+          ...category.documents.map((document) => ({ ...document, checked: false })),
+        ]
+        return acc
+      }, {} as Record<CategoryDTO['id'], SelectDocumentItem[]>)
+    }
+  )
+
+  const allSelectedDocuments = Object.values(documentMap).flatMap((documents) =>
+    documents.filter((document) => document.checked)
+  )
 
   const curCategory = categories.find((category) => category.id === selectCategoryId)!
 
   useEffect(() => {
-    const newSelectedDocuments = documentList.filter((item) => item.checked)
-
-    setAllSelectedDocuments((prev) => {
-      const newDocuments = newSelectedDocuments.filter(
-        (newDoc) => !prev.some((prevDoc) => prevDoc.id === newDoc.id)
-      )
-
-      return [...prev, ...newDocuments]
-    })
+    setDocumentMap((prev) => ({
+      ...prev,
+      [curCategory.id]: documentList,
+    }))
   }, [documentList])
 
   useEffect(() => {
-    const category = categories.find((category) => category.id === selectCategoryId)!
-
-    setDocumentList(
-      category.documents.map((document) => ({
-        ...document,
-        checked: allSelectedDocuments.some((_document) => _document.id === document.id),
-      }))
-    )
-  }, [categories, setDocumentList, selectCategoryId])
+    setDocumentList(documentMap[selectCategoryId])
+  }, [selectCategoryId])
 
   const [quizCount, setQuizCount] = useState(DEFAULT_QUIZ_COUNT)
 
@@ -269,13 +271,11 @@ function MakeQuizDialogContent({
             선택된 노트
           </div>
           <ul className="flex flex-1 flex-col gap-[8px] overflow-auto px-[19px] py-[13px]">
-            {allSelectedDocuments
-              // .filter((document) => getDocumentCheckedIds().includes(document.id))
-              .map((document) => (
-                <li key={document.id} className="text-text-medium text-gray-08">
-                  <span className="line-clamp-1">{document.name}</span>
-                </li>
-              ))}
+            {allSelectedDocuments.map((document) => (
+              <li key={document.id} className="text-text-medium text-gray-08">
+                <span className="line-clamp-1">{document.name}</span>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
