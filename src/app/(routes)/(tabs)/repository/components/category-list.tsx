@@ -134,7 +134,7 @@ export default function CategoryList({ className }: Props) {
             onDragEnd={handleDragEnd}
           >
             <SortableContext items={categories}>
-              <div className="flex gap-3 overflow-x-scroll scrollbar-hide lg:grid lg:grid-cols-[repeat(auto-fill,minmax(240px,1fr))] lg:gap-4">
+              <div className="m-[-20px] flex gap-3 overflow-x-scroll p-[20px] scrollbar-hide lg:grid lg:grid-cols-[repeat(auto-fill,minmax(240px,1fr))] lg:gap-4">
                 {categories.map((studyCategory) => (
                   <CategoryItem key={studyCategory.id} {...studyCategory} />
                 ))}
