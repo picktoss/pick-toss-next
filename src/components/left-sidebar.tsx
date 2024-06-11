@@ -1,10 +1,19 @@
+'use client'
+
 import { Button } from './ui/button'
-import { TabNavigation } from './tab-nav'
 import { CategoryAccordion } from './category-accordion'
 import { mockCategories } from '@/app/(routes)/(tabs)/repository/mock-data'
 import Link from 'next/link'
+import { findActiveNav, navigationItems } from '@/constants/navigation-items'
+import { useMemo } from 'react'
+import { useSelectedLayoutSegments } from 'next/navigation'
+import { cn } from '@/lib/utils'
 
-export const LeftSidebar = () => {
+export default function LeftSidebar() {
+  const segments = useSelectedLayoutSegments()
+
+  const activeItem = useMemo(() => findActiveNav(navigationItems, segments), [segments])
+
   return (
     <div className="fixed left-0 z-50 flex h-screen w-[240px] flex-col items-center border-r border-gray-04 bg-white py-[30px]">
       <div className="flex items-center gap-[14px]">
@@ -19,7 +28,20 @@ export const LeftSidebar = () => {
           </Button>
         </Link>
       </div>
-      <TabNavigation />
+      <div className="w-full">
+        <div className="hidden flex-col bg-white lg:flex">
+          {navigationItems.slice(0, 3).map((item) => {
+            const { href, Icon, title } = item
+            const isActive = activeItem == item
+            return (
+              <Link key={title} href={href} className="flex h-[64px] items-center gap-4 pl-[45px]">
+                <Icon isActive={isActive} />
+                <span className={cn('text-gray-06', isActive && 'text-orange-06')}>{title}</span>
+              </Link>
+            )
+          })}
+        </div>
+      </div>
       <CategoryAccordion
         categories={mockCategories}
         hasBorder={false}

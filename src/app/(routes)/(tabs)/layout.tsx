@@ -1,5 +1,5 @@
-import { LeftSidebar } from '@/components/left-sidebar'
-import { TabNavigation } from '@/components/tab-nav'
+import LeftSidebar from '@/components/left-sidebar'
+import BottomNavigation from '@/components/bottom-navigation'
 import { Viewport } from 'next'
 import { PropsWithChildren } from 'react'
 
@@ -24,7 +24,7 @@ const TabsLayout = ({ children }: LayoutProps) => {
 
       <div className="lg:hidden">
         <div className="flex min-h-screen flex-col pb-[84px]">{children}</div>
-        <TabNavigation />
+        <BottomNavigation />
       </div>
     </>
   )

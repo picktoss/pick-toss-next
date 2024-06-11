@@ -1,9 +1,6 @@
-'use client'
-
+// TODO: 파일 위치에 대한 고민 필요
 import { cn } from '@/lib/utils'
-import Link from 'next/link'
-import { useSelectedLayoutSegments } from 'next/navigation'
-import { ReactNode, useMemo } from 'react'
+import { ReactNode } from 'react'
 
 interface IconProps {
   isActive: boolean
@@ -16,80 +13,32 @@ interface NavItem {
   segments: string[][]
 }
 
-export const TabNavigation = () => {
-  const segments = useSelectedLayoutSegments()
-  const navItems: NavItem[] = useMemo(
-    () => [
-      {
-        href: '/main',
-        title: '파워업 퀴즈',
-        Icon: PowerUpIcon,
-        segments: [['main']],
-      },
-      {
-        href: '/repository',
-        title: '노트 창고',
-        Icon: StudyRepositoryIcon,
-        segments: [['repository'], ['document']],
-      },
-      {
-        href: '/review',
-        title: '복습 체크',
-        Icon: ReviewCheckIcon,
-        segments: [['review']],
-      },
-      {
-        href: '/profile',
-        title: '마이',
-        Icon: function ({ isActive }: IconProps) {
-          return (
-            <div
-              className={cn('size-[24px] rounded-full bg-gray-07', isActive ?? 'bg-orange-500')}
-            />
-          )
-        },
-        segments: [['/profile']],
-      },
-    ],
-    []
-  )
-
-  const activeItem = useMemo(() => findActiveNav(navItems, segments), [navItems, segments])
-
-  return (
-    <div className="w-full">
-      <div className="hidden flex-col bg-white lg:flex">
-        {navItems.slice(0, 3).map((item) => {
-          const { href, Icon, title } = item
-          const isActive = activeItem == item
-          return (
-            <Link key={title} href={href} className="flex h-[64px] items-center gap-4 pl-[45px]">
-              <Icon isActive={isActive} />
-              <span className={cn('text-gray-06', isActive && 'text-orange-06')}>{title}</span>
-            </Link>
-          )
-        })}
-      </div>
-
-      <div className="fixed bottom-0 flex h-[84px] w-full justify-around border-t border-gray-02 bg-white px-[20px] lg:hidden">
-        {navItems.map((item) => {
-          const { href, Icon, title } = item
-          const isActive = activeItem == item
-          return (
-            <Link
-              key={title}
-              href={href}
-              className="flex flex-1 flex-col items-center gap-1 pt-[16px] text-tag"
-            >
-              <Icon isActive={isActive} />
-              <span className={cn('text-gray-06', isActive && 'text-orange-06')}>{title}</span>
-            </Link>
-          )
-        })}
-      </div>
-    </div>
-  )
-}
+export const navigationItems: NavItem[] = [
+  {
+    href: '/main',
+    title: '파워업 퀴즈',
+    Icon: PowerUpIcon,
+    segments: [['main']],
+  },
+  {
+    href: '/repository',
+    title: '노트 창고',
+    Icon: StudyRepositoryIcon,
+    segments: [['repository'], ['document']],
+  },
+  {
+    href: '/review',
+    title: '복습 체크',
+    Icon: ReviewCheckIcon,
+    segments: [['review']],
+  },
+  {
+    href: '/profile',
+    title: '마이',
+    Icon: ProfileIcon,
+    segments: [['/profile']],
+  },
+]
 
 interface SegmentsRecord {
   segments: string[]
@@ -102,7 +51,7 @@ const descendingOrderOfSegments = (recordA: SegmentsRecord, recordB: SegmentsRec
 const getIsActiveNav = (currentSegments: string[]) => (record: SegmentsRecord) =>
   record.segments.every((seg, index) => currentSegments[index] === seg)
 
-const findActiveNav = (items: NavItem[], currentSegments: string[]): NavItem | undefined => {
+export const findActiveNav = (items: NavItem[], currentSegments: string[]): NavItem | undefined => {
   const segments = items.reduce<SegmentsRecord[]>((result, item) => {
     item.segments.forEach((segments) => {
       result.push({
@@ -218,4 +167,8 @@ function StudyRepositoryIcon({ isActive }: IconProps) {
       </defs>
     </svg>
   )
+}
+
+function ProfileIcon({ isActive }: IconProps) {
+  return <div className={cn('size-[24px] rounded-full bg-gray-07', isActive ?? 'bg-orange-500')} />
 }
