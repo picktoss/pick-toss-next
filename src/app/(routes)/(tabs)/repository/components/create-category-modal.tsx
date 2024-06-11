@@ -85,7 +85,7 @@ export default function CreateCategoryModal({ trigger }: Props) {
                 </div>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                {CATEGORY_TAG_TYPE.map((tag) => (
+                {CATEGORY_TAG_TYPE.filter((tag) => tag !== 'DEFAULT').map((tag) => (
                   <DropdownMenuItem key={tag} onClick={() => setTag(tag)}>
                     <CategoryTag tag={tag} />
                   </DropdownMenuItem>

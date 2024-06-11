@@ -107,7 +107,7 @@ export default function ModifyCategoryModal({ id, name, emoji, tag, open, onOpen
               </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              {CATEGORY_TAG_TYPE.map((tag) => (
+              {CATEGORY_TAG_TYPE.filter((tag) => tag !== 'DEFAULT').map((tag) => (
                 <DropdownMenuItem key={tag} onClick={() => setNewTag(tag)}>
                   <CategoryTag tag={tag} />
                 </DropdownMenuItem>
