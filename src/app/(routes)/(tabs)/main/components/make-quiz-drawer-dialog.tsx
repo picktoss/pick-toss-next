@@ -289,9 +289,8 @@ function MakeQuizDialogContent({
           variant="gradation"
           className="flex w-[335px] gap-[10px] text-white"
           onClick={() => {
-            const documentCheckedIds = getDocumentCheckedIds() as number[]
             handleCreateQuizzes({
-              documentIds: documentCheckedIds,
+              documentIds: allSelectedDocuments.map((document) => document.id),
               count: quizCount,
             })
           }}
