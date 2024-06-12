@@ -7,8 +7,15 @@ import { CommonLayout } from '@/components/common-layout'
 import Image from 'next/image'
 import { auth } from '@/app/api/auth/[...nextauth]/auth'
 import { getCategories } from '@/apis/fetchers/category/get-categories'
+import { RewordDialog } from './components/reward-alert'
 
-export default async function Main() {
+interface Props {
+  searchParams: {
+    reward?: string
+  }
+}
+
+export default async function Main({ searchParams }: Props) {
   const session = await auth()
   const { quizSetId, type } = await getTodayQuizSetId({
     accessToken: session?.user.accessToken || '',
@@ -40,6 +47,7 @@ export default async function Main() {
 
         <QuizMaker categories={categories} />
       </main>
+      {searchParams?.reward && <RewordDialog reward={searchParams?.reward} />}
     </CommonLayout>
   )
 }
