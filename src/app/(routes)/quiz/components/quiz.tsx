@@ -24,9 +24,10 @@ import { deleteQuiz } from '@/apis/fetchers/quiz/delete-quiz'
 
 interface QuizProps {
   quizzes: QuizDTO[]
+  isTodayQuiz: boolean
 }
 
-export default function Quiz({ quizzes }: QuizProps) {
+export default function Quiz({ quizzes, isTodayQuiz }: QuizProps) {
   const quizSetId = useSearchParams().get('quizSetId') || ''
   const session = useSession()
 
@@ -123,6 +124,8 @@ export default function Quiz({ quizzes }: QuizProps) {
   }
 
   const handlePassQuiz = () => {
+    stopTimer()
+
     deleteQuizMutate(
       {
         documentId: curQuiz.document.id,
@@ -226,7 +229,7 @@ export default function Quiz({ quizzes }: QuizProps) {
             />
           </>
         ),
-        end: <QuizResult totalElapsedTime={totalElapsedTime} />,
+        end: <QuizResult totalElapsedTime={totalElapsedTime} isTodayQuiz={isTodayQuiz} />,
       }}
     />
   )

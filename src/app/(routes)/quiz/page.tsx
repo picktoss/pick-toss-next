@@ -16,7 +16,7 @@ export default async function QuizPage({ searchParams }: QuizProps) {
     notFound()
   }
 
-  // const { quizzes: ignore } = await getQuizSets({
+  // const { quizzes: ignore, todayQuizSet } = await getQuizSets({
   //   quizSetId: searchParams.quizSetId,
   // })
 
@@ -26,7 +26,7 @@ export default async function QuizPage({ searchParams }: QuizProps) {
 
   return (
     <div>
-      <Quiz quizzes={quizzes} />
+      <Quiz quizzes={quizzes} isTodayQuiz={true} />
     </div>
   )
 }
