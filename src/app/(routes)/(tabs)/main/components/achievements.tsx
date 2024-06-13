@@ -1,10 +1,12 @@
-import { auth } from '@/app/api/auth/[...nextauth]/auth'
+'use client'
+
 import icons from '@/constants/icons'
 import Image from 'next/image'
 import MyStarsDrawerDialog from './my-stars-drawer-dialog'
+import { useSession } from 'next-auth/react'
 
-export default async function Achievements() {
-  const session = await auth()
+export default function Achievements() {
+  const { data: session } = useSession()
   const userDTO = session?.user.dto
 
   return (
