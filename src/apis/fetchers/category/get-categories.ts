@@ -1,4 +1,5 @@
 import { API_ENDPOINT } from '@/apis/api-endpoint'
+import { DocumentStatus } from '@/apis/types/dto/document.dto'
 import { apiClient } from '@/lib/api-client'
 
 interface GetCategoriesParams extends NextFetchRequestConfig {
@@ -29,6 +30,7 @@ export interface Category {
     id: number
     name: string
     order: number
+    documentStatus: DocumentStatus
   }[]
 }
 
