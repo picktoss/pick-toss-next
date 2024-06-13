@@ -7,9 +7,10 @@ import { useRouter } from 'next/navigation'
 
 interface Props {
   totalElapsedTime: number
+  isTodayQuiz: boolean
 }
 
-export default function QuizResult({ totalElapsedTime }: Props) {
+export default function QuizResult({ totalElapsedTime, isTodayQuiz }: Props) {
   const router = useRouter()
 
   return (
@@ -80,7 +81,10 @@ export default function QuizResult({ totalElapsedTime }: Props) {
             </div>
           </div>
           <div className="px-[12px]">
-            <Button className="w-full" onClick={() => router.push('/main')}>
+            <Button
+              className="w-full"
+              onClick={() => router.replace(isTodayQuiz ? `/main?reward=5` : '/main')}
+            >
               확인
             </Button>
           </div>

@@ -31,6 +31,10 @@ export const API_ENDPOINT = {
       url: `/quizzes`,
       method: HttpMethod.POST,
     }),
+    deleteQuiz: (documentId: number, quizId: number) => ({
+      url: `/incorrect-quiz/${documentId}/${quizId}`,
+      method: HttpMethod.DELETE,
+    }),
   },
 
   // 문서 관련 API

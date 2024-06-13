@@ -37,6 +37,7 @@ interface GetQuizSetsParams extends NextFetchRequestConfig {
 
 export interface GetQuizSetsResponse {
   quizzes: (MixUpQuiz | MultipleChoiceQuiz)[]
+  todayQuizSet: boolean
 }
 
 export const getQuizSets = async (params: GetQuizSetsParams) => {

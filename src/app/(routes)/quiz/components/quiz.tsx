@@ -19,12 +19,15 @@ import { useSearchParams } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import QuizResult from './quiz-result'
 import { ChoiceReact } from './choice-react'
+import { ReportQuizError } from './report-quiz-error'
+import { deleteQuiz } from '@/apis/fetchers/quiz/delete-quiz'
 
 interface QuizProps {
   quizzes: QuizDTO[]
+  isTodayQuiz: boolean
 }
 
-export default function Quiz({ quizzes }: QuizProps) {
+export default function Quiz({ quizzes, isTodayQuiz }: QuizProps) {
   const quizSetId = useSearchParams().get('quizSetId') || ''
   const session = useSession()
 
@@ -40,6 +43,16 @@ export default function Quiz({ quizzes }: QuizProps) {
           quizSetId,
           quizzes: solvingData,
         },
+        accessToken: session.data?.user.accessToken || '',
+      }),
+  })
+
+  const { mutate: deleteQuizMutate } = useMutation({
+    mutationKey: ['deleteQuiz'],
+    mutationFn: ({ documentId, quizId }: { documentId: number; quizId: number }) =>
+      deleteQuiz({
+        documentId,
+        quizId,
         accessToken: session.data?.user.accessToken || '',
       }),
   })
@@ -110,6 +123,34 @@ export default function Quiz({ quizzes }: QuizProps) {
     }))
   }
 
+  const handlePassQuiz = () => {
+    stopTimer()
+
+    deleteQuizMutate(
+      {
+        documentId: curQuiz.document.id,
+        quizId: curQuiz.id,
+      },
+      {
+        onSettled: () => {
+          if (quizProgress.quizIndex === quizzes.length - 1) {
+            patchQuizResultMutate(solvingData, {
+              onSuccess: () => {
+                setState('end')
+              },
+            })
+            return
+          }
+
+          setQuizProgress((prev) => ({
+            ...prev,
+            quizIndex: prev.quizIndex + 1,
+          }))
+        },
+      }
+    )
+  }
+
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setState('solving')
@@ -174,6 +215,11 @@ export default function Quiz({ quizzes }: QuizProps) {
                   className="mt-[48px]"
                 />
               ) : null}
+              {quizProgress.progress === 'idle' ? (
+                <div className="ml-[20px] mt-[25px] pb-[40px] lg:mt-[33px] lg:p-0">
+                  <ReportQuizError handlePassQuiz={handlePassQuiz} />
+                </div>
+              ) : null}
             </div>
 
             <ChoiceReact
@@ -183,7 +229,7 @@ export default function Quiz({ quizzes }: QuizProps) {
             />
           </>
         ),
-        end: <QuizResult totalElapsedTime={totalElapsedTime} />,
+        end: <QuizResult totalElapsedTime={totalElapsedTime} isTodayQuiz={isTodayQuiz} />,
       }}
     />
   )
