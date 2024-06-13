@@ -322,12 +322,8 @@ function MakeQuizDrawerContent({
 }) {
   const session = useSession()
 
-  const [openSelectCategory, setOpenSelectCategory] = useState(false)
   const [selectCategoryId, setSelectCategoryId] = useState<CategoryDTO['id']>(categories[0].id)
-
   const curCategory = categories.find((category) => category.id === selectCategoryId)!
-
-  const [openSelectDocuments, setOpenSelectDocuments] = useState(false)
 
   const [step, setStep] = useState<'folder' | 'document'>('folder')
 
@@ -375,8 +371,8 @@ function MakeQuizDrawerContent({
       </h3>
 
       <div className="mt-[48px]">
-        <div className="flex flex-1 flex-col justify-around">
-          <div className="flex items-center">
+        <div className="flex items-center gap-[27px]">
+          <div className="flex flex-col gap-[10px]">
             <div className="w-[52px] shrink-0 text-body2-medium text-gray-08">폴더</div>
             <Drawer open={openFolderDrawer} onOpenChange={setOpenFolderDrawer}>
               <DrawerTrigger
@@ -386,7 +382,11 @@ function MakeQuizDrawerContent({
                   unCheckDocumentAll()
                 }}
               >
-                <FakeSelectTrigger emoji={curCategory.emoji} value={curCategory.name} />
+                <FakeSelectTrigger
+                  emoji={curCategory.emoji}
+                  value={curCategory.name}
+                  className="w-[186px]"
+                />
               </DrawerTrigger>
               <DrawerContent className="h-[510px]">
                 <SelectDrawerContent
@@ -415,7 +415,10 @@ function MakeQuizDrawerContent({
                         categories
                           .filter((category) => checkedCategoryIds.includes(category.id))
                           .flatMap((category) =>
-                            category.documents.map((document) => ({ ...document, checked: false }))
+                            category.documents.map((document) => ({
+                              ...document,
+                              checked: false,
+                            }))
                           )
                       )
                       setStep('document')
@@ -428,11 +431,14 @@ function MakeQuizDrawerContent({
             </Drawer>
           </div>
 
-          <div className="flex items-center">
+          <div className="flex flex-col gap-[10px]">
             <div className="w-[52px] shrink-0 text-body2-medium text-gray-08">노트</div>
             <Drawer open={openDocumentDrawer} onOpenChange={setOpenDocumentDrawer}>
               <DrawerTrigger className="cursor-pointer">
-                <FakeSelectTrigger value={`${getDocumentCheckedIds().length}개`} />
+                <FakeSelectTrigger
+                  className="w-[74px]"
+                  value={`${getDocumentCheckedIds().length}개`}
+                />
               </DrawerTrigger>
               <DrawerContent className="h-[510px]">
                 <SelectDrawerContent
@@ -461,7 +467,10 @@ function MakeQuizDrawerContent({
                         categories
                           .filter((category) => checkedCategoryIds.includes(category.id))
                           .flatMap((category) =>
-                            category.documents.map((document) => ({ ...document, checked: false }))
+                            category.documents.map((document) => ({
+                              ...document,
+                              checked: false,
+                            }))
                           )
                       )
                       setStep('document')
@@ -473,33 +482,37 @@ function MakeQuizDrawerContent({
               </DrawerContent>
             </Drawer>
           </div>
+        </div>
 
-          <div className="flex items-center">
-            <div className="w-[52px] text-body2-medium text-gray-08">퀴즈 수</div>
-            <Select
-              defaultValue={String(DEFAULT_QUIZ_COUNT)}
-              onValueChange={(value) => setQuizCount(+value)}
-            >
-              <SelectTrigger className="w-[85px] border-none bg-gray-01 pl-[14px] text-body1-bold outline-none">
-                <SelectValue placeholder={quizCount} />
-              </SelectTrigger>
-              <SelectContent className="flex min-w-[85px]">
-                {QUIZ_COUNT_OPTIONS.map((option) => (
-                  <SelectItem
-                    key={option}
-                    value={String(option)}
-                    className="flex justify-center px-0"
-                  >
-                    {option}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+        <div className="mt-[12px] text-body2-medium text-orange-06">
+          선택된 노트: <span className="text-body2-bold">제무제표 분석하기, 최근 이슈</span>
+        </div>
+
+        <div className="mt-[31px] flex flex-col gap-[10px]">
+          <div className="w-[52px] text-body2-medium text-gray-08">퀴즈 수</div>
+          <Select
+            defaultValue={String(DEFAULT_QUIZ_COUNT)}
+            onValueChange={(value) => setQuizCount(+value)}
+          >
+            <SelectTrigger className="w-[85px] border-none bg-gray-01 pl-[14px] text-body1-bold outline-none">
+              <SelectValue placeholder={quizCount} />
+            </SelectTrigger>
+            <SelectContent className="flex min-w-[85px]">
+              {QUIZ_COUNT_OPTIONS.map((option) => (
+                <SelectItem
+                  key={option}
+                  value={String(option)}
+                  className="flex justify-center px-0"
+                >
+                  {option}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
       </div>
 
-      <div className="flex flex-col items-center gap-[8px]">
+      <div className="mt-[68px] flex flex-col items-center gap-[8px]">
         <div className="text-center text-small1-regular">
           <span className="text-gray-06">나의 별: </span>
           <span className="text-gray-08">{userPoints}개</span>
@@ -509,7 +522,7 @@ function MakeQuizDrawerContent({
           className="flex w-[335px] gap-[10px] text-white"
           onClick={() => {
             handleCreateQuizzes({
-              documentIds: [],
+              documentIds: getCategoryCheckedIds() as number[],
               count: quizCount,
             })
           }}
@@ -569,109 +582,6 @@ function SelectDrawerContent({ step, selectCheckItems, next, init }: SelectDrawe
     </div>
   )
 }
-
-// function MakeQuizDrawerContent({
-//   categories,
-//   handleCreateQuizzes,
-// }: {
-//   categories: CategoryDTO[]
-//   handleCreateQuizzes: ({ documentIds, count }: { documentIds: number[]; count: number }) => void
-// }) {
-//   const [step, setStep] = useState<'folder' | 'document'>('folder')
-
-//   const {
-//     list: categoryList,
-//     isAllChecked: isCategoryAllChecked,
-//     checkAll: checkCategoryAll,
-//     unCheckAll: unCheckCategoryAll,
-//     getCheckedIds: getCategoryCheckedIds,
-//     toggle: toggleCategoryChecked,
-//   } = useCheckList([...categories.map((category) => ({ ...category, checked: false }))])
-
-//   const {
-//     list: documentList,
-//     set: setDocumentList,
-//     isAllChecked: isDocumentAllChecked,
-//     checkAll: checkDocumentAll,
-//     unCheckAll: unCheckDocumentAll,
-//     getCheckedIds: getDocumentCheckedIds,
-//     toggle: toggleDocumentChecked,
-//   } = useCheckList([] as { id: number; name: string; order: number; checked: false }[])
-
-//   return (
-//     <div className="flex flex-1 flex-col justify-between pb-[22px] pt-[40px]">
-//       <div>
-//         <div className="flex gap-[21px] px-[24px] text-h4-bold text-gray-09">
-//           <div role="button" className={cn(step === 'folder' ? 'text-gray-09' : 'text-gray-06')}>
-//             폴더
-//           </div>
-//           {step === 'document' && (
-//             <div role="button" className="text-gray-09">
-//               노트
-//             </div>
-//           )}
-//         </div>
-
-//         <div className="mt-[24px]">
-//           <SelectCheckItems
-//             items={step === 'folder' ? categoryList : documentList}
-//             isAllChecked={step === 'folder' ? isCategoryAllChecked() : isDocumentAllChecked()}
-//             unCheckAll={step === 'folder' ? unCheckCategoryAll : unCheckDocumentAll}
-//             checkAll={step === 'folder' ? checkCategoryAll : checkDocumentAll}
-//             toggle={step === 'folder' ? toggleCategoryChecked : toggleDocumentChecked}
-//             selectType={step === 'folder' ? 'category' : 'document'}
-//           />
-//         </div>
-//       </div>
-
-//       <div className="px-[20px]">
-//         {step === 'folder' ? (
-//           <Button
-//             className="w-full"
-//             onClick={() => {
-//               const checkedCategoryIds = getCategoryCheckedIds()
-//               setDocumentList(
-//                 categories
-//                   .filter((category) => checkedCategoryIds.includes(category.id))
-//                   .flatMap((category) =>
-//                     category.documents.map((document) => ({ ...document, checked: false }))
-//                   )
-//               )
-//               setStep('document')
-//             }}
-//           >
-//             노트 선택
-//           </Button>
-//         ) : (
-//           <div className="flex w-full gap-[6px]">
-//             <Button
-//               className="flex-[100]"
-//               variant="secondary"
-//               onClick={() => {
-//                 unCheckCategoryAll()
-//                 setStep('folder')
-//               }}
-//             >
-//               초기화
-//             </Button>
-//             <Button
-//               className="flex-[230]"
-//               onClick={() => {
-//                 const documentCheckedIds = getDocumentCheckedIds() as number[]
-//                 handleCreateQuizzes({
-//                   documentIds: documentCheckedIds,
-//                   count: 3,
-//                 })
-//               }}
-//             >
-//               완료
-//             </Button>
-//           </div>
-//         )}
-//       </div>
-//     </div>
-//   )
-// }
 
 type CheckItem = {
   id: number

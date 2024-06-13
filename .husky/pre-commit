@@ -1,17 +1,17 @@
-# #!/bin/sh
-# . "$(dirname "$0")/_/husky.sh"
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
 
-# npm run check:lint
-# LINT_EXIT_CODE=$?
+npm run check:lint
+LINT_EXIT_CODE=$?
 
-# npm run check:format
-# FORMAT_EXIT_CODE=$?
+npm run check:format
+FORMAT_EXIT_CODE=$?
 
-# npm run check:spell
-# SPELL_EXIT_CODE=$?
+npm run check:spell
+SPELL_EXIT_CODE=$?
 
-# if [ $LINT_EXIT_CODE -ne 0 ] | [ $FORMAT_EXIT_CODE -ne 0 ] | [ $SPELL_EXIT_CODE -ne 0 ]; then
-#   exit 1
-# fi
+if [ $LINT_EXIT_CODE -ne 0 ] | [ $FORMAT_EXIT_CODE -ne 0 ] | [ $SPELL_EXIT_CODE -ne 0 ]; then
+  exit 1
+fi
 
-# exit 0
+exit 0
