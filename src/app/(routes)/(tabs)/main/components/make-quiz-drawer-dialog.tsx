@@ -161,12 +161,22 @@ function MakeQuizDialogContent({
   const {
     list: documentList,
     set: setDocumentList,
-    isAllChecked: isDocumentAllChecked,
-    checkAll: checkDocumentAll,
-    unCheckAll: unCheckDocumentAll,
     getCheckedIds: getDocumentCheckedIds,
     toggle: toggleDocumentChecked,
-  } = useCheckList([] as SelectDocumentItem[])
+    isAllCheckedWithoutIgnored: isDocumentAllCheckedWithoutIgnored,
+    checkAllWithoutIgnored: checkDocumentAllWithoutIgnored,
+    unCheckAllWithoutIgnored: unCheckDocumentAllWithoutIgnored,
+  } = useCheckList([] as SelectDocumentItem[], {
+    ignoreIds: categories.flatMap((category) =>
+      category.documents
+        .filter(
+          (document) =>
+            document.documentStatus === 'UNPROCESSED' ||
+            document.documentStatus === 'DEFAULT_DOCUMENT'
+        )
+        .map((document) => document.id)
+    ),
+  })
 
   const [documentMap, setDocumentMap] = useState<Record<CategoryDTO['id'], SelectDocumentItem[]>>(
     () => {
@@ -241,9 +251,9 @@ function MakeQuizDialogContent({
               <DropdownMenuContent className="w-[320px]">
                 <SelectCheckItems
                   items={documentList}
-                  isAllChecked={isDocumentAllChecked()}
-                  unCheckAll={unCheckDocumentAll}
-                  checkAll={checkDocumentAll}
+                  isAllChecked={isDocumentAllCheckedWithoutIgnored()}
+                  unCheckAll={unCheckDocumentAllWithoutIgnored}
+                  checkAll={checkDocumentAllWithoutIgnored}
                   toggle={toggleDocumentChecked}
                   selectType="document"
                 />
@@ -351,12 +361,22 @@ function MakeQuizDrawerContent({
   const {
     list: documentList,
     set: setDocumentList,
-    isAllChecked: isDocumentAllChecked,
-    checkAll: checkDocumentAll,
-    unCheckAll: unCheckDocumentAll,
     getCheckedIds: getDocumentCheckedIds,
     toggle: toggleDocumentChecked,
-  } = useCheckList([] as SelectDocumentItem[])
+    isAllCheckedWithoutIgnored: isDocumentAllCheckedWithoutIgnored,
+    checkAllWithoutIgnored: checkDocumentAllWithoutIgnored,
+    unCheckAllWithoutIgnored: unCheckDocumentAllWithoutIgnored,
+  } = useCheckList([] as SelectDocumentItem[], {
+    ignoreIds: categories.flatMap((category) =>
+      category.documents
+        .filter(
+          (document) =>
+            document.documentStatus === 'UNPROCESSED' ||
+            document.documentStatus === 'DEFAULT_DOCUMENT'
+        )
+        .map((document) => document.id)
+    ),
+  })
 
   return (
     <div className="px-[20px]">
@@ -384,7 +404,7 @@ function MakeQuizDrawerContent({
                 className="cursor-pointer"
                 onClick={() => {
                   setStep('folder')
-                  unCheckDocumentAll()
+                  unCheckDocumentAllWithoutIgnored()
                 }}
               >
                 <FakeSelectTrigger
@@ -400,17 +420,23 @@ function MakeQuizDrawerContent({
                     <SelectCheckItems
                       items={step === 'folder' ? categoryList : documentList}
                       isAllChecked={
-                        step === 'folder' ? isCategoryAllChecked() : isDocumentAllChecked()
+                        step === 'folder'
+                          ? isCategoryAllChecked()
+                          : isDocumentAllCheckedWithoutIgnored()
                       }
-                      unCheckAll={step === 'folder' ? unCheckCategoryAll : unCheckDocumentAll}
-                      checkAll={step === 'folder' ? checkCategoryAll : checkDocumentAll}
+                      unCheckAll={
+                        step === 'folder' ? unCheckCategoryAll : unCheckDocumentAllWithoutIgnored
+                      }
+                      checkAll={
+                        step === 'folder' ? checkCategoryAll : checkDocumentAllWithoutIgnored
+                      }
                       toggle={step === 'folder' ? toggleCategoryChecked : toggleDocumentChecked}
                       selectType={step === 'folder' ? 'category' : 'document'}
                     />
                   }
                   init={() => {
                     unCheckCategoryAll()
-                    unCheckDocumentAll()
+                    unCheckDocumentAllWithoutIgnored()
                     setStep('folder')
                   }}
                   next={() => {
@@ -452,17 +478,23 @@ function MakeQuizDrawerContent({
                     <SelectCheckItems
                       items={step === 'folder' ? categoryList : documentList}
                       isAllChecked={
-                        step === 'folder' ? isCategoryAllChecked() : isDocumentAllChecked()
+                        step === 'folder'
+                          ? isCategoryAllChecked()
+                          : isDocumentAllCheckedWithoutIgnored()
                       }
-                      unCheckAll={step === 'folder' ? unCheckCategoryAll : unCheckDocumentAll}
-                      checkAll={step === 'folder' ? checkCategoryAll : checkDocumentAll}
+                      unCheckAll={
+                        step === 'folder' ? unCheckCategoryAll : unCheckDocumentAllWithoutIgnored
+                      }
+                      checkAll={
+                        step === 'folder' ? checkCategoryAll : checkDocumentAllWithoutIgnored
+                      }
                       toggle={step === 'folder' ? toggleCategoryChecked : toggleDocumentChecked}
                       selectType={step === 'folder' ? 'category' : 'document'}
                     />
                   }
                   init={() => {
                     unCheckCategoryAll()
-                    unCheckDocumentAll()
+                    unCheckDocumentAllWithoutIgnored()
                     setStep('folder')
                   }}
                   next={() => {
