@@ -41,15 +41,14 @@ interface Props {
   quizType?: QuizType
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function MakeQuizDrawerDialog({ trigger, categories, quizType = 'MIX_UP' }: Props) {
-  const session = useSession()
+  const { data: session, update: updateSession } = useSession()
   const router = useRouter()
   const [open, setOpen] = useState(false)
   const isDesktop = useMediaQuery('(min-width: 1024px)')
   const [startedCreate, setStartedState] = useState(false)
 
-  const userPoints = session.data?.user.dto.point || 0
+  const userPoints = session?.user.dto.point || 0
 
   const { mutate: mutateCreateQuizzes } = useMutation({
     mutationKey: ['create-quizzes'],
@@ -58,7 +57,7 @@ export default function MakeQuizDrawerDialog({ trigger, categories, quizType = '
         documentIds,
         point: count,
         quizType,
-        accessToken: session.data?.user.accessToken || '',
+        accessToken: session?.user.accessToken || '',
       }),
   })
 
@@ -88,7 +87,8 @@ export default function MakeQuizDrawerDialog({ trigger, categories, quizType = '
         count,
       },
       {
-        onSuccess: ({ quizSetId }) => {
+        onSuccess: async ({ quizSetId }) => {
+          await updateSession({})
           router.push(`/quiz?quizSetId=${quizSetId}`)
         },
       }
@@ -142,8 +142,8 @@ function MakeQuizDialogContent({
   handleCreateQuizzes: ({ documentIds, count }: { documentIds: number[]; count: number }) => void
 }) {
   type SelectDocumentItem = { id: number; name: string; order: number; checked: boolean }
-  const session = useSession()
-  const userPoints = session.data?.user.dto.point || 0
+  const { data: session } = useSession()
+  const userPoints = session?.user.dto.point || 0
 
   const [openSelectCategory, setOpenSelectCategory] = useState(false)
   const [selectCategoryId, setSelectCategoryId] = useState<CategoryDTO['id']>(categories[0].id)
@@ -318,8 +318,8 @@ function MakeQuizDrawerContent({
   closeDrawer: () => void
   quizType: QuizType
 }) {
-  const session = useSession()
-  const userPoints = session.data?.user.dto.point || 0
+  const { data: session } = useSession()
+  const userPoints = session?.user.dto.point || 0
 
   const [step, setStep] = useState<'folder' | 'document'>('folder')
   const [quizCount, setQuizCount] = useState(DEFAULT_QUIZ_COUNT)
