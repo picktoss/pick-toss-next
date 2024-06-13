@@ -143,9 +143,11 @@ function MakeQuizDialogContent({
 }) {
   type SelectDocumentItem = { id: number; name: string; order: number; checked: boolean }
   const session = useSession()
+  const userPoints = session.data?.user.dto.point || 0
 
   const [openSelectCategory, setOpenSelectCategory] = useState(false)
   const [selectCategoryId, setSelectCategoryId] = useState<CategoryDTO['id']>(categories[0].id)
+  const [quizCount, setQuizCount] = useState(DEFAULT_QUIZ_COUNT)
 
   const [openSelectDocuments, setOpenSelectDocuments] = useState(false)
   const {
@@ -185,10 +187,6 @@ function MakeQuizDialogContent({
   useEffect(() => {
     setDocumentList(documentMap[selectCategoryId])
   }, [selectCategoryId])
-
-  const [quizCount, setQuizCount] = useState(DEFAULT_QUIZ_COUNT)
-
-  const userPoints = session.data?.user.dto.point || 0
 
   return (
     <div className="">
@@ -321,11 +319,17 @@ function MakeQuizDrawerContent({
   quizType: QuizType
 }) {
   const session = useSession()
-
-  const [selectCategoryId, setSelectCategoryId] = useState<CategoryDTO['id']>(categories[0].id)
-  const curCategory = categories.find((category) => category.id === selectCategoryId)!
+  const userPoints = session.data?.user.dto.point || 0
 
   const [step, setStep] = useState<'folder' | 'document'>('folder')
+  const [quizCount, setQuizCount] = useState(DEFAULT_QUIZ_COUNT)
+
+  const [openFolderDrawer, setOpenFolderDrawer] = useState(false)
+  const [openDocumentDrawer, setOpenDocumentDrawer] = useState(false)
+
+  /** TODO: 어떤 카테고리를 보여줄 것인가 */
+  // const [selectCategoryId, setSelectCategoryId] = useState<CategoryDTO['id']>(categories[0].id)
+  const curCategory = categories[0]
 
   const {
     list: categoryList,
@@ -345,13 +349,6 @@ function MakeQuizDrawerContent({
     getCheckedIds: getDocumentCheckedIds,
     toggle: toggleDocumentChecked,
   } = useCheckList([] as { id: number; name: string; order: number; checked: false }[])
-
-  const [quizCount, setQuizCount] = useState(DEFAULT_QUIZ_COUNT)
-
-  const userPoints = session.data?.user.dto.point || 0
-
-  const [openFolderDrawer, setOpenFolderDrawer] = useState(false)
-  const [openDocumentDrawer, setOpenDocumentDrawer] = useState(false)
 
   return (
     <div className="px-[20px]">
@@ -484,8 +481,14 @@ function MakeQuizDrawerContent({
           </div>
         </div>
 
-        <div className="mt-[12px] text-body2-medium text-orange-06">
-          선택된 노트: <span className="text-body2-bold">제무제표 분석하기, 최근 이슈</span>
+        <div className="mt-[12px] line-clamp-2 text-body2-regular text-orange-06">
+          선택된 노트:{' '}
+          <span className="text-body2-bold">
+            {documentList
+              .filter((document) => getDocumentCheckedIds().includes(document.id))
+              .map((document) => document.name)
+              .join(', ')}
+          </span>
         </div>
 
         <div className="mt-[31px] flex flex-col gap-[10px]">
