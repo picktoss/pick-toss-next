@@ -1,6 +1,6 @@
 'use client'
 
-import { findActiveNav, navigationItems } from '@/constants/navigation-items'
+import { findActiveNavItem, navigationItems } from '@/constants/navigation-items'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
 import { useSelectedLayoutSegments } from 'next/navigation'
@@ -9,14 +9,15 @@ import { useMemo } from 'react'
 export default function BottomNavigation() {
   const segments = useSelectedLayoutSegments()
 
-  const activeItem = useMemo(() => findActiveNav(navigationItems, segments), [segments])
+  const activeItem = useMemo(() => findActiveNavItem(segments), [segments])
 
   return (
     <div className="w-full">
       <div className="fixed bottom-0 flex h-[84px] w-full justify-around border-t border-gray-02 bg-white px-[20px] lg:hidden">
         {navigationItems.map((item) => {
-          const { href, Icon, title } = item
-          const isActive = activeItem == item
+          const { title, href, icon: Icon } = item
+          const isActive = activeItem === item
+
           return (
             <Link
               key={title}

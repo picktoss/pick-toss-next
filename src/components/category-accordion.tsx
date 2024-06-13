@@ -1,3 +1,5 @@
+'use client'
+
 import {
   Accordion,
   AccordionContent,
@@ -10,10 +12,11 @@ import Link from 'next/link'
 import icons from '@/constants/icons'
 import { cn } from '@/lib/utils'
 import { HTMLAttributes } from 'react'
-import { Category } from '@/apis/fetchers/category/get-categories'
+import { getCategories } from '@/apis/fetchers/category/get-categories'
+import { useQuery } from '@tanstack/react-query'
+import { useSession } from 'next-auth/react'
 
 interface CategoryAccordionProps {
-  categories: Category[]
   hasBorder?: boolean
   showChevron?: boolean
   className?: HTMLAttributes<HTMLDivElement>['className']
@@ -22,13 +25,29 @@ interface CategoryAccordionProps {
 }
 
 export const CategoryAccordion = ({
-  categories,
   hasBorder = true,
   showChevron = true,
   className,
   triggerStyles,
   contentStyles,
 }: CategoryAccordionProps) => {
+  const { data: session } = useSession()
+  const {
+    data: categories,
+    isPending,
+    isError,
+  } = useQuery({
+    queryKey: ['categories'],
+    queryFn: async () => {
+      const res = await getCategories({ accessToken: session?.user.accessToken || '' })
+      return res.categories
+    },
+  })
+
+  if (isPending) return <div>loading</div>
+
+  if (isError) return <div>error</div>
+
   return (
     <div className={className}>
       <Accordion type="multiple">
