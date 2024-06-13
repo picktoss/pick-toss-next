@@ -1,10 +1,12 @@
 import { Category } from '@/apis/fetchers/category/get-categories'
+import { DocumentStatus } from '@/apis/types/dto/document.dto'
 
 // TODO: data interface 백엔드와 협의 필요
 export interface Document {
   id: number
   name: string
   order: number
+  documentStatus: DocumentStatus
   // quizCreation: 'PREPARING' | 'ON' | 'OFF'
 }
 
@@ -27,11 +29,13 @@ export const mockCategories: Category[] = [
         id: 1,
         name: '모던 리액트 딥다이브 정리',
         order: 0,
+        documentStatus: 'PROCESSED',
       },
       {
         id: 2,
         name: '모던 자바스크립트 딥다이브 정리',
         order: 1,
+        documentStatus: 'PROCESSED',
       },
     ],
   },
@@ -46,11 +50,13 @@ export const mockCategories: Category[] = [
         id: 2,
         name: '제무제표 분석하기',
         order: 0,
+        documentStatus: 'PROCESSED',
       },
       {
         id: 3,
         name: '회계 원리',
         order: 1,
+        documentStatus: 'PROCESSED',
       },
     ],
   },
@@ -65,16 +71,19 @@ export const mockCategories: Category[] = [
         id: 4,
         name: '돌다리 건너기 문제',
         order: 0,
+        documentStatus: 'PROCESSED',
       },
       {
         id: 5,
         name: '카카오 기출 문제',
         order: 1,
+        documentStatus: 'PROCESSED',
       },
       {
         id: 6,
         name: '피보나치 수열',
         order: 2,
+        documentStatus: 'PROCESSED',
       },
     ],
   },
@@ -89,11 +98,13 @@ export const mockCategories: Category[] = [
         id: 7,
         name: '철학이 본 예술 독후감',
         order: 0,
+        documentStatus: 'PROCESSED',
       },
       {
         id: 8,
         name: '서양 미학사의 거장들',
         order: 1,
+        documentStatus: 'PROCESSED',
       },
     ],
   },
