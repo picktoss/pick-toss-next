@@ -1,3 +1,5 @@
+import { getBookmarks } from '@/apis/fetchers/key-point/get-bookmarks'
+import { auth } from '@/app/api/auth/[...nextauth]/auth'
 import { CommonLayout } from '@/components/common-layout'
 import ProTag from '@/components/pro-tag'
 import { Button } from '@/components/ui/button'
@@ -6,7 +8,12 @@ import { cn } from '@/lib/utils'
 import Image from 'next/image'
 import Link from 'next/link'
 
-export default function Review() {
+export default async function Review() {
+  const session = await auth()
+  const { keyPoints } = await getBookmarks({
+    accessToken: session?.user.accessToken || '',
+  })
+
   return (
     <CommonLayout
       title={{
@@ -41,7 +48,7 @@ export default function Review() {
                   <Image src={icons.savePick} width={31} height={31} alt="" />
                 </div>
               }
-              count={45}
+              count={keyPoints.length}
             />
           </section>
 
