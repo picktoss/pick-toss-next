@@ -1,16 +1,53 @@
-import { auth } from '@/app/api/auth/[...nextauth]/auth'
+'use client'
+
 import { CommonLayout } from '@/components/common-layout'
-import { getBookmarks } from '@/apis/fetchers/key-point/get-bookmarks'
+import { GetBookmarksResponse, getBookmarks } from '@/apis/fetchers/key-point/get-bookmarks'
 import Link from 'next/link'
 import { HTMLAttributes } from 'react'
 import DeleteDropdown from './components/delete-dropdown'
+import { useSession } from 'next-auth/react'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { toggleBookmark } from '@/apis/fetchers/key-point/toggle-bookmark'
+import Loading from '@/components/loading'
 // import { CategorySelect } from './components/category-select'
 
-export default async function Picks() {
-  const session = await auth()
-  const { keyPoints } = await getBookmarks({
-    accessToken: session?.user.accessToken || '',
+export default function Picks() {
+  const { data: session } = useSession()
+  const queryClient = useQueryClient()
+
+  const { data, isLoading } = useQuery({
+    queryKey: ['bookmarks'],
+    queryFn: () =>
+      getBookmarks({
+        accessToken: session?.user.accessToken || '',
+      }),
   })
+
+  const { mutate: deleteBookmark } = useMutation({
+    mutationKey: ['patch-toggle-bookmark'],
+    mutationFn: (keyPointId: number) =>
+      toggleBookmark({
+        keypointId: keyPointId,
+        bookmark: false,
+        accessToken: session?.user.accessToken || '',
+      }),
+    onError: () => {
+      /** TODO: 에러 Toast, set back optimistic */
+    },
+  })
+
+  const handleDeleteBookmark = (keyPointId: number) => {
+    queryClient.setQueryData<GetBookmarksResponse>(['bookmarks'], (oldData) => {
+      if (!oldData) return oldData
+
+      return {
+        ...oldData,
+        keyPoints: oldData?.keyPoints.filter((keypoint) => keypoint.id !== keyPointId),
+      }
+    })
+
+    deleteBookmark(keyPointId)
+  }
 
   return (
     <CommonLayout
@@ -20,46 +57,53 @@ export default async function Picks() {
         hasSearch: true,
       }}
     >
-      <div className="mt-[18px] px-[20px] pb-[70px]">
-        <div className="flex items-center justify-between">
-          {/** TODO: 폴더 별 북마크 */}
-          {/* <CategorySelect categories={categories} /> */}
-          <div className="flex items-center gap-[8px] text-body1-bold text-gray-09">모든 문서</div>
-          <div className="text-text-medium text-gray-06">{keyPoints.length}개 저장됨</div>
+      {isLoading ? (
+        <div className="relative h-[80vh] w-full">
+          <Loading center />
         </div>
-        <div className="mt-[16px] flex flex-col gap-[24px] lg:grid lg:grid-cols-2 lg:gap-[16px]">
-          {keyPoints.map((keyPoint) => (
-            <div
-              key={keyPoint.id}
-              className="overflow-hidden rounded-[12px] bg-white pb-[13px] lg:pb-[32px]"
-            >
-              <div className="flex h-[48px] items-center justify-between border-b border-gray-02 px-[16px] lg:h-[56px] lg:pl-[32px]">
-                <div className="text-small1-regular text-gray-06 lg:text-body2-regular">
-                  {keyPoint.category.name} {'>'}{' '}
-                  <Link
-                    href={`/document/${keyPoint.document.id}`}
-                    className="text-blue-05 underline underline-offset-2"
-                  >
-                    {keyPoint.document.name}
-                  </Link>
+      ) : (
+        <div className="mt-[18px] px-[20px] pb-[70px]">
+          <div className="flex items-center justify-between">
+            {/** TODO: 폴더 별 북마크 */}
+            {/* <CategorySelect categories={categories} /> */}
+            <div className="flex items-center gap-[8px] text-body1-bold text-gray-09">
+              모든 문서
+            </div>
+            <div className="text-text-medium text-gray-06">{data?.keyPoints.length}개 저장됨</div>
+          </div>
+          <div className="mt-[16px] flex flex-col gap-[24px] lg:grid lg:grid-cols-2 lg:gap-[16px]">
+            {data?.keyPoints.map((keyPoint) => (
+              <div
+                key={keyPoint.id}
+                className="overflow-hidden rounded-[12px] bg-white pb-[13px] lg:pb-[32px]"
+              >
+                <div className="flex h-[48px] items-center justify-between border-b border-gray-02 px-[16px] lg:h-[56px] lg:pl-[32px]">
+                  <div className="text-small1-regular text-gray-06 lg:text-body2-regular">
+                    {keyPoint.category.name} {'>'}{' '}
+                    <Link
+                      href={`/document/${keyPoint.document.id}`}
+                      className="text-blue-05 underline underline-offset-2"
+                    >
+                      {keyPoint.document.name}
+                    </Link>
+                  </div>
+                  <DeleteDropdown handleDeleteBookmark={() => handleDeleteBookmark(keyPoint.id)} />
                 </div>
-                <DeleteDropdown keyPointId={keyPoint.id} />
-              </div>
 
-              <div className="flex flex-col gap-[8px] pt-[16px] lg:gap-[16px]">
-                <div className="flex gap-[3px] px-[16px]">
-                  <PinIcon className="shrink-0 lg:size-[24px]" />
-                  <h4 className="text-body1-bold text-gray-09 lg:text-h4-bold">
-                    {keyPoint.question}
-                  </h4>
+                <div className="flex flex-col gap-[8px] pt-[16px] lg:gap-[16px]">
+                  <div className="flex gap-[3px] px-[16px]">
+                    <PinIcon className="shrink-0 lg:size-[24px]" />
+                    <h4 className="text-body1-bold text-gray-09 lg:text-h4-bold">
+                      {keyPoint.question}
+                    </h4>
+                  </div>
+                  <p className="px-[20px] text-text-regular text-gray-08 lg:pl-[32px]">
+                    {keyPoint.answer}
+                  </p>
                 </div>
-                <p className="px-[20px] text-text-regular text-gray-08 lg:pl-[32px]">
-                  {keyPoint.answer}
-                </p>
-              </div>
 
-              {/** TODO: 펼치기 */}
-              {/* <div className="px-[12px]">
+                {/** TODO: 펼치기 */}
+                {/* <div className="px-[12px]">
                 <Button
                   variant="outline"
                   className="h-[36px] w-full rounded-[8px] border-gray-02 !text-small1-bold text-gray-07"
@@ -67,10 +111,11 @@ export default async function Picks() {
                   펼치기
                 </Button>
               </div> */}
-            </div>
-          ))}
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </CommonLayout>
   )
 }
@@ -98,8 +143,8 @@ function PinIcon({ className }: { className: HTMLAttributes<HTMLDivElement>['cla
         fill="#A2A6AB"
       />
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M1.40235 3.94837C1.18016 4.07665 1.10403 4.36076 1.23231 4.58295L1.46452 4.98515C1.8976 5.73526 2.77469 6.06919 3.57214 5.84663L6.41758 10.7751C5.82608 11.3544 5.67672 12.281 6.1098 13.0311L6.34201 13.4333C6.47029 13.6555 6.7544 13.7316 6.97659 13.6033L13.4132 9.88714C13.6354 9.75886 13.7115 9.47474 13.5833 9.25255L13.3511 8.85036C12.9183 8.10084 12.0423 7.76684 11.2453 7.98835L8.3994 3.05906C8.98972 2.47964 9.13851 1.55394 8.70577 0.804407L8.47356 0.402216C8.34528 0.180026 8.06117 0.103898 7.83898 0.232179L1.40235 3.94837Z"
         fill="#7095F8"
       />
