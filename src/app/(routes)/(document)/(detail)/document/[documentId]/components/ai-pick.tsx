@@ -310,11 +310,7 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
   )
 }
 
-function PickBanner({
-  status,
-}: {
-  status: 'UNPROCESSED' | 'PROCESSED' | 'PROCESSING' | 'KEYPOINT_UPDATE_POSSIBLE'
-}) {
+function PickBanner({ status }: { status: DocumentStatus }) {
   return (
     <SwitchCase
       value={status}

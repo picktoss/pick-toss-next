@@ -24,7 +24,7 @@ export const {
 } = NextAuth({
   providers: [Kakao, Google],
   callbacks: {
-    jwt: async ({ token, account }) => {
+    jwt: async ({ token, account, trigger }) => {
       if (account) {
         try {
           const { accessToken, accessTokenExpiration } = await signInAPI({
@@ -53,6 +53,17 @@ export const {
         Date.now() > new Date(token.accessTokenExpiration as string).getTime()
       ) {
         throw new Error('server token expired')
+      }
+
+      if (trigger === 'update') {
+        try {
+          const user = await getUser({
+            accessToken: token.accessToken as string,
+          })
+          token.userDTO = user
+        } catch (error) {
+          throw new Error('Failed to get user')
+        }
       }
 
       return token
