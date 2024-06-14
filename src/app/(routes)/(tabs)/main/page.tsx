@@ -2,11 +2,8 @@ import icons from '@/constants/icons'
 import QuizBanner from './components/quiz-banner'
 import QuizMaker from './components/quiz-maker'
 import Achievements from './components/achievements'
-import { getTodayQuizSetId } from '@/apis/fetchers/quiz/get-today-quiz-set-id'
 import { CommonLayout } from '@/components/common-layout'
 import Image from 'next/image'
-import { auth } from '@/app/api/auth/[...nextauth]/auth'
-import { getCategories } from '@/apis/fetchers/category/get-categories'
 import { RewordDialog } from './components/reward-alert'
 
 interface Props {
@@ -15,15 +12,7 @@ interface Props {
   }
 }
 
-export default async function Main({ searchParams }: Props) {
-  const session = await auth()
-  const { quizSetId, type } = await getTodayQuizSetId({
-    accessToken: session?.user.accessToken || '',
-  })
-  const { categories } = await getCategories({
-    accessToken: session?.user.accessToken || '',
-  })
-
+export default function Main({ searchParams }: Props) {
   return (
     <CommonLayout
       title={{
@@ -41,11 +30,11 @@ export default async function Main({ searchParams }: Props) {
     >
       <main className="flex flex-col px-[20px] pb-[40px] pt-[10px] lg:pt-[28px]">
         <section className="mb-[56px] flex flex-col gap-[24px] lg:flex-row lg:gap-[10px]">
-          <QuizBanner type={type} quizSetId={quizSetId} />
+          <QuizBanner />
           <Achievements />
         </section>
 
-        <QuizMaker categories={categories} />
+        <QuizMaker />
       </main>
       {searchParams?.reward && <RewordDialog reward={searchParams?.reward} />}
     </CommonLayout>

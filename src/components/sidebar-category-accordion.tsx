@@ -17,6 +17,7 @@ import { ChevronRight } from 'lucide-react'
 import { useSelectedLayoutSegments } from 'next/navigation'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { cn } from '@/lib/utils'
+import BarLoader from 'react-spinners/BarLoader'
 
 export const SidebarCategoryAccordion = () => {
   const segments = useSelectedLayoutSegments()
@@ -25,11 +26,7 @@ export const SidebarCategoryAccordion = () => {
   const [accordionValue, setAccordionValue] = useState<string[]>([])
   const prevCategoryId = useRef<number | null>(null)
 
-  const {
-    data: categories,
-    isPending,
-    isError,
-  } = useQuery({
+  const { data: categories, isPending } = useQuery({
     queryKey: ['categories'],
     queryFn: async () => {
       const res = await getCategories({ accessToken: session?.user.accessToken || '' })
@@ -69,13 +66,17 @@ export const SidebarCategoryAccordion = () => {
     }
   }, [currentCategoryId])
 
-  if (isPending) return <div>loading</div>
-
-  if (isError) return <div>error</div>
+  if (isPending) {
+    return (
+      <div className="flex justify-center">
+        <BarLoader />
+      </div>
+    )
+  }
 
   return (
     <Accordion type="multiple" value={accordionValue} onValueChange={setAccordionValue}>
-      {categories.map((category) => (
+      {categories?.map((category) => (
         <AccordionItem key={category.id} value={category.id.toString()}>
           <AccordionTrigger
             className="group overflow-hidden rounded-[8px] py-[7px] pl-[42px] text-body2-medium text-gray-08 hover:bg-gray-01 [&[data-state=open]>svg]:rotate-90"
