@@ -9,14 +9,25 @@ import { cn } from '@/lib/utils'
 import { ChevronRight } from 'lucide-react'
 import { Accordion, AccordionContent, AccordionItem } from './ui/accordion'
 import { SidebarCategoryAccordion } from './sidebar-category-accordion'
+import Image from 'next/image'
+import icons from '@/constants/icons'
+import { useDocumentUsage } from '@/hooks/use-document-usage'
 
 export default function LeftSidebar() {
   const segments = useSelectedLayoutSegments()
 
+  const {
+    availableAiPickCount,
+    possessDocumentCount,
+    freePlanMaxPossessDocumentCount,
+    uploadableCount,
+    uploadableRate,
+  } = useDocumentUsage()
+
   const activeItem = useMemo(() => findActiveNavItem(segments), [segments])
 
   return (
-    <div className="fixed left-0 z-50 flex h-screen w-[240px] flex-col items-center border-r border-gray-04 bg-white py-[30px]">
+    <div className="fixed left-0 z-50 flex h-screen w-[240px] flex-col items-center border-r border-gray-04 bg-white py-[24px]">
       <div className="mb-[24px] flex h-[48px] items-center justify-center">
         <LogoIcon />
       </div>
@@ -28,7 +39,7 @@ export default function LeftSidebar() {
           </Button>
         </Link>
       </div>
-      <div className="w-full">
+      <div className="mb-[20px] w-full flex-1">
         <div className="flex flex-col bg-white">
           {navigationItems.slice(0, 3).map((item) => {
             const { title, href, icon: Icon } = item
@@ -70,17 +81,31 @@ export default function LeftSidebar() {
           })}
         </div>
       </div>
-      {/* <CategoryAccordion
-        categories={mockCategories}
-        hasBorder={false}
-        showChevron={false}
-        className="w-full flex-1 overflow-y-scroll pl-[49px]"
-        triggerStyles="!text-body-2-medium py-[8px]"
-        contentStyles="!text-body2-medium h-[32px]"
-      /> */}
-      <div className="mt-[20px] w-full pl-[29px]">
-        <div>남은 AI pick 생성 횟수</div>
-        <div>나의 노트 창고</div>
+      <div className="mb-[40px] w-full px-[29px]">
+        <div className="mb-[24px] flex flex-col gap-[8px]">
+          <div className="flex gap-[7px]">
+            <span className="text-small1-regular text-gray-07">남은 AI pick 생성 횟수</span>
+            <Image src={icons.circleQuestion} width={16} height={16} alt="" />
+          </div>
+          <div className="text-h4-bold text-orange-05">{availableAiPickCount}회</div>
+        </div>
+        <div className="relative flex flex-col gap-[8px]">
+          <div className="text-small1-regular text-gray-07">노트 창고 용량</div>
+          <div className="text-h4-bold text-orange-05">
+            {possessDocumentCount}/{freePlanMaxPossessDocumentCount}
+          </div>
+          <div className="relative h-[4px] overflow-hidden rounded-full *:h-full">
+            <div className="w-full bg-gray-02" />
+            <div
+              className="absolute left-0 top-0 bg-orange-05"
+              style={{ width: `${uploadableRate}%` }}
+            />
+          </div>
+          <div className="text-small1-regular text-gray-07">
+            {uploadableCount}
+            개의 노트를 더 저장할 수 있습니다
+          </div>
+        </div>
       </div>
     </div>
   )

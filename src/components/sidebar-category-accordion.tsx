@@ -15,12 +15,16 @@ import { useQuery } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 import { ChevronRight } from 'lucide-react'
 import { useSelectedLayoutSegments } from 'next/navigation'
-import { useMemo } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { cn } from '@/lib/utils'
 
 export const SidebarCategoryAccordion = () => {
   const segments = useSelectedLayoutSegments()
   const { data: session } = useSession()
+
+  const [accordionValue, setAccordionValue] = useState<string[]>([])
+  const prevCategoryId = useRef<number | null>(null)
+
   const {
     data: categories,
     isPending,
@@ -54,15 +58,23 @@ export const SidebarCategoryAccordion = () => {
     }
   }, [segments])
 
+  useEffect(() => {
+    if (currentCategoryId) {
+      setAccordionValue((prevValue) => [...prevValue, currentCategoryId.toString()])
+      prevCategoryId.current = currentCategoryId
+    } else {
+      setAccordionValue((prevValue) =>
+        prevValue.filter((categoryId) => categoryId !== prevCategoryId.current?.toString())
+      )
+    }
+  }, [currentCategoryId])
+
   if (isPending) return <div>loading</div>
 
   if (isError) return <div>error</div>
 
   return (
-    <Accordion
-      type="multiple"
-      value={currentCategoryId ? [currentCategoryId.toString()] : undefined}
-    >
+    <Accordion type="multiple" value={accordionValue} onValueChange={setAccordionValue}>
       {categories.map((category) => (
         <AccordionItem key={category.id} value={category.id.toString()}>
           <AccordionTrigger
