@@ -1,12 +1,14 @@
+'use client'
+
 import Image from 'next/image'
 
 import CategoryList from './components/category-list'
 import { CommonLayout } from '@/components/common-layout'
-import { auth } from '@/app/api/auth/[...nextauth]/auth'
 import { CategoryAccordion } from '@/components/category-accordion'
+import { useSession } from 'next-auth/react'
 
-export default async function Repository() {
-  const session = await auth()
+export default function Repository() {
+  const { data: session } = useSession()
 
   return (
     <CommonLayout

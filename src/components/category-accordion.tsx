@@ -51,7 +51,7 @@ export const CategoryAccordion = ({
   return (
     <div className={className}>
       <Accordion type="multiple">
-        {categories.map((category) => (
+        {categories?.map((category) => (
           <AccordionItem key={category.id} value={category.id + ''}>
             <AccordionTrigger
               className={cn(

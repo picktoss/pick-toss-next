@@ -5,13 +5,20 @@ import Image from 'next/image'
 import { BlackLottie, MultipleLottie, OXLottie } from './lotties'
 import { ReactNode, forwardRef } from 'react'
 import MakeQuizDrawerDialog from './make-quiz-drawer-dialog'
-import { CategoryDTO } from '@/apis/types/dto/category.dto'
+import { useQuery } from '@tanstack/react-query'
+import { getCategories } from '@/apis/fetchers/category/get-categories'
+import { useSession } from 'next-auth/react'
 
-interface Props {
-  categories: CategoryDTO[]
-}
+export default function QuizMaker() {
+  const { data: session } = useSession()
+  const { data: categories } = useQuery({
+    queryKey: ['categories'],
+    queryFn: () =>
+      getCategories({
+        accessToken: session?.user.accessToken || '',
+      }).then((res) => res.categories),
+  })
 
-export default function QuizMaker({ categories }: Props) {
   return (
     <section className="flex flex-col gap-[24px]">
       <div>
@@ -26,7 +33,7 @@ export default function QuizMaker({ categories }: Props) {
 
       <div className="flex flex-col gap-[16px] lg:flex-row">
         <MakeQuizDrawerDialog
-          categories={categories}
+          categories={categories ?? []}
           quizType="MULTIPLE_CHOICE"
           trigger={
             <MakerTrigger
@@ -37,7 +44,7 @@ export default function QuizMaker({ categories }: Props) {
           }
         />
         <MakeQuizDrawerDialog
-          categories={categories}
+          categories={categories ?? []}
           quizType="MIX_UP"
           trigger={
             <MakerTrigger
@@ -48,7 +55,7 @@ export default function QuizMaker({ categories }: Props) {
           }
         />
         <MakeQuizDrawerDialog
-          categories={categories}
+          categories={categories ?? []}
           trigger={
             <MakerTrigger
               title="빈칸 채우기"
