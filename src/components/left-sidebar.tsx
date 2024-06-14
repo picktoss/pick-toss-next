@@ -40,7 +40,7 @@ export default function LeftSidebar() {
         </Link>
       </div>
       <div className="mb-[20px] w-full flex-1">
-        <div className="flex flex-col bg-white">
+        <div className="bg-white">
           {navigationItems.slice(0, 3).map((item) => {
             const { title, href, icon: Icon } = item
             const isActive = activeItem === item
@@ -63,7 +63,7 @@ export default function LeftSidebar() {
                   </Link>
                   <Accordion type="single" value={isActive ? 'active' : ''} collapsible>
                     <AccordionItem value="active">
-                      <AccordionContent className="px-[7px] py-[5px]">
+                      <AccordionContent className="max-h-[calc(100vh-580px)] overflow-auto px-[7px] py-[5px]">
                         <SidebarCategoryAccordion />
                       </AccordionContent>
                     </AccordionItem>
