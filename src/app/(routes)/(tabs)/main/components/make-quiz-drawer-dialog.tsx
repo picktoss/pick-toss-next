@@ -32,6 +32,7 @@ import {
 import Link from 'next/link'
 import { QuizType } from '@/apis/types/dto/quiz.dto'
 import { DocumentStatus } from '@/apis/types/dto/document.dto'
+import { CategoryProtector } from '@/components/category-protector'
 
 const QUIZ_COUNT_OPTIONS = [3, 5, 10, 15, 20]
 const DEFAULT_QUIZ_COUNT = 5
@@ -107,7 +108,9 @@ export default function MakeQuizDrawerDialog({ trigger, categories, quizType = '
   if (isDesktop) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>{trigger}</DialogTrigger>
+        <CategoryProtector>
+          <DialogTrigger asChild>{trigger}</DialogTrigger>
+        </CategoryProtector>
         <DialogContent className="min-h-[480px] min-w-[560px] rounded-[12px] border-none py-[26px]">
           {startedCreate ? (
             <Loading center />
@@ -124,9 +127,11 @@ export default function MakeQuizDrawerDialog({ trigger, categories, quizType = '
 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerTrigger asChild className="cursor-pointer">
-        {trigger}
-      </DrawerTrigger>
+      <CategoryProtector>
+        <DrawerTrigger asChild className="cursor-pointer">
+          {trigger}
+        </DrawerTrigger>
+      </CategoryProtector>
       <DrawerContent className="h-screen rounded-none" hideSidebar>
         {startedCreate ? (
           <Loading center />
@@ -154,7 +159,7 @@ function MakeQuizDialogContent({
   const userPoints = session?.user.dto.point || 0
 
   const [openSelectCategory, setOpenSelectCategory] = useState(false)
-  const [selectCategoryId, setSelectCategoryId] = useState<CategoryDTO['id']>(categories[0].id)
+  const [selectCategoryId, setSelectCategoryId] = useState<CategoryDTO['id']>(categories[0]?.id)
   const [quizCount, setQuizCount] = useState(DEFAULT_QUIZ_COUNT)
 
   const [openSelectDocuments, setOpenSelectDocuments] = useState(false)

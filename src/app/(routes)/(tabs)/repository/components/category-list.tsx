@@ -18,10 +18,10 @@ import { SortableContext, arrayMove } from '@dnd-kit/sortable'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Category, getCategories } from '@/apis/fetchers/category/get-categories'
 import { useSession } from 'next-auth/react'
-import CreateCategoryModal from './create-category-modal'
 import icons from '@/constants/icons'
 import { reorderCategory } from '@/apis/fetchers/category/reorder-category'
 import { cn } from '@/lib/utils'
+import CreateCategoryDialog from '@/components/create-category-dialog'
 
 interface Props extends HTMLAttributes<HTMLDivElement> {}
 
@@ -116,7 +116,7 @@ export default function CategoryList({ className }: Props) {
             <p className="text-body2-medium text-gray-08 lg:text-body1-medium">
               폴더 <span className="font-bold text-orange-06">{categories.length}</span>개
             </p>
-            <CreateCategoryModal
+            <CreateCategoryDialog
               trigger={
                 <button className="flex items-center gap-[8px] text-body2-medium text-gray-08 lg:hidden lg:text-body1-medium">
                   폴더 추가
@@ -153,7 +153,7 @@ interface AddCategoryButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>
 
 function AddCategoryButton({ className }: AddCategoryButtonProps) {
   return (
-    <CreateCategoryModal
+    <CreateCategoryDialog
       trigger={
         <button
           className={cn(
