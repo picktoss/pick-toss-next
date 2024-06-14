@@ -1,4 +1,4 @@
-import { LeftSidebar } from '@/components/left-sidebar'
+import LeftSidebar from '@/components/left-sidebar'
 import { Viewport } from 'next'
 import { PropsWithChildren } from 'react'
 
