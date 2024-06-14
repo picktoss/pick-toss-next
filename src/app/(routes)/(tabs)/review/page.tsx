@@ -1,5 +1,3 @@
-import { getBookmarks } from '@/apis/fetchers/key-point/get-bookmarks'
-import { auth } from '@/app/api/auth/[...nextauth]/auth'
 import { CommonLayout } from '@/components/common-layout'
 import ProTag from '@/components/pro-tag'
 import { Button } from '@/components/ui/button'
@@ -7,13 +5,10 @@ import icons from '@/constants/icons'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
 import Link from 'next/link'
+import { ArchiveLink } from './components/archive-link'
+import { SavedPicksLink } from './components/saved-picks-link'
 
-export default async function Review() {
-  const session = await auth()
-  const { keyPoints } = await getBookmarks({
-    accessToken: session?.user.accessToken || '',
-  })
-
+export default function Review() {
   return (
     <CommonLayout
       title={{
@@ -40,16 +35,7 @@ export default async function Review() {
               count={143}
               isPro
             />
-            <ArchiveLink
-              redirectUrl="/review/picks"
-              title="저장한 pick"
-              icon={
-                <div className="flex size-[56px] items-center justify-center rounded-full bg-orange-01">
-                  <Image src={icons.savePick} width={31} height={31} alt="" />
-                </div>
-              }
-              count={keyPoints.length}
-            />
+            <SavedPicksLink />
           </section>
 
           <section className="flex flex-col gap-[24px] rounded-none p-[20px] pb-[22px] lg:rounded-[12px] lg:bg-white">
@@ -187,39 +173,6 @@ export default async function Review() {
         </section>
       </main>
     </CommonLayout>
-  )
-}
-
-function ArchiveLink({
-  redirectUrl,
-  title,
-  icon,
-  count,
-  isPro,
-}: {
-  redirectUrl: string
-  title: string
-  icon: React.ReactNode
-  count: number
-  isPro?: boolean
-}) {
-  return (
-    <Link
-      href={redirectUrl}
-      className="flex justify-between rounded-[12px] bg-white p-[20px] lg:w-full"
-    >
-      <div className="flex items-center gap-[16px] lg:gap-[10px]">
-        {icon}
-        <div className="flex flex-col gap-[4px]">
-          <div className="flex items-center gap-[8px]">
-            <div className="text-h4-bold text-gray-09">{title}</div>
-            {isPro && <ProTag />}
-          </div>
-          <div className="text-body1-medium text-gray-06">{count}개</div>
-        </div>
-      </div>
-      <Image src={icons.chevronRight} width={6} height={10} alt="" className="lg:hidden" />
-    </Link>
   )
 }
 
