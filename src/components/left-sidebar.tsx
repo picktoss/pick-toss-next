@@ -63,6 +63,7 @@ export default function LeftSidebar() {
                   </Link>
                   <Accordion type="single" value={isActive ? 'active' : ''} collapsible>
                     <AccordionItem value="active">
+                      {/* TODO: hegiht calc 계산보다 더 나은 방식(상대적인 height 계산) 필요 */}
                       <AccordionContent className="max-h-[calc(100vh-580px)] overflow-auto px-[7px] py-[5px]">
                         <SidebarCategoryAccordion />
                       </AccordionContent>
