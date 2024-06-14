@@ -5,7 +5,7 @@ interface GetBookmarksParams {
   accessToken: string
 }
 
-interface GetBookmarksResponse {
+export interface GetBookmarksResponse {
   keyPoints: {
     id: number
     question: string
