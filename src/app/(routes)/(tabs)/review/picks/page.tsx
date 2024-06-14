@@ -9,6 +9,7 @@ import { useSession } from 'next-auth/react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { toggleBookmark } from '@/apis/fetchers/key-point/toggle-bookmark'
 import Loading from '@/components/loading'
+import { NoPicks } from './components/no-picks'
 // import { CategorySelect } from './components/category-select'
 
 export default function Picks() {
@@ -62,48 +63,54 @@ export default function Picks() {
           <Loading center />
         </div>
       ) : (
-        <div className="mt-[18px] px-[20px] pb-[70px]">
-          <div className="flex items-center justify-between">
-            {/** TODO: 폴더 별 북마크 */}
-            {/* <CategorySelect categories={categories} /> */}
-            <div className="flex items-center gap-[8px] text-body1-bold text-gray-09">
-              모든 문서
-            </div>
-            <div className="text-text-medium text-gray-06">{data?.keyPoints.length}개 저장됨</div>
-          </div>
-          <div className="mt-[16px] flex flex-col gap-[24px] lg:grid lg:grid-cols-2 lg:gap-[16px]">
-            {data?.keyPoints.map((keyPoint) => (
-              <div
-                key={keyPoint.id}
-                className="overflow-hidden rounded-[12px] bg-white pb-[13px] lg:pb-[32px]"
-              >
-                <div className="flex h-[48px] items-center justify-between border-b border-gray-02 px-[16px] lg:h-[56px] lg:pl-[32px]">
-                  <div className="text-small1-regular text-gray-06 lg:text-body2-regular">
-                    {keyPoint.category.name} {'>'}{' '}
-                    <Link
-                      href={`/document/${keyPoint.document.id}`}
-                      className="text-blue-05 underline underline-offset-2"
-                    >
-                      {keyPoint.document.name}
-                    </Link>
-                  </div>
-                  <DeleteDropdown handleDeleteBookmark={() => handleDeleteBookmark(keyPoint.id)} />
+        <>
+          {data?.keyPoints.length ? (
+            <div className="mt-[18px] px-[20px] pb-[70px]">
+              <div className="flex items-center justify-between">
+                {/** TODO: 폴더 별 북마크 */}
+                {/* <CategorySelect categories={categories} /> */}
+                <div className="flex items-center gap-[8px] text-body1-bold text-gray-09">
+                  모든 문서
                 </div>
-
-                <div className="flex flex-col gap-[8px] pt-[16px] lg:gap-[16px]">
-                  <div className="flex gap-[3px] px-[16px]">
-                    <PinIcon className="shrink-0 lg:size-[24px]" />
-                    <h4 className="text-body1-bold text-gray-09 lg:text-h4-bold">
-                      {keyPoint.question}
-                    </h4>
-                  </div>
-                  <p className="px-[20px] text-text-regular text-gray-08 lg:pl-[32px]">
-                    {keyPoint.answer}
-                  </p>
+                <div className="text-text-medium text-gray-06">
+                  {data?.keyPoints.length}개 저장됨
                 </div>
+              </div>
+              <div className="mt-[16px] flex flex-col gap-[24px] lg:grid lg:grid-cols-2 lg:gap-[16px]">
+                {data?.keyPoints.map((keyPoint) => (
+                  <div
+                    key={keyPoint.id}
+                    className="overflow-hidden rounded-[12px] bg-white pb-[13px] lg:pb-[32px]"
+                  >
+                    <div className="flex h-[48px] items-center justify-between border-b border-gray-02 px-[16px] lg:h-[56px] lg:pl-[32px]">
+                      <div className="text-small1-regular text-gray-06 lg:text-body2-regular">
+                        {keyPoint.category.name} {'>'}{' '}
+                        <Link
+                          href={`/document/${keyPoint.document.id}`}
+                          className="text-blue-05 underline underline-offset-2"
+                        >
+                          {keyPoint.document.name}
+                        </Link>
+                      </div>
+                      <DeleteDropdown
+                        handleDeleteBookmark={() => handleDeleteBookmark(keyPoint.id)}
+                      />
+                    </div>
 
-                {/** TODO: 펼치기 */}
-                {/* <div className="px-[12px]">
+                    <div className="flex flex-col gap-[8px] pt-[16px] lg:gap-[16px]">
+                      <div className="flex gap-[3px] px-[16px]">
+                        <PinIcon className="shrink-0 lg:size-[24px]" />
+                        <h4 className="text-body1-bold text-gray-09 lg:text-h4-bold">
+                          {keyPoint.question}
+                        </h4>
+                      </div>
+                      <p className="px-[20px] text-text-regular text-gray-08 lg:pl-[32px]">
+                        {keyPoint.answer}
+                      </p>
+                    </div>
+
+                    {/** TODO: 펼치기 */}
+                    {/* <div className="px-[12px]">
                 <Button
                   variant="outline"
                   className="h-[36px] w-full rounded-[8px] border-gray-02 !text-small1-bold text-gray-07"
@@ -111,10 +118,14 @@ export default function Picks() {
                   펼치기
                 </Button>
               </div> */}
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
+            </div>
+          ) : (
+            <NoPicks />
+          )}
+        </>
       )}
     </CommonLayout>
   )
