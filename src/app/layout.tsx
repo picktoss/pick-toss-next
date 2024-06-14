@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils'
 import { SessionProvider } from 'next-auth/react'
 import TanstackProvider from '@/providers/tanstack-provider'
 import { dmSans, suit } from '@/lib/fonts'
+import { Toaster } from '@/components/ui/toaster'
 
 export const metadata: Metadata = {
   title: 'Picktoss',
@@ -21,6 +22,7 @@ export default function RootLayout({
         <SessionProvider>
           <TanstackProvider>{children}</TanstackProvider>
         </SessionProvider>
+        <Toaster />
       </body>
     </html>
   )
