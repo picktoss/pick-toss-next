@@ -23,7 +23,7 @@ export default async function Repository() {
         },
       }}
     >
-      {/* TODO: hegiht calc 계산보다 더 나은 방식(상대적인 height 계산) 필요 */}
+      {/* TODO: height calc 계산보다 더 나은 방식(상대적인 height 계산) 필요 */}
       <main className="mt-[28px] flex h-[calc(100vh-160px)] flex-col lg:mt-[40px]">
         <CategoryList className="px-[20px]" />
 
