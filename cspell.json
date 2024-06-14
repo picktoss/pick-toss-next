@@ -3,5 +3,15 @@
   "language": "en",
   "ignorePaths": ["node_modules", ".next", "*.js", "*.json", "*.html", "*.css", "*.md", "*.svg"],
   "files": ["src/**/*.tsx", "src/**/*.ts"],
-  "words": ["picktoss", "kakao", "nextauth", "remirror", "Tanstack", "vaul", "KEYPOINT", "lotties"]
+  "words": [
+    "picktoss",
+    "kakao",
+    "nextauth",
+    "remirror",
+    "Tanstack",
+    "vaul",
+    "KEYPOINT",
+    "lotties",
+    "classname"
+  ]
 }
