@@ -12,6 +12,7 @@ import { SidebarCategoryAccordion } from './sidebar-category-accordion'
 import Image from 'next/image'
 import icons from '@/constants/icons'
 import { useDocumentUsage } from '@/hooks/use-document-usage'
+import { CategoryProtector } from './category-protector'
 
 export default function LeftSidebar() {
   const segments = useSelectedLayoutSegments()
@@ -32,12 +33,14 @@ export default function LeftSidebar() {
         <LogoIcon />
       </div>
       <div className="mb-[35px]">
-        <Link href="/create">
-          <Button className="h-[47px] w-[151px] gap-[13px] rounded-[16px] bg-orange-05 hover:bg-orange-05/90">
-            <span className="text-body2-bold">노트 추가하기</span>
-            <PlusIcon />
-          </Button>
-        </Link>
+        <CategoryProtector>
+          <Link href="/create">
+            <Button className="h-[47px] w-[151px] gap-[13px] rounded-[16px] bg-orange-05 hover:bg-orange-05/90">
+              <span className="text-body2-bold">노트 추가하기</span>
+              <PlusIcon />
+            </Button>
+          </Link>
+        </CategoryProtector>
       </div>
       <div className="mb-[20px] w-full flex-1">
         <div className="bg-white">

@@ -1,6 +1,7 @@
 'use client'
 
 import { getTodayQuizSetId } from '@/apis/fetchers/quiz/get-today-quiz-set-id'
+import { CategoryProtector } from '@/components/category-protector'
 import { SwitchCase } from '@/components/react/switch-case'
 import { Button } from '@/components/ui/button'
 import icons from '@/constants/icons'
@@ -99,13 +100,15 @@ export default function QuizBanner() {
             </Button>
           ),
           NOT_READY: (
-            <Button
-              className="flex w-full gap-[8px] rounded-[8px]"
-              onClick={() => router.push('/create')}
-            >
-              <div>노트 추가하러 가기</div>
-              <Image src={icons.arrowRight} width={20.25} height={13.5} alt="" />
-            </Button>
+            <CategoryProtector>
+              <Button
+                className="flex w-full gap-[8px] rounded-[8px]"
+                onClick={() => router.push('/create')}
+              >
+                <div>노트 추가하러 가기</div>
+                <Image src={icons.arrowRight} width={20.25} height={13.5} alt="" />
+              </Button>
+            </CategoryProtector>
           ),
           DONE: (
             <Button className="flex w-full cursor-default gap-[8px] rounded-[8px] bg-blue-03 text-blue-06 hover:bg-blue-03">
