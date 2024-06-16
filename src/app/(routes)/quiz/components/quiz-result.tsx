@@ -4,21 +4,71 @@ import { Button } from '@/components/ui/button'
 import { msToElapsedTime } from '@/utils/time'
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
+import { SolvingData } from '../types'
+import { useMemo } from 'react'
+import { getCurrentDate } from '@/utils/date'
+
+type Result = SolvingData[number] & { category: { id: number; name: string } }
+
+interface CategoryDetailResult {
+  name: string
+  correct: number
+  total: number
+}
 
 interface Props {
   totalElapsedTime: number
   isTodayQuiz: boolean
+  results: Result[]
 }
 
-export default function QuizResult({ totalElapsedTime, isTodayQuiz }: Props) {
+export default function QuizResult({ totalElapsedTime, isTodayQuiz, results }: Props) {
   const router = useRouter()
+
+  const categoryDetailResults = useMemo(() => {
+    const { categoryMap, totalCorrect, totalQuestions } = results.reduce(
+      (acc, result: Result) => {
+        const categoryName = result.category.name
+
+        if (!acc.categoryMap[categoryName]) {
+          acc.categoryMap[categoryName] = {
+            name: categoryName,
+            correct: 0,
+            total: 0,
+          }
+        }
+
+        acc.categoryMap[categoryName].total += 1
+        if (result.answer) {
+          acc.categoryMap[categoryName].correct += 1
+          acc.totalCorrect += 1
+        }
+
+        acc.totalQuestions += 1
+
+        return acc
+      },
+      {
+        categoryMap: {} as { [key: string]: CategoryDetailResult },
+        totalCorrect: 0,
+        totalQuestions: 0,
+      }
+    )
+
+    const details = Object.values(categoryMap)
+    const score = Math.round((totalCorrect / totalQuestions) * 100)
+
+    return { score, details }
+  }, [results])
 
   return (
     <div className="mt-[45px] flex flex-col items-center gap-[24px] pb-[86px]">
       <div className="flex h-[58px] flex-col items-center justify-end gap-[8px]">
-        <div className="text-body1-medium text-gray-07">2024년 04월 25일</div>
+        {isTodayQuiz && <div className="text-body1-medium text-gray-07">{getCurrentDate()}</div>}
         <div className="relative flex h-[30.76px] items-end">
-          <div className="text-h3-bold text-gray-08">오늘의 퀴즈 완료!</div>
+          <div className="text-h3-bold text-gray-08">
+            {isTodayQuiz ? '오늘의 퀴즈 완료!' : '퀴즈 완료!'}
+          </div>
           <div className="absolute right-[-34px]">
             <FireworkIcon />
           </div>
@@ -36,7 +86,7 @@ export default function QuizResult({ totalElapsedTime, isTodayQuiz }: Props) {
         >
           <div className="flex flex-col items-center gap-[8px]">
             <BadgeIcon />
-            <div className="text-h1 text-gray-08">80점</div>
+            <div className="text-h1 text-gray-08">{categoryDetailResults.score || 0}점</div>
             <div className="flex items-center gap-[8px] rounded-[16px] bg-orange-01 px-[13px] py-[2px]">
               <TimerIcon />
               <div className="text-small1-bold text-orange-06">
@@ -48,36 +98,25 @@ export default function QuizResult({ totalElapsedTime, isTodayQuiz }: Props) {
           <div className="mb-[43px] flex flex-col gap-[24px] px-[24px]">
             <div className="text-body1-bold text-gray-08">폴더별 상세</div>
             <div className="flex flex-col gap-[16px]">
-              <div className="flex flex-col gap-[8px]">
-                <div className="flex items-center justify-between">
-                  <div className="text-body2-medium text-gray-08">전공 공부</div>
-                  <div className="text-body2-bold text-orange-04">2/3</div>
+              {categoryDetailResults.details.map((detail) => (
+                <div key={detail.name} className="flex flex-col gap-[8px]">
+                  <div className="flex items-center justify-between">
+                    <div className="text-body2-medium text-gray-08">{detail.name}</div>
+                    <div className="text-body2-bold text-orange-04">
+                      {detail.correct}/{detail.total}
+                    </div>
+                  </div>
+                  <div className="relative">
+                    <div className="h-[4px] rounded-[9.5px] bg-gray-02" />
+                    <div
+                      className="absolute bottom-0 h-[4px] rounded-[9.5px] bg-orange-04"
+                      style={{
+                        width: `${(detail.correct / detail.total) * 100}%`,
+                      }}
+                    />
+                  </div>
                 </div>
-                <div className="relative">
-                  <div className="h-[4px] rounded-[9.5px] bg-gray-02" />
-                  <div className="absolute bottom-0 h-[4px] w-2/3 rounded-[9.5px] bg-orange-04" />
-                </div>
-              </div>
-              <div className="flex flex-col gap-[8px]">
-                <div className="flex items-center justify-between">
-                  <div className="text-body2-medium text-gray-08">코딩 아카데미</div>
-                  <div className="text-body2-bold text-orange-04">3/3</div>
-                </div>
-                <div className="relative">
-                  <div className="h-[4px] rounded-[9.5px] bg-gray-02" />
-                  <div className="absolute bottom-0 h-[4px] w-full rounded-[9.5px] bg-orange-04" />
-                </div>
-              </div>
-              <div className="flex flex-col gap-[8px]">
-                <div className="flex items-center justify-between">
-                  <div className="text-body2-medium text-gray-08">컴활 필기 준비</div>
-                  <div className="text-body2-bold text-orange-04">1/4</div>
-                </div>
-                <div className="relative">
-                  <div className="h-[4px] rounded-[9.5px] bg-gray-02" />
-                  <div className="absolute bottom-0 h-[4px] w-1/4 rounded-[9.5px] bg-orange-04" />
-                </div>
-              </div>
+              ))}
             </div>
           </div>
           <div className="px-[12px]">

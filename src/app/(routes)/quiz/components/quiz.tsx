@@ -104,6 +104,7 @@ export default function Quiz({ quizzes, isTodayQuiz }: QuizProps) {
         elapsedTime: totalElapsedTime,
       },
     ]
+    setSolvingData(newSolvingData)
 
     if (quizProgress.quizIndex === quizzes.length - 1) {
       patchQuizResultMutate(newSolvingData, {
@@ -114,7 +115,6 @@ export default function Quiz({ quizzes, isTodayQuiz }: QuizProps) {
       return
     }
 
-    setSolvingData(newSolvingData)
     setQuizProgress((prev) => ({
       quizIndex: prev.quizIndex + 1,
       selectedMultipleQuizAnswer: null,
@@ -229,7 +229,16 @@ export default function Quiz({ quizzes, isTodayQuiz }: QuizProps) {
             />
           </>
         ),
-        end: <QuizResult totalElapsedTime={totalElapsedTime} isTodayQuiz={isTodayQuiz} />,
+        end: (
+          <QuizResult
+            totalElapsedTime={totalElapsedTime}
+            isTodayQuiz={isTodayQuiz}
+            results={solvingData.map((data) => ({
+              ...data,
+              category: quizzes.find((quiz) => quiz.id === data.id)!.category,
+            }))}
+          />
+        ),
       }}
     />
   )
