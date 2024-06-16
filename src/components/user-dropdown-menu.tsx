@@ -11,8 +11,7 @@ import {
 } from './ui/dropdown-menu'
 import icons from '@/constants/icons'
 import Image from 'next/image'
-import { signOut } from '@/app/api/auth/[...nextauth]/auth'
-import { useSession } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
 
 export function UserDropdownMenu() {
   const session = useSession()
