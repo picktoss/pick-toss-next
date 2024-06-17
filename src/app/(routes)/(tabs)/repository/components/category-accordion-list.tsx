@@ -20,11 +20,7 @@ interface CategoryAccordionProps extends HTMLAttributes<HTMLDivElement> {}
 
 export default function CategoryAccordionList(props: CategoryAccordionProps) {
   const { data: session } = useSession()
-  const {
-    data: categories,
-    isPending,
-    isError,
-  } = useQuery({
+  const { data: categories } = useQuery({
     queryKey: ['categories'],
     queryFn: async () => {
       const res = await getCategories({ accessToken: session?.user.accessToken || '' })
@@ -32,9 +28,7 @@ export default function CategoryAccordionList(props: CategoryAccordionProps) {
     },
   })
 
-  if (isPending) return <div>loading</div>
-
-  if (isError) return <div>error</div>
+  if (!categories) return null
 
   return (
     <div {...props}>

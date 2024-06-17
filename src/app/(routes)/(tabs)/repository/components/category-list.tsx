@@ -22,6 +22,7 @@ import icons from '@/constants/icons'
 import { reorderCategory } from '@/apis/fetchers/category/reorder-category'
 import { cn } from '@/lib/utils'
 import CreateCategoryDialog from '@/components/create-category-dialog'
+import Loading from '@/components/loading'
 
 interface Props extends HTMLAttributes<HTMLDivElement> {}
 
@@ -59,7 +60,12 @@ export default function CategoryList({ className }: Props) {
     })
   )
 
-  if (isPending) return <div>loading</div>
+  if (isPending)
+    return (
+      <div className="relative min-h-[205.7px]">
+        <Loading size="small" center />
+      </div>
+    )
 
   if (isError) return <div>error</div>
 
