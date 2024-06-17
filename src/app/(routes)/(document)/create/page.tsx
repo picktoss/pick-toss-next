@@ -18,7 +18,7 @@ const VisualEditor = dynamic(() => import('./components/visual-editor'), {
 })
 
 export default function CreateDocument() {
-  const session = useSession()
+  const { data: session } = useSession()
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
 
@@ -26,9 +26,9 @@ export default function CreateDocument() {
     queryKey: ['categories'],
     queryFn: () =>
       getCategories({
-        accessToken: session.data?.user.accessToken || '',
+        accessToken: session?.user.accessToken || '',
       }).then((res) => res.categories),
-    enabled: !!session.data?.user.accessToken,
+    enabled: !!session?.user.accessToken,
   })
 
   const { mutateAsync } = useMutation({
@@ -54,7 +54,7 @@ export default function CreateDocument() {
 
     await mutateAsync(
       {
-        accessToken: session.data?.user.accessToken || '',
+        accessToken: session?.user.accessToken || '',
         documentName: documentName,
         file,
         categoryId,

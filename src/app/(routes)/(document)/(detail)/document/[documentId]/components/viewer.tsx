@@ -10,6 +10,14 @@ import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import remarkGfm from 'remark-gfm'
 import { useDocumentDetailContext } from '../contexts/document-detail-context'
 import { cn } from '@/lib/utils'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { useParams } from 'next/navigation'
+import Link from 'next/link'
 
 interface Props {
   documentName: string
@@ -19,6 +27,7 @@ interface Props {
 
 export function Viewer({ documentName, createdAt, content }: Props) {
   const { isPickOpen } = useDocumentDetailContext()
+  const { documentId } = useParams()
 
   return (
     <div
@@ -36,9 +45,7 @@ export function Viewer({ documentName, createdAt, content }: Props) {
             <p className="text-body2-regular text-gray-06">{formatDateKorean(createdAt)}</p>
           </div>
 
-          <div className="ml-[10px] flex size-[25px] items-center justify-center rounded-full hover:bg-gray-02">
-            <Image src={icons.kebab} alt="" width={15} height={3} />
-          </div>
+          <DocumentDropdown documentId={documentId as string} />
         </div>
 
         <div className="prose max-w-none pb-[80px] lg:pb-0">
@@ -66,5 +73,25 @@ const handleMarkDownCodeBlock = (
     <code {...props} className={className}>
       {children}
     </code>
+  )
+}
+
+function DocumentDropdown({ documentId }: { documentId: string }) {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger className="focus:outline-none">
+        <div className="ml-[10px] flex size-[25px] items-center justify-center rounded-full hover:bg-gray-02">
+          <Image src={icons.kebab} alt="" width={15} height={3} />
+        </div>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuItem>
+          <Link href={`/modify/${documentId}`} className="flex gap-4">
+            <Image src="/icons/modify-pencil.svg" alt="" width={16} height={16} />
+            <span className="text-gray-09">문서 수정하기</span>
+          </Link>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   )
 }
