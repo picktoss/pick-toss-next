@@ -72,6 +72,11 @@ export const API_ENDPOINT = {
       method: HttpMethod.PATCH,
     }),
 
+    updateDocumentContent: (documentId: number) => ({
+      url: `/documents/${documentId}/update-content`,
+      method: HttpMethod.PATCH,
+    }),
+
     reorderDocument: () => ({
       url: `/documents/reorder`,
       method: HttpMethod.PATCH,

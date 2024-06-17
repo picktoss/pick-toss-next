@@ -9,7 +9,7 @@ import { useSession } from 'next-auth/react'
 
 interface Props {
   categoryId: number
-  handleSubmit?: ({
+  handleSubmit: ({
     documentName,
     editorContent,
   }: {
@@ -53,12 +53,12 @@ export function Header({ categoryId, handleSubmit }: Props) {
         <Button
           variant="ghost"
           className="ml-auto bg-gradient-to-r from-[#93B0FF] to-[#FF8428] bg-clip-text px-0 pl-[15px] !text-body2-bold text-transparent hover:text-transparent"
-          //   onClick={() =>
-          //     handleSubmit({
-          //       documentName,
-          //       editorContent: editorMarkdownContent,
-          //     })
-          //   }
+          onClick={() =>
+            handleSubmit({
+              documentName,
+              editorContent: editorMarkdownContent,
+            })
+          }
         >
           수정하기
         </Button>
