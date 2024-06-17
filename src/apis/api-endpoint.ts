@@ -76,6 +76,11 @@ export const API_ENDPOINT = {
       url: `/documents/reorder`,
       method: HttpMethod.PATCH,
     }),
+
+    getTopFive: () => ({
+      url: `/documents/top-five`,
+      method: HttpMethod.GET,
+    }),
   },
 
   keypoint: {

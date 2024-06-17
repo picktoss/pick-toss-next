@@ -7,6 +7,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ArchiveLink } from './components/archive-link'
 import { SavedPicksLink } from './components/saved-picks-link'
+import TopFive from './components/top-five'
 
 export default function Review() {
   return (
@@ -57,46 +58,7 @@ export default function Review() {
             </div>
           </section>
 
-          <section className="flex flex-col gap-[24px] rounded-none bg-white p-[20px] pb-[17px] lg:rounded-[12px]">
-            <h2 className="text-h4-bold text-gray-09">내가 자주 틀린 노트 TOP5</h2>
-            <ul className="*:border-b *:border-gray-01 *:px-[12px]">
-              <FrequentlyWrongNoteItem
-                rank={1}
-                redirectUrl="#"
-                title="중간고사 요점정리"
-                categoryName="전공 공부"
-                wrongCount={9}
-              />
-              <FrequentlyWrongNoteItem
-                rank={2}
-                redirectUrl="#"
-                title="파이썬 기초"
-                categoryName="코딩 아카데미"
-                wrongCount={7}
-              />
-              <FrequentlyWrongNoteItem
-                rank={3}
-                redirectUrl="#"
-                title="대충 엄청 긴 이름의 문서 엄청 긴 이름의 문서 엄청 긴 이름의 문서 엄청 긴 이름의 문서"
-                categoryName="엄청 긴 이름의 카테고리 엄청 긴 이름의 카테고리 엄청 긴 이름의 카테고리 엄청 긴 이름의 카테고리"
-                wrongCount={5}
-              />
-              <FrequentlyWrongNoteItem
-                rank={4}
-                redirectUrl="#"
-                title="4/3 노트필기"
-                categoryName="컴활 필기 준비"
-                wrongCount={3}
-              />
-              <FrequentlyWrongNoteItem
-                rank={5}
-                redirectUrl="#"
-                title="철학자별 특징과 차이"
-                categoryName="철학입문"
-                wrongCount={9}
-              />
-            </ul>
-          </section>
+          <TopFive />
         </div>
 
         {/** TODO: 퀴즈 분석 */}
@@ -173,39 +135,6 @@ export default function Review() {
         </section>
       </main>
     </CommonLayout>
-  )
-}
-
-function FrequentlyWrongNoteItem({
-  rank,
-  redirectUrl,
-  title,
-  categoryName,
-  wrongCount,
-}: {
-  rank: number
-  redirectUrl: string
-  title: string
-  categoryName: string
-  wrongCount: number
-}) {
-  return (
-    <Link
-      href={redirectUrl}
-      className="flex h-[62px] items-center justify-between last:border-none"
-    >
-      <div className="flex items-center gap-[16px]">
-        <span className="text-body2-bold text-orange-06">{rank}</span>
-        <div className="flex flex-col gap-[4px]">
-          <div className="line-clamp-1 text-body1-medium text-gray-08">{title}</div>
-          <div className="line-clamp-1 text-small1-regular text-gray-06">{categoryName}</div>
-        </div>
-      </div>
-      <div className="flex shrink-0 gap-[40px] pl-[12px]">
-        <div className="text-body2-medium text-orange-05">오답 {wrongCount}회</div>
-        <Image src={icons.chevronRight} width={6} height={10} alt="" />
-      </div>
-    </Link>
   )
 }
 
