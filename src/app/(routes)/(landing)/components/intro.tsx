@@ -1,7 +1,8 @@
 import Image from 'next/image'
 import mobileSkySource from '../assets/mobile-sky.png'
 import { Button } from '@/components/ui/button'
-import { ArrowRightIcon, LogoTextIcon, LongChevronDownIcon } from '../svgs'
+import { ArrowRightIcon, LogoTextIcon } from '../svgs'
+import { BounceChevronDown } from './ui/bounce-chevron-down'
 
 export function Intro() {
   return (
@@ -33,7 +34,7 @@ export function Intro() {
 
       <div className="z-40 flex flex-col items-center gap-[5.8px] pb-[30px]">
         <LogoTextIcon />
-        <LongChevronDownIcon />
+        <BounceChevronDown />
       </div>
     </div>
   )
