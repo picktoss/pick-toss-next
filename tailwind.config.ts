@@ -58,6 +58,14 @@ const config = {
             letterSpacing: '0.02em',
           },
         ],
+        'h3-bold-eng': [
+          '24px',
+          {
+            lineHeight: 'normal',
+            fontWeight: 'bold',
+            letterSpacing: '-0.02em',
+          },
+        ],
         'h3-medium': [
           '24px',
           {

@@ -11,7 +11,7 @@ interface UpdateDocumentNameParams extends NextFetchRequestConfig {
 export const updateDocumentContent = async (params: UpdateDocumentNameParams) => {
   const formData = new FormData()
   formData.append('file', params.file)
-  formData.append('documentName', params.name)
+  formData.append('name', params.name)
 
   return await apiClient.fetch({
     ...API_ENDPOINT.document.updateDocumentContent(params.documentId),
