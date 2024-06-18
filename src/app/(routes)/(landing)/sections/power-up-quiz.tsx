@@ -2,10 +2,9 @@
 
 import { ReactNode, useState } from 'react'
 import { Section } from '../components/section'
-import { BlankQuizIcon, MultipleQuizIcon, OXQuizIcon } from '../svgs'
+import { BlankQuizIcon, MultipleQuizIcon, OXQuizIcon, PhoneEdgeIcon } from '../svgs'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
-import phoneImageSource from '../assets/phone1.png'
 import oxGifSource from '../assets/select.gif'
 import selectGifSource from '../assets/ox.gif'
 
@@ -28,23 +27,16 @@ export function PowerUpQuiz() {
         <div className="absolute right-1/2 top-[-45px] translate-x-1/2">
           <div className="relative h-[464.4px] w-[259.2px]">
             {quiz === 'multiple' ? (
-              <Image
-                src={oxGifSource}
-                width={200}
-                height={300}
-                alt=""
-                className="ml-[23px] pt-[17px]"
-              />
+              <div className="overflow-hidden">
+                <Image src={oxGifSource} width={245.8} alt="" />
+              </div>
             ) : (
-              <Image
-                src={selectGifSource}
-                width={200}
-                height={300}
-                alt=""
-                className="ml-[23px] pt-[17px]"
-              />
+              <Image src={selectGifSource} width={245.8} alt="" />
             )}
-            <Image src={phoneImageSource} fill alt="" />
+            <div className="absolute top-0">
+              <PhoneEdgeIcon />
+            </div>
+            <div className="absolute bottom-1/2 right-1/2 mr-[6.5px] h-[445px] w-[218px] translate-x-1/2 translate-y-1/2 rounded-[36px] ring-[33px] ring-blue-01" />
           </div>
         </div>
 
