@@ -49,6 +49,7 @@
     "react-markdown": "^9.0.1",
     "react-spinners": "^0.13.8",
     "react-syntax-highlighter": "^15.5.0",
+    "react-use-measure": "^2.1.1",
     "refractor": "^4.8.1",
     "remark-gfm": "^4.0.0",
     "remirror": "^2.0.39",
