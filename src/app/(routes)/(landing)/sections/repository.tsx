@@ -39,7 +39,7 @@ export function Repository() {
           노트로 만들어보세요
         </>
       }
-      className="mt-[60px]"
+      className="mt-[60px] overflow-hidden"
     >
       <div className="px-[20px]">
         <div className="relative mx-auto mt-[60px] size-[159px]">
@@ -64,7 +64,7 @@ export function Repository() {
       <motion.div
         ref={ref}
         style={{ x: xTranslation }}
-        className="mt-[40px] inline-flex h-[536px] overflow-hidden *:shrink-0"
+        className="mt-[40px] inline-flex h-[536px] w-full *:shrink-0"
       >
         {[...items, ...items].map((Item, index) => (
           <Item key={index} />
