@@ -3,6 +3,7 @@ import mobileSkySource from '../assets/mobile-sky.png'
 import { Button } from '@/components/ui/button'
 import { ArrowRightIcon, LogoTextIcon } from '../svgs'
 import { BounceChevronDown } from './ui/bounce-chevron-down'
+import { LoginDialog } from './login-dialog'
 
 export function Intro() {
   return (
@@ -22,13 +23,17 @@ export function Intro() {
         </div>
 
         <div className="mt-[33px] flex justify-center">
-          <Button
-            variant="gradation"
-            className="flex h-[52px] w-[190px] gap-[8px] rounded-[32px] !text-body1-bold text-white"
-          >
-            <div>픽토스 시작하기</div>
-            <ArrowRightIcon />
-          </Button>
+          <LoginDialog
+            trigger={
+              <Button
+                variant="gradation"
+                className="flex h-[52px] w-[190px] gap-[8px] rounded-[32px] !text-body1-bold text-white"
+              >
+                <div>픽토스 시작하기</div>
+                <ArrowRightIcon />
+              </Button>
+            }
+          />
         </div>
       </div>
 
