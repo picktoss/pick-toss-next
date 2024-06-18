@@ -1,6 +1,7 @@
 import { Header } from './components/header'
 import { PowerUpQuiz } from './sections/power-up-quiz'
 import { Repository } from './sections/repository'
+import { Review } from './sections/review'
 import { TodayQuiz } from './sections/today-quiz'
 
 export default function Landing() {
@@ -10,6 +11,7 @@ export default function Landing() {
       <Repository />
       <PowerUpQuiz />
       <TodayQuiz />
+      <Review />
     </div>
   )
 }
