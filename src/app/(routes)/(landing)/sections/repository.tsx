@@ -2,30 +2,28 @@
 
 import { useEffect } from 'react'
 import { Section } from '../components/section'
-import { AIPickIcon, AIPickTextIcon, Quiz1Icon, RingIcon } from '../svgs'
-import useMeasure from 'react-use-measure'
+import { AIPickIcon, AIPickTextIcon, Quiz1Icon, Quiz2Icon, RingIcon } from '../svgs'
 import { motion, animate, useMotionValue } from 'framer-motion'
 
 export function Repository() {
-  const items = [Quiz1Icon, Quiz1Icon, Quiz1Icon, Quiz1Icon]
-
-  const [ref, { width }] = useMeasure()
+  const items = [Quiz1Icon, Quiz2Icon]
 
   const xTranslation = useMotionValue(0)
 
   useEffect(() => {
-    const finalPosition = -width / 2
+    const startPosition = 0
+    const finalPosition = -712
 
-    const controls = animate(xTranslation, [0, finalPosition], {
+    const controls = animate(xTranslation, [startPosition, finalPosition], {
       ease: 'linear',
-      duration: 20,
+      duration: 5,
       repeat: Infinity,
       repeatType: 'loop',
       repeatDelay: 0,
     })
 
     return controls.stop
-  }, [xTranslation, width])
+  }, [xTranslation])
 
   return (
     <Section
@@ -62,7 +60,6 @@ export function Repository() {
         </div>
       </div>
       <motion.div
-        ref={ref}
         style={{ x: xTranslation }}
         className="mt-[40px] inline-flex h-[536px] w-full *:shrink-0"
       >
