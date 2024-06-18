@@ -20,9 +20,10 @@ interface Props {
   totalElapsedTime: number
   isTodayQuiz: boolean
   results: Result[]
+  reward: number | null
 }
 
-export default function QuizResult({ totalElapsedTime, isTodayQuiz, results }: Props) {
+export default function QuizResult({ totalElapsedTime, isTodayQuiz, results, reward }: Props) {
   const router = useRouter()
 
   const categoryDetailResults = useMemo(() => {
@@ -122,7 +123,7 @@ export default function QuizResult({ totalElapsedTime, isTodayQuiz, results }: P
           <div className="px-[12px]">
             <Button
               className="w-full"
-              onClick={() => router.replace(isTodayQuiz ? `/main?reward=5` : '/main')}
+              onClick={() => router.replace(isTodayQuiz ? `/main?reward=${reward}` : '/main')}
             >
               확인
             </Button>

@@ -11,7 +11,9 @@ interface PatchQuizResultParams extends NextFetchRequestConfig {
   accessToken: string
 }
 
-interface PatchQuizResultResponse {}
+interface PatchQuizResultResponse {
+  reward: number | null
+}
 
 export const patchQuizResult = async ({ data, accessToken }: PatchQuizResultParams) => {
   return await apiClient.fetch<PatchQuizResultResponse>({
