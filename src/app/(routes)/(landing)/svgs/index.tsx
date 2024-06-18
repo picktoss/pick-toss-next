@@ -74,7 +74,7 @@ export function LogoIcon() {
 export function LogoTextIcon() {
   return (
     <svg width="80" height="21" viewBox="0 0 80 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <g clip-path="url(#clip0_3938_4097)">
+      <g clipPath="url(#clip0_3938_4097)">
         <path
           d="M11.0821 5.18578C10.4189 4.75363 9.61296 4.53369 8.67595 4.53369C8.03972 4.53369 7.47674 4.62244 6.98318 4.80379C6.48961 4.98514 6.05389 5.22051 5.67215 5.5099C5.2904 5.79929 4.94722 6.12341 4.6426 6.48611L4.75057 4.79221H2.75703L0 20.508H2.16706L3.31614 14.0411C3.48966 14.4038 3.7403 14.7279 4.0642 15.0173C4.3881 15.3067 4.78141 15.5421 5.24413 15.7234C5.70685 15.9048 6.21198 15.9935 6.76339 15.9935C7.63098 15.9935 8.43303 15.8315 9.16952 15.5035C9.90601 15.1794 10.5538 14.7241 11.1091 14.1376C11.6643 13.5511 12.1116 12.8643 12.4432 12.0771C12.7749 11.29 12.9561 10.4295 12.9869 9.50348C13.0448 8.562 12.906 7.71698 12.5743 6.96456C12.2427 6.21215 11.7415 5.61794 11.0782 5.18578H11.0821ZM10.1721 12.0115C9.80961 12.6713 9.33533 13.1845 8.75307 13.5511C8.17082 13.9176 7.50759 14.1028 6.76724 14.1028C6.17342 14.1028 5.65672 13.9639 5.21714 13.69C4.77756 13.416 4.44209 13.034 4.21844 12.5517C3.99479 12.0655 3.90225 11.4906 3.94852 10.827C3.97551 9.97422 4.17217 9.2218 4.53463 8.56971C4.89709 7.91762 5.37524 7.39672 5.97677 7.00701C6.57444 6.6173 7.24539 6.42051 7.98188 6.42051C8.58727 6.42051 9.10397 6.56714 9.52041 6.85267C9.94071 7.14206 10.2608 7.53563 10.4844 8.03724C10.7081 8.53499 10.8045 9.10991 10.7775 9.762C10.735 10.5993 10.5307 11.3517 10.1721 12.0077V12.0115Z"
           fill="#292B2C"
@@ -124,9 +124,9 @@ export function LongChevronDownIcon() {
       <path
         d="M1.57617 6.03955L13.1077 13.9675L24.6392 6.03955"
         stroke="#797D81"
-        stroke-width="2.16216"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2.16216"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   )
@@ -135,9 +135,9 @@ export function LongChevronDownIcon() {
 export function MenuIcon() {
   return (
     <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M1 1H19" stroke="#A2A6AB" stroke-width="2" stroke-linecap="round" />
-      <path d="M1 9H19" stroke="#A2A6AB" stroke-width="2" stroke-linecap="round" />
-      <path d="M1 17H19" stroke="#A2A6AB" stroke-width="2" stroke-linecap="round" />
+      <path d="M1 1H19" stroke="#A2A6AB" strokeWidth="2" strokeLinecap="round" />
+      <path d="M1 9H19" stroke="#A2A6AB" strokeWidth="2" strokeLinecap="round" />
+      <path d="M1 17H19" stroke="#A2A6AB" strokeWidth="2" strokeLinecap="round" />
     </svg>
   )
 }
@@ -156,9 +156,9 @@ export function RingIcon() {
         cy="79.5"
         r="77.5"
         stroke="url(#paint0_linear_3947_4128)"
-        stroke-width="4"
-        stroke-linecap="round"
-        stroke-dasharray="12 15 2 7.5"
+        strokeWidth="4"
+        strokeLinecap="round"
+        strokeDasharray="12 15 2 7.5"
       />
       <defs>
         <linearGradient
@@ -169,8 +169,8 @@ export function RingIcon() {
           y2="55.4363"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FF8428" />
-          <stop offset="1" stop-color="#93B0FF" />
+          <stop stopColor="#FF8428" />
+          <stop offset="1" stopColor="#93B0FF" />
         </linearGradient>
       </defs>
     </svg>
@@ -209,8 +209,8 @@ export function AIPickIcon() {
           y2="14.5748"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FF8428" />
-          <stop offset="1" stop-color="#93B0FF" />
+          <stop stopColor="#FF8428" />
+          <stop offset="1" stopColor="#93B0FF" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_3947_4126"
@@ -220,8 +220,8 @@ export function AIPickIcon() {
           y2="14.5748"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FF8428" />
-          <stop offset="1" stop-color="#93B0FF" />
+          <stop stopColor="#FF8428" />
+          <stop offset="1" stopColor="#93B0FF" />
         </linearGradient>
         <linearGradient
           id="paint2_linear_3947_4126"
@@ -231,8 +231,8 @@ export function AIPickIcon() {
           y2="14.5748"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FF8428" />
-          <stop offset="1" stop-color="#93B0FF" />
+          <stop stopColor="#FF8428" />
+          <stop offset="1" stopColor="#93B0FF" />
         </linearGradient>
         <linearGradient
           id="paint3_linear_3947_4126"
@@ -242,8 +242,8 @@ export function AIPickIcon() {
           y2="14.5748"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FF8428" />
-          <stop offset="1" stop-color="#93B0FF" />
+          <stop stopColor="#FF8428" />
+          <stop offset="1" stopColor="#93B0FF" />
         </linearGradient>
         <linearGradient
           id="paint4_linear_3947_4126"
@@ -253,8 +253,8 @@ export function AIPickIcon() {
           y2="14.5748"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FF8428" />
-          <stop offset="1" stop-color="#93B0FF" />
+          <stop stopColor="#FF8428" />
+          <stop offset="1" stopColor="#93B0FF" />
         </linearGradient>
       </defs>
     </svg>
@@ -277,8 +277,8 @@ export function AIPickTextIcon() {
           y2="5.94875"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FF8428" />
-          <stop offset="1" stop-color="#93B0FF" />
+          <stop stopColor="#FF8428" />
+          <stop offset="1" stopColor="#93B0FF" />
         </linearGradient>
       </defs>
     </svg>
@@ -317,7 +317,7 @@ export function Quiz1Icon() {
       <a href="https://namu.wiki/w/%EA%B2%BD%EB%B3%B5%EA%B6%81">
         <rect
           fill="black"
-          fill-opacity="0"
+          fillOpacity="0"
           x="171.229"
           y="153.512"
           width="30.9846"
@@ -327,7 +327,7 @@ export function Quiz1Icon() {
       <a href="https://namu.wiki/w/%EC%9D%B8%ED%98%95">
         <rect
           fill="black"
-          fill-opacity="0"
+          fillOpacity="0"
           x="89.5631"
           y="189.512"
           width="20.7363"
@@ -337,7 +337,7 @@ export function Quiz1Icon() {
       <a href="https://namu.wiki/w/%EC%9E%90%EB%8F%99">
         <rect
           fill="black"
-          fill-opacity="0"
+          fillOpacity="0"
           x="87.0375"
           y="207.512"
           width="20.7363"
@@ -370,8 +370,8 @@ export function Quiz1Icon() {
           fill="#A2A6AB"
         />
         <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
+          fillRule="evenodd"
+          clipRule="evenodd"
           d="M89.3808 304.534C89.5847 304.652 89.6546 304.912 89.5368 305.116L88.9367 306.156C88.4724 306.96 87.4518 307.243 86.6414 306.799L83.3082 312.572C84.0967 313.053 84.3613 314.077 83.8972 314.881L83.2971 315.921C83.1794 316.125 82.9186 316.194 82.7147 316.077L74.7965 311.505C74.5926 311.387 74.5227 311.127 74.6404 310.923L75.2405 309.883C75.7051 309.079 76.7265 308.796 77.5371 309.24L80.8702 303.467C80.0809 302.987 79.8157 301.962 80.28 301.158L80.8801 300.118C80.9979 299.914 81.2586 299.845 81.4625 299.962L89.3808 304.534Z"
           fill="url(#paint3_linear_3947_4198)"
         />
@@ -396,9 +396,9 @@ export function Quiz1Icon() {
           width="340"
           height="260"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feColorMatrix
             in="SourceAlpha"
             type="matrix"
@@ -425,8 +425,8 @@ export function Quiz1Icon() {
           y2="418"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#F9F9F9" />
-          <stop offset="1" stop-color="white" stop-opacity="0" />
+          <stop stopColor="#F9F9F9" />
+          <stop offset="1" stopColor="white" stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_3947_4198"
@@ -436,8 +436,8 @@ export function Quiz1Icon() {
           y2="418"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#EAECEF" />
-          <stop offset="1" stop-color="#EAECEF" stop-opacity="0" />
+          <stop stopColor="#EAECEF" />
+          <stop offset="1" stopColor="#EAECEF" stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="paint2_linear_3947_4198"
@@ -447,8 +447,8 @@ export function Quiz1Icon() {
           y2="471"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#292B2C" />
-          <stop offset="1" stop-color="white" stop-opacity="0" />
+          <stop stopColor="#292B2C" />
+          <stop offset="1" stopColor="white" stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="paint3_linear_3947_4198"
@@ -458,8 +458,8 @@ export function Quiz1Icon() {
           y2="313.791"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#577CFF" />
-          <stop offset="1" stop-color="#A4B3FF" />
+          <stop stopColor="#577CFF" />
+          <stop offset="1" stopColor="#A4B3FF" />
         </linearGradient>
       </defs>
     </svg>
@@ -477,8 +477,8 @@ export function MultipleQuizIcon() {
       <path
         d="M20.9331 27.9008L21.9208 28.8885L23.8962 26.9131"
         stroke="#577CFF"
-        stroke-width="0.658469"
-        stroke-linecap="round"
+        strokeWidth="0.658469"
+        strokeLinecap="round"
       />
       <path
         d="M61.9981 38.0344L58.109 32.0072C57.5737 31.1777 58.2393 30.0981 59.2209 30.2037L66.295 30.9647C67.3183 31.0747 67.7146 32.3545 66.9327 33.0237L65.1693 34.5326C64.988 34.6878 64.8583 34.8945 64.7974 35.1253L64.1195 37.6972C63.8594 38.6838 62.5513 38.8917 61.9981 38.0344Z"
@@ -493,22 +493,22 @@ export function OXQuizIcon() {
     <svg width="69" height="31" viewBox="0 0 69 31" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect x="35.1001" y="4" width="33.0652" height="23.4" rx="4.06957" fill="#95B0F8" />
       <rect x="4.8374" y="5.72754" width="27.9879" height="19.8068" rx="3.44466" fill="#D7E2FF" />
-      <circle cx="19.0467" cy="15.6312" r="5.16699" stroke="#95B0F8" stroke-width="1.72233" />
+      <circle cx="19.0467" cy="15.6312" r="5.16699" stroke="#95B0F8" strokeWidth="1.72233" />
       <path
         d="M46.7998 10.6133L56.465 20.2785"
         stroke="#F0F4FF"
-        stroke-width="2.54348"
-        stroke-linecap="round"
+        strokeWidth="2.54348"
+        strokeLinecap="round"
       />
       <path
         d="M56.4653 10.6133L46.8001 20.2785"
         stroke="#F0F4FF"
-        stroke-width="2.54348"
-        stroke-linecap="round"
+        strokeWidth="2.54348"
+        strokeLinecap="round"
       />
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M50.0275 0.615417C50.5068 0.568775 50.9926 0.544922 51.4837 0.544922C51.9749 0.544922 52.4607 0.568775 52.9399 0.615417C53.2501 0.6456 53.477 0.92149 53.4468 1.23163C53.4167 1.54178 53.1408 1.76873 52.8306 1.73855C52.3876 1.69544 51.9384 1.67336 51.4837 1.67336C51.0291 1.67336 50.5798 1.69544 50.1368 1.73855C49.8267 1.76873 49.5508 1.54178 49.5206 1.23163C49.4904 0.92149 49.7174 0.6456 50.0275 0.615417ZM47.8731 1.55749C47.9635 1.85572 47.7949 2.17072 47.4967 2.26107C46.6287 2.52404 45.7971 2.87071 45.011 3.29173C44.7363 3.43886 44.3944 3.33545 44.2472 3.06076C44.1001 2.78607 44.2035 2.44412 44.4782 2.297C45.3291 1.84126 46.2296 1.4659 47.1695 1.18111C47.4678 1.09076 47.7828 1.25927 47.8731 1.55749ZM55.0944 1.55749C55.1847 1.25927 55.4997 1.09076 55.7979 1.18111C56.7379 1.4659 57.6384 1.84126 58.4893 2.29699C58.7639 2.44412 58.8673 2.78607 58.7202 3.06076C58.5731 3.33545 58.2311 3.43886 57.9565 3.29173C57.1704 2.87071 56.3387 2.52404 55.4707 2.26107C55.1725 2.17072 55.004 1.85572 55.0944 1.55749ZM60.1156 3.99502C60.3135 3.75425 60.669 3.71944 60.9098 3.91725C61.6615 4.53489 62.3515 5.22489 62.9691 5.97663C63.167 6.2174 63.1322 6.57294 62.8914 6.77076C62.6506 6.96858 62.2951 6.93376 62.0973 6.69299C61.5263 5.99804 60.8884 5.36013 60.1934 4.78915C59.9526 4.59133 59.9178 4.23578 60.1156 3.99502ZM42.8518 3.99502C43.0496 4.23579 43.0148 4.59133 42.774 4.78915C42.0791 5.36013 41.4412 5.99804 40.8702 6.69299C40.6724 6.93376 40.3168 6.96858 40.0761 6.77076C39.8353 6.57294 39.8005 6.2174 39.9983 5.97663C40.6159 5.2249 41.3059 4.5349 42.0577 3.91726C42.2985 3.71944 42.654 3.75425 42.8518 3.99502ZM63.8256 8.16618C64.1003 8.01905 64.4423 8.12246 64.5894 8.39715C65.0451 9.248 65.4205 10.1485 65.7053 11.0885C65.7956 11.3867 65.6271 11.7017 65.3289 11.7921C65.0307 11.8824 64.7157 11.7139 64.6253 11.4157C64.3624 10.5477 64.0157 9.716 63.5947 8.92995C63.4475 8.65526 63.551 8.31331 63.8256 8.16618ZM39.1418 8.16618C39.4165 8.31331 39.5199 8.65526 39.3728 8.92995C38.9518 9.716 38.6051 10.5477 38.3421 11.4157C38.2518 11.7139 37.9368 11.8824 37.6385 11.7921C37.3403 11.7017 37.1718 11.3867 37.2622 11.0885C37.547 10.1485 37.9223 9.24801 38.378 8.39715C38.5252 8.12246 38.8671 8.01906 39.1418 8.16618ZM37.3127 13.4396C37.6228 13.4697 37.8498 13.7456 37.8196 14.0558C37.7765 14.4988 37.7544 14.9481 37.7544 15.4027C37.7544 15.8573 37.7765 16.3066 37.8196 16.7496C37.8498 17.0597 37.6228 17.3356 37.3127 17.3658C37.0025 17.396 36.7267 17.169 36.6965 16.8589C36.6498 16.3796 36.626 15.8939 36.626 15.4027C36.626 14.9115 36.6498 14.4257 36.6965 13.9465C36.7267 13.6363 37.0025 13.4094 37.3127 13.4396ZM65.6548 13.4396C65.9649 13.4094 66.2408 13.6363 66.271 13.9465C66.3176 14.4257 66.3415 14.9115 66.3415 15.4027C66.3415 15.8939 66.3176 16.3796 66.271 16.8589C66.2408 17.169 65.9649 17.396 65.6548 17.3658C65.3446 17.3356 65.1177 17.0597 65.1479 16.7496C65.191 16.3066 65.213 15.8573 65.213 15.4027C65.213 14.9481 65.191 14.4988 65.1479 14.0558C65.1177 13.7456 65.3446 13.4697 65.6548 13.4396ZM37.6385 19.0133C37.9368 18.9229 38.2518 19.0915 38.3421 19.3897C38.6051 20.2577 38.9518 21.0893 39.3728 21.8754C39.5199 22.1501 39.4165 22.492 39.1418 22.6392C38.8671 22.7863 38.5252 22.6829 38.3781 22.4082C37.9223 21.5573 37.547 20.6568 37.2622 19.7169C37.1718 19.4187 37.3403 19.1036 37.6385 19.0133ZM65.3289 19.0133C65.6271 19.1036 65.7956 19.4187 65.7053 19.7169C65.4205 20.6568 65.0451 21.5573 64.5894 22.4082C64.4423 22.6829 64.1003 22.7863 63.8256 22.6392C63.551 22.492 63.4475 22.1501 63.5947 21.8754C64.0157 21.0893 64.3624 20.2577 64.6253 19.3897C64.7157 19.0915 65.0307 18.9229 65.3289 19.0133ZM62.8914 24.0346C63.1322 24.2324 63.167 24.5879 62.9692 24.8287C62.3515 25.5805 61.6615 26.2705 60.9098 26.8881C60.669 27.0859 60.3135 27.0511 60.1156 26.8103C59.9178 26.5696 59.9526 26.214 60.1934 26.0162C60.8884 25.4452 61.5263 24.8073 62.0973 24.1124C62.2951 23.8716 62.6506 23.8368 62.8914 24.0346ZM40.0761 24.0346C40.3168 23.8368 40.6724 23.8716 40.8702 24.1124C41.4412 24.8073 42.0791 25.4452 42.774 26.0162C43.0148 26.214 43.0496 26.5696 42.8518 26.8103C42.654 27.0511 42.2985 27.0859 42.0577 26.8881C41.3059 26.2705 40.616 25.5805 39.9983 24.8287C39.8005 24.5879 39.8353 24.2324 40.0761 24.0346ZM44.2472 27.7446C44.3944 27.4699 44.7363 27.3665 45.011 27.5136C45.7971 27.9346 46.6288 28.2813 47.4967 28.5443C47.7949 28.6346 47.9635 28.9496 47.8731 29.2479C47.7828 29.5461 47.4678 29.7146 47.1695 29.6242C46.2296 29.3395 45.3291 28.9641 44.4782 28.5084C44.2035 28.3612 44.1001 28.0193 44.2472 27.7446ZM58.7202 27.7446C58.8673 28.0193 58.7639 28.3612 58.4893 28.5084C57.6384 28.9641 56.7379 29.3395 55.7979 29.6242C55.4997 29.7146 55.1847 29.5461 55.0944 29.2479C55.004 28.9496 55.1725 28.6346 55.4707 28.5443C56.3387 28.2813 57.1704 27.9346 57.9565 27.5136C58.2311 27.3665 58.5731 27.4699 58.7202 27.7446ZM49.5206 29.5737C49.5508 29.2636 49.8267 29.0366 50.1368 29.0668C50.5798 29.1099 51.0291 29.132 51.4837 29.132C51.9384 29.132 52.3876 29.1099 52.8306 29.0668C53.1408 29.0366 53.4167 29.2636 53.4468 29.5737C53.477 29.8839 53.2501 30.1597 52.9399 30.1899C52.4607 30.2366 51.9749 30.2604 51.4837 30.2604C50.9926 30.2604 50.5068 30.2366 50.0275 30.1899C49.7174 30.1597 49.4904 29.8839 49.5206 29.5737Z"
         fill="#FF9100"
       />
@@ -527,8 +527,8 @@ export function BlankQuizIcon() {
       <path
         d="M9.39453 10.5684L9.39453 21.5284"
         stroke="#FF9100"
-        stroke-width="0.782857"
-        stroke-linecap="round"
+        strokeWidth="0.782857"
+        strokeLinecap="round"
       />
     </svg>
   )
@@ -552,14 +552,14 @@ export function FireworkIcon() {
       <path
         d="M22.4003 22.5603C21.2737 23.0523 13.441 23.4004 10.6406 18.3603"
         stroke="#577CFF"
-        stroke-width="1.12001"
-        stroke-linecap="round"
+        strokeWidth="1.12001"
+        strokeLinecap="round"
       />
       <path
         d="M16.7505 25.0352C15.6239 25.5273 11.2001 26.48 8.68085 23.3999"
         stroke="#577CFF"
-        stroke-width="1.12001"
-        stroke-linecap="round"
+        strokeWidth="1.12001"
+        strokeLinecap="round"
       />
       <path
         d="M35.3394 15.6968C35.4426 15.5145 35.6777 15.5145 35.7809 15.6968L36.1802 16.4023C36.197 16.432 36.2183 16.4581 36.2431 16.4793L36.8557 17.0025C36.995 17.1215 36.995 17.3587 36.8557 17.4777L36.2431 18.0009C36.2183 18.0221 36.197 18.0481 36.1802 18.0778L35.7809 18.7833C35.6777 18.9657 35.4426 18.9657 35.3394 18.7833L34.9402 18.0778C34.9234 18.0481 34.9021 18.0221 34.8772 18.0009L34.2646 17.4777C34.1253 17.3587 34.1253 17.1215 34.2646 17.0025L34.8772 16.4793C34.9021 16.4581 34.9234 16.432 34.9402 16.4023L35.3394 15.6968Z"
@@ -572,20 +572,20 @@ export function FireworkIcon() {
       <path
         d="M17.7952 13.7223C16.8463 12.7856 16.7927 11.0478 18.9501 9.63289C21.7214 7.81537 20.336 6.45227 19.8851 5.83022C19.3323 5.06759 17.7952 3.95321 20.5667 0.999843"
         stroke="#577CFF"
-        stroke-width="1.68002"
-        stroke-linecap="round"
+        strokeWidth="1.68002"
+        strokeLinecap="round"
       />
       <path
         d="M20.3265 13.205C20.3461 11.8826 21.5738 10.632 24.1093 11.1648C27.3664 11.8491 27.3918 9.92158 27.5299 9.16973C27.6992 8.24796 27.4377 6.38711 31.5218 6.2789"
         stroke="#95B0F8"
-        stroke-width="1.68002"
-        stroke-linecap="round"
+        strokeWidth="1.68002"
+        strokeLinecap="round"
       />
       <path
         d="M21.6628 19.1097C25.9368 15.9135 29.768 18.4617 30.4168 20.4066"
         stroke="#FB7E20"
-        stroke-width="1.68002"
-        stroke-linecap="round"
+        strokeWidth="1.68002"
+        strokeLinecap="round"
       />
       <defs>
         <linearGradient
@@ -596,8 +596,8 @@ export function FireworkIcon() {
           y2="6.77961"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FFA049" />
-          <stop offset="1" stop-color="#FFE5CD" />
+          <stop stopColor="#FFA049" />
+          <stop offset="1" stopColor="#FFE5CD" />
         </linearGradient>
       </defs>
     </svg>
@@ -610,14 +610,14 @@ export function TrophyIcon() {
       <path
         d="M55.5019 8.66375C59.1599 8.08616 66.476 8.89478 66.476 16.7499C66.476 26.5689 60.1225 30.0345 54.3467 30.0345"
         stroke="url(#paint0_linear_3938_3889)"
-        stroke-width="5.77585"
-        stroke-linecap="round"
+        strokeWidth="5.77585"
+        strokeLinecap="round"
       />
       <path
         d="M13.9156 8.66375C10.2576 8.08616 2.94151 8.89478 2.94151 16.7499C2.94151 26.5689 9.29495 30.0345 15.0708 30.0345"
         stroke="url(#paint1_linear_3938_3889)"
-        stroke-width="5.77585"
-        stroke-linecap="round"
+        strokeWidth="5.77585"
+        strokeLinecap="round"
       />
       <path
         d="M28.3558 39.2759H42.2178L44.5281 65.8448H26.0454L28.3558 39.2759Z"
@@ -649,8 +649,8 @@ export function TrophyIcon() {
           y2="30.0345"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FF9100" />
-          <stop offset="1" stop-color="#FFCC91" />
+          <stop stopColor="#FF9100" />
+          <stop offset="1" stopColor="#FFCC91" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_3938_3889"
@@ -660,8 +660,8 @@ export function TrophyIcon() {
           y2="30.0345"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FF9100" />
-          <stop offset="1" stop-color="#FFCC91" />
+          <stop stopColor="#FF9100" />
+          <stop offset="1" stopColor="#FFCC91" />
         </linearGradient>
         <linearGradient
           id="paint2_linear_3938_3889"
@@ -671,8 +671,8 @@ export function TrophyIcon() {
           y2="65.8448"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FFE5A2" />
-          <stop offset="0.68" stop-color="#FF9100" />
+          <stop stopColor="#FFE5A2" />
+          <stop offset="0.68" stopColor="#FF9100" />
         </linearGradient>
         <linearGradient
           id="paint3_linear_3938_3889"
@@ -682,8 +682,8 @@ export function TrophyIcon() {
           y2="15.9456"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.12" stop-color="#FFB95E" />
-          <stop offset="0.78" stop-color="#FF832A" />
+          <stop offset="0.12" stopColor="#FFB95E" />
+          <stop offset="0.78" stopColor="#FF832A" />
         </linearGradient>
       </defs>
     </svg>
@@ -712,9 +712,9 @@ export function OrangeGradientIcon() {
           width="330"
           height="330"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
           <feGaussianBlur stdDeviation="6" result="effect1_foregroundBlur_3947_4346" />
         </filter>
@@ -792,29 +792,29 @@ export function ContinuousQuizDatesIcon() {
       <path
         d="M10.5 35.2759L15.8413 40.6759L24.15 32.2759"
         stroke="white"
-        stroke-width="2.1"
-        stroke-linecap="round"
+        strokeWidth="2.1"
+        strokeLinecap="round"
       />
       <circle cx="61.6003" cy="36.4758" r="16.8" fill="#FFAB40" />
       <path
         d="M55.3003 35.2759L60.6416 40.6759L68.9503 32.2759"
         stroke="white"
-        stroke-width="2.1"
-        stroke-linecap="round"
+        strokeWidth="2.1"
+        strokeLinecap="round"
       />
       <circle cx="106.401" cy="36.4758" r="16.8" fill="#FFAB40" />
       <path
         d="M100.101 35.2759L105.442 40.6759L113.751 32.2759"
         stroke="white"
-        stroke-width="2.1"
-        stroke-linecap="round"
+        strokeWidth="2.1"
+        strokeLinecap="round"
       />
       <circle cx="151.2" cy="36.4758" r="16.8" fill="#FFAB40" />
       <path
         d="M144.9 35.2759L150.241 40.6759L158.55 32.2759"
         stroke="white"
-        stroke-width="2.1"
-        stroke-linecap="round"
+        strokeWidth="2.1"
+        strokeLinecap="round"
       />
     </svg>
   )
@@ -849,9 +849,9 @@ export function TodayQuizScreenIcon() {
           width="246.768"
           height="406.5"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feColorMatrix
             in="SourceAlpha"
             type="matrix"
@@ -920,7 +920,7 @@ export function ReviewInfoIcon() {
           height="120"
           rx="12"
           fill="white"
-          shape-rendering="crispEdges"
+          shapeRendering="crispEdges"
         />
         <rect
           x="17.5"
@@ -929,13 +929,13 @@ export function ReviewInfoIcon() {
           height="119"
           rx="11.5"
           stroke="#EAECEF"
-          shape-rendering="crispEdges"
+          shapeRendering="crispEdges"
         />
-        <path d="M132 32L132 112" stroke="#EAECEF" stroke-linecap="round" stroke-linejoin="round" />
-        <path d="M238 32L238 112" stroke="#EAECEF" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M132 32L132 112" stroke="#EAECEF" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M238 32L238 112" stroke="#EAECEF" strokeLinecap="round" strokeLinejoin="round" />
         <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
+          fillRule="evenodd"
+          clipRule="evenodd"
           d="M82.437 43.3408C86.6091 43.3408 89.9914 46.723 89.9914 50.8952V55.7421C89.9914 59.9143 86.6091 63.2965 82.437 63.2965H70.5196L65.0277 68.3307C64.422 68.8859 63.4453 68.4563 63.4453 67.6346L63.4453 63.1496C59.9867 62.4578 57.3809 59.4043 57.3809 55.7421V50.8952C57.3809 46.723 60.7631 43.3408 64.9353 43.3408H82.437Z"
           fill="#95B0F8"
         />
@@ -960,7 +960,7 @@ export function ReviewInfoIcon() {
         />
         <rect x="183" y="36.002" width="4" height="4" rx="0.833333" fill="#FFAB40" />
         <circle cx="185" cy="53.916" r="15" fill="#FFECD0" />
-        <circle cx="185" cy="53.916" r="13.9583" stroke="#FF9100" stroke-width="2.08333" />
+        <circle cx="185" cy="53.916" r="13.9583" stroke="#FF9100" strokeWidth="2.08333" />
         <path
           d="M197.412 40.1144C196.631 39.3334 195.365 39.3334 194.584 40.1144L192.707 41.9911L196.315 45.5993L198.192 43.7226C198.973 42.9415 198.973 41.6752 198.192 40.8941L197.412 40.1144Z"
           fill="#FF9100"
@@ -991,8 +991,8 @@ export function ReviewInfoIcon() {
         <path
           d="M287.73 50.8887L292.867 56.3134L300.857 47.875"
           stroke="#F5F7F9"
-          stroke-width="2.81244"
-          stroke-linecap="round"
+          strokeWidth="2.81244"
+          strokeLinecap="round"
         />
         <path
           d="M284.56 80.124H286.696V77.376H287.596V83.628H286.696V80.868H284.56V80.124ZM279.028 82.812C280.564 82.248 281.68 80.832 281.68 79.308V78.9H279.304V78.156H284.908V78.9H282.58V79.308C282.58 80.676 283.636 81.984 285.148 82.512L284.68 83.232C283.504 82.8 282.592 81.912 282.148 80.82C281.704 82.068 280.72 83.052 279.484 83.532L279.028 82.812ZM280.66 85.92C280.66 84.696 281.98 83.964 284.152 83.964C286.312 83.964 287.632 84.696 287.632 85.92C287.632 87.156 286.312 87.864 284.152 87.864C281.98 87.864 280.66 87.156 280.66 85.92ZM281.56 85.92C281.56 86.688 282.544 87.156 284.152 87.156C285.748 87.156 286.744 86.688 286.744 85.92C286.744 85.14 285.748 84.672 284.152 84.672C282.544 84.672 281.56 85.14 281.56 85.92ZM296.476 77.376H297.376V79.848H298.936V80.604H297.376V82.968H296.476V77.376ZM289.744 82.608V78.072H294.352V78.804H290.632V81.852C292.732 81.852 293.932 81.78 295.324 81.504L295.432 82.236C293.968 82.524 292.732 82.608 290.548 82.608H289.744ZM290.788 87.696V83.544H291.676V84.864H296.488V83.544H297.376V87.696H290.788ZM291.676 86.952H296.488V85.596H291.676V86.952ZM299.477 82.188H308.993V82.872H306.401V83.856H307.793V86.076H301.529V87.096H308.129V87.756H300.641V85.44H306.917V84.516H300.617V83.856H302.069V82.872H299.477V82.188ZM300.689 78.348V77.688H307.757V79.836H301.589V80.772H307.949V81.432H300.713V79.224H306.869V78.348H300.689ZM302.945 83.856H305.513V82.872H302.945V83.856Z"
@@ -1011,9 +1011,9 @@ export function ReviewInfoIcon() {
           width="375"
           height="160"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feColorMatrix
             in="SourceAlpha"
             type="matrix"
@@ -1039,9 +1039,9 @@ export function ReviewInfoIcon() {
           width="21.0713"
           height="24"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
           <feGaussianBlur stdDeviation="1" result="effect1_foregroundBlur_3947_4350" />
         </filter>
@@ -1120,41 +1120,36 @@ export function PercentageOfCorrectAnswersGraphIcon() {
         <path
           d="M51 181H339"
           stroke="#D2D6DB"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-dasharray="2 2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeDasharray="2 2"
         />
         <path
           d="M51 146H339"
           stroke="#D2D6DB"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-dasharray="2 2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeDasharray="2 2"
         />
         <path
           d="M51 111H339"
           stroke="#D2D6DB"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-dasharray="2 2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeDasharray="2 2"
         />
         <path
           d="M51 76H339"
           stroke="#D2D6DB"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-dasharray="2 2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeDasharray="2 2"
         />
-        <path
-          d="M52.7041 216H339"
-          stroke="#797D81"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
+        <path d="M52.7041 216H339" stroke="#797D81" strokeLinecap="round" strokeLinejoin="round" />
         <path
           d="M80 187L120.32 168L161.147 124.323L200.96 111L237.989 121L272.262 124.323L313 143"
           stroke="#FFD180"
-          stroke-width="2"
+          strokeWidth="2"
         />
         <circle cx="79" cy="187" r="6" fill="#FF9100" />
         <circle cx="79.0004" cy="187" r="3.6" fill="#FFE1AC" />
@@ -1222,9 +1217,9 @@ export function PercentageOfCorrectAnswersGraphIcon() {
           width="375"
           height="280"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feColorMatrix
             in="SourceAlpha"
             type="matrix"
@@ -1265,7 +1260,7 @@ export function FrequentlyWrongNoteIcon() {
           height="347.098"
           rx="12.8304"
           fill="white"
-          shape-rendering="crispEdges"
+          shapeRendering="crispEdges"
         />
         <rect
           x="19.5346"
@@ -1274,8 +1269,8 @@ export function FrequentlyWrongNoteIcon() {
           height="346.028"
           rx="12.2958"
           stroke="#EAECEF"
-          stroke-width="1.0692"
-          shape-rendering="crispEdges"
+          strokeWidth="1.0692"
+          shapeRendering="crispEdges"
         />
         <path
           d="M49.0405 34.3457H51.1517V50.3766H49.0405V42.3612H47.5197V49.6073H45.4622V34.6499H47.5197V40.572H49.0405V34.3457ZM38.0908 46.4583V36.1528H40.2915V44.5439C41.5797 44.5082 42.9931 44.4008 44.5497 44.0966L44.7644 45.9932C42.6711 46.3868 40.8282 46.4583 39.2001 46.4583H38.0908ZM63.0322 34.3278H65.2686V40.5183H67.523V42.3433H65.2686V50.3766H63.0322V34.3278ZM52.6014 45.9037C56.3586 43.9714 58.3625 41.3771 58.774 37.7809H53.4781V35.9917H61.0104C61.0104 40.7867 59.1497 44.9018 53.8359 47.5855L52.6014 45.9037ZM72.0405 35.9023H80.8432V37.7272H77.6227V38.747C77.6227 41.1803 78.9288 44.0251 81.523 45.2238L80.3064 46.9772C78.5173 46.1363 77.2469 44.5082 76.5492 42.5759C75.8335 44.6871 74.5274 46.4941 72.6846 47.3708L71.4322 45.6174C74.0265 44.3829 75.4041 41.3771 75.4041 38.747V37.7272H72.0405V35.9023ZM82.0777 50.3945V34.3636H84.2962V40.5183H86.6579V42.3433H84.2962V50.3945H82.0777ZM87.0699 43.2378H101.562V45.027H95.3716V50.4124H93.153V45.027H87.0699V43.2378ZM87.7855 40.5362C91.006 40.1426 92.7952 38.5323 93.0278 36.9579H88.3581V35.2045H100.238V36.9579H95.6042C95.8368 38.5323 97.6259 40.1426 100.846 40.5362L100.041 42.2896C97.2681 41.896 95.2821 40.6793 94.316 39.0154C93.3498 40.6793 91.3639 41.896 88.5907 42.2896L87.7855 40.5362ZM107.905 34.7035H118.908V36.2064H110.105V37.0116H118.55V38.4429H110.105V39.2838H119.033V40.7867H107.905V34.7035ZM106.133 43.1842V41.556H120.572V43.1842H106.133ZM107.761 45.528V43.9893H118.818V47.8181H109.962V48.7306H119.248V50.2693H107.797V46.351H116.636V45.528H107.761ZM132.452 34.3636H134.671V46.1542H132.452V34.3636ZM122.182 37.1726V35.4192H129.554V40.5004H124.383V42.3254C127.246 42.3075 129.053 42.218 131.11 41.8244L131.325 43.5957C129.053 44.043 126.995 44.1145 123.596 44.1145H122.2V38.8544H127.371V37.1726H122.182ZM123.972 50.0903V45.2059H126.19V48.3191H135.082V50.0903H123.972ZM142.069 35.5802H144.305V41.2877H153.394V43.041H148.796V46.7625H154.951V48.5517H140.441V46.7625H146.578V43.041H142.069V35.5802ZM157.42 35.5444H168.549V37.2978H159.675V39.0691H168.173V40.7867H159.675V42.6295H168.674V44.4008H157.42V35.5444ZM155.721 48.5159V46.7267H170.231V48.5159H155.721ZM184.768 35.777V37.8882H181.028V49.0884H178.881V37.8882H175.106V35.777H184.768ZM191.159 47.0667C193.879 47.0667 195.668 45.027 195.668 42.4327C195.668 39.8563 193.879 37.7988 191.159 37.7988C188.44 37.7988 186.651 39.8563 186.651 42.4327C186.651 45.027 188.44 47.0667 191.159 47.0667ZM184.504 42.4327C184.504 38.7113 187.223 35.6339 191.159 35.6339C195.095 35.6339 197.833 38.7113 197.833 42.4327C197.833 46.1721 195.095 49.2315 191.159 49.2315C187.223 49.2315 184.504 46.1721 184.504 42.4327ZM205.02 42.5222C206.254 42.5222 207.238 41.4308 207.238 40.2142C207.238 38.9796 206.236 37.8882 205.002 37.8882H201.549V42.5222H205.02ZM199.402 49.0884V35.777H204.984C207.435 35.777 209.385 37.763 209.385 40.2142C209.385 42.6295 207.435 44.6334 204.984 44.6334H201.549V49.0884H199.402ZM213.333 43.2557L211.186 43.1663L211.472 35.9023H218.808V38.0493H213.53L213.441 40.6436C213.995 40.411 214.604 40.2857 215.23 40.2857C217.663 40.2857 219.882 42.1107 219.882 44.705C219.882 47.174 217.627 49.1421 215.23 49.1421C213.19 49.1421 211.204 47.6929 210.721 45.6532L212.814 45.1701C213.083 46.2973 214.013 46.9951 215.23 46.9951C216.679 46.9951 217.735 46.0468 217.735 44.705C217.735 43.2736 216.733 42.4327 215.23 42.4327C214.407 42.4327 213.852 42.6832 213.333 43.2557Z"
@@ -1300,9 +1295,9 @@ export function FrequentlyWrongNoteIcon() {
         <path
           d="M324.948 105.829L328.526 102.25L324.948 98.672"
           stroke="#A2A6AB"
-          stroke-width="1.78916"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="1.78916"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
         <path
           d="M48.4034 160.762C50.2445 158.996 52.6491 157.58 52.6491 156.09C52.6491 155 51.9854 154.537 51.1588 154.537C50.6202 154.537 49.9439 154.737 49.5306 155.639L48.1655 155.025C48.8794 153.435 50.3447 153.034 51.1588 153.034C52.574 153.034 54.152 154.136 54.152 156.09C54.152 157.981 52.311 159.447 50.7079 160.762H54.2898V162.264H48.4034V160.762Z"
@@ -1323,9 +1318,9 @@ export function FrequentlyWrongNoteIcon() {
         <path
           d="M324.948 161.292L328.526 157.714L324.948 154.135"
           stroke="#A2A6AB"
-          stroke-width="1.78916"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="1.78916"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
         <path
           d="M53.0499 212.994C53.8515 213.458 54.4777 214.234 54.4777 215.148C54.4777 216.676 53.2252 217.803 51.3091 217.803C49.4054 217.803 48.1655 216.676 48.1655 215.036H49.6684C49.6684 215.712 50.1443 216.351 51.3091 216.351C52.4863 216.351 53.0249 215.712 53.0249 215.036C53.0249 214.347 52.599 213.67 51.3341 213.67H50.6954V212.33H51.3591C52.3987 212.33 52.8871 211.717 52.8871 211.103C52.8871 210.514 52.4237 209.963 51.3967 209.963C50.3572 209.963 49.9439 210.514 49.9439 211.116H48.441C48.441 209.563 49.6433 208.511 51.3967 208.511C53.1251 208.511 54.3274 209.563 54.3274 211.003C54.3274 211.842 53.7888 212.543 53.0499 212.994Z"
@@ -1346,9 +1341,9 @@ export function FrequentlyWrongNoteIcon() {
         <path
           d="M324.948 216.757L328.526 213.179L324.948 209.6"
           stroke="#A2A6AB"
-          stroke-width="1.78916"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="1.78916"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
         <path
           d="M53.6886 264.05V269.623H54.7657V271.101H53.6886V273.192H52.1983V271.101H48.1655V269.623L52.2609 264.05H53.6886ZM49.9189 269.623H52.1983V266.517L49.9189 269.623Z"
@@ -1369,9 +1364,9 @@ export function FrequentlyWrongNoteIcon() {
         <path
           d="M324.948 272.221L328.526 268.642L324.948 265.064"
           stroke="#A2A6AB"
-          stroke-width="1.78916"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="1.78916"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
         <path
           d="M49.994 324.661L48.4911 324.599L48.6915 319.514H53.8264V321.017H50.1318L50.0692 322.833C50.4574 322.67 50.8832 322.582 51.3216 322.582C53.0249 322.582 54.5779 323.86 54.5779 325.676C54.5779 327.404 52.9998 328.782 51.3216 328.782C49.8938 328.782 48.5036 327.767 48.1655 326.34L49.6308 326.001C49.8187 326.79 50.4699 327.279 51.3216 327.279C52.336 327.279 53.075 326.615 53.075 325.676C53.075 324.674 52.3736 324.085 51.3216 324.085C50.7455 324.085 50.3572 324.261 49.994 324.661Z"
@@ -1392,33 +1387,33 @@ export function FrequentlyWrongNoteIcon() {
         <path
           d="M324.948 327.685L328.526 324.106L324.948 320.528"
           stroke="#A2A6AB"
-          stroke-width="1.78916"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="1.78916"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
         <path
           d="M36.8921 296.583H333.893"
           stroke="#F5F7F9"
-          stroke-width="0.894582"
-          stroke-linecap="round"
+          strokeWidth="0.894582"
+          strokeLinecap="round"
         />
         <path
           d="M36.8921 185.655H333.893"
           stroke="#F5F7F9"
-          stroke-width="0.894582"
-          stroke-linecap="round"
+          strokeWidth="0.894582"
+          strokeLinecap="round"
         />
         <path
           d="M36.8921 241.119H333.893"
           stroke="#F5F7F9"
-          stroke-width="0.894582"
-          stroke-linecap="round"
+          strokeWidth="0.894582"
+          strokeLinecap="round"
         />
         <path
           d="M36.8921 130.19H333.893"
           stroke="#F5F7F9"
-          stroke-width="0.894582"
-          stroke-linecap="round"
+          strokeWidth="0.894582"
+          strokeLinecap="round"
         />
       </g>
       <defs>
@@ -1429,9 +1424,9 @@ export function FrequentlyWrongNoteIcon() {
           width="378.236"
           height="389.866"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feColorMatrix
             in="SourceAlpha"
             type="matrix"
@@ -1458,13 +1453,13 @@ export function FrequentlyWrongNoteIcon() {
 export function ArrowRightIcon() {
   return (
     <svg width="22" height="17" viewBox="0 0 22 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0 8.22998H20.25" stroke="white" stroke-width="2" stroke-linejoin="round" />
+      <path d="M0 8.22998H20.25" stroke="white" strokeWidth="2" strokeLinejoin="round" />
       <path
         d="M12.8862 1.75L20.2499 8.5L12.8862 15.25"
         stroke="white"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   )
@@ -1473,7 +1468,7 @@ export function ArrowRightIcon() {
 export function GoogleIcon() {
   return (
     <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="18" cy="18" r="17.25" fill="#F5F7F9" stroke="#EAECEF" stroke-width="1.5" />
+      <circle cx="18" cy="18" r="17.25" fill="#F5F7F9" stroke="#EAECEF" strokeWidth="1.5" />
       <path
         d="M27.1927 16.1639H26.4375V16.125H18V19.875H23.2983C22.5253 22.058 20.4483 23.625 18 23.625C14.8936 23.625 12.375 21.1064 12.375 18C12.375 14.8936 14.8936 12.375 18 12.375C19.4339 12.375 20.7384 12.9159 21.7317 13.7995L24.3834 11.1478C22.7091 9.58734 20.4694 8.625 18 8.625C12.8227 8.625 8.625 12.8227 8.625 18C8.625 23.1773 12.8227 27.375 18 27.375C23.1773 27.375 27.375 23.1773 27.375 18C27.375 17.3714 27.3103 16.7578 27.1927 16.1639Z"
         fill="#FFC107"
@@ -1497,7 +1492,7 @@ export function GoogleIcon() {
 export function KakaoIcon() {
   return (
     <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="18" cy="18" r="17.25" fill="#FBE44D" stroke="#F5D948" stroke-width="1.5" />
+      <circle cx="18" cy="18" r="17.25" fill="#FBE44D" stroke="#F5D948" strokeWidth="1.5" />
       <path
         d="M18.0001 10.4682C12.7817 10.4682 8.55029 13.7189 8.55029 17.7311C8.55029 20.3083 10.3029 22.5711 12.9348 23.8627L12.0444 27.0966C12.0103 27.1958 12.0386 27.3009 12.1126 27.3725C12.1635 27.4224 12.2314 27.45 12.3052 27.45C12.3621 27.45 12.4187 27.4279 12.4698 27.3893L16.2984 24.8726C16.8545 24.9498 17.4218 24.9939 18.0001 24.9939C23.2185 24.9939 27.4503 21.7434 27.4503 17.7311C27.4503 13.7189 23.2185 10.4682 18.0001 10.4682Z"
         fill="#3C1E1E"
