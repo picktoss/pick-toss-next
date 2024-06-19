@@ -1,13 +1,22 @@
 import Image from 'next/image'
 import mobileNightSkySource from '../assets/mobile-night-sky.png'
 import { Button } from '@/components/ui/button'
-import { GoogleIcon, KakaoIcon } from '../svgs'
+import { GoogleIcon, KakaoIcon, PicktossIcon } from '../svgs'
 import { signIn } from '@/app/api/auth/[...nextauth]/auth'
 
 export function Footer() {
   return (
-    <div className="relative mt-[184px] flex h-[870px] w-full flex-col justify-end">
+    <div className="relative mt-[184px] flex h-[870px] w-full flex-col justify-between">
       <Image src={mobileNightSkySource} fill alt="" />
+      <div className="z-10 flex flex-col items-center pt-[162px]">
+        <PicktossIcon />
+        <div className="mt-[16px] text-center text-h3-bold text-gray-02">
+          매일 유성처럼 나에게 도착하는
+          <br />
+          퀴즈를 받아보세요
+        </div>
+      </div>
+
       <div className="z-10 px-[20px] pb-[56px]">
         <div className="flex items-center gap-[8px]">
           <span className="text-h3-bold-eng text-orange-06">Q</span>
