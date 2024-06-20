@@ -42,6 +42,14 @@ const config = {
             letterSpacing: '0.02em',
           },
         ],
+        'h2-bold-eng': [
+          '32px',
+          {
+            lineHeight: 'normal',
+            fontWeight: 'bold',
+            letterSpacing: '-0.02em',
+          },
+        ],
         'h2-medium': [
           '32px',
           {
@@ -55,7 +63,7 @@ const config = {
           {
             lineHeight: 'normal',
             fontWeight: 'bold',
-            letterSpacing: '0.02em',
+            letterSpacing: '-0.02em',
           },
         ],
         'h3-bold-eng': [
