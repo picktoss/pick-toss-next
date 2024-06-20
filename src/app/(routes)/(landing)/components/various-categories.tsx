@@ -60,15 +60,16 @@ export function VariousCategories() {
   }, [xTranslation1, xTranslation2, xTranslation3, createAnimation])
 
   return (
-    <div className="mt-[178px] text-center">
-      <h2 className="text-h3-bold text-gray-09">다양한 분야를 픽토스의 퀴즈로</h2>
-      <p className="mt-[16px] text-text-medium text-gray-08">
+    <div className="mt-[178px] text-center xl:mt-[228px]">
+      <h2 className="text-h3-bold text-gray-09 xl:text-h1">다양한 분야를 픽토스의 퀴즈로</h2>
+      <p className="mt-[16px] text-text-medium text-gray-08 xl:text-h4-medium">
         전공 요점정리, 취미생활, 자격증 공부, 상식 메모까지.
-        <br />
+        <span className="hidden xl:inline-block"> </span>
+        <br className="xl:hidden" />
         노트만 있다면, 무엇이든 픽토스의 퀴즈로 복습할 수 있어요
       </p>
 
-      <div className="mt-[58px] flex flex-col items-center gap-[32px] overflow-hidden">
+      <div className="relative mx-auto mt-[58px] flex flex-col items-center gap-[32px] overflow-hidden xl:max-w-[1032px]">
         <motion.div style={{ x: xTranslation1 }} className="flex w-full gap-[24px] *:shrink-0">
           {[...items[0], ...items[0], ...items[0]].map((item, index) => (
             <div
@@ -99,6 +100,9 @@ export function VariousCategories() {
             </div>
           ))}
         </motion.div>
+
+        <div className="absolute left-0 h-full w-[50px] bg-gradient-to-r from-white to-transparent" />
+        <div className="absolute right-0 h-full w-[50px] bg-gradient-to-r from-transparent to-white" />
       </div>
     </div>
   )
