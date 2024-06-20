@@ -690,8 +690,8 @@ export function Quiz2Icon() {
           fill="#A2A6AB"
         />
         <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
+          fillRule="evenodd"
+          clipRule="evenodd"
           d="M98.3808 302.534C98.5847 302.652 98.6546 302.912 98.5368 303.116L97.9367 304.156C97.4724 304.96 96.4518 305.243 95.6414 304.799L92.3082 310.572C93.0967 311.053 93.3613 312.077 92.8972 312.881L92.2971 313.921C92.1794 314.125 91.9186 314.194 91.7147 314.077L83.7965 309.505C83.5926 309.387 83.5227 309.127 83.6404 308.923L84.2405 307.883C84.7051 307.079 85.7265 306.796 86.5371 307.24L89.8702 301.467C89.0809 300.987 88.8157 299.962 89.28 299.158L89.8801 298.118C89.9979 297.914 90.2586 297.845 90.4625 297.962L98.3808 302.534Z"
           fill="url(#paint3_linear_3947_4209)"
         />
@@ -716,9 +716,9 @@ export function Quiz2Icon() {
           width="340"
           height="220"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feColorMatrix
             in="SourceAlpha"
             type="matrix"
@@ -745,8 +745,8 @@ export function Quiz2Icon() {
           y2="418"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#F9F9F9" />
-          <stop offset="1" stop-color="white" stop-opacity="0" />
+          <stop stopColor="#F9F9F9" />
+          <stop offset="1" stopColor="white" stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_3947_4209"
@@ -756,8 +756,8 @@ export function Quiz2Icon() {
           y2="418"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#EAECEF" />
-          <stop offset="1" stop-color="#EAECEF" stop-opacity="0" />
+          <stop stopColor="#EAECEF" />
+          <stop offset="1" stopColor="#EAECEF" stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="paint2_linear_3947_4209"
@@ -767,8 +767,8 @@ export function Quiz2Icon() {
           y2="478"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#292B2C" />
-          <stop offset="1" stop-color="white" stop-opacity="0" />
+          <stop stopColor="#292B2C" />
+          <stop offset="1" stopColor="white" stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="paint3_linear_3947_4209"
@@ -778,8 +778,8 @@ export function Quiz2Icon() {
           y2="311.791"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#577CFF" />
-          <stop offset="1" stop-color="#A4B3FF" />
+          <stop stopColor="#577CFF" />
+          <stop offset="1" stopColor="#A4B3FF" />
         </linearGradient>
       </defs>
     </svg>
@@ -820,12 +820,12 @@ export function Quiz1DesktopIcon() {
         fill="url(#paint2_linear_3484_1009)"
       />
       <a href="https://namu.wiki/w/%EA%B2%BD%EB%B3%B5%EA%B6%81">
-        <rect fill="black" fill-opacity="0" x="107.8" y="148.764" width="36.1487" height="17.472" />
+        <rect fill="black" fillOpacity="0" x="107.8" y="148.764" width="36.1487" height="17.472" />
       </a>
       <a href="https://namu.wiki/w/%EC%9D%B8%ED%98%95">
         <rect
           fill="black"
-          fill-opacity="0"
+          fillOpacity="0"
           x="208.981"
           y="169.764"
           width="24.1923"
@@ -835,7 +835,7 @@ export function Quiz1DesktopIcon() {
       <a href="https://namu.wiki/w/%EC%9E%90%EB%8F%99">
         <rect
           fill="black"
-          fill-opacity="0"
+          fillOpacity="0"
           x="120.131"
           y="190.764"
           width="24.1923"
@@ -872,8 +872,8 @@ export function Quiz1DesktopIcon() {
           fill="#A2A6AB"
         />
         <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
+          fillRule="evenodd"
+          clipRule="evenodd"
           d="M116.381 349.534C116.585 349.652 116.655 349.912 116.537 350.116L115.937 351.156C115.472 351.96 114.452 352.243 113.641 351.799L110.308 357.572C111.097 358.053 111.361 359.077 110.897 359.881L110.297 360.921C110.179 361.125 109.919 361.194 109.715 361.077L101.796 356.505C101.593 356.387 101.523 356.127 101.64 355.923L102.241 354.883C102.705 354.079 103.727 353.796 104.537 354.24L107.87 348.467C107.081 347.987 106.816 346.962 107.28 346.158L107.88 345.118C107.998 344.914 108.259 344.845 108.463 344.962L116.381 349.534Z"
           fill="url(#paint3_linear_3484_1009)"
         />
@@ -890,9 +890,9 @@ export function Quiz1DesktopIcon() {
           width="520"
           height="200"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feColorMatrix
             in="SourceAlpha"
             type="matrix"
@@ -919,8 +919,8 @@ export function Quiz1DesktopIcon() {
           y2="418"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#F9F9F9" />
-          <stop offset="1" stop-color="white" stop-opacity="0" />
+          <stop stopColor="#F9F9F9" />
+          <stop offset="1" stopColor="white" stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_3484_1009"
@@ -930,8 +930,8 @@ export function Quiz1DesktopIcon() {
           y2="418"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#EAECEF" />
-          <stop offset="1" stop-color="#EAECEF" stop-opacity="0" />
+          <stop stopColor="#EAECEF" />
+          <stop offset="1" stopColor="#EAECEF" stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="paint2_linear_3484_1009"
@@ -941,8 +941,8 @@ export function Quiz1DesktopIcon() {
           y2="498"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#292B2C" />
-          <stop offset="1" stop-color="white" stop-opacity="0" />
+          <stop stopColor="#292B2C" />
+          <stop offset="1" stopColor="white" stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="paint3_linear_3484_1009"
@@ -952,8 +952,8 @@ export function Quiz1DesktopIcon() {
           y2="358.791"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#577CFF" />
-          <stop offset="1" stop-color="#A4B3FF" />
+          <stop stopColor="#577CFF" />
+          <stop offset="1" stopColor="#A4B3FF" />
         </linearGradient>
       </defs>
     </svg>
@@ -1023,8 +1023,8 @@ export function Quiz2DesktopIcon() {
           fill="#A2A6AB"
         />
         <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
+          fillRule="evenodd"
+          clipRule="evenodd"
           d="M98.3808 444.534C98.5847 444.652 98.6546 444.912 98.5368 445.116L97.9367 446.156C97.4724 446.96 96.4518 447.243 95.6414 446.799L92.3082 452.572C93.0967 453.053 93.3613 454.077 92.8972 454.881L92.2971 455.921C92.1794 456.125 91.9186 456.194 91.7147 456.077L83.7965 451.505C83.5926 451.387 83.5227 451.127 83.6404 450.923L84.2405 449.883C84.7051 449.079 85.7265 448.796 86.5371 449.24L89.8702 443.467C89.0809 442.987 88.8157 441.962 89.28 441.158L89.8801 440.118C89.9979 439.914 90.2586 439.845 90.4625 439.962L98.3808 444.534Z"
           fill="url(#paint3_linear_3484_1019)"
         />
@@ -1041,9 +1041,9 @@ export function Quiz2DesktopIcon() {
           width="520"
           height="178"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feColorMatrix
             in="SourceAlpha"
             type="matrix"
@@ -1070,8 +1070,8 @@ export function Quiz2DesktopIcon() {
           y2="418"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#F9F9F9" />
-          <stop offset="1" stop-color="white" stop-opacity="0" />
+          <stop stopColor="#F9F9F9" />
+          <stop offset="1" stopColor="white" stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_3484_1019"
@@ -1081,8 +1081,8 @@ export function Quiz2DesktopIcon() {
           y2="418"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#EAECEF" />
-          <stop offset="1" stop-color="#EAECEF" stop-opacity="0" />
+          <stop stopColor="#EAECEF" />
+          <stop offset="1" stopColor="#EAECEF" stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="paint2_linear_3484_1019"
@@ -1092,8 +1092,8 @@ export function Quiz2DesktopIcon() {
           y2="499"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#292B2C" />
-          <stop offset="1" stop-color="white" stop-opacity="0" />
+          <stop stopColor="#292B2C" />
+          <stop offset="1" stopColor="white" stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="paint3_linear_3484_1019"
@@ -1103,8 +1103,8 @@ export function Quiz2DesktopIcon() {
           y2="453.791"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#577CFF" />
-          <stop offset="1" stop-color="#A4B3FF" />
+          <stop stopColor="#577CFF" />
+          <stop offset="1" stopColor="#A4B3FF" />
         </linearGradient>
       </defs>
     </svg>
@@ -2301,7 +2301,7 @@ export function PercentageGraphIcon() {
         <path
           d="M45 397L130.5 367.5L220.5 289.5L309.5 269.5L395 216.5L472.5 141L558 169.5"
           stroke="#FFD180"
-          stroke-width="3.47154"
+          strokeWidth="3.47154"
         />
         <circle cx="45.4146" cy="399.599" r="10.4146" fill="#FF9100" />
         <circle cx="45.4153" cy="399.6" r="6.24878" fill="#FFE1AC" />
@@ -2326,9 +2326,9 @@ export function PercentageGraphIcon() {
           width="602.379"
           height="475.431"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
           <feGaussianBlur stdDeviation="8" result="effect1_foregroundBlur_0_1" />
         </filter>
@@ -2339,9 +2339,9 @@ export function PercentageGraphIcon() {
           width="541.829"
           height="289.012"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
           <feGaussianBlur stdDeviation="2.5" result="effect1_foregroundBlur_0_1" />
         </filter>
@@ -2368,7 +2368,7 @@ export function LongFrequentlyWrongNoteIcon({ className }: SVGProps) {
           height="340"
           rx="12"
           fill="white"
-          shape-rendering="crispEdges"
+          shapeRendering="crispEdges"
         />
         <rect
           x="17.5"
@@ -2377,7 +2377,7 @@ export function LongFrequentlyWrongNoteIcon({ className }: SVGProps) {
           height="339"
           rx="11.5"
           stroke="#EAECEF"
-          shape-rendering="crispEdges"
+          shapeRendering="crispEdges"
         />
         <path
           d="M54.58 39.74H56.94V57.66H54.58V48.7H52.88V56.8H50.58V40.08H52.88V46.7H54.58V39.74ZM42.34 53.28V41.76H44.8V51.14C46.24 51.1 47.82 50.98 49.56 50.64L49.8 52.76C47.46 53.2 45.4 53.28 43.58 53.28H42.34ZM70.2205 39.72H72.7205V46.64H75.2405V48.68H72.7205V57.66H70.2205V39.72ZM58.5605 52.66C62.7605 50.5 65.0005 47.6 65.4605 43.58H59.5405V41.58H67.9605C67.9605 46.94 65.8805 51.54 59.9405 54.54L58.5605 52.66ZM80.2903 41.48H90.1303V43.52H86.5303V44.66C86.5303 47.38 87.9903 50.56 90.8903 51.9L89.5303 53.86C87.5303 52.92 86.1103 51.1 85.3303 48.94C84.5303 51.3 83.0703 53.32 81.0103 54.3L79.6103 52.34C82.5103 50.96 84.0503 47.6 84.0503 44.66V43.52H80.2903V41.48ZM91.5103 57.68V39.76H93.9903V46.64H96.6303V48.68H93.9903V57.68H91.5103ZM97.0908 49.68H113.291V51.68H106.371V57.7H103.891V51.68H97.0908V49.68ZM97.8908 46.66C101.491 46.22 103.491 44.42 103.751 42.66H98.5308V40.7H111.811V42.66H106.631C106.891 44.42 108.891 46.22 112.491 46.66L111.591 48.62C108.491 48.18 106.271 46.82 105.191 44.96C104.111 46.82 101.891 48.18 98.7908 48.62L97.8908 46.66ZM120.381 40.14H132.681V41.82H122.841V42.72H132.281V44.32H122.841V45.26H132.821V46.94H120.381V40.14ZM118.401 49.62V47.8H134.541V49.62H118.401ZM120.221 52.24V50.52H132.581V54.8H122.681V55.82H133.061V57.54H120.261V53.16H130.141V52.24H120.221ZM147.821 39.76H150.301V52.94H147.821V39.76ZM136.341 42.9V40.94H144.581V46.62H138.801V48.66C142.001 48.64 144.021 48.54 146.321 48.1L146.561 50.08C144.021 50.58 141.721 50.66 137.921 50.66H136.361V44.78H142.141V42.9H136.341ZM138.341 57.34V51.88H140.821V55.36H150.761V57.34H138.341ZM158.571 41.12H161.071V47.5H171.231V49.46H166.091V53.62H172.971V55.62H156.751V53.62H163.611V49.46H158.571V41.12ZM175.731 41.08H188.171V43.04H178.251V45.02H187.751V46.94H178.251V49H188.311V50.98H175.731V41.08ZM173.831 55.58V53.58H190.051V55.58H173.831ZM206.301 41.34V43.7H202.121V56.22H199.721V43.7H195.501V41.34H206.301ZM213.446 53.96C216.486 53.96 218.486 51.68 218.486 48.78C218.486 45.9 216.486 43.6 213.446 43.6C210.406 43.6 208.406 45.9 208.406 48.78C208.406 51.68 210.406 53.96 213.446 53.96ZM206.006 48.78C206.006 44.62 209.046 41.18 213.446 41.18C217.846 41.18 220.906 44.62 220.906 48.78C220.906 52.96 217.846 56.38 213.446 56.38C209.046 56.38 206.006 52.96 206.006 48.78ZM228.94 48.88C230.32 48.88 231.42 47.66 231.42 46.3C231.42 44.92 230.3 43.7 228.92 43.7H225.06V48.88H228.94ZM222.66 56.22V41.34H228.9C231.64 41.34 233.82 43.56 233.82 46.3C233.82 49 231.64 51.24 228.9 51.24H225.06V56.22H222.66ZM238.233 49.7L235.833 49.6L236.153 41.48H244.353V43.88H238.453L238.353 46.78C238.973 46.52 239.653 46.38 240.353 46.38C243.073 46.38 245.553 48.42 245.553 51.32C245.553 54.08 243.033 56.28 240.353 56.28C238.073 56.28 235.853 54.66 235.313 52.38L237.653 51.84C237.953 53.1 238.993 53.88 240.353 53.88C241.973 53.88 243.153 52.82 243.153 51.32C243.153 49.72 242.033 48.78 240.353 48.78C239.433 48.78 238.813 49.06 238.233 49.7Z"
@@ -2402,9 +2402,9 @@ export function LongFrequentlyWrongNoteIcon({ className }: SVGProps) {
         <path
           d="M471 106.5L475 102.5L471 98.5"
           stroke="#A2A6AB"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
         <path
           d="M49.868 157.376C51.926 155.402 54.614 153.82 54.614 152.154C54.614 150.936 53.872 150.418 52.948 150.418C52.346 150.418 51.59 150.642 51.128 151.65L49.602 150.964C50.4 149.186 52.038 148.738 52.948 148.738C54.53 148.738 56.294 149.97 56.294 152.154C56.294 154.268 54.236 155.906 52.444 157.376H56.448V159.056H49.868V157.376Z"
@@ -2425,9 +2425,9 @@ export function LongFrequentlyWrongNoteIcon({ className }: SVGProps) {
         <path
           d="M471 157.5L475 153.5L471 149.5"
           stroke="#A2A6AB"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
         <path
           d="M55.062 204.764C55.958 205.282 56.658 206.15 56.658 207.172C56.658 208.88 55.258 210.14 53.116 210.14C50.988 210.14 49.602 208.88 49.602 207.046H51.282C51.282 207.802 51.814 208.516 53.116 208.516C54.432 208.516 55.034 207.802 55.034 207.046C55.034 206.276 54.558 205.52 53.144 205.52H52.43V204.022H53.172C54.334 204.022 54.88 203.336 54.88 202.65C54.88 201.992 54.362 201.376 53.214 201.376C52.052 201.376 51.59 201.992 51.59 202.664H49.91C49.91 200.928 51.254 199.752 53.214 199.752C55.146 199.752 56.49 200.928 56.49 202.538C56.49 203.476 55.888 204.26 55.062 204.764Z"
@@ -2448,9 +2448,9 @@ export function LongFrequentlyWrongNoteIcon({ className }: SVGProps) {
         <path
           d="M471 208.5L475 204.5L471 200.5"
           stroke="#A2A6AB"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
         <path
           d="M55.776 250.836V257.066H56.98V258.718H55.776V261.056H54.11V258.718H49.602V257.066L54.18 250.836H55.776ZM51.562 257.066H54.11V253.594L51.562 257.066Z"
@@ -2471,9 +2471,9 @@ export function LongFrequentlyWrongNoteIcon({ className }: SVGProps) {
         <path
           d="M471 259.5L475 255.5L471 251.5"
           stroke="#A2A6AB"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
         <path
           d="M51.646 307.59L49.966 307.52L50.19 301.836H55.93V303.516H51.8L51.73 305.546C52.164 305.364 52.64 305.266 53.13 305.266C55.034 305.266 56.77 306.694 56.77 308.724C56.77 310.656 55.006 312.196 53.13 312.196C51.534 312.196 49.98 311.062 49.602 309.466L51.24 309.088C51.45 309.97 52.178 310.516 53.13 310.516C54.264 310.516 55.09 309.774 55.09 308.724C55.09 307.604 54.306 306.946 53.13 306.946C52.486 306.946 52.052 307.142 51.646 307.59Z"
@@ -2494,14 +2494,14 @@ export function LongFrequentlyWrongNoteIcon({ className }: SVGProps) {
         <path
           d="M471 310.5L475 306.5L471 302.5"
           stroke="#A2A6AB"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
-        <path d="M49 283H481" stroke="#F5F7F9" stroke-linecap="round" />
-        <path d="M49 179H481" stroke="#F5F7F9" stroke-linecap="round" />
-        <path d="M49 231H481" stroke="#F5F7F9" stroke-linecap="round" />
-        <path d="M49 127H481" stroke="#F5F7F9" stroke-linecap="round" />
+        <path d="M49 283H481" stroke="#F5F7F9" strokeLinecap="round" />
+        <path d="M49 179H481" stroke="#F5F7F9" strokeLinecap="round" />
+        <path d="M49 231H481" stroke="#F5F7F9" strokeLinecap="round" />
+        <path d="M49 127H481" stroke="#F5F7F9" strokeLinecap="round" />
       </g>
       <defs>
         <filter
@@ -2511,9 +2511,9 @@ export function LongFrequentlyWrongNoteIcon({ className }: SVGProps) {
           width="530"
           height="380"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feColorMatrix
             in="SourceAlpha"
             type="matrix"
