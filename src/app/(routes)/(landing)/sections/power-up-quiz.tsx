@@ -24,7 +24,7 @@ export function PowerUpQuiz() {
         }
         className="mt-[94px] xl:hidden"
       >
-        <div className="relative mt-[82px] flex h-[689px] items-end bg-blue-01 pb-[42px]">
+        <div className="relative mt-[100px] flex h-[689px] items-end bg-blue-01 pb-[42px]">
           <div className="absolute right-1/2 top-[-45px] translate-x-1/2">
             <div className="relative h-[464.4px] w-[259.2px]">
               {quiz === 'multiple' ? (
