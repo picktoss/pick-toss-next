@@ -82,6 +82,14 @@ const config = {
             letterSpacing: '0.02em',
           },
         ],
+        'h4-medium': [
+          '20px',
+          {
+            lineHeight: '150%',
+            fontWeight: 'normal',
+            letterSpacing: '0.02em',
+          },
+        ],
         button: [
           '16px',
           {

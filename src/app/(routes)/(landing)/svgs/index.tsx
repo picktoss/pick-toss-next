@@ -1,4 +1,4 @@
-export function LogoIcon() {
+export function LogoIcon({ className }: { className?: HTMLElement['className'] }) {
   return (
     <svg
       width="116"
@@ -6,6 +6,7 @@ export function LogoIcon() {
       viewBox="0 0 116 26"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
     >
       <path
         d="M22.922 0.884279C22.922 0.884279 22.8963 0.888412 22.8847 0.89339C17.5683 2.24252 11.9065 4.12139 7.7193 7.83681C5.94038 9.41832 4.52543 11.4785 4.3785 13.9242C4.14868 17.7497 7.05061 21.0369 10.8596 21.2657C12.4276 21.3599 14.0003 20.9068 15.2816 19.9906C16.5127 19.1083 17.3515 17.7966 18.0349 16.4387C19.0909 14.3342 22.0266 8.59417 22.0266 8.59417C22.1287 8.39884 21.9358 8.17727 21.7303 8.25856C20.7573 8.46401 18.5755 9.13314 17.7409 9.62215C17.6267 9.68906 17.4892 9.57865 17.5279 9.45328C17.8984 8.22415 18.7445 7.02644 19.4111 5.99387C20.5235 4.26733 21.7766 2.69112 23.1907 1.20972C23.2358 1.16419 23.2814 1.11018 23.2853 1.04515C23.2946 0.889639 23.0817 0.859822 22.9219 0.887107L22.922 0.884279Z"
@@ -102,9 +103,16 @@ export function PicktossIcon({ className }: { className?: HTMLElement['className
   )
 }
 
-export function LogoTextIcon() {
+export function LogoTextIcon({ className }: { className?: HTMLElement['className'] }) {
   return (
-    <svg width="80" height="21" viewBox="0 0 80 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width="80"
+      height="21"
+      viewBox="0 0 80 21"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
       <g clipPath="url(#clip0_3938_4097)">
         <path
           d="M11.0821 5.18578C10.4189 4.75363 9.61296 4.53369 8.67595 4.53369C8.03972 4.53369 7.47674 4.62244 6.98318 4.80379C6.48961 4.98514 6.05389 5.22051 5.67215 5.5099C5.2904 5.79929 4.94722 6.12341 4.6426 6.48611L4.75057 4.79221H2.75703L0 20.508H2.16706L3.31614 14.0411C3.48966 14.4038 3.7403 14.7279 4.0642 15.0173C4.3881 15.3067 4.78141 15.5421 5.24413 15.7234C5.70685 15.9048 6.21198 15.9935 6.76339 15.9935C7.63098 15.9935 8.43303 15.8315 9.16952 15.5035C9.90601 15.1794 10.5538 14.7241 11.1091 14.1376C11.6643 13.5511 12.1116 12.8643 12.4432 12.0771C12.7749 11.29 12.9561 10.4295 12.9869 9.50348C13.0448 8.562 12.906 7.71698 12.5743 6.96456C12.2427 6.21215 11.7415 5.61794 11.0782 5.18578H11.0821ZM10.1721 12.0115C9.80961 12.6713 9.33533 13.1845 8.75307 13.5511C8.17082 13.9176 7.50759 14.1028 6.76724 14.1028C6.17342 14.1028 5.65672 13.9639 5.21714 13.69C4.77756 13.416 4.44209 13.034 4.21844 12.5517C3.99479 12.0655 3.90225 11.4906 3.94852 10.827C3.97551 9.97422 4.17217 9.2218 4.53463 8.56971C4.89709 7.91762 5.37524 7.39672 5.97677 7.00701C6.57444 6.6173 7.24539 6.42051 7.98188 6.42051C8.58727 6.42051 9.10397 6.56714 9.52041 6.85267C9.94071 7.14206 10.2608 7.53563 10.4844 8.03724C10.7081 8.53499 10.8045 9.10991 10.7775 9.762C10.735 10.5993 10.5307 11.3517 10.1721 12.0077V12.0115Z"
@@ -149,9 +157,16 @@ export function LogoTextIcon() {
   )
 }
 
-export function LongChevronDownIcon() {
+export function LongChevronDownIcon({ className }: { className?: HTMLElement['className'] }) {
   return (
-    <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width="26"
+      height="26"
+      viewBox="0 0 26 26"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
       <path
         d="M1.57617 6.03955L13.1077 13.9675L24.6392 6.03955"
         stroke="#797D81"
@@ -163,9 +178,16 @@ export function LongChevronDownIcon() {
   )
 }
 
-export function MenuIcon() {
+export function MenuIcon({ className }: { className?: HTMLElement['className'] }) {
   return (
-    <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width="20"
+      height="18"
+      viewBox="0 0 20 18"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
       <path d="M1 1H19" stroke="#A2A6AB" strokeWidth="2" strokeLinecap="round" />
       <path d="M1 9H19" stroke="#A2A6AB" strokeWidth="2" strokeLinecap="round" />
       <path d="M1 17H19" stroke="#A2A6AB" strokeWidth="2" strokeLinecap="round" />
@@ -173,7 +195,90 @@ export function MenuIcon() {
   )
 }
 
-export function RingIcon() {
+export function DocumentIcon({ className }: { className?: HTMLElement['className'] }) {
+  return (
+    <svg
+      width="48"
+      height="48"
+      viewBox="0 0 48 48"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      <rect x="7.33789" y="3.55859" width="36.4797" height="40.0387" fill="#BCCFFF" />
+      <rect x="7.33789" y="40.0386" width="31.1412" height="7.11798" rx="3.55899" fill="#BCCFFF" />
+      <path
+        d="M0.219238 6.22842C0.219238 6.71981 0.617592 7.11816 1.10899 7.11816H18.0142C18.997 7.11816 19.7937 6.32146 19.7937 5.33867V4.8938C19.7937 2.19113 17.6027 0.000181675 14.9001 0.000181675H3.77823C1.81265 0.000181675 0.219238 1.5936 0.219238 3.55918V6.22842Z"
+        fill="#95B0F8"
+      />
+      <path
+        d="M11.0315 47.1567C13.0714 47.1567 14.7251 45.4185 14.7251 43.2742L14.7251 40.9285C14.7251 40.4371 15.1235 40.0388 15.6149 40.0388L46.2856 40.0388C46.777 40.0388 47.1754 40.4371 47.1754 40.9285L47.1754 43.2742C47.2873 44.5684 46.7724 47.1567 43.8176 47.1567L11.0315 47.1567Z"
+        fill="#95B0F8"
+      />
+      <path
+        d="M3.66875 1.60366e-07C5.69494 2.48934e-07 7.3375 1.73827 7.3375 3.88253L7.3375 7.11798L43.8155 7.11798L43.8155 3.88253C43.9267 2.58836 43.4153 1.89774e-06 40.4803 1.76945e-06L3.66875 1.60366e-07Z"
+        fill="#BCCFFF"
+      />
+      <path
+        d="M14.0112 8.00781H37.1447"
+        stroke="#D7E2FF"
+        strokeWidth="1.7795"
+        strokeLinecap="round"
+      />
+      <path
+        d="M14.4556 12.457H37.589"
+        stroke="#D7E2FF"
+        strokeWidth="1.7795"
+        strokeLinecap="round"
+      />
+      <path
+        d="M14.4556 16.9053H37.589"
+        stroke="#D7E2FF"
+        strokeWidth="1.7795"
+        strokeLinecap="round"
+      />
+      <path
+        d="M14.4556 21.3545H25.1325"
+        stroke="#D7E2FF"
+        strokeWidth="1.7795"
+        strokeLinecap="round"
+      />
+    </svg>
+  )
+}
+
+export function LightningIcon({ className }: { className?: HTMLElement['className'] }) {
+  return (
+    <svg
+      width="26"
+      height="57"
+      viewBox="0 0 26 57"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      <path
+        d="M15.0977 0L0 33.0217L12.7927 33.1136L9.58876 56.6447L25.6084 25.2546H12.7927L15.0977 0Z"
+        fill="url(#paint0_linear_3495_1108)"
+      />
+      <defs>
+        <linearGradient
+          id="paint0_linear_3495_1108"
+          x1="-3.22699"
+          y1="43.8681"
+          x2="27.8412"
+          y2="12.6818"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop offset="0.12" stopColor="#FFB95E" />
+          <stop offset="0.78" stopColor="#FF832A" />
+        </linearGradient>
+      </defs>
+    </svg>
+  )
+}
+
+export function RingIcon({ className }: { className?: HTMLElement['className'] }) {
   return (
     <svg
       width="159"
@@ -181,6 +286,7 @@ export function RingIcon() {
       viewBox="0 0 159 159"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
     >
       <circle
         cx="79.5"
@@ -208,9 +314,16 @@ export function RingIcon() {
   )
 }
 
-export function AIPickIcon() {
+export function AIPickIcon({ className }: { className?: HTMLElement['className'] }) {
   return (
-    <svg width="34" height="35" viewBox="0 0 34 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width="34"
+      height="35"
+      viewBox="0 0 34 35"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
       <path
         d="M9.51649 22.5088L6.91087 20.9769L0.642715 32.0326C0.227298 32.7653 0.473824 33.7022 1.19335 34.1252C1.91287 34.5482 2.83292 34.2972 3.24834 33.5645L9.51649 22.5088Z"
         fill="url(#paint0_linear_3947_4126)"
@@ -292,9 +405,16 @@ export function AIPickIcon() {
   )
 }
 
-export function AIPickTextIcon() {
+export function AIPickTextIcon({ className }: { className?: HTMLElement['className'] }) {
   return (
-    <svg width="44" height="14" viewBox="0 0 44 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width="44"
+      height="14"
+      viewBox="0 0 44 14"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
       <path
         d="M0.5432 10.4766L4.05867 0.863963H6.03611L9.55158 10.4766H7.68399L6.91498 8.25193H3.16607L2.38333 10.4766H0.5432ZM3.6467 6.8787H6.43435L5.03366 2.88261L3.6467 6.8787ZM10.5152 10.4766V0.863963H12.2729V10.4766H10.5152ZM15.7054 13.4977L17.4219 3.66535H19.0011L19.0148 4.64034C19.2895 4.30161 19.6191 4.02697 20.0036 3.8164C20.3972 3.60584 20.8641 3.50056 21.4043 3.50056C21.9627 3.50056 22.4479 3.62873 22.8599 3.88507C23.281 4.1414 23.606 4.49386 23.8349 4.94245C24.0637 5.38188 24.1782 5.88082 24.1782 6.43927C24.1782 7.02518 24.0775 7.57447 23.8761 8.08715C23.6838 8.59066 23.4092 9.03467 23.0521 9.41918C22.6951 9.80368 22.274 10.1058 21.7888 10.3255C21.3127 10.5361 20.7955 10.6413 20.237 10.6413C19.7426 10.6413 19.3124 10.5361 18.9462 10.3255C18.58 10.1058 18.3145 9.84488 18.1497 9.54277L17.4631 13.4977H15.7054ZM20.1546 9.10333C20.5757 9.10333 20.9511 9.00263 21.2807 8.80122C21.6194 8.59066 21.8849 8.30686 22.0771 7.94982C22.2694 7.59278 22.3655 7.18997 22.3655 6.74138C22.3655 6.25617 22.219 5.85336 21.9261 5.53294C21.6331 5.20337 21.2349 5.03858 20.7314 5.03858C20.3011 5.03858 19.9166 5.14386 19.5779 5.35442C19.2483 5.56498 18.9874 5.85336 18.7951 6.21955C18.6029 6.58575 18.5067 6.99772 18.5067 7.45546C18.5067 7.93151 18.6578 8.32517 18.9599 8.63644C19.262 8.9477 19.6603 9.10333 20.1546 9.10333ZM27.3164 2.64916C26.996 2.64916 26.7305 2.55303 26.52 2.36078C26.3186 2.15938 26.2178 1.91219 26.2178 1.61924C26.2178 1.32628 26.3186 1.08368 26.52 0.891428C26.7305 0.690021 26.996 0.589318 27.3164 0.589318C27.6369 0.589318 27.8978 0.690021 28.0992 0.891428C28.3097 1.08368 28.415 1.32628 28.415 1.61924C28.415 1.91219 28.3097 2.15938 28.0992 2.36078C27.8978 2.55303 27.6369 2.64916 27.3164 2.64916ZM24.8721 10.4766L26.0668 3.66535H27.8245L26.6298 10.4766H24.8721ZM31.5121 10.6413C30.9079 10.6413 30.3814 10.5223 29.9329 10.2843C29.4843 10.0371 29.1364 9.69382 28.8892 9.25439C28.6512 8.81496 28.5322 8.30228 28.5322 7.71637C28.5322 7.13046 28.6374 6.58117 28.848 6.0685C29.0586 5.55583 29.3561 5.10724 29.7406 4.72274C30.1251 4.33823 30.5737 4.0407 31.0864 3.83014C31.599 3.61042 32.1575 3.50056 32.7617 3.50056C33.6406 3.50056 34.3409 3.73401 34.8628 4.20091C35.3937 4.66781 35.6592 5.31322 35.6592 6.13716H33.8054C33.8054 5.77097 33.6818 5.49174 33.4346 5.29949C33.1874 5.09808 32.8761 4.99738 32.5008 4.99738C32.1071 4.99738 31.7455 5.11182 31.4159 5.34069C31.0864 5.5604 30.8255 5.86251 30.6332 6.24702C30.441 6.63152 30.3448 7.06638 30.3448 7.55159C30.3448 8.03679 30.4776 8.42587 30.7431 8.71883C31.0086 9.00263 31.3519 9.14453 31.773 9.14453C32.1483 9.14453 32.4916 9.0484 32.8029 8.85615C33.1233 8.65475 33.3522 8.37095 33.4895 8.00475H35.3296C35.1374 8.53573 34.8536 8.99805 34.4782 9.39171C34.1029 9.78537 33.6589 10.0921 33.1462 10.3118C32.6427 10.5315 32.098 10.6413 31.5121 10.6413ZM36.1489 10.4766L37.9066 0.589318H39.6643L38.6344 6.38434L41.5869 3.66535H43.7703L40.296 6.68645L43.0013 10.4766H40.914L38.5383 6.93363L37.9066 10.4766H36.1489Z"
         fill="url(#paint0_linear_3947_4127)"
@@ -316,7 +436,7 @@ export function AIPickTextIcon() {
   )
 }
 
-export function Quiz1Icon() {
+export function Quiz1Icon({ className }: { className?: HTMLElement['className'] }) {
   return (
     <svg
       width="355"
@@ -324,6 +444,7 @@ export function Quiz1Icon() {
       viewBox="0 0 355 519"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
     >
       <rect
         x="0.5"
@@ -497,7 +618,7 @@ export function Quiz1Icon() {
   )
 }
 
-export function Quiz2Icon() {
+export function Quiz2Icon({ className }: { className?: HTMLElement['className'] }) {
   return (
     <svg
       width="357"
@@ -505,6 +626,7 @@ export function Quiz2Icon() {
       viewBox="0 0 357 477"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
     >
       <rect
         x="0.5"
@@ -648,9 +770,16 @@ export function Quiz2Icon() {
   )
 }
 
-export function MultipleQuizIcon() {
+export function MultipleQuizIcon({ className }: { className?: HTMLElement['className'] }) {
   return (
-    <svg width="72" height="45" viewBox="0 0 72 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width="72"
+      height="45"
+      viewBox="0 0 72 45"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
       <rect x="11.895" width="44.606" height="9.78203" rx="2.2303" fill="#D7E2FF" />
       <rect x="11.895" y="11.5234" width="44.606" height="9.78203" rx="2.2303" fill="#D7E2FF" />
       <rect x="16.7275" y="23.0464" width="44.606" height="9.78203" rx="2.2303" fill="#95B0F8" />
@@ -670,9 +799,16 @@ export function MultipleQuizIcon() {
   )
 }
 
-export function OXQuizIcon() {
+export function OXQuizIcon({ className }: { className?: HTMLElement['className'] }) {
   return (
-    <svg width="69" height="31" viewBox="0 0 69 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width="69"
+      height="31"
+      viewBox="0 0 69 31"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
       <rect x="35.1001" y="4" width="33.0652" height="23.4" rx="4.06957" fill="#95B0F8" />
       <rect x="4.8374" y="5.72754" width="27.9879" height="19.8068" rx="3.44466" fill="#D7E2FF" />
       <circle cx="19.0467" cy="15.6312" r="5.16699" stroke="#95B0F8" strokeWidth="1.72233" />
@@ -698,9 +834,16 @@ export function OXQuizIcon() {
   )
 }
 
-export function BlankQuizIcon() {
+export function BlankQuizIcon({ className }: { className?: HTMLElement['className'] }) {
   return (
-    <svg width="83" height="32" viewBox="0 0 83 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width="83"
+      height="32"
+      viewBox="0 0 83 32"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
       <rect x="5.47998" y="8.22021" width="71.4575" height="15.6571" rx="2.30508" fill="#D7E2FF" />
       <path
         d="M12.1758 14.2951H15.8208V14.9089H15.2634V16.7627H15.9022V17.3827H12.1007V16.7627H12.7458V14.9089H12.1758V14.2951ZM13.5098 16.7627H14.4931V14.9089H13.5098V16.7627ZM17.4932 14.2889H21.0379V14.9089H18.2697V15.4851H20.9878V16.0988H18.2697V16.7189H21.088V17.3389H17.4932V14.2889ZM24.1758 14.22H24.9524V15.0592C24.9524 15.8796 25.4659 16.5748 26.5995 16.8128L26.23 17.4266C25.4283 17.2324 24.8709 16.8128 24.5641 16.2366C24.2572 16.8128 23.6998 17.2324 22.8981 17.4266L22.5286 16.8128C23.656 16.5748 24.1758 15.8796 24.1758 15.0592V14.22ZM28.1591 14.2388H31.6663V17.3827H30.8834V16.2053L28.1027 16.3932L28.0088 15.7231L30.8834 15.5978V14.8588H28.1591V14.2388ZM33.3762 14.245H36.946V14.8651H35.5306V15.0342C35.5306 15.8609 36.0254 16.5623 37.0963 16.8128L36.7394 17.4015C35.9628 17.1948 35.4304 16.7564 35.1423 16.1615C34.8605 16.7564 34.3219 17.1948 33.5453 17.4015L33.1883 16.8128C34.2655 16.5623 34.754 15.8609 34.754 15.0342V14.8651H33.3762V14.245Z"
@@ -716,9 +859,16 @@ export function BlankQuizIcon() {
   )
 }
 
-export function FireworkIcon() {
+export function FireworkIcon({ className }: { className?: HTMLElement['className'] }) {
   return (
-    <svg width="37" height="36" viewBox="0 0 37 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width="37"
+      height="36"
+      viewBox="0 0 37 36"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
       <path
         d="M10.4014 27.7675C8.85846 28.41 7.28065 26.9279 7.82551 25.3478L12.7097 11.1839C13.0905 10.0795 14.355 9.56098 15.4016 10.0801L21.1457 12.9293C21.4879 13.099 21.7723 13.3662 21.9631 13.6971L25.1657 19.252C25.7492 20.2641 25.3107 21.5585 24.2322 22.0076L10.4014 27.7675Z"
         fill="#95B0F8"
@@ -786,9 +936,16 @@ export function FireworkIcon() {
   )
 }
 
-export function TrophyIcon() {
+export function TrophyIcon({ className }: { className?: HTMLElement['className'] }) {
   return (
-    <svg width="70" height="73" viewBox="0 0 70 73" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width="70"
+      height="73"
+      viewBox="0 0 70 73"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
       <path
         d="M55.5019 8.66375C59.1599 8.08616 66.476 8.89478 66.476 16.7499C66.476 26.5689 60.1225 30.0345 54.3467 30.0345"
         stroke="url(#paint0_linear_3938_3889)"
@@ -872,7 +1029,7 @@ export function TrophyIcon() {
   )
 }
 
-export function OrangeGradientIcon() {
+export function OrangeGradientIcon({ className }: { className?: HTMLElement['className'] }) {
   return (
     <svg
       width="330"
@@ -880,6 +1037,7 @@ export function OrangeGradientIcon() {
       viewBox="0 0 330 330"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
     >
       <g filter="url(#filter0_f_3947_4346)">
         <circle cx="165" cy="165" r="153" fill="#FFECD0" />
@@ -905,7 +1063,7 @@ export function OrangeGradientIcon() {
   )
 }
 
-export function ContinuousQuizDatesIcon() {
+export function ContinuousQuizDatesIcon({ className }: { className?: HTMLElement['className'] }) {
   return (
     <svg
       width="291"
@@ -913,6 +1071,7 @@ export function ContinuousQuizDatesIcon() {
       viewBox="0 0 291 54"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
     >
       <path
         d="M6.48629 8.77588V2.89588H7.67909L9.56069 6.69268L11.4255 2.89588H12.6267V8.77588H11.6187V4.62628L9.95549 7.95268H9.16589L7.49429 4.63468V8.77588H6.48629ZM16.2475 8.87668C15.6819 8.87668 15.1807 8.75068 14.7439 8.49868C14.3127 8.24108 13.9739 7.88548 13.7275 7.43188C13.4811 6.97268 13.3579 6.44068 13.3579 5.83588C13.3579 5.23668 13.4811 4.71028 13.7275 4.25668C13.9739 3.79748 14.3127 3.43908 14.7439 3.18148C15.1807 2.92388 15.6819 2.79508 16.2475 2.79508C16.8243 2.79508 17.3311 2.92388 17.7679 3.18148C18.2047 3.43908 18.5435 3.79748 18.7843 4.25668C19.0251 4.71028 19.1455 5.23668 19.1455 5.83588C19.1455 6.44068 19.0251 6.97268 18.7843 7.43188C18.5435 7.88548 18.2047 8.24108 17.7679 8.49868C17.3311 8.75068 16.8243 8.87668 16.2475 8.87668ZM16.2559 7.96948C16.6311 7.96948 16.9587 7.88548 17.2387 7.71748C17.5187 7.54388 17.7343 7.29748 17.8855 6.97828C18.0367 6.65908 18.1123 6.27828 18.1123 5.83588C18.1123 5.39348 18.0367 5.01268 17.8855 4.69348C17.7343 4.37428 17.5187 4.13068 17.2387 3.96268C16.9587 3.78908 16.6311 3.70228 16.2559 3.70228C15.8807 3.70228 15.5531 3.78908 15.2731 3.96268C14.9931 4.13068 14.7747 4.37428 14.6179 4.69348C14.4667 5.01268 14.3911 5.39348 14.3911 5.83588C14.3911 6.27828 14.4667 6.65908 14.6179 6.97828C14.7747 7.29748 14.9931 7.54388 15.2731 7.71748C15.5531 7.88548 15.8807 7.96948 16.2559 7.96948ZM19.8784 8.77588V2.89588H20.8864L23.7172 7.14628V2.89588H24.7252V8.77588H23.7172L20.8864 4.53388V8.77588H19.8784Z"
@@ -1002,7 +1161,7 @@ export function ContinuousQuizDatesIcon() {
   )
 }
 
-export function TodayQuizScreenIcon() {
+export function TodayQuizScreenIcon({ className }: { className?: HTMLElement['className'] }) {
   return (
     <svg
       width="247"
@@ -1011,6 +1170,7 @@ export function TodayQuizScreenIcon() {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
+      className={className}
     >
       <g filter="url(#filter0_d_3947_4309)">
         <rect
@@ -1085,7 +1245,7 @@ export function TodayQuizScreenIcon() {
   )
 }
 
-export function ReviewInfoIcon() {
+export function ReviewInfoIcon({ className }: { className?: HTMLElement['className'] }) {
   return (
     <svg
       width="372"
@@ -1093,6 +1253,7 @@ export function ReviewInfoIcon() {
       viewBox="0 0 372 160"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
     >
       <g filter="url(#filter0_d_3947_4350)">
         <rect
@@ -1232,7 +1393,11 @@ export function ReviewInfoIcon() {
   )
 }
 
-export function PercentageOfCorrectAnswersGraphIcon() {
+export function PercentageOfCorrectAnswersGraphIcon({
+  className,
+}: {
+  className?: HTMLElement['className']
+}) {
   return (
     <svg
       width="371"
@@ -1240,6 +1405,7 @@ export function PercentageOfCorrectAnswersGraphIcon() {
       viewBox="0 0 371 280"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
     >
       <g filter="url(#filter0_d_3947_4388)">
         <rect x="17" y="12" width="335" height="240" rx="12" fill="white" />
@@ -1425,7 +1591,7 @@ export function PercentageOfCorrectAnswersGraphIcon() {
   )
 }
 
-export function FrequentlyWrongNoteIcon() {
+export function FrequentlyWrongNoteIcon({ className }: { className?: HTMLElement['className'] }) {
   return (
     <svg
       width="374"
@@ -1433,6 +1599,7 @@ export function FrequentlyWrongNoteIcon() {
       viewBox="0 0 374 391"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
     >
       <g filter="url(#filter0_d_3947_4640)">
         <rect
@@ -1632,9 +1799,16 @@ export function FrequentlyWrongNoteIcon() {
   )
 }
 
-export function ArrowRightIcon() {
+export function ArrowRightIcon({ className }: { className?: HTMLElement['className'] }) {
   return (
-    <svg width="22" height="17" viewBox="0 0 22 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width="22"
+      height="17"
+      viewBox="0 0 22 17"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
       <path d="M0 8.22998H20.25" stroke="white" strokeWidth="2" strokeLinejoin="round" />
       <path
         d="M12.8862 1.75L20.2499 8.5L12.8862 15.25"
@@ -1647,9 +1821,16 @@ export function ArrowRightIcon() {
   )
 }
 
-export function GoogleIcon() {
+export function GoogleIcon({ className }: { className?: HTMLElement['className'] }) {
   return (
-    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width="36"
+      height="36"
+      viewBox="0 0 36 36"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
       <circle cx="18" cy="18" r="17.25" fill="#F5F7F9" stroke="#EAECEF" strokeWidth="1.5" />
       <path
         d="M27.1927 16.1639H26.4375V16.125H18V19.875H23.2983C22.5253 22.058 20.4483 23.625 18 23.625C14.8936 23.625 12.375 21.1064 12.375 18C12.375 14.8936 14.8936 12.375 18 12.375C19.4339 12.375 20.7384 12.9159 21.7317 13.7995L24.3834 11.1478C22.7091 9.58734 20.4694 8.625 18 8.625C12.8227 8.625 8.625 12.8227 8.625 18C8.625 23.1773 12.8227 27.375 18 27.375C23.1773 27.375 27.375 23.1773 27.375 18C27.375 17.3714 27.3103 16.7578 27.1927 16.1639Z"
@@ -1671,9 +1852,16 @@ export function GoogleIcon() {
   )
 }
 
-export function KakaoIcon() {
+export function KakaoIcon({ className }: { className?: HTMLElement['className'] }) {
   return (
-    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width="36"
+      height="36"
+      viewBox="0 0 36 36"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
       <circle cx="18" cy="18" r="17.25" fill="#FBE44D" stroke="#F5D948" strokeWidth="1.5" />
       <path
         d="M18.0001 10.4682C12.7817 10.4682 8.55029 13.7189 8.55029 17.7311C8.55029 20.3083 10.3029 22.5711 12.9348 23.8627L12.0444 27.0966C12.0103 27.1958 12.0386 27.3009 12.1126 27.3725C12.1635 27.4224 12.2314 27.45 12.3052 27.45C12.3621 27.45 12.4187 27.4279 12.4698 27.3893L16.2984 24.8726C16.8545 24.9498 17.4218 24.9939 18.0001 24.9939C23.2185 24.9939 27.4503 21.7434 27.4503 17.7311C27.4503 13.7189 23.2185 10.4682 18.0001 10.4682Z"
@@ -1683,7 +1871,7 @@ export function KakaoIcon() {
   )
 }
 
-export function PhoneEdgeIcon() {
+export function PhoneEdgeIcon({ className }: { className?: HTMLElement['className'] }) {
   return (
     <svg
       width="260"
@@ -1692,6 +1880,7 @@ export function PhoneEdgeIcon() {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
+      className={className}
     >
       <rect width="259.2" height="464.4" fill="url(#pattern0_3947_4296)" />
       <defs>

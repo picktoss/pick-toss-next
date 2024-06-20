@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import { LongChevronDownIcon } from '../../svgs'
 
-export function BounceChevronDown() {
+export function BounceChevronDown({ className }: { className: HTMLElement['className'] }) {
   return (
     <motion.div
       animate={{ y: [0, 10, 0] }}
@@ -14,7 +14,7 @@ export function BounceChevronDown() {
         repeatType: 'loop',
       }}
     >
-      <LongChevronDownIcon />
+      <LongChevronDownIcon className={className} />
     </motion.div>
   )
 }
