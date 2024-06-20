@@ -1,7 +1,7 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import { LogoIcon, LogoTextIcon, MenuIcon, PicktossIcon } from '../svgs'
+import { LogoIcon, MenuIcon } from '../svgs'
 import { useState } from 'react'
 import { LoginDialog } from './login-dialog'
 import Link from 'next/link'
@@ -13,7 +13,7 @@ export function Header() {
     <div className="sticky top-0 z-50">
       <div className="xl:hidden">
         <header className="flex h-[60px] items-center justify-between border-b border-gray-02 bg-white/50 px-[16px] backdrop-blur-md">
-          <LogoIcon />
+          <LogoIcon svgKey="mobile-logo" />
 
           <div className="flex items-center gap-[19px]">
             <LoginDialog
@@ -53,10 +53,7 @@ export function Header() {
       <div className="hidden xl:block">
         <header className="flex h-[60px] items-center bg-white/50 backdrop-blur-md">
           <div className="mx-auto flex w-full max-w-[1032px] items-center justify-between">
-            <div className="flex items-center">
-              <PicktossIcon className="size-[25.5px]" />
-              <LogoTextIcon />
-            </div>
+            <LogoIcon svgKey="desktop-logo" />
 
             <div className="flex items-center">
               <div className="flex gap-[40px] text-body2-medium text-gray-08">
