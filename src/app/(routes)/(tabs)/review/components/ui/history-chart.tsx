@@ -9,16 +9,26 @@ import {
 } from 'recharts'
 
 interface Props {
+  periodType: 'week' | 'month'
   quizzes: { date: string; totalQuizCount: number; incorrectAnswerCount: number }[]
 }
 
-export function HistoryChart({ quizzes }: Props) {
+export function HistoryChart({ periodType, quizzes }: Props) {
   const processedData = quizzes.map((item) => ({
-    date: item.date,
+    date: item.date
+      .split('-')
+      .slice(1)
+      .map((value) => Number(value))
+      .join('/'),
     totalQuizCount: item.totalQuizCount,
     correctAnswerCount: item.totalQuizCount - item.incorrectAnswerCount,
     correctRate: ((item.totalQuizCount - item.incorrectAnswerCount) / item.totalQuizCount) * 100,
   }))
+
+  const xTicks =
+    periodType === 'month'
+      ? processedData.map((item) => item.date).filter((date, index) => index % 5 === 0)
+      : undefined
 
   return (
     <div className="flex flex-col gap-[16px] rounded-[12px] border p-[16px] pb-[11px]">
@@ -37,16 +47,18 @@ export function HistoryChart({ quizzes }: Props) {
         </div>
       </div>
 
-      <ResponsiveContainer width="100%" height={260}>
+      <ResponsiveContainer width="100%" height={250}>
         <ComposedChart data={processedData} margin={{ top: 20, right: 0, left: -30, bottom: 0 }}>
           <CartesianGrid vertical={false} strokeDasharray="3 3" />
           <XAxis
             dataKey="date"
+            ticks={xTicks}
             tick={{
               fontFamily: 'DM Sans',
               fontSize: 12,
               fontWeight: '600',
               fill: '#4B4F54',
+              transform: 'translate(0, 5)',
             }}
           />
           <YAxis
@@ -76,6 +88,8 @@ export function HistoryChart({ quizzes }: Props) {
             strokeWidth={2}
             name="정답 수"
             dot={CustomDot}
+            isAnimationActive={false}
+            connectNulls={false}
           />
         </ComposedChart>
       </ResponsiveContainer>
