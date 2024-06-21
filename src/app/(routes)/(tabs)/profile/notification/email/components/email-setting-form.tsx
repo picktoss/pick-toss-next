@@ -9,7 +9,7 @@ import { actionRevalidatePath } from '@/lib/revalidate'
 import { useMutation } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useRef, useState } from 'react'
 
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 const codeRegex = /^[a-zA-Z0-9]{6}$/
@@ -21,6 +21,7 @@ export default function EmailSettingForm() {
 
   const [emailInput, setEmailInput] = useState(session?.user.dto.email || '')
   const [codeInput, setCodeInput] = useState('')
+  const isFirstEmail = useRef(!!session?.user.dto.email)
 
   const {
     mutate: mutateVerifyEmail,
@@ -42,8 +43,11 @@ export default function EmailSettingForm() {
         verificationCode: codeInput,
       }),
     onSuccess: async () => {
+      const description = isFirstEmail.current
+        ? '알림 받을 이메일이 등록되었습니다'
+        : '알림 받을 이메일이 변경되었습니다'
       await Promise.all([update(), actionRevalidatePath(API_ENDPOINT.user.getUser().url)])
-      toast({ description: '알림 받을 이메일이 등록되었습니다' })
+      toast({ description: description })
       router.push('/profile/notification')
     },
   })
