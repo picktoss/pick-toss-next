@@ -6,3 +6,10 @@ export const msToElapsedTime = (ms: number) => {
 
   return `${hours}:${minutes}:${seconds}`
 }
+
+export const msToMin = (ms: number) => {
+  const millisecondsPerMinute = 60 * 1000
+  const minutes = ms / millisecondsPerMinute
+
+  return minutes
+}

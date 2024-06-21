@@ -35,6 +35,14 @@ export const API_ENDPOINT = {
       url: `/incorrect-quiz/${documentId}/${quizId}`,
       method: HttpMethod.DELETE,
     }),
+    getWeekQuizAnswerRate: (categoryId: number) => ({
+      url: `/categories/${categoryId}/quiz-answer-rate-week`,
+      method: HttpMethod.GET,
+    }),
+    getMonthQuizAnswerRate: (categoryId: number, year: number, month: number) => ({
+      url: `/categories/${categoryId}/quiz-answer-rate-month/${year}/${month}`,
+      method: HttpMethod.GET,
+    }),
   },
 
   // 문서 관련 API
