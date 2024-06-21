@@ -10,8 +10,10 @@ import Loading from '@/components/loading'
 import { QuizAnalysisSummary } from './ui/quiz-analysis-summary'
 import { QuizTypeChart } from './ui/quiz-type-chart'
 import { getMonthQuizAnswerRate } from '@/apis/fetchers/quiz/get-month-quiz-answer-rate'
-import { cn } from '@/lib/utils'
-import { currentMonth, formatDateKorean } from '@/utils/date'
+import { currentMonth } from '@/utils/date'
+import { Period } from './ui/period'
+import { PeriodTypeSelector } from './ui/period-type-selector'
+import { CategorySelect } from './ui/category-select'
 
 interface Period {
   type: 'week' | 'month'
@@ -70,54 +72,28 @@ export function QuizAnalysis() {
   return (
     <section className="relative flex min-h-[833px] flex-1 flex-col rounded-none bg-white p-[20px] pb-[70px] lg:min-h-[726px] lg:max-w-[520px] lg:rounded-[12px] lg:pb-[20px]">
       <h2 className="text-h4-bold text-gray-09">퀴즈 분석</h2>
-      <div className="absolute right-[20px] top-[16px] flex gap-[6px] text-text-bold *:rounded-[16px] *:px-[12px] *:py-[4px] lg:right-[30px] lg:top-[66px]">
-        <div
-          role="button"
-          className={cn(
-            period.type === 'week' ? 'bg-blue-04 text-white' : 'bg-gray-02 text-gray-07'
-          )}
-          onClick={() =>
-            setPeriod({
-              type: 'week',
-            })
-          }
-        >
-          주
-        </div>
-        <div
-          role="button"
-          className={cn(
-            period.type === 'month' ? 'bg-blue-04 text-white' : 'bg-gray-02 text-gray-07'
-          )}
-          onClick={() =>
-            setPeriod({
-              type: 'month',
-              value: currentMonth(),
-            })
-          }
-        >
-          월
-        </div>
-      </div>
 
       {isLoading ? (
         <Loading size="small" center />
       ) : (
         <div className="mt-[27px] lg:mt-[16px]">
-          <div className="mb-[24px] text-center text-h4-bold text-gray-08 lg:text-h3-bold">
-            {period.type === 'week'
-              ? `${formatDateKorean(rateData!.quizzes[0].date, {
-                  month: true,
-                  day: true,
-                })}~${formatDateKorean(rateData!.quizzes[rateData!.quizzes.length - 1].date, {
-                  month: true,
-                  day: true,
-                })}`
-              : `${period.value}월`}
-          </div>
+          <Period
+            periodType={period.type}
+            weekDates={rateData!.quizzes.map((value) => value.date)}
+            month={period.value || currentMonth()}
+          />
+          <PeriodTypeSelector
+            periodType={period.type}
+            selectWeek={() => setPeriod({ type: 'week' })}
+            selectMonth={() => setPeriod({ type: 'month', value: currentMonth() })}
+          />
 
-          <div className="flex flex-col gap-[12px]">
-            <div className="text-body1-bold text-gray-08">📚 전공 공부</div>
+          <div className="mt-[24px] flex flex-col gap-[12px]">
+            <CategorySelect
+              selectedCategoryId={selectedCategoryId || categories[0].id}
+              categories={categories}
+              onValueChange={(categoryId: number) => setSelectedCategoryId(categoryId)}
+            />
 
             <div className="flex flex-col gap-[16px]">
               <QuizAnalysisSummary
