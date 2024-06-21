@@ -70,7 +70,7 @@ export function QuizAnalysis() {
                   (weekQuizAnswerRate.mixUpQuizCount / weekQuizAnswerRate.totalQuizCount) * 100
                 )}
               />
-              <HistoryChart />
+              <HistoryChart quizzes={weekQuizAnswerRate.quizzes} />
             </div>
           </div>
         </div>
