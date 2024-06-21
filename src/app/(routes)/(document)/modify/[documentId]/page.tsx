@@ -12,6 +12,7 @@ import VisualEditor from '../components/visual-editor'
 import { updateDocumentContent } from '@/apis/fetchers/document/update-document-content'
 import { useState } from 'react'
 import { useToast } from '@/hooks/use-toast'
+import { ToastAction } from '@/components/ui/toast'
 
 export default function Modify() {
   const { data: session } = useSession()
@@ -67,7 +68,18 @@ export default function Modify() {
       },
       {
         onSuccess: () => {
-          toast({ description: '노트가 수정되었습니다' })
+          const handleActionClick = () => {
+            // TODO: AI Pick 다시 생성하기 로직 구현 필요
+          }
+
+          toast({
+            description: '노트가 수정되었습니다',
+            action: (
+              <ToastAction altText="AI Pick 다시 생성하기" onClick={handleActionClick}>
+                AI Pick 다시 생성하기
+              </ToastAction>
+            ),
+          })
           router.push(`/document/${Number(documentId)}`)
         },
       }
