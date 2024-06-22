@@ -10,7 +10,7 @@ import { useSession } from 'next-auth/react'
 import { UserDropdownMenu } from './user-dropdown-menu'
 import { NotificationDialogPage } from './notification-dialog-page'
 import { useState } from 'react'
-import { SearchInput } from './ui/search-input'
+import { SearchForm } from './search-form'
 
 type TitleType =
   | string
@@ -29,6 +29,8 @@ interface MobileOptions {
 
 interface SearchOptions {
   placeholder: string
+  recentTerms: string[]
+  onSubmit: ({ term }: { term: string }) => void
 }
 
 interface CommonLayoutProps extends React.PropsWithChildren {
@@ -97,12 +99,17 @@ export function CommonLayout({
     return null
   }
 
+  const handleSubmit = (data: { term: string }) => {
+    searchOptions?.onSubmit(data)
+    setIsSearching(false)
+  }
+
   return (
     <>
-      {isSearching ? (
+      {isSearching && searchOptions ? (
         <div className="px-[20px] pt-[13px]">
           <div className="flex h-[40px] gap-[10px]">
-            <SearchInput placeholder={searchOptions?.placeholder} />
+            <SearchForm placeholder={searchOptions?.placeholder} onSubmit={handleSubmit} />
             <Button
               variant="ghost"
               className="h-full p-0 !text-body2-medium text-gray-08"

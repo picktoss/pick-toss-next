@@ -10,11 +10,14 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { toggleBookmark } from '@/apis/fetchers/key-point/toggle-bookmark'
 import Loading from '@/components/loading'
 import { NoPicks } from './components/no-picks'
+import { usePathname, useRouter } from 'next/navigation'
 // import { CategorySelect } from './components/category-select'
 
 export default function Picks() {
   const { data: session } = useSession()
   const queryClient = useQueryClient()
+  const router = useRouter()
+  const pathname = usePathname()
 
   const { data, isLoading } = useQuery({
     queryKey: ['bookmarks'],
@@ -59,6 +62,10 @@ export default function Picks() {
       }}
       searchOptions={{
         placeholder: '노트명, pick 내용을 입력하세요',
+        recentTerms: ['식물기반 단백질', '제품', '최근 이슈'],
+        onSubmit: ({ term }) => {
+          router.push(`${pathname}/?term=${term}`)
+        },
       }}
     >
       {isLoading ? (
