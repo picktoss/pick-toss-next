@@ -5,19 +5,20 @@ import { Form, FormControl, FormField, FormItem } from './ui/form'
 import { Input } from './ui/input'
 
 interface Props {
-  placeholder: string
   onSubmit: ({ term }: { term: string }) => void
+  placeholder?: string
+  defaultValue?: string
 }
 
 const formSchema = z.object({
   term: z.string(),
 })
 
-export function SearchForm({ placeholder, onSubmit }: Props) {
+export function SearchForm({ placeholder, defaultValue, onSubmit }: Props) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      term: '',
+      term: defaultValue,
     },
   })
 

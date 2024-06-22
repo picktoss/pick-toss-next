@@ -111,6 +111,11 @@ export const API_ENDPOINT = {
       url: `/key-point/${keypointId}/bookmark`,
       method: HttpMethod.PATCH,
     }),
+
+    searchKeyPoints: () => ({
+      url: `/key-point/search`,
+      method: HttpMethod.POST,
+    }),
   },
 
   // 카테고리 관련 API
