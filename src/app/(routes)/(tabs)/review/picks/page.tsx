@@ -57,6 +57,9 @@ export default function Picks() {
         hasBackButton: true,
         hasSearch: true,
       }}
+      searchOptions={{
+        placeholder: '노트명, pick 내용을 입력하세요',
+      }}
     >
       {isLoading ? (
         <div className="relative h-[80vh] w-full">

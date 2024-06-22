@@ -9,6 +9,8 @@ import { useMediaQuery } from '@/hooks/use-media-query'
 import { useSession } from 'next-auth/react'
 import { UserDropdownMenu } from './user-dropdown-menu'
 import { NotificationDialogPage } from './notification-dialog-page'
+import { useState } from 'react'
+import { SearchInput } from './ui/search-input'
 
 type TitleType =
   | string
@@ -25,6 +27,10 @@ interface MobileOptions {
   mobileTitle?: TitleType
 }
 
+interface SearchOptions {
+  placeholder: string
+}
+
 interface CommonLayoutProps extends React.PropsWithChildren {
   title?:
     | string
@@ -34,11 +40,19 @@ interface CommonLayoutProps extends React.PropsWithChildren {
       }
   hideHeader?: boolean
   mobileOptions?: MobileOptions
+  searchOptions?: SearchOptions
 }
 
-export function CommonLayout({ title, hideHeader, mobileOptions, children }: CommonLayoutProps) {
+export function CommonLayout({
+  title,
+  hideHeader,
+  mobileOptions,
+  searchOptions,
+  children,
+}: CommonLayoutProps) {
   const isDesktop = useMediaQuery('(min-width: 1024px)')
   const session = useSession()
+  const [isSearching, setIsSearching] = useState(false)
 
   const user = session.data?.user.dto
 
@@ -84,34 +98,57 @@ export function CommonLayout({ title, hideHeader, mobileOptions, children }: Com
   }
 
   return (
-    <div className="flex flex-col">
-      <div className="relative flex h-[48px] items-center px-[20px]">
-        {mobileOptions?.hasBackButton && (
-          <div className="flex items-center">
-            <BackButton />
+    <>
+      {isSearching ? (
+        <div className="px-[20px] pt-[13px]">
+          <div className="flex h-[40px] gap-[10px]">
+            <SearchInput placeholder={searchOptions?.placeholder} />
+            <Button
+              variant="ghost"
+              className="h-full p-0 !text-body2-medium text-gray-08"
+              onClick={() => setIsSearching(false)}
+            >
+              취소
+            </Button>
           </div>
-        )}
-
-        {titleContent()}
-
-        {hasRightContent && (
-          <div className="ml-auto flex items-center gap-[16px]">
-            {mobileOptions.hasStars && (
-              <div className="flex items-center gap-[8px] rounded-[16px] bg-gray-02 px-[10px] py-[3.5px]">
-                <Image src={icons.star} alt="" width={16} height={16} />
-                <div className="mt-[3px] text-body2-bold leading-none text-gray-08">
-                  {user.point}
-                </div>
+        </div>
+      ) : (
+        <div className="flex flex-col">
+          <div className="relative flex h-[48px] items-center px-[20px]">
+            {mobileOptions?.hasBackButton && (
+              <div className="flex items-center">
+                <BackButton />
               </div>
             )}
-            {mobileOptions.hasSearch && <SearchIcon />}
-            {mobileOptions.hasNotifications && <NotificationDialogPage trigger={<BellIcon />} />}
-          </div>
-        )}
-      </div>
 
-      {children}
-    </div>
+            {titleContent()}
+
+            {hasRightContent && (
+              <div className="ml-auto flex items-center gap-[16px]">
+                {mobileOptions.hasStars && (
+                  <div className="flex items-center gap-[8px] rounded-[16px] bg-gray-02 px-[10px] py-[3.5px]">
+                    <Image src={icons.star} alt="" width={16} height={16} />
+                    <div className="mt-[3px] text-body2-bold leading-none text-gray-08">
+                      {user.point}
+                    </div>
+                  </div>
+                )}
+                {mobileOptions.hasSearch && (
+                  <Button variant="ghost" className="p-0" onClick={() => setIsSearching(true)}>
+                    <SearchIcon />
+                  </Button>
+                )}
+                {mobileOptions.hasNotifications && (
+                  <NotificationDialogPage trigger={<BellIcon />} />
+                )}
+              </div>
+            )}
+          </div>
+
+          {children}
+        </div>
+      )}
+    </>
   )
 }
 
