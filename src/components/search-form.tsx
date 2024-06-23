@@ -3,18 +3,20 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { Form, FormControl, FormField, FormItem } from './ui/form'
 import { Input } from './ui/input'
+import { cn } from '@/lib/utils'
 
 interface Props {
   onSubmit: ({ term }: { term: string }) => void
   placeholder?: string
   defaultValue?: string
+  className?: HTMLDivElement['className']
 }
 
 const formSchema = z.object({
   term: z.string(),
 })
 
-export function SearchForm({ placeholder, defaultValue, onSubmit }: Props) {
+export function SearchForm({ placeholder, defaultValue, onSubmit, className }: Props) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -23,31 +25,33 @@ export function SearchForm({ placeholder, defaultValue, onSubmit }: Props) {
   })
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
-        <FormField
-          control={form.control}
-          name="term"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <div className="relative h-[40px] w-full">
-                  <SearchIcon className="absolute bottom-1/2 left-[13px] translate-y-1/2" />
-                  <Input
-                    className="rounded-[24px] border-none bg-gray-02 pl-[41px] pr-[43px]"
-                    placeholder={placeholder}
-                    {...field}
-                  />
-                  <div role="button" onClick={() => form.setValue('term', '')}>
-                    <XIcon className="absolute bottom-1/2 right-[7px] translate-y-1/2" />
+    <div className={cn('w-full', className)}>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
+          <FormField
+            control={form.control}
+            name="term"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <div className="relative h-[40px] w-full">
+                    <SearchIcon className="absolute bottom-1/2 left-[13px] translate-y-1/2" />
+                    <Input
+                      className="rounded-[24px] border-none bg-gray-02 pl-[41px] pr-[43px]"
+                      placeholder={placeholder}
+                      {...field}
+                    />
+                    <div role="button" onClick={() => form.setValue('term', '')}>
+                      <XIcon className="absolute bottom-1/2 right-[7px] translate-y-1/2" />
+                    </div>
                   </div>
-                </div>
-              </FormControl>
-            </FormItem>
-          )}
-        />
-      </form>
-    </Form>
+                </FormControl>
+              </FormItem>
+            )}
+          />
+        </form>
+      </Form>
+    </div>
   )
 }
 

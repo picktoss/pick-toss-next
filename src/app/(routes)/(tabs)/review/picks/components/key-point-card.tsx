@@ -6,9 +6,10 @@ import { HTMLAttributes } from 'react'
 interface Props {
   keyPoint: KeyPointDTO
   handleDeleteBookmark: (id: number) => void
+  highlightTo?: string
 }
 
-export function KeyPointCard({ keyPoint, handleDeleteBookmark }: Props) {
+export function KeyPointCard({ keyPoint, highlightTo, handleDeleteBookmark }: Props) {
   return (
     <div className="overflow-hidden rounded-[12px] bg-white pb-[13px] lg:pb-[32px]">
       <div className="flex h-[48px] items-center justify-between border-b border-gray-02 px-[16px] lg:h-[56px] lg:pl-[32px]">
@@ -18,7 +19,7 @@ export function KeyPointCard({ keyPoint, handleDeleteBookmark }: Props) {
             href={`/document/${keyPoint.document.id}`}
             className="text-blue-05 underline underline-offset-2"
           >
-            {keyPoint.document.name}
+            {highlight(keyPoint.document.name, highlightTo || '')}
           </Link>
         </div>
         <DeleteDropdown handleDeleteBookmark={() => handleDeleteBookmark(keyPoint.id)} />
@@ -27,11 +28,29 @@ export function KeyPointCard({ keyPoint, handleDeleteBookmark }: Props) {
       <div className="flex flex-col gap-[8px] pt-[16px] lg:gap-[16px]">
         <div className="flex gap-[3px] px-[16px]">
           <PinIcon className="shrink-0 lg:size-[24px]" />
-          <h4 className="text-body1-bold text-gray-09 lg:text-h4-bold">{keyPoint.question}</h4>
+          <h4 className="text-body1-bold text-gray-09 lg:text-h4-bold">
+            {highlight(keyPoint.question, highlightTo || '')}
+          </h4>
         </div>
-        <p className="px-[20px] text-text-regular text-gray-08 lg:pl-[32px]">{keyPoint.answer}</p>
+        <p className="px-[20px] text-text-regular text-gray-08 lg:pl-[32px]">
+          {highlight(keyPoint.answer, highlightTo || '')}
+        </p>
       </div>
     </div>
+  )
+}
+
+const highlight = (text: string, term: string) => {
+  if (!term) return text
+  const parts = text.split(new RegExp(`(${term})`, 'gi'))
+  return parts.map((part, index) =>
+    part.toLowerCase() === term.toLowerCase() ? (
+      <span key={index} className="text-orange-06">
+        {part}
+      </span>
+    ) : (
+      part
+    )
   )
 }
 

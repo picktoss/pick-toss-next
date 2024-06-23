@@ -49,13 +49,17 @@ export function SearchResult({ term, keyPoints, onReSearch }: Props) {
         hasBackButton: true,
       }}
     >
-      <div className="pb-[60px]">
-        <div className="px-[20px] py-[4px] pb-[12px]">
-          <SearchForm defaultValue={term} onSubmit={onReSearch} />
+      <div className="relative min-h-[80vh] pb-[60px]">
+        <div className="mt-[28px] px-[20px]">
+          <SearchForm
+            defaultValue={term}
+            onSubmit={onReSearch}
+            placeholder="노트명, pick 내용을 입력하세요"
+          />
         </div>
 
         {keyPoints.length ? (
-          <div className="mt-[20px] px-[20px]">
+          <div className="mt-[20px] px-[20px] lg:mt-[48px]">
             <div className="text-body2-medium text-gray-08">
               검색결과 <span className="text-orange-06">{keyPoints.length}개</span>
             </div>
@@ -66,6 +70,7 @@ export function SearchResult({ term, keyPoints, onReSearch }: Props) {
                   key={keyPoint.id}
                   keyPoint={keyPoint}
                   handleDeleteBookmark={handleDeleteBookmark}
+                  highlightTo={term}
                 />
               ))}
             </div>

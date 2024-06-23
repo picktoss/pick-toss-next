@@ -62,6 +62,11 @@ export function CommonLayout({
     return null
   }
 
+  const handleSubmit = (data: { term: string }) => {
+    searchOptions?.onSubmit(data)
+    setIsSearching(false)
+  }
+
   if (isDesktop) {
     if (hideHeader) return children
 
@@ -80,6 +85,14 @@ export function CommonLayout({
           </div>
 
           {title != null && <Title title={title} />}
+
+          {searchOptions && (
+            <SearchForm
+              placeholder={searchOptions?.placeholder}
+              onSubmit={handleSubmit}
+              className="mt-[28px]"
+            />
+          )}
         </div>
 
         {children}
@@ -97,11 +110,6 @@ export function CommonLayout({
     if (title) return <Title title={title} center={mobileOptions?.hasBackButton} />
 
     return null
-  }
-
-  const handleSubmit = (data: { term: string }) => {
-    searchOptions?.onSubmit(data)
-    setIsSearching(false)
   }
 
   return (

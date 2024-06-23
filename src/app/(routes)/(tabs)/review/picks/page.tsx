@@ -105,7 +105,7 @@ export default function Picks() {
           ) : (
             <>
               {data?.keyPoints.length ? (
-                <div className="mt-[18px] px-[20px] pb-[70px]">
+                <div className="mt-[18px] px-[20px] pb-[70px] lg:mt-[48px]">
                   <div className="flex items-center justify-between">
                     {/** TODO: 폴더 별 북마크 */}
                     {/* <CategorySelect categories={categories} /> */}
