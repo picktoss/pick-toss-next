@@ -13,12 +13,12 @@ import { QuizAnalysis } from './components/quiz-analysis'
 export default function Review() {
   return (
     <CommonLayout
-      title={{
-        label: '복습 체크',
-        icon: (
+      title={
+        <div className="flex gap-[8px]">
+          <span>복습 체크</span>
           <Image src={icons.ranking} width={24} height={24} alt="" className="lg:size-[32px]" />
-        ),
-      }}
+        </div>
+      }
       mobileOptions={{
         hasNotifications: true,
       }}

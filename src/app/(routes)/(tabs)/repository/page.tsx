@@ -48,17 +48,21 @@ export default function Repository() {
         </div>
       ) : (
         <CommonLayout
-          title={{
-            label: `${session?.user.dto.name}님의 노트 창고`,
-            icon: <Image src="/icons/book.svg" alt="" width={32} height={32} />,
-          }}
+          title={
+            <div className="flex gap-[8px]">
+              <span>{session?.user.dto.name}님의 노트 창고</span>
+              <Image src="/icons/book.svg" alt="" width={32} height={32} />
+            </div>
+          }
           mobileOptions={{
             hasSearch: true,
             hasNotifications: true,
-            mobileTitle: {
-              label: '노트 창고',
-              icon: <Image src="/icons/book.svg" alt="" width={24} height={24} />,
-            },
+            mobileTitle: (
+              <div className="flex gap-[8px]">
+                <span>노트 창고</span>
+                <Image src="/icons/book.svg" alt="" width={24} height={24} />
+              </div>
+            ),
           }}
           searchOptions={{
             placeholder: '노트명, 노트 내용을 입력하세요',

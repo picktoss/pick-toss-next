@@ -85,7 +85,7 @@ export default function Picks() {
         </div>
       ) : (
         <CommonLayout
-          title="저장한 pick"
+          title={<span className="lg:text-h3-bold">저장한 pick</span>}
           mobileOptions={{
             hasBackButton: true,
             hasSearch: true,

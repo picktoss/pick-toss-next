@@ -15,14 +15,14 @@ interface Props {
 export default function Main({ searchParams }: Props) {
   return (
     <CommonLayout
-      title={{
-        label: '파워업 퀴즈',
-        icon: (
+      title={
+        <div className="flex gap-[8px]">
+          파워업 퀴즈
           <div className="relative h-[21.67px] w-[25.05px] lg:h-[30px] lg:w-[34.69px]">
             <Image src={icons.powerUpQuiz} fill alt="" />
           </div>
-        ),
-      }}
+        </div>
+      }
       mobileOptions={{
         hasStars: true,
         hasNotifications: true,

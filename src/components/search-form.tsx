@@ -5,8 +5,10 @@ import { Form, FormControl, FormField, FormItem } from './ui/form'
 import { Input } from './ui/input'
 import { cn } from '@/lib/utils'
 
+export type SearchFormSubmitType = (data: { term: string }) => void
+
 interface Props {
-  onSubmit: ({ term }: { term: string }) => void
+  onSubmit: SearchFormSubmitType
   placeholder?: string
   defaultValue?: string
   className?: HTMLDivElement['className']
