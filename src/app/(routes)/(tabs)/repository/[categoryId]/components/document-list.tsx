@@ -60,24 +60,10 @@ export default function DocumentList({ categoryId, className }: Props) {
   return (
     <div className={className}>
       {documents.length === 0 ? (
-        <div className="flex h-[70vh] flex-col items-center justify-center">
-          <Image className="mb-[20px]" src={icons.noteEmpty} alt="" />
-          <h3 className="mb-[8px] text-h3-bold text-gray-08">아직 노트가 없어요</h3>
-          <p className="mb-[30px] text-body2-medium text-gray-07">
-            내가 공부하는 노트를 추가해보세요
-          </p>
-          <AddNoteButton />
-        </div>
+        <NoContent />
       ) : (
         <>
-          <div className="mb-[40px] hidden items-center gap-4 rounded-full bg-gray-02 px-8 py-3 lg:flex">
-            <Image src={icons.search} alt="search" width={16} height={16} />
-            <input
-              className="w-full bg-transparent focus:outline-none"
-              placeholder="노트명, 노트 내용 검색"
-            />
-          </div>
-          <div className="mb-6 flex items-center justify-between">
+          <div className="flex items-center justify-between">
             <div className="text-body1-medium text-gray-08">
               노트 <span className="font-bold text-orange-06">{documents.length}</span>개
             </div>
@@ -101,7 +87,7 @@ export default function DocumentList({ categoryId, className }: Props) {
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-          <div className="mb-[30px] flex flex-col gap-2">
+          <div className="mt-[20px] flex flex-col gap-2 lg:mt-[16px]">
             {documents.map((document) => (
               <DocumentItem key={document.id} sortOption={sortOption} {...document} />
             ))}
@@ -109,6 +95,17 @@ export default function DocumentList({ categoryId, className }: Props) {
           </div>
         </>
       )}
+    </div>
+  )
+}
+
+function NoContent() {
+  return (
+    <div className="flex h-[70vh] flex-col items-center justify-center">
+      <Image className="mb-[20px]" src={icons.noteEmpty} alt="" />
+      <h3 className="mb-[8px] text-h3-bold text-gray-08">아직 노트가 없어요</h3>
+      <p className="mb-[30px] text-body2-medium text-gray-07">내가 공부하는 노트를 추가해보세요</p>
+      <AddNoteButton />
     </div>
   )
 }

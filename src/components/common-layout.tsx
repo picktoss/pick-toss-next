@@ -63,7 +63,11 @@ export function CommonLayout({
   }
 
   const handleSubmit = (data: { term: string }) => {
-    searchOptions?.onSubmit(data)
+    const trimTerm = data.term.trim()
+
+    if (trimTerm === '') return
+
+    searchOptions?.onSubmit({ term: trimTerm })
     setIsSearching(false)
   }
 
@@ -86,7 +90,7 @@ export function CommonLayout({
 
           {title != null && <Title title={title} />}
 
-          {searchOptions && (
+          {searchOptions != null && (
             <SearchForm
               placeholder={searchOptions?.placeholder}
               onSubmit={handleSubmit}
@@ -114,7 +118,7 @@ export function CommonLayout({
 
   return (
     <>
-      {isSearching && searchOptions ? (
+      {isSearching && searchOptions != null ? (
         <div className="px-[20px] pt-[13px]">
           <div className="flex h-[40px] gap-[10px]">
             <SearchForm placeholder={searchOptions?.placeholder} onSubmit={handleSubmit} />

@@ -101,23 +101,9 @@ export default function CategoryList({ className }: Props) {
   return (
     <div className={className}>
       {categories.length === 0 ? (
-        <div className="flex h-[70vh] flex-col items-center justify-center">
-          <Image className="mb-[20px]" src={icons.folderEmpty} alt="" />
-          <h3 className="mb-[8px] text-h3-bold text-gray-08">아직 폴더가 없어요</h3>
-          <p className="mb-[30px] text-body2-medium text-gray-07">
-            폴더를 만들고 노트를 추가해보세요
-          </p>
-          <AddCategoryButton />
-        </div>
+        <NoCategory />
       ) : (
         <>
-          <div className="mb-[24px] hidden items-center gap-4 rounded-full bg-gray-02 px-8 py-3 lg:flex">
-            <Image src={icons.search} alt="search" width={16} height={16} />
-            <input
-              className="w-full bg-transparent focus:outline-none"
-              placeholder="노트명, 노트 내용 검색"
-            />
-          </div>
           <div className="mb-[16px] flex items-center justify-between">
             <p className="text-body2-medium text-gray-08 lg:text-body1-medium">
               폴더 <span className="font-bold text-orange-06">{categories.length}</span>개
@@ -151,6 +137,17 @@ export default function CategoryList({ className }: Props) {
           </DndContext>
         </>
       )}
+    </div>
+  )
+}
+
+function NoCategory() {
+  return (
+    <div className="flex h-[70vh] flex-col items-center justify-center">
+      <Image className="mb-[20px]" src={icons.folderEmpty} alt="" />
+      <h3 className="mb-[8px] text-h3-bold text-gray-08">아직 폴더가 없어요</h3>
+      <p className="mb-[30px] text-body2-medium text-gray-07">폴더를 만들고 노트를 추가해보세요</p>
+      <AddCategoryButton />
     </div>
   )
 }

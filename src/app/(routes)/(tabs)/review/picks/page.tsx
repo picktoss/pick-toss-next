@@ -56,7 +56,7 @@ export default function Picks() {
   }
 
   const { data: searchData } = useQuery({
-    queryKey: ['search', term],
+    queryKey: ['search-picks', term],
     queryFn: () =>
       searchKeyPoints({
         term: term!,

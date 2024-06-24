@@ -94,6 +94,11 @@ export const API_ENDPOINT = {
       url: `/documents/top-five`,
       method: HttpMethod.GET,
     }),
+
+    searchDocument: () => ({
+      url: `/documents/search`,
+      method: HttpMethod.POST,
+    }),
   },
 
   keypoint: {
