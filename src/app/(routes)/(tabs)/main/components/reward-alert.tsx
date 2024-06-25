@@ -27,11 +27,7 @@ export function RewordDialog({ reward }: Props) {
   const userPoints = session.data?.user.dto.point
 
   useEffect(() => {
-    if (Number(reward) > 0) {
-      setIsOpen(true)
-    } else {
-      setIsOpen(false)
-    }
+    setIsOpen(Number(reward) > 0)
   }, [reward])
 
   return (

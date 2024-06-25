@@ -14,7 +14,7 @@ export async function middleware(request: NextRequest) {
   const session = await auth()
   const exists = publicOnlyUrls[request.nextUrl.pathname]
   // 로그인 되어 있지 않은 상태
-  if (!session?.user.id) {
+  if (!session?.user?.id) {
     if (!exists) {
       return NextResponse.redirect(new URL('/', request.url))
     }
