@@ -27,15 +27,15 @@ export function RewordDialog({ reward }: Props) {
   const userPoints = session.data?.user.dto.point
 
   useEffect(() => {
-    if (reward) {
+    if (Number(reward) > 10) {
       setIsOpen(true)
+    } else {
+      setIsOpen(false)
     }
-  }, [reward, setIsOpen])
-
-  if (!reward) return null
+  }, [reward])
 
   return (
-    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+    <AlertDialog defaultOpen={false} open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogContent className="w-[320px] !rounded-[12px] px-[20px] pb-[18px] pt-[32px]">
         <AlertDialogHeader className="*:text-center">
           <AlertDialogTitle className="!text-h4-bold text-gray-09">
