@@ -38,7 +38,7 @@ export default function CategoryList({ className }: Props) {
     queryKey: ['categories'],
     queryFn: () =>
       getCategories({ accessToken: session?.user.accessToken || '' }).then((res) => res.categories),
-    enabled: !!session,
+    enabled: !!session?.user.accessToken,
   })
   const { mutate: mutateReorder } = useMutation({
     mutationFn: reorderCategory,

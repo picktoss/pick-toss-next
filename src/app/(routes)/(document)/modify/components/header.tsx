@@ -30,6 +30,7 @@ export function Header({ categoryId, handleSubmit }: Props) {
         accessToken: session?.user.accessToken || '',
         categoryId,
       }),
+    enabled: !!session?.user.accessToken,
   })
 
   return (

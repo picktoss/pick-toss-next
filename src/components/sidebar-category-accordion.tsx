@@ -32,6 +32,7 @@ export const SidebarCategoryAccordion = () => {
       const res = await getCategories({ accessToken: session?.user.accessToken || '' })
       return res.categories
     },
+    enabled: !!session?.user.accessToken,
   })
 
   const currentCategoryId = useMemo(() => {

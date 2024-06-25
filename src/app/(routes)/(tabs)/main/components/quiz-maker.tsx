@@ -17,6 +17,7 @@ export default function QuizMaker() {
       getCategories({
         accessToken: session?.user.accessToken || '',
       }).then((res) => res.categories),
+    enabled: !!session?.user.accessToken,
   })
 
   return (

@@ -26,6 +26,7 @@ export default function CategoryAccordionList(props: CategoryAccordionProps) {
       const res = await getCategories({ accessToken: session?.user.accessToken || '' })
       return res.categories
     },
+    enabled: !!session?.user.accessToken,
   })
 
   if (!categories) return null

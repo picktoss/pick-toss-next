@@ -23,6 +23,7 @@ export function CategoryProtector({ children }: Props) {
       getCategories({
         accessToken: session?.user.accessToken || '',
       }).then((res) => res.categories),
+    enabled: !!session?.user.accessToken,
   })
 
   const [isDialogOpen, setIsDialogOpen] = useState(false)

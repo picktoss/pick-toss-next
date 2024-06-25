@@ -13,19 +13,29 @@ import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import icons from '@/constants/icons'
+import { useEffect, useState } from 'react'
 
 interface Props {
-  reward: string
+  reward?: string
 }
 
 export function RewordDialog({ reward }: Props) {
   const router = useRouter()
   const session = useSession()
+  const [isOpen, setIsOpen] = useState(false)
 
   const userPoints = session.data?.user.dto.point
 
+  useEffect(() => {
+    if (reward) {
+      setIsOpen(true)
+    }
+  }, [reward, setIsOpen])
+
+  if (!reward) return null
+
   return (
-    <AlertDialog defaultOpen={true}>
+    <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogContent className="w-[320px] !rounded-[12px] px-[20px] pb-[18px] pt-[32px]">
         <AlertDialogHeader className="*:text-center">
           <AlertDialogTitle className="!text-h4-bold text-gray-09">
