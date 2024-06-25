@@ -105,6 +105,11 @@ export default function MakeQuizDrawerDialog({ trigger, categories, quizType = '
     )
   }
 
+  useEffect(() => {
+    const vh = window.innerHeight * 0.01
+    document.documentElement.style.setProperty('--vh', `${vh}px`)
+  }, [])
+
   if (isDesktop) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
