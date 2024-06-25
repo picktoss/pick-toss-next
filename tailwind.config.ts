@@ -31,7 +31,7 @@ const config = {
           {
             lineHeight: 'normal',
             fontWeight: 'bold',
-            letterSpacing: '0.02em',
+            letterSpacing: '-0.02em',
           },
         ],
         'h2-bold': [
@@ -39,7 +39,7 @@ const config = {
           {
             lineHeight: 'normal',
             fontWeight: 'bold',
-            letterSpacing: '0.02em',
+            letterSpacing: '-0.02em',
           },
         ],
         'h2-bold-eng': [
@@ -55,7 +55,7 @@ const config = {
           {
             lineHeight: 'normal',
             fontWeight: '500',
-            letterSpacing: '0.02em',
+            letterSpacing: '-0.02em',
           },
         ],
         'h3-bold': [
@@ -79,7 +79,7 @@ const config = {
           {
             lineHeight: 'normal',
             fontWeight: '500',
-            letterSpacing: '0.02em',
+            letterSpacing: '-0.02em',
           },
         ],
         'h4-bold': [
@@ -87,7 +87,7 @@ const config = {
           {
             lineHeight: 'normal',
             fontWeight: 'bold',
-            letterSpacing: '0.02em',
+            letterSpacing: '-0.02em',
           },
         ],
         'h4-medium': [
@@ -103,7 +103,7 @@ const config = {
           {
             lineHeight: 'normal',
             fontWeight: 'bold',
-            letterSpacing: '0.02em',
+            letterSpacing: '-0.02em',
           },
         ],
         'body1-bold': [
@@ -111,7 +111,7 @@ const config = {
           {
             lineHeight: '120%',
             fontWeight: 'bold',
-            letterSpacing: '0.02em',
+            letterSpacing: '-0.02em',
           },
         ],
         'body1-bold-eng': [
@@ -119,7 +119,7 @@ const config = {
           {
             lineHeight: '120%',
             fontWeight: 'bold',
-            letterSpacing: '0.02em',
+            letterSpacing: '-0.02em',
           },
         ],
         'body1-medium': [
@@ -127,7 +127,7 @@ const config = {
           {
             lineHeight: '120%',
             fontWeight: '500',
-            letterSpacing: '0.02em',
+            letterSpacing: '-0.02em',
           },
         ],
         'body2-bold': [
@@ -159,7 +159,7 @@ const config = {
           {
             lineHeight: 'normal',
             fontWeight: 'normal',
-            letterSpacing: '0.02em',
+            letterSpacing: '-0.02em',
           },
         ],
         'text-medium': [
@@ -167,7 +167,7 @@ const config = {
           {
             lineHeight: '150%',
             fontWeight: '500',
-            letterSpacing: '0.02em',
+            letterSpacing: '-0.02em',
           },
         ],
         'text-bold': [
@@ -175,7 +175,7 @@ const config = {
           {
             lineHeight: '150%',
             fontWeight: 'bold',
-            letterSpacing: '0.02em',
+            letterSpacing: '-0.02em',
           },
         ],
         'text2-bold': [
@@ -183,7 +183,7 @@ const config = {
           {
             lineHeight: '150%',
             fontWeight: 'bold',
-            letterSpacing: '0.02em',
+            letterSpacing: '-0.02em',
           },
         ],
         'text-regular': [
@@ -191,7 +191,7 @@ const config = {
           {
             lineHeight: '150%',
             fontWeight: 'normal',
-            letterSpacing: '0.02em',
+            letterSpacing: '-0.02em',
           },
         ],
         'small1-bold': [
@@ -199,7 +199,7 @@ const config = {
           {
             lineHeight: 'normal',
             fontWeight: 'bold',
-            letterSpacing: '0.02em',
+            letterSpacing: '-0.02em',
           },
         ],
         'small1-regular': [
@@ -207,15 +207,15 @@ const config = {
           {
             lineHeight: 'normal',
             fontWeight: 'normal',
-            letterSpacing: '0.02em',
+            letterSpacing: '-0.02em',
           },
         ],
         tag: [
           '10px',
           {
-            lineHeight: 'normal',
-            fontWeight: 'bold',
-            letterSpacing: '0.02em',
+            lineHeight: '150%',
+            fontWeight: 'normal',
+            letterSpacing: '0em',
           },
         ],
         'tag-eng': [
@@ -223,7 +223,7 @@ const config = {
           {
             lineHeight: '150%',
             fontWeight: 'normal',
-            letterSpacing: '0.03em',
+            letterSpacing: '-0.03em',
           },
         ],
       },
