@@ -30,7 +30,9 @@ export default function LeftSidebar() {
   return (
     <div className="fixed left-0 z-50 flex h-screen w-[240px] flex-col items-center border-r border-gray-04 bg-white py-[24px]">
       <div className="mb-[24px] flex h-[48px] items-center justify-center">
-        <LogoIcon />
+        <Link href="/main">
+          <LogoIcon />
+        </Link>
       </div>
       <div className="mb-[35px]">
         <CategoryProtector>
