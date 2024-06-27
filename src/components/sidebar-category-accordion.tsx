@@ -88,7 +88,7 @@ export const SidebarCategoryAccordion = () => {
             <span className="truncate">{category.name}</span>
           </AccordionTrigger>
           <AccordionContent>
-            <div>
+            <div className="flex flex-col gap-[2px]">
               {category.documents.map((document) => (
                 <Link
                   key={document.id}
