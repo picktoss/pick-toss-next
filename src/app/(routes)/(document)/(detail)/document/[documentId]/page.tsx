@@ -1,14 +1,12 @@
 'use client'
 
-import { getDocument } from '@/apis/fetchers/document/get-document'
 import { CommonLayout } from '@/components/common-layout'
 import VisualViewport from '@/components/react/visual-viewport'
 import { Viewer } from './components/viewer'
 import { DocumentDetailProvider } from './contexts/document-detail-context'
 import { AiPick } from './components/ai-pick'
-import { useSession } from 'next-auth/react'
-import { useQuery } from '@tanstack/react-query'
 import Loading from '@/components/loading'
+import { useGetDocument } from '@/apis/fetchers/document/get-document/query'
 
 interface Props {
   params: {
@@ -17,16 +15,7 @@ interface Props {
 }
 
 export default function Document({ params: { documentId } }: Props) {
-  const { data: session } = useSession()
-  const { data: document } = useQuery({
-    queryKey: ['document', documentId],
-    queryFn: () =>
-      getDocument({
-        accessToken: session?.user.accessToken || '',
-        documentId: Number(documentId),
-      }),
-    enabled: !!session?.user.accessToken,
-  })
+  const { data: document } = useGetDocument({ documentId: Number(documentId) })
 
   if (!document)
     return (
