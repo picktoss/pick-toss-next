@@ -6,7 +6,7 @@ import { getTopFive } from './fetcher'
 
 export const GET_TOP_FIVE_KEY = 'document-top-five'
 
-export const useGetTopFive = () => {
+export const useGetTopFiveQuery = () => {
   const { data: session } = useSession()
 
   return useQuery({

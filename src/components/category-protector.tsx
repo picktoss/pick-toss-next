@@ -9,12 +9,12 @@ import React, {
   useState,
 } from 'react'
 import CreateCategoryDialog from './create-category-dialog'
-import { useGetCategories } from '@/apis/fetchers/category/get-categories/query'
+import { useGetCategoriesQuery } from '@/apis/fetchers/category/get-categories/query'
 
 interface Props extends PropsWithChildren {}
 
 export function CategoryProtector({ children }: Props) {
-  const { data: categories } = useGetCategories()
+  const { data: categories } = useGetCategoriesQuery()
 
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const targetRef = useRef<(EventTarget & Element) | null>(null)

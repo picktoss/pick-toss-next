@@ -13,7 +13,7 @@ import { currentMonth } from '@/utils/date'
 import { Period } from './ui/period'
 import { PeriodTypeSelector } from './ui/period-type-selector'
 import { CategorySelect } from './ui/category-select'
-import { useGetCategories } from '@/apis/fetchers/category/get-categories/query'
+import { useGetCategoriesQuery } from '@/apis/fetchers/category/get-categories/query'
 
 interface Period {
   type: 'week' | 'month'
@@ -27,7 +27,7 @@ export function QuizAnalysis() {
   })
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null)
 
-  const { data: categories } = useGetCategories()
+  const { data: categories } = useGetCategoriesQuery()
 
   const { data: weekQuizAnswerRate } = useQuery({
     queryKey: ['week-quiz-answer-rate', selectedCategoryId],

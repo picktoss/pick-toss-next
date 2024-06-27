@@ -3,10 +3,10 @@
 import Image from 'next/image'
 import { ArchiveLink } from './archive-link'
 import icons from '@/constants/icons'
-import { useGetBookmarks } from '@/apis/fetchers/key-point/get-bookmarks/query'
+import { useGetBookmarksQuery } from '@/apis/fetchers/key-point/get-bookmarks/query'
 
 export function SavedPicksLink() {
-  const { data: keyPoints } = useGetBookmarks()
+  const { data: keyPoints } = useGetBookmarksQuery()
 
   return (
     <ArchiveLink

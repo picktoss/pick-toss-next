@@ -6,7 +6,7 @@ import { getCategories } from './fetcher'
 
 export const GET_CATEGORIES_KEY = 'categories'
 
-export const useGetCategories = () => {
+export const useGetCategoriesQuery = () => {
   const { data: session } = useSession()
 
   return useQuery({

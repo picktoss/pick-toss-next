@@ -12,12 +12,12 @@ import Link from 'next/link'
 import icons from '@/constants/icons'
 import { ChevronRight } from 'lucide-react'
 import { HTMLAttributes } from 'react'
-import { useGetCategories } from '@/apis/fetchers/category/get-categories/query'
+import { useGetCategoriesQuery } from '@/apis/fetchers/category/get-categories/query'
 
 interface CategoryAccordionProps extends HTMLAttributes<HTMLDivElement> {}
 
 export default function CategoryAccordionList(props: CategoryAccordionProps) {
-  const { data: categories } = useGetCategories()
+  const { data: categories } = useGetCategoriesQuery()
 
   if (!categories) return null
 

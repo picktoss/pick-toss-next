@@ -11,7 +11,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { searchKeyPoints } from '@/apis/fetchers/key-point/search-key-points'
 import { SearchResult } from './components/search-result'
 import { KeyPointCard } from './components/key-point-card'
-import { useGetBookmarks } from '@/apis/fetchers/key-point/get-bookmarks/query'
+import { useGetBookmarksQuery } from '@/apis/fetchers/key-point/get-bookmarks/query'
 // import { CategorySelect } from './components/category-select'
 
 export default function Picks() {
@@ -21,7 +21,7 @@ export default function Picks() {
   const pathname = usePathname()
   const term = useSearchParams().get('term')
 
-  const { data: keyPoints, isLoading } = useGetBookmarks()
+  const { data: keyPoints, isLoading } = useGetBookmarksQuery()
 
   const { mutate: deleteBookmark } = useMutation({
     mutationKey: ['patch-toggle-bookmark'],

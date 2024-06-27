@@ -11,7 +11,7 @@ import { createDocument } from '@/apis/fetchers/document/create-document'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { useToast } from '@/hooks/use-toast'
-import { useGetCategories } from '@/apis/fetchers/category/get-categories/query'
+import { useGetCategoriesQuery } from '@/apis/fetchers/category/get-categories/query'
 
 const VisualEditor = dynamic(() => import('./components/visual-editor'), {
   ssr: false,
@@ -25,7 +25,7 @@ export default function CreateDocument() {
 
   const [isLoading, setIsLoading] = useState(false)
 
-  const { data: categories } = useGetCategories()
+  const { data: categories } = useGetCategoriesQuery()
 
   const { mutateAsync } = useMutation({
     mutationFn: createDocument,

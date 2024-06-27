@@ -15,14 +15,15 @@ import {
 } from '@dnd-kit/core'
 import { ButtonHTMLAttributes, HTMLAttributes, useState } from 'react'
 import { SortableContext, arrayMove } from '@dnd-kit/sortable'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { Category, getCategories } from '@/apis/fetchers/category/get-categories/fetcher'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { Category } from '@/apis/fetchers/category/get-categories/fetcher'
 import { useSession } from 'next-auth/react'
 import icons from '@/constants/icons'
 import { reorderCategory } from '@/apis/fetchers/category/reorder-category'
 import { cn } from '@/lib/utils'
 import CreateCategoryDialog from '@/components/create-category-dialog'
 import Loading from '@/components/loading'
+import { useGetCategoriesQuery } from '@/apis/fetchers/category/get-categories/query'
 
 interface Props extends HTMLAttributes<HTMLDivElement> {}
 
@@ -30,16 +31,7 @@ export default function CategoryList({ className }: Props) {
   const { data: session } = useSession()
   const queryClient = useQueryClient()
 
-  const {
-    data: categories,
-    isError,
-    isPending,
-  } = useQuery({
-    queryKey: ['categories'],
-    queryFn: () =>
-      getCategories({ accessToken: session?.user.accessToken || '' }).then((res) => res.categories),
-    enabled: !!session?.user.accessToken,
-  })
+  const { data: categories, isError, isPending } = useGetCategoriesQuery()
   const { mutate: mutateReorder } = useMutation({
     mutationFn: reorderCategory,
   })

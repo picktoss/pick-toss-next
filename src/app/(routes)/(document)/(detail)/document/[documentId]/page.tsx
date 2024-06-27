@@ -6,7 +6,7 @@ import { Viewer } from './components/viewer'
 import { DocumentDetailProvider } from './contexts/document-detail-context'
 import { AiPick } from './components/ai-pick'
 import Loading from '@/components/loading'
-import { useGetDocument } from '@/apis/fetchers/document/get-document/query'
+import { useGetDocumentQuery } from '@/apis/fetchers/document/get-document/query'
 
 interface Props {
   params: {
@@ -15,7 +15,7 @@ interface Props {
 }
 
 export default function Document({ params: { documentId } }: Props) {
-  const { data: document } = useGetDocument({ documentId: Number(documentId) })
+  const { data: document } = useGetDocumentQuery({ documentId: Number(documentId) })
 
   if (!document)
     return (

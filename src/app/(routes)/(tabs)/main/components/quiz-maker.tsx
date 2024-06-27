@@ -5,10 +5,10 @@ import Image from 'next/image'
 import { BlackLottie, MultipleLottie, OXLottie } from './lotties'
 import { ReactNode, forwardRef } from 'react'
 import MakeQuizDrawerDialog from './make-quiz-drawer-dialog'
-import { useGetCategories } from '@/apis/fetchers/category/get-categories/query'
+import { useGetCategoriesQuery } from '@/apis/fetchers/category/get-categories/query'
 
 export default function QuizMaker() {
-  const { data: categories } = useGetCategories()
+  const { data: categories } = useGetCategoriesQuery()
 
   return (
     <section className="flex flex-col gap-[24px]">

@@ -12,7 +12,7 @@ import { updateDocumentContent } from '@/apis/fetchers/document/update-document-
 import { useState } from 'react'
 import { useToast } from '@/hooks/use-toast'
 import { ToastAction } from '@/components/ui/toast'
-import { useGetDocument } from '@/apis/fetchers/document/get-document/query'
+import { useGetDocumentQuery } from '@/apis/fetchers/document/get-document/query'
 
 export default function Modify() {
   const { data: session } = useSession()
@@ -21,7 +21,7 @@ export default function Modify() {
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
 
-  const { data: modifyTargetDocument } = useGetDocument({ documentId: Number(documentId) })
+  const { data: modifyTargetDocument } = useGetDocumentQuery({ documentId: Number(documentId) })
 
   const { mutateAsync } = useMutation({
     mutationFn: (data: { name: string; file: File }) =>

@@ -12,7 +12,7 @@ import DocumentItem from './document-item'
 import icons from '@/constants/icons'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
-import { useGetDocumentsForCategory } from '@/apis/fetchers/document/get-documents-for-category/query'
+import { useGetDocumentsForCategoryQuery } from '@/apis/fetchers/document/get-documents-for-category/query'
 
 const SORT_OPTION_TYPE = ['createdAt', 'name', 'updatedAt'] as const
 
@@ -34,7 +34,7 @@ export default function DocumentList({ categoryId, className }: Props) {
     data: documents,
     isError,
     isPending,
-  } = useGetDocumentsForCategory({
+  } = useGetDocumentsForCategoryQuery({
     categoryId,
     sortOption,
   })

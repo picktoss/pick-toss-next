@@ -1,13 +1,13 @@
 'use client'
 
-import { useGetTopFive } from '@/apis/fetchers/document/get-top-five/query'
+import { useGetTopFiveQuery } from '@/apis/fetchers/document/get-top-five/query'
 import Loading from '@/components/loading'
 import icons from '@/constants/icons'
 import Image from 'next/image'
 import Link from 'next/link'
 
 export default function TopFive() {
-  const { data: documents, isLoading } = useGetTopFive()
+  const { data: documents, isLoading } = useGetTopFiveQuery()
 
   return (
     <section className="relative flex min-h-[400px] flex-col gap-[24px] rounded-none bg-white p-[20px] pb-[17px] lg:rounded-[12px]">

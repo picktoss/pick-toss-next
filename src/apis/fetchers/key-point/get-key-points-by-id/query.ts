@@ -21,7 +21,7 @@ interface Params {
   }
 }
 
-export const useGetKeyPointsById = ({ documentId, initialData }: Params) => {
+export const useGetKeyPointsByIdQuery = ({ documentId, initialData }: Params) => {
   const { data: session } = useSession()
 
   return useQuery({

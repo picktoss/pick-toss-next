@@ -15,7 +15,7 @@ import { useSelectedLayoutSegments } from 'next/navigation'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { cn } from '@/lib/utils'
 import BarLoader from 'react-spinners/BarLoader'
-import { useGetCategories } from '@/apis/fetchers/category/get-categories/query'
+import { useGetCategoriesQuery } from '@/apis/fetchers/category/get-categories/query'
 
 export const SidebarCategoryAccordion = () => {
   const segments = useSelectedLayoutSegments()
@@ -23,7 +23,7 @@ export const SidebarCategoryAccordion = () => {
   const [accordionValue, setAccordionValue] = useState<string[]>([])
   const prevCategoryId = useRef<number | null>(null)
 
-  const { data: categories, isPending } = useGetCategories()
+  const { data: categories, isPending } = useGetCategoriesQuery()
 
   const currentCategoryId = useMemo(() => {
     if (segments[0] === 'repository' && segments.length === 2) {

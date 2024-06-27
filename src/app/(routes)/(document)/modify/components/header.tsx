@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 import { useEditDocumentContext } from '../contexts/edit-document-context'
-import { useGetCategory } from '@/apis/fetchers/category/get-category/query'
+import { useGetCategoryQuery } from '@/apis/fetchers/category/get-category/query'
 
 interface Props {
   categoryId: number
@@ -19,7 +19,7 @@ interface Props {
 export function Header({ categoryId, handleSubmit }: Props) {
   const router = useRouter()
   const { documentName, editorMarkdownContent } = useEditDocumentContext()
-  const { data: category } = useGetCategory({ categoryId })
+  const { data: category } = useGetCategoryQuery({ categoryId })
 
   return (
     <div className="sticky top-0 z-10 bg-gray-01 opacity-95 shadow-md">

@@ -12,7 +12,7 @@ interface Params {
   sortOption: (typeof SORT_OPTION)[number]
 }
 
-export const useGetDocumentsForCategory = ({ categoryId, sortOption }: Params) => {
+export const useGetDocumentsForCategoryQuery = ({ categoryId, sortOption }: Params) => {
   const { data: session } = useSession()
 
   return useQuery({

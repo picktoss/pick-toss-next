@@ -22,7 +22,7 @@ import { PickBanner } from '../ui/pick-banner'
 import { PickAccordion } from '../ui/pick-accordion'
 import {
   GET_KEY_POINTS_BY_ID_KEY,
-  useGetKeyPointsById,
+  useGetKeyPointsByIdQuery,
 } from '@/apis/fetchers/key-point/get-key-points-by-id/query'
 import { GetKeyPointsByIdResponse } from '@/apis/fetchers/key-point/get-key-points-by-id/fetcher'
 
@@ -66,7 +66,7 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
 
   const {
     data: { documentStatus: status, keyPoints },
-  } = useGetKeyPointsById({
+  } = useGetKeyPointsByIdQuery({
     documentId: Number(documentId),
     initialData: {
       documentStatus: initStatus,

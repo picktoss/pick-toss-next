@@ -10,7 +10,7 @@ interface Params {
   documentId: number
 }
 
-export const useGetDocument = ({ documentId }: Params) => {
+export const useGetDocumentQuery = ({ documentId }: Params) => {
   const { data: session } = useSession()
 
   return useQuery({

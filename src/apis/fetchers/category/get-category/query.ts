@@ -10,7 +10,7 @@ interface Params {
   categoryId: number
 }
 
-export const useGetCategory = ({ categoryId }: Params) => {
+export const useGetCategoryQuery = ({ categoryId }: Params) => {
   const { data: session } = useSession()
 
   return useQuery({
