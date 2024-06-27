@@ -164,8 +164,7 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
     if (isDesktop) {
       setIsPickOpen(true)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [isDesktop, setIsPickOpen])
 
   if (isDesktop) {
     return (
