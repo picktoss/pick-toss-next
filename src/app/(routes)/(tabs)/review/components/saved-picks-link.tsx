@@ -3,20 +3,10 @@
 import Image from 'next/image'
 import { ArchiveLink } from './archive-link'
 import icons from '@/constants/icons'
-import { useQuery } from '@tanstack/react-query'
-import { useSession } from 'next-auth/react'
-import { getBookmarks } from '@/apis/fetchers/key-point/get-bookmarks'
+import { useGetBookmarks } from '@/apis/fetchers/key-point/get-bookmarks/query'
 
 export function SavedPicksLink() {
-  const { data: session } = useSession()
-
-  const { data } = useQuery({
-    queryKey: ['bookmarks'],
-    queryFn: () =>
-      getBookmarks({
-        accessToken: session?.user.accessToken || '',
-      }),
-  })
+  const { data: keyPoints } = useGetBookmarks()
 
   return (
     <ArchiveLink
@@ -27,7 +17,7 @@ export function SavedPicksLink() {
           <Image src={icons.savePick} width={31} height={31} alt="" />
         </div>
       }
-      count={data?.keyPoints.length || 0}
+      count={keyPoints?.length || 0}
     />
   )
 }

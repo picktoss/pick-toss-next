@@ -1,7 +1,7 @@
 'use client'
 
 import { CommonLayout } from '@/components/common-layout'
-import { GetBookmarksResponse, getBookmarks } from '@/apis/fetchers/key-point/get-bookmarks'
+import { GetBookmarksResponse } from '@/apis/fetchers/key-point/get-bookmarks/fetcher'
 import { useSession } from 'next-auth/react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { toggleBookmark } from '@/apis/fetchers/key-point/toggle-bookmark'
@@ -11,6 +11,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { searchKeyPoints } from '@/apis/fetchers/key-point/search-key-points'
 import { SearchResult } from './components/search-result'
 import { KeyPointCard } from './components/key-point-card'
+import { useGetBookmarks } from '@/apis/fetchers/key-point/get-bookmarks/query'
 // import { CategorySelect } from './components/category-select'
 
 export default function Picks() {
@@ -20,14 +21,7 @@ export default function Picks() {
   const pathname = usePathname()
   const term = useSearchParams().get('term')
 
-  const { data, isLoading } = useQuery({
-    queryKey: ['bookmarks'],
-    queryFn: () =>
-      getBookmarks({
-        accessToken: session?.user.accessToken || '',
-      }),
-    enabled: session?.user.accessToken != null,
-  })
+  const { data: keyPoints, isLoading } = useGetBookmarks()
 
   const { mutate: deleteBookmark } = useMutation({
     mutationKey: ['patch-toggle-bookmark'],
@@ -104,7 +98,7 @@ export default function Picks() {
             </div>
           ) : (
             <>
-              {data?.keyPoints.length ? (
+              {keyPoints?.length ? (
                 <div className="mt-[18px] px-[20px] pb-[70px] lg:mt-[48px]">
                   <div className="flex items-center justify-between">
                     {/** TODO: 폴더 별 북마크 */}
@@ -113,11 +107,11 @@ export default function Picks() {
                       모든 문서
                     </div>
                     <div className="text-text-medium text-gray-06">
-                      {data?.keyPoints.length}개 저장됨
+                      {keyPoints?.length}개 저장됨
                     </div>
                   </div>
                   <div className="mt-[16px] flex flex-col gap-[24px] lg:grid lg:grid-cols-2 lg:gap-[16px]">
-                    {data?.keyPoints.map((keyPoint) => (
+                    {keyPoints?.map((keyPoint) => (
                       <KeyPointCard
                         key={keyPoint.id}
                         keyPoint={keyPoint}
