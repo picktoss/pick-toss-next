@@ -53,7 +53,7 @@ export function Header({ categoryId, handleSubmit }: Props) {
 
         <Button
           variant="ghost"
-          className="ml-auto bg-gradient-to-r from-[#93B0FF] to-[#FF8428] bg-clip-text px-0 pl-[15px] !text-body2-bold text-transparent hover:text-transparent"
+          className="ml-auto px-0 pl-[15px] !text-body2-bold text-orange-06 hover:text-orange-06"
           onClick={() =>
             handleSubmit({
               documentName,
