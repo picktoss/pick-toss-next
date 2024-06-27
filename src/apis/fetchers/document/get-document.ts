@@ -1,11 +1,12 @@
 import { API_ENDPOINT } from '@/apis/api-endpoint'
+import { DocumentStatus } from '@/apis/types/dto/document.dto'
 import { apiClient } from '@/lib/api-client'
 import { notFound } from 'next/navigation'
 
 export interface DocumentInfo {
   id: number
   documentName: string
-  status: 'UNPROCESSED' | 'PROCESSED' | 'PROCESSING' | 'KEYPOINT_UPDATE_POSSIBLE'
+  status: DocumentStatus
   quizGenerationStatus: boolean
   category: {
     id: number

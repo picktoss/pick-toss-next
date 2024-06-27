@@ -18,14 +18,17 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
+import { StatusTag } from '../ui/status-tag'
+import { DocumentStatus } from '@/apis/types/dto/document.dto'
 
 interface Props {
   documentName: string
   createdAt: string
   content: string
+  status: DocumentStatus
 }
 
-export function Viewer({ documentName, createdAt, content }: Props) {
+export function Viewer({ documentName, createdAt, content, status }: Props) {
   const { isPickOpen } = useDocumentDetailContext()
   const { documentId } = useParams()
 
@@ -42,7 +45,10 @@ export function Viewer({ documentName, createdAt, content }: Props) {
             <h3 className="line-clamp-1 text-h3-bold text-gray-08 hover:text-clip">
               {documentName}
             </h3>
-            <p className="text-body2-regular text-gray-06">{formatDateKorean(createdAt)}</p>
+            <div className="mt-[8px] flex items-center gap-[8px]">
+              <p className="text-body2-regular text-gray-06">{formatDateKorean(createdAt)}</p>
+              <StatusTag status={status} />
+            </div>
           </div>
 
           <DocumentDropdown documentId={documentId as string} />
