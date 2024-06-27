@@ -10,20 +10,21 @@ import { useEffect, useRef, useState } from 'react'
 import { cn } from '@/lib/utils'
 import { motion, AnimatePresence } from 'framer-motion'
 import { SwitchCase } from '@/components/react/switch-case'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { createAiPick } from '@/apis/fetchers/document/create-ai-pick'
 import { useSession } from 'next-auth/react'
 import { useParams } from 'next/navigation'
 import { toggleBookmark } from '@/apis/fetchers/key-point/toggle-bookmark'
 import { DocumentStatus } from '@/apis/types/dto/document.dto'
-import {
-  GetKeyPointsByIdResponse,
-  getKeyPointsById,
-} from '@/apis/fetchers/key-point/get-key-points'
 import { useToast } from '@/hooks/use-toast'
 import { GeneratingPicks } from '../ui/generating-picks'
 import { PickBanner } from '../ui/pick-banner'
 import { PickAccordion } from '../ui/pick-accordion'
+import {
+  GET_KEY_POINTS_BY_ID_KEY,
+  useGetKeyPointsById,
+} from '@/apis/fetchers/key-point/get-key-points-by-id/query'
+import { GetKeyPointsByIdResponse } from '@/apis/fetchers/key-point/get-key-points-by-id/fetcher'
 
 interface Props {
   initKeyPoints: {
@@ -53,8 +54,6 @@ const slideInOutVariants = {
   },
 }
 
-const GET_KEY_POINTS_BY_ID_QUERY_KEY = 'get-key-points-by-id'
-
 export function AiPick({ initKeyPoints, initStatus }: Props) {
   const isDesktop = useMediaQuery('(min-width: 1024px)')
   const { isPickOpen, setIsPickOpen } = useDocumentDetailContext()
@@ -67,13 +66,8 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
 
   const {
     data: { documentStatus: status, keyPoints },
-  } = useQuery({
-    queryKey: [GET_KEY_POINTS_BY_ID_QUERY_KEY, documentId],
-    queryFn: () =>
-      getKeyPointsById({
-        accessToken: session.data?.user.accessToken || '',
-        documentId: Number(documentId),
-      }),
+  } = useGetKeyPointsById({
+    documentId: Number(documentId),
     initialData: {
       documentStatus: initStatus,
       keyPoints: initKeyPoints,
@@ -84,7 +78,7 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
     mutationKey: ['create-ai-pick'],
     mutationFn: ({ rePick }: { rePick: boolean }) => {
       queryClient.setQueryData<GetKeyPointsByIdResponse>(
-        [GET_KEY_POINTS_BY_ID_QUERY_KEY, documentId],
+        [GET_KEY_POINTS_BY_ID_KEY, documentId],
         (oldData) => {
           if (!oldData) return oldData
 
@@ -108,7 +102,7 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
     mutationKey: ['patch-toggle-bookmark'],
     mutationFn: (data: { keypointId: number; bookmark: boolean }) => {
       queryClient.setQueryData<GetKeyPointsByIdResponse>(
-        [GET_KEY_POINTS_BY_ID_QUERY_KEY, documentId],
+        [GET_KEY_POINTS_BY_ID_KEY, documentId],
         (oldData) => {
           if (!oldData) return oldData
 
@@ -135,7 +129,7 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
     },
     onSettled: async () => {
       await queryClient.refetchQueries({
-        queryKey: [GET_KEY_POINTS_BY_ID_QUERY_KEY, documentId],
+        queryKey: [GET_KEY_POINTS_BY_ID_KEY, documentId],
         exact: true,
       })
     },
@@ -164,7 +158,7 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
     if (status !== 'PROCESSING') return
 
     const refetchKeyPoints = async () => {
-      await queryClient.refetchQueries({ queryKey: [GET_KEY_POINTS_BY_ID_QUERY_KEY, documentId] })
+      await queryClient.refetchQueries({ queryKey: [GET_KEY_POINTS_BY_ID_KEY, documentId] })
       if (status === 'PROCESSING') {
         timerId = setTimeout(refetchKeyPoints, 4000)
       }
