@@ -1,6 +1,6 @@
 import { API_ENDPOINT } from '@/apis/api-endpoint'
 import { apiClient } from '@/lib/api-client'
-import { CategoryTagType } from './get-categories'
+import { CategoryTagType } from './get-categories/fetcher'
 
 interface UpdateCategoryParams extends NextFetchRequestConfig {
   accessToken: string

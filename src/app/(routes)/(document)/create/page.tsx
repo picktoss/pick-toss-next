@@ -1,8 +1,7 @@
 'use client'
 
-import { getCategories } from '@/apis/fetchers/category/get-categories'
 import Loading from '@/components/loading'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 import dynamic from 'next/dynamic'
 import { CreateDocumentProvider } from './contexts/create-document-context'
@@ -12,6 +11,7 @@ import { createDocument } from '@/apis/fetchers/document/create-document'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { useToast } from '@/hooks/use-toast'
+import { useGetCategories } from '@/apis/fetchers/category/get-categories/query'
 
 const VisualEditor = dynamic(() => import('./components/visual-editor'), {
   ssr: false,
@@ -25,14 +25,7 @@ export default function CreateDocument() {
 
   const [isLoading, setIsLoading] = useState(false)
 
-  const { data: categories } = useQuery({
-    queryKey: ['categories'],
-    queryFn: () =>
-      getCategories({
-        accessToken: session?.user.accessToken || '',
-      }).then((res) => res.categories),
-    enabled: !!session?.user.accessToken,
-  })
+  const { data: categories } = useGetCategories()
 
   const { mutateAsync } = useMutation({
     mutationFn: createDocument,

@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { createCategory } from '@/apis/fetchers/category/create-category'
 import { useSession } from 'next-auth/react'
-import { CATEGORY_TAG_TYPE, CategoryTagType } from '@/apis/fetchers/category/get-categories'
+import { CATEGORY_TAG_TYPE, CategoryTagType } from '@/apis/fetchers/category/get-categories/fetcher'
 import {
   DropdownMenu,
   DropdownMenuContent,

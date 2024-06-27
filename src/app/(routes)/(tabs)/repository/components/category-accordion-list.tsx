@@ -10,24 +10,14 @@ import {
 import Image from 'next/image'
 import Link from 'next/link'
 import icons from '@/constants/icons'
-import { getCategories } from '@/apis/fetchers/category/get-categories'
-import { useQuery } from '@tanstack/react-query'
-import { useSession } from 'next-auth/react'
 import { ChevronRight } from 'lucide-react'
 import { HTMLAttributes } from 'react'
+import { useGetCategories } from '@/apis/fetchers/category/get-categories/query'
 
 interface CategoryAccordionProps extends HTMLAttributes<HTMLDivElement> {}
 
 export default function CategoryAccordionList(props: CategoryAccordionProps) {
-  const { data: session } = useSession()
-  const { data: categories } = useQuery({
-    queryKey: ['categories'],
-    queryFn: async () => {
-      const res = await getCategories({ accessToken: session?.user.accessToken || '' })
-      return res.categories
-    },
-    enabled: !!session?.user.accessToken,
-  })
+  const { data: categories } = useGetCategories()
 
   if (!categories) return null
 

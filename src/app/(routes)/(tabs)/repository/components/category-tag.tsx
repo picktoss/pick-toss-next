@@ -1,4 +1,4 @@
-import { CategoryTagType } from '@/apis/fetchers/category/get-categories'
+import { CategoryTagType } from '@/apis/fetchers/category/get-categories/fetcher'
 import { cn } from '@/lib/utils'
 
 const tagVariant: {

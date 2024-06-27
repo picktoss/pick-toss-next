@@ -4,7 +4,6 @@ import { useQuery } from '@tanstack/react-query'
 import { HistoryChart } from './ui/history-chart'
 import { useEffect, useState } from 'react'
 import { getWeekQuizAnswerRate } from '@/apis/fetchers/quiz/get-week-quiz-answer-rate'
-import { getCategories } from '@/apis/fetchers/category/get-categories'
 import { useSession } from 'next-auth/react'
 import Loading from '@/components/loading'
 import { QuizAnalysisSummary } from './ui/quiz-analysis-summary'
@@ -14,6 +13,7 @@ import { currentMonth } from '@/utils/date'
 import { Period } from './ui/period'
 import { PeriodTypeSelector } from './ui/period-type-selector'
 import { CategorySelect } from './ui/category-select'
+import { useGetCategories } from '@/apis/fetchers/category/get-categories/query'
 
 interface Period {
   type: 'week' | 'month'
@@ -27,14 +27,7 @@ export function QuizAnalysis() {
   })
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null)
 
-  const { data: categories } = useQuery({
-    queryKey: ['categories'],
-    queryFn: () =>
-      getCategories({
-        accessToken: session?.user.accessToken || '',
-      }).then((res) => res.categories),
-    enabled: !!session?.user.accessToken,
-  })
+  const { data: categories } = useGetCategories()
 
   const { data: weekQuizAnswerRate } = useQuery({
     queryKey: ['week-quiz-answer-rate', selectedCategoryId],

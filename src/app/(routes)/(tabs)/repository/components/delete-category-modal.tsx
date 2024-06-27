@@ -1,5 +1,5 @@
 import { deleteCategory } from '@/apis/fetchers/category/delete-category'
-import { Category } from '@/apis/fetchers/category/get-categories'
+import { Category } from '@/apis/fetchers/category/get-categories/fetcher'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogClose, DialogContent } from '@/components/ui/dialog'
 import icons from '@/constants/icons'

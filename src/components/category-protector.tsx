@@ -1,8 +1,5 @@
 'use client'
 
-import { getCategories } from '@/apis/fetchers/category/get-categories'
-import { useQuery } from '@tanstack/react-query'
-import { useSession } from 'next-auth/react'
 import React, {
   MouseEventHandler,
   PropsWithChildren,
@@ -12,19 +9,12 @@ import React, {
   useState,
 } from 'react'
 import CreateCategoryDialog from './create-category-dialog'
+import { useGetCategories } from '@/apis/fetchers/category/get-categories/query'
 
 interface Props extends PropsWithChildren {}
 
 export function CategoryProtector({ children }: Props) {
-  const { data: session } = useSession()
-  const { data: categories } = useQuery({
-    queryKey: ['categories'],
-    queryFn: () =>
-      getCategories({
-        accessToken: session?.user.accessToken || '',
-      }).then((res) => res.categories),
-    enabled: !!session?.user.accessToken,
-  })
+  const { data: categories } = useGetCategories()
 
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const targetRef = useRef<(EventTarget & Element) | null>(null)

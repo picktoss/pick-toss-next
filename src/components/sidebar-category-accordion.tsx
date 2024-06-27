@@ -10,30 +10,20 @@ import {
 import Image from 'next/image'
 import Link from 'next/link'
 import icons from '@/constants/icons'
-import { getCategories } from '@/apis/fetchers/category/get-categories'
-import { useQuery } from '@tanstack/react-query'
-import { useSession } from 'next-auth/react'
 import { ChevronRight } from 'lucide-react'
 import { useSelectedLayoutSegments } from 'next/navigation'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { cn } from '@/lib/utils'
 import BarLoader from 'react-spinners/BarLoader'
+import { useGetCategories } from '@/apis/fetchers/category/get-categories/query'
 
 export const SidebarCategoryAccordion = () => {
   const segments = useSelectedLayoutSegments()
-  const { data: session } = useSession()
 
   const [accordionValue, setAccordionValue] = useState<string[]>([])
   const prevCategoryId = useRef<number | null>(null)
 
-  const { data: categories, isPending } = useQuery({
-    queryKey: ['categories'],
-    queryFn: async () => {
-      const res = await getCategories({ accessToken: session?.user.accessToken || '' })
-      return res.categories
-    },
-    enabled: !!session?.user.accessToken,
-  })
+  const { data: categories, isPending } = useGetCategories()
 
   const currentCategoryId = useMemo(() => {
     if (segments[0] === 'repository' && segments.length === 2) {

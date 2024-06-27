@@ -16,7 +16,7 @@ import {
 import { ButtonHTMLAttributes, HTMLAttributes, useState } from 'react'
 import { SortableContext, arrayMove } from '@dnd-kit/sortable'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { Category, getCategories } from '@/apis/fetchers/category/get-categories'
+import { Category, getCategories } from '@/apis/fetchers/category/get-categories/fetcher'
 import { useSession } from 'next-auth/react'
 import icons from '@/constants/icons'
 import { reorderCategory } from '@/apis/fetchers/category/reorder-category'

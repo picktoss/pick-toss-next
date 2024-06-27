@@ -5,20 +5,10 @@ import Image from 'next/image'
 import { BlackLottie, MultipleLottie, OXLottie } from './lotties'
 import { ReactNode, forwardRef } from 'react'
 import MakeQuizDrawerDialog from './make-quiz-drawer-dialog'
-import { useQuery } from '@tanstack/react-query'
-import { getCategories } from '@/apis/fetchers/category/get-categories'
-import { useSession } from 'next-auth/react'
+import { useGetCategories } from '@/apis/fetchers/category/get-categories/query'
 
 export default function QuizMaker() {
-  const { data: session } = useSession()
-  const { data: categories } = useQuery({
-    queryKey: ['categories'],
-    queryFn: () =>
-      getCategories({
-        accessToken: session?.user.accessToken || '',
-      }).then((res) => res.categories),
-    enabled: !!session?.user.accessToken,
-  })
+  const { data: categories } = useGetCategories()
 
   return (
     <section className="flex flex-col gap-[24px]">

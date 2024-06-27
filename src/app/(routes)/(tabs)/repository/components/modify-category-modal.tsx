@@ -10,7 +10,7 @@ import {
   CATEGORY_TAG_TYPE,
   Category,
   CategoryTagType,
-} from '@/apis/fetchers/category/get-categories'
+} from '@/apis/fetchers/category/get-categories/fetcher'
 import { updateCategory } from '@/apis/fetchers/category/update-category'
 import {
   DropdownMenu,
