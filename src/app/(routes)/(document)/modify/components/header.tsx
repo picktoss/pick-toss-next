@@ -3,9 +3,7 @@
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 import { useEditDocumentContext } from '../contexts/edit-document-context'
-import { useQuery } from '@tanstack/react-query'
-import { getCategory } from '@/apis/fetchers/category/get-category'
-import { useSession } from 'next-auth/react'
+import { useGetCategory } from '@/apis/fetchers/category/get-category/query'
 
 interface Props {
   categoryId: number
@@ -20,18 +18,8 @@ interface Props {
 
 export function Header({ categoryId, handleSubmit }: Props) {
   const router = useRouter()
-  const { data: session } = useSession()
   const { documentName, editorMarkdownContent } = useEditDocumentContext()
-
-  const { data: category } = useQuery({
-    queryKey: ['category', categoryId],
-    queryFn: () =>
-      getCategory({
-        accessToken: session?.user.accessToken || '',
-        categoryId,
-      }),
-    enabled: !!session?.user.accessToken,
-  })
+  const { data: category } = useGetCategory({ categoryId })
 
   return (
     <div className="sticky top-0 z-10 bg-gray-01 opacity-95 shadow-md">

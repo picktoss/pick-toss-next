@@ -2,7 +2,7 @@ import CategoryTag from '../components/category-tag'
 import DocumentList from './components/document-list'
 import { CommonLayout } from '@/components/common-layout'
 import { auth } from '@/app/api/auth/[...nextauth]/auth'
-import { getCategory } from '@/apis/fetchers/category/get-category'
+import { getCategory } from '@/apis/fetchers/category/get-category/fetcher'
 
 interface Props {
   params: {
