@@ -215,7 +215,9 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
             >
               <div className="mb-[20px] flex flex-col gap-[15px] pt-[23px]">
                 <div className="flex h-[48px] items-center px-[19px]">
-                  <h3 className="text-h3-bold text-gray-08">AI pick</h3>
+                  <h3 className="text-h3-bold text-gray-08">
+                    A<i>I</i> pick
+                  </h3>
                 </div>
 
                 <div className="px-[10px]">
@@ -275,7 +277,9 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
         ) : (
           <Button className="absolute bottom-[50px] right-1/2 flex h-[40px] w-[144px] translate-x-1/2 gap-[8px] rounded-full bg-blue-06 !text-body2-bold hover:bg-blue-06">
             <Image src={icons.pin} width={16.6} height={20.4} alt="" />
-            AI pick 보기
+            <span>
+              AI <i>p</i>ick 보기
+            </span>
           </Button>
         )}
       </DrawerTrigger>
@@ -283,7 +287,9 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
       <DrawerContent className="rounded-t-[20px]">
         <div className="mt-[10px] flex h-[90vh] flex-col">
           <div className="flex flex-col gap-[15px]">
-            <h3 className="pl-[24px] text-h3-bold text-gray-08">AI pick</h3>
+            <h3 className="pl-[24px] text-h3-bold text-gray-08">
+              AI <i>p</i>ick
+            </h3>
 
             <div className="px-[15px]">
               <PickBanner status={status} />

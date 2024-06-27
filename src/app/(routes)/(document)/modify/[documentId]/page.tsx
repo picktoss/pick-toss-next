@@ -76,7 +76,7 @@ export default function Modify() {
             description: '노트가 수정되었습니다',
             action: (
               <ToastAction altText="AI Pick 다시 생성하기" onClick={handleActionClick}>
-                AI Pick 다시 생성하기
+                AI <i>p</i>ick 다시 생성하기
               </ToastAction>
             ),
           })

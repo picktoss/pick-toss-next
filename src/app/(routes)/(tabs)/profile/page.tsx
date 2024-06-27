@@ -40,7 +40,9 @@ export default async function Profile() {
               <div className="h-px w-full rounded-full bg-gray-02" />
               <div className="flex flex-col gap-[8px]">
                 <div className="flex gap-[7px]">
-                  <span className="text-small1-regular text-gray-07">남은 AI pick 생성 횟수</span>
+                  <span className="text-small1-regular text-gray-07">
+                    남은 AI <i>p</i>ick 생성 횟수
+                  </span>
                   <Image src={icons.circleQuestion} width={16} height={16} alt="" />
                 </div>
                 <div className="text-h4-bold text-orange-05">{availableAiPickCount}회</div>

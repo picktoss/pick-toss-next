@@ -9,5 +9,6 @@ export const suit = localFont({
 export const dmSans = DM_Sans({
   variable: '--font-dm-sans',
   subsets: ['latin'],
+  style: ['italic', 'normal'],
   adjustFontFallback: false,
 })
