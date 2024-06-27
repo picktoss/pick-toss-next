@@ -1,5 +1,5 @@
 import { deleteDocument } from '@/apis/fetchers/document/delete-document'
-import { Document } from '@/apis/fetchers/document/get-documents-for-category'
+import { Document } from '@/apis/fetchers/document/get-documents-for-category/fetcher'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogClose, DialogContent } from '@/components/ui/dialog'
 import icons from '@/constants/icons'

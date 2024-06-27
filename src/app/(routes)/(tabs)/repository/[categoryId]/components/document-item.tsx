@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { cn } from '@/lib/utils'
-import { Document } from '@/apis/fetchers/document/get-documents-for-category'
+import { Document } from '@/apis/fetchers/document/get-documents-for-category/fetcher'
 import { useState } from 'react'
 import DeleteDocumentModal from './delete-document.modal'
 import ModifyDocumentNameModal from './modify-document-name-modal'

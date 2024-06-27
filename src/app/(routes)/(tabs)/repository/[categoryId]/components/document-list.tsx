@@ -9,12 +9,10 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { ButtonHTMLAttributes, HTMLAttributes, useState } from 'react'
 import DocumentItem from './document-item'
-import { getDocumentsForCategory } from '@/apis/fetchers/document/get-documents-for-category'
-import { useSession } from 'next-auth/react'
-import { useQuery } from '@tanstack/react-query'
 import icons from '@/constants/icons'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
+import { useGetDocumentsForCategory } from '@/apis/fetchers/document/get-documents-for-category/query'
 
 const SORT_OPTION_TYPE = ['createdAt', 'name', 'updatedAt'] as const
 
@@ -30,23 +28,15 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
 }
 
 export default function DocumentList({ categoryId, className }: Props) {
-  const { data: session } = useSession()
-
   const [sortOption, setSortOption] = useState<SortOption>('createdAt')
 
   const {
     data: documents,
     isError,
     isPending,
-  } = useQuery({
-    queryKey: ['documents', categoryId, sortOption],
-    queryFn: () =>
-      getDocumentsForCategory({
-        accessToken: session?.user.accessToken || '',
-        categoryId,
-        sortOption,
-      }).then((res) => res.documents),
-    enabled: !!session,
+  } = useGetDocumentsForCategory({
+    categoryId,
+    sortOption,
   })
 
   const handleSortOptionClick = (option: SortOption) => {
