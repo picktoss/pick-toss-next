@@ -2,7 +2,7 @@ import NextAuth, { Account, DefaultSession, NextAuthResult } from 'next-auth'
 import { signIn as signInAPI } from '@/apis/fetchers/auth/sign-in'
 import Kakao from 'next-auth/providers/kakao'
 import Google from 'next-auth/providers/google'
-import { getUser } from '@/apis/fetchers/user/get-user'
+import { getUser } from '@/apis/fetchers/user/get-user/fetcher'
 import { UserDTO } from '@/apis/types/dto/user.dto'
 
 declare module 'next-auth' {

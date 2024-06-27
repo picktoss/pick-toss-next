@@ -1,6 +1,6 @@
 'use client'
 
-import { getTodayQuizSetId } from '@/apis/fetchers/quiz/get-today-quiz-set-id'
+import { getTodayQuizSetId } from '@/apis/fetchers/quiz/get-today-quiz-set-id/fetcher'
 import { CategoryProtector } from '@/components/category-protector'
 import { SwitchCase } from '@/components/react/switch-case'
 import { Button } from '@/components/ui/button'

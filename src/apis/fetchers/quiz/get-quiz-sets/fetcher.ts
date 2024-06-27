@@ -1,5 +1,4 @@
 import { API_ENDPOINT } from '@/apis/api-endpoint'
-import { auth } from '@/app/api/auth/[...nextauth]/auth'
 import { apiClient } from '@/lib/api-client'
 
 interface Document {
@@ -33,6 +32,8 @@ interface MultipleChoiceQuiz extends BaseQuiz<'MULTIPLE_CHOICE'> {
 
 interface GetQuizSetsParams extends NextFetchRequestConfig {
   quizSetId: string
+
+  accessToken: string
 }
 
 export interface GetQuizSetsResponse {
@@ -41,13 +42,11 @@ export interface GetQuizSetsResponse {
 }
 
 export const getQuizSets = async (params: GetQuizSetsParams) => {
-  const session = await auth()
-
   try {
     return await apiClient.fetch<GetQuizSetsResponse>({
       ...API_ENDPOINT.quiz.getQuizSets(params.quizSetId),
       headers: {
-        Authorization: `Bearer ${session?.user.accessToken}`,
+        Authorization: `Bearer ${params.accessToken}`,
       },
     })
   } catch (error) {
