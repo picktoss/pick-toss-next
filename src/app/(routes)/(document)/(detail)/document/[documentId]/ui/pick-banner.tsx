@@ -5,9 +5,10 @@ import Image from 'next/image'
 
 interface Props {
   status: DocumentStatus
+  rePick: () => void
 }
 
-export function PickBanner({ status }: Props) {
+export function PickBanner({ status, rePick }: Props) {
   return (
     <SwitchCase
       value={status}
@@ -30,7 +31,11 @@ export function PickBanner({ status }: Props) {
                 퀴즈와 요약에 수정한 내용을 반영해보세요
               </div>
             </div>
-            <div role="button" className="p-[5px] text-small1-bold text-orange-06">
+            <div
+              role="button"
+              className="p-[5px] text-small1-bold text-orange-06"
+              onClick={() => rePick()}
+            >
               pick 다시하기
             </div>
           </div>

@@ -1,10 +1,14 @@
+'use client'
+
 import { getDocument } from '@/apis/fetchers/document/get-document'
-import { auth } from '@/app/api/auth/[...nextauth]/auth'
 import { CommonLayout } from '@/components/common-layout'
 import VisualViewport from '@/components/react/visual-viewport'
 import { Viewer } from './components/viewer'
 import { DocumentDetailProvider } from './contexts/document-detail-context'
 import { AiPick } from './components/ai-pick'
+import { useSession } from 'next-auth/react'
+import { useQuery } from '@tanstack/react-query'
+import Loading from '@/components/loading'
 
 interface Props {
   params: {
@@ -12,12 +16,26 @@ interface Props {
   }
 }
 
-export default async function Document({ params: { documentId } }: Props) {
-  const session = await auth()
-  const { documentName, createdAt, content, keyPoints, status } = await getDocument({
-    accessToken: session?.user.accessToken || '',
-    documentId: Number(documentId),
+export default function Document({ params: { documentId } }: Props) {
+  const { data: session } = useSession()
+  const { data: document } = useQuery({
+    queryKey: ['document', documentId],
+    queryFn: () =>
+      getDocument({
+        accessToken: session?.user.accessToken || '',
+        documentId: Number(documentId),
+      }),
+    enabled: !!session?.user.accessToken,
   })
+
+  if (!document)
+    return (
+      <div className="relative size-full h-screen">
+        <Loading center />
+      </div>
+    )
+
+  const { documentName, status, createdAt, content, keyPoints } = document
 
   return (
     <VisualViewport hideYScrollbar>
