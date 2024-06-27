@@ -2,22 +2,24 @@
 
 import { Button } from '@/components/ui/button'
 import { msToElapsedTime } from '@/utils/time'
-import { useRouter } from 'next/navigation'
 import { HTMLAttributes } from 'react'
+import { QuizExitDialog } from './quiz-exit-dialog'
 
 interface QuizHeaderProps extends HTMLAttributes<HTMLDivElement> {
   totalElapsedTime: number
 }
 
 export default function QuizHeader({ className, totalElapsedTime }: QuizHeaderProps) {
-  const router = useRouter()
-
   return (
     <div className={className}>
       <div className="flex items-center justify-between">
-        <Button variant="ghost" size="icon" className="flex flex-col" onClick={() => router.back()}>
-          <ExitIcon />
-        </Button>
+        <QuizExitDialog
+          trigger={
+            <Button variant="ghost" size="icon" className="flex flex-col">
+              <ExitIcon />
+            </Button>
+          }
+        />
         <div className="flex items-end gap-[8px]">
           <TimerIcon />
           <span className="text-body2-medium text-gray-07">
