@@ -4,7 +4,7 @@ import Image from 'next/image'
 import icons from '@/constants/icons'
 import { Button } from '@/components/ui/button'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { createCategory } from '@/apis/fetchers/category/create-category'
+import { createCategory } from '@/apis/fetchers/category/create-category/fetcher'
 import { useSession } from 'next-auth/react'
 import { CATEGORY_TAG_TYPE, CategoryTagType } from '@/apis/fetchers/category/get-categories/fetcher'
 import {

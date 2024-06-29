@@ -1,4 +1,4 @@
-import { deleteCategory } from '@/apis/fetchers/category/delete-category'
+import { deleteCategory } from '@/apis/fetchers/category/delete-category/fetcher'
 import { Category } from '@/apis/fetchers/category/get-categories/fetcher'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogClose, DialogContent } from '@/components/ui/dialog'

@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 import { Document } from '@/apis/fetchers/document/get-documents-for-category/fetcher'
-import { updateDocumentName } from '@/apis/fetchers/document/update-document-name'
+import { updateDocumentName } from '@/apis/fetchers/document/update-document-name/fetcher'
 import { useParams } from 'next/navigation'
 import { SortOption } from './document-list'
 

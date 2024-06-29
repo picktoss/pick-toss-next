@@ -8,7 +8,7 @@ import { useSession } from 'next-auth/react'
 import CategoryAccordionList from './components/category-accordion-list'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useQuery } from '@tanstack/react-query'
-import { searchDocument } from '@/apis/fetchers/document/search-document'
+import { searchDocument } from '@/apis/fetchers/document/search-document/fetcher'
 import Loading from '@/components/loading'
 import { SearchResult } from './components/search-result'
 

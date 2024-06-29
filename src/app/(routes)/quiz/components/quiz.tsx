@@ -14,13 +14,13 @@ import { INTRO_DURATION, SHOW_RESULT_DURATION } from '../constants'
 import { SwitchCase } from '@/components/react/switch-case'
 import { useTimer } from '../hooks/use-timer'
 import { useMutation } from '@tanstack/react-query'
-import { patchQuizResult } from '@/apis/fetchers/quiz/patch-quiz-result'
+import { patchQuizResult } from '@/apis/fetchers/quiz/patch-quiz-result/fetcher'
 import { useSearchParams } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import QuizResult from './quiz-result'
 import { ChoiceReact } from './choice-react'
 import { ReportQuizError } from './report-quiz-error'
-import { deleteQuiz } from '@/apis/fetchers/quiz/delete-quiz'
+import { deleteQuiz } from '@/apis/fetchers/quiz/delete-quiz/fetcher'
 
 interface QuizProps {
   quizzes: QuizDTO[]

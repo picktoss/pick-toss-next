@@ -11,7 +11,7 @@ import {
   Category,
   CategoryTagType,
 } from '@/apis/fetchers/category/get-categories/fetcher'
-import { updateCategory } from '@/apis/fetchers/category/update-category'
+import { updateCategory } from '@/apis/fetchers/category/update-category/fetcher'
 import {
   DropdownMenu,
   DropdownMenuContent,

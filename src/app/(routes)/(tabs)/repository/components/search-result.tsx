@@ -1,4 +1,4 @@
-import { SearchDocumentResponse } from '@/apis/fetchers/document/search-document'
+import { SearchDocumentResponse } from '@/apis/fetchers/document/search-document/fetcher'
 import { CommonLayout } from '@/components/common-layout'
 import { SearchForm } from '@/components/search-form'
 

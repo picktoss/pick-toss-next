@@ -1,7 +1,7 @@
 'use client'
 
 import { API_ENDPOINT } from '@/apis/api-endpoint'
-import { updateUserName } from '@/apis/fetchers/user/update-user-name'
+import { updateUserName } from '@/apis/fetchers/user/update-user-name/fetcher'
 import { Button } from '@/components/ui/button'
 import { useToast } from '@/hooks/use-toast'
 import { actionRevalidatePath } from '@/lib/revalidate'

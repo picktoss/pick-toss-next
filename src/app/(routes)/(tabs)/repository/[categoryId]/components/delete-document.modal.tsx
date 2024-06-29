@@ -1,4 +1,4 @@
-import { deleteDocument } from '@/apis/fetchers/document/delete-document'
+import { deleteDocument } from '@/apis/fetchers/document/delete-document/fetcher'
 import { Document } from '@/apis/fetchers/document/get-documents-for-category/fetcher'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogClose, DialogContent } from '@/components/ui/dialog'
