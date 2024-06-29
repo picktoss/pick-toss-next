@@ -11,7 +11,6 @@ import { cn } from '@/lib/utils'
 import { motion, AnimatePresence } from 'framer-motion'
 import { SwitchCase } from '@/components/react/switch-case'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { createAiPick } from '@/apis/fetchers/document/create-ai-pick/fetcher'
 import { useSession } from 'next-auth/react'
 import { useParams } from 'next/navigation'
 import { toggleBookmark } from '@/apis/fetchers/key-point/toggle-bookmark/fetcher'
@@ -25,6 +24,7 @@ import {
   useGetKeyPointsByIdQuery,
 } from '@/apis/fetchers/key-point/get-key-points-by-id/query'
 import { GetKeyPointsByIdResponse } from '@/apis/fetchers/key-point/get-key-points-by-id/fetcher'
+import { useCreateAIPickMutation } from '@/apis/fetchers/document/create-ai-pick/mutation'
 
 interface Props {
   initKeyPoints: {
@@ -74,29 +74,7 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
     },
   })
 
-  const { mutate: mutateCreateAiPick } = useMutation({
-    mutationKey: ['create-ai-pick'],
-    mutationFn: ({ rePick }: { rePick: boolean }) => {
-      queryClient.setQueryData<GetKeyPointsByIdResponse>(
-        [GET_KEY_POINTS_BY_ID_KEY, documentId],
-        (oldData) => {
-          if (!oldData) return oldData
-
-          return {
-            ...oldData,
-            documentStatus: 'PROCESSING',
-            keyPoints: rePick ? [] : oldData.keyPoints,
-          }
-        }
-      )
-      prevStatusRef.current = 'PROCESSING'
-
-      return createAiPick({
-        documentId: Number(documentId),
-        accessToken: session.data?.user.accessToken || '',
-      })
-    },
-  })
+  const { mutate: mutateCreateAiPick } = useCreateAIPickMutation()
 
   const { mutate: mutateToggleBookmark } = useMutation({
     mutationKey: ['patch-toggle-bookmark'],
@@ -139,7 +117,8 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
   })
 
   const rePick = () => {
-    mutateCreateAiPick({ rePick: true })
+    prevStatusRef.current = 'PROCESSING'
+    mutateCreateAiPick({ documentId: Number(documentId), rePick: true })
   }
 
   useEffect(() => {
@@ -246,7 +225,10 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
                         variant="gradation"
                         size="sm"
                         className="w-fit gap-[4px]"
-                        onClick={() => mutateCreateAiPick({ rePick: false })}
+                        onClick={() => {
+                          prevStatusRef.current = 'PROCESSING'
+                          mutateCreateAiPick({ documentId: Number(documentId), rePick: false })
+                        }}
                       >
                         <StarsIcon />
                         pick 시작
@@ -317,7 +299,10 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
                 variant="gradation"
                 size="sm"
                 className="w-fit gap-[4px]"
-                onClick={() => mutateCreateAiPick({ rePick: false })}
+                onClick={() => {
+                  prevStatusRef.current = 'PROCESSING'
+                  mutateCreateAiPick({ documentId: Number(documentId), rePick: false })
+                }}
               >
                 <StarsIcon />
                 pick 시작
