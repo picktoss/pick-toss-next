@@ -1,16 +1,14 @@
 'use client'
 
-import { API_ENDPOINT } from '@/apis/api-endpoint'
-import { updateUserName } from '@/apis/fetchers/user/update-user-name/fetcher'
+import { useUpdateUsernameMutation } from '@/apis/fetchers/user/update-user-name/mutation'
 import { Button } from '@/components/ui/button'
 import { useToast } from '@/hooks/use-toast'
-import { actionRevalidatePath } from '@/lib/revalidate'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { ChangeEvent, useState } from 'react'
 
 export default function EditForm() {
-  const { data: session, update } = useSession()
+  const { data: session } = useSession()
   const router = useRouter()
   const { toast } = useToast()
 
@@ -28,38 +26,46 @@ export default function EditForm() {
     setIsButtonDisabled(false)
   }
 
-  const handleSubmit = async () => {
-    if (name.length === 0) return
+  const { mutate: mutateUpdateUsername } = useUpdateUsernameMutation()
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (name.trim().length === 0) return
 
     setIsButtonDisabled(true)
 
-    await updateUserName({ accessToken: session?.user.accessToken || '', name: name })
-    await Promise.all([update({}), actionRevalidatePath(API_ENDPOINT.user.getUser().url)])
-
-    toast({ description: '프로필이 변경되었습니다' })
-    router.push('/profile')
+    mutateUpdateUsername(
+      { name },
+      {
+        onSuccess: () => {
+          toast({ description: '프로필이 변경되었습니다' })
+          router.push('/profile')
+        },
+      }
+    )
   }
 
   return (
     <div>
       <label className="mb-[8px] text-small1-regular text-gray-07">이름</label>
-      <div className="flex h-[48px] w-full items-center rounded-sm border border-gray-01 bg-gray-01 px-[10px] focus-within:border-blue-05">
-        <input
-          name="name"
-          className="flex-1 bg-gray-01 outline-none"
-          value={name}
-          onChange={handleNameChange}
-        />
-        <span className="text-body1-medium text-gray-06">{name.length}/20</span>
-      </div>
-      <Button
-        className="float-end mt-[40px] text-[16px] font-bold"
-        size="lg"
-        onClick={handleSubmit}
-        disabled={name.length === 0 || isButtonDisabled}
-      >
-        완료
-      </Button>
+      <form onSubmit={(e) => handleSubmit(e)}>
+        <div className="flex h-[48px] w-full items-center rounded-sm border border-gray-01 bg-gray-01 px-[10px] focus-within:border-blue-05">
+          <input
+            name="name"
+            className="flex-1 bg-gray-01 outline-none"
+            value={name}
+            onChange={handleNameChange}
+          />
+          <span className="text-body1-medium text-gray-06">{name.length}/20</span>
+        </div>
+        <Button
+          className="float-end mt-[40px] text-[16px] font-bold"
+          size="lg"
+          disabled={name.length === 0 || isButtonDisabled}
+        >
+          완료
+        </Button>
+      </form>
     </div>
   )
 }
