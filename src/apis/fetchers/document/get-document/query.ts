@@ -21,5 +21,6 @@ export const useGetDocumentQuery = ({ documentId }: Params) => {
         documentId: documentId,
       }),
     enabled: !!session?.user.accessToken,
+    retry: false,
   })
 }

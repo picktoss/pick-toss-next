@@ -56,14 +56,14 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
   const isDesktop = useMediaQuery('(min-width: 1024px)')
   const { isPickOpen, setIsPickOpen } = useDocumentDetailContext()
   const [showToggle, setShowToggle] = useState(false)
-  const documentId = useParams().documentId as string
+  const documentId = Number(useParams().documentId as string)
   const queryClient = useQueryClient()
   const prevStatusRef = useRef<DocumentStatus>()
 
   const {
     data: { documentStatus: status, keyPoints },
   } = useGetKeyPointsByIdQuery({
-    documentId: Number(documentId),
+    documentId,
     initialData: {
       documentStatus: initStatus,
       keyPoints: initKeyPoints,
@@ -89,17 +89,17 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
     )
 
     mutateCreateAiPick({
-      documentId: Number(documentId),
+      documentId,
     })
   }
 
   const { mutate: mutateToggleBookmark } = useToggleBookmarkMutation({
-    documentId: Number(documentId),
+    documentId,
   })
 
   const handleToggleBookmark = (data: { keyPointId: number; bookmark: boolean }) => {
     queryClient.setQueryData<GetKeyPointsByIdResponse>(
-      [GET_KEY_POINTS_BY_ID_KEY, Number(documentId)],
+      [GET_KEY_POINTS_BY_ID_KEY, documentId],
       (oldData) => {
         if (!oldData) return oldData
 
@@ -120,7 +120,9 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
     if (prevStatusRef.current === 'PROCESSING' && status === 'PROCESSED') {
       const refetchDocument = async () => {
         prevStatusRef.current === 'PROCESSED'
-        await queryClient.refetchQueries({ queryKey: ['document', documentId] })
+        await queryClient.refetchQueries({
+          queryKey: [GET_KEY_POINTS_BY_ID_KEY, Number(documentId)],
+        })
       }
 
       void refetchDocument()
@@ -131,7 +133,7 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
     if (status !== 'PROCESSING') return
 
     const refetchKeyPoints = async () => {
-      await queryClient.refetchQueries({ queryKey: [GET_KEY_POINTS_BY_ID_KEY, documentId] })
+      await queryClient.refetchQueries({ queryKey: [GET_KEY_POINTS_BY_ID_KEY, Number(documentId)] })
       if (status === 'PROCESSING') {
         timerId = setTimeout(refetchKeyPoints, 4000)
       }
@@ -290,7 +292,7 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
                 variant="gradation"
                 size="sm"
                 className="w-fit gap-[4px]"
-                onClick={() => () => handleCreateAiPick()}
+                onClick={() => handleCreateAiPick()}
               >
                 <StarsIcon />
                 pick 시작

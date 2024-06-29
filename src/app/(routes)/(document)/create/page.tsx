@@ -1,17 +1,15 @@
 'use client'
 
 import Loading from '@/components/loading'
-import { useMutation } from '@tanstack/react-query'
-import { useSession } from 'next-auth/react'
 import dynamic from 'next/dynamic'
 import { CreateDocumentProvider } from './contexts/create-document-context'
 import { Header } from './components/header'
 import { TitleInput } from './components/title-input'
-import { createDocument } from '@/apis/fetchers/document/create-document/fetcher'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { useToast } from '@/hooks/use-toast'
 import { useGetCategoriesQuery } from '@/apis/fetchers/category/get-categories/query'
+import { useCreateDocumentMutation } from '@/apis/fetchers/document/create-document/mutation'
 
 const VisualEditor = dynamic(() => import('./components/visual-editor'), {
   ssr: false,
@@ -19,7 +17,6 @@ const VisualEditor = dynamic(() => import('./components/visual-editor'), {
 })
 
 export default function CreateDocument() {
-  const { data: session } = useSession()
   const router = useRouter()
   const { toast } = useToast()
 
@@ -27,9 +24,7 @@ export default function CreateDocument() {
 
   const { data: categories } = useGetCategoriesQuery()
 
-  const { mutateAsync } = useMutation({
-    mutationFn: createDocument,
-  })
+  const { mutateAsync } = useCreateDocumentMutation()
 
   const handleSubmit = async ({
     categoryId,
@@ -50,7 +45,6 @@ export default function CreateDocument() {
 
     await mutateAsync(
       {
-        accessToken: session?.user.accessToken || '',
         documentName: documentName,
         file,
         categoryId,

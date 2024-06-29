@@ -32,5 +32,8 @@ export const useGetKeyPointsByIdQuery = ({ documentId, initialData }: Params) =>
         documentId,
       }),
     initialData,
+
+    enabled: !!session?.user.accessToken,
+    retry: false,
   })
 }

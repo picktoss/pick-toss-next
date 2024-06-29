@@ -7,6 +7,7 @@ import { DocumentDetailProvider } from './contexts/document-detail-context'
 import { AiPick } from './components/ai-pick'
 import Loading from '@/components/loading'
 import { useGetDocumentQuery } from '@/apis/fetchers/document/get-document/query'
+import { notFound } from 'next/navigation'
 
 interface Props {
   params: {
@@ -15,7 +16,11 @@ interface Props {
 }
 
 export default function Document({ params: { documentId } }: Props) {
-  const { data: document } = useGetDocumentQuery({ documentId: Number(documentId) })
+  const { data: document, isError } = useGetDocumentQuery({ documentId: Number(documentId) })
+
+  if (isError) {
+    notFound()
+  }
 
   if (!document)
     return (
@@ -23,6 +28,10 @@ export default function Document({ params: { documentId } }: Props) {
         <Loading center />
       </div>
     )
+
+  if (isError) {
+    notFound()
+  }
 
   const { documentName, status, createdAt, content, keyPoints } = document
 
