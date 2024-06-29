@@ -1,10 +1,10 @@
 import { SearchKeyPointsResponse } from '@/apis/fetchers/key-point/search-key-points/fetcher'
 import { CommonLayout } from '@/components/common-layout'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { toggleBookmark } from '@/apis/fetchers/key-point/toggle-bookmark/fetcher'
-import { useSession } from 'next-auth/react'
+import { useQueryClient } from '@tanstack/react-query'
 import { SearchForm } from '@/components/search-form'
 import { KeyPointCard } from './key-point-card'
+import { useToggleBookmarkMutation } from '@/apis/fetchers/key-point/toggle-bookmark/mutation'
+import { SEARCH_KEY_POINTS_KEY } from '@/apis/fetchers/key-point/search-key-points/query'
 
 interface Props {
   term: string
@@ -14,23 +14,11 @@ interface Props {
 
 export function SearchResult({ term, keyPoints, onReSearch }: Props) {
   const queryClient = useQueryClient()
-  const { data: session } = useSession()
 
-  const { mutate: deleteBookmark } = useMutation({
-    mutationKey: ['patch-toggle-bookmark'],
-    mutationFn: (keyPointId: number) =>
-      toggleBookmark({
-        keypointId: keyPointId,
-        bookmark: false,
-        accessToken: session?.user.accessToken || '',
-      }),
-    onError: () => {
-      /** TODO: 에러 Toast, set back optimistic */
-    },
-  })
+  const { mutate: deleteBookmark } = useToggleBookmarkMutation()
 
   const handleDeleteBookmark = (keyPointId: number) => {
-    queryClient.setQueryData<SearchKeyPointsResponse>(['search', term], (oldData) => {
+    queryClient.setQueryData<SearchKeyPointsResponse>([SEARCH_KEY_POINTS_KEY, term], (oldData) => {
       if (!oldData) return oldData
 
       return {
@@ -39,7 +27,7 @@ export function SearchResult({ term, keyPoints, onReSearch }: Props) {
       }
     })
 
-    deleteBookmark(keyPointId)
+    deleteBookmark({ keyPointId, bookmark: false })
   }
 
   return (

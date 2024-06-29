@@ -2,20 +2,21 @@
 
 import { CommonLayout } from '@/components/common-layout'
 import { GetBookmarksResponse } from '@/apis/fetchers/key-point/get-bookmarks/fetcher'
-import { useSession } from 'next-auth/react'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { toggleBookmark } from '@/apis/fetchers/key-point/toggle-bookmark/fetcher'
+import { useQueryClient } from '@tanstack/react-query'
 import Loading from '@/components/loading'
 import { NoPicks } from './components/no-picks'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { searchKeyPoints } from '@/apis/fetchers/key-point/search-key-points/fetcher'
 import { SearchResult } from './components/search-result'
 import { KeyPointCard } from './components/key-point-card'
-import { useGetBookmarksQuery } from '@/apis/fetchers/key-point/get-bookmarks/query'
+import {
+  GET_BOOKMARKS_KEY,
+  useGetBookmarksQuery,
+} from '@/apis/fetchers/key-point/get-bookmarks/query'
+import { useToggleBookmarkMutation } from '@/apis/fetchers/key-point/toggle-bookmark/mutation'
+import { useSearchKeyPointsQuery } from '@/apis/fetchers/key-point/search-key-points/query'
 // import { CategorySelect } from './components/category-select'
 
 export default function Picks() {
-  const { data: session } = useSession()
   const queryClient = useQueryClient()
   const router = useRouter()
   const pathname = usePathname()
@@ -23,41 +24,27 @@ export default function Picks() {
 
   const { data: keyPoints, isLoading } = useGetBookmarksQuery()
 
-  const { mutate: deleteBookmark } = useMutation({
-    mutationKey: ['patch-toggle-bookmark'],
-    mutationFn: (keyPointId: number) =>
-      toggleBookmark({
-        keypointId: keyPointId,
-        bookmark: false,
-        accessToken: session?.user.accessToken || '',
-      }),
-    onError: () => {
-      /** TODO: 에러 Toast, set back optimistic */
-    },
-  })
+  const { mutate: deleteBookmark } = useToggleBookmarkMutation()
 
   const handleDeleteBookmark = (keyPointId: number) => {
-    queryClient.setQueryData<GetBookmarksResponse>(['bookmarks'], (oldData) => {
-      if (!oldData) return oldData
+    queryClient.setQueryData<GetBookmarksResponse['keyPoints']>(
+      [GET_BOOKMARKS_KEY],
+      (keyPoints) => {
+        if (!keyPoints) return keyPoints
 
-      return {
-        ...oldData,
-        keyPoints: oldData?.keyPoints.filter((keypoint) => keypoint.id !== keyPointId),
+        return keyPoints?.filter((keypoint) => keypoint.id !== keyPointId)
       }
-    })
+    )
 
-    deleteBookmark(keyPointId)
+    deleteBookmark({ keyPointId, bookmark: false })
   }
 
-  const { data: searchData } = useQuery({
-    queryKey: ['search-picks', term],
-    queryFn: () =>
-      searchKeyPoints({
-        term: term!,
-        accessToken: session?.user.accessToken || '',
-      }),
-    enabled: term != null && session?.user.accessToken != null,
-  })
+  const { data: searchData } = useSearchKeyPointsQuery(
+    { term: term! },
+    {
+      enabled: term != null,
+    }
+  )
 
   const showSearchResult = term != null
 

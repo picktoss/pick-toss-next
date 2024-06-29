@@ -9,7 +9,7 @@ import { ChevronDown } from 'lucide-react'
 
 export function PickAccordion({
   keyPoints,
-  mutateToggleBookmark,
+  handleToggleBookmark,
 }: {
   keyPoints: {
     id: number
@@ -17,7 +17,7 @@ export function PickAccordion({
     answer: string
     bookmark: boolean
   }[]
-  mutateToggleBookmark: (data: { keypointId: number; bookmark: boolean }) => void
+  handleToggleBookmark: (data: { keyPointId: number; bookmark: boolean }) => void
 }) {
   return (
     <Accordion type="multiple" className="flex flex-col gap-[19px]">
@@ -44,8 +44,8 @@ export function PickAccordion({
               <div
                 role="button"
                 onClick={() =>
-                  mutateToggleBookmark({
-                    keypointId: keyPoint.id,
+                  handleToggleBookmark({
+                    keyPointId: keyPoint.id,
                     bookmark: !keyPoint.bookmark,
                   })
                 }

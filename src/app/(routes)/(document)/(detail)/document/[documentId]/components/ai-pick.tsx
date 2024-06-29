@@ -10,12 +10,9 @@ import { useEffect, useRef, useState } from 'react'
 import { cn } from '@/lib/utils'
 import { motion, AnimatePresence } from 'framer-motion'
 import { SwitchCase } from '@/components/react/switch-case'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useSession } from 'next-auth/react'
+import { useQueryClient } from '@tanstack/react-query'
 import { useParams } from 'next/navigation'
-import { toggleBookmark } from '@/apis/fetchers/key-point/toggle-bookmark/fetcher'
 import { DocumentStatus } from '@/apis/types/dto/document.dto'
-import { useToast } from '@/hooks/use-toast'
 import { GeneratingPicks } from '../ui/generating-picks'
 import { PickBanner } from '../ui/pick-banner'
 import { PickAccordion } from '../ui/pick-accordion'
@@ -25,6 +22,7 @@ import {
 } from '@/apis/fetchers/key-point/get-key-points-by-id/query'
 import { GetKeyPointsByIdResponse } from '@/apis/fetchers/key-point/get-key-points-by-id/fetcher'
 import { useCreateAIPickMutation } from '@/apis/fetchers/document/create-ai-pick/mutation'
+import { useToggleBookmarkMutation } from '@/apis/fetchers/key-point/toggle-bookmark/mutation'
 
 interface Props {
   initKeyPoints: {
@@ -58,10 +56,8 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
   const isDesktop = useMediaQuery('(min-width: 1024px)')
   const { isPickOpen, setIsPickOpen } = useDocumentDetailContext()
   const [showToggle, setShowToggle] = useState(false)
-  const session = useSession()
   const documentId = useParams().documentId as string
   const queryClient = useQueryClient()
-  const { toast } = useToast()
   const prevStatusRef = useRef<DocumentStatus>()
 
   const {
@@ -76,49 +72,47 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
 
   const { mutate: mutateCreateAiPick } = useCreateAIPickMutation()
 
-  const { mutate: mutateToggleBookmark } = useMutation({
-    mutationKey: ['patch-toggle-bookmark'],
-    mutationFn: (data: { keypointId: number; bookmark: boolean }) => {
-      queryClient.setQueryData<GetKeyPointsByIdResponse>(
-        [GET_KEY_POINTS_BY_ID_KEY, documentId],
-        (oldData) => {
-          if (!oldData) return oldData
+  const handleCreateAiPick = (option?: { rePick: boolean }) => {
+    prevStatusRef.current = 'PROCESSING'
 
-          return {
-            ...oldData,
-            keyPoints: oldData?.keyPoints.map((keypoint) =>
-              keypoint.id !== data.keypointId ? keypoint : { ...keypoint, bookmark: data.bookmark }
-            ),
-          }
+    queryClient.setQueryData<GetKeyPointsByIdResponse>(
+      [GET_KEY_POINTS_BY_ID_KEY, documentId],
+      (oldData) => {
+        if (!oldData) return oldData
+
+        return {
+          ...oldData,
+          documentStatus: 'PROCESSING',
+          keyPoints: option?.rePick ? [] : oldData.keyPoints,
         }
-      )
+      }
+    )
 
-      return toggleBookmark({
-        ...data,
-        accessToken: session.data?.user.accessToken || '',
-      })
-    },
-    onSuccess: (_, variable) => {
-      const description = variable.bookmark ? 'pick이 저장되었습니다' : 'pick이 저장 해제되었습니다'
+    mutateCreateAiPick({
+      documentId: Number(documentId),
+    })
+  }
 
-      toast({
-        description: description,
-      })
-    },
-    onSettled: async () => {
-      await queryClient.refetchQueries({
-        queryKey: [GET_KEY_POINTS_BY_ID_KEY, documentId],
-        exact: true,
-      })
-    },
-    onError: async () => {
-      /** TODO: 실패 안내 */
-    },
+  const { mutate: mutateToggleBookmark } = useToggleBookmarkMutation({
+    documentId: Number(documentId),
   })
 
-  const rePick = () => {
-    prevStatusRef.current = 'PROCESSING'
-    mutateCreateAiPick({ documentId: Number(documentId), rePick: true })
+  const handleToggleBookmark = (data: { keyPointId: number; bookmark: boolean }) => {
+    queryClient.setQueryData<GetKeyPointsByIdResponse>(
+      [GET_KEY_POINTS_BY_ID_KEY, Number(documentId)],
+      (oldData) => {
+        if (!oldData) return oldData
+
+        return {
+          ...oldData,
+          keyPoints: oldData?.keyPoints.map((keypoint) =>
+            keypoint.id !== data.keyPointId ? keypoint : { ...keypoint, bookmark: data.bookmark }
+          ),
+        }
+      }
+    )
+
+    mutateToggleBookmark(data)
   }
 
   useEffect(() => {
@@ -208,7 +202,7 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
                 </div>
 
                 <div className="px-[10px]">
-                  <PickBanner status={status} rePick={rePick} />
+                  <PickBanner status={status} rePick={() => handleCreateAiPick()} />
                 </div>
               </div>
 
@@ -225,10 +219,7 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
                         variant="gradation"
                         size="sm"
                         className="w-fit gap-[4px]"
-                        onClick={() => {
-                          prevStatusRef.current = 'PROCESSING'
-                          mutateCreateAiPick({ documentId: Number(documentId), rePick: false })
-                        }}
+                        onClick={() => handleCreateAiPick()}
                       >
                         <StarsIcon />
                         pick 시작
@@ -239,8 +230,8 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
                   <div className="flex flex-col gap-[40px] pb-[60px] pl-[16px] pr-[18px]">
                     <PickAccordion
                       keyPoints={keyPoints}
-                      mutateToggleBookmark={(data: { keypointId: number; bookmark: boolean }) =>
-                        mutateToggleBookmark(data)
+                      handleToggleBookmark={(data: { keyPointId: number; bookmark: boolean }) =>
+                        handleToggleBookmark(data)
                       }
                     />
                     {status === 'PROCESSING' && <GeneratingPicks />}
@@ -284,7 +275,7 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
             </h3>
 
             <div className="px-[15px]">
-              <PickBanner status={status} rePick={rePick} />
+              <PickBanner status={status} rePick={() => handleCreateAiPick()} />
             </div>
           </div>
 
@@ -299,10 +290,7 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
                 variant="gradation"
                 size="sm"
                 className="w-fit gap-[4px]"
-                onClick={() => {
-                  prevStatusRef.current = 'PROCESSING'
-                  mutateCreateAiPick({ documentId: Number(documentId), rePick: false })
-                }}
+                onClick={() => () => handleCreateAiPick()}
               >
                 <StarsIcon />
                 pick 시작
@@ -312,9 +300,8 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
             <div className="mt-[12px] flex flex-col gap-[40px] overflow-auto pb-[60px] pl-[16px] pr-[24px]">
               <PickAccordion
                 keyPoints={keyPoints}
-                mutateToggleBookmark={(data: { keypointId: number; bookmark: boolean }) => {
-                  prevStatusRef.current = 'PROCESSING'
-                  mutateToggleBookmark(data)
+                handleToggleBookmark={(data: { keyPointId: number; bookmark: boolean }) => {
+                  handleToggleBookmark(data)
                 }}
               />
               {status === 'PROCESSING' && <GeneratingPicks />}
