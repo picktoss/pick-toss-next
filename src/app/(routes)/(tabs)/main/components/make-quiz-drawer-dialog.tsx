@@ -9,8 +9,6 @@ import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { CategoryDTO } from '@/apis/types/dto/category.dto'
 import { useCheckList } from '@/hooks/use-check-list'
-import { useMutation } from '@tanstack/react-query'
-import { createQuizzes } from '@/apis/fetchers/quiz/create-quizzes/fetcher'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import Loading from '@/components/loading'
@@ -34,6 +32,7 @@ import { QuizType } from '@/apis/types/dto/quiz.dto'
 import { DocumentStatus } from '@/apis/types/dto/document.dto'
 import { CategoryProtector } from '@/components/category-protector'
 import Div100vh from 'react-div-100vh'
+import { useCreateQuizzesMutation } from '@/apis/fetchers/quiz/create-quizzes/mutation'
 
 const QUIZ_COUNT_OPTIONS = [3, 5, 10, 15, 20]
 const DEFAULT_QUIZ_COUNT = 5
@@ -53,7 +52,7 @@ interface Props {
 }
 
 export default function MakeQuizDrawerDialog({ trigger, categories, quizType = 'MIX_UP' }: Props) {
-  const { data: session, update: updateSession } = useSession()
+  const { data: session } = useSession()
   const router = useRouter()
   const [open, setOpen] = useState(false)
   const isDesktop = useMediaQuery('(min-width: 1024px)')
@@ -61,16 +60,7 @@ export default function MakeQuizDrawerDialog({ trigger, categories, quizType = '
 
   const userPoints = session?.user.dto.point || 0
 
-  const { mutate: mutateCreateQuizzes } = useMutation({
-    mutationKey: ['create-quizzes'],
-    mutationFn: ({ documentIds, count }: { documentIds: number[]; count: number }) =>
-      createQuizzes({
-        documentIds,
-        point: count,
-        quizType,
-        accessToken: session?.user.accessToken || '',
-      }),
-  })
+  const { mutate: mutateCreateQuizzes } = useCreateQuizzesMutation()
 
   const handleCreateQuizzes = ({
     documentIds,
@@ -96,10 +86,10 @@ export default function MakeQuizDrawerDialog({ trigger, categories, quizType = '
       {
         documentIds,
         count,
+        quizType,
       },
       {
-        onSuccess: async ({ quizSetId }) => {
-          await updateSession({})
+        onSuccess: ({ quizSetId }) => {
           router.push(`/quiz?quizSetId=${quizSetId}`)
         },
       }
