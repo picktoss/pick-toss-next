@@ -1,20 +1,19 @@
 'use client'
 
-import { API_ENDPOINT } from '@/apis/api-endpoint'
-import { updateQuizNotification } from '@/apis/fetchers/user/update-quiz-notification'
+import { useUpdateQuizNotificationMutation } from '@/apis/fetchers/user/update-quiz-notification/mutation'
 import { Switch } from '@/components/ui/switch'
-import { actionRevalidatePath } from '@/lib/revalidate'
 import { useSession } from 'next-auth/react'
 
 export default function QuizNotificationSwitch() {
-  const { data: session, update } = useSession()
+  const { data: session } = useSession()
+  const { mutate: mutateUpdateQuiz } = useUpdateQuizNotificationMutation()
 
-  const handleCheckedChange = async (checked: boolean) => {
-    await updateQuizNotification({
-      accessToken: session?.user.accessToken || '',
-      quizNotificationEnabled: checked,
-    })
-    await Promise.all([update({}), actionRevalidatePath(API_ENDPOINT.user.getUser().url)])
+  if (!session?.user) {
+    return (
+      <div className="flex h-[22.5px] items-center">
+        <p className="text-small1-regular text-gray-07">퀴즈 알림</p>
+      </div>
+    )
   }
 
   return (
@@ -22,8 +21,8 @@ export default function QuizNotificationSwitch() {
       <p className="text-small1-regular text-gray-07">퀴즈 알림</p>
       <Switch
         displayStatus
-        defaultChecked={session?.user.dto.quizNotificationEnabled}
-        onCheckedChange={handleCheckedChange}
+        defaultChecked={session.user.dto.quizNotificationEnabled}
+        onCheckedChange={(checked: boolean) => mutateUpdateQuiz({ checked })}
       />
     </div>
   )
