@@ -34,7 +34,7 @@ export default function EditForm() {
     setIsButtonDisabled(true)
 
     await updateUserName({ accessToken: session?.user.accessToken || '', name: name })
-    await Promise.all([update(), actionRevalidatePath(API_ENDPOINT.user.getUser().url)])
+    await Promise.all([update({}), actionRevalidatePath(API_ENDPOINT.user.getUser().url)])
 
     toast({ description: '프로필이 변경되었습니다' })
     router.push('/profile')

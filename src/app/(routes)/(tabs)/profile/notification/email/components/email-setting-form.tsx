@@ -46,7 +46,7 @@ export default function EmailSettingForm() {
       const description = isFirstEmail.current
         ? '알림 받을 이메일이 등록되었습니다'
         : '알림 받을 이메일이 변경되었습니다'
-      await Promise.all([update(), actionRevalidatePath(API_ENDPOINT.user.getUser().url)])
+      await Promise.all([update({}), actionRevalidatePath(API_ENDPOINT.user.getUser().url)])
       toast({ description: description })
       router.push('/profile/notification')
     },

@@ -14,7 +14,7 @@ export default function QuizNotificationSwitch() {
       accessToken: session?.user.accessToken || '',
       quizNotificationEnabled: checked,
     })
-    await Promise.all([update(), actionRevalidatePath(API_ENDPOINT.user.getUser().url)])
+    await Promise.all([update({}), actionRevalidatePath(API_ENDPOINT.user.getUser().url)])
   }
 
   return (
