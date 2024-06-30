@@ -14,6 +14,7 @@ import {
 } from '@/apis/fetchers/key-point/get-bookmarks/query'
 import { useToggleBookmarkMutation } from '@/apis/fetchers/key-point/toggle-bookmark/mutation'
 import { useSearchKeyPointsQuery } from '@/apis/fetchers/key-point/search-key-points/query'
+import { LOCAL_KEY } from '@/constants/recent-search-term'
 // import { CategorySelect } from './components/category-select'
 
 export default function Picks() {
@@ -46,6 +47,24 @@ export default function Picks() {
     }
   )
 
+  const handleSubmit = (data: { term: string }) => {
+    const trimTerm = data.term.trim()
+
+    if (trimTerm === '') return
+
+    const localItem = localStorage.getItem(LOCAL_KEY.SEARCH_PICK)
+    const prevRecentTerms = localItem
+      ? (JSON.parse(localItem) as unknown as string[])
+      : ([] as string[])
+
+    localStorage.setItem(
+      LOCAL_KEY.SEARCH_PICK,
+      JSON.stringify([trimTerm, ...prevRecentTerms].slice(0, 5))
+    )
+
+    router.push(`${pathname}/?term=${trimTerm}`)
+  }
+
   const showSearchResult = term != null
 
   return (
@@ -55,13 +74,7 @@ export default function Picks() {
           {!searchData ? (
             <Loading center />
           ) : (
-            <SearchResult
-              term={term}
-              keyPoints={searchData.keyPoints}
-              onReSearch={({ term }: { term: string }) => {
-                router.push(`${pathname}/?term=${term}`)
-              }}
-            />
+            <SearchResult term={term} keyPoints={searchData.keyPoints} onReSearch={handleSubmit} />
           )}
         </div>
       ) : (
@@ -73,10 +86,8 @@ export default function Picks() {
           }}
           searchOptions={{
             placeholder: '노트명, pick 내용을 입력하세요',
-            recentTerms: ['식물기반 단백질', '제품', '최근 이슈'],
-            onSubmit: ({ term }) => {
-              router.push(`${pathname}/?term=${term}`)
-            },
+            onSubmit: handleSubmit,
+            recentTermsLocalKey: LOCAL_KEY.SEARCH_PICK,
           }}
         >
           {isLoading ? (

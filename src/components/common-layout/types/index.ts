@@ -13,6 +13,6 @@ export interface MobileOptions {
 
 export interface SearchOptions {
   placeholder: string
-  recentTerms: string[]
+  recentTermsLocalKey: string
   onSubmit: SearchFormSubmitType
 }

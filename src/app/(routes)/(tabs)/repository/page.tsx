@@ -11,6 +11,7 @@ import { useQuery } from '@tanstack/react-query'
 import { searchDocument } from '@/apis/fetchers/document/search-document/fetcher'
 import Loading from '@/components/loading'
 import { SearchResult } from './components/search-result'
+import { LOCAL_KEY } from '@/constants/recent-search-term'
 
 export default function Repository() {
   const { data: session } = useSession()
@@ -28,6 +29,24 @@ export default function Repository() {
     enabled: term != null && session?.user.accessToken != null,
   })
 
+  const handleSubmit = (data: { term: string }) => {
+    const trimTerm = data.term.trim()
+
+    if (trimTerm === '') return
+
+    const localItem = localStorage.getItem(LOCAL_KEY.SEARCH_DOCUMENT)
+    const prevRecentTerms = localItem
+      ? (JSON.parse(localItem) as unknown as string[])
+      : ([] as string[])
+
+    localStorage.setItem(
+      LOCAL_KEY.SEARCH_DOCUMENT,
+      JSON.stringify([trimTerm, ...prevRecentTerms].slice(0, 5))
+    )
+
+    router.push(`${pathname}/?term=${trimTerm}`)
+  }
+
   const showSearchResult = term != null
 
   return (
@@ -37,13 +56,7 @@ export default function Repository() {
           {!searchData ? (
             <Loading center />
           ) : (
-            <SearchResult
-              term={term}
-              documents={searchData.documents}
-              onReSearch={({ term }: { term: string }) => {
-                router.push(`${pathname}/?term=${term}`)
-              }}
-            />
+            <SearchResult term={term} documents={searchData.documents} onReSearch={handleSubmit} />
           )}
         </div>
       ) : (
@@ -66,10 +79,8 @@ export default function Repository() {
           }}
           searchOptions={{
             placeholder: '노트명, 노트 내용을 입력하세요',
-            recentTerms: ['식물기반 단백질', '제품', '최근 이슈'],
-            onSubmit: ({ term }) => {
-              router.push(`${pathname}/?term=${term}`)
-            },
+            recentTermsLocalKey: LOCAL_KEY.SEARCH_DOCUMENT,
+            onSubmit: handleSubmit,
           }}
         >
           {/* TODO: height calc 계산보다 더 나은 방식(상대적인 height 계산) 필요 */}

@@ -28,11 +28,7 @@ export function CommonLayout({ title, hideHeader, mobileOptions, searchOptions, 
   }
 
   const handleSubmit = (data: { term: string }) => {
-    const trimTerm = data.term.trim()
-
-    if (trimTerm === '') return
-
-    searchOptions?.onSubmit({ term: trimTerm })
+    searchOptions?.onSubmit(data)
     setSearchingFalse()
   }
 
@@ -60,6 +56,7 @@ export function CommonLayout({ title, hideHeader, mobileOptions, searchOptions, 
           searchOptions={searchOptions}
           setSearchingFalse={setSearchingFalse}
           handleSubmit={handleSubmit}
+          recentTermsLocalKey={searchOptions?.recentTermsLocalKey || ''}
         />
       ) : (
         <>
