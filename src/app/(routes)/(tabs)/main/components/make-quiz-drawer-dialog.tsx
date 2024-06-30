@@ -124,16 +124,18 @@ export default function MakeQuizDrawerDialog({ trigger, categories, quizType = '
         </DrawerTrigger>
       </CategoryProtector>
       <DrawerContent className="rounded-none" hideSidebar>
-        {startedCreate ? (
-          <Loading center />
-        ) : (
-          <MakeQuizDrawerContent
-            categories={categories}
-            handleCreateQuizzes={handleCreateQuizzes}
-            closeDrawer={() => setOpen(false)}
-            quizType={quizType}
-          />
-        )}
+        <Div100vh>
+          {startedCreate ? (
+            <Loading center />
+          ) : (
+            <MakeQuizDrawerContent
+              categories={categories}
+              handleCreateQuizzes={handleCreateQuizzes}
+              closeDrawer={() => setOpen(false)}
+              quizType={quizType}
+            />
+          )}
+        </Div100vh>
       </DrawerContent>
     </Drawer>
   )
@@ -375,207 +377,205 @@ function MakeQuizDrawerContent({
   })
 
   return (
-    <Div100vh>
-      <div className="px-[20px]">
-        <div className="relative h-[48px]">
-          <Button variant="ghost" size="icon" className="ml-[-12px]" onClick={() => closeDrawer()}>
-            <ChevronDownIcon />
-          </Button>
-          <div className="center text-body1-bold text-gray-09">
-            {quizType === 'MIX_UP' ? 'O/X 퀴즈' : '객관식 퀴즈'}
-          </div>
-        </div>
-
-        <h3 className="text-h3-bold text-gray-09">
-          원하는 폴더와 노트,
-          <br />
-          퀴즈 수를 선택해주세요
-        </h3>
-
-        <div className="mt-[48px]">
-          <div className="flex items-center gap-[27px]">
-            <div className="flex flex-col gap-[10px]">
-              <div className="w-[52px] shrink-0 text-body2-medium text-gray-08">폴더</div>
-              <Drawer open={openFolderDrawer} onOpenChange={setOpenFolderDrawer}>
-                <DrawerTrigger
-                  className="cursor-pointer"
-                  onClick={() => {
-                    setStep('folder')
-                    unCheckDocumentAllWithoutIgnored()
-                  }}
-                >
-                  <FakeSelectTrigger
-                    emoji={curCategory.emoji}
-                    value={curCategory.name}
-                    className="w-[186px]"
-                  />
-                </DrawerTrigger>
-                <DrawerContent className="h-[510px]">
-                  <SelectDrawerContent
-                    step={step}
-                    selectCheckItems={
-                      <SelectCheckItems
-                        items={step === 'folder' ? categoryList : documentList}
-                        isAllChecked={
-                          step === 'folder'
-                            ? isCategoryAllChecked()
-                            : isDocumentAllCheckedWithoutIgnored()
-                        }
-                        unCheckAll={
-                          step === 'folder' ? unCheckCategoryAll : unCheckDocumentAllWithoutIgnored
-                        }
-                        checkAll={
-                          step === 'folder' ? checkCategoryAll : checkDocumentAllWithoutIgnored
-                        }
-                        toggle={step === 'folder' ? toggleCategoryChecked : toggleDocumentChecked}
-                        selectType={step === 'folder' ? 'category' : 'document'}
-                      />
-                    }
-                    init={() => {
-                      unCheckCategoryAll()
-                      unCheckDocumentAllWithoutIgnored()
-                      setStep('folder')
-                    }}
-                    next={() => {
-                      if (step === 'folder') {
-                        const checkedCategoryIds = getCategoryCheckedIds()
-                        setDocumentList(
-                          categories
-                            .filter((category) => checkedCategoryIds.includes(category.id))
-                            .flatMap((category) =>
-                              category.documents.map((document) => ({
-                                ...document,
-                                checked: false,
-                              }))
-                            )
-                        )
-                        setStep('document')
-                      } else if (step === 'document') {
-                        setOpenFolderDrawer(false)
-                      }
-                    }}
-                  />
-                </DrawerContent>
-              </Drawer>
-            </div>
-
-            <div className="flex flex-col gap-[10px]">
-              <div className="w-[52px] shrink-0 text-body2-medium text-gray-08">노트</div>
-              <Drawer open={openDocumentDrawer} onOpenChange={setOpenDocumentDrawer}>
-                <DrawerTrigger className="cursor-pointer">
-                  <FakeSelectTrigger
-                    className="w-[74px]"
-                    value={`${getDocumentCheckedIds().length}개`}
-                  />
-                </DrawerTrigger>
-                <DrawerContent className="h-[510px]">
-                  <SelectDrawerContent
-                    step={step}
-                    selectCheckItems={
-                      <SelectCheckItems
-                        items={step === 'folder' ? categoryList : documentList}
-                        isAllChecked={
-                          step === 'folder'
-                            ? isCategoryAllChecked()
-                            : isDocumentAllCheckedWithoutIgnored()
-                        }
-                        unCheckAll={
-                          step === 'folder' ? unCheckCategoryAll : unCheckDocumentAllWithoutIgnored
-                        }
-                        checkAll={
-                          step === 'folder' ? checkCategoryAll : checkDocumentAllWithoutIgnored
-                        }
-                        toggle={step === 'folder' ? toggleCategoryChecked : toggleDocumentChecked}
-                        selectType={step === 'folder' ? 'category' : 'document'}
-                      />
-                    }
-                    init={() => {
-                      unCheckCategoryAll()
-                      unCheckDocumentAllWithoutIgnored()
-                      setStep('folder')
-                    }}
-                    next={() => {
-                      if (step === 'folder') {
-                        const checkedCategoryIds = getCategoryCheckedIds()
-                        setDocumentList(
-                          categories
-                            .filter((category) => checkedCategoryIds.includes(category.id))
-                            .flatMap((category) =>
-                              category.documents.map((document) => ({
-                                ...document,
-                                checked: false,
-                              }))
-                            )
-                        )
-                        setStep('document')
-                      } else if (step === 'document') {
-                        setOpenDocumentDrawer(false)
-                      }
-                    }}
-                  />
-                </DrawerContent>
-              </Drawer>
-            </div>
-          </div>
-
-          <div className="mt-[12px] line-clamp-2 text-body2-regular text-orange-06">
-            선택된 노트:{' '}
-            <span className="text-body2-bold">
-              {documentList
-                .filter((document) => getDocumentCheckedIds().includes(document.id))
-                .map((document) => document.name)
-                .join(', ')}
-            </span>
-          </div>
-
-          <div className="mt-[31px] flex flex-col gap-[10px]">
-            <div className="w-[52px] text-body2-medium text-gray-08">퀴즈 수</div>
-            <Select
-              defaultValue={String(DEFAULT_QUIZ_COUNT)}
-              onValueChange={(value) => setQuizCount(+value)}
-            >
-              <SelectTrigger className="w-[85px] border-none bg-gray-01 pl-[14px] text-body1-bold outline-none">
-                <SelectValue placeholder={quizCount} />
-              </SelectTrigger>
-              <SelectContent className="flex min-w-[85px]">
-                {QUIZ_COUNT_OPTIONS.map((option) => (
-                  <SelectItem
-                    key={option}
-                    value={String(option)}
-                    className="flex justify-center px-0"
-                  >
-                    {option}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-
-        <div className="mt-[68px] flex flex-col items-center gap-[8px]">
-          <div className="text-center text-small1-regular">
-            <span className="text-gray-06">나의 별: </span>
-            <span className="text-gray-08">{userPoints}개</span>
-          </div>
-          <Button
-            variant="gradation"
-            className="flex w-[335px] gap-[10px] text-white"
-            onClick={() => {
-              handleCreateQuizzes({
-                documentIds: getCategoryCheckedIds() as number[],
-                count: quizCount,
-              })
-            }}
-          >
-            <div>퀴즈 시작</div>
-            <div className="flex items-start gap-[8px] rounded-[16px] px-[10px] py-[3px]">
-              <Image src={icons.star} width={16} height={16} alt="" className="mt-px" />
-              <div className="text-text-bold">{quizCount}</div>
-            </div>
-          </Button>
+    <div className="px-[20px]">
+      <div className="relative h-[48px]">
+        <Button variant="ghost" size="icon" className="ml-[-12px]" onClick={() => closeDrawer()}>
+          <ChevronDownIcon />
+        </Button>
+        <div className="center text-body1-bold text-gray-09">
+          {quizType === 'MIX_UP' ? 'O/X 퀴즈' : '객관식 퀴즈'}
         </div>
       </div>
-    </Div100vh>
+
+      <h3 className="text-h3-bold text-gray-09">
+        원하는 폴더와 노트,
+        <br />
+        퀴즈 수를 선택해주세요
+      </h3>
+
+      <div className="mt-[48px]">
+        <div className="flex items-center gap-[27px]">
+          <div className="flex flex-col gap-[10px]">
+            <div className="w-[52px] shrink-0 text-body2-medium text-gray-08">폴더</div>
+            <Drawer open={openFolderDrawer} onOpenChange={setOpenFolderDrawer}>
+              <DrawerTrigger
+                className="cursor-pointer"
+                onClick={() => {
+                  setStep('folder')
+                  unCheckDocumentAllWithoutIgnored()
+                }}
+              >
+                <FakeSelectTrigger
+                  emoji={curCategory.emoji}
+                  value={curCategory.name}
+                  className="w-[186px]"
+                />
+              </DrawerTrigger>
+              <DrawerContent className="h-[510px]">
+                <SelectDrawerContent
+                  step={step}
+                  selectCheckItems={
+                    <SelectCheckItems
+                      items={step === 'folder' ? categoryList : documentList}
+                      isAllChecked={
+                        step === 'folder'
+                          ? isCategoryAllChecked()
+                          : isDocumentAllCheckedWithoutIgnored()
+                      }
+                      unCheckAll={
+                        step === 'folder' ? unCheckCategoryAll : unCheckDocumentAllWithoutIgnored
+                      }
+                      checkAll={
+                        step === 'folder' ? checkCategoryAll : checkDocumentAllWithoutIgnored
+                      }
+                      toggle={step === 'folder' ? toggleCategoryChecked : toggleDocumentChecked}
+                      selectType={step === 'folder' ? 'category' : 'document'}
+                    />
+                  }
+                  init={() => {
+                    unCheckCategoryAll()
+                    unCheckDocumentAllWithoutIgnored()
+                    setStep('folder')
+                  }}
+                  next={() => {
+                    if (step === 'folder') {
+                      const checkedCategoryIds = getCategoryCheckedIds()
+                      setDocumentList(
+                        categories
+                          .filter((category) => checkedCategoryIds.includes(category.id))
+                          .flatMap((category) =>
+                            category.documents.map((document) => ({
+                              ...document,
+                              checked: false,
+                            }))
+                          )
+                      )
+                      setStep('document')
+                    } else if (step === 'document') {
+                      setOpenFolderDrawer(false)
+                    }
+                  }}
+                />
+              </DrawerContent>
+            </Drawer>
+          </div>
+
+          <div className="flex flex-col gap-[10px]">
+            <div className="w-[52px] shrink-0 text-body2-medium text-gray-08">노트</div>
+            <Drawer open={openDocumentDrawer} onOpenChange={setOpenDocumentDrawer}>
+              <DrawerTrigger className="cursor-pointer">
+                <FakeSelectTrigger
+                  className="w-[74px]"
+                  value={`${getDocumentCheckedIds().length}개`}
+                />
+              </DrawerTrigger>
+              <DrawerContent className="h-[510px]">
+                <SelectDrawerContent
+                  step={step}
+                  selectCheckItems={
+                    <SelectCheckItems
+                      items={step === 'folder' ? categoryList : documentList}
+                      isAllChecked={
+                        step === 'folder'
+                          ? isCategoryAllChecked()
+                          : isDocumentAllCheckedWithoutIgnored()
+                      }
+                      unCheckAll={
+                        step === 'folder' ? unCheckCategoryAll : unCheckDocumentAllWithoutIgnored
+                      }
+                      checkAll={
+                        step === 'folder' ? checkCategoryAll : checkDocumentAllWithoutIgnored
+                      }
+                      toggle={step === 'folder' ? toggleCategoryChecked : toggleDocumentChecked}
+                      selectType={step === 'folder' ? 'category' : 'document'}
+                    />
+                  }
+                  init={() => {
+                    unCheckCategoryAll()
+                    unCheckDocumentAllWithoutIgnored()
+                    setStep('folder')
+                  }}
+                  next={() => {
+                    if (step === 'folder') {
+                      const checkedCategoryIds = getCategoryCheckedIds()
+                      setDocumentList(
+                        categories
+                          .filter((category) => checkedCategoryIds.includes(category.id))
+                          .flatMap((category) =>
+                            category.documents.map((document) => ({
+                              ...document,
+                              checked: false,
+                            }))
+                          )
+                      )
+                      setStep('document')
+                    } else if (step === 'document') {
+                      setOpenDocumentDrawer(false)
+                    }
+                  }}
+                />
+              </DrawerContent>
+            </Drawer>
+          </div>
+        </div>
+
+        <div className="mt-[12px] line-clamp-2 text-body2-regular text-orange-06">
+          선택된 노트:{' '}
+          <span className="text-body2-bold">
+            {documentList
+              .filter((document) => getDocumentCheckedIds().includes(document.id))
+              .map((document) => document.name)
+              .join(', ')}
+          </span>
+        </div>
+
+        <div className="mt-[31px] flex flex-col gap-[10px]">
+          <div className="w-[52px] text-body2-medium text-gray-08">퀴즈 수</div>
+          <Select
+            defaultValue={String(DEFAULT_QUIZ_COUNT)}
+            onValueChange={(value) => setQuizCount(+value)}
+          >
+            <SelectTrigger className="w-[85px] border-none bg-gray-01 pl-[14px] text-body1-bold outline-none">
+              <SelectValue placeholder={quizCount} />
+            </SelectTrigger>
+            <SelectContent className="flex min-w-[85px]">
+              {QUIZ_COUNT_OPTIONS.map((option) => (
+                <SelectItem
+                  key={option}
+                  value={String(option)}
+                  className="flex justify-center px-0"
+                >
+                  {option}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+
+      <div className="mt-[68px] flex flex-col items-center gap-[8px]">
+        <div className="text-center text-small1-regular">
+          <span className="text-gray-06">나의 별: </span>
+          <span className="text-gray-08">{userPoints}개</span>
+        </div>
+        <Button
+          variant="gradation"
+          className="flex w-[335px] gap-[10px] text-white"
+          onClick={() => {
+            handleCreateQuizzes({
+              documentIds: getDocumentCheckedIds() as number[],
+              count: quizCount,
+            })
+          }}
+        >
+          <div>퀴즈 시작</div>
+          <div className="flex items-start gap-[8px] rounded-[16px] px-[10px] py-[3px]">
+            <Image src={icons.star} width={16} height={16} alt="" className="mt-px" />
+            <div className="text-text-bold">{quizCount}</div>
+          </div>
+        </Button>
+      </div>
+    </div>
   )
 }
 
