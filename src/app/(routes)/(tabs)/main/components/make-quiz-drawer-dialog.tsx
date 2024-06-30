@@ -33,9 +33,10 @@ import { DocumentStatus } from '@/apis/types/dto/document.dto'
 import { CategoryProtector } from '@/components/category-protector'
 import Div100vh from 'react-div-100vh'
 import { useCreateQuizzesMutation } from '@/apis/fetchers/quiz/create-quizzes/mutation'
+import { useQuizCountMutation } from '@/apis/fetchers/document/quiz-count/mutation'
 
 const QUIZ_COUNT_OPTIONS = [3, 5, 10, 15, 20]
-const DEFAULT_QUIZ_COUNT = 5
+const DEFAULT_QUIZ_COUNT = QUIZ_COUNT_OPTIONS[0]
 
 type SelectDocumentItem = {
   id: number
@@ -154,6 +155,10 @@ function MakeQuizDialogContent({
   const [openSelectCategory, setOpenSelectCategory] = useState(false)
   const [selectCategoryId, setSelectCategoryId] = useState<CategoryDTO['id']>(categories[0]?.id)
   const [quizCount, setQuizCount] = useState(DEFAULT_QUIZ_COUNT)
+  const [maxQuizCount, setMaxQuizCount] = useState(
+    QUIZ_COUNT_OPTIONS[QUIZ_COUNT_OPTIONS.length - 1]
+  )
+  const { mutate: quizCountMutate, isPending } = useQuizCountMutation()
 
   const [openSelectDocuments, setOpenSelectDocuments] = useState(false)
   const {
@@ -192,6 +197,25 @@ function MakeQuizDialogContent({
   )
 
   const curCategory = categories.find((category) => category.id === selectCategoryId)!
+
+  useEffect(() => {
+    if (allSelectedDocuments.length > 0) {
+      quizCountMutate(
+        {
+          documentIds: allSelectedDocuments.map((document) => document.id),
+        },
+        {
+          onSuccess: (data) => {
+            setMaxQuizCount(data.quizCount)
+
+            if (quizCount > data.quizCount) {
+              setQuizCount(DEFAULT_QUIZ_COUNT)
+            }
+          },
+        }
+      )
+    }
+  }, [allSelectedDocuments.length])
 
   useEffect(() => {
     setDocumentMap((prev) => ({
@@ -264,20 +288,27 @@ function MakeQuizDialogContent({
             <Select
               defaultValue={String(DEFAULT_QUIZ_COUNT)}
               onValueChange={(value) => setQuizCount(+value)}
+              value={String(quizCount)}
             >
               <SelectTrigger className="w-[85px] border-none bg-gray-01 pl-[14px] text-body1-bold outline-none">
-                <SelectValue placeholder={quizCount} />
+                <SelectValue />
               </SelectTrigger>
-              <SelectContent className="flex min-w-[85px]">
-                {QUIZ_COUNT_OPTIONS.map((option) => (
-                  <SelectItem
-                    key={option}
-                    value={String(option)}
-                    className="flex justify-center px-0"
-                  >
-                    {option}
-                  </SelectItem>
-                ))}
+              <SelectContent className="relative flex min-h-[100px] min-w-[85px]">
+                {isPending ? (
+                  <Loading center size="xs" />
+                ) : (
+                  <>
+                    {QUIZ_COUNT_OPTIONS.filter((option) => option <= maxQuizCount).map((option) => (
+                      <SelectItem
+                        key={option}
+                        value={String(option)}
+                        className="flex justify-center px-0"
+                      >
+                        {option}
+                      </SelectItem>
+                    ))}
+                  </>
+                )}
               </SelectContent>
             </Select>
           </div>
@@ -339,6 +370,10 @@ function MakeQuizDrawerContent({
 
   const [step, setStep] = useState<'folder' | 'document'>('folder')
   const [quizCount, setQuizCount] = useState(DEFAULT_QUIZ_COUNT)
+  const [maxQuizCount, setMaxQuizCount] = useState(
+    QUIZ_COUNT_OPTIONS[QUIZ_COUNT_OPTIONS.length - 1]
+  )
+  const { mutate: quizCountMutate, isPending } = useQuizCountMutation()
 
   const [openFolderDrawer, setOpenFolderDrawer] = useState(false)
   const [openDocumentDrawer, setOpenDocumentDrawer] = useState(false)
@@ -375,6 +410,27 @@ function MakeQuizDrawerContent({
         .map((document) => document.id)
     ),
   })
+
+  const documentLength = getDocumentCheckedIds().length
+
+  useEffect(() => {
+    if (documentLength > 0) {
+      quizCountMutate(
+        {
+          documentIds: getDocumentCheckedIds() as number[],
+        },
+        {
+          onSuccess: (data) => {
+            setMaxQuizCount(data.quizCount)
+
+            if (quizCount > data.quizCount) {
+              setQuizCount(DEFAULT_QUIZ_COUNT)
+            }
+          },
+        }
+      )
+    }
+  }, [documentLength])
 
   return (
     <div className="px-[20px]">
@@ -534,20 +590,27 @@ function MakeQuizDrawerContent({
           <Select
             defaultValue={String(DEFAULT_QUIZ_COUNT)}
             onValueChange={(value) => setQuizCount(+value)}
+            value={String(quizCount)}
           >
             <SelectTrigger className="w-[85px] border-none bg-gray-01 pl-[14px] text-body1-bold outline-none">
-              <SelectValue placeholder={quizCount} />
+              <SelectValue />
             </SelectTrigger>
-            <SelectContent className="flex min-w-[85px]">
-              {QUIZ_COUNT_OPTIONS.map((option) => (
-                <SelectItem
-                  key={option}
-                  value={String(option)}
-                  className="flex justify-center px-0"
-                >
-                  {option}
-                </SelectItem>
-              ))}
+            <SelectContent className="relative flex min-h-[100px] min-w-[85px]">
+              {isPending ? (
+                <Loading center size="xs" />
+              ) : (
+                <>
+                  {QUIZ_COUNT_OPTIONS.filter((option) => option <= maxQuizCount).map((option) => (
+                    <SelectItem
+                      key={option}
+                      value={String(option)}
+                      className="flex justify-center px-0"
+                    >
+                      {option}
+                    </SelectItem>
+                  ))}
+                </>
+              )}
             </SelectContent>
           </Select>
         </div>

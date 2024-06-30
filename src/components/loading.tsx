@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils'
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   center?: boolean
-  size?: 'small' | 'large'
+  size?: 'small' | 'large' | 'xs'
 }
 
 export default function Loading({ center, size = 'small', className }: Props) {
@@ -17,7 +17,8 @@ export default function Loading({ center, size = 'small', className }: Props) {
       <div
         className={cn(
           'relative overflow-hidden z-50',
-          size === 'large' ? 'size-[262px]' : 'size-[104.5px]'
+          size === 'large' ? 'size-[262px]' : 'size-[104.5px]',
+          size === 'xs' && 'size-[45px]'
         )}
       >
         <Lottie
@@ -27,22 +28,24 @@ export default function Loading({ center, size = 'small', className }: Props) {
           speed={0.8}
           className="center absolute"
           style={{
-            width: size === 'large' ? 262 : 104.5,
-            height: size === 'large' ? 262 : 104.5,
+            width: size === 'large' ? 262 : size === 'small' ? 104.5 : 45,
+            height: size === 'large' ? 262 : size === 'small' ? 104.5 : 45,
           }}
         />
-        <Lottie
-          loop
-          animationData={sparkleData}
-          play
-          className="absolute"
-          style={{
-            width: size === 'large' ? 56 : 22.4,
-            height: size === 'large' ? 80 : 32,
-            top: size === 'large' ? 67 : 26.7,
-            right: size === 'large' ? 55 : 22,
-          }}
-        />
+        {size !== 'xs' && (
+          <Lottie
+            loop
+            animationData={sparkleData}
+            play
+            className="absolute"
+            style={{
+              width: size === 'large' ? 56 : 22.4,
+              height: size === 'large' ? 80 : 32,
+              top: size === 'large' ? 67 : 26.7,
+              right: size === 'large' ? 55 : 22,
+            }}
+          />
+        )}
       </div>
     </div>
   )

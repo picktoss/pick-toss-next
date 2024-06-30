@@ -99,6 +99,10 @@ export const API_ENDPOINT = {
       url: `/documents/search`,
       method: HttpMethod.POST,
     }),
+    quizCount: () => ({
+      url: `/documents/quiz-count`,
+      method: HttpMethod.POST,
+    }),
   },
 
   keypoint: {
