@@ -13,6 +13,7 @@ import { useState } from 'react'
 import { useToast } from '@/hooks/use-toast'
 import { ToastAction } from '@/components/ui/toast'
 import { useGetDocumentQuery } from '@/apis/fetchers/document/get-document/query'
+import { MAX_CONTENT_LENGTH, MIN_CONTENT_LENGTH } from '@/constants/document'
 
 export default function Modify() {
   const { data: session } = useSession()
@@ -49,6 +50,15 @@ export default function Modify() {
     if (isLoading || !documentName || !editorContent) {
       return
     }
+
+    if (editorContent.length < MIN_CONTENT_LENGTH) {
+      alert('최소 150자 이상의 본문을 입력해주세요.')
+      return
+    } else if (editorContent.length > MAX_CONTENT_LENGTH) {
+      alert('본문의 길이는 15,000자를 넘길 수 없습니다.')
+      return
+    }
+
     setIsLoading(true)
 
     const documentBlob = new Blob([editorContent], { type: 'text/markdown' })
