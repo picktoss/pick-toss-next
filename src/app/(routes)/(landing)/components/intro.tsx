@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import mobileSkySource from '../assets/mobile-sky.png'
+import desktopSkySource from '../assets/desktop-sky.png'
 import { Button } from '@/components/ui/button'
 import { ArrowRightIcon, DocumentIcon, LightningIcon, LogoTextIcon } from '../svgs'
 import { BounceChevronDown } from './ui/bounce-chevron-down'
@@ -8,7 +9,8 @@ import { LoginDialog } from './login-dialog'
 export function Intro() {
   return (
     <div className="relative flex h-[calc(100vh-60px)] w-full flex-col justify-between pt-[128.5px] xl:pt-[146px]">
-      <Image src={mobileSkySource} fill alt="" />
+      <Image src={mobileSkySource} fill alt="" className="xl:hidden" />
+      <Image src={desktopSkySource} fill alt="" className="hidden xl:block" />
       <div className="z-40">
         <div className="text-center text-h2-bold text-gray-09 xl:text-[64px]">
           나의{'\u00A0'}
