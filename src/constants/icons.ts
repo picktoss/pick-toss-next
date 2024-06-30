@@ -20,6 +20,7 @@ import plus from '../../public/icons/plus.svg'
 import quizReady from '../../public/icons/quiz-ready.svg'
 import quizNotReady from '../../public/icons/quiz-not-ready.svg'
 import quizDone from '../../public/icons/quiz-done.svg'
+import quizDoneDesktop from '../../public/icons/quiz-done-desktop.svg'
 import arrowRight from '../../public/icons/arrow-right.svg'
 import logOut from '../../public/icons/log-out.svg'
 import ranking from '../../public/icons/ranking.svg'
@@ -60,6 +61,7 @@ const icons = {
   folderEmpty,
   noteEmpty,
   deleteFolder,
+  quizDoneDesktop,
 }
 
 export default icons as Record<keyof typeof icons, StaticImport>
