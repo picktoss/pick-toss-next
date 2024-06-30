@@ -6,13 +6,24 @@ import { SwitchCase } from '@/components/react/switch-case'
 import { Button } from '@/components/ui/button'
 import icons from '@/constants/icons'
 import { cn } from '@/lib/utils'
+import { calculateTimeUntilTomorrowMidnight, getCurrentDate } from '@/utils/date'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
 export default function QuizBanner() {
   const router = useRouter()
 
   const { data } = useGetTodayQuizSetId()
+  const [remainingTime, setRemainingTime] = useState(calculateTimeUntilTomorrowMidnight())
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setRemainingTime(calculateTimeUntilTomorrowMidnight())
+    }, 30 * 1000)
+
+    return () => clearInterval(timer)
+  }, [])
 
   const type = data?.type ?? 'NOT_READY'
   const quizSetId = data?.quizSetId ?? null
@@ -52,7 +63,11 @@ export default function QuizBanner() {
             <SwitchCase
               value={type}
               caseBy={{
-                READY: <div className="text-body2-medium">4월 25일 목요일</div>,
+                READY: (
+                  <div className="text-body2-medium">
+                    {getCurrentDate({ month: true, day: true, dayOfWeek: true })}
+                  </div>
+                ),
                 NOT_READY: (
                   <div className="text-small1-regular">
                     퀴즈를 만들 수 있을 정도로 노트 양이 충분하지 않거나, 현재 퀴즈를 생성중입니다
@@ -83,7 +98,7 @@ export default function QuizBanner() {
         caseBy={{
           READY: (
             <Button
-              className="flex w-full gap-[8px] rounded-[8px]"
+              className="flex w-full gap-[8px] rounded-[32px]"
               onClick={() => router.push(`/quiz?quizSetId=${quizSetId}`)}
             >
               <div>오늘의 퀴즈 시작하기</div>
@@ -93,7 +108,7 @@ export default function QuizBanner() {
           NOT_READY: (
             <CategoryProtector>
               <Button
-                className="flex w-full gap-[8px] rounded-[8px]"
+                className="flex w-full gap-[8px] rounded-[32px]"
                 onClick={() => router.push('/create')}
               >
                 <div>노트 추가하러 가기</div>
@@ -102,8 +117,11 @@ export default function QuizBanner() {
             </CategoryProtector>
           ),
           DONE: (
-            <Button className="flex w-full cursor-default gap-[8px] rounded-[8px] bg-blue-03 text-blue-06 hover:bg-blue-03">
-              <div>내일 퀴즈까지 00:00분 남음</div>
+            <Button className="flex w-full cursor-default gap-[8px] rounded-[32px] bg-blue-03 text-blue-06 hover:bg-blue-03">
+              <div>
+                내일 퀴즈까지 {remainingTime.hours.toString().padStart(2, '0')}:
+                {remainingTime.minutes.toString().padStart(2, '0')}분 남음
+              </div>
             </Button>
           ),
         }}

@@ -27,13 +27,29 @@ export const formatDateKorean = (
   }
 }
 
-export const getCurrentDate = () => {
+export const getCurrentDate = (option?: {
+  year?: boolean
+  month?: boolean
+  day?: boolean
+  dayOfWeek?: boolean
+}): string => {
   const date = new Date()
 
   const year = date.getFullYear()
   const month = date.getMonth() + 1
   const day = date.getDate()
   const dayOfWeek = days[date.getDay()]
+
+  if (option) {
+    return [
+      option?.year && `${year}년`,
+      option?.month && `${month}월`,
+      option?.day && `${day}일`,
+      option?.dayOfWeek && dayOfWeek,
+    ]
+      .filter((value) => value)
+      .join(' ')
+  }
 
   const formattedDate = `${year}년 ${month}월 ${day}일 ${dayOfWeek}`
 
@@ -77,4 +93,23 @@ export const getRelativeTime = (time: string) => {
 export const currentMonth = () => {
   const date = new Date()
   return date.getMonth() + 1
+}
+
+export function calculateTimeUntilTomorrowMidnight() {
+  const now = new Date()
+  const tomorrowMidnight = new Date(now)
+
+  tomorrowMidnight.setDate(tomorrowMidnight.getDate() + 1)
+  tomorrowMidnight.setHours(0, 0, 0, 0)
+
+  const timeDifference = tomorrowMidnight.getTime() - now.getTime()
+
+  if (timeDifference <= 0) {
+    return { hours: 0, minutes: 0 }
+  }
+
+  const hours = Math.floor(timeDifference / (1000 * 60 * 60))
+  const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60))
+
+  return { hours, minutes }
 }
