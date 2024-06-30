@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic'
 import { CreateDocumentProvider } from './contexts/create-document-context'
 import { Header } from './components/header'
 import { TitleInput } from './components/title-input'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 import { useToast } from '@/hooks/use-toast'
 import { useGetCategoriesQuery } from '@/apis/fetchers/category/get-categories/query'
@@ -20,6 +20,7 @@ const VisualEditor = dynamic(() => import('./components/visual-editor'), {
 export default function CreateDocument() {
   const router = useRouter()
   const { toast } = useToast()
+  const searchParams = useSearchParams()
 
   const [isLoading, setIsLoading] = useState(false)
 
@@ -71,8 +72,12 @@ export default function CreateDocument() {
     return null
   }
 
+  const defaultCategoryId =
+    categories.find((category) => category.id === Number(searchParams.get('default')))?.id ||
+    categories[0].id
+
   return (
-    <CreateDocumentProvider initCategoryId={categories[0].id}>
+    <CreateDocumentProvider initCategoryId={Number(defaultCategoryId) || categories[0].id}>
       <Header categories={categories} handleSubmit={handleSubmit} />
       <div className="mt-[22px] min-h-screen rounded-t-[20px] bg-white shadow-sm">
         <TitleInput />
