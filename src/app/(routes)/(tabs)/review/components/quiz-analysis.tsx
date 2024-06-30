@@ -55,13 +55,13 @@ export function QuizAnalysis() {
   const rateData = period.type === 'week' ? weekQuizAnswerRate : monthQuizAnswerRate
 
   return (
-    <section className="relative flex min-h-[833px] flex-1 flex-col rounded-none bg-white p-[20px] pb-[70px] lg:min-h-[726px] lg:max-w-[520px] lg:rounded-[12px] lg:pb-[20px]">
+    <section className="relative flex min-h-[833px] flex-1 flex-col rounded-none bg-white p-[20px] pb-[70px] xl:min-h-[726px] xl:max-w-[520px] xl:rounded-[12px] xl:pb-[20px]">
       <h2 className="text-h4-bold text-gray-09">퀴즈 분석</h2>
 
       {isLoading ? (
         <Loading size="small" center />
       ) : (
-        <div className="mt-[27px] lg:mt-[16px]">
+        <div className="mt-[27px] xl:mt-[16px]">
           <Period
             periodType={period.type}
             weekDates={rateData!.quizzes.map((value) => value.date)}

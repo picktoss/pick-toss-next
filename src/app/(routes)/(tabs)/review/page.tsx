@@ -16,16 +16,16 @@ export default function Review() {
       title={
         <div className="flex gap-[8px]">
           <span>복습 체크</span>
-          <Image src={icons.ranking} width={24} height={24} alt="" className="lg:size-[32px]" />
+          <Image src={icons.ranking} width={24} height={24} alt="" className="xl:size-[32px]" />
         </div>
       }
       mobileOptions={{
         hasNotifications: true,
       }}
     >
-      <main className="mt-[18px] flex w-full flex-col gap-[24px] lg:mt-[24px] lg:flex-row lg:gap-[22px] lg:px-[20px] lg:pb-[50px]">
-        <div className="flex flex-col gap-[24px] lg:max-w-[490px] lg:gap-[16px]">
-          <section className="mt-[8px] flex flex-col gap-[12px] px-[20px] lg:mt-0 lg:flex-row lg:px-0">
+      <main className="mt-[18px] flex w-full flex-col gap-[24px] xl:mt-[24px] xl:flex-row xl:gap-[22px] xl:px-[20px] xl:pb-[50px]">
+        <div className="flex flex-col gap-[24px] xl:max-w-[490px] xl:gap-[16px]">
+          <section className="mt-[8px] flex flex-col gap-[12px] px-[20px] xl:mt-0 xl:flex-row xl:px-0">
             <ArchiveLink
               redirectUrl="#"
               title="퀴즈 기록"
@@ -40,7 +40,7 @@ export default function Review() {
             <SavedPicksLink />
           </section>
 
-          <section className="flex flex-col gap-[24px] rounded-none p-[20px] pb-[22px] lg:rounded-[12px] lg:bg-white">
+          <section className="flex flex-col gap-[24px] rounded-none p-[20px] pb-[22px] xl:rounded-[12px] xl:bg-white">
             <div className="flex flex-col gap-[8px]">
               <h2 className="flex items-center gap-[8px] text-h4-bold text-gray-09">
                 퀴즈 톺아보기 <ProTag />
@@ -83,7 +83,7 @@ function QuizReviewSet({
     <div
       className={cn(
         'relative flex h-[148px] w-[140px] shrink-0 flex-col justify-between rounded-[12px] pb-[13px] pt-[17px]',
-        isDone ? 'bg-white lg:border lg:border-gray-02' : 'bg-orange-01'
+        isDone ? 'bg-white xl:border xl:border-gray-02' : 'bg-orange-01'
       )}
     >
       <div className="flex flex-col gap-[4px] px-[16px]">
