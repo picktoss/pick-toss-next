@@ -15,12 +15,17 @@ export default function QuizHeader({ className, totalElapsedTime }: QuizHeaderPr
       <div className="flex items-center justify-between">
         <QuizExitDialog
           trigger={
-            <Button variant="ghost" size="icon" className="flex flex-col">
-              <ExitIcon />
+            <Button
+              variant="ghost"
+              size="icon"
+              className="flex flex-col items-center *:shrink-0 lg:h-[72px] lg:w-[64px] lg:rounded-[12px] lg:bg-gray-02 lg:px-[16px] lg:pb-[9px] lg:pt-[16.8px]"
+            >
+              <ExitIcon className="lg:w-[21.4px]" />
+              <div className="mt-[4px] hidden text-small1-bold text-gray-07 lg:block">나가기</div>
             </Button>
           }
         />
-        <div className="flex items-end gap-[8px]">
+        <div className="flex items-end gap-[8px] lg:hidden">
           <TimerIcon />
           <span className="text-body2-medium text-gray-07">
             {msToElapsedTime(totalElapsedTime)}
@@ -31,9 +36,16 @@ export default function QuizHeader({ className, totalElapsedTime }: QuizHeaderPr
   )
 }
 
-function ExitIcon() {
+function ExitIcon({ className }: { className?: HTMLElement['className'] }) {
   return (
-    <svg width="23" height="25" viewBox="0 0 23 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width="23"
+      height="25"
+      viewBox="0 0 23 25"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
       <path
         d="M16.1686 13.6006V18.7895C16.1686 19.3627 15.704 19.8273 15.1308 19.8273H2.33081C1.75763 19.8273 1.29297 19.3627 1.29297 18.7895V2.53002C1.29297 1.95684 1.75762 1.49219 2.33081 1.49219H15.1308C15.704 1.49219 16.1686 1.95684 16.1686 2.53003V7.37361"
         stroke="#A2A6AB"

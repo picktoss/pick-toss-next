@@ -21,6 +21,7 @@ import QuizResult from './quiz-result'
 import { ChoiceReact } from './choice-react'
 import { ReportQuizError } from './report-quiz-error'
 import { deleteQuiz } from '@/apis/fetchers/quiz/delete-quiz/fetcher'
+import { cn } from '@/lib/utils'
 
 interface QuizProps {
   quizzes: QuizDTO[]
@@ -170,60 +171,76 @@ export default function Quiz({ quizzes, isTodayQuiz }: QuizProps) {
         solving: (
           <>
             <div className="pt-[12px]">
-              <QuizHeader className="mb-[32px] px-[20px]" totalElapsedTime={totalElapsedTime} />
+              <QuizHeader
+                className="mb-[32px] px-[20px] lg:mb-[36px]"
+                totalElapsedTime={totalElapsedTime}
+              />
+
               <Question
                 categoryName={curQuiz.category.name}
                 documentName={curQuiz.document.name}
                 question={curQuiz.question}
                 curQuizIndex={quizProgress.quizIndex}
                 totalQuizCount={quizzes.length}
+                totalElapsedTime={totalElapsedTime}
+                isTodayQuiz={isTodayQuiz}
+                quizType={curQuiz.quizType}
               />
-              <SwitchCase
-                value={curQuiz.quizType}
-                caseBy={{
-                  MULTIPLE_CHOICE: (
-                    <MultipleOptions
-                      quizProgress={quizProgress}
-                      curQuiz={curQuiz}
-                      onSelectAnswer={onSelectAnswer}
-                      onVisibleAnimationEnd={() => runTimer()}
-                      className="mt-[24px]"
-                    />
-                  ),
-                  MIX_UP: (
-                    <MixUpOptions
-                      quizProgress={quizProgress}
-                      curQuiz={curQuiz}
-                      onSelectAnswer={onSelectAnswer}
-                      onVisibleAnimationEnd={() => runTimer()}
-                      className="mt-[40px]"
-                    />
-                  ),
-                }}
-              />
-              {quizProgress.progress === 'result' ? (
-                <Explanation
-                  isCorrect={isCorrect}
-                  correctItem={
-                    curQuiz.quizType === 'MULTIPLE_CHOICE'
-                      ? String.fromCharCode(
-                          65 + curQuiz.options.findIndex((option) => curQuiz.answer === option)
-                        )
-                      : curQuiz.answer === 'correct'
-                      ? 'O'
-                      : 'X'
-                  }
-                  explanation={curQuiz.explanation}
-                  next={next}
-                  className="mt-[48px]"
-                />
-              ) : null}
-              {quizProgress.progress === 'idle' ? (
-                <div className="ml-[20px] mt-[25px] pb-[40px] lg:mt-[33px] lg:p-0">
-                  <ReportQuizError handlePassQuiz={handlePassQuiz} />
+              <div
+                className={cn(
+                  'lg:mx-[20px] lg:rounded-b-[12px] lg:bg-white',
+                  curQuiz.quizType === 'MIX_UP' ? 'lg:pb-[81.8px]' : 'lg:pb-[40px]'
+                )}
+              >
+                <div className="lg:mx-auto lg:w-[640px]">
+                  <SwitchCase
+                    value={curQuiz.quizType}
+                    caseBy={{
+                      MULTIPLE_CHOICE: (
+                        <MultipleOptions
+                          quizProgress={quizProgress}
+                          curQuiz={curQuiz}
+                          onSelectAnswer={onSelectAnswer}
+                          onVisibleAnimationEnd={() => runTimer()}
+                          className="pt-[24px] lg:pt-[40px]"
+                        />
+                      ),
+                      MIX_UP: (
+                        <MixUpOptions
+                          quizProgress={quizProgress}
+                          curQuiz={curQuiz}
+                          onSelectAnswer={onSelectAnswer}
+                          onVisibleAnimationEnd={() => runTimer()}
+                          className="pt-[40px] lg:pt-[58px]"
+                        />
+                      ),
+                    }}
+                  />
+                  {quizProgress.progress === 'idle' ? (
+                    <div className="ml-[20px] mt-[25px] pb-[40px] lg:ml-0 lg:mt-[40px] lg:p-0">
+                      <ReportQuizError handlePassQuiz={handlePassQuiz} />
+                    </div>
+                  ) : null}
                 </div>
-              ) : null}
+              </div>
             </div>
+            {quizProgress.progress === 'result' ? (
+              <Explanation
+                isCorrect={isCorrect}
+                correctItem={
+                  curQuiz.quizType === 'MULTIPLE_CHOICE'
+                    ? String.fromCharCode(
+                        65 + curQuiz.options.findIndex((option) => curQuiz.answer === option)
+                      )
+                    : curQuiz.answer === 'correct'
+                    ? 'O'
+                    : 'X'
+                }
+                explanation={curQuiz.explanation}
+                next={next}
+                className="mt-[48px] lg:mx-[20px] lg:mt-0"
+              />
+            ) : null}
 
             <ChoiceReact
               duration={SHOW_RESULT_DURATION}
