@@ -200,6 +200,14 @@ export const API_ENDPOINT = {
     }),
   },
 
+  // 문의하기 관련 API
+  feedback: {
+    postFeedback: () => ({
+      url: `/feedback`,
+      method: HttpMethod.POST,
+    }),
+  },
+
   // test
   test: {
     changePoint: () => ({

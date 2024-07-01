@@ -199,7 +199,7 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
               <div className="mb-[20px] flex flex-col gap-[15px] pt-[23px]">
                 <div className="flex h-[48px] items-center px-[19px]">
                   <h3 className="text-h3-bold text-gray-08">
-                    A<i>I</i> pick
+                    AI <i>p</i>ick
                   </h3>
                 </div>
 
