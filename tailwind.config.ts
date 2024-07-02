@@ -95,7 +95,7 @@ const config = {
           {
             lineHeight: '150%',
             fontWeight: 'normal',
-            letterSpacing: '0.02em',
+            letterSpacing: '-0.02em',
           },
         ],
         button: [
@@ -135,7 +135,7 @@ const config = {
           {
             lineHeight: '120%',
             fontWeight: 'bold',
-            letterSpacing: '0.02em',
+            letterSpacing: '-0.02em',
           },
         ],
         'body2-medium': [
@@ -143,7 +143,7 @@ const config = {
           {
             lineHeight: '120%',
             fontWeight: '500',
-            letterSpacing: '0.02em',
+            letterSpacing: '-0.02em',
           },
         ],
         'body2-regular': [
@@ -151,7 +151,7 @@ const config = {
           {
             lineHeight: '120%',
             fontWeight: 'normal',
-            letterSpacing: '0.02em',
+            letterSpacing: '-0.02em',
           },
         ],
         'body2-regular-eng': [
