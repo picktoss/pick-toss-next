@@ -29,7 +29,7 @@ export default function QuizMaker() {
             {Array.from({ length: 3 }).map((_, idx) => (
               <div
                 key={idx}
-                className="relative h-[200px] flex-1 rounded-[12px] bg-white lg:h-[280px]"
+                className="relative h-[200px] w-full rounded-[12px] bg-white lg:h-[280px]"
               >
                 <Loading center />
               </div>
