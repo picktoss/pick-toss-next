@@ -762,6 +762,7 @@ function SelectCheckItems(props: {
                   <Link
                     href={`/document/${item.id}`}
                     className="mt-[3px] shrink-0 text-small1-regular text-blue-05 underline underline-offset-2"
+                    target="_blank"
                   >
                     노트 보기
                   </Link>
