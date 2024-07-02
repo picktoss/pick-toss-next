@@ -13,9 +13,11 @@ import Image from 'next/image'
 import icons from '@/constants/icons'
 import { useDocumentUsage } from '@/hooks/use-document-usage'
 import { CategoryProtector } from './category-protector'
+import { useSession } from 'next-auth/react'
 
 export default function LeftSidebar() {
   const segments = useSelectedLayoutSegments()
+  const { data: session } = useSession()
 
   const {
     availableAiPickCount,
@@ -87,34 +89,36 @@ export default function LeftSidebar() {
           })}
         </div>
       </div>
-      <div className="mb-[40px] w-full px-[29px]">
-        <div className="mb-[24px] flex flex-col gap-[8px]">
-          <div className="flex gap-[7px]">
-            <span className="text-small1-regular text-gray-07">
-              남은 AI <i>p</i>ick 생성 횟수
-            </span>
-            <Image src={icons.circleQuestion} width={16} height={16} alt="" />
+      {session?.user && (
+        <div className="mb-[40px] w-full px-[29px]">
+          <div className="mb-[24px] flex flex-col gap-[8px]">
+            <div className="flex gap-[7px]">
+              <span className="text-small1-regular text-gray-07">
+                남은 AI <i>p</i>ick 생성 횟수
+              </span>
+              <Image src={icons.circleQuestion} width={16} height={16} alt="" />
+            </div>
+            <div className="text-h4-bold text-orange-05">{availableAiPickCount}회</div>
           </div>
-          <div className="text-h4-bold text-orange-05">{availableAiPickCount}회</div>
+          <div className="relative flex flex-col gap-[8px]">
+            <div className="text-small1-regular text-gray-07">노트 창고 용량</div>
+            <div className="text-h4-bold text-orange-05">
+              {possessDocumentCount}/{freePlanMaxPossessDocumentCount}
+            </div>
+            <div className="relative h-[4px] overflow-hidden rounded-full *:h-full">
+              <div className="w-full bg-gray-02" />
+              <div
+                className="absolute left-0 top-0 bg-orange-05"
+                style={{ width: `${uploadableRate}%` }}
+              />
+            </div>
+            <div className="text-small1-regular text-gray-07">
+              {uploadableCount}
+              개의 노트를 더 저장할 수 있습니다
+            </div>
+          </div>
         </div>
-        <div className="relative flex flex-col gap-[8px]">
-          <div className="text-small1-regular text-gray-07">노트 창고 용량</div>
-          <div className="text-h4-bold text-orange-05">
-            {possessDocumentCount}/{freePlanMaxPossessDocumentCount}
-          </div>
-          <div className="relative h-[4px] overflow-hidden rounded-full *:h-full">
-            <div className="w-full bg-gray-02" />
-            <div
-              className="absolute left-0 top-0 bg-orange-05"
-              style={{ width: `${uploadableRate}%` }}
-            />
-          </div>
-          <div className="text-small1-regular text-gray-07">
-            {uploadableCount}
-            개의 노트를 더 저장할 수 있습니다
-          </div>
-        </div>
-      </div>
+      )}
     </div>
   )
 }
