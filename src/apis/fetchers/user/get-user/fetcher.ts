@@ -11,6 +11,7 @@ export interface GetUserResponse {
   role: 'ROLE_USER' | 'ROLE_ADMIN'
   point: number
   continuousQuizDatesCount: number
+  maxContinuousQuizDatesCount: number
   subscription: {
     plan: 'PRO' | 'FREE'
     purchasedDate: string
