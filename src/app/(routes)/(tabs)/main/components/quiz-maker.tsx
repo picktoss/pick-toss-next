@@ -18,7 +18,7 @@ export default function QuizMaker() {
           <div className="text-h4-bold text-gray-08">퀴즈 만들기</div>
           <Image src={icons.circleQuestion} width={20} height={20} alt="" />
         </div>
-        <div className="text-body2-regular text-gray-07">
+        <div className="mt-[8px] text-body2-regular text-gray-07">
           원하는 노트에서 퀴즈를 만들고 풀어보세요
         </div>
       </div>
