@@ -13,6 +13,8 @@ export function AIPickDialog({ trigger, confirm }: Props) {
   const [open, setOpen] = useState(false)
   const { data: session } = useSession()
 
+  const availableAiPickCount = session?.user.dto.documentUsage.availableAiPickCount || 0
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
@@ -47,14 +49,16 @@ export function AIPickDialog({ trigger, confirm }: Props) {
         </div>
         {confirm != null && (
           <Button
-            variant="gradation"
+            variant={availableAiPickCount > 0 ? 'gradation' : 'default'}
             className="mt-[18px] w-full text-white"
             onClick={() => {
-              confirm()
+              if (availableAiPickCount > 0) {
+                confirm()
+              }
               setOpen(false)
             }}
           >
-            시작하기
+            {availableAiPickCount > 0 ? '시작하기' : '닫기'}
           </Button>
         )}
       </DialogContent>
