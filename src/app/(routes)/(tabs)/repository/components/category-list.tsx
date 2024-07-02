@@ -59,7 +59,7 @@ export default function CategoryList({ className }: Props) {
       </div>
     )
 
-  if (isError) return <div>error</div>
+  if (isError) return <div>오류가 발생했습니다. 잠시 후 다시 시도해주세요.</div>
 
   const handleDragStart = (event: DragStartEvent) => {
     const { active } = event

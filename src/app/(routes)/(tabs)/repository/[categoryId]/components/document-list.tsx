@@ -13,6 +13,7 @@ import icons from '@/constants/icons'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { useGetDocumentsForCategoryQuery } from '@/apis/fetchers/document/get-documents-for-category/query'
+import Loading from '@/components/loading'
 
 const SORT_OPTION_TYPE = ['createdAt', 'name', 'updatedAt'] as const
 
@@ -43,9 +44,14 @@ export default function DocumentList({ categoryId, className }: Props) {
     setSortOption(option)
   }
 
-  if (isPending) return <div>loading</div>
+  if (isPending)
+    return (
+      <div className="relative min-h-[205.7px]">
+        <Loading size="small" center />
+      </div>
+    )
 
-  if (isError) return <div>error</div>
+  if (isError) return <div>오류가 발생했습니다. 잠시 후 다시 시도해주세요.</div>
 
   return (
     <div className={className}>
