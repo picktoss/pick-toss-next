@@ -26,7 +26,7 @@ export default function MyStarsDrawerDialog({
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{trigger}</DialogTrigger>
-        <DialogContent className="min-w-[560px] pb-[31px] pt-[26px]">
+        <DialogContent className="min-w-[560px] pb-[65px] pt-[26px]">
           <MyStarsContent stars={stars} continuousQuizDatesCount={continuousQuizDatesCount} />
         </DialogContent>
       </Dialog>
@@ -38,7 +38,7 @@ export default function MyStarsDrawerDialog({
       <DrawerTrigger asChild className="cursor-pointer">
         {trigger}
       </DrawerTrigger>
-      <DrawerContent className="min-h-[550px]">
+      <DrawerContent className="min-h-[500px]">
         <MyStarsContent stars={stars} continuousQuizDatesCount={continuousQuizDatesCount} />
       </DrawerContent>
     </Drawer>
@@ -104,7 +104,7 @@ function MyStarsContent({ stars }: { stars: number; continuousQuizDatesCount: nu
         </div>
       </div>
 
-      <div className="mt-[48px] flex w-full flex-col items-center gap-[32px] px-[20px] lg:mt-[32px] lg:gap-[24px]">
+      {/* <div className="mt-[48px] flex w-full flex-col items-center gap-[32px] px-[20px] lg:mt-[32px] lg:gap-[24px]">
         <div className="relative flex h-[17px] w-full justify-center">
           <div className="center absolute h-px w-full rounded-full bg-gray-02" />
           <div className="z-10 bg-white px-[12px] text-body2-medium text-orange-05">
@@ -121,7 +121,7 @@ function MyStarsContent({ stars }: { stars: number; continuousQuizDatesCount: nu
             <Tag label="+5개" className="absolute right-[-14px] top-[-8px]" />
           </Button>
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }
