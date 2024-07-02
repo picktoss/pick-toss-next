@@ -110,6 +110,7 @@ export default function MakeQuizDrawerDialog({ trigger, categories, quizType = '
             <MakeQuizDialogContent
               categories={categories}
               handleCreateQuizzes={handleCreateQuizzes}
+              quizType={quizType}
             />
           )}
         </DialogContent>
@@ -145,9 +146,11 @@ export default function MakeQuizDrawerDialog({ trigger, categories, quizType = '
 function MakeQuizDialogContent({
   categories,
   handleCreateQuizzes,
+  quizType,
 }: {
   categories: CategoryDTO[]
   handleCreateQuizzes: ({ documentIds, count }: { documentIds: number[]; count: number }) => void
+  quizType: QuizType
 }) {
   const { data: session } = useSession()
   const userPoints = session?.user.dto.point || 0
@@ -203,6 +206,7 @@ function MakeQuizDialogContent({
       quizCountMutate(
         {
           documentIds: allSelectedDocuments.map((document) => document.id),
+          type: quizType,
         },
         {
           onSuccess: (data) => {
@@ -418,6 +422,7 @@ function MakeQuizDrawerContent({
       quizCountMutate(
         {
           documentIds: getDocumentCheckedIds() as number[],
+          type: quizType,
         },
         {
           onSuccess: (data) => {

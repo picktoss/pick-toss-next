@@ -1,10 +1,12 @@
 import { API_ENDPOINT } from '@/apis/api-endpoint'
+import { QuizType } from '@/apis/types/dto/quiz.dto'
 import { apiClient } from '@/lib/api-client'
 
 interface QuizCountParams extends NextFetchRequestConfig {
   accessToken: string
 
   documentIds: number[]
+  type: QuizType
 }
 
 interface QuizCountResponse {
@@ -16,6 +18,7 @@ export const quizCount = async (params: QuizCountParams) => {
     ...API_ENDPOINT.document.quizCount(),
     body: {
       documentIds: params.documentIds,
+      type: params.type,
     },
     headers: {
       Authorization: `Bearer ${params.accessToken}`,
