@@ -7,17 +7,17 @@ import { useMediaQuery } from '@/hooks/use-media-query'
 import Image from 'next/image'
 import { ReactNode, useState } from 'react'
 
-interface ContinuousQuizDrwaerDialog {
+interface ContinuousQuizDrawerDialog {
   continuousQuizDatesCount: number
   maxContinuousQuizDatesCount: number
   trigger: ReactNode
 }
 
-export default function ContinuousQuizDrwaerDialog({
+export default function ContinuousQuizDrawerDialog({
   trigger,
   continuousQuizDatesCount,
   maxContinuousQuizDatesCount,
-}: ContinuousQuizDrwaerDialog) {
+}: ContinuousQuizDrawerDialog) {
   const [open, setOpen] = useState(false)
   const isDesktop = useMediaQuery('(min-width: 1024px)')
 
