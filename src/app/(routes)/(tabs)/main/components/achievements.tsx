@@ -4,7 +4,7 @@ import icons from '@/constants/icons'
 import Image from 'next/image'
 import MyStarsDrawerDialog from './my-stars-drawer-dialog'
 import { useSession } from 'next-auth/react'
-import ContinuousQuizDrwaerDialog from './continuous-quiz-drawer-dialog'
+import ContinuousQuizDrawerDialog from './continuous-quiz-drawer-dialog'
 
 export default function Achievements() {
   const { data: session } = useSession()
@@ -12,7 +12,7 @@ export default function Achievements() {
 
   return (
     <div className="flex h-[80px] gap-[7px] lg:h-[248px] lg:flex-col lg:gap-[8px]">
-      <ContinuousQuizDrwaerDialog
+      <ContinuousQuizDrawerDialog
         continuousQuizDatesCount={userDTO!.continuousQuizDatesCount}
         maxContinuousQuizDatesCount={userDTO!.maxContinuousQuizDatesCount}
         trigger={
