@@ -1,6 +1,7 @@
 import { SearchDocumentResponse } from '@/apis/fetchers/document/search-document/fetcher'
 import { CommonLayout } from '@/components/common-layout'
 import { SearchForm } from '@/components/search-form'
+import Link from 'next/link'
 
 interface Props {
   term: string
@@ -34,8 +35,10 @@ export function SearchResult({ term, documents, onReSearch }: Props) {
 
             <div className="mt-[16px] flex flex-col gap-[24px] lg:grid lg:grid-cols-2 lg:gap-[16px]">
               {documents.map((document) => (
-                <div
+                <Link
                   key={document.documentId}
+                  href={`/document/${document.documentId}`}
+                  role="button"
                   className="flex h-[160px] w-full flex-col justify-between bg-white p-[20px]"
                 >
                   <div>
@@ -49,7 +52,7 @@ export function SearchResult({ term, documents, onReSearch }: Props) {
                   <div className="text-small1-regular text-gray-06">
                     {document.category.name} {'>'} {document.documentName}
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </div>
