@@ -15,6 +15,7 @@ import { useDocumentUsage } from '@/hooks/use-document-usage'
 import { CategoryProtector } from './category-protector'
 import { useSession } from 'next-auth/react'
 import { AIPickDialog } from './ai-pick-dialog'
+import { CreateDocumentProtector } from './create-document-protector'
 
 export default function LeftSidebar() {
   const segments = useSelectedLayoutSegments()
@@ -38,14 +39,13 @@ export default function LeftSidebar() {
         </Link>
       </div>
       <div className="mb-[35px]">
-        <CategoryProtector>
-          <Link href="/create">
-            <Button className="h-[47px] w-[151px] gap-[13px] rounded-[16px] bg-orange-05 hover:bg-orange-05/90">
-              <span className="text-body2-bold">노트 추가하기</span>
-              <PlusIcon />
-            </Button>
-          </Link>
-        </CategoryProtector>
+        <CreateDocumentProtector skeleton={<AddNoteButton />}>
+          <CategoryProtector>
+            <Link href="/create">
+              <AddNoteButton />
+            </Link>
+          </CategoryProtector>
+        </CreateDocumentProtector>
       </div>
       <div className="mb-[20px] w-full flex-1">
         <div className="bg-white">
@@ -125,6 +125,15 @@ export default function LeftSidebar() {
         </div>
       )}
     </div>
+  )
+}
+
+const AddNoteButton = () => {
+  return (
+    <Button className="h-[47px] w-[151px] gap-[13px] rounded-[16px] bg-orange-05 hover:bg-orange-05/90">
+      <span className="text-body2-bold">노트 추가하기</span>
+      <PlusIcon />
+    </Button>
   )
 }
 

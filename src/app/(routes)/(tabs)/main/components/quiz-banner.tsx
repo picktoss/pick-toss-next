@@ -2,6 +2,7 @@
 
 import { useGetTodayQuizSetId } from '@/apis/fetchers/quiz/get-today-quiz-set-id/query'
 import { CategoryProtector } from '@/components/category-protector'
+import { CreateDocumentProtector } from '@/components/create-document-protector'
 import { SwitchCase } from '@/components/react/switch-case'
 import { Button } from '@/components/ui/button'
 import icons from '@/constants/icons'
@@ -140,13 +141,22 @@ export default function QuizBanner() {
         value={type}
         caseBy={{
           READY: (
-            <Button
-              className="flex w-full gap-[8px] rounded-[32px] lg:w-[240px]"
-              onClick={() => router.push(`/quiz?quizSetId=${quizSetId}`)}
+            <CreateDocumentProtector
+              skeleton={
+                <Button className="flex w-full gap-[8px] rounded-[32px] lg:w-[240px]">
+                  <div>오늘의 퀴즈 시작하기</div>
+                  <Image src={icons.arrowRight} width={20.25} height={13.5} alt="" />
+                </Button>
+              }
             >
-              <div>오늘의 퀴즈 시작하기</div>
-              <Image src={icons.arrowRight} width={20.25} height={13.5} alt="" />
-            </Button>
+              <Button
+                className="flex w-full gap-[8px] rounded-[32px] lg:w-[240px]"
+                onClick={() => router.push(`/quiz?quizSetId=${quizSetId}`)}
+              >
+                <div>오늘의 퀴즈 시작하기</div>
+                <Image src={icons.arrowRight} width={20.25} height={13.5} alt="" />
+              </Button>
+            </CreateDocumentProtector>
           ),
           NOT_READY: (
             <CategoryProtector>

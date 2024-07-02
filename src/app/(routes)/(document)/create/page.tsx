@@ -11,6 +11,7 @@ import { useToast } from '@/hooks/use-toast'
 import { useGetCategoriesQuery } from '@/apis/fetchers/category/get-categories/query'
 import { useCreateDocumentMutation } from '@/apis/fetchers/document/create-document/mutation'
 import { MAX_CONTENT_LENGTH, MIN_CONTENT_LENGTH } from '@/constants/document'
+import { useSession } from 'next-auth/react'
 
 const VisualEditor = dynamic(() => import('./components/visual-editor'), {
   ssr: false,
@@ -21,6 +22,7 @@ export default function CreateDocument() {
   const router = useRouter()
   const { toast } = useToast()
   const searchParams = useSearchParams()
+  const { data: session } = useSession()
 
   const [isLoading, setIsLoading] = useState(false)
 
@@ -76,14 +78,28 @@ export default function CreateDocument() {
     categories.find((category) => category.id === Number(searchParams.get('default')))?.id ||
     categories[0].id
 
-  return (
-    <CreateDocumentProvider initCategoryId={Number(defaultCategoryId) || categories[0].id}>
-      <Header categories={categories} handleSubmit={handleSubmit} />
-      <div className="mt-[22px] min-h-screen rounded-t-[20px] bg-white shadow-sm">
-        <TitleInput />
-        <VisualEditor />
-      </div>
-      {isLoading && <Loading center />}
-    </CreateDocumentProvider>
-  )
+  if (!session?.user) {
+    return null
+  }
+
+  const isLimited =
+    session.user.dto.documentUsage.freePlanMaxPossessDocumentCount -
+      session.user.dto.documentUsage.possessDocumentCount ===
+    0
+
+  if (isLimited) {
+    return <div>리미트 Dialog</div>
+  }
+
+  if (session)
+    return (
+      <CreateDocumentProvider initCategoryId={Number(defaultCategoryId) || categories[0].id}>
+        <Header categories={categories} handleSubmit={handleSubmit} />
+        <div className="mt-[22px] min-h-screen rounded-t-[20px] bg-white shadow-sm">
+          <TitleInput />
+          <VisualEditor />
+        </div>
+        {isLoading && <Loading center />}
+      </CreateDocumentProvider>
+    )
 }
