@@ -14,7 +14,6 @@ import { INTRO_DURATION, SHOW_RESULT_DURATION } from '../constants'
 import { SwitchCase } from '@/components/react/switch-case'
 import { useTimer } from '../hooks/use-timer'
 import { useMutation } from '@tanstack/react-query'
-import { patchQuizResult } from '@/apis/fetchers/quiz/patch-quiz-result/fetcher'
 import { useSearchParams } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import QuizResult from './quiz-result'
@@ -22,6 +21,7 @@ import { ChoiceReact } from './choice-react'
 import { ReportQuizError } from './report-quiz-error'
 import { deleteQuiz } from '@/apis/fetchers/quiz/delete-quiz/fetcher'
 import { cn } from '@/lib/utils'
+import { usePatchQuizResultMutation } from '@/apis/fetchers/quiz/patch-quiz-result/mutation'
 
 interface QuizProps {
   quizzes: QuizDTO[]
@@ -38,17 +38,7 @@ export default function Quiz({ quizzes, isTodayQuiz }: QuizProps) {
 
   const [reward, setReward] = useState<null | number>(null)
 
-  const { mutate: patchQuizResultMutate } = useMutation({
-    mutationKey: ['patchQuizResult'],
-    mutationFn: (solvingData: SolvingData) =>
-      patchQuizResult({
-        data: {
-          quizSetId,
-          quizzes: solvingData,
-        },
-        accessToken: session.data?.user.accessToken || '',
-      }),
-  })
+  const { mutate: patchQuizResultMutate } = usePatchQuizResultMutation()
 
   const { mutate: deleteQuizMutate } = useMutation({
     mutationKey: ['deleteQuiz'],
@@ -110,12 +100,15 @@ export default function Quiz({ quizzes, isTodayQuiz }: QuizProps) {
     setSolvingData(newSolvingData)
 
     if (quizProgress.quizIndex === quizzes.length - 1) {
-      patchQuizResultMutate(newSolvingData, {
-        onSuccess: ({ reward }) => {
-          setReward(reward)
-          setState('end')
-        },
-      })
+      patchQuizResultMutate(
+        { quizSetId, solvingData: newSolvingData },
+        {
+          onSuccess: ({ reward }) => {
+            setReward(reward)
+            setState('end')
+          },
+        }
+      )
       return
     }
 
@@ -138,11 +131,14 @@ export default function Quiz({ quizzes, isTodayQuiz }: QuizProps) {
       {
         onSettled: () => {
           if (quizProgress.quizIndex === quizzes.length - 1) {
-            patchQuizResultMutate(solvingData, {
-              onSuccess: () => {
-                setState('end')
-              },
-            })
+            patchQuizResultMutate(
+              { quizSetId, solvingData },
+              {
+                onSuccess: () => {
+                  setState('end')
+                },
+              }
+            )
             return
           }
 

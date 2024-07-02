@@ -23,6 +23,7 @@ import {
 import { GetKeyPointsByIdResponse } from '@/apis/fetchers/key-point/get-key-points-by-id/fetcher'
 import { useCreateAIPickMutation } from '@/apis/fetchers/document/create-ai-pick/mutation'
 import { useToggleBookmarkMutation } from '@/apis/fetchers/key-point/toggle-bookmark/mutation'
+import { useSession } from 'next-auth/react'
 
 interface Props {
   initKeyPoints: {
@@ -59,6 +60,9 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
   const documentId = Number(useParams().documentId as string)
   const queryClient = useQueryClient()
   const prevStatusRef = useRef<DocumentStatus>()
+  const { data: session } = useSession()
+
+  const availableAiPickCount = session?.user.dto.documentUsage.availableAiPickCount || 0
 
   const {
     data: { documentStatus: status, keyPoints },
@@ -73,6 +77,11 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
   const { mutate: mutateCreateAiPick } = useCreateAIPickMutation()
 
   const handleCreateAiPick = (option?: { rePick: boolean }) => {
+    if (availableAiPickCount < 1) {
+      alert('AI Pick 가능 횟수를 초과했습니다.')
+      return
+    }
+
     prevStatusRef.current = 'PROCESSING'
 
     queryClient.setQueryData<GetKeyPointsByIdResponse>(
