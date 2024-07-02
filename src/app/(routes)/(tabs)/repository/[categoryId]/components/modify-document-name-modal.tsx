@@ -9,6 +9,7 @@ import { Document } from '@/apis/fetchers/document/get-documents-for-category/fe
 import { updateDocumentName } from '@/apis/fetchers/document/update-document-name/fetcher'
 import { useParams } from 'next/navigation'
 import { SortOption } from './document-list'
+import { GET_DOCUMENTS_FOR_CATEGORY_KEY } from '@/apis/fetchers/document/get-documents-for-category/query'
 
 interface Props extends Document {
   open: boolean
@@ -32,16 +33,18 @@ export default function ModifyDocumentNameModal({
   const { mutate } = useMutation({
     mutationFn: updateDocumentName,
     onMutate: async () => {
-      await queryClient.cancelQueries({ queryKey: ['documents', Number(categoryId), sortOption] })
+      await queryClient.cancelQueries({
+        queryKey: [GET_DOCUMENTS_FOR_CATEGORY_KEY, Number(categoryId), sortOption],
+      })
 
       const prevDocuments = queryClient.getQueryData<Document[]>([
-        'documents',
+        GET_DOCUMENTS_FOR_CATEGORY_KEY,
         Number(categoryId),
         sortOption,
       ])
 
       queryClient.setQueryData(
-        ['documents', Number(categoryId), sortOption],
+        [GET_DOCUMENTS_FOR_CATEGORY_KEY, Number(categoryId), sortOption],
         (prevDocuments: Document[]) =>
           prevDocuments.map((document) => {
             if (id !== document.id) return document
@@ -56,7 +59,10 @@ export default function ModifyDocumentNameModal({
       return prevDocuments
     },
     onError: (_, __, context) => {
-      queryClient.setQueryData(['documents', Number(categoryId), sortOption], context)
+      queryClient.setQueryData(
+        [GET_DOCUMENTS_FOR_CATEGORY_KEY, Number(categoryId), sortOption],
+        context
+      )
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['documents'] }),
   })

@@ -19,6 +19,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import EmojiPicker from 'emoji-picker-react'
+import { GET_CATEGORIES_KEY } from '@/apis/fetchers/category/get-categories/query'
 
 interface Props extends Category {
   open: boolean
@@ -36,11 +37,11 @@ export default function ModifyCategoryModal({ id, name, emoji, tag, open, onOpen
   const { mutate } = useMutation({
     mutationFn: updateCategory,
     onMutate: async () => {
-      await queryClient.cancelQueries({ queryKey: ['categories'] })
+      await queryClient.cancelQueries({ queryKey: [GET_CATEGORIES_KEY] })
 
-      const prevCategories = queryClient.getQueryData<Category[]>(['categories'])
+      const prevCategories = queryClient.getQueryData<Category[]>([GET_CATEGORIES_KEY])
 
-      queryClient.setQueryData(['categories'], (prevCategories: Category[]) =>
+      queryClient.setQueryData([GET_CATEGORIES_KEY], (prevCategories: Category[]) =>
         prevCategories.map((category) => {
           if (id !== category.id) return category
 
@@ -56,9 +57,9 @@ export default function ModifyCategoryModal({ id, name, emoji, tag, open, onOpen
       return prevCategories
     },
     onError: (_, __, context) => {
-      queryClient.setQueryData(['categories'], context)
+      queryClient.setQueryData([GET_CATEGORIES_KEY], context)
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['categories'] }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: [GET_CATEGORIES_KEY] }),
   })
 
   const handleUpdateCategory = () => {

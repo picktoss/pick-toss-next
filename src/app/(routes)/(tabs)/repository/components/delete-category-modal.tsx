@@ -1,5 +1,6 @@
 import { deleteCategory } from '@/apis/fetchers/category/delete-category/fetcher'
 import { Category } from '@/apis/fetchers/category/get-categories/fetcher'
+import { GET_CATEGORIES_KEY } from '@/apis/fetchers/category/get-categories/query'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogClose, DialogContent } from '@/components/ui/dialog'
 import icons from '@/constants/icons'
@@ -19,20 +20,20 @@ export default function DeleteCategoryModal({ id, name, documents, open, onOpenC
   const { mutate } = useMutation({
     mutationFn: deleteCategory,
     onMutate: async () => {
-      await queryClient.cancelQueries({ queryKey: ['categories'] })
+      await queryClient.cancelQueries({ queryKey: [GET_CATEGORIES_KEY] })
 
-      const prevCategories = queryClient.getQueryData<Category[]>(['categories'])
+      const prevCategories = queryClient.getQueryData<Category[]>([GET_CATEGORIES_KEY])
 
-      queryClient.setQueryData(['categories'], (prevCategories: Category[]) =>
+      queryClient.setQueryData([GET_CATEGORIES_KEY], (prevCategories: Category[]) =>
         prevCategories.filter((category) => id !== category.id)
       )
 
       return prevCategories
     },
     onError: (_, __, context) => {
-      queryClient.setQueryData(['categories'], context)
+      queryClient.setQueryData([GET_CATEGORIES_KEY], context)
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['categories'] }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: [GET_CATEGORIES_KEY] }),
   })
 
   const handleDeleteCategory = () => {
