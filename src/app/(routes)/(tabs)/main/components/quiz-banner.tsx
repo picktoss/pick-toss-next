@@ -3,6 +3,7 @@
 import { useGetTodayQuizSetId } from '@/apis/fetchers/quiz/get-today-quiz-set-id/query'
 import { CategoryProtector } from '@/components/category-protector'
 import { CreateDocumentProtector } from '@/components/create-document-protector'
+import Loading from '@/components/loading'
 import { SwitchCase } from '@/components/react/switch-case'
 import { Button } from '@/components/ui/button'
 import icons from '@/constants/icons'
@@ -27,6 +28,14 @@ export default function QuizBanner() {
 
     return () => clearInterval(timer)
   }, [])
+
+  if (!data) {
+    return (
+      <div className="relative h-[240px] w-full rounded-[12px] bg-gray-01 lg:h-[248px] lg:max-w-[840px]">
+        <Loading center />
+      </div>
+    )
+  }
 
   const type = data?.type ?? 'NOT_READY'
   const quizSetId = data?.quizSetId ?? null
