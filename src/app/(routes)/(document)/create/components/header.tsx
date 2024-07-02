@@ -7,6 +7,7 @@ import { CategorySelect } from './category-select'
 import { useCreateDocumentContext } from '../contexts/create-document-context'
 import { cn } from '@/lib/utils'
 import { MAX_CONTENT_LENGTH } from '@/constants/document'
+import { useSession } from 'next-auth/react'
 
 interface Props {
   categories: CategoryDTO[]
@@ -24,6 +25,11 @@ interface Props {
 export function Header({ categories, handleSubmit }: Props) {
   const router = useRouter()
   const { documentName, selectedCategoryId, editorMarkdownContent } = useCreateDocumentContext()
+  const { data: session } = useSession()
+
+  const user = session?.user.dto
+
+  if (!user) return null
 
   return (
     <div className="sticky top-0 z-10 bg-white opacity-95 shadow-md">
@@ -65,7 +71,12 @@ export function Header({ categories, handleSubmit }: Props) {
           / 15,000자
         </div>
         <div className="text-body2-regular text-gray-06">
-          남은 등록 가능 횟수 <span className="text-body2-bold">00회</span>
+          남은 등록 가능 횟수{' '}
+          <span className="text-body2-bold">
+            {user.documentUsage.freePlanMaxPossessDocumentCount -
+              user.documentUsage.possessDocumentCount}
+            회
+          </span>
         </div>
       </div>
     </div>
