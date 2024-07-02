@@ -11,7 +11,7 @@ import { useQuery } from '@tanstack/react-query'
 import { searchDocument } from '@/apis/fetchers/document/search-document/fetcher'
 import Loading from '@/components/loading'
 import { SearchResult } from './components/search-result'
-import { LOCAL_KEY } from '@/constants/recent-search-term'
+import { LOCAL_KEY } from '@/constants/local-key'
 
 export default function Repository() {
   const { data: session } = useSession()

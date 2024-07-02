@@ -1,14 +1,20 @@
 'use client'
 
-import { useGetTodayQuizSetId } from '@/apis/fetchers/quiz/get-today-quiz-set-id/query'
+import { TodayQuizSetType } from '@/apis/fetchers/quiz/get-today-quiz-set-id/fetcher'
+import {
+  GET_TODAY_QUIZ_SET_ID_KEY,
+  useGetTodayQuizSetId,
+} from '@/apis/fetchers/quiz/get-today-quiz-set-id/query'
 import { CategoryProtector } from '@/components/category-protector'
 import { CreateDocumentProtector } from '@/components/create-document-protector'
 import Loading from '@/components/loading'
 import { SwitchCase } from '@/components/react/switch-case'
 import { Button } from '@/components/ui/button'
 import icons from '@/constants/icons'
+import { LOCAL_KEY } from '@/constants/local-key'
 import { cn } from '@/lib/utils'
 import { calculateTimeUntilTomorrowMidnight, getCurrentDate } from '@/utils/date'
+import { useQueryClient } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
@@ -17,9 +23,13 @@ import { useEffect, useState } from 'react'
 export default function QuizBanner() {
   const router = useRouter()
   const { data: session } = useSession()
+  const queryClient = useQueryClient()
 
   const { data } = useGetTodayQuizSetId()
   const [remainingTime, setRemainingTime] = useState(calculateTimeUntilTomorrowMidnight())
+  const [type, setType] = useState<TodayQuizSetType | 'CREATING' | null>(null)
+
+  const quizSetId = data?.quizSetId ?? null
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -29,7 +39,37 @@ export default function QuizBanner() {
     return () => clearInterval(timer)
   }, [])
 
-  if (!data) {
+  useEffect(() => {
+    if (!data?.type) {
+      return
+    }
+
+    const creatingQuizLocalValue = localStorage.getItem(LOCAL_KEY.QUIZ_CREATING)
+    const isQuizCreating = creatingQuizLocalValue || 'false'
+
+    let intervalId: ReturnType<typeof setInterval>
+
+    if (isQuizCreating === 'true') {
+      setType('CREATING')
+      intervalId = setInterval(async () => {
+        await queryClient.refetchQueries({
+          queryKey: [GET_TODAY_QUIZ_SET_ID_KEY],
+        })
+
+        if (data.type === 'READY') {
+          localStorage.removeItem(LOCAL_KEY.QUIZ_CREATING)
+          clearInterval(intervalId)
+          setType(data.type)
+        }
+      }, 5000)
+    } else {
+      setType(data.type)
+    }
+
+    return () => clearInterval(intervalId)
+  }, [data?.type, queryClient])
+
+  if (type == null) {
     return (
       <div className="relative h-[240px] w-full rounded-[12px] bg-gray-01 lg:h-[248px] lg:max-w-[840px]">
         <Loading center />
@@ -37,16 +77,14 @@ export default function QuizBanner() {
     )
   }
 
-  const type = data?.type ?? 'NOT_READY'
-  const quizSetId = data?.quizSetId ?? null
-
   return (
     <div
       className={cn(
         'relative flex h-[240px] w-full flex-col justify-between rounded-[12px] p-[20px] lg:h-[248px] lg:max-w-[840px] text-body1-bold-eng lg:pl-[40px] lg:pt-[30px] lg:pb-[28px] overflow-hidden',
         type === 'READY' && 'bg-orange-02',
         type === 'NOT_READY' && 'bg-gray-02',
-        type === 'DONE' && 'bg-blue-02'
+        type === 'DONE' && 'bg-blue-02',
+        type === 'CREATING' && 'bg-blue-02'
       )}
     >
       <div className="w-[calc(100%-160px)] text-nowrap">
@@ -55,7 +93,8 @@ export default function QuizBanner() {
             'mb-[12px] text-body1-bold-eng',
             type === 'READY' && 'text-orange-06',
             type === 'NOT_READY' && 'text-gray-06',
-            type === 'DONE' && 'text-blue-06'
+            type === 'DONE' && 'text-blue-06',
+            type === 'CREATING' && 'text-blue-06'
           )}
         >
           TODAY&apos;s QUIZ
@@ -78,6 +117,7 @@ export default function QuizBanner() {
                 ),
                 NOT_READY: <div>아직 만들어진 퀴즈가 없어요</div>,
                 DONE: <div>오늘의 퀴즈 완료!</div>,
+                CREATING: <div>현재 퀴즈를 만들고 있어요</div>,
               }}
             />
           </div>
@@ -102,6 +142,12 @@ export default function QuizBanner() {
                   </div>
                 ),
                 DONE: <div className="text-body2-medium lg:text-body1-medium">나의 점수: 80점</div>,
+                CREATING: (
+                  <div className="text-body2-medium lg:text-body1-medium">
+                    AI <i>p</i>ick이 진행된 문서로부터 <br className="lg:hidden" />
+                    퀴즈를 생성중입니다
+                  </div>
+                ),
               }}
             />
           </div>
@@ -142,6 +188,14 @@ export default function QuizBanner() {
                 alt=""
               />
             </>
+          ),
+          CREATING: (
+            <Image
+              src={icons.quizCreating}
+              width={335}
+              className="absolute bottom-[100px] right-[30px] w-[180px] lg:bottom-[39px] lg:right-[40px] lg:w-[335px]"
+              alt=""
+            />
           ),
         }}
       />
@@ -184,6 +238,11 @@ export default function QuizBanner() {
                 내일 퀴즈까지 {remainingTime.hours.toString().padStart(2, '0')}:
                 {remainingTime.minutes.toString().padStart(2, '0')}분 남음
               </div>
+            </Button>
+          ),
+          CREATING: (
+            <Button className="z-10 flex w-full cursor-default gap-[8px] rounded-[32px] bg-blue-03 text-blue-06 hover:bg-blue-03 lg:w-[240px]">
+              <div>퀴즈 도착 예정</div>
             </Button>
           ),
         }}

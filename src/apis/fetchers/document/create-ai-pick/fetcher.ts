@@ -7,7 +7,9 @@ interface CreateAiPickParams extends NextFetchRequestConfig {
   documentId: number
 }
 
-interface CreateAiPickResponse {}
+interface CreateAiPickResponse {
+  firstUseAiPick: boolean
+}
 
 export const createAiPick = async (params: CreateAiPickParams) => {
   return await apiClient.fetch<CreateAiPickResponse>({

@@ -18,6 +18,7 @@ import google from '../../public/icons/google.svg'
 import file from '../../public/icons/file.svg'
 import plus from '../../public/icons/plus.svg'
 import quizReady from '../../public/icons/quiz-ready.svg'
+import quizCreating from '../../public/icons/quiz-creating.svg'
 import quizNotReady from '../../public/icons/quiz-not-ready.svg'
 import quizDone from '../../public/icons/quiz-done.svg'
 import quizDoneDesktop from '../../public/icons/quiz-done-desktop.svg'
@@ -66,6 +67,7 @@ const icons = {
   quizDoneDesktop,
   logo,
   logoTitle,
+  quizCreating,
 }
 
 export default icons as Record<keyof typeof icons, StaticImport>

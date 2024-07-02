@@ -14,7 +14,7 @@ import {
 } from '@/apis/fetchers/key-point/get-bookmarks/query'
 import { useToggleBookmarkMutation } from '@/apis/fetchers/key-point/toggle-bookmark/mutation'
 import { useSearchKeyPointsQuery } from '@/apis/fetchers/key-point/search-key-points/query'
-import { LOCAL_KEY } from '@/constants/recent-search-term'
+import { LOCAL_KEY } from '@/constants/local-key'
 // import { CategorySelect } from './components/category-select'
 
 export default function Picks() {
