@@ -30,6 +30,8 @@ import timer from '../../public/icons/timer.svg'
 import folderEmpty from '../../public/icons/folder-empty.svg'
 import noteEmpty from '../../public/icons/note-empty.svg'
 import deleteFolder from '../../public/icons/delete-folder.svg'
+import logo from '../../public/icons/logo.svg'
+import logoTitle from '../../public/icons/logo-title.svg'
 
 const icons = {
   check,
@@ -62,6 +64,8 @@ const icons = {
   noteEmpty,
   deleteFolder,
   quizDoneDesktop,
+  logo,
+  logoTitle,
 }
 
 export default icons as Record<keyof typeof icons, StaticImport>

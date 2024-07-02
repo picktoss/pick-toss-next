@@ -9,6 +9,7 @@ import { ArchiveLink } from './components/archive-link'
 import { SavedPicksLink } from './components/saved-picks-link'
 import TopFive from './components/top-five'
 import { QuizAnalysis } from './components/quiz-analysis'
+import ProDialogTriggerWrapper from '@/components/pro-dialog-trigger-wrapper'
 
 export default function Review() {
   return (
@@ -26,24 +27,29 @@ export default function Review() {
       <main className="mt-[18px] flex w-full flex-col gap-[24px] xl:mt-[24px] xl:flex-row xl:gap-[22px] xl:px-[20px] xl:pb-[50px]">
         <div className="flex flex-col gap-[24px] xl:max-w-[490px] xl:gap-[16px]">
           <section className="mt-[8px] flex flex-col gap-[12px] px-[20px] xl:mt-0 xl:flex-row xl:px-0">
-            <ArchiveLink
-              redirectUrl="#"
-              title="퀴즈 기록"
-              icon={
-                <div className="flex size-[56px] items-center justify-center rounded-full bg-blue-01">
-                  <Image src={icons.quizArchive} width={31.7} height={31.7} alt="" />
-                </div>
-              }
-              count={143}
-              isPro
-            />
+            <ProDialogTriggerWrapper asChild>
+              <ArchiveLink
+                redirectUrl="#"
+                title="퀴즈 기록"
+                icon={
+                  <div className="flex size-[56px] items-center justify-center rounded-full bg-blue-01">
+                    <Image src={icons.quizArchive} width={31.7} height={31.7} alt="" />
+                  </div>
+                }
+                count={143}
+                isPro
+              />
+            </ProDialogTriggerWrapper>
             <SavedPicksLink />
           </section>
 
           <section className="flex flex-col gap-[24px] rounded-none p-[20px] pb-[22px] xl:rounded-[12px] xl:bg-white">
             <div className="flex flex-col gap-[8px]">
               <h2 className="flex items-center gap-[8px] text-h4-bold text-gray-09">
-                퀴즈 톺아보기 <ProTag />
+                퀴즈 톺아보기{' '}
+                <ProDialogTriggerWrapper>
+                  <ProTag />
+                </ProDialogTriggerWrapper>
               </h2>
               <p className="text-body2-regular text-gray-07">
                 틀렸거나 고민했던 퀴즈만 모아 복습 세트를 만들어드려요
@@ -92,16 +98,17 @@ function QuizReviewSet({
 
         <div className="absolute right-[17px]">{isDone ? <CheckIcon /> : <StarsIcon />}</div>
       </div>
-
       <Link href={redirectUrl} className="px-[10px]">
-        <Button
-          className={cn(
-            'h-[33px] w-full rounded-full !text-body2-medium',
-            isDone && 'bg-gray-02 text-gray-08 hover:bg-gray-04/60'
-          )}
-        >
-          {isDone ? '다시 풀기' : '시작하기'}
-        </Button>
+        <ProDialogTriggerWrapper asChild>
+          <Button
+            className={cn(
+              'h-[33px] w-full rounded-full !text-body2-medium',
+              isDone && 'bg-gray-02 text-gray-08 hover:bg-gray-04/60'
+            )}
+          >
+            {isDone ? '다시 풀기' : '시작하기'}
+          </Button>
+        </ProDialogTriggerWrapper>
       </Link>
     </div>
   )

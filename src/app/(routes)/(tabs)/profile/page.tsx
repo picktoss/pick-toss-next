@@ -7,6 +7,7 @@ import SignOut from './components/sign-out'
 import Section from './components/section'
 import ProTag from '@/components/pro-tag'
 import { auth } from '@/app/api/auth/[...nextauth]/auth'
+import ProDialogTriggerWrapper from '@/components/pro-dialog-trigger-wrapper'
 
 export default async function Profile() {
   const session = await auth()
@@ -63,10 +64,12 @@ export default async function Profile() {
                 <div className="text-h4-bold text-orange-05">
                   {possessDocumentCount}/{freePlanMaxPossessDocumentCount}
                 </div>
-                <button className="absolute right-[4px] top-[6px] flex w-fit items-center gap-[8px] rounded-[16px] bg-gray-01 px-[12px] py-[6px]">
-                  <ProTag />
-                  <div className="text-small1-bold text-gray-08">시작하기</div>
-                </button>
+                <ProDialogTriggerWrapper>
+                  <button className="absolute right-[4px] top-[6px] flex w-fit items-center gap-[8px] rounded-[16px] bg-gray-01 px-[12px] py-[6px]">
+                    <ProTag />
+                    <div className="text-small1-bold text-gray-08">시작하기</div>
+                  </button>
+                </ProDialogTriggerWrapper>
                 <div className="relative h-[8px] overflow-hidden rounded-full *:h-full">
                   <div className="w-full bg-gray-02" />
                   <div
