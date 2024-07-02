@@ -1,4 +1,5 @@
 import { DocumentStatus } from '@/apis/types/dto/document.dto'
+import { AIPickDialog } from '@/components/ai-pick-dialog'
 import { SwitchCase } from '@/components/react/switch-case'
 import icons from '@/constants/icons'
 import Image from 'next/image'
@@ -31,13 +32,14 @@ export function PickBanner({ status, rePick }: Props) {
                 퀴즈와 요약에 수정한 내용을 반영해보세요
               </div>
             </div>
-            <div
-              role="button"
-              className="p-[5px] text-small1-bold text-orange-06"
-              onClick={() => rePick()}
-            >
-              pick 다시하기
-            </div>
+            <AIPickDialog
+              trigger={
+                <div role="button" className="p-[5px] text-small1-bold text-orange-06">
+                  pick 다시하기
+                </div>
+              }
+              confirm={() => rePick()}
+            />
           </div>
         ),
       }}
