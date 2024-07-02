@@ -42,9 +42,18 @@ export default function Quiz({ quizzes, isTodayQuiz }: QuizProps) {
 
   const { mutate: deleteQuizMutate } = useMutation({
     mutationKey: ['deleteQuiz'],
-    mutationFn: ({ documentId, quizId }: { documentId: number; quizId: number }) =>
+    mutationFn: ({
+      documentId,
+      quizSetId,
+      quizId,
+    }: {
+      documentId: number
+      quizSetId: string
+      quizId: number
+    }) =>
       deleteQuiz({
         documentId,
+        quizSetId,
         quizId,
         accessToken: session.data?.user.accessToken || '',
       }),
@@ -126,6 +135,7 @@ export default function Quiz({ quizzes, isTodayQuiz }: QuizProps) {
     deleteQuizMutate(
       {
         documentId: curQuiz.document.id,
+        quizSetId,
         quizId: curQuiz.id,
       },
       {

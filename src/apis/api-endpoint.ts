@@ -31,8 +31,8 @@ export const API_ENDPOINT = {
       url: `/quizzes`,
       method: HttpMethod.POST,
     }),
-    deleteQuiz: (documentId: number, quizId: number) => ({
-      url: `/incorrect-quiz/${documentId}/${quizId}`,
+    deleteQuiz: (documentId: number, quizSetId: string, quizId: number) => ({
+      url: `/incorrect-quiz/${documentId}/${quizSetId}/${quizId}`,
       method: HttpMethod.DELETE,
     }),
     getWeekQuizAnswerRate: (categoryId: number) => ({
