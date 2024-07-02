@@ -29,7 +29,7 @@ export default function Repository() {
     enabled: term != null && session?.user.accessToken != null,
   })
 
-  const handleSubmit = (data: { term: string }) => {
+  const handleSubmit = (data: { term: string }, options?: { isResearch: boolean }) => {
     const trimTerm = data.term.trim()
 
     if (trimTerm === '') return
@@ -44,6 +44,10 @@ export default function Repository() {
       JSON.stringify([trimTerm, ...prevRecentTerms].slice(0, 5))
     )
 
+    if (options?.isResearch) {
+      router.replace(`${pathname}/?term=${trimTerm}`)
+      return
+    }
     router.push(`${pathname}/?term=${trimTerm}`)
   }
 
@@ -54,9 +58,15 @@ export default function Repository() {
       {showSearchResult ? (
         <div>
           {!searchData ? (
-            <Loading center />
+            <div className="relative h-screen w-full">
+              <Loading center />
+            </div>
           ) : (
-            <SearchResult term={term} documents={searchData.documents} onReSearch={handleSubmit} />
+            <SearchResult
+              term={term}
+              documents={searchData.documents}
+              onReSearch={(data: { term: string }) => handleSubmit(data, { isResearch: true })}
+            />
           )}
         </div>
       ) : (

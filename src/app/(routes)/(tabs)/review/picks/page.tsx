@@ -47,7 +47,7 @@ export default function Picks() {
     }
   )
 
-  const handleSubmit = (data: { term: string }) => {
+  const handleSubmit = (data: { term: string }, options?: { isResearch: boolean }) => {
     const trimTerm = data.term.trim()
 
     if (trimTerm === '') return
@@ -62,6 +62,9 @@ export default function Picks() {
       JSON.stringify([trimTerm, ...prevRecentTerms].slice(0, 5))
     )
 
+    if (options?.isResearch) {
+      router.replace(`${pathname}/?term=${trimTerm}`)
+    }
     router.push(`${pathname}/?term=${trimTerm}`)
   }
 
@@ -72,9 +75,15 @@ export default function Picks() {
       {showSearchResult ? (
         <div>
           {!searchData ? (
-            <Loading center />
+            <div className="relative h-screen w-full">
+              <Loading center />
+            </div>
           ) : (
-            <SearchResult term={term} keyPoints={searchData.keyPoints} onReSearch={handleSubmit} />
+            <SearchResult
+              term={term}
+              keyPoints={searchData.keyPoints}
+              onReSearch={(data: { term: string }) => handleSubmit(data, { isResearch: true })}
+            />
           )}
         </div>
       ) : (
