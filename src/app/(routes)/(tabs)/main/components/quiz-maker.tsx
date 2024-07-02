@@ -29,7 +29,7 @@ export default function QuizMaker() {
             {Array.from({ length: 3 }).map((_, idx) => (
               <div
                 key={idx}
-                className="relative h-[200px] w-full rounded-[12px] bg-white lg:h-[280px]"
+                className="relative h-[200px] w-full rounded-[12px] bg-blue-01 lg:h-[280px]"
               >
                 <Loading center />
               </div>
@@ -59,16 +59,11 @@ export default function QuizMaker() {
                 />
               }
             />
-            <MakeQuizDrawerDialog
-              categories={categories ?? []}
-              trigger={
-                <MakerTrigger
-                  title="빈칸 채우기"
-                  description="주어진 문장의 빈 곳을 채우는 퀴즈"
-                  comingSoon
-                  lottie={<BlackLottie />}
-                />
-              }
+            <MakerTrigger
+              title="빈칸 채우기"
+              description="주어진 문장의 빈 곳을 채우는 퀴즈"
+              comingSoon
+              lottie={<BlackLottie />}
             />
           </>
         )}
@@ -89,7 +84,12 @@ const MakerTrigger = forwardRef<HTMLDivElement, MakerTriggerProps>((props, ref) 
   const { lottie, title, description, comingSoon, ...rest } = props
 
   return (
-    <div ref={ref} {...rest} role="button" className="w-full overflow-hidden rounded-[12px]">
+    <div
+      ref={ref}
+      {...rest}
+      role={comingSoon ? '' : 'button'}
+      className="w-full overflow-hidden rounded-[12px]"
+    >
       <div className="flex h-[120px] items-center justify-center bg-blue-01 lg:h-[180px]">
         {lottie}
       </div>
