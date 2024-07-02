@@ -12,6 +12,7 @@ import { searchDocument } from '@/apis/fetchers/document/search-document/fetcher
 import Loading from '@/components/loading'
 import { SearchResult } from './components/search-result'
 import { LOCAL_KEY } from '@/constants/recent-search-term'
+import AddNoteFloatingButton from '@/components/add-note-floating-button'
 
 export default function Repository() {
   const { data: session } = useSession()
@@ -101,6 +102,7 @@ export default function Repository() {
               <h3 className="mb-[20px] text-h4-bold text-gray-09">노트</h3>
               <CategoryAccordionList className="h-[90%] overflow-auto" />
             </div>
+            <AddNoteFloatingButton />
           </main>
         </CommonLayout>
       )}

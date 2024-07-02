@@ -3,6 +3,7 @@ import DocumentList from './components/document-list'
 import { CommonLayout } from '@/components/common-layout'
 import { auth } from '@/app/api/auth/[...nextauth]/auth'
 import { getCategory } from '@/apis/fetchers/category/get-category/fetcher'
+import AddNoteFloatingButton from '@/components/add-note-floating-button'
 
 interface Props {
   params: {
@@ -33,6 +34,7 @@ export default async function Category({ params: { categoryId } }: Props) {
         <CategoryTag tag={tag} />
       </div>
       <DocumentList className="px-[20px] pb-[80px]" categoryId={Number(categoryId)} />
+      <AddNoteFloatingButton categoryId={Number(categoryId)} />
     </CommonLayout>
   )
 }
