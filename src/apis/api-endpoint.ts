@@ -75,6 +75,11 @@ export const API_ENDPOINT = {
       method: HttpMethod.POST,
     }),
 
+    rePostAiPick: (documentId: number) => ({
+      url: `/documents/${documentId}/re-upload`,
+      method: HttpMethod.POST,
+    }),
+
     updateDocumentName: (documentId: number) => ({
       url: `/documents/${documentId}/update-name`,
       method: HttpMethod.PATCH,

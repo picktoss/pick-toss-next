@@ -23,8 +23,8 @@ import {
 import { GetKeyPointsByIdResponse } from '@/apis/fetchers/key-point/get-key-points-by-id/fetcher'
 import { useCreateAIPickMutation } from '@/apis/fetchers/document/create-ai-pick/mutation'
 import { useToggleBookmarkMutation } from '@/apis/fetchers/key-point/toggle-bookmark/mutation'
-import { useSession } from 'next-auth/react'
 import { AIPickDialog } from '@/components/ai-pick-dialog'
+import { useReCreateAIPickMutation } from '@/apis/fetchers/document/re-create-ai-pick/mutation'
 
 interface Props {
   initKeyPoints: {
@@ -61,9 +61,6 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
   const documentId = Number(useParams().documentId as string)
   const queryClient = useQueryClient()
   const prevStatusRef = useRef<DocumentStatus>()
-  const { data: session } = useSession()
-
-  const availableAiPickCount = session?.user.dto.documentUsage.availableAiPickCount || 0
 
   const {
     data: { documentStatus: status, keyPoints },
@@ -77,12 +74,17 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
 
   const { mutate: mutateCreateAiPick } = useCreateAIPickMutation()
 
-  const handleCreateAiPick = (option?: { rePick: boolean }) => {
-    if (availableAiPickCount < 1) {
-      alert('AI Pick 가능 횟수를 초과했습니다.')
-      return
-    }
+  const { mutate: mutateReCreateAiPick } = useReCreateAIPickMutation()
 
+  const handleCreateAiPick = () => {
+    prevStatusRef.current = 'PROCESSING'
+
+    mutateCreateAiPick({
+      documentId,
+    })
+  }
+
+  const handleReCreateAiPick = () => {
     prevStatusRef.current = 'PROCESSING'
 
     queryClient.setQueryData<GetKeyPointsByIdResponse>(
@@ -93,12 +95,12 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
         return {
           ...oldData,
           documentStatus: 'PROCESSING',
-          keyPoints: option?.rePick ? [] : oldData.keyPoints,
+          keyPoints: [],
         }
       }
     )
 
-    mutateCreateAiPick({
+    mutateReCreateAiPick({
       documentId,
     })
   }
@@ -214,7 +216,7 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
                 </div>
 
                 <div className="px-[10px]">
-                  <PickBanner status={status} rePick={() => handleCreateAiPick({ rePick: true })} />
+                  <PickBanner status={status} rePick={() => handleReCreateAiPick()} />
                 </div>
               </div>
 
@@ -287,7 +289,7 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
             </h3>
 
             <div className="px-[15px]">
-              <PickBanner status={status} rePick={() => handleCreateAiPick({ rePick: true })} />
+              <PickBanner status={status} rePick={() => handleReCreateAiPick()} />
             </div>
           </div>
 
