@@ -79,6 +79,18 @@ export function AiPick({ initKeyPoints, initStatus }: Props) {
   const handleCreateAiPick = () => {
     prevStatusRef.current = 'PROCESSING'
 
+    queryClient.setQueryData<GetKeyPointsByIdResponse>(
+      [GET_KEY_POINTS_BY_ID_KEY, documentId],
+      (oldData) => {
+        if (!oldData) return oldData
+
+        return {
+          ...oldData,
+          documentStatus: 'PROCESSING',
+        }
+      }
+    )
+
     mutateCreateAiPick({
       documentId,
     })
