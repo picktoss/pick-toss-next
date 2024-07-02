@@ -1,12 +1,11 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer'
 import icons from '@/constants/icons'
 import { useMediaQuery } from '@/hooks/use-media-query'
 import Image from 'next/image'
-import { HTMLAttributes, ReactNode, useState } from 'react'
+import { ReactNode, useState } from 'react'
 
 interface MyStarsDrawerDialog {
   stars: number
@@ -126,19 +125,19 @@ function MyStarsContent({ stars }: { stars: number; continuousQuizDatesCount: nu
   )
 }
 
-interface TagProps extends HTMLAttributes<HTMLDivElement> {
-  label: string
-}
+// interface TagProps extends HTMLAttributes<HTMLDivElement> {
+//   label: string
+// }
 
-function Tag({ className, label }: TagProps) {
-  return (
-    <div className={className}>
-      <div className="flex rounded-[10px] rounded-bl-none bg-orange-05 px-[8px] py-[4px] text-tag text-gray-01">
-        {label}
-      </div>
-    </div>
-  )
-}
+// function Tag({ className, label }: TagProps) {
+//   return (
+//     <div className={className}>
+//       <div className="flex rounded-[10px] rounded-bl-none bg-orange-05 px-[8px] py-[4px] text-tag text-gray-01">
+//         {label}
+//       </div>
+//     </div>
+//   )
+// }
 
 // 초기 사용자 회원 가입 완료 시,
 // 연속 풀이 횟수 등
