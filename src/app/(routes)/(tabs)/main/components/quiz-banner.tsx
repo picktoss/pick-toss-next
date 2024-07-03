@@ -5,6 +5,7 @@ import {
   GET_TODAY_QUIZ_SET_ID_KEY,
   useGetTodayQuizSetId,
 } from '@/apis/fetchers/quiz/get-today-quiz-set-id/query'
+import { useGetWeekQuizAnswerRateMutation } from '@/apis/fetchers/quiz/get-week-quiz-answer-rate/mutation'
 import { CategoryProtector } from '@/components/category-protector'
 import { CreateDocumentProtector } from '@/components/create-document-protector'
 import Loading from '@/components/loading'
@@ -28,8 +29,32 @@ export default function QuizBanner() {
   const { data } = useGetTodayQuizSetId()
   const [remainingTime, setRemainingTime] = useState(calculateTimeUntilTomorrowMidnight())
   const [type, setType] = useState<TodayQuizSetType | 'CREATING' | null>(null)
+  const [resultScore, setResultScore] = useState<number | null>(null)
 
   const quizSetId = data?.quizSetId ?? null
+
+  const { mutate: getWeekQuizAnswerRate } = useGetWeekQuizAnswerRateMutation()
+
+  useEffect(() => {
+    if (type !== 'DONE') {
+      return
+    }
+
+    getWeekQuizAnswerRate(
+      { categoryId: 0 },
+      {
+        onSuccess: (data) => {
+          const todayData = data.quizzes[data.quizzes.length - 1]
+          const score = Math.round(
+            ((todayData.totalQuizCount - todayData.incorrectAnswerCount) /
+              todayData.totalQuizCount) *
+              100
+          )
+          setResultScore(score)
+        },
+      }
+    )
+  }, [type])
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -141,7 +166,11 @@ export default function QuizBanner() {
                     AI pick이 적용된 노트가 없는 상태입니다
                   </div>
                 ),
-                DONE: <div className="text-body2-medium lg:text-body1-medium">나의 점수: 80점</div>,
+                DONE: (
+                  <div className="text-body2-medium lg:text-body1-medium">
+                    나의 점수: {resultScore || 0}점
+                  </div>
+                ),
                 CREATING: (
                   <div className="text-body2-medium lg:text-body1-medium">
                     AI <i>p</i>ick이 진행된 문서로부터 <br className="lg:hidden" />
