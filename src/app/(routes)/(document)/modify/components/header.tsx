@@ -16,9 +16,10 @@ interface Props {
     documentName: string
     editorContent: string
   }) => Promise<void>
+  isLoading: boolean
 }
 
-export function Header({ categoryId, handleSubmit }: Props) {
+export function Header({ categoryId, handleSubmit, isLoading }: Props) {
   const router = useRouter()
   const { documentName, editorMarkdownContent } = useEditDocumentContext()
   const { data: category } = useGetCategoryQuery({ categoryId })
@@ -30,6 +31,7 @@ export function Header({ categoryId, handleSubmit }: Props) {
           variant="ghost"
           className="ml-[-10px] p-[10px] !text-body2-medium text-gray-08"
           onClick={() => router.back()}
+          disabled={isLoading}
         >
           취소
         </Button>
@@ -50,6 +52,7 @@ export function Header({ categoryId, handleSubmit }: Props) {
               editorContent: editorMarkdownContent,
             })
           }
+          disabled={isLoading}
         >
           수정하기
         </Button>

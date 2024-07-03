@@ -98,7 +98,11 @@ export default function Modify() {
       prevTitle={modifyTargetDocument.documentName}
       prevContent={modifyTargetDocument.content}
     >
-      <Header categoryId={modifyTargetDocument?.category.id} handleSubmit={handleSubmit} />
+      <Header
+        categoryId={modifyTargetDocument?.category.id}
+        handleSubmit={handleSubmit}
+        isLoading={isLoading}
+      />
       <div className="mt-[22px] min-h-screen rounded-t-[20px] bg-white shadow-sm">
         <TitleInput />
         <VisualEditor />

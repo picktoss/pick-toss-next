@@ -4,12 +4,14 @@ import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { HTMLAttributes, useEffect, useRef } from 'react'
 import { SCROLL_TO_EXPLANATION_DURATION } from '../constants'
+import Loading from '@/components/loading'
 
 interface ExplanationProps extends HTMLAttributes<HTMLDivElement> {
   isCorrect: boolean
   correctItem: string
   explanation: string
   next: () => void
+  isLoadingResult: boolean
 }
 
 export default function Explanation({
@@ -17,6 +19,7 @@ export default function Explanation({
   correctItem,
   explanation,
   next,
+  isLoadingResult,
   className,
 }: ExplanationProps) {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -58,9 +61,15 @@ export default function Explanation({
           <div className="text-text-regular">{explanation}</div>
         </div>
         <div className="flex justify-end lg:absolute lg:bottom-[30px] lg:right-[28px]">
-          <Button className="flex w-[116px] gap-[8px]" onClick={next}>
-            <div>다음</div>
-            <ArrowRightIcon />
+          <Button className="flex w-[116px] gap-[8px]" onClick={next} disabled={isLoadingResult}>
+            {isLoadingResult ? (
+              <Loading size="xs" />
+            ) : (
+              <>
+                <div>다음</div>
+                <ArrowRightIcon />
+              </>
+            )}
           </Button>
         </div>
       </div>

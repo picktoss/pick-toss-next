@@ -91,7 +91,7 @@ export default function CreateDocument() {
   if (session)
     return (
       <CreateDocumentProvider initCategoryId={Number(defaultCategoryId) || categories[0].id}>
-        <Header categories={categories} handleSubmit={handleSubmit} />
+        <Header categories={categories} handleSubmit={handleSubmit} isLoading={isLoading} />
         <div className="mt-[22px] min-h-screen rounded-t-[20px] bg-white shadow-sm">
           <TitleInput />
           <VisualEditor />

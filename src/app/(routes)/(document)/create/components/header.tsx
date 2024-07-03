@@ -20,9 +20,10 @@ interface Props {
     documentName: string
     editorContent: string
   }) => Promise<void>
+  isLoading: boolean
 }
 
-export function Header({ categories, handleSubmit }: Props) {
+export function Header({ categories, handleSubmit, isLoading }: Props) {
   const router = useRouter()
   const { documentName, selectedCategoryId, editorMarkdownContent } = useCreateDocumentContext()
   const { data: session } = useSession()
@@ -38,6 +39,7 @@ export function Header({ categories, handleSubmit }: Props) {
           variant="ghost"
           className="ml-[-10px] p-[10px] !text-body2-medium text-gray-08"
           onClick={() => router.back()}
+          disabled={isLoading}
         >
           취소
         </Button>
@@ -54,6 +56,7 @@ export function Header({ categories, handleSubmit }: Props) {
               editorContent: editorMarkdownContent,
             })
           }
+          disabled={isLoading}
         >
           등록하기
         </Button>
