@@ -1,13 +1,17 @@
-import { QuizDTO } from '@/apis/types/dto/quiz.dto'
+import { QuizDTO, QuizType } from '@/apis/types/dto/quiz.dto'
 import { getCurrentDate } from '@/utils/date'
 import { motion } from 'framer-motion'
 import { HTMLAttributes } from 'react'
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   quizzes: QuizDTO[]
+  isTodayQuiz: boolean
+  quizType: QuizType
 }
 
-export default function QuizIntro({ quizzes, className }: Props) {
+export default function QuizIntro({ quizzes, isTodayQuiz, quizType, className }: Props) {
+  const quizSort = quizType === 'MIX_UP' ? 'O/X 퀴즈' : '객관식 퀴즈'
+
   return (
     <div className={className}>
       <motion.div
@@ -17,7 +21,7 @@ export default function QuizIntro({ quizzes, className }: Props) {
         transition={{ duration: 0.5 }}
       >
         <div className="flex flex-col items-center gap-[8px]">
-          <div className="text-h3-bold text-gray-08">오늘의 퀴즈</div>
+          <div className="text-h3-bold text-gray-08">{isTodayQuiz ? '오늘의 퀴즈' : quizSort}</div>
           <div className="text-body1-medium text-gray-07">{getCurrentDate()}</div>
         </div>
         <DocumentListIcon />

@@ -176,7 +176,14 @@ export default function Quiz({ quizzes, isTodayQuiz }: QuizProps) {
     <SwitchCase
       value={state}
       caseBy={{
-        intro: <QuizIntro quizzes={quizzes} className="mx-[20px] mt-[43px]" />,
+        intro: (
+          <QuizIntro
+            isTodayQuiz={isTodayQuiz}
+            quizType={curQuiz.quizType}
+            quizzes={quizzes}
+            className="mx-[20px] mt-[43px]"
+          />
+        ),
         solving: (
           <>
             <div className="pt-[12px]">

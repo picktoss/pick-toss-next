@@ -92,6 +92,7 @@ export default function Picks() {
           mobileOptions={{
             hasBackButton: true,
             hasSearch: true,
+            fixed: true,
           }}
           searchOptions={{
             placeholder: '노트명, pick 내용을 입력하세요',

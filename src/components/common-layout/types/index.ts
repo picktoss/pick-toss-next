@@ -9,6 +9,7 @@ export interface MobileOptions {
   hasSearch?: boolean
   hasNotifications?: boolean
   mobileTitle?: TitleType
+  fixed?: boolean
 }
 
 export interface SearchOptions {

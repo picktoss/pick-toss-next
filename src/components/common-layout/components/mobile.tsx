@@ -8,6 +8,7 @@ import { useSession } from 'next-auth/react'
 import { SearchForm, SearchFormSubmitType } from '@/components/search-form'
 import { BellIcon, SearchIcon } from '../svgs'
 import { useEffect, useState } from 'react'
+import { cn } from '@/lib/utils'
 
 export function Mobile({ children }: React.PropsWithChildren) {
   return children
@@ -28,7 +29,12 @@ function MobileHeader({
     mobileOptions?.hasNotifications || mobileOptions?.hasSearch || mobileOptions?.hasStars
 
   return (
-    <div className="relative flex h-[48px] items-center px-[20px]">
+    <div
+      className={cn(
+        'flex h-[48px] items-center bg-gray-01 px-[20px]',
+        mobileOptions?.fixed ? 'sticky top-0 z-50' : 'relative'
+      )}
+    >
       {mobileOptions?.hasBackButton && <BackButton />}
 
       {children}
