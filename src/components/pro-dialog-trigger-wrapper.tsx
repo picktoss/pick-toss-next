@@ -13,7 +13,9 @@ interface Props extends DialogTriggerProps, React.RefAttributes<HTMLButtonElemen
 export default function ProDialogTriggerWrapper({ open, onOpenChange, children, ...props }: Props) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogTrigger {...props}>{children}</DialogTrigger>
+      <DialogTrigger {...props} asChild>
+        {children}
+      </DialogTrigger>
       <DialogContent className="w-[320px] lg:w-[448px]" displayCloseButton={false}>
         <div className="mb-[4px] bg-gradient-to-r from-[#93B0FF] to-[#FF8428] bg-clip-text text-center text-h2-bold-eng text-transparent">
           Coming Soon

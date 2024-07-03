@@ -1,3 +1,5 @@
+'use client'
+
 import { ReactNode, useState } from 'react'
 import { Dialog, DialogContent, DialogHeader, DialogTrigger } from './ui/dialog'
 import { cn } from '@/lib/utils'

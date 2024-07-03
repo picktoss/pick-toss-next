@@ -8,6 +8,7 @@ import Section from './components/section'
 import ProTag from '@/components/pro-tag'
 import { auth } from '@/app/api/auth/[...nextauth]/auth'
 import ProDialogTriggerWrapper from '@/components/pro-dialog-trigger-wrapper'
+import { AIPickDialog } from '@/components/ai-pick-dialog'
 
 export default async function Profile() {
   const session = await auth()
@@ -55,7 +56,17 @@ export default async function Profile() {
                   <span className="text-small1-regular text-gray-07">
                     남은 AI <i>p</i>ick 생성 횟수
                   </span>
-                  <Image src={icons.circleQuestion} width={16} height={16} alt="" />
+                  <AIPickDialog
+                    trigger={
+                      <Image
+                        role="button"
+                        src={icons.circleQuestion}
+                        width={16}
+                        height={16}
+                        alt=""
+                      />
+                    }
+                  />
                 </div>
                 <div className="text-h4-bold text-orange-05">{availableAiPickCount}회</div>
               </div>
@@ -117,7 +128,7 @@ export default async function Profile() {
             {profileConfig.appConfig.items.map((item) => (
               <Link
                 key={item.id}
-                href={item.label}
+                href={item.href}
                 className="flex items-center justify-between py-[12px]"
               >
                 <div className="flex items-center gap-[8px]">
