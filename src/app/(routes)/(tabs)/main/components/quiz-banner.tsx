@@ -204,33 +204,33 @@ export default function QuizBanner() {
         value={type}
         caseBy={{
           READY: (
+            <Button
+              className="flex w-full gap-[8px] rounded-[32px] lg:w-[240px]"
+              onClick={() => router.push(`/quiz?quizSetId=${quizSetId}`)}
+            >
+              <div>오늘의 퀴즈 시작하기</div>
+              <Image src={icons.arrowRight} width={20.25} height={13.5} alt="" />
+            </Button>
+          ),
+          NOT_READY: (
             <CreateDocumentProtector
               skeleton={
-                <Button className="flex w-full gap-[8px] rounded-[32px] lg:w-[240px]">
-                  <div>오늘의 퀴즈 시작하기</div>
+                <Button className="absolute bottom-[16px] flex w-[calc(100%-40px)] gap-[8px] rounded-[32px] lg:relative lg:bottom-0 lg:w-[240px]">
+                  <div>노트 추가하러 가기</div>
                   <Image src={icons.arrowRight} width={20.25} height={13.5} alt="" />
                 </Button>
               }
             >
-              <Button
-                className="flex w-full gap-[8px] rounded-[32px] lg:w-[240px]"
-                onClick={() => router.push(`/quiz?quizSetId=${quizSetId}`)}
-              >
-                <div>오늘의 퀴즈 시작하기</div>
-                <Image src={icons.arrowRight} width={20.25} height={13.5} alt="" />
-              </Button>
+              <CategoryProtector>
+                <Button
+                  className="absolute bottom-[16px] flex w-[calc(100%-40px)] gap-[8px] rounded-[32px] lg:relative lg:bottom-0 lg:w-[240px]"
+                  onClick={() => router.push('/create')}
+                >
+                  <div>노트 추가하러 가기</div>
+                  <Image src={icons.arrowRight} width={20.25} height={13.5} alt="" />
+                </Button>
+              </CategoryProtector>
             </CreateDocumentProtector>
-          ),
-          NOT_READY: (
-            <CategoryProtector>
-              <Button
-                className="absolute bottom-[16px] flex w-[calc(100%-40px)] gap-[8px] rounded-[32px] lg:relative lg:bottom-0 lg:w-[240px]"
-                onClick={() => router.push('/create')}
-              >
-                <div>노트 추가하러 가기</div>
-                <Image src={icons.arrowRight} width={20.25} height={13.5} alt="" />
-              </Button>
-            </CategoryProtector>
           ),
           DONE: (
             <Button className="z-10 flex w-full cursor-default gap-[8px] rounded-[32px] bg-blue-03 text-blue-06 hover:bg-blue-03 lg:w-[240px]">

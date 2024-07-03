@@ -14,6 +14,7 @@ import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { useGetDocumentsForCategoryQuery } from '@/apis/fetchers/document/get-documents-for-category/query'
 import Loading from '@/components/loading'
+import { CreateDocumentProtector } from '@/components/create-document-protector'
 
 const SORT_OPTION_TYPE = ['createdAt', 'name', 'updatedAt'] as const
 
@@ -46,7 +47,7 @@ export default function DocumentList({ categoryId, className }: Props) {
 
   if (isPending)
     return (
-      <div className="relative min-h-[205.7px]">
+      <div className="relative h-[70vh]">
         <Loading size="small" center />
       </div>
     )
@@ -112,17 +113,34 @@ interface AddNoteButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 function AddNoteButton({ className, categoryId }: AddNoteButtonProps) {
   return (
-    <Link
-      href={`/create?default=${categoryId}`}
-      className={cn(
-        'flex h-[78px] w-full items-center justify-center gap-2 rounded-xl border-2 border-dashed !text-body2-bold text-gray-08',
-        className
-      )}
+    <CreateDocumentProtector
+      skeleton={
+        <div
+          role="button"
+          className={cn(
+            'flex h-[78px] w-full items-center justify-center gap-2 rounded-xl border-2 border-dashed !text-body2-bold text-gray-08',
+            className
+          )}
+        >
+          노트 추가하기
+          <div className="rounded-full bg-gray-02 p-2">
+            <Image src="/icons/plus.svg" alt="" width={18} height={18} />
+          </div>
+        </div>
+      }
     >
-      노트 추가하기
-      <div className="rounded-full bg-gray-02 p-2">
-        <Image src="/icons/plus.svg" alt="" width={18} height={18} />
-      </div>
-    </Link>
+      <Link
+        href={`/create?default=${categoryId}`}
+        className={cn(
+          'flex h-[78px] w-full items-center justify-center gap-2 rounded-xl border-2 border-dashed !text-body2-bold text-gray-08',
+          className
+        )}
+      >
+        노트 추가하기
+        <div className="rounded-full bg-gray-02 p-2">
+          <Image src="/icons/plus.svg" alt="" width={18} height={18} />
+        </div>
+      </Link>
+    </CreateDocumentProtector>
   )
 }

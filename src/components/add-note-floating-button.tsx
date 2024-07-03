@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { Button } from './ui/button'
+import { CreateDocumentProtector } from './create-document-protector'
 
 interface Props {
   categoryId?: number
@@ -7,13 +8,23 @@ interface Props {
 
 export default function AddNoteFloatingButton({ categoryId }: Props) {
   return (
-    <div className="fixed bottom-[120px] right-[20px] drop-shadow-[0_4px_12px_rgba(0,0,0,0.15)] lg:hidden">
-      <Link href={`/create${categoryId ? `?default=${categoryId}` : ''}`}>
-        <Button className="flex h-[48px] w-[136px] items-center gap-[8px] text-body2-bold text-white ">
-          노트 추가하기 <PlusIcon />
-        </Button>
-      </Link>
-    </div>
+    <CreateDocumentProtector
+      skeleton={
+        <div className="fixed bottom-[120px] right-[20px] drop-shadow-[0_4px_12px_rgba(0,0,0,0.15)] lg:hidden">
+          <Button className="flex h-[48px] w-[136px] items-center gap-[8px] text-body2-bold text-white ">
+            노트 추가하기 <PlusIcon />
+          </Button>
+        </div>
+      }
+    >
+      <div className="fixed bottom-[120px] right-[20px] drop-shadow-[0_4px_12px_rgba(0,0,0,0.15)] lg:hidden">
+        <Link href={`/create${categoryId ? `?default=${categoryId}` : ''}`}>
+          <Button className="flex h-[48px] w-[136px] items-center gap-[8px] text-body2-bold text-white ">
+            노트 추가하기 <PlusIcon />
+          </Button>
+        </Link>
+      </div>
+    </CreateDocumentProtector>
   )
 }
 

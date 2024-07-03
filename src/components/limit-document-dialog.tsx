@@ -1,20 +1,32 @@
-import { Dialog, DialogClose, DialogContent, DialogTrigger } from './ui/dialog'
-import { Button } from './ui/button'
 import Image from 'next/image'
+import { Dialog, DialogClose, DialogContent, DialogTrigger } from './ui/dialog'
+
+import { ReactNode } from 'react'
 import icons from '@/constants/icons'
 import ProTag from './pro-tag'
-import { DialogTriggerProps } from '@radix-ui/react-alert-dialog'
+import { Button } from './ui/button'
 
-interface Props extends DialogTriggerProps, React.RefAttributes<HTMLButtonElement> {
-  open?: boolean
-  onOpenChange?: (open: boolean) => void
+interface Props {
+  trigger?: ReactNode
+  confirm?: () => void
+  defaultOpen?: boolean
 }
 
-export default function ProDialogTriggerWrapper({ open, onOpenChange, children, ...props }: Props) {
+export function LimitDocumentDialog({ trigger, confirm, defaultOpen = false }: Props) {
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogTrigger {...props}>{children}</DialogTrigger>
+    <Dialog
+      defaultOpen={defaultOpen}
+      onOpenChange={(value) => {
+        if (value === false) {
+          confirm?.()
+        }
+      }}
+    >
+      <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent className="w-[320px] lg:w-[448px]" displayCloseButton={false}>
+        <div className="mb-[16px] text-center text-body1-bold text-orange-06">
+          노트 창고 용량이 모두 찼습니다
+        </div>
         <div className="mb-[4px] bg-gradient-to-r from-[#93B0FF] to-[#FF8428] bg-clip-text text-center text-h2-bold-eng text-transparent">
           Coming Soon
         </div>
@@ -38,7 +50,9 @@ export default function ProDialogTriggerWrapper({ open, onOpenChange, children, 
         </div>
         <div className="flex justify-center">
           <DialogClose asChild className="w-full">
-            <Button className="w-full lg:w-[280px]">확인</Button>
+            <Button className="w-full lg:w-[280px]" onClick={() => confirm?.()}>
+              확인
+            </Button>
           </DialogClose>
         </div>
       </DialogContent>

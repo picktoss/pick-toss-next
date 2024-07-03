@@ -2,6 +2,7 @@
 
 import { useSession } from 'next-auth/react'
 import React, { isValidElement } from 'react'
+import { LimitDocumentDialog } from './limit-document-dialog'
 
 interface Props {
   skeleton: React.ReactElement
@@ -24,8 +25,7 @@ export function CreateDocumentProtector({ skeleton, children }: Props) {
     0
 
   if (isLimited) {
-    // trigger가 될 거임
-    return <div>{skeleton}</div>
+    return <LimitDocumentDialog trigger={skeleton} />
   }
 
   return children
