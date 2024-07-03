@@ -35,11 +35,11 @@ export const API_ENDPOINT = {
       url: `/incorrect-quiz/${documentId}/${quizSetId}/${quizId}`,
       method: HttpMethod.DELETE,
     }),
-    getWeekQuizAnswerRate: (categoryId: number) => ({
+    getWeekQuizAnswerRate: (categoryId: number | 'all') => ({
       url: `/categories/${categoryId}/quiz-answer-rate-week`,
       method: HttpMethod.GET,
     }),
-    getMonthQuizAnswerRate: (categoryId: number, year: number, month: number) => ({
+    getMonthQuizAnswerRate: (categoryId: number | 'all', year: number, month: number) => ({
       url: `/categories/${categoryId}/quiz-answer-rate-month/${year}/${month}`,
       method: HttpMethod.GET,
     }),

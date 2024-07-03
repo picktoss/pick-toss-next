@@ -1,7 +1,7 @@
 'use client'
 
 import { HistoryChart } from './ui/history-chart'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Loading from '@/components/loading'
 import { QuizAnalysisSummary } from './ui/quiz-analysis-summary'
 import { QuizTypeChart } from './ui/quiz-type-chart'
@@ -22,33 +22,21 @@ export function QuizAnalysis() {
   const [period, setPeriod] = useState<Period>({
     type: 'week',
   })
-  const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null)
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number>(0) // 0 === 전체
 
   const { data: categories } = useGetCategoriesQuery()
 
   const { data: weekQuizAnswerRate } = useGetWeekQuizAnswerRateQuery({
-    categoryId: selectedCategoryId!,
-    options: {
-      enabled: selectedCategoryId != null,
-    },
+    categoryId: selectedCategoryId,
   })
 
   const { data: monthQuizAnswerRate } = useGetMonthQuizAnswerRateQuery({
-    categoryId: selectedCategoryId!,
+    categoryId: selectedCategoryId,
     date: {
       year: 2024,
       month: currentMonth(),
     },
-    options: {
-      enabled: selectedCategoryId != null,
-    },
   })
-
-  useEffect(() => {
-    if (categories == null || categories?.length === 0) return
-
-    setSelectedCategoryId(categories[0].id || null)
-  }, [categories])
 
   const isLoading = categories == null || weekQuizAnswerRate == null || monthQuizAnswerRate == null
 
@@ -77,7 +65,7 @@ export function QuizAnalysis() {
 
           <div className="mt-[24px] flex flex-col gap-[12px]">
             <CategorySelect
-              selectedCategoryId={selectedCategoryId || categories[0].id}
+              selectedCategoryId={selectedCategoryId}
               categories={categories}
               onValueChange={(categoryId: number) => setSelectedCategoryId(categoryId)}
             />

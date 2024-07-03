@@ -3,7 +3,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 import { getMonthQuizAnswerRate } from './fetcher'
-import { QueryOptions } from '@/apis/types/query'
 
 export const GET_MONTH_QUIZ_ANSWER_RATE_KEY = 'month-quiz-answer-rate'
 
@@ -13,11 +12,9 @@ interface Params {
     year: number
     month: number
   }
-
-  options?: QueryOptions
 }
 
-export const useGetMonthQuizAnswerRateQuery = ({ categoryId, date, options }: Params) => {
+export const useGetMonthQuizAnswerRateQuery = ({ categoryId, date }: Params) => {
   const { data: session } = useSession()
 
   return useQuery({
@@ -25,9 +22,9 @@ export const useGetMonthQuizAnswerRateQuery = ({ categoryId, date, options }: Pa
     queryFn: () =>
       getMonthQuizAnswerRate({
         accessToken: session?.user.accessToken || '',
-        categoryId: categoryId,
+        categoryId,
         date,
       }),
-    enabled: !!session?.user.accessToken && options?.enabled,
+    enabled: !!session?.user.accessToken,
   })
 }

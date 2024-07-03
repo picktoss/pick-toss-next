@@ -36,7 +36,7 @@ export default function Review() {
                     <Image src={icons.quizArchive} width={31.7} height={31.7} alt="" />
                   </div>
                 }
-                count={143}
+                count={0}
                 isPro
               />
             </ProDialogTriggerWrapper>

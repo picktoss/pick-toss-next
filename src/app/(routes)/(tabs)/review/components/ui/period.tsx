@@ -13,7 +13,7 @@ export function Period({ periodType, weekDates, month }: Props) {
         ? `${formatDateKorean(weekDates[0], {
             month: true,
             day: true,
-          })}~${formatDateKorean(weekDates[weekDates.length - 1], {
+          })} ~ ${formatDateKorean(weekDates[weekDates.length - 1], {
             month: true,
             day: true,
           })}`

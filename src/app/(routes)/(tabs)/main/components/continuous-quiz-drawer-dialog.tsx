@@ -1,9 +1,12 @@
 'use client'
 
+import { useGetMonthQuizAnswerRateQuery } from '@/apis/fetchers/quiz/get-month-quiz-answer-rate/query'
+import Loading from '@/components/loading'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer'
 import icons from '@/constants/icons'
 import { useMediaQuery } from '@/hooks/use-media-query'
+import { cn } from '@/lib/utils'
 import Image from 'next/image'
 import { ReactNode, useState } from 'react'
 
@@ -85,26 +88,45 @@ function QuizCalendar() {
   const thisMonth = today.getMonth() + 1
   const firstDayOfThisMonth = new Date(today.getFullYear(), today.getMonth(), 1).getDay()
 
-  const nextMonth = new Date(today.getFullYear(), today.getMonth() + 1, 1)
-  const lastDayOfThisMonth = new Date(Number(nextMonth) - 1).getDate()
+  const { data } = useGetMonthQuizAnswerRateQuery({
+    categoryId: 0,
+    date: {
+      year: 2024,
+      month: thisMonth,
+    },
+  })
+
+  if (!data) {
+    return (
+      <div className="relative h-[274.7px] w-[332px] rounded-[12px] bg-gray-01">
+        <Loading center />
+      </div>
+    )
+  }
 
   return (
-    <div className="w-[335px] rounded-[12px] bg-gray-01 px-[20px] py-[18px]">
+    <div className="rounded-[12px] bg-gray-01 px-[20px] py-[18px]">
       <div className="mb-[19px] flex justify-center text-body1-bold text-gray-08">
         {thisMonth}월
       </div>
-      <div className="grid grid-cols-7 gap-y-[20px] text-center">
+      <div className="grid grid-cols-7 gap-x-[16px] gap-y-[9px] text-center">
         {days.map((day) => (
-          <div key={day} className="text-small1-regular text-gray-06">
+          <div key={day} className="w-[28px] text-small1-regular text-gray-06">
             {day}
           </div>
         ))}
         {Array.from({ length: firstDayOfThisMonth }).map((_, i) => (
           <div key={i} />
         ))}
-        {Array.from({ length: lastDayOfThisMonth }, (_, i) => i + 1).map((date) => (
-          <div key={date} className="text-body2-medium text-gray-08">
-            {date}
+        {data.quizzes.map((quiz, idx) => (
+          <div
+            key={idx}
+            className={cn(
+              'flex size-[28px] items-center justify-center rounded-full text-body2-medium text-gray-08',
+              quiz.totalQuizCount > 0 && 'bg-orange-01'
+            )}
+          >
+            {idx + 1}
           </div>
         ))}
       </div>
