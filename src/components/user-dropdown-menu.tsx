@@ -14,6 +14,7 @@ import Image from 'next/image'
 import { signOut, useSession } from 'next-auth/react'
 import { useState } from 'react'
 import FeedbackDialog from './feedback-dialog'
+import Link from 'next/link'
 
 export function UserDropdownMenu() {
   const session = useSession()
@@ -31,8 +32,7 @@ export function UserDropdownMenu() {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger className="focus:outline-none">
-          <span className="flex items-center gap-[13px] rounded-xl p-1 hover:bg-gray-02">
-            <div className="size-8 rounded-full bg-orange-04" />
+          <span className="flex items-center gap-[13px] rounded-xl px-[12px] py-[10px] hover:bg-gray-02 ">
             <span className="text-sm text-[#818181]">{user.name}님</span>
             <Image src={icons.chevronDown} alt="arrow-down" width={16} height={16} />
           </span>
@@ -40,13 +40,10 @@ export function UserDropdownMenu() {
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>
             <div className="flex items-center gap-[16px] rounded-lg bg-blue-01 p-3">
-              <div className="size-10 rounded-full bg-orange-04" />
-              <div>
-                <div className="mb-1 text-body2-regular text-gray-08">
-                  <span className="font-bold">{user.name}</span>님
-                </div>
-                <div className="text-body2-regular-eng text-gray-07">{user.email}</div>
+              <div className="mb-1 text-body2-regular text-gray-08">
+                <span className="pl-[12px] font-bold">{user.name}</span>님
               </div>
+              <div className="text-body2-regular-eng text-gray-07">{user.email}</div>
             </div>
           </DropdownMenuLabel>
           <div className="px-2 py-1 text-body1-bold text-gray-07 *:cursor-pointer">
@@ -60,10 +57,14 @@ export function UserDropdownMenu() {
               </div>
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <div className="flex w-full justify-between text-base">
+              <Link
+                href="/policy"
+                target="_blank"
+                className="flex w-full justify-between text-base"
+              >
                 <div>정책 및 이용약관</div>
                 <Image src={icons.link} alt="move" width={16} height={16} />
-              </div>
+              </Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => signOut()}>
