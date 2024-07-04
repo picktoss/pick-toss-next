@@ -11,7 +11,7 @@ export const Metadatas = {
       },
       openGraph: {
         url: 'https://www.picktoss.com',
-        images: ['/images/picktoss-logo.png'],
+        images: ['/images/open-graph.png'],
         title: '똑소 | AI로 생성하는 나만의 퀴즈',
         description:
           '나의 노트로부터 생성되는 다양한 퀴즈와 요점 정리를 통해 효율적으로 메타인지 할 수 있어요!',
