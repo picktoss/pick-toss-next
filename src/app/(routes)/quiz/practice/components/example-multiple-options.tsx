@@ -4,7 +4,7 @@ import { HTMLAttributes, useEffect, useState } from 'react'
 import { VariantProps } from 'class-variance-authority'
 import { QuizProgress } from '../../types'
 import { motion } from 'framer-motion'
-import { ExampleQuiz } from '@/apis/fetchers/quiz/get-example-quizzes/fetcher'
+import { ExampleQuizType } from '@/apis/fetchers/quiz/get-example-quizzes/fetcher'
 import MultipleOption, { optionVariants } from '../../components/multiple-options/components/option'
 
 const container = {
@@ -31,7 +31,7 @@ const item = {
 
 interface MultipleOptionsProps extends HTMLAttributes<HTMLDivElement> {
   quizProgress: QuizProgress
-  curQuiz: ExampleQuiz
+  curQuiz: ExampleQuizType
   onSelectAnswer: (answer: number) => Promise<void>
   onVisibleAnimationEnd: () => void
 }

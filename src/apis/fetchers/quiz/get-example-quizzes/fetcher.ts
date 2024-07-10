@@ -2,7 +2,7 @@ import { API_ENDPOINT } from '@/apis/api-endpoint'
 import { apiClient } from '@/lib/api-client'
 import { QuizType } from '@/apis/types/dto/quiz.dto'
 
-export interface ExampleQuiz {
+export interface ExampleQuizType {
   id: number
   question: string
   answer: string
@@ -12,7 +12,7 @@ export interface ExampleQuiz {
 }
 
 interface ExampleQuizSetsResponse {
-  quizzes: Omit<ExampleQuiz, 'id'>[]
+  quizzes: Omit<ExampleQuizType, 'id'>[]
 }
 
 export const getExampleQuizSets = async () => {

@@ -1,11 +1,11 @@
-import { ExampleQuiz } from '@/apis/fetchers/quiz/get-example-quizzes/fetcher'
+import { ExampleQuizType } from '@/apis/fetchers/quiz/get-example-quizzes/fetcher'
 import { QuizType } from '@/apis/types/dto/quiz.dto'
 import { getCurrentDate } from '@/utils/date'
 import { motion } from 'framer-motion'
 import { HTMLAttributes } from 'react'
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
-  quizzes: ExampleQuiz[]
+  quizzes: ExampleQuizType[]
   quizType: QuizType
 }
 
@@ -41,7 +41,7 @@ export default function ExampleQuizIntro({ quizzes, className }: Props) {
   )
 }
 
-const getEachQuizTypeCount = (quizzes: ExampleQuiz[]) => {
+const getEachQuizTypeCount = (quizzes: ExampleQuizType[]) => {
   return quizzes.reduce((acc, quiz) => {
     acc[quiz.quizType] = (acc[quiz.quizType] ?? 0) + 1
     return acc

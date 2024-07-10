@@ -14,14 +14,14 @@ import ExampleQuizIntro from './example-quiz-intro'
 import ExampleQuizHeader from './example-quiz-header'
 import ExampleQuizResult from './example-quiz-result'
 import ExampleQuestion from './example-question'
-import { ExampleQuiz } from '@/apis/fetchers/quiz/get-example-quizzes/fetcher'
+import type { ExampleQuizType } from '@/apis/fetchers/quiz/get-example-quizzes/fetcher'
 import ExampleMultipleOptions from './example-multiple-options'
 import ExampleMixUpOptions from './example-mix-up-options'
 
 export type ExampleSolvingData = (SolvingData[number] & { quizType: QuizType })[]
 
 interface Params {
-  quizzes: ExampleQuiz[]
+  quizzes: ExampleQuizType[]
 }
 
 export function ExampleQuiz({ quizzes }: Params) {
