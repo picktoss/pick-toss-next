@@ -3,7 +3,7 @@
 import { HTMLAttributes } from 'react'
 import { QuizProgress } from '../../types'
 import { motion } from 'framer-motion'
-import { ExampleQuizType } from '@/apis/fetchers/quiz/get-example-quizzes/fetcher'
+import type { ExampleQuizType } from '@/apis/fetchers/quiz/get-example-quizzes/fetcher'
 import MixUpOption from '../../components/mix-up-options/components/option'
 
 interface MixUpOptionsProps extends HTMLAttributes<HTMLDivElement> {
