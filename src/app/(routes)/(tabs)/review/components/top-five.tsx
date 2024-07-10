@@ -10,23 +10,34 @@ export default function TopFive() {
   const { data: documents, isLoading } = useGetTopFiveQuery()
 
   return (
-    <section className="relative flex min-h-[400px] flex-col gap-[24px] rounded-none bg-white p-[20px] pb-[17px] xl:rounded-[12px]">
+    <section className="relative flex min-h-[340px] flex-col gap-[24px] rounded-none bg-white p-[20px] pb-[17px] lg:min-h-[400px] xl:rounded-[12px]">
       <h2 className="text-h4-bold text-gray-09">내가 자주 틀린 노트 TOP5</h2>
       {isLoading ? (
         <Loading size="small" center />
       ) : (
-        <ul className="*:border-b *:border-gray-01 *:px-[12px]">
-          {documents?.map((document, index) => (
-            <FrequentlyWrongNoteItem
-              key={document.id}
-              rank={index + 1}
-              redirectUrl={`/document/${document.id}`}
-              title={document.name}
-              categoryName={document.category.name}
-              wrongCount={document.incorrectAnswerCount}
-            />
-          ))}
-        </ul>
+        <>
+          {documents && documents.length > 0 ? (
+            <ul className="*:border-b *:border-gray-01 *:px-[12px]">
+              {documents?.map((document, index) => (
+                <FrequentlyWrongNoteItem
+                  key={document.id}
+                  rank={index + 1}
+                  redirectUrl={`/document/${document.id}`}
+                  title={document.name}
+                  categoryName={document.category.name}
+                  wrongCount={document.incorrectAnswerCount}
+                />
+              ))}
+            </ul>
+          ) : (
+            <div className="center flex flex-col gap-[8px] text-center">
+              <div className="text-body1-bold-eng text-gray-09">아직 틀린 노트가 없어요</div>
+              <div className="text-body2-regular text-gray-07">
+                퀴즈를 풀면 틀린 노트를 알려드려요
+              </div>
+            </div>
+          )}
+        </>
       )}
     </section>
   )

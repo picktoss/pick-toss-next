@@ -45,7 +45,7 @@ export function QuizAnalysis() {
   const isNoAnalysis = !rateData?.totalQuizCount
 
   return (
-    <section className="relative flex min-h-[833px] flex-1 flex-col rounded-none bg-white p-[20px] pb-[70px] xl:min-h-[726px] xl:max-w-[520px] xl:rounded-[12px] xl:pb-[20px]">
+    <section className="relative flex min-h-[500px] flex-1 flex-col rounded-none bg-white p-[20px] pb-[70px] lg:min-h-[833px] xl:min-h-[726px] xl:max-w-[520px] xl:rounded-[12px] xl:pb-[20px]">
       <h2 className="text-h4-bold text-gray-09">퀴즈 분석</h2>
 
       {isLoading ? (
