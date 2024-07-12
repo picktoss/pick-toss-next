@@ -5,6 +5,7 @@ import { LogoIcon, MenuIcon } from '../svgs'
 import { useState } from 'react'
 import { LoginDialog } from './login-dialog'
 import Link from 'next/link'
+import ProDialogTriggerWrapper from '@/components/pro-dialog-trigger-wrapper'
 
 export function Header() {
   const [openMenu, setOpenMenu] = useState(false)
@@ -43,9 +44,11 @@ export function Header() {
             <div role="button" className="w-fit px-[20px] py-[12px]">
               픽토스 소식
             </div>
-            <div role="button" className="w-fit px-[20px] py-[12px]">
-              구독 및 결제
-            </div>
+            <ProDialogTriggerWrapper>
+              <div role="button" className="w-fit px-[20px] py-[12px]">
+                구독 및 결제
+              </div>
+            </ProDialogTriggerWrapper>
           </div>
         )}
       </div>
@@ -59,7 +62,9 @@ export function Header() {
               <div className="flex gap-[40px] text-body2-medium text-gray-08">
                 <Link href="#">서비스 소개</Link>
                 <Link href="#">픽토스 소식</Link>
-                <Link href="#">구독 및 결제</Link>
+                <ProDialogTriggerWrapper>
+                  <div role="button">구독 및 결제</div>
+                </ProDialogTriggerWrapper>
               </div>
 
               <LoginDialog
