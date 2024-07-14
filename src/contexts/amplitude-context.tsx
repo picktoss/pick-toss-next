@@ -8,11 +8,13 @@ export const AmplitudeContext = createContext({})
 
 const AmplitudeContextProvider = ({ children }: PropsWithChildren) => {
   useEffect(() => {
-    init(AMPLITUDE_API_KEY, undefined, {
-      defaultTracking: {
-        sessions: true,
-      },
-    })
+    if (process.env.NODE_ENV === 'production') {
+      init(AMPLITUDE_API_KEY, undefined, {
+        defaultTracking: {
+          sessions: true,
+        },
+      })
+    }
   }, [])
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
