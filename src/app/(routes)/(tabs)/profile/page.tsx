@@ -9,6 +9,7 @@ import ProTag from '@/components/pro-tag'
 import { auth } from '@/app/api/auth/[...nextauth]/auth'
 import ProDialogTriggerWrapper from '@/components/pro-dialog-trigger-wrapper'
 import { AIPickDialog } from '@/components/ai-pick-dialog'
+import { SuggestTip } from './components/suggest-tip'
 
 export default async function Profile() {
   const session = await auth()
@@ -102,7 +103,7 @@ export default async function Profile() {
         className="mb-[40px]"
         title={profileConfig.userConfig.name}
         content={
-          <div className="flex flex-col rounded-[12px] bg-white py-[12px] text-gray-08 *:px-[20px]">
+          <div className="relative flex flex-col rounded-[12px] bg-white py-[12px] text-gray-08 *:px-[20px]">
             {profileConfig.userConfig.items.map((item) => (
               <Link
                 key={item.id}
@@ -116,6 +117,7 @@ export default async function Profile() {
                 <Image src={icons.chevronRight} width={6} height={10} alt="" />
               </Link>
             ))}
+            <SuggestTip />
           </div>
         }
       />
