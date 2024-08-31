@@ -1,7 +1,7 @@
 import { deleteDocument } from '@/apis/fetchers/document/delete-document/fetcher'
 import { Document } from '@/apis/fetchers/document/get-documents-for-category/fetcher'
-import { Button } from '@/components/ui/button'
-import { Dialog, DialogClose, DialogContent } from '@/components/ui/dialog'
+import { Button } from '@/shared/components/ui/button'
+import { Dialog, DialogClose, DialogContent } from '@/shared/components/ui/dialog'
 import icons from '@/constants/icons'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
@@ -10,7 +10,7 @@ import { SortOption } from './document-list'
 import { useParams } from 'next/navigation'
 import { GET_DOCUMENTS_FOR_CATEGORY_KEY } from '@/apis/fetchers/document/get-documents-for-category/query'
 import { useState } from 'react'
-import Loading from '@/components/loading'
+import Loading from '@/shared/components/loading'
 
 interface Props extends Pick<Document, 'id' | 'name'> {
   open: boolean

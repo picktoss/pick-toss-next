@@ -1,11 +1,11 @@
 'use client'
 
-import { CommonLayout } from '@/components/common-layout'
-import VisualViewport from '@/components/react/visual-viewport'
+import { CommonLayout } from '@/shared/components/common-layout'
+import VisualViewport from '@/shared/components/react/visual-viewport'
 import { Viewer } from './components/viewer'
 import { DocumentDetailProvider } from './contexts/document-detail-context'
 import { AiPick } from './components/ai-pick'
-import Loading from '@/components/loading'
+import Loading from '@/shared/components/loading'
 import { useGetDocumentQuery } from '@/apis/fetchers/document/get-document/query'
 import { notFound } from 'next/navigation'
 

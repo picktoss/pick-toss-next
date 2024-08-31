@@ -6,8 +6,8 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { cn } from '@/lib/utils'
+} from '@/shared/components/ui/dropdown-menu'
+import { cn } from '@/shared/lib/utils'
 import { Document } from '@/apis/fetchers/document/get-documents-for-category/fetcher'
 import { useState } from 'react'
 import DeleteDocumentModal from './delete-document.modal'

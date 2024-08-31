@@ -3,7 +3,7 @@
 import { ReactNode, useState } from 'react'
 import { Section } from '../components/section'
 import { BlankQuizIcon, MultipleQuizIcon, OXQuizIcon, PhoneEdgeIcon } from '../svgs'
-import { cn } from '@/lib/utils'
+import { cn } from '@/shared/lib/utils'
 import Image from 'next/image'
 import oxGifSource from '../assets/select.gif'
 import selectGifSource from '../assets/ox.gif'

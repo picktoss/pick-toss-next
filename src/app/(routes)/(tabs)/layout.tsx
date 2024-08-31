@@ -1,5 +1,5 @@
-import LeftSidebar from '@/components/left-sidebar'
-import BottomNavigation from '@/components/bottom-navigation'
+import LeftSidebar from '@/shared/components/left-sidebar'
+import BottomNavigation from '@/shared/components/bottom-navigation'
 import { Viewport } from 'next'
 import { PropsWithChildren } from 'react'
 

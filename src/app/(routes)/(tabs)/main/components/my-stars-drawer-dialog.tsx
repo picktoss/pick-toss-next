@@ -1,11 +1,11 @@
 'use client'
 
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
-import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer'
+import { Dialog, DialogContent, DialogTrigger } from '@/shared/components/ui/dialog'
+import { Drawer, DrawerContent, DrawerTrigger } from '@/shared/components/ui/drawer'
 import icons from '@/constants/icons'
-import useAmplitudeContext from '@/hooks/use-amplitude-context'
-import { useMediaQuery } from '@/hooks/use-media-query'
-import { cn } from '@/lib/utils'
+import useAmplitudeContext from '@/shared/hooks/use-amplitude-context'
+import { useMediaQuery } from '@/shared/hooks/use-media-query'
+import { cn } from '@/shared/lib/utils'
 import Image from 'next/image'
 import { ReactNode, useState } from 'react'
 

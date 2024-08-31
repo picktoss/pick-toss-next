@@ -1,9 +1,9 @@
 import CategoryTag from '../components/category-tag'
 import DocumentList from './components/document-list'
-import { CommonLayout } from '@/components/common-layout'
+import { CommonLayout } from '@/shared/components/common-layout'
 import { auth } from '@/app/api/auth/[...nextauth]/auth'
 import { getCategory } from '@/apis/fetchers/category/get-category/fetcher'
-import AddNoteFloatingButton from '@/components/add-note-floating-button'
+import AddNoteFloatingButton from '@/shared/components/add-note-floating-button'
 
 interface Props {
   params: {

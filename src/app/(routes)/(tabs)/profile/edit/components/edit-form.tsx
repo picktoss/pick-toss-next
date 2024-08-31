@@ -1,8 +1,8 @@
 'use client'
 
 import { useUpdateUsernameMutation } from '@/apis/fetchers/user/update-user-name/mutation'
-import { Button } from '@/components/ui/button'
-import { useToast } from '@/hooks/use-toast'
+import { Button } from '@/shared/components/ui/button'
+import { useToast } from '@/shared/hooks/use-toast'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { ChangeEvent, useState } from 'react'

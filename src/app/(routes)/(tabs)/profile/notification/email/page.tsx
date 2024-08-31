@@ -1,4 +1,4 @@
-import TitleHeader from '@/components/title-header'
+import TitleHeader from '@/shared/components/title-header'
 import EmailSettingForm from './components/email-setting-form'
 
 export default function ProfileEmail() {

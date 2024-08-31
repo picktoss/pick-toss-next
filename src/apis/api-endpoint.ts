@@ -1,4 +1,4 @@
-import { HttpMethod } from '@/lib/api-client'
+import { HttpMethod } from '@/shared/api-client'
 
 export const API_ENDPOINT = {
   // 퀴즈

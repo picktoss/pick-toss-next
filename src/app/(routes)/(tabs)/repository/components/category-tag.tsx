@@ -1,5 +1,5 @@
 import { CategoryTagType } from '@/apis/fetchers/category/get-categories/fetcher'
-import { cn } from '@/lib/utils'
+import { cn } from '@/shared/lib/utils'
 
 const tagVariant: {
   style: Record<CategoryTagType, string>

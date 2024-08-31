@@ -1,4 +1,4 @@
-import { useBooleanState } from '@/hooks/use-boolean-state'
+import { useBooleanState } from '@/shared/hooks/use-boolean-state'
 import { useEffect, useRef, useState } from 'react'
 
 export function useTimer() {

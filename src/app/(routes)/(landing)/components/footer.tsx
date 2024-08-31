@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import mobileNightSkySource from '../assets/mobile-night-sky.png'
 import desktopNightSkySource from '../assets/desktop-night-sky.png'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/shared/components/ui/button'
 import { GoogleIcon, KakaoIcon, PicktossIcon } from '../svgs'
 import { signIn } from '@/app/api/auth/[...nextauth]/auth'
 

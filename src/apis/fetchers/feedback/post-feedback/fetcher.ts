@@ -1,6 +1,6 @@
 import { API_ENDPOINT } from '@/apis/api-endpoint'
 import { FeedbackType } from '@/apis/types/dto/feedback.dto'
-import { apiClient } from '@/lib/api-client'
+import { apiClient } from '@/shared/api-client'
 
 interface PostFeedbackParams extends NextFetchRequestConfig {
   content: string

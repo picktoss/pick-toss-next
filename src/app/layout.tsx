@@ -1,12 +1,10 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import { cn } from '@/lib/utils'
-import { SessionProvider } from 'next-auth/react'
-import TanstackProvider from '@/providers/tanstack-provider'
+import { cn } from '@/shared/lib/utils'
 import { dmSans, suit } from '@/lib/fonts'
-import { Toaster } from '@/components/ui/toaster'
 import { Metadatas } from '@/features/metadata'
-import AmplitudeContextProvider from '@/contexts/amplitude-context'
+import { Providers } from '@/providers'
+import { Toaster } from '@/shared/components/ui/toaster'
 
 export const metadata: Metadata = Metadatas.root()
 
@@ -18,11 +16,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={cn(suit.variable, dmSans.variable, 'bg-gray-01 font-dm-suit')}>
-        <AmplitudeContextProvider>
-          <SessionProvider>
-            <TanstackProvider>{children}</TanstackProvider>
-          </SessionProvider>
-        </AmplitudeContextProvider>
+        <Providers>{children}</Providers>
         <Toaster />
       </body>
     </html>

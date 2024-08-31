@@ -1,6 +1,6 @@
 import { DocumentStatus } from '@/apis/types/dto/document.dto'
-import { SwitchCase } from '@/components/react/switch-case'
-import { cn } from '@/lib/utils'
+import { SwitchCase } from '@/shared/components/react/switch-case'
+import { cn } from '@/shared/lib/utils'
 
 interface Props {
   status: DocumentStatus

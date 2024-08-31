@@ -1,19 +1,19 @@
 'use client'
 
-import Loading from '@/components/loading'
+import Loading from '@/shared/components/loading'
 import dynamic from 'next/dynamic'
 import { CreateDocumentProvider } from './contexts/create-document-context'
 import { Header } from './components/header'
 import { TitleInput } from './components/title-input'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useState } from 'react'
-import { useToast } from '@/hooks/use-toast'
+import { useToast } from '@/shared/hooks/use-toast'
 import { useGetCategoriesQuery } from '@/apis/fetchers/category/get-categories/query'
 import { useCreateDocumentMutation } from '@/apis/fetchers/document/create-document/mutation'
 import { MAX_CONTENT_LENGTH, MIN_CONTENT_LENGTH } from '@/constants/document'
 import { useSession } from 'next-auth/react'
-import { LimitDocumentDialog } from '@/components/limit-document-dialog'
-import useAmplitudeContext from '@/hooks/use-amplitude-context'
+import { LimitDocumentDialog } from '@/shared/components/limit-document-dialog'
+import useAmplitudeContext from '@/shared/hooks/use-amplitude-context'
 
 const VisualEditor = dynamic(() => import('./components/visual-editor'), {
   ssr: false,

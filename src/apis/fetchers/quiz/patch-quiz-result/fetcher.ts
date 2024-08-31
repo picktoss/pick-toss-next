@@ -1,6 +1,6 @@
 import { API_ENDPOINT } from '@/apis/api-endpoint'
 import { SolvingData } from '@/app/(routes)/quiz/types'
-import { apiClient } from '@/lib/api-client'
+import { apiClient } from '@/shared/api-client'
 
 interface PatchQuizResultParams extends NextFetchRequestConfig {
   data: {

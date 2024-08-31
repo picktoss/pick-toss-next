@@ -1,11 +1,11 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
+import { Button } from '@/shared/components/ui/button'
 import { LogoIcon, MenuIcon } from '../svgs'
 import { useState } from 'react'
 import { LoginDialog } from './login-dialog'
 import Link from 'next/link'
-import ProDialogTriggerWrapper from '@/components/pro-dialog-trigger-wrapper'
+import ProDialogTriggerWrapper from '@/shared/components/pro-dialog-trigger-wrapper'
 
 export function Header() {
   const [openMenu, setOpenMenu] = useState(false)

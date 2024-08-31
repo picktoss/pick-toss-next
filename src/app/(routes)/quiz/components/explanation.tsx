@@ -1,10 +1,10 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
+import { Button } from '@/shared/components/ui/button'
+import { cn } from '@/shared/lib/utils'
 import { HTMLAttributes, useEffect, useRef } from 'react'
 import { SCROLL_TO_EXPLANATION_DURATION } from '../constants'
-import Loading from '@/components/loading'
+import Loading from '@/shared/components/loading'
 
 interface ExplanationProps extends HTMLAttributes<HTMLDivElement> {
   isCorrect: boolean

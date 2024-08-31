@@ -1,5 +1,5 @@
 import { auth } from '@/app/api/auth/[...nextauth]/auth'
-import TitleHeader from '@/components/title-header'
+import TitleHeader from '@/shared/components/title-header'
 import icons from '@/constants/icons'
 import Image from 'next/image'
 import QuizNotificationSwitch from './components/quiz-notification-switch'

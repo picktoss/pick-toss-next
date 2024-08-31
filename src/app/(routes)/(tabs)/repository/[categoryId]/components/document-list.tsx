@@ -6,16 +6,16 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
+} from '@/shared/components/ui/dropdown-menu'
 import { ButtonHTMLAttributes, HTMLAttributes, useState } from 'react'
 import DocumentItem from './document-item'
 import icons from '@/constants/icons'
 import Link from 'next/link'
-import { cn } from '@/lib/utils'
+import { cn } from '@/shared/lib/utils'
 import { useGetDocumentsForCategoryQuery } from '@/apis/fetchers/document/get-documents-for-category/query'
-import Loading from '@/components/loading'
-import { CreateDocumentProtector } from '@/components/create-document-protector'
-import useAmplitudeContext from '@/hooks/use-amplitude-context'
+import Loading from '@/shared/components/loading'
+import { CreateDocumentProtector } from '@/shared/components/create-document-protector'
+import useAmplitudeContext from '@/shared/hooks/use-amplitude-context'
 
 const SORT_OPTION_TYPE = ['createdAt', 'name', 'updatedAt'] as const
 

@@ -5,15 +5,15 @@ import { useSession } from 'next-auth/react'
 import { useParams, useRouter } from 'next/navigation'
 import { EditDocumentProvider } from '../contexts/edit-document-context'
 import { Header } from '../components/header'
-import Loading from '@/components/loading'
+import Loading from '@/shared/components/loading'
 import { TitleInput } from '../components/title-input'
 import VisualEditor from '../components/visual-editor'
 import { updateDocumentContent } from '@/apis/fetchers/document/update-document-content/fetcher'
 import { useState } from 'react'
-import { useToast } from '@/hooks/use-toast'
+import { useToast } from '@/shared/hooks/use-toast'
 import { useGetDocumentQuery } from '@/apis/fetchers/document/get-document/query'
 import { MAX_CONTENT_LENGTH, MIN_CONTENT_LENGTH } from '@/constants/document'
-import useAmplitudeContext from '@/hooks/use-amplitude-context'
+import useAmplitudeContext from '@/shared/hooks/use-amplitude-context'
 
 export default function Modify() {
   const { data: session } = useSession()

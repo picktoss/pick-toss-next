@@ -2,7 +2,7 @@ import { getCurrentDate } from '@/utils/date'
 import ProgressBar from './progress-bar'
 import { motion } from 'framer-motion'
 import { msToElapsedTime } from '@/utils/time'
-import { cn } from '@/lib/utils'
+import { cn } from '@/shared/lib/utils'
 import { QuizType } from '@/apis/types/dto/quiz.dto'
 
 interface QuestionProps {

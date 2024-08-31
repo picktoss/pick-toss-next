@@ -9,13 +9,13 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import remarkGfm from 'remark-gfm'
 import { useDocumentDetailContext } from '../contexts/document-detail-context'
-import { cn } from '@/lib/utils'
+import { cn } from '@/shared/lib/utils'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
+} from '@/shared/components/ui/dropdown-menu'
 import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { StatusTag } from '../ui/status-tag'

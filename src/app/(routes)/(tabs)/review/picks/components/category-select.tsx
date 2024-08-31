@@ -6,7 +6,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select'
+} from '@/shared/components/ui/select'
 import { CategoryDTO } from '@/apis/types/dto/category.dto'
 import { useState } from 'react'
 

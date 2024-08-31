@@ -1,10 +1,10 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
+import { Button } from '@/shared/components/ui/button'
 import { useRouter } from 'next/navigation'
 import { useEditDocumentContext } from '../contexts/edit-document-context'
 import { useGetCategoryQuery } from '@/apis/fetchers/category/get-category/query'
-import { cn } from '@/lib/utils'
+import { cn } from '@/shared/lib/utils'
 import { MAX_CONTENT_LENGTH } from '@/constants/document'
 
 interface Props {

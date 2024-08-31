@@ -1,7 +1,7 @@
 'use client'
 
-import useAmplitudeContext from '@/hooks/use-amplitude-context'
-import { cn } from '@/lib/utils'
+import useAmplitudeContext from '@/shared/hooks/use-amplitude-context'
+import { cn } from '@/shared/lib/utils'
 
 interface Props {
   periodType: 'week' | 'month'

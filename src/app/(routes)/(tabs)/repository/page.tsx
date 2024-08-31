@@ -3,16 +3,16 @@
 import Image from 'next/image'
 
 import CategoryList from './components/category-list'
-import { CommonLayout } from '@/components/common-layout'
+import { CommonLayout } from '@/shared/components/common-layout'
 import { useSession } from 'next-auth/react'
 import CategoryAccordionList from './components/category-accordion-list'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useQuery } from '@tanstack/react-query'
 import { searchDocument } from '@/apis/fetchers/document/search-document/fetcher'
-import Loading from '@/components/loading'
+import Loading from '@/shared/components/loading'
 import { SearchResult } from './components/search-result'
 import { LOCAL_KEY } from '@/constants/local-key'
-import AddNoteFloatingButton from '@/components/add-note-floating-button'
+import AddNoteFloatingButton from '@/shared/components/add-note-floating-button'
 
 export default function Repository() {
   const { data: session } = useSession()

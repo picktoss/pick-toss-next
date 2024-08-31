@@ -1,5 +1,5 @@
 import { API_ENDPOINT } from '@/apis/api-endpoint'
-import { apiClient } from '@/lib/api-client'
+import { apiClient } from '@/shared/api-client'
 
 interface GetBookmarksParams {
   accessToken: string

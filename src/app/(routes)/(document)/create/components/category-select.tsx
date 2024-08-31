@@ -4,7 +4,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select'
+} from '@/shared/components/ui/select'
 import { useCreateDocumentContext } from '../contexts/create-document-context'
 import { CategoryDTO } from '@/apis/types/dto/category.dto'
 

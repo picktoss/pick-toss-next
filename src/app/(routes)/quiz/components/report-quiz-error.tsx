@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button'
+import { Button } from '@/shared/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -7,10 +7,10 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog'
-import { Label } from '@/components/ui/label'
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
-import { cn } from '@/lib/utils'
+} from '@/shared/components/ui/dialog'
+import { Label } from '@/shared/components/ui/label'
+import { RadioGroup, RadioGroupItem } from '@/shared/components/ui/radio-group'
+import { cn } from '@/shared/lib/utils'
 import { useState } from 'react'
 
 const options = [

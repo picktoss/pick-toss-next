@@ -1,11 +1,11 @@
 'use client'
 
 import { CategoryDTO } from '@/apis/types/dto/category.dto'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/shared/components/ui/button'
 import { useRouter } from 'next/navigation'
 import { CategorySelect } from './category-select'
 import { useCreateDocumentContext } from '../contexts/create-document-context'
-import { cn } from '@/lib/utils'
+import { cn } from '@/shared/lib/utils'
 import { MAX_CONTENT_LENGTH } from '@/constants/document'
 import { useSession } from 'next-auth/react'
 

@@ -1,6 +1,6 @@
 import { API_ENDPOINT } from '@/apis/api-endpoint'
 import { QuizType } from '@/apis/types/dto/quiz.dto'
-import { apiClient } from '@/lib/api-client'
+import { apiClient } from '@/shared/api-client'
 
 interface QuizCountParams extends NextFetchRequestConfig {
   accessToken: string

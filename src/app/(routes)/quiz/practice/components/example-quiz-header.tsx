@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
+import { Button } from '@/shared/components/ui/button'
 import { msToElapsedTime } from '@/utils/time'
 import { useRouter } from 'next/navigation'
 import { HTMLAttributes } from 'react'

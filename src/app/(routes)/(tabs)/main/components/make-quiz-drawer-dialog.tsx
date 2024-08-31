@@ -1,41 +1,41 @@
 'use client'
 
-import { useMediaQuery } from '@/hooks/use-media-query'
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
-import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer'
 import { ReactNode, useEffect, useState } from 'react'
-import { cn } from '@/lib/utils'
-import { Button } from '@/components/ui/button'
-import { Checkbox } from '@/components/ui/checkbox'
+import { cn } from '@/shared/lib/utils'
 import { CategoryDTO } from '@/apis/types/dto/category.dto'
-import { useCheckList } from '@/hooks/use-check-list'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import Loading from '@/components/loading'
 import Image from 'next/image'
 import icons from '@/constants/icons'
+import Link from 'next/link'
+import { QuizType } from '@/apis/types/dto/quiz.dto'
+import { DocumentStatus } from '@/apis/types/dto/document.dto'
+import Div100vh from 'react-div-100vh'
+import { useCreateQuizzesMutation } from '@/apis/fetchers/quiz/create-quizzes/mutation'
+import { useQuizCountMutation } from '@/apis/fetchers/document/quiz-count/mutation'
+import { X } from 'lucide-react'
+import { useMediaQuery } from '@/shared/hooks/use-media-query'
+import useAmplitudeContext from '@/shared/hooks/use-amplitude-context'
+import { Dialog, DialogContent, DialogTrigger } from '@/shared/components/ui/dialog'
+import { CategoryProtector } from '@/shared/components/category-protector'
+import Loading from '@/shared/components/loading'
+import { Drawer, DrawerContent, DrawerTrigger } from '@/shared/components/ui/drawer'
+import { useCheckList } from '@/shared/hooks/use-check-list'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from '@/shared/components/ui/dropdown-menu'
+import { FakeSelectTrigger } from '@/shared/components/fake-select-trigger'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select'
-import { FakeSelectTrigger } from '@/components/fake-select-trigger'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import Link from 'next/link'
-import { QuizType } from '@/apis/types/dto/quiz.dto'
-import { DocumentStatus } from '@/apis/types/dto/document.dto'
-import { CategoryProtector } from '@/components/category-protector'
-import Div100vh from 'react-div-100vh'
-import { useCreateQuizzesMutation } from '@/apis/fetchers/quiz/create-quizzes/mutation'
-import { useQuizCountMutation } from '@/apis/fetchers/document/quiz-count/mutation'
-import useAmplitudeContext from '@/hooks/use-amplitude-context'
-import { X } from 'lucide-react'
+} from '@/shared/components/ui/select'
+import { Button } from '@/shared/components/ui/button'
+import { Checkbox } from '@/shared/components/ui/checkbox'
 
 const QUIZ_COUNT_OPTIONS = [3, 5, 10, 15, 20]
 const DEFAULT_QUIZ_COUNT = QUIZ_COUNT_OPTIONS[0]

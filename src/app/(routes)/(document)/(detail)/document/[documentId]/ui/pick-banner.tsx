@@ -1,6 +1,6 @@
 import { DocumentStatus } from '@/apis/types/dto/document.dto'
-import { AIPickDialog } from '@/components/ai-pick-dialog'
-import { SwitchCase } from '@/components/react/switch-case'
+import { AIPickDialog } from '@/shared/components/ai-pick-dialog'
+import { SwitchCase } from '@/shared/components/react/switch-case'
 import icons from '@/constants/icons'
 import Image from 'next/image'
 

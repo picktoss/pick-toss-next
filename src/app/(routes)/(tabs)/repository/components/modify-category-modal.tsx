@@ -1,9 +1,9 @@
-import { Dialog, DialogClose, DialogContent } from '@/components/ui/dialog'
+import { Dialog, DialogClose, DialogContent } from '@/shared/components/ui/dialog'
 import { useState } from 'react'
 import CategoryTag from './category-tag'
 import Image from 'next/image'
 import icons from '@/constants/icons'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/shared/components/ui/button'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 import {
@@ -17,7 +17,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
+} from '@/shared/components/ui/dropdown-menu'
 import EmojiPicker from 'emoji-picker-react'
 import { GET_CATEGORIES_KEY } from '@/apis/fetchers/category/get-categories/query'
 

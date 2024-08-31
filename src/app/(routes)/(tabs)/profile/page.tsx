@@ -1,14 +1,14 @@
-import ComingSoon from '@/components/coming-soon'
+import ComingSoon from '@/shared/components/coming-soon'
 import icons from '@/constants/icons'
 import Image from 'next/image'
 import Link from 'next/link'
 import { profileConfig } from './config'
 import SignOut from './components/sign-out'
 import Section from './components/section'
-import ProTag from '@/components/pro-tag'
+import ProTag from '@/shared/components/pro-tag'
 import { auth } from '@/app/api/auth/[...nextauth]/auth'
-import ProDialogTriggerWrapper from '@/components/pro-dialog-trigger-wrapper'
-import { AIPickDialog } from '@/components/ai-pick-dialog'
+import ProDialogTriggerWrapper from '@/shared/components/pro-dialog-trigger-wrapper'
+import { AIPickDialog } from '@/shared/components/ai-pick-dialog'
 import { SuggestTip } from './components/suggest-tip'
 
 export default async function Profile() {

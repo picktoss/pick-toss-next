@@ -1,5 +1,5 @@
 import { signOut } from '@/app/api/auth/[...nextauth]/auth'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/shared/components/ui/button'
 import icons from '@/constants/icons'
 import Image from 'next/image'
 

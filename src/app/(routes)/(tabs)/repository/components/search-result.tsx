@@ -1,6 +1,6 @@
 import { SearchDocumentResponse } from '@/apis/fetchers/document/search-document/fetcher'
-import { CommonLayout } from '@/components/common-layout'
-import { SearchForm } from '@/components/search-form'
+import { CommonLayout } from '@/shared/components/common-layout'
+import { SearchForm } from '@/shared/components/search-form'
 import Link from 'next/link'
 
 interface Props {

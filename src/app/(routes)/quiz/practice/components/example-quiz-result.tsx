@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
+import { Button } from '@/shared/components/ui/button'
 import { msToElapsedTime } from '@/utils/time'
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'

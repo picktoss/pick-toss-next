@@ -1,4 +1,4 @@
-import TitleHeader from '@/components/title-header'
+import TitleHeader from '@/shared/components/title-header'
 import EditForm from './components/edit-form'
 
 export default function ProfileEdit() {

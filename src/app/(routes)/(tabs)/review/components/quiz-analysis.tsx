@@ -2,7 +2,7 @@
 
 import { HistoryChart } from './ui/history-chart'
 import { useState } from 'react'
-import Loading from '@/components/loading'
+import Loading from '@/shared/components/loading'
 import { QuizAnalysisSummary } from './ui/quiz-analysis-summary'
 import { QuizTypeChart } from './ui/quiz-type-chart'
 import { currentMonth } from '@/utils/date'

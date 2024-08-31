@@ -20,9 +20,9 @@ import { Category } from '@/apis/fetchers/category/get-categories/fetcher'
 import { useSession } from 'next-auth/react'
 import icons from '@/constants/icons'
 import { reorderCategory } from '@/apis/fetchers/category/reorder-category/fetcher'
-import { cn } from '@/lib/utils'
-import CreateCategoryDialog from '@/components/create-category-dialog'
-import Loading from '@/components/loading'
+import { cn } from '@/shared/lib/utils'
+import CreateCategoryDialog from '@/shared/components/create-category-dialog'
+import Loading from '@/shared/components/loading'
 import { useGetCategoriesQuery } from '@/apis/fetchers/category/get-categories/query'
 
 interface Props extends HTMLAttributes<HTMLDivElement> {}

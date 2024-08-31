@@ -1,7 +1,7 @@
 'use client'
 
-import { SwitchCase } from '@/components/react/switch-case'
-import { cn } from '@/lib/utils'
+import { SwitchCase } from '@/shared/components/react/switch-case'
+import { cn } from '@/shared/lib/utils'
 import { VariantProps, cva } from 'class-variance-authority'
 
 export const optionVariants = cva(

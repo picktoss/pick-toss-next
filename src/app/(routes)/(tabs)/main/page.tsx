@@ -2,7 +2,7 @@ import icons from '@/constants/icons'
 import QuizBanner from './components/quiz-banner'
 import QuizMaker from './components/quiz-maker'
 import Achievements from './components/achievements'
-import { CommonLayout } from '@/components/common-layout'
+import { CommonLayout } from '@/shared/components/common-layout'
 import Image from 'next/image'
 import { RewordDialog } from './components/reward-alert'
 

@@ -3,7 +3,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
+} from '@/shared/components/ui/dropdown-menu'
 import CategoryTag from './category-tag'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -11,7 +11,7 @@ import icons from '@/constants/icons'
 import { Category } from '@/apis/fetchers/category/get-categories/fetcher'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import { cn } from '@/lib/utils'
+import { cn } from '@/shared/lib/utils'
 import DeleteCategoryModal from './delete-category-modal'
 import { useState } from 'react'
 import ModifyCategoryModal from './modify-category-modal'

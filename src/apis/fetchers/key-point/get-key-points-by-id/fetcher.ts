@@ -1,6 +1,6 @@
 import { API_ENDPOINT } from '@/apis/api-endpoint'
 import { DocumentStatus } from '@/apis/types/dto/document.dto'
-import { apiClient } from '@/lib/api-client'
+import { apiClient } from '@/shared/api-client'
 
 interface GetKeyPointsByIdParams {
   documentId: number

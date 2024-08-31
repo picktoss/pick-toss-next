@@ -1,4 +1,4 @@
-import ProTag from '@/components/pro-tag'
+import ProTag from '@/shared/components/pro-tag'
 import icons from '@/constants/icons'
 import Image from 'next/image'
 import Link from 'next/link'

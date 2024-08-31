@@ -6,7 +6,7 @@ import { BlackLottie, MultipleLottie, OXLottie } from './lotties'
 import { ReactNode, forwardRef } from 'react'
 import MakeQuizDrawerDialog from './make-quiz-drawer-dialog'
 import { useGetCategoriesQuery } from '@/apis/fetchers/category/get-categories/query'
-import Loading from '@/components/loading'
+import Loading from '@/shared/components/loading'
 
 export default function QuizMaker() {
   const { data: categories, isLoading } = useGetCategoriesQuery()

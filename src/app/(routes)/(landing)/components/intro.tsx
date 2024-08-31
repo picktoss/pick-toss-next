@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import mobileSkySource from '../assets/mobile-sky.png'
 import desktopSkySource from '../assets/desktop-sky.png'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/shared/components/ui/button'
 import { ArrowRightIcon, DocumentIcon, LightningIcon, LogoTextIcon } from '../svgs'
 import { BounceChevronDown } from './ui/bounce-chevron-down'
 import { LoginDialog } from './login-dialog'

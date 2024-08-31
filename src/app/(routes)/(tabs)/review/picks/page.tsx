@@ -1,9 +1,9 @@
 'use client'
 
-import { CommonLayout } from '@/components/common-layout'
+import { CommonLayout } from '@/shared/components/common-layout'
 import { GetBookmarksResponse } from '@/apis/fetchers/key-point/get-bookmarks/fetcher'
 import { useQueryClient } from '@tanstack/react-query'
-import Loading from '@/components/loading'
+import Loading from '@/shared/components/loading'
 import { NoPicks } from './components/no-picks'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { SearchResult } from './components/search-result'
