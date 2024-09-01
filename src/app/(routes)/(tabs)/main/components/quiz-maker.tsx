@@ -5,11 +5,14 @@ import Image from 'next/image'
 import { BlackLottie, MultipleLottie, OXLottie } from './lotties'
 import { ReactNode, forwardRef } from 'react'
 import MakeQuizDrawerDialog from './make-quiz-drawer-dialog'
-import { useGetCategoriesQuery } from '@/actions/fetchers/category/get-categories/query'
 import Loading from '@/shared/components/loading'
+import { useQuery } from '@tanstack/react-query'
+import { queries } from '@/shared/lib/tanstack-query/query-keys'
 
 export default function QuizMaker() {
-  const { data: categories, isLoading } = useGetCategoriesQuery()
+  const { data, isLoading } = useQuery({
+    ...queries.category.list(),
+  })
 
   return (
     <section className="flex flex-col gap-[24px]">
@@ -38,7 +41,7 @@ export default function QuizMaker() {
         ) : (
           <>
             <MakeQuizDrawerDialog
-              categories={categories ?? []}
+              categories={data?.categories ?? []}
               quizType="MULTIPLE_CHOICE"
               trigger={
                 <MakerTrigger
@@ -49,7 +52,7 @@ export default function QuizMaker() {
               }
             />
             <MakeQuizDrawerDialog
-              categories={categories ?? []}
+              categories={data?.categories ?? []}
               quizType="MIX_UP"
               trigger={
                 <MakerTrigger

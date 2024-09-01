@@ -15,13 +15,12 @@ import {
 } from '@dnd-kit/core'
 import { ButtonHTMLAttributes, HTMLAttributes, useState } from 'react'
 import { SortableContext, arrayMove } from '@dnd-kit/sortable'
-import { useQueryClient } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { Category } from '@/actions/fetchers/category/get-categories'
 import icons from '@/constants/icons'
 import { cn } from '@/shared/lib/utils'
 import CreateCategoryDialog from '@/shared/components/create-category-dialog'
 import Loading from '@/shared/components/loading'
-import { useGetCategoriesQuery } from '@/actions/fetchers/category/get-categories/query'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import { useReorderCategoryMutation } from '@/actions/fetchers/category/reorder-category/mutation'
 
@@ -29,7 +28,9 @@ interface Props extends HTMLAttributes<HTMLDivElement> {}
 
 export default function CategoryList({ className }: Props) {
   const queryClient = useQueryClient()
-  const { data: categories, isError, isPending } = useGetCategoriesQuery()
+  const { data, isError, isPending } = useQuery({
+    ...queries.category.list(),
+  })
   const { mutate: reorderMutate } = useReorderCategoryMutation()
 
   const [draggedItem, setDraggedItem] = useState<Category | null>(null)
@@ -59,7 +60,7 @@ export default function CategoryList({ className }: Props) {
 
   const handleDragStart = (event: DragStartEvent) => {
     const { active } = event
-    const draggedItem = categories.find((category) => category.id === active.id) || null
+    const draggedItem = data?.categories.find((category) => category.id === active.id) || null
 
     setDraggedItem(draggedItem)
   }
@@ -68,8 +69,8 @@ export default function CategoryList({ className }: Props) {
     const { active, over } = event
 
     if (active.id !== over?.id) {
-      const oldIndex = categories.findIndex((category) => category.id === active.id)
-      const newIndex = categories.findIndex((category) => category.id === over?.id)
+      const oldIndex = data?.categories.findIndex((category) => category.id === active.id)
+      const newIndex = data?.categories.findIndex((category) => category.id === over?.id)
 
       reorderMutate({
         categoryId: Number(active.id),
@@ -87,13 +88,13 @@ export default function CategoryList({ className }: Props) {
 
   return (
     <div className={className}>
-      {categories.length === 0 ? (
+      {data?.categories.length === 0 ? (
         <NoCategory />
       ) : (
         <>
           <div className="mb-[16px] flex items-center justify-between">
             <p className="text-body2-medium text-gray-08 lg:text-body1-medium">
-              폴더 <span className="font-bold text-orange-06">{categories.length}</span>개
+              폴더 <span className="font-bold text-orange-06">{data?.categories.length}</span>개
             </p>
             <CreateCategoryDialog
               trigger={
@@ -112,9 +113,9 @@ export default function CategoryList({ className }: Props) {
             onDragStart={handleDragStart}
             onDragEnd={handleDragEnd}
           >
-            <SortableContext items={categories}>
+            <SortableContext items={data?.categories}>
               <div className="m-[-20px] flex gap-3 overflow-x-scroll p-[20px] scrollbar-hide lg:grid lg:grid-cols-[repeat(auto-fill,minmax(240px,1fr))] lg:gap-4">
-                {categories.map((studyCategory) => (
+                {data?.categories.map((studyCategory) => (
                   <CategoryItem key={studyCategory.id} {...studyCategory} />
                 ))}
                 <AddCategoryButton className="hidden lg:flex" />

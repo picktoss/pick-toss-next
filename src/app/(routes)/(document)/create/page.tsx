@@ -8,12 +8,13 @@ import { TitleInput } from './components/title-input'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 import { useToast } from '@/shared/hooks/use-toast'
-import { useGetCategoriesQuery } from '@/actions/fetchers/category/get-categories/query'
 import { useCreateDocumentMutation } from '@/actions/fetchers/document/create-document/mutation'
 import { MAX_CONTENT_LENGTH, MIN_CONTENT_LENGTH } from '@/constants/document'
 import { useSession } from 'next-auth/react'
 import { LimitDocumentDialog } from '@/shared/components/limit-document-dialog'
 import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
+import { useQuery } from '@tanstack/react-query'
+import { queries } from '@/shared/lib/tanstack-query/query-keys'
 
 const VisualEditor = dynamic(() => import('./components/visual-editor'), {
   ssr: false,
@@ -29,7 +30,9 @@ export default function CreateDocument() {
 
   const [isLoading, setIsLoading] = useState(false)
 
-  const { data: categories } = useGetCategoriesQuery()
+  const { data } = useQuery({
+    ...queries.category.list(),
+  })
 
   const { mutateAsync } = useCreateDocumentMutation()
   const { documentCreatedEvent } = useAmplitudeContext()
@@ -78,9 +81,10 @@ export default function CreateDocument() {
     )
   }
 
-  if (!categories) {
+  if (!data?.categories) {
     return null
   }
+  const { categories } = data
 
   const defaultCategoryId =
     categories.find((category) => category.id === Number(searchParams.get('default')))?.id ||

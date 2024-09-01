@@ -15,7 +15,8 @@ import { useSelectedLayoutSegments } from 'next/navigation'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { cn } from '@/shared/lib/utils'
 import BarLoader from 'react-spinners/BarLoader'
-import { useGetCategoriesQuery } from '@/actions/fetchers/category/get-categories/query'
+import { useQuery } from '@tanstack/react-query'
+import { queries } from '../lib/tanstack-query/query-keys'
 
 export const SidebarCategoryAccordion = () => {
   const segments = useSelectedLayoutSegments()
@@ -23,7 +24,9 @@ export const SidebarCategoryAccordion = () => {
   const [accordionValue, setAccordionValue] = useState<string[]>([])
   const prevCategoryId = useRef<number | null>(null)
 
-  const { data: categories, isPending } = useGetCategoriesQuery()
+  const { data, isPending } = useQuery({
+    ...queries.category.list(),
+  })
 
   const currentCategoryId = useMemo(() => {
     if (segments[0] === 'repository' && segments.length === 2) {
@@ -32,13 +35,13 @@ export const SidebarCategoryAccordion = () => {
 
     if (segments[0] === 'document' && segments.length === 2) {
       const documentId = Number(segments[1])
-      const category = categories?.find((category) =>
+      const category = data?.categories.find((category) =>
         category.documents.some((document) => document.id === documentId)
       )
 
       return category?.id
     }
-  }, [categories, segments])
+  }, [data?.categories, segments])
 
   const currentDocumentId = useMemo(() => {
     if (segments[0] === 'document' && segments.length === 2) {
@@ -67,7 +70,7 @@ export const SidebarCategoryAccordion = () => {
 
   return (
     <Accordion type="multiple" value={accordionValue} onValueChange={setAccordionValue}>
-      {categories?.map((category) => (
+      {data?.categories.map((category) => (
         <AccordionItem key={category.id} value={category.id.toString()}>
           <AccordionTrigger
             className="overflow-hidden rounded-[8px] py-0 pl-[42px] text-body2-medium text-gray-08 hover:bg-gray-01 [&[data-state=open]_svg]:rotate-90"

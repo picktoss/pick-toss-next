@@ -12,14 +12,18 @@ import Link from 'next/link'
 import icons from '@/constants/icons'
 import { ChevronRight } from 'lucide-react'
 import { HTMLAttributes } from 'react'
-import { useGetCategoriesQuery } from '@/actions/fetchers/category/get-categories/query'
+import { useQuery } from '@tanstack/react-query'
+import { queries } from '@/shared/lib/tanstack-query/query-keys'
 
 interface CategoryAccordionProps extends HTMLAttributes<HTMLDivElement> {}
 
 export default function CategoryAccordionList(props: CategoryAccordionProps) {
-  const { data: categories } = useGetCategoriesQuery()
+  const { data } = useQuery({
+    ...queries.category.list(),
+  })
 
-  if (!categories) return null
+  if (!data?.categories) return null
+  const { categories } = data
 
   return (
     <div {...props}>
