@@ -2,19 +2,15 @@
 
 import { CommonLayout } from '@/shared/components/common-layout'
 import { GetBookmarksResponse } from '@/actions/fetchers/key-point/get-bookmarks'
-import { useQueryClient } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import Loading from '@/shared/components/loading'
 import { NoPicks } from './components/no-picks'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { SearchResult } from './components/search-result'
 import { KeyPointCard } from './components/key-point-card'
-import {
-  GET_BOOKMARKS_KEY,
-  useGetBookmarksQuery,
-} from '@/actions/fetchers/key-point/get-bookmarks/query'
 import { useToggleBookmarkMutation } from '@/actions/fetchers/key-point/toggle-bookmark/mutation'
-import { useSearchKeyPointsQuery } from '@/actions/fetchers/key-point/search-key-points/query'
 import { LOCAL_KEY } from '@/constants/local-key'
+import { queries } from '@/shared/lib/tanstack-query/query-keys'
 // import { CategorySelect } from './components/category-select'
 
 export default function Picks() {
@@ -23,13 +19,15 @@ export default function Picks() {
   const pathname = usePathname()
   const term = useSearchParams().get('term')
 
-  const { data: keyPoints, isLoading } = useGetBookmarksQuery()
+  const { data: keyPoints, isLoading } = useQuery({
+    ...queries.keyPoints.list(),
+  })
 
   const { mutate: deleteBookmark } = useToggleBookmarkMutation()
 
   const handleDeleteBookmark = (keyPointId: number) => {
     queryClient.setQueryData<GetBookmarksResponse['keyPoints']>(
-      [GET_BOOKMARKS_KEY],
+      queries.keyPoints.list().queryKey,
       (keyPoints) => {
         if (!keyPoints) return keyPoints
 
@@ -40,12 +38,10 @@ export default function Picks() {
     deleteBookmark({ keyPointId, bookmark: false })
   }
 
-  const { data: searchData } = useSearchKeyPointsQuery(
-    { term: term! },
-    {
-      enabled: term != null,
-    }
-  )
+  const { data: searchData } = useQuery({
+    ...queries.keyPoints.search(term!),
+    enabled: term != null,
+  })
 
   const handleSubmit = (data: { term: string }, options?: { isResearch: boolean }) => {
     const trimTerm = data.term.trim()

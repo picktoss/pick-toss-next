@@ -3,10 +3,13 @@
 import Image from 'next/image'
 import { ArchiveLink } from './archive-link'
 import icons from '@/constants/icons'
-import { useGetBookmarksQuery } from '@/actions/fetchers/key-point/get-bookmarks/query'
+import { useQuery } from '@tanstack/react-query'
+import { queries } from '@/shared/lib/tanstack-query/query-keys'
 
 export function SavedPicksLink() {
-  const { data: keyPoints } = useGetBookmarksQuery()
+  const { data: keyPoints } = useQuery({
+    ...queries.keyPoints.list(),
+  })
 
   return (
     <ArchiveLink
