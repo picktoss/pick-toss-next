@@ -10,6 +10,10 @@ export const queries = createQueryKeyStore({
     }),
     item: (categoryId: number) => ({
       queryKey: [categoryId],
+      queryFn: () =>
+        api.category.getCategory({
+          categoryId,
+        }),
     }),
   },
 

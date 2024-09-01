@@ -3,9 +3,10 @@
 import { Button } from '@/shared/components/ui/button'
 import { useRouter } from 'next/navigation'
 import { useEditDocumentContext } from '../contexts/edit-document-context'
-import { useGetCategoryQuery } from '@/actions/fetchers/category/get-category/query'
 import { cn } from '@/shared/lib/utils'
 import { MAX_CONTENT_LENGTH } from '@/constants/document'
+import { useQuery } from '@tanstack/react-query'
+import { queries } from '@/shared/lib/tanstack-query/query-keys'
 
 interface Props {
   categoryId: number
@@ -22,7 +23,9 @@ interface Props {
 export function Header({ categoryId, handleSubmit, isLoading }: Props) {
   const router = useRouter()
   const { documentName, editorMarkdownContent } = useEditDocumentContext()
-  const { data: category } = useGetCategoryQuery({ categoryId })
+  const { data: category } = useQuery({
+    ...queries.category.item(categoryId),
+  })
 
   return (
     <div className="sticky top-0 z-10 bg-gray-01 opacity-95 shadow-md">
