@@ -16,9 +16,9 @@ export default function EmailSettingForm() {
   const { user } = useUser()
   const { toast } = useToast()
 
-  const [emailInput, setEmailInput] = useState(user.email)
+  const [emailInput, setEmailInput] = useState(user?.email)
   const [codeInput, setCodeInput] = useState('')
-  const isFirstEmail = useRef(user.email)
+  const isFirstEmail = useRef(user?.email)
 
   const {
     mutate: verifyEmailMutate,
@@ -50,14 +50,14 @@ export default function EmailSettingForm() {
 
   const handleRequestCodeClick = () => {
     verifyEmailMutate({
-      email: emailInput,
+      email: emailInput || '',
     })
   }
 
   const handleVerifyCodeClick = () => {
     verifyEmailCheckMutate(
       {
-        email: emailInput,
+        email: emailInput || '',
         verificationCode: codeInput,
       },
       {
@@ -91,7 +91,7 @@ export default function EmailSettingForm() {
     return ``
   }
 
-  const isValidateEmail = emailInput.match(emailRegex)
+  const isValidateEmail = emailInput?.match(emailRegex)
   const isValidateCode = codeInput.match(codeRegex)
 
   return (

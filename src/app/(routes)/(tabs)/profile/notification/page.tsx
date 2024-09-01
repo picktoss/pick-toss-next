@@ -29,7 +29,7 @@ export default function ProfileNotification() {
             <Image src={icons.circleQuestion} width={16} height={16} alt="" />
           </div>
           <div className="flex items-center gap-[7px]">
-            {user.email ? (
+            {user?.email ? (
               <p className="text-text-regular text-gray-07">{user.email}</p>
             ) : (
               <p className="text-text-regular text-gray-04">이메일을 추가해보세요</p>
@@ -37,7 +37,7 @@ export default function ProfileNotification() {
 
             <Link href="/profile/notification/email">
               <button className="h-[24px] w-[66px] rounded-[4px] bg-orange-01 text-small1-bold text-orange-06 hover:bg-orange-02/80">
-                {user.email ? '변경하기' : '추가하기'}
+                {user?.email ? '변경하기' : '추가하기'}
               </button>
             </Link>
           </div>
