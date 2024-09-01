@@ -59,7 +59,6 @@ export default function Quiz({ quizzes, isTodayQuiz }: QuizProps) {
         documentId,
         quizSetId,
         quizId,
-        accessToken: session?.user.accessToken || '',
       }),
   })
 

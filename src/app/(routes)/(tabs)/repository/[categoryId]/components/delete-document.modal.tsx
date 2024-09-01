@@ -33,7 +33,6 @@ export default function DeleteDocumentModal({
   const { update } = useSession()
   const queryClient = useQueryClient()
   const [isLoading, setIsLoading] = useState(false)
-  const { data: session } = useSession()
 
   const { mutate } = useMutation({
     mutationFn: deleteDocument,
@@ -75,7 +74,7 @@ export default function DeleteDocumentModal({
   })
 
   const handleDeleteDocument = () => {
-    mutate({ documentId: id, accessToken: session?.user.accessToken || '' })
+    mutate({ documentId: id })
   }
 
   return (

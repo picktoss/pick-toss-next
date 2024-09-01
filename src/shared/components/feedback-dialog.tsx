@@ -12,7 +12,6 @@ import { useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { postFeedback } from '@/actions/fetchers/feedback/post-feedback'
 import { useToast } from '@/shared/hooks/use-toast'
-import { useSession } from 'next-auth/react'
 
 const feedbackOption = [
   { type: 'GENERAL', label: '일반 질문' },
@@ -27,7 +26,6 @@ interface Props {
 
 export default function FeedbackDialog({ open, onOpenChange }: Props) {
   const { toast } = useToast()
-  const { data: session } = useSession()
 
   const [typeOption, setTypeOption] = useState<(typeof feedbackOption)[number]>(feedbackOption[0])
   const [content, setContent] = useState('')
@@ -40,7 +38,7 @@ export default function FeedbackDialog({ open, onOpenChange }: Props) {
   })
 
   const handleSubmit = () => {
-    mutateFeedback({ type: typeOption.type, content, accessToken: session?.user.accessToken || '' })
+    mutateFeedback({ type: typeOption.type, content })
     setTypeOption(feedbackOption[0])
     setContent('')
   }

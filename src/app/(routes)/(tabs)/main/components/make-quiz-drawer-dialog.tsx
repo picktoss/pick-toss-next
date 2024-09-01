@@ -90,7 +90,7 @@ export default function MakeQuizDrawerDialog({ trigger, categories, quizType = '
     mutateCreateQuizzes(
       {
         documentIds,
-        count,
+        point: count,
         quizType,
       },
       {

@@ -8,7 +8,6 @@ import { Document } from '@/actions/fetchers/document/get-documents-for-category
 import { updateDocumentName } from '@/actions/fetchers/document/update-document-name'
 import { useParams } from 'next/navigation'
 import { SortOption } from './document-list'
-import { useSession } from 'next-auth/react'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
 
 interface Props extends Document {
@@ -27,7 +26,6 @@ export default function ModifyDocumentNameModal({
   const { categoryId } = useParams<{ categoryId: string }>()
   const [documentName, setDocumentName] = useState(name)
   const queryClient = useQueryClient()
-  const { data: session } = useSession()
 
   const { mutate } = useMutation({
     mutationFn: updateDocumentName,
@@ -67,7 +65,7 @@ export default function ModifyDocumentNameModal({
   const handleModifyName = () => {
     if (documentName === '') return alert('노트 이름을 설정해주세요')
 
-    mutate({ documentId: id, name: documentName, accessToken: session?.user.accessToken || '' })
+    mutate({ documentId: id, name: documentName })
   }
 
   return (

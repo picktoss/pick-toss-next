@@ -31,7 +31,6 @@ export default function Admin() {
     mutationFn: (data: { point: number }) =>
       changePoint({
         point: data.point,
-        accessToken: session?.user.accessToken || '',
       }),
     onSuccess,
   })
@@ -39,7 +38,6 @@ export default function Admin() {
     mutationFn: (data: { aiPickCount: number }) =>
       changeAiPick({
         aiPickCount: data.aiPickCount,
-        accessToken: session?.user.accessToken || '',
       }),
     onSuccess,
   })
@@ -48,7 +46,6 @@ export default function Admin() {
     mutationFn: () =>
       createTodayQuiz({
         quizSetId: todayQuizSetIdData?.quizSetId || '',
-        accessToken: session?.user.accessToken || '',
       }),
     onSuccess,
   })

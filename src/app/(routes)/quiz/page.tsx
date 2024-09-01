@@ -1,7 +1,6 @@
 import { getQuizSets } from '@/actions/fetchers/quiz/get-quiz-sets'
 import Quiz from './components/quiz'
 import { notFound } from 'next/navigation'
-import { auth } from '@/app/api/auth/[...nextauth]/auth'
 
 interface QuizProps {
   searchParams: {
@@ -14,11 +13,8 @@ export default async function QuizPage({ searchParams }: QuizProps) {
     notFound()
   }
 
-  const session = await auth()
-
   const { quizzes, todayQuizSet } = await getQuizSets({
     quizSetId: searchParams.quizSetId,
-    accessToken: session?.user.accessToken || '',
   })
 
   if (quizzes.length === 0) {

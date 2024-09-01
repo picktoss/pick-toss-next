@@ -25,7 +25,6 @@ export default function Repository() {
     queryFn: () =>
       searchDocument({
         term: term!,
-        accessToken: session?.user.accessToken || '',
       }),
     enabled: term != null,
   })

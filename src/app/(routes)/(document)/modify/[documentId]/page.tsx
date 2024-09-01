@@ -13,14 +13,12 @@ import { useToast } from '@/shared/hooks/use-toast'
 import { useGetDocumentQuery } from '@/actions/fetchers/document/get-document/query'
 import { MAX_CONTENT_LENGTH, MIN_CONTENT_LENGTH } from '@/constants/document'
 import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
-import { useSession } from 'next-auth/react'
 
 export default function Modify() {
   const { documentId } = useParams()
   const { toast } = useToast()
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
-  const { data: session } = useSession()
 
   const { data: modifyTargetDocument } = useGetDocumentQuery({ documentId: Number(documentId) })
 
@@ -31,7 +29,6 @@ export default function Modify() {
       updateDocumentContent({
         documentId: Number(documentId),
         ...data,
-        accessToken: session?.user.accessToken || '',
       }),
   })
 
