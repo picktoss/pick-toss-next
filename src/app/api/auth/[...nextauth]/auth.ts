@@ -39,7 +39,7 @@ export const {
         }
         // 회원가입 했을 때만 첫 사용자인지 알 수 있다
         try {
-          const user = await getUser()
+          const user = await getUser(token.accessToken as string)
           token.userDTO = user
         } catch (error) {
           throw new Error('Failed to get user')
@@ -55,7 +55,7 @@ export const {
 
       if (trigger === 'update') {
         try {
-          const user = await getUser()
+          const user = await getUser(token.accessToken as string)
           token.userDTO = user
         } catch (error) {
           throw new Error('Failed to get user')

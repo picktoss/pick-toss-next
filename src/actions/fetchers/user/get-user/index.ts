@@ -25,8 +25,11 @@ export interface GetUserResponse {
   quizNotificationEnabled: boolean
 }
 
-export const getUser = async () => {
+export const getUser = async (accessToken: string) => {
   return await apiClient.fetch<GetUserResponse>({
     endpoint: API_ENDPOINT.user.getUser(),
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
   })
 }
