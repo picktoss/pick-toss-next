@@ -4,7 +4,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { SearchForm } from '@/shared/components/search-form'
 import { KeyPointCard } from './key-point-card'
 import { useToggleBookmarkMutation } from '@/actions/fetchers/key-point/toggle-bookmark/mutation'
-import { SEARCH_KEY_POINTS_KEY } from '@/actions/fetchers/key-point/search-key-points/query'
+import { queries } from '@/shared/lib/tanstack-query/query-keys'
 
 interface Props {
   term: string
@@ -18,14 +18,17 @@ export function SearchResult({ term, keyPoints, onReSearch }: Props) {
   const { mutate: deleteBookmark } = useToggleBookmarkMutation()
 
   const handleDeleteBookmark = (keyPointId: number) => {
-    queryClient.setQueryData<SearchKeyPointsResponse>([SEARCH_KEY_POINTS_KEY, term], (oldData) => {
-      if (!oldData) return oldData
+    queryClient.setQueryData<SearchKeyPointsResponse>(
+      queries.keyPoints.search(term).queryKey,
+      (oldData) => {
+        if (!oldData) return oldData
 
-      return {
-        ...oldData,
-        keyPoints: oldData?.keyPoints.filter((keypoint) => keypoint.id !== keyPointId),
+        return {
+          ...oldData,
+          keyPoints: oldData?.keyPoints.filter((keypoint) => keypoint.id !== keyPointId),
+        }
       }
-    })
+    )
 
     deleteBookmark({ keyPointId, bookmark: false })
   }

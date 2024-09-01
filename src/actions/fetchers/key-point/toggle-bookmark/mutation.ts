@@ -2,7 +2,7 @@
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toggleBookmark } from '.'
-import { GET_KEY_POINTS_BY_ID_KEY } from '../get-key-points-by-id/query'
+import { queries } from '@/shared/lib/tanstack-query/query-keys'
 
 interface Props {
   documentId?: number
@@ -16,12 +16,12 @@ export function useToggleBookmarkMutation(props?: Props) {
     onSettled: async () => {
       if (props?.documentId != null) {
         await queryClient.refetchQueries({
-          queryKey: [GET_KEY_POINTS_BY_ID_KEY, props.documentId],
+          queryKey: queries.keyPoints.item(props.documentId).queryKey,
           exact: true,
         })
       } else {
         await queryClient.refetchQueries({
-          queryKey: [GET_KEY_POINTS_BY_ID_KEY],
+          queryKey: queries.keyPoints.item._def,
         })
       }
     },
