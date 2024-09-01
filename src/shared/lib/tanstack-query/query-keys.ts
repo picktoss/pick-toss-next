@@ -20,6 +20,11 @@ export const queries = createQueryKeyStore({
   document: {
     item: (documentId: number) => ({
       queryKey: [documentId],
+      queryFn: () =>
+        api.document.getDocument({
+          documentId,
+        }),
+      retry: false,
     }),
     list: (categoryId: number, sortOption: (typeof SORT_OPTION)[number]) => ({
       queryKey: [categoryId, sortOption],

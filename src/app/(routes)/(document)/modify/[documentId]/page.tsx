@@ -1,6 +1,6 @@
 'use client'
 
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { useParams, useRouter } from 'next/navigation'
 import { EditDocumentProvider } from '../contexts/edit-document-context'
 import { Header } from '../components/header'
@@ -10,9 +10,9 @@ import VisualEditor from '../components/visual-editor'
 import { updateDocumentContent } from '@/actions/fetchers/document/update-document-content'
 import { useState } from 'react'
 import { useToast } from '@/shared/hooks/use-toast'
-import { useGetDocumentQuery } from '@/actions/fetchers/document/get-document/query'
 import { MAX_CONTENT_LENGTH, MIN_CONTENT_LENGTH } from '@/constants/document'
 import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
+import { queries } from '@/shared/lib/tanstack-query/query-keys'
 
 export default function Modify() {
   const { documentId } = useParams()
@@ -20,7 +20,9 @@ export default function Modify() {
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
 
-  const { data: modifyTargetDocument } = useGetDocumentQuery({ documentId: Number(documentId) })
+  const { data: modifyTargetDocument } = useQuery({
+    ...queries.document.item(Number(documentId)),
+  })
 
   const { documentEditedEvent } = useAmplitudeContext()
 

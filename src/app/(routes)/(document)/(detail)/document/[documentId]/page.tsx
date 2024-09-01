@@ -6,8 +6,9 @@ import { Viewer } from './components/viewer'
 import { DocumentDetailProvider } from './contexts/document-detail-context'
 import { AiPick } from './components/ai-pick'
 import Loading from '@/shared/components/loading'
-import { useGetDocumentQuery } from '@/actions/fetchers/document/get-document/query'
 import { notFound } from 'next/navigation'
+import { useQuery } from '@tanstack/react-query'
+import { queries } from '@/shared/lib/tanstack-query/query-keys'
 
 interface Props {
   params: {
@@ -16,7 +17,9 @@ interface Props {
 }
 
 export default function Document({ params: { documentId } }: Props) {
-  const { data: document, isError } = useGetDocumentQuery({ documentId: Number(documentId) })
+  const { data: document, isError } = useQuery({
+    ...queries.document.item(Number(documentId)),
+  })
 
   if (isError) {
     notFound()
