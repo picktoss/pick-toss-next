@@ -1,6 +1,5 @@
 'use client'
 
-import { useGetMonthQuizAnswerRateQuery } from '@/actions/fetchers/quiz/get-month-quiz-answer-rate/query'
 import Loading from '@/shared/components/loading'
 import { Dialog, DialogContent, DialogTrigger } from '@/shared/components/ui/dialog'
 import { Drawer, DrawerContent, DrawerTrigger } from '@/shared/components/ui/drawer'
@@ -10,6 +9,8 @@ import { useMediaQuery } from '@/shared/hooks/use-media-query'
 import { cn } from '@/shared/lib/utils'
 import Image from 'next/image'
 import { ReactNode, useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { queries } from '@/shared/lib/tanstack-query/query-keys'
 
 interface ContinuousQuizDrawerDialog {
   continuousQuizDatesCount: number
@@ -110,12 +111,14 @@ function QuizCalendar() {
   const thisMonth = today.getMonth() + 1
   const firstDayOfThisMonth = new Date(today.getFullYear(), today.getMonth(), 1).getDay()
 
-  const { data } = useGetMonthQuizAnswerRateQuery({
-    categoryId: 0,
-    date: {
-      year: 2024,
-      month: thisMonth,
-    },
+  const { data } = useQuery({
+    ...queries.quiz.monthAnswerRate({
+      categoryId: 0,
+      date: {
+        year: 2024,
+        month: thisMonth,
+      },
+    }),
   })
 
   if (!data) {

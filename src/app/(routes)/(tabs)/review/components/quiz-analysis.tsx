@@ -9,8 +9,6 @@ import { currentMonth } from '@/shared/utils/date'
 import { Period } from './ui/period'
 import { PeriodTypeSelector } from './ui/period-type-selector'
 import { CategorySelect } from './ui/category-select'
-import { useGetMonthQuizAnswerRateQuery } from '@/actions/fetchers/quiz/get-month-quiz-answer-rate/query'
-import { useGetWeekQuizAnswerRateQuery } from '@/actions/fetchers/quiz/get-week-quiz-answer-rate/query'
 import { useQuery } from '@tanstack/react-query'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
 
@@ -29,16 +27,18 @@ export function QuizAnalysis() {
     ...queries.category.list(),
   })
 
-  const { data: weekQuizAnswerRate } = useGetWeekQuizAnswerRateQuery({
-    categoryId: selectedCategoryId,
+  const { data: weekQuizAnswerRate } = useQuery({
+    ...queries.quiz.weekAnswerRate(selectedCategoryId),
   })
 
-  const { data: monthQuizAnswerRate } = useGetMonthQuizAnswerRateQuery({
-    categoryId: selectedCategoryId,
-    date: {
-      year: 2024,
-      month: currentMonth(),
-    },
+  const { data: monthQuizAnswerRate } = useQuery({
+    ...queries.quiz.monthAnswerRate({
+      categoryId: selectedCategoryId,
+      date: {
+        year: 2024,
+        month: currentMonth(),
+      },
+    }),
   })
 
   const isLoading =

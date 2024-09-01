@@ -1,4 +1,5 @@
 import { api } from '@/actions/fetchers'
+import { getWeekQuizAnswerRate } from '@/actions/fetchers/quiz'
 import { SORT_OPTION } from '@/constants/document'
 import { createQueryKeyStore } from '@lukemorales/query-key-factory'
 
@@ -57,6 +58,37 @@ export const queries = createQueryKeyStore({
       queryFn: () =>
         api.keyPoint.searchKeyPoints({
           term,
+        }),
+    }),
+  },
+
+  quiz: {
+    today: () => ({
+      queryKey: [''],
+      queryFn: () => api.quiz.getTodayQuizSetId(),
+    }),
+    weekAnswerRate: (categoryId: number) => ({
+      queryKey: [categoryId],
+      queryFn: () =>
+        getWeekQuizAnswerRate({
+          categoryId,
+        }),
+    }),
+    monthAnswerRate: ({
+      categoryId,
+      date,
+    }: {
+      categoryId: number
+      date: {
+        year: number
+        month: number
+      }
+    }) => ({
+      queryKey: [categoryId, date],
+      queryFn: () =>
+        api.quiz.getMonthQuizAnswerRate({
+          categoryId,
+          date,
         }),
     }),
   },

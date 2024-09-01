@@ -3,11 +3,11 @@
 import { changeAiPick } from '@/actions/fetchers/admin/test-change-ai-pick'
 import { changePoint } from '@/actions/fetchers/admin/test-change-point'
 import { createTodayQuiz } from '@/actions/fetchers/admin/test-create-today-quiz'
-import { useGetTodayQuizSetId } from '@/actions/fetchers/quiz/get-today-quiz-set-id/query'
 import Loading from '@/shared/components/loading'
 import { Button } from '@/shared/components/ui/button'
 import { Input } from '@/shared/components/ui/input'
-import { useMutation } from '@tanstack/react-query'
+import { queries } from '@/shared/lib/tanstack-query/query-keys'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -15,7 +15,9 @@ import { useState } from 'react'
 export default function Admin() {
   const router = useRouter()
   const { data: session, update } = useSession()
-  const { data: todayQuizSetIdData } = useGetTodayQuizSetId()
+  const { data: todayQuizSetIdData } = useQuery({
+    ...queries.quiz.today(),
+  })
   const [loading, setLoading] = useState(false)
 
   const [point, setPoint] = useState(0)

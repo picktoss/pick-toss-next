@@ -1,10 +1,6 @@
 'use client'
 
 import { TodayQuizSetType } from '@/actions/fetchers/quiz/get-today-quiz-set-id'
-import {
-  GET_TODAY_QUIZ_SET_ID_KEY,
-  useGetTodayQuizSetId,
-} from '@/actions/fetchers/quiz/get-today-quiz-set-id/query'
 import { useGetWeekQuizAnswerRateMutation } from '@/actions/fetchers/quiz/get-week-quiz-answer-rate/mutation'
 import icons from '@/constants/icons'
 import { LOCAL_KEY } from '@/constants/local-key'
@@ -14,9 +10,10 @@ import Loading from '@/shared/components/loading'
 import { SwitchCase } from '@/shared/components/react/switch-case'
 import { Button } from '@/shared/components/ui/button'
 import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
+import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import { cn } from '@/shared/lib/utils'
 import { calculateTimeUntilTomorrowMidnight, getCurrentDate } from '@/shared/utils/date'
-import { useQueryClient } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -28,7 +25,9 @@ export default function QuizBanner() {
   const { data: session } = useSession()
   const queryClient = useQueryClient()
 
-  const { data } = useGetTodayQuizSetId()
+  const { data } = useQuery({
+    ...queries.quiz.today(),
+  })
   const [remainingTime, setRemainingTime] = useState(calculateTimeUntilTomorrowMidnight())
   const [type, setType] = useState<TodayQuizSetType | 'CREATING' | null>(null)
   const [resultScore, setResultScore] = useState<number | null>(null)
@@ -82,7 +81,7 @@ export default function QuizBanner() {
       setType('CREATING')
       intervalId = setInterval(async () => {
         await queryClient.refetchQueries({
-          queryKey: [GET_TODAY_QUIZ_SET_ID_KEY],
+          queryKey: queries.quiz.today().queryKey,
         })
 
         if (data.type === 'READY') {
