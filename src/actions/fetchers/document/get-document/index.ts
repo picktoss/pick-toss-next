@@ -1,6 +1,8 @@
+'use server'
+
 import { apiClient } from '@/actions/api-client'
 import { API_ENDPOINT } from '@/actions/endpoints'
-import { PrivateRequest } from '@/actions/types'
+
 import { DocumentStatus } from '@/actions/types/dto/document.dto'
 import { notFound } from 'next/navigation'
 
@@ -23,19 +25,16 @@ export interface DocumentInfo {
   createdAt: string
 }
 
-interface GetDocumentParams extends PrivateRequest {
+interface GetDocumentParams extends NextFetchRequestConfig {
   documentId: number
 }
 
 interface GetDocumentResponse extends DocumentInfo {}
 
-export const getDocument = async ({ documentId, accessToken }: GetDocumentParams) => {
+export const getDocument = async ({ documentId }: GetDocumentParams) => {
   try {
     return await apiClient.fetch<GetDocumentResponse>({
       endpoint: API_ENDPOINT.document.getDocument(documentId),
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
     })
   } catch (error) {
     if ((error as { status: number }).status === 400) {

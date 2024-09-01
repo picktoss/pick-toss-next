@@ -1,8 +1,9 @@
+'use server'
+
 import { apiClient } from '@/actions/api-client'
 import { API_ENDPOINT } from '@/actions/endpoints'
-import { PrivateRequest } from '@/actions/types'
 
-interface CreateDocumentParams extends PrivateRequest {
+interface CreateDocumentParams extends NextFetchRequestConfig {
   file: File
   documentName: string
   categoryId: number
@@ -21,8 +22,5 @@ export const createDocument = async (params: CreateDocumentParams) => {
   return await apiClient.fetch<CreateDocumentResponse>({
     endpoint: API_ENDPOINT.document.createDocument(),
     body: formData,
-    headers: {
-      Authorization: `Bearer ${params.accessToken}`,
-    },
   })
 }

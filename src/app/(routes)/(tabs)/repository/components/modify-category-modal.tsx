@@ -4,11 +4,7 @@ import CategoryTag from './category-tag'
 import Image from 'next/image'
 import icons from '@/constants/icons'
 import { Button } from '@/shared/components/ui/button'
-import {
-  CATEGORY_TAG_TYPE,
-  Category,
-  CategoryTagType,
-} from '@/actions/fetchers/category/get-categories'
+import { Category, CategoryTagType } from '@/actions/fetchers/category/get-categories'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,6 +13,7 @@ import {
 } from '@/shared/components/ui/dropdown-menu'
 import EmojiPicker from 'emoji-picker-react'
 import { useUpdateCategoryMutation } from '@/actions/fetchers/category/update-category/mutation'
+import { CATEGORY_TAG_TYPE } from '@/types/category'
 
 interface Props extends Category {
   open: boolean

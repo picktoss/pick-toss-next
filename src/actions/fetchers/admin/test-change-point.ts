@@ -1,20 +1,17 @@
+'use server'
+
 import { apiClient } from '@/actions/api-client'
 import { API_ENDPOINT } from '@/actions/endpoints'
-import { PrivateRequest } from '@/actions/types'
 
-interface ChangePointParams extends PrivateRequest {
+interface ChangePointParams extends NextFetchRequestConfig {
   point: number
-  accessToken: string
 }
 
-export const changePoint = async ({ point, accessToken }: ChangePointParams) => {
+export const changePoint = async ({ point }: ChangePointParams) => {
   return await apiClient.fetch({
     endpoint: API_ENDPOINT.test.changePoint(),
     body: {
       point,
-    },
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
     },
   })
 }

@@ -3,7 +3,7 @@ import { ReactNode, useState } from 'react'
 import Image from 'next/image'
 import icons from '@/constants/icons'
 import { Button } from '@/shared/components/ui/button'
-import { CATEGORY_TAG_TYPE, CategoryTagType } from '@/actions/fetchers/category/get-categories'
+import { CategoryTagType } from '@/actions/fetchers/category/get-categories'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,6 +15,7 @@ import CategoryTag from '@/app/(routes)/(tabs)/repository/components/category-ta
 import Loading from './loading'
 import { cn } from '@/shared/lib/utils'
 import { useCreateCategoryMutation } from '@/actions/fetchers/category/create-category/mutation'
+import { CATEGORY_TAG_TYPE } from '@/types/category'
 
 interface Props {
   trigger: ReactNode

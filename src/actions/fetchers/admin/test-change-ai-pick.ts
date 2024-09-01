@@ -1,20 +1,17 @@
+'use server'
+
 import { apiClient } from '@/actions/api-client'
 import { API_ENDPOINT } from '@/actions/endpoints'
-import { PrivateRequest } from '@/actions/types'
 
-interface ChangeAiPickParams extends PrivateRequest {
+interface ChangeAiPickParams extends NextFetchRequestConfig {
   aiPickCount: number
-  accessToken: string
 }
 
-export const changeAiPick = async ({ aiPickCount, accessToken }: ChangeAiPickParams) => {
+export const changeAiPick = async ({ aiPickCount }: ChangeAiPickParams) => {
   return await apiClient.fetch({
     endpoint: API_ENDPOINT.test.changeAiPick(),
     body: {
       aiPickCount,
-    },
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
     },
   })
 }

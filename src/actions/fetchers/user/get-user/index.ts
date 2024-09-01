@@ -1,8 +1,7 @@
+'use server'
+
 import { apiClient } from '@/actions/api-client'
 import { API_ENDPOINT } from '@/actions/endpoints'
-import { PrivateRequest } from '@/actions/types'
-
-interface GetUserParams extends PrivateRequest {}
 
 export interface GetUserResponse {
   name: string
@@ -26,11 +25,8 @@ export interface GetUserResponse {
   quizNotificationEnabled: boolean
 }
 
-export const getUser = async ({ accessToken }: GetUserParams) => {
+export const getUser = async () => {
   return await apiClient.fetch<GetUserResponse>({
     endpoint: API_ENDPOINT.user.getUser(),
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
   })
 }

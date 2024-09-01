@@ -1,9 +1,11 @@
+'use server'
+
 import { apiClient } from '@/actions/api-client'
 import { API_ENDPOINT } from '@/actions/endpoints'
-import { PrivateRequest } from '@/actions/types'
+
 import { DocumentStatus } from '@/actions/types/dto/document.dto'
 
-interface GetKeyPointsByIdParams extends PrivateRequest {
+interface GetKeyPointsByIdParams extends NextFetchRequestConfig {
   documentId: number
 }
 
@@ -18,11 +20,8 @@ export interface GetKeyPointsByIdResponse {
   }[]
 }
 
-export const getKeyPointsById = async ({ documentId, accessToken }: GetKeyPointsByIdParams) => {
+export const getKeyPointsById = async ({ documentId }: GetKeyPointsByIdParams) => {
   return await apiClient.fetch<GetKeyPointsByIdResponse>({
     endpoint: API_ENDPOINT.keyPoint.getPickPointsById(documentId),
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
   })
 }

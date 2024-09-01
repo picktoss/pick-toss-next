@@ -1,9 +1,10 @@
+'use server'
+
 import { apiClient } from '@/actions/api-client'
 import { API_ENDPOINT } from '@/actions/endpoints'
 import { CategoryTagType } from '../get-categories'
-import { PrivateRequest } from '@/actions/types'
 
-interface GetCategoryParams extends PrivateRequest {
+interface GetCategoryParams extends NextFetchRequestConfig {
   categoryId: number
 }
 
@@ -15,11 +16,8 @@ interface GetCategoryResponse {
   order: number
 }
 
-export const getCategory = async ({ categoryId, accessToken }: GetCategoryParams) => {
+export const getCategory = async ({ categoryId }: GetCategoryParams) => {
   return await apiClient.fetch<GetCategoryResponse>({
     endpoint: API_ENDPOINT.category.getCategory(categoryId),
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
   })
 }

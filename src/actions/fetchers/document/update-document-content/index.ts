@@ -1,8 +1,9 @@
+'use server'
+
 import { apiClient } from '@/actions/api-client'
 import { API_ENDPOINT } from '@/actions/endpoints'
-import { PrivateRequest } from '@/actions/types'
 
-interface UpdateDocumentNameParams extends PrivateRequest {
+interface UpdateDocumentNameParams extends NextFetchRequestConfig {
   documentId: number
   name: string
   file: File
@@ -16,8 +17,5 @@ export const updateDocumentContent = async (params: UpdateDocumentNameParams) =>
   return await apiClient.fetch({
     endpoint: API_ENDPOINT.document.updateDocumentContent(params.documentId),
     body: formData,
-    headers: {
-      Authorization: `Bearer ${params.accessToken}`,
-    },
   })
 }

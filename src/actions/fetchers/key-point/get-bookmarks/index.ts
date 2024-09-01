@@ -1,8 +1,7 @@
+'use server'
+
 import { apiClient } from '@/actions/api-client'
 import { API_ENDPOINT } from '@/actions/endpoints'
-import { PrivateRequest } from '@/actions/types'
-
-interface GetBookmarksParams extends PrivateRequest {}
 
 export interface GetBookmarksResponse {
   keyPoints: {
@@ -22,11 +21,8 @@ export interface GetBookmarksResponse {
   }[]
 }
 
-export const getBookmarks = async ({ accessToken }: GetBookmarksParams) => {
+export const getBookmarks = async () => {
   return await apiClient.fetch<GetBookmarksResponse>({
     endpoint: API_ENDPOINT.keyPoint.getBookmark(),
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
   })
 }

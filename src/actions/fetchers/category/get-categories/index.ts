@@ -1,19 +1,10 @@
+'use server'
+
 import { apiClient } from '@/actions/api-client'
 import { API_ENDPOINT } from '@/actions/endpoints'
-import { PrivateRequest } from '@/actions/types'
-import { DocumentStatus } from '@/actions/types/dto/document.dto'
 
-export const CATEGORY_TAG_TYPE = [
-  'IT',
-  'ECONOMY',
-  'HISTORY',
-  'LANGUAGE',
-  'MATH',
-  'ART',
-  'MEDICINE',
-  'ETC',
-  'DEFAULT',
-] as const
+import { DocumentStatus } from '@/actions/types/dto/document.dto'
+import { CATEGORY_TAG_TYPE } from '@/types/category'
 
 export type CategoryTagType = (typeof CATEGORY_TAG_TYPE)[number]
 
@@ -31,17 +22,12 @@ export interface Category {
   }[]
 }
 
-interface GetCategoriesParams extends PrivateRequest {}
-
 interface GetCategoriesResponse {
   categories: Category[]
 }
 
-export const getCategories = async ({ accessToken }: GetCategoriesParams) => {
+export const getCategories = async () => {
   return await apiClient.fetch<GetCategoriesResponse>({
     endpoint: API_ENDPOINT.category.getCategories(),
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
   })
 }

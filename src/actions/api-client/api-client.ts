@@ -3,6 +3,7 @@ import { EndPoint } from '../endpoints/types'
 import { ApiResponse } from './types'
 import { ApiError } from './api-error'
 import { ServerEnv } from './server-env'
+import { auth } from '@/app/api/auth/[...nextauth]/auth'
 
 interface Config {
   baseUrl: string
@@ -23,14 +24,16 @@ class ApiClient {
   constructor(private readonly config: Config) {}
 
   async fetch<T extends ApiResponse>(params: FetchParams): Promise<T> {
-    const response = await fetch(this.getUrl(params), {
-      headers: this.getHeaders(params.headers, params.body),
-      next: this.getNextOptions(params.next),
-      body: this.getBody(params.body),
+    const headers = await this.getHeaders(params)
+
+    const response = await fetch(this.getUrl({ endpoint: params.endpoint, query: params.query }), {
       method: params.endpoint.method,
+      headers,
+      body: this.getBody(params.body),
+      next: this.getNextOptions(params.next),
     })
 
-    return await this.handleResponse<T>(params, response)
+    return this.handleResponse<T>(params, response)
   }
 
   private getUrl({ endpoint, query }: Pick<FetchParams, 'endpoint' | 'query'>): string {
@@ -38,17 +41,19 @@ class ApiClient {
     return `${this.config.baseUrl}${endpoint.url}${searchParamsUrl}`
   }
 
-  private getHeaders(headers?: FetchParams['headers'], body?: FetchParams['body']): HeadersInit {
-    if (body instanceof FormData) {
-      return {
-        ...(headers || {}),
-      }
+  private async getHeaders(params: FetchParams): Promise<Headers> {
+    const headers = new Headers(params.headers)
+
+    if (params.endpoint.auth) {
+      const session = await auth()
+      headers.set('Authorization', `Bearer ${session?.user.accessToken}`)
     }
 
-    return {
-      'Content-Type': 'application/json',
-      ...(headers || {}),
+    if (!(params.body instanceof FormData) && !headers.has('Content-Type')) {
+      headers.set('Content-Type', 'application/json')
     }
+
+    return headers
   }
 
   private getNextOptions(next: FetchParams['next']): NextFetchRequestConfig | undefined {

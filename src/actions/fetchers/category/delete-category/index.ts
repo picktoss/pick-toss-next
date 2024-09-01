@@ -1,16 +1,14 @@
+'use server'
+
 import { apiClient } from '@/actions/api-client'
 import { API_ENDPOINT } from '@/actions/endpoints'
-import { PrivateRequest } from '@/actions/types'
 
-export interface DeleteCategoryParams extends PrivateRequest {
+export interface DeleteCategoryParams extends NextFetchRequestConfig {
   categoryId: number
 }
 
-export const deleteCategory = async ({ categoryId, accessToken }: DeleteCategoryParams) => {
+export const deleteCategory = async ({ categoryId }: DeleteCategoryParams) => {
   return await apiClient.fetch({
     endpoint: API_ENDPOINT.category.deleteCategory(categoryId),
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
   })
 }

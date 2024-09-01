@@ -1,8 +1,9 @@
+'use server'
+
 import { apiClient } from '@/actions/api-client'
 import { API_ENDPOINT } from '@/actions/endpoints'
-import { PrivateRequest } from '@/actions/types'
 
-interface GetMonthQuizAnswerRateParams extends PrivateRequest {
+interface GetMonthQuizAnswerRateParams extends NextFetchRequestConfig {
   categoryId: number
   date: {
     year: number
@@ -26,12 +27,8 @@ interface GetMonthQuizAnswerRateResponse {
 export const getMonthQuizAnswerRate = async ({
   categoryId,
   date,
-  accessToken,
 }: GetMonthQuizAnswerRateParams) => {
   return await apiClient.fetch<GetMonthQuizAnswerRateResponse>({
     endpoint: API_ENDPOINT.quiz.getMonthQuizAnswerRate(categoryId, date.year, date.month),
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
   })
 }

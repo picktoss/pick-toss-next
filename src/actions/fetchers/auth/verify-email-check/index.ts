@@ -1,25 +1,19 @@
+'use server'
+
 import { apiClient } from '@/actions/api-client'
 import { API_ENDPOINT } from '@/actions/endpoints'
-import { PrivateRequest } from '@/actions/types'
 
-export interface VerifyEmailCheckParams extends PrivateRequest {
+export interface VerifyEmailCheckParams extends NextFetchRequestConfig {
   email: string
   verificationCode: string
 }
 
-export const verifyEmailCheck = async ({
-  email,
-  verificationCode,
-  accessToken,
-}: VerifyEmailCheckParams) => {
+export const verifyEmailCheck = async ({ email, verificationCode }: VerifyEmailCheckParams) => {
   return await apiClient.fetch({
     endpoint: API_ENDPOINT.auth.verifyEmailCheck(),
     body: {
       email: email,
       verificationCode: verificationCode,
-    },
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
     },
   })
 }

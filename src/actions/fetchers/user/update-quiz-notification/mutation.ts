@@ -9,13 +9,12 @@ interface Params {
 }
 
 export function useUpdateQuizNotificationMutation() {
-  const { data: session, update } = useSession()
+  const { update } = useSession()
 
   return useMutation({
     mutationFn: ({ checked }: Params) =>
       updateQuizNotification({
         quizNotificationEnabled: checked,
-        accessToken: session?.user.accessToken || '',
       }),
     onSuccess: async () => await update({}),
   })

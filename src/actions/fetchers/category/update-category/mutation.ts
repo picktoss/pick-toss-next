@@ -1,19 +1,15 @@
+'use client'
+
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useSession } from 'next-auth/react'
-import { UpdateCategoryParams, updateCategory } from '.'
+import { updateCategory } from '.'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import { Category } from '../get-categories'
 
 export const useUpdateCategoryMutation = () => {
-  const { data: session } = useSession()
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (data: Omit<UpdateCategoryParams, 'accessToken' | 'revalidate' | 'tags'>) =>
-      updateCategory({
-        ...data,
-        accessToken: session?.user.accessToken || '',
-      }),
+    mutationFn: updateCategory,
     onMutate: async (data) => {
       await queryClient.cancelQueries({ queryKey: queries.category.list().queryKey })
 

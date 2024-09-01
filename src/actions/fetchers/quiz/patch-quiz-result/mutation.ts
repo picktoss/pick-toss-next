@@ -9,7 +9,7 @@ interface Params {
 }
 
 export const usePatchQuizResultMutation = () => {
-  const { data: session, update } = useSession()
+  const { update } = useSession()
 
   return useMutation({
     mutationFn: (params: Params) =>
@@ -18,7 +18,6 @@ export const usePatchQuizResultMutation = () => {
           quizSetId: params.quizSetId,
           quizzes: params.solvingData,
         },
-        accessToken: session?.user.accessToken || '',
       }),
     onSuccess: () => update({}),
   })

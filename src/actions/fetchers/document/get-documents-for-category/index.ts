@@ -1,6 +1,7 @@
+'use server'
+
 import { apiClient } from '@/actions/api-client'
 import { API_ENDPOINT } from '@/actions/endpoints'
-import { PrivateRequest } from '@/actions/types'
 
 export interface Document {
   id: number
@@ -16,7 +17,7 @@ export interface Document {
   updatedAt: string
 }
 
-interface GetDocumentsForCategory extends PrivateRequest {
+interface GetDocumentsForCategory extends NextFetchRequestConfig {
   categoryId: number
   sortOption?: 'createdAt' | 'name' | 'updatedAt'
 }
@@ -28,12 +29,8 @@ interface GetDocumentsForCategoryResponse {
 export const getDocumentsForCategory = async ({
   categoryId,
   sortOption,
-  accessToken,
 }: GetDocumentsForCategory) => {
   return await apiClient.fetch<GetDocumentsForCategoryResponse>({
     endpoint: API_ENDPOINT.document.getDocumentsForCategory(categoryId, sortOption),
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
   })
 }

@@ -1,8 +1,9 @@
+'use server'
+
 import { apiClient } from '@/actions/api-client'
 import { API_ENDPOINT } from '@/actions/endpoints'
-import { PrivateRequest } from '@/actions/types'
 
-interface GetWeekQuizAnswerRateParams extends PrivateRequest {
+interface GetWeekQuizAnswerRateParams extends NextFetchRequestConfig {
   categoryId: number
 }
 
@@ -19,14 +20,8 @@ interface GetWeekQuizAnswerRateResponse {
   }[]
 }
 
-export const getWeekQuizAnswerRate = async ({
-  categoryId,
-  accessToken,
-}: GetWeekQuizAnswerRateParams) => {
+export const getWeekQuizAnswerRate = async ({ categoryId }: GetWeekQuizAnswerRateParams) => {
   return await apiClient.fetch<GetWeekQuizAnswerRateResponse>({
     endpoint: API_ENDPOINT.quiz.getWeekQuizAnswerRate(categoryId),
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
   })
 }

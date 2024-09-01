@@ -6,20 +6,12 @@ import { createAiPick } from '.'
 import { LOCAL_KEY } from '@/constants/local-key'
 import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
 
-interface Params {
-  documentId: number
-}
-
 export function useCreateAIPickMutation() {
-  const { data: session, update } = useSession()
+  const { update } = useSession()
   const { aiPickEvent } = useAmplitudeContext()
 
   return useMutation({
-    mutationFn: ({ documentId }: Params) =>
-      createAiPick({
-        documentId,
-        accessToken: session?.user.accessToken || '',
-      }),
+    mutationFn: createAiPick,
     onSuccess: async ({ firstUseAiPick }) => {
       aiPickEvent({
         buttonName: 'create_ai_pick_button',

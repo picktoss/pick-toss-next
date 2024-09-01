@@ -1,8 +1,9 @@
+'use server'
+
 import { apiClient } from '@/actions/api-client'
 import { API_ENDPOINT } from '@/actions/endpoints'
-import { PrivateRequest } from '@/actions/types'
 
-interface SearchDocumentParams extends PrivateRequest {
+interface SearchDocumentParams extends NextFetchRequestConfig {
   term: string
 }
 
@@ -18,14 +19,11 @@ export interface SearchDocumentResponse {
   }[]
 }
 
-export const searchDocument = async ({ term, accessToken }: SearchDocumentParams) => {
+export const searchDocument = async ({ term }: SearchDocumentParams) => {
   return await apiClient.fetch<SearchDocumentResponse>({
     endpoint: API_ENDPOINT.document.searchDocument(),
     body: {
       word: term,
-    },
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
     },
   })
 }

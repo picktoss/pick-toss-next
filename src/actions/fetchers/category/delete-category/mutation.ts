@@ -1,19 +1,15 @@
+'use client'
+
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useSession } from 'next-auth/react'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
-import { DeleteCategoryParams, deleteCategory } from '.'
+import { deleteCategory } from '.'
 import { Category } from '../get-categories'
 
 export const useDeleteCategoryMutation = () => {
-  const { data: session } = useSession()
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (data: Omit<DeleteCategoryParams, 'accessToken' | 'revalidate' | 'tags'>) =>
-      deleteCategory({
-        ...data,
-        accessToken: session?.user.accessToken || '',
-      }),
+    mutationFn: deleteCategory,
     onMutate: async (data) => {
       await queryClient.cancelQueries({ queryKey: queries.category.list().queryKey })
 

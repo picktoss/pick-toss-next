@@ -1,6 +1,7 @@
+'use server'
+
 import { apiClient } from '@/actions/api-client'
 import { API_ENDPOINT } from '@/actions/endpoints'
-import { PrivateRequest } from '@/actions/types'
 
 export interface TopFive {
   documents: {
@@ -14,15 +15,10 @@ export interface TopFive {
   }[]
 }
 
-interface GetTopFiveParams extends PrivateRequest {}
-
 interface GetTopFiveResponse extends TopFive {}
 
-export const getTopFive = async ({ accessToken }: GetTopFiveParams) => {
+export const getTopFive = async () => {
   return await apiClient.fetch<GetTopFiveResponse>({
     endpoint: API_ENDPOINT.document.getTopFive(),
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
   })
 }

@@ -1,6 +1,7 @@
+'use server'
+
 import { apiClient } from '@/actions/api-client'
 import { API_ENDPOINT } from '@/actions/endpoints'
-import { PrivateRequest } from '@/actions/types'
 
 interface Document {
   id: number
@@ -31,7 +32,7 @@ interface MultipleChoiceQuiz extends BaseQuiz<'MULTIPLE_CHOICE'> {
   options: string[]
 }
 
-interface GetQuizSetsParams extends PrivateRequest {
+interface GetQuizSetsParams extends NextFetchRequestConfig {
   quizSetId: string
 }
 
@@ -44,9 +45,6 @@ export const getQuizSets = async (params: GetQuizSetsParams) => {
   try {
     return await apiClient.fetch<GetQuizSetsResponse>({
       endpoint: API_ENDPOINT.quiz.getQuizSets(params.quizSetId),
-      headers: {
-        Authorization: `Bearer ${params.accessToken}`,
-      },
     })
   } catch (error) {
     console.error(error)
