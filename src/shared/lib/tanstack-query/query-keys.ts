@@ -1,5 +1,5 @@
 import { api } from '@/actions/fetchers'
-import { SORT_OPTION } from '@/actions/fetchers/document/get-documents-for-category/query'
+import { SORT_OPTION } from '@/constants/document'
 import { createQueryKeyStore } from '@lukemorales/query-key-factory'
 
 export const queries = createQueryKeyStore({
@@ -28,6 +28,15 @@ export const queries = createQueryKeyStore({
     }),
     list: (categoryId: number, sortOption: (typeof SORT_OPTION)[number]) => ({
       queryKey: [categoryId, sortOption],
+      queryFn: () =>
+        api.document.getDocumentsForCategory({
+          categoryId,
+          sortOption,
+        }),
+    }),
+    topFive: () => ({
+      queryKey: [''],
+      queryFn: () => api.document.getTopFive().then((res) => res.documents),
     }),
   },
 })

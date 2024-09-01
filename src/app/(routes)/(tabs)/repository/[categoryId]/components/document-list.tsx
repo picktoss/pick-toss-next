@@ -12,14 +12,14 @@ import DocumentItem from './document-item'
 import icons from '@/constants/icons'
 import Link from 'next/link'
 import { cn } from '@/shared/lib/utils'
-import { useGetDocumentsForCategoryQuery } from '@/actions/fetchers/document/get-documents-for-category/query'
 import Loading from '@/shared/components/loading'
 import { CreateDocumentProtector } from '@/shared/components/create-document-protector'
 import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
+import { useQuery } from '@tanstack/react-query'
+import { queries } from '@/shared/lib/tanstack-query/query-keys'
+import { SORT_OPTION } from '@/constants/document'
 
-const SORT_OPTION_TYPE = ['createdAt', 'name', 'updatedAt'] as const
-
-export type SortOption = (typeof SORT_OPTION_TYPE)[number]
+export type SortOption = (typeof SORT_OPTION)[number]
 
 const sortOptionLabel = {
   createdAt: '업로드한 날짜',
@@ -33,13 +33,8 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
 export default function DocumentList({ categoryId, className }: Props) {
   const [sortOption, setSortOption] = useState<SortOption>('createdAt')
 
-  const {
-    data: documents,
-    isError,
-    isPending,
-  } = useGetDocumentsForCategoryQuery({
-    categoryId,
-    sortOption,
+  const { data, isError, isPending } = useQuery({
+    ...queries.document.list(categoryId, sortOption),
   })
 
   const handleSortOptionClick = (option: SortOption) => {
@@ -57,13 +52,13 @@ export default function DocumentList({ categoryId, className }: Props) {
 
   return (
     <div className={className}>
-      {documents.length === 0 ? (
+      {data?.documents.length === 0 ? (
         <NoContent categoryId={categoryId} />
       ) : (
         <>
           <div className="flex items-center justify-between">
             <div className="text-body1-medium text-gray-08">
-              노트 <span className="font-bold text-orange-06">{documents.length}</span>개
+              노트 <span className="font-bold text-orange-06">{data?.documents.length}</span>개
             </div>
             <DropdownMenu>
               <DropdownMenuTrigger>
@@ -73,7 +68,7 @@ export default function DocumentList({ categoryId, className }: Props) {
                 </div>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                {SORT_OPTION_TYPE.map((type) => (
+                {SORT_OPTION.map((type) => (
                   <DropdownMenuItem
                     key={type}
                     onClick={() => handleSortOptionClick(type)}
@@ -86,7 +81,7 @@ export default function DocumentList({ categoryId, className }: Props) {
             </DropdownMenu>
           </div>
           <div className="mt-[20px] flex flex-col gap-2 lg:mt-[16px]">
-            {documents.map((document) => (
+            {data?.documents.map((document) => (
               <DocumentItem key={document.id} sortOption={sortOption} {...document} />
             ))}
             <AddNoteButton className="hidden lg:flex" categoryId={categoryId} />

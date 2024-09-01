@@ -1,14 +1,17 @@
 'use client'
 
-import { useGetTopFiveQuery } from '@/actions/fetchers/document/get-top-five/query'
 import Loading from '@/shared/components/loading'
 import icons from '@/constants/icons'
 import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useQuery } from '@tanstack/react-query'
+import { queries } from '@/shared/lib/tanstack-query/query-keys'
 
 export default function TopFive() {
-  const { data: documents, isLoading } = useGetTopFiveQuery()
+  const { data: documents, isLoading } = useQuery({
+    ...queries.document.topFive(),
+  })
 
   return (
     <section className="relative flex min-h-[340px] flex-col gap-[24px] rounded-none bg-white p-[20px] pb-[17px] lg:min-h-[400px] xl:rounded-[12px]">
