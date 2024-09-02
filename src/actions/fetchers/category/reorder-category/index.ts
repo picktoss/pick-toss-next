@@ -14,12 +14,13 @@ export const reorderCategory = async ({
   preDragCategoryOrder,
   afterDragCategoryOrder,
 }: ReorderCategoryParams) => {
-  return await apiClient.fetch({
+  const result = await apiClient({
     endpoint: API_ENDPOINT.category.reorderCategory(),
-    body: {
+    data: {
       categoryId,
       preDragCategoryOrder,
       afterDragCategoryOrder,
     },
   })
+  return result.data
 }

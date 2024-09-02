@@ -12,7 +12,8 @@ interface CreateAiPickResponse {
 }
 
 export const createAiPick = async (params: CreateAiPickParams) => {
-  return await apiClient.fetch<CreateAiPickResponse>({
+  const result = await apiClient<CreateAiPickResponse>({
     endpoint: API_ENDPOINT.document.postAiPick(params.documentId),
   })
+  return result.data
 }

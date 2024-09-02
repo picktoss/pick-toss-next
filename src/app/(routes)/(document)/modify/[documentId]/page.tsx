@@ -13,12 +13,14 @@ import { useToast } from '@/shared/hooks/use-toast'
 import { MAX_CONTENT_LENGTH, MIN_CONTENT_LENGTH } from '@/constants/document'
 import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
+import { useSession } from 'next-auth/react'
 
 export default function Modify() {
   const { documentId } = useParams()
   const { toast } = useToast()
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
+  const { data: session } = useSession()
 
   const { data: modifyTargetDocument } = useQuery({
     ...queries.document.item(Number(documentId)),
@@ -26,15 +28,16 @@ export default function Modify() {
 
   const { documentEditedEvent } = useAmplitudeContext()
 
-  const { mutateAsync } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: (data: { name: string; file: File }) =>
       updateDocumentContent({
         documentId: Number(documentId),
         ...data,
+        accessToken: session?.user.accessToken || '',
       }),
   })
 
-  const handleSubmit = async ({
+  const handleSubmit = ({
     documentName,
     editorContent,
   }: {
@@ -65,7 +68,7 @@ export default function Modify() {
     const documentBlob = new Blob([editorContent], { type: 'text/markdown' })
     const file = new File([documentBlob], `${documentName}.md`, { type: 'text/markdown' })
 
-    await mutateAsync(
+    mutate(
       {
         name: documentName,
         file,

@@ -8,10 +8,11 @@ interface ChangeAiPickParams extends NextFetchRequestConfig {
 }
 
 export const changeAiPick = async ({ aiPickCount }: ChangeAiPickParams) => {
-  return await apiClient.fetch({
+  const result = await apiClient({
     endpoint: API_ENDPOINT.test.changeAiPick(),
-    body: {
+    data: {
       aiPickCount,
     },
   })
+  return result.data
 }

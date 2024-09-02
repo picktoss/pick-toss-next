@@ -11,7 +11,12 @@ interface GetTodayQuizSetIdResponse {
 }
 
 export const getTodayQuizSetId = async () => {
-  return await apiClient.fetch<GetTodayQuizSetIdResponse>({
-    endpoint: API_ENDPOINT.quiz.getTodayQuizSetId(),
-  })
+  try {
+    const result = await apiClient<GetTodayQuizSetIdResponse>({
+      endpoint: API_ENDPOINT.quiz.getTodayQuizSetId(),
+    })
+    return result.data
+  } catch (error) {
+    console.error(error)
+  }
 }

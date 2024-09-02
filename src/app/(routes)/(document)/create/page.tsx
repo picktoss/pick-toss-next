@@ -34,10 +34,10 @@ export default function CreateDocument() {
     ...queries.category.list(),
   })
 
-  const { mutateAsync } = useCreateDocumentMutation()
+  const { mutate } = useCreateDocumentMutation()
   const { documentCreatedEvent } = useAmplitudeContext()
 
-  const handleSubmit = async ({
+  const handleSubmit = ({
     categoryId,
     documentName,
     editorContent,
@@ -63,9 +63,9 @@ export default function CreateDocument() {
     const documentBlob = new Blob([editorContent], { type: 'text/markdown' })
     const file = new File([documentBlob], `${documentName}.md`, { type: 'text/markdown' })
 
-    await mutateAsync(
+    mutate(
       {
-        documentName: documentName,
+        documentName,
         file,
         categoryId,
       },
@@ -75,10 +75,12 @@ export default function CreateDocument() {
             length: editorContent.length,
           })
           toast({ description: '노트가 등록되었습니다' })
-          router.push(`/document/${data.id}`)
+          router.push(`/document/${data?.id}`)
         },
       }
     )
+
+    documentCreatedEvent({ length: editorContent.length })
   }
 
   if (!data?.categories) {

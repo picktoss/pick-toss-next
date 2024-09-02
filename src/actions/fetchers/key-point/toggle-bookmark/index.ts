@@ -11,10 +11,11 @@ interface ToggleBookmarkParams extends NextFetchRequestConfig {
 export interface ToggleBookmarkResponse {}
 
 export const toggleBookmark = async ({ keyPointId, bookmark }: ToggleBookmarkParams) => {
-  return await apiClient.fetch<ToggleBookmarkResponse>({
+  const result = await apiClient<ToggleBookmarkResponse>({
     endpoint: API_ENDPOINT.keyPoint.patchBookmark(keyPointId),
-    body: {
+    data: {
       bookmark,
     },
   })
+  return result.data
 }

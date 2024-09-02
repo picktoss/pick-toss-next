@@ -17,7 +17,8 @@ interface GetCategoryResponse {
 }
 
 export const getCategory = async ({ categoryId }: GetCategoryParams) => {
-  return await apiClient.fetch<GetCategoryResponse>({
+  const result = await apiClient<GetCategoryResponse>({
     endpoint: API_ENDPOINT.category.getCategory(categoryId),
   })
+  return result.data
 }

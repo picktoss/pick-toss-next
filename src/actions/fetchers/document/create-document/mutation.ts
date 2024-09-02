@@ -2,13 +2,17 @@
 
 import { useMutation } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
-import { createDocument } from '.'
+import { CreateDocumentParams, createDocument } from '.'
 
 export function useCreateDocumentMutation() {
-  const { update } = useSession()
+  const { data: session, update } = useSession()
 
   return useMutation({
-    mutationFn: createDocument,
+    mutationFn: (data: Omit<CreateDocumentParams, 'accessToken'>) =>
+      createDocument({
+        ...data,
+        accessToken: session?.user.accessToken || '',
+      }),
     onSuccess: () => update({}),
   })
 }

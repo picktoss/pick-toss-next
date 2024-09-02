@@ -8,10 +8,11 @@ interface CreateTodayQuizParams extends NextFetchRequestConfig {
 }
 
 export const createTodayQuiz = async ({ quizSetId }: CreateTodayQuizParams) => {
-  return await apiClient.fetch({
+  const result = await apiClient({
     endpoint: API_ENDPOINT.test.createTodayQuiz(),
-    body: {
+    data: {
       quizSetId,
     },
   })
+  return result.data
 }

@@ -21,7 +21,8 @@ interface GetWeekQuizAnswerRateResponse {
 }
 
 export const getWeekQuizAnswerRate = async ({ categoryId }: GetWeekQuizAnswerRateParams) => {
-  return await apiClient.fetch<GetWeekQuizAnswerRateResponse>({
+  const result = await apiClient<GetWeekQuizAnswerRateResponse>({
     endpoint: API_ENDPOINT.quiz.getWeekQuizAnswerRate(categoryId),
   })
+  return result.data
 }

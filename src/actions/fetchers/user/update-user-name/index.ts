@@ -8,10 +8,11 @@ interface UpdateUserNameParams extends NextFetchRequestConfig {
 }
 
 export const updateUserName = async ({ name }: UpdateUserNameParams) => {
-  return await apiClient.fetch({
+  const result = await apiClient({
     endpoint: API_ENDPOINT.user.updateUserName(),
-    body: {
+    data: {
       name,
     },
   })
+  return result.data
 }

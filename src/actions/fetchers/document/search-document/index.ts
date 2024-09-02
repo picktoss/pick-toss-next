@@ -20,10 +20,11 @@ export interface SearchDocumentResponse {
 }
 
 export const searchDocument = async ({ term }: SearchDocumentParams) => {
-  return await apiClient.fetch<SearchDocumentResponse>({
+  const result = await apiClient<SearchDocumentResponse>({
     endpoint: API_ENDPOINT.document.searchDocument(),
-    body: {
+    data: {
       word: term,
     },
   })
+  return result.data
 }

@@ -10,7 +10,8 @@ interface ReCreateAiPickParams extends NextFetchRequestConfig {
 interface ReCreateAiPickResponse {}
 
 export const reCreateAiPick = async (params: ReCreateAiPickParams) => {
-  return await apiClient.fetch<ReCreateAiPickResponse>({
+  const result = await apiClient<ReCreateAiPickResponse>({
     endpoint: API_ENDPOINT.document.rePostAiPick(params.documentId),
   })
+  return result.data
 }

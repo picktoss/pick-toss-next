@@ -43,9 +43,10 @@ export interface GetQuizSetsResponse {
 
 export const getQuizSets = async (params: GetQuizSetsParams) => {
   try {
-    return await apiClient.fetch<GetQuizSetsResponse>({
+    const result = await apiClient<GetQuizSetsResponse>({
       endpoint: API_ENDPOINT.quiz.getQuizSets(params.quizSetId),
     })
+    return result.data
   } catch (error) {
     console.error(error)
     throw new Error()

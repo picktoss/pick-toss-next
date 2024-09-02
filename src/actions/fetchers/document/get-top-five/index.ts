@@ -18,7 +18,8 @@ export interface TopFive {
 interface GetTopFiveResponse extends TopFive {}
 
 export const getTopFive = async () => {
-  return await apiClient.fetch<GetTopFiveResponse>({
+  const result = await apiClient<GetTopFiveResponse>({
     endpoint: API_ENDPOINT.document.getTopFive(),
   })
+  return result.data
 }

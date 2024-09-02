@@ -30,7 +30,8 @@ export const getDocumentsForCategory = async ({
   categoryId,
   sortOption,
 }: GetDocumentsForCategory) => {
-  return await apiClient.fetch<GetDocumentsForCategoryResponse>({
+  const result = await apiClient<GetDocumentsForCategoryResponse>({
     endpoint: API_ENDPOINT.document.getDocumentsForCategory(categoryId, sortOption),
   })
+  return result.data
 }

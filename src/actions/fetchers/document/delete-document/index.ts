@@ -8,7 +8,8 @@ interface DeleteDocumentParams extends NextFetchRequestConfig {
 }
 
 export const deleteDocument = async ({ documentId }: DeleteDocumentParams) => {
-  return await apiClient.fetch({
+  const result = await apiClient({
     endpoint: API_ENDPOINT.document.deleteDocument(documentId),
   })
+  return result.data
 }

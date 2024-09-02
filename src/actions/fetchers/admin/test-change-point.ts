@@ -8,10 +8,11 @@ interface ChangePointParams extends NextFetchRequestConfig {
 }
 
 export const changePoint = async ({ point }: ChangePointParams) => {
-  return await apiClient.fetch({
+  const result = await apiClient({
     endpoint: API_ENDPOINT.test.changePoint(),
-    body: {
+    data: {
       point,
     },
   })
+  return result.data
 }

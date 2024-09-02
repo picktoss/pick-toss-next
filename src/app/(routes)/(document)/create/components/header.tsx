@@ -19,7 +19,7 @@ interface Props {
     categoryId: number
     documentName: string
     editorContent: string
-  }) => Promise<void>
+  }) => void
   isLoading: boolean
 }
 

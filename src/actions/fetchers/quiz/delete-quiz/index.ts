@@ -14,7 +14,8 @@ export interface DeleteQuizResponse {
 }
 
 export const deleteQuiz = async ({ documentId, quizSetId, quizId }: DeleteQuizParams) => {
-  return await apiClient.fetch<DeleteQuizResponse>({
+  const result = await apiClient<DeleteQuizResponse>({
     endpoint: API_ENDPOINT.quiz.deleteQuiz(documentId, quizSetId, quizId),
   })
+  return result.data
 }

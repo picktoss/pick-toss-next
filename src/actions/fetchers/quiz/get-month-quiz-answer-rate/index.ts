@@ -28,7 +28,8 @@ export const getMonthQuizAnswerRate = async ({
   categoryId,
   date,
 }: GetMonthQuizAnswerRateParams) => {
-  return await apiClient.fetch<GetMonthQuizAnswerRateResponse>({
+  const result = await apiClient<GetMonthQuizAnswerRateResponse>({
     endpoint: API_ENDPOINT.quiz.getMonthQuizAnswerRate(categoryId, date.year, date.month),
   })
+  return result.data
 }

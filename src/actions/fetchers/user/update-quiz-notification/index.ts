@@ -10,10 +10,11 @@ interface UpdateQuizNotificationParams extends NextFetchRequestConfig {
 export const updateQuizNotification = async ({
   quizNotificationEnabled,
 }: UpdateQuizNotificationParams) => {
-  return await apiClient.fetch({
+  const result = await apiClient({
     endpoint: API_ENDPOINT.user.updateQuizNotification(),
-    body: {
+    data: {
       quizNotificationEnabled,
     },
   })
+  return result.data
 }

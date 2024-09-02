@@ -18,7 +18,8 @@ interface ExampleQuizSetsResponse {
 }
 
 export const getExampleQuizSets = async () => {
-  return await apiClient.fetch<ExampleQuizSetsResponse>({
+  const result = await apiClient<ExampleQuizSetsResponse>({
     endpoint: API_ENDPOINT.quiz.getExampleQuizSets(),
   })
+  return result.data
 }

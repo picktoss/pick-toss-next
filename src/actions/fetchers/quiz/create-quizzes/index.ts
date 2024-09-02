@@ -14,12 +14,13 @@ export interface CreateQuizzesResponse {
 }
 
 export const createQuizzes = async ({ documentIds, point, quizType }: CreateQuizzesParams) => {
-  return await apiClient.fetch<CreateQuizzesResponse>({
+  const result = await apiClient<CreateQuizzesResponse>({
     endpoint: API_ENDPOINT.quiz.postQuizzes(),
-    body: {
+    data: {
       documents: documentIds,
       point,
       quizType,
     },
   })
+  return result.data
 }

@@ -12,12 +12,13 @@ export interface UpdateCategoryParams extends NextFetchRequestConfig {
 }
 
 export const updateCategory = async ({ categoryId, name, tag, emoji }: UpdateCategoryParams) => {
-  return await apiClient.fetch({
+  const result = await apiClient({
     endpoint: API_ENDPOINT.category.updateCategory(categoryId),
-    body: {
+    data: {
       name: name,
       categoryTag: tag,
       emoji: emoji,
     },
   })
+  return result.data
 }

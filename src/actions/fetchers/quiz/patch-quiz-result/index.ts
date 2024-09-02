@@ -17,8 +17,9 @@ interface PatchQuizResultResponse {
 }
 
 export const patchQuizResult = async ({ data }: PatchQuizResultParams) => {
-  return await apiClient.fetch<PatchQuizResultResponse>({
+  const result = await apiClient<PatchQuizResultResponse>({
     endpoint: API_ENDPOINT.quiz.patchQuizResult(),
-    body: data,
+    data: data,
   })
+  return result.data
 }

@@ -14,12 +14,13 @@ export const reorderDocument = async ({
   preDragDocumentOrder,
   afterDragDocumentOrder,
 }: ReorderDocumentParams) => {
-  return await apiClient.fetch({
+  const result = await apiClient({
     endpoint: API_ENDPOINT.document.reorderDocument(),
-    body: {
+    data: {
       documentId,
       preDragDocumentOrder,
       afterDragDocumentOrder,
     },
   })
+  return result.data
 }

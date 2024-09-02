@@ -20,6 +20,10 @@ interface FetchParams {
   }
 }
 
+/**
+ * @deprecated 이 클래스는 제거 될 예정입니다.
+ * 대신 actions/api-client/index.ts를 사용하세요.
+ */
 class ApiClient {
   constructor(private readonly config: Config) {}
 

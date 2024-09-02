@@ -9,10 +9,11 @@ interface UpdateDocumentNameParams extends NextFetchRequestConfig {
 }
 
 export const updateDocumentName = async ({ documentId, name }: UpdateDocumentNameParams) => {
-  return await apiClient.fetch({
+  const result = await apiClient({
     endpoint: API_ENDPOINT.document.updateDocumentName(documentId),
-    body: {
+    data: {
       name,
     },
   })
+  return result.data
 }

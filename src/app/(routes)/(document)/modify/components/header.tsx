@@ -16,7 +16,7 @@ interface Props {
   }: {
     documentName: string
     editorContent: string
-  }) => Promise<void>
+  }) => void
   isLoading: boolean
 }
 

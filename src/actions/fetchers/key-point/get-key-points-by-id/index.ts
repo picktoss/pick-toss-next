@@ -21,7 +21,8 @@ export interface GetKeyPointsByIdResponse {
 }
 
 export const getKeyPointsById = async ({ documentId }: GetKeyPointsByIdParams) => {
-  return await apiClient.fetch<GetKeyPointsByIdResponse>({
+  const result = await apiClient<GetKeyPointsByIdResponse>({
     endpoint: API_ENDPOINT.keyPoint.getPickPointsById(documentId),
   })
+  return result.data
 }

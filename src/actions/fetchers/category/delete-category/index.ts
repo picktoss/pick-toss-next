@@ -8,7 +8,8 @@ export interface DeleteCategoryParams extends NextFetchRequestConfig {
 }
 
 export const deleteCategory = async ({ categoryId }: DeleteCategoryParams) => {
-  return await apiClient.fetch({
+  const result = await apiClient({
     endpoint: API_ENDPOINT.category.deleteCategory(categoryId),
   })
+  return result.data
 }

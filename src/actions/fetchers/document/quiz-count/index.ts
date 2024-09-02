@@ -15,11 +15,12 @@ interface QuizCountResponse {
 }
 
 export const quizCount = async (params: QuizCountParams) => {
-  return await apiClient.fetch<QuizCountResponse>({
+  const result = await apiClient<QuizCountResponse>({
     endpoint: API_ENDPOINT.document.quizCount(),
-    body: {
+    data: {
       documentIds: params.documentIds,
       type: params.type,
     },
   })
+  return result.data
 }

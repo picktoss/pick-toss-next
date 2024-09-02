@@ -22,7 +22,8 @@ export interface GetBookmarksResponse {
 }
 
 export const getBookmarks = async () => {
-  return await apiClient.fetch<GetBookmarksResponse>({
+  const result = await apiClient<GetBookmarksResponse>({
     endpoint: API_ENDPOINT.keyPoint.getBookmark(),
   })
+  return result.data
 }

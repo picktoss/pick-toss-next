@@ -26,10 +26,11 @@ export interface SearchKeyPointsResponse {
 }
 
 export const searchKeyPoints = async ({ term }: SearchKeyPointsParams) => {
-  return await apiClient.fetch<SearchKeyPointsResponse>({
+  const result = await apiClient<SearchKeyPointsResponse>({
     endpoint: API_ENDPOINT.keyPoint.searchKeyPoints(),
-    body: {
+    data: {
       searchedWord: term,
     },
   })
+  return result.data
 }

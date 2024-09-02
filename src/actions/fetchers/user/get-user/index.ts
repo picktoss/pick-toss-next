@@ -26,10 +26,11 @@ export interface GetUserResponse {
 }
 
 export const getUser = async (accessToken: string) => {
-  return await apiClient.fetch<GetUserResponse>({
+  const result = await apiClient<GetUserResponse>({
     endpoint: API_ENDPOINT.user.getUser(),
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
   })
+  return result.data
 }

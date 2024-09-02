@@ -14,12 +14,13 @@ interface CreateCategoryResponse {
 }
 
 export const createCategory = async ({ name, tag, emoji }: CreateCategoryParams) => {
-  return await apiClient.fetch<CreateCategoryResponse>({
+  const result = await apiClient<CreateCategoryResponse>({
     endpoint: API_ENDPOINT.category.createCategory(),
-    body: {
+    data: {
       name: name,
       tag: tag,
       emoji: emoji,
     },
   })
+  return result.data
 }

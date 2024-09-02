@@ -8,10 +8,11 @@ export interface VerifyEmailParams extends NextFetchRequestConfig {
 }
 
 export const verifyEmail = async ({ email }: VerifyEmailParams) => {
-  return await apiClient.fetch({
+  const result = await apiClient({
     endpoint: API_ENDPOINT.auth.verifyEmail(),
-    body: {
+    data: {
       email,
     },
   })
+  return result.data
 }

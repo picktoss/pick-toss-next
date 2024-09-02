@@ -11,11 +11,12 @@ interface PostFeedbackParams extends NextFetchRequestConfig {
 }
 
 export const postFeedback = async ({ content, type }: PostFeedbackParams) => {
-  return await apiClient.fetch({
+  const result = await apiClient({
     endpoint: API_ENDPOINT.feedback.postFeedback(),
-    body: {
+    data: {
       content,
       type,
     },
   })
+  return result.data
 }

@@ -33,9 +33,10 @@ interface GetDocumentResponse extends DocumentInfo {}
 
 export const getDocument = async ({ documentId }: GetDocumentParams) => {
   try {
-    return await apiClient.fetch<GetDocumentResponse>({
+    const result = await apiClient<GetDocumentResponse>({
       endpoint: API_ENDPOINT.document.getDocument(documentId),
     })
+    return result.data
   } catch (error) {
     if ((error as { status: number }).status === 400) {
       notFound()

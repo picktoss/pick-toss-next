@@ -1,5 +1,5 @@
-// export { apiClient } from './api-client'
-
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { AxiosRequestConfig } from 'axios'
 import { Endpoint } from '../endpoints/types'
 import { auth } from '@/app/api/auth/[...nextauth]/auth'
@@ -15,7 +15,7 @@ export const apiClient = async <T>({
 }: {
   endpoint: Endpoint
   headers?: Record<string, string>
-  data?: object
+  data?: any
   params?: object
   cache?: NextFetchRequestConfig
 }) => {
@@ -27,22 +27,18 @@ export const apiClient = async <T>({
     params,
   } satisfies AxiosRequestConfig
 
-  if (endpoint.auth) {
+  if (endpoint.auth && !config.headers.Authorization) {
     const session = await auth()
     if (!session) {
       throw new Error('Unauthorized')
     }
-    if (!config.headers.Authorization) {
-      config.headers.Authorization = `Bearer ${session.user.accessToken}`
-    }
+    config.headers.Authorization = `Bearer ${session.user.accessToken}`
   }
 
   if (cache) {
-    const cacheKey = `${config.url}:${config.method}:${JSON.stringify(
-      config.params
-    )}:${JSON.stringify(config.data)}`
+    const cacheKey = `${config.url}:${config.method}:${JSON.stringify(config.params)}`
 
-    return unstable_cache(async () => await http<T>(config), [cacheKey], cache)()
+    return await unstable_cache(async () => await http<T>(config), [cacheKey], cache)()
   }
   return await http<T>(config)
 }

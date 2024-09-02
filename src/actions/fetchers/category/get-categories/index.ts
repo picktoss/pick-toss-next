@@ -27,7 +27,8 @@ interface GetCategoriesResponse {
 }
 
 export const getCategories = async () => {
-  return await apiClient.fetch<GetCategoriesResponse>({
+  const result = await apiClient<GetCategoriesResponse>({
     endpoint: API_ENDPOINT.category.getCategories(),
   })
+  return result.data
 }

@@ -14,11 +14,13 @@ interface SignInResponse {
 }
 
 export const signIn = async (params: SignInParams) => {
-  return await apiClient.fetch<SignInResponse>({
+  const result = await apiClient<SignInResponse>({
     endpoint: API_ENDPOINT.auth.signIn(),
-    body: {
+    data: {
       socialPlatform: params.socialPlatform,
       accessToken: params.accessToken,
     },
   })
+
+  return result.data
 }

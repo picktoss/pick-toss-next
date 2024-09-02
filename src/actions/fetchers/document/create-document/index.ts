@@ -1,12 +1,12 @@
-'use server'
-
 import { apiClient } from '@/actions/api-client'
 import { API_ENDPOINT } from '@/actions/endpoints'
 
-interface CreateDocumentParams extends NextFetchRequestConfig {
+export interface CreateDocumentParams {
   file: File
   documentName: string
   categoryId: number
+
+  accessToken: string
 }
 
 interface CreateDocumentResponse {
@@ -19,8 +19,17 @@ export const createDocument = async (params: CreateDocumentParams) => {
   formData.append('documentName', params.documentName)
   formData.append('categoryId', String(params.categoryId))
 
-  return await apiClient.fetch<CreateDocumentResponse>({
-    endpoint: API_ENDPOINT.document.createDocument(),
-    body: formData,
-  })
+  try {
+    const result = await apiClient<CreateDocumentResponse>({
+      endpoint: API_ENDPOINT.document.createDocument(),
+      data: formData,
+      headers: {
+        Authorization: `Bearer ${params.accessToken}`,
+      },
+    })
+    return result.data
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
 }
