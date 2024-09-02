@@ -1,6 +1,6 @@
-import { EndPoint } from '../types'
+import { Endpoint } from '../types'
 
-export const createEndPoint = ({ url, method, auth = false }: EndPoint) => ({
+export const createEndPoint = ({ url, method, auth = false }: Endpoint) => ({
   url,
   method,
   auth,

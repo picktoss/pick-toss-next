@@ -1,5 +1,5 @@
 import QS from 'qs'
-import { EndPoint } from '../endpoints/types'
+import { Endpoint } from '../endpoints/types'
 import { ApiResponse } from './types'
 import { ApiError } from './api-error'
 import { ServerEnv } from './server-env'
@@ -11,7 +11,7 @@ interface Config {
 }
 
 interface FetchParams {
-  endpoint: EndPoint
+  endpoint: Endpoint
   headers?: HeadersInit
   query?: object
   body?: object
