@@ -18,6 +18,7 @@ export const updateDocumentContent = async (params: UpdateDocumentNameParams) =>
     endpoint: API_ENDPOINT.document.updateDocumentContent(params.documentId),
     data: formData,
     headers: {
+      'Content-Type': 'multipart/form-data',
       Authorization: `Bearer ${params.accessToken}`,
     },
   })

@@ -24,6 +24,7 @@ export const createDocument = async (params: CreateDocumentParams) => {
       endpoint: API_ENDPOINT.document.createDocument(),
       data: formData,
       headers: {
+        'Content-Type': 'multipart/form-data',
         Authorization: `Bearer ${params.accessToken}`,
       },
     })

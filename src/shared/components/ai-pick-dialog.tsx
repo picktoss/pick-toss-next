@@ -120,8 +120,8 @@ function PinIcon({ className }: { className: HTMLElement['className'] }) {
           y2="42.6067"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FF8428" />
-          <stop offset="1" stop-color="#93B0FF" />
+          <stop stopColor="#FF8428" />
+          <stop offset="1" stopColor="#93B0FF" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_4223_2638"
@@ -131,8 +131,8 @@ function PinIcon({ className }: { className: HTMLElement['className'] }) {
           y2="42.6067"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FF8428" />
-          <stop offset="1" stop-color="#93B0FF" />
+          <stop stopColor="#FF8428" />
+          <stop offset="1" stopColor="#93B0FF" />
         </linearGradient>
         <linearGradient
           id="paint2_linear_4223_2638"
@@ -142,8 +142,8 @@ function PinIcon({ className }: { className: HTMLElement['className'] }) {
           y2="42.6067"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FF8428" />
-          <stop offset="1" stop-color="#93B0FF" />
+          <stop stopColor="#FF8428" />
+          <stop offset="1" stopColor="#93B0FF" />
         </linearGradient>
         <linearGradient
           id="paint3_linear_4223_2638"
@@ -153,8 +153,8 @@ function PinIcon({ className }: { className: HTMLElement['className'] }) {
           y2="42.6067"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FF8428" />
-          <stop offset="1" stop-color="#93B0FF" />
+          <stop stopColor="#FF8428" />
+          <stop offset="1" stopColor="#93B0FF" />
         </linearGradient>
         <linearGradient
           id="paint4_linear_4223_2638"
@@ -164,8 +164,8 @@ function PinIcon({ className }: { className: HTMLElement['className'] }) {
           y2="42.6067"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FF8428" />
-          <stop offset="1" stop-color="#93B0FF" />
+          <stop stopColor="#FF8428" />
+          <stop offset="1" stopColor="#93B0FF" />
         </linearGradient>
       </defs>
     </svg>
