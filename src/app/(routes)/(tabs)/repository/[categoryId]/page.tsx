@@ -1,4 +1,4 @@
-import CategoryTag from '../components/category-tag'
+import CategoryTag from '@/views/repository/components/category-tag'
 import DocumentList from './components/document-list'
 import { CommonLayout } from '@/shared/components/common-layout'
 import { getCategory } from '@/actions/fetchers/category/get-category'

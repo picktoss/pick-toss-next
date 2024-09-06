@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from '@/shared/components/ui/dropdown-menu'
 import EmojiPicker from 'emoji-picker-react'
-import CategoryTag from '@/app/(routes)/(tabs)/repository/components/category-tag'
+import CategoryTag from '@/views/repository/components/category-tag' // 경로 수정
 import Loading from './loading'
 import { cn } from '@/shared/lib/utils'
 import { useCreateCategoryMutation } from '@/actions/fetchers/category/create-category/mutation'
