@@ -3,7 +3,7 @@ import { Session } from 'next-auth'
 import RenderSearchResult from './components/render-search-result'
 import RenderRepository from './components/render-repository'
 
-export interface ViewRepositoryProps {
+export interface Props {
   searchData: SearchDocumentResponse | undefined
   term: string | null
   handleSubmit: (
@@ -17,12 +17,7 @@ export interface ViewRepositoryProps {
   session: Session | null
 }
 
-export default function ViewRepository({
-  searchData,
-  term,
-  handleSubmit,
-  session,
-}: ViewRepositoryProps) {
+export default function ViewRepository({ searchData, term, handleSubmit, session }: Props) {
   return (
     <>
       {term != null ? (
