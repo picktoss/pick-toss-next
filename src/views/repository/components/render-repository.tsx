@@ -1,15 +1,20 @@
 import Image from 'next/image'
-import { ViewRepositoryProps } from '..'
 import { CommonLayout } from '@/shared/components/common-layout'
 import { LOCAL_KEY } from '@/constants/local-key'
 import CategoryList from './category-list'
 import CategoryAccordionList from './category-accordion-list'
 import AddNoteFloatingButton from '@/shared/components/add-note-floating-button'
+import { useSession } from 'next-auth/react'
+import { RepositoryProps } from './render-search-result'
+import Loading from '@/shared/components/loading'
 
-export default function RenderRepository({
-  session,
-  handleSubmit,
-}: Omit<ViewRepositoryProps, 'showSearchResult' | 'searchData' | 'term'>) {
+export default function RenderRepository({ handleSubmit }: Omit<RepositoryProps, 'term'>) {
+  const { data: session, status } = useSession()
+
+  if (status === 'loading') {
+    return <Loading center />
+  }
+
   return (
     <CommonLayout
       title={
