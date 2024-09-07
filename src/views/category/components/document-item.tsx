@@ -19,6 +19,7 @@ interface Props extends Document {
   sortOption: SortOption
 }
 
+// DocumentItem 컴포넌트
 export default function DocumentItem({ sortOption, ...document }: Props) {
   const { id, name, status, updatedAt } = document
 

@@ -20,7 +20,8 @@ interface Props extends Pick<Document, 'id' | 'name'> {
   showLoading?: boolean
 }
 
-export default function DeleteDocumentModal({
+// DeleteDocumentModal 컴포넌트
+const DeleteDocumentModal = ({
   id,
   sortOption,
   name,
@@ -28,7 +29,7 @@ export default function DeleteDocumentModal({
   setOpen,
   onSuccess,
   showLoading = false,
-}: Props) {
+}: Props) => {
   const { categoryId } = useParams<{ categoryId: string }>()
   const { update } = useSession()
   const queryClient = useQueryClient()
@@ -57,10 +58,12 @@ export default function DeleteDocumentModal({
       return prevDocuments
     },
     onError: (_, __, context) => {
-      queryClient.setQueryData(
-        queries.document.list(Number(categoryId), sortOption).queryKey,
-        context
-      )
+      if (context) {
+        queryClient.setQueryData(
+          queries.document.list(Number(categoryId), sortOption).queryKey,
+          context
+        )
+      }
     },
     onSuccess: async () => {
       await Promise.all([
@@ -114,3 +117,5 @@ export default function DeleteDocumentModal({
     </Dialog>
   )
 }
+
+export default DeleteDocumentModal

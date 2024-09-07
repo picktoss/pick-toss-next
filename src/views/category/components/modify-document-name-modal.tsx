@@ -16,13 +16,8 @@ interface Props extends Document {
   sortOption: SortOption
 }
 
-export default function ModifyDocumentNameModal({
-  id,
-  name,
-  sortOption,
-  open,
-  onOpenChange,
-}: Props) {
+// ModifyDocumentNameModal 컴포넌트
+const ModifyDocumentNameModal = ({ id, name, sortOption, open, onOpenChange }: Props) => {
   const { categoryId } = useParams<{ categoryId: string }>()
   const [documentName, setDocumentName] = useState(name)
   const queryClient = useQueryClient()
@@ -97,3 +92,5 @@ export default function ModifyDocumentNameModal({
     </Dialog>
   )
 }
+
+export default ModifyDocumentNameModal
