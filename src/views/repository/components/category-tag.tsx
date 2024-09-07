@@ -34,7 +34,8 @@ interface Props {
   className?: string
 }
 
-export default function CategoryTag({ tag, className }: Props) {
+// CategoryTag 컴포넌트
+const CategoryTag = ({ tag, className }: Props) => {
   return (
     <span
       className={cn(
@@ -47,3 +48,5 @@ export default function CategoryTag({ tag, className }: Props) {
     </span>
   )
 }
+
+export default CategoryTag

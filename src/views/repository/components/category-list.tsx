@@ -26,7 +26,8 @@ import { useReorderCategoryMutation } from '@/actions/fetchers/category/reorder-
 
 interface Props extends HTMLAttributes<HTMLDivElement> {}
 
-export default function CategoryList({ className }: Props) {
+// CategoryList 컴포넌트
+const CategoryList = ({ className }: Props) => {
   const queryClient = useQueryClient()
   const { data, isError, isPending } = useQuery({
     ...queries.category.list(),
@@ -129,6 +130,9 @@ export default function CategoryList({ className }: Props) {
   )
 }
 
+export default CategoryList
+
+// CategoryList 내부에서 사용되는 컴포넌트들
 function NoCategory() {
   return (
     <div className="flex h-[70vh] flex-col items-center justify-center">

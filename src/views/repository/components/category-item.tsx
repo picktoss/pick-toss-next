@@ -18,7 +18,8 @@ import ModifyCategoryModal from './modify-category-modal'
 
 interface Props extends Category {}
 
-export default function CategoryItem(props: Props) {
+// CategoryItem 컴포넌트
+const CategoryItem = (props: Props) => {
   const { id, emoji, name, tag, documents } = props
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: id,
@@ -95,3 +96,5 @@ export default function CategoryItem(props: Props) {
     </>
   )
 }
+
+export default CategoryItem

@@ -17,7 +17,8 @@ import { queries } from '@/shared/lib/tanstack-query/query-keys'
 
 interface CategoryAccordionProps extends HTMLAttributes<HTMLDivElement> {}
 
-export default function CategoryAccordionList(props: CategoryAccordionProps) {
+// CategoryAccordionList 컴포넌트
+const CategoryAccordionList = (props: CategoryAccordionProps) => {
   const { data } = useQuery({
     ...queries.category.list(),
   })
@@ -63,3 +64,5 @@ export default function CategoryAccordionList(props: CategoryAccordionProps) {
     </div>
   )
 }
+
+export default CategoryAccordionList

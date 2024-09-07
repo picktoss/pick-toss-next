@@ -1,5 +1,5 @@
 import Loading from '@/shared/components/loading'
-import { SearchResult } from './search-result'
+import SearchResult from './search-result'
 import { useQuery } from '@tanstack/react-query'
 import { searchDocument } from '@/actions/fetchers/document'
 
@@ -15,7 +15,8 @@ export interface RepositoryProps {
   ) => void
 }
 
-export default function RenderSearchResult({ term, handleSubmit }: RepositoryProps) {
+// RenderSearchResult 컴포넌트
+const RenderSearchResult = ({ term, handleSubmit }: RepositoryProps) => {
   const { data: searchData, isLoading } = useQuery({
     queryKey: ['search-document', term],
     queryFn: () =>
@@ -46,3 +47,5 @@ export default function RenderSearchResult({ term, handleSubmit }: RepositoryPro
     </div>
   )
 }
+
+export default RenderSearchResult

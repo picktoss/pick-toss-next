@@ -8,7 +8,8 @@ import { useSession } from 'next-auth/react'
 import { RepositoryProps } from './render-search-result'
 import Loading from '@/shared/components/loading'
 
-export default function RenderRepository({ handleSubmit }: Omit<RepositoryProps, 'term'>) {
+// RenderRepository 컴포넌트
+const RenderRepository = ({ handleSubmit }: Omit<RepositoryProps, 'term'>) => {
   const { data: session, status } = useSession()
 
   if (status === 'loading') {
@@ -52,3 +53,5 @@ export default function RenderRepository({ handleSubmit }: Omit<RepositoryProps,
     </CommonLayout>
   )
 }
+
+export default RenderRepository
