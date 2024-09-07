@@ -4,26 +4,22 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { LOCAL_KEY } from '@/constants/local-key'
 import RenderSearchResult from './components/render-search-result'
 import RenderRepository from './components/render-repository'
+import { getLocalStorage, setLocalStorage } from '@/shared/utils/storage'
 
 const Repository = () => {
   const router = useRouter()
   const pathname = usePathname()
-  const term = useSearchParams().get('term')
+  const term = useSearchParams().get('term') ?? null
 
   const handleSubmit = (data: { term: string }, options?: { isResearch: boolean }) => {
     const trimTerm = data.term.trim()
 
     if (trimTerm === '') return
 
-    const localItem = localStorage.getItem(LOCAL_KEY.SEARCH_DOCUMENT)
-    const prevRecentTerms = localItem
-      ? (JSON.parse(localItem) as unknown as string[])
-      : ([] as string[])
+    const localItem = getLocalStorage<string[]>(LOCAL_KEY.SEARCH_DOCUMENT)
+    const prevRecentTerms = localItem ?? ([] as string[])
 
-    localStorage.setItem(
-      LOCAL_KEY.SEARCH_DOCUMENT,
-      JSON.stringify([trimTerm, ...prevRecentTerms].slice(0, 5))
-    )
+    setLocalStorage(LOCAL_KEY.SEARCH_DOCUMENT, [trimTerm, ...prevRecentTerms].slice(0, 5))
 
     if (options?.isResearch) {
       router.replace(`${pathname}/?term=${trimTerm}`)
