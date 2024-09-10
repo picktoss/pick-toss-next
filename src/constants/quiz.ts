@@ -1,0 +1,2 @@
+export const QUIZ_COUNT_OPTIONS = [3, 5, 10, 15, 20]
+export const DEFAULT_QUIZ_COUNT = QUIZ_COUNT_OPTIONS[0]

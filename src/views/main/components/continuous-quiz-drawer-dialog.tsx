@@ -18,11 +18,12 @@ interface ContinuousQuizDrawerDialog {
   trigger: ReactNode
 }
 
-export default function ContinuousQuizDrawerDialog({
+// ContinuousQuizDrawerDialog 컴포넌트
+const ContinuousQuizDrawerDialog = ({
   trigger,
   continuousQuizDatesCount,
   maxContinuousQuizDatesCount,
-}: ContinuousQuizDrawerDialog) {
+}: ContinuousQuizDrawerDialog) => {
   const [open, setOpen] = useState(false)
   const isDesktop = useMediaQuery('(min-width: 1024px)')
 
@@ -76,6 +77,9 @@ export default function ContinuousQuizDrawerDialog({
   )
 }
 
+export default ContinuousQuizDrawerDialog
+
+// ContinuousQuizDrawerDialog 내부에서 사용되는 컴포넌트들
 function ContinuousQuizContent({
   continuousQuizDatesCount,
   maxContinuousQuizDatesCount,

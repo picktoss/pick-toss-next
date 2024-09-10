@@ -1,15 +1,16 @@
 'use client'
 
 import Lottie from 'react-lottie-player'
-import multipleHoverData from '../../../../../../public/lottie/multiple-hover.json'
-import oxHoverData from '../../../../../../public/lottie/ox-hover.json'
-import blankHoverData from '../../../../../../public/lottie/blank-hover.json'
+import multipleHoverData from '@/../public/lottie/multiple-hover.json'
+import multipleLeaveData from '@/../public/lottie/multiple-leave.json'
+import oxHoverData from '@/../public/lottie/ox-hover.json'
+import oxLeaveData from '@/../public/lottie/ox-leave.json'
+import blankHoverData from '@/../public/lottie/blank-hover.json'
+import blankLeaveData from '@/../public/lottie/blank-leave.json'
 import { useState } from 'react'
-import multipleLeaveData from '../../../../../../public/lottie/multiple-leave.json'
-import blankLeaveData from '../../../../../../public/lottie/blank-leave.json'
-import oxLeaveData from '../../../../../../public/lottie/ox-leave.json'
 
-export function MultipleLottie() {
+// MultipleLottie 컴포넌트 - 다지선다형 문제
+export const MultipleLottie = () => {
   const [hover, setHover] = useState(false)
 
   const handleMouseEnter = () => {
@@ -31,7 +32,8 @@ export function MultipleLottie() {
   )
 }
 
-export function OXLottie() {
+// OXLottie 컴포넌트 - OX형 문제
+export const OXLottie = () => {
   const [hover, setHover] = useState(false)
 
   const handleMouseEnter = () => {
@@ -52,7 +54,9 @@ export function OXLottie() {
     </div>
   )
 }
-export function BlackLottie() {
+
+// BlankLottie 컴포넌트 - 빈칸 채우기형 문제
+export const BlankLottie = () => {
   const [hover, setHover] = useState(false)
 
   const handleMouseEnter = () => {

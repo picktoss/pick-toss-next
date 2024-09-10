@@ -14,12 +14,9 @@ import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import icons from '@/constants/icons'
 import { useEffect, useState } from 'react'
+import { MainProps } from '..'
 
-interface Props {
-  reward?: string
-}
-
-export function RewordDialog({ reward }: Props) {
+export function RewordDialog({ reward }: MainProps) {
   const router = useRouter()
   const session = useSession()
   const [isOpen, setIsOpen] = useState(false)

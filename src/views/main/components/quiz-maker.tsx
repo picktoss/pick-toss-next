@@ -2,7 +2,7 @@
 
 import icons from '@/constants/icons'
 import Image from 'next/image'
-import { BlackLottie, MultipleLottie, OXLottie } from './lotties'
+import { BlankLottie, MultipleLottie, OXLottie } from './lotties'
 import { ReactNode, forwardRef } from 'react'
 import MakeQuizDrawerDialog from './make-quiz-drawer-dialog'
 import Loading from '@/shared/components/loading'
@@ -66,7 +66,7 @@ export default function QuizMaker() {
               title="빈칸 채우기"
               description="주어진 문장의 빈 곳을 채우는 퀴즈"
               comingSoon
-              lottie={<BlackLottie />}
+              lottie={<BlankLottie />}
             />
           </>
         )}
