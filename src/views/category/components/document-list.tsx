@@ -34,9 +34,7 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
 const DocumentList = ({ categoryId, className }: Props) => {
   const [sortOption, setSortOption] = useState<SortOption>('createdAt')
 
-  const { data, isError, isLoading } = useQuery({
-    ...queries.document.list(categoryId, sortOption),
-  })
+  const { data, isError, isLoading } = useQuery(queries.document.list(categoryId, sortOption))
 
   const handleSortOptionClick = (option: SortOption) => {
     setSortOption(option)

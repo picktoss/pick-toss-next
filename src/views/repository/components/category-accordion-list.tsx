@@ -19,9 +19,7 @@ interface CategoryAccordionProps extends HTMLAttributes<HTMLDivElement> {}
 
 // CategoryAccordionList 컴포넌트
 const CategoryAccordionList = (props: CategoryAccordionProps) => {
-  const { data } = useQuery({
-    ...queries.category.list(),
-  })
+  const { data } = useQuery(queries.category.list())
 
   if (!data?.categories) return null
   const { categories } = data

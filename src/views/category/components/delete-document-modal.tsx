@@ -1,16 +1,12 @@
-import { deleteDocument } from '@/actions/fetchers/document/delete-document'
 import { Document } from '@/actions/fetchers/document/get-documents-for-category'
 import { Button } from '@/shared/components/ui/button'
 import { Dialog, DialogClose, DialogContent } from '@/shared/components/ui/dialog'
 import icons from '@/constants/icons'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import { SortOption } from './document-list'
 import { useParams } from 'next/navigation'
-import { useState } from 'react'
 import Loading from '@/shared/components/loading'
-import { queries } from '@/shared/lib/tanstack-query/query-keys'
+import { useDeleteDocumentMutation } from '@/actions/fetchers/document/delete-document/mutation'
 
 interface Props extends Pick<Document, 'id' | 'name'> {
   open: boolean
@@ -31,53 +27,21 @@ const DeleteDocumentModal = ({
   showLoading = false,
 }: Props) => {
   const { categoryId } = useParams<{ categoryId: string }>()
-  const { update } = useSession()
-  const queryClient = useQueryClient()
-  const [isLoading, setIsLoading] = useState(false)
-
-  const { mutate } = useMutation({
-    mutationFn: deleteDocument,
-    onMutate: async () => {
-      setIsLoading(true)
-
-      await queryClient.cancelQueries({
-        queryKey: queries.document.list(Number(categoryId), sortOption).queryKey,
-      })
-
-      const prevDocuments = queryClient.getQueryData<Document[]>(
-        queries.document.list(Number(categoryId), sortOption).queryKey
-      )
-
-      if (categoryId) {
-        queryClient.setQueryData(
-          queries.document.list(Number(categoryId), sortOption).queryKey,
-          (prevDocuments: Document[]) => prevDocuments.filter((document) => document.id !== id)
-        )
-      }
-
-      return prevDocuments
-    },
-    onError: (_, __, context) => {
-      if (context) {
-        queryClient.setQueryData(
-          queries.document.list(Number(categoryId), sortOption).queryKey,
-          context
-        )
-      }
-    },
-    onSuccess: async () => {
-      await Promise.all([
-        queryClient.invalidateQueries({ queryKey: queries.document._def }),
-        queryClient.invalidateQueries({ queryKey: queries.category.list().queryKey }),
-      ])
-      await update({})
-      setOpen(false)
-      onSuccess?.()
-    },
+  const { mutate, isPending } = useDeleteDocumentMutation({
+    categoryId: Number(categoryId),
+    sortOption,
   })
 
   const handleDeleteDocument = () => {
-    mutate({ documentId: id })
+    mutate(
+      { documentId: id },
+      {
+        onSuccess: () => {
+          setOpen(false)
+          onSuccess?.()
+        },
+      }
+    )
   }
 
   return (
@@ -86,7 +50,7 @@ const DeleteDocumentModal = ({
         className="flex min-h-[373px] w-[320px] flex-col items-center"
         displayCloseButton={false}
       >
-        {showLoading && isLoading ? (
+        {showLoading && isPending ? (
           <Loading center />
         ) : (
           <>

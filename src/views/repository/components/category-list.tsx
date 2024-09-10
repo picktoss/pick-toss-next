@@ -29,9 +29,7 @@ interface Props extends HTMLAttributes<HTMLDivElement> {}
 // CategoryList 컴포넌트
 const CategoryList = ({ className }: Props) => {
   const queryClient = useQueryClient()
-  const { data, isError, isPending } = useQuery({
-    ...queries.category.list(),
-  })
+  const { data, isError, isPending } = useQuery(queries.category.list())
   const { mutate: reorderMutate } = useReorderCategoryMutation()
 
   const [draggedItem, setDraggedItem] = useState<Category | null>(null)

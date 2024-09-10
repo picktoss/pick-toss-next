@@ -39,6 +39,11 @@ export const queries = createQueryKeyStore({
       queryKey: [''],
       queryFn: () => api.document.getTopFive().then((res) => res.documents),
     }),
+    search: (term: string | null) => ({
+      queryKey: [''],
+      queryFn: () => api.document.searchDocument({ term: term! }),
+      enabled: term != null,
+    }),
   },
 
   keyPoints: {
