@@ -11,15 +11,14 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 import { BannerBottomContent, BannerImage, BannerTopContent } from './quiz-banner-content'
+import { removeLocalStorage } from '@/shared/utils/storage'
 
 // QuizBanner 컴포넌트
 const QuizBanner = () => {
   const { data: session } = useSession()
   const queryClient = useQueryClient()
 
-  const { data } = useQuery({
-    ...queries.quiz.today(),
-  })
+  const { data } = useQuery(queries.quiz.today())
   const [remainingTime, setRemainingTime] = useState(calculateTimeUntilTomorrowMidnight())
   const [type, setType] = useState<TodayQuizSetType | 'CREATING' | null>(null)
   const [resultScore, setResultScore] = useState<number | null>(null)
@@ -75,7 +74,7 @@ const QuizBanner = () => {
         })
 
         if (data.type === 'READY') {
-          localStorage.removeItem(LOCAL_KEY.QUIZ_CREATING)
+          removeLocalStorage(LOCAL_KEY.QUIZ_CREATING)
           clearInterval(intervalId)
           setType(data.type)
         }

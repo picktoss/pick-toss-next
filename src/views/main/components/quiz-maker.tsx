@@ -10,9 +10,7 @@ import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import MakeQuizDrawerDialog from './make-quiz-drawer-dialog'
 
 export default function QuizMaker() {
-  const { data, isLoading } = useQuery({
-    ...queries.category.list(),
-  })
+  const { data, isPending } = useQuery(queries.category.list())
 
   return (
     <section className="flex flex-col gap-[24px]">
@@ -27,7 +25,7 @@ export default function QuizMaker() {
       </div>
 
       <div className="flex flex-col gap-[16px] lg:flex-row">
-        {isLoading ? (
+        {isPending ? (
           <>
             {Array.from({ length: 3 }).map((_, idx) => (
               <div

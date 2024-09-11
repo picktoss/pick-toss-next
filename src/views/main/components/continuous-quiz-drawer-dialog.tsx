@@ -115,15 +115,15 @@ function QuizCalendar() {
   const thisMonth = today.getMonth() + 1
   const firstDayOfThisMonth = new Date(today.getFullYear(), today.getMonth(), 1).getDay()
 
-  const { data } = useQuery({
-    ...queries.quiz.monthAnswerRate({
+  const { data } = useQuery(
+    queries.quiz.monthAnswerRate({
       categoryId: 0,
       date: {
         year: 2024,
         month: thisMonth,
       },
-    }),
-  })
+    })
+  )
 
   if (!data) {
     return (

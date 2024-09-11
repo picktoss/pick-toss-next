@@ -2,16 +2,24 @@ import { Checkbox } from '@/shared/components/ui/checkbox'
 import { CheckItem } from '@/types/quiz'
 import Link from 'next/link'
 
-const SelectCheckItems = (props: {
+interface Props {
   items: CheckItem[]
   isAllChecked: boolean
   unCheckAll: () => void
   checkAll: () => void
   toggle: (id: number) => void
   selectType?: 'category' | 'document'
-}) => {
-  const { items, isAllChecked, unCheckAll, checkAll, toggle, selectType = 'category' } = props
+}
 
+// SelectCheckItems 컴포넌트
+const SelectCheckItems = ({
+  items,
+  isAllChecked,
+  unCheckAll,
+  checkAll,
+  toggle,
+  selectType = 'category',
+}: Props) => {
   return (
     <div>
       <div className="flex gap-[16px] px-[27px] py-[9px]">
