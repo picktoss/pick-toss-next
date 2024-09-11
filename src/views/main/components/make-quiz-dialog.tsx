@@ -107,7 +107,7 @@ const MakeQuizDialog = ({
 
           <div className="flex items-center">
             <div className="w-[52px] shrink-0 text-body2-medium text-gray-08">노트</div>
-            <DocumentSelector filteredIgnoreIds={filteredIgnoreIds} />
+            <DocumentSelector documentList={documentList} filteredIgnoreIds={filteredIgnoreIds} />
           </div>
 
           <div className="flex items-center">

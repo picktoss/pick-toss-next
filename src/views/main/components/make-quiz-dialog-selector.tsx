@@ -7,7 +7,7 @@ import {
 } from '@/shared/components/ui/dropdown-menu'
 import { useCheckList } from '@/shared/hooks/use-check-list'
 import { SelectDocumentItem } from '@/types/quiz'
-import { useState } from 'react'
+import { memo, useCallback, useState } from 'react'
 import SelectCheckItems from './select-check-items'
 import {
   Select,
@@ -27,25 +27,35 @@ interface Props {
     setSelectCategoryId: (categoryId: number) => void
   }
   DocumentSelector: {
+    documentList: SelectDocumentItem[]
     filteredIgnoreIds: number[]
   }
   QuizCountSelector: {
     quizCount: number
-    setQuizCount: (quizCount: number) => void
+    setQuizCount: (value: number) => void
     isPendingQuizCount: boolean
     maxQuizCount: number
   }
 }
 
 // CategorySelector 컴포넌트
-export const CategorySelector = ({
+export const CategorySelector = memo(function CategorySelector({
   categories,
   selectCategoryId,
   setSelectCategoryId,
-}: Props['CategorySelector']) => {
+}: Props['CategorySelector']) {
   const [openSelectCategory, setOpenSelectCategory] = useState(false)
 
   const curCategory = categories.find((category) => category.id === selectCategoryId)!
+
+  // useCallback으로 함수 재생성 방지
+  const handleCategoryClick = useCallback(
+    (categoryId: number) => {
+      setOpenSelectCategory(false)
+      setSelectCategoryId(categoryId)
+    },
+    [setSelectCategoryId]
+  )
 
   return (
     <DropdownMenu open={openSelectCategory} onOpenChange={setOpenSelectCategory}>
@@ -59,10 +69,7 @@ export const CategorySelector = ({
             <button
               key={category.id}
               className="flex items-center gap-[8px] rounded-[8px] px-[18px] py-[8px] text-body2-regular hover:bg-gray-01"
-              onClick={() => {
-                setOpenSelectCategory(false)
-                setSelectCategoryId(category.id)
-              }}
+              onClick={() => handleCategoryClick(category.id)}
             >
               {category.emoji && <div>{category.emoji}</div>}
               <div>{category.name}</div>
@@ -72,20 +79,22 @@ export const CategorySelector = ({
       </DropdownMenuContent>
     </DropdownMenu>
   )
-}
+})
 
 // DocumentSelector 컴포넌트
-export const DocumentSelector = ({ filteredIgnoreIds }: Props['DocumentSelector']) => {
+export const DocumentSelector = memo(function DocumentSelector({
+  documentList,
+  filteredIgnoreIds,
+}: Props['DocumentSelector']) {
   const [openSelectDocuments, setOpenSelectDocuments] = useState(false)
 
   const {
-    list: documentList,
     getCheckedIds: getDocumentCheckedIds,
     toggle: toggleDocumentChecked,
     isAllCheckedWithoutIgnored: isDocumentAllCheckedWithoutIgnored,
     checkAllWithoutIgnored: checkDocumentAllWithoutIgnored,
     unCheckAllWithoutIgnored: unCheckDocumentAllWithoutIgnored,
-  } = useCheckList([] as SelectDocumentItem[], {
+  } = useCheckList(documentList, {
     ignoreIds: filteredIgnoreIds,
   })
 
@@ -106,15 +115,15 @@ export const DocumentSelector = ({ filteredIgnoreIds }: Props['DocumentSelector'
       </DropdownMenuContent>
     </DropdownMenu>
   )
-}
+})
 
 // QuizCountSelector 컴포넌트
-export const QuizCountSelector = ({
+export const QuizCountSelector = memo(function QuizCountSelector({
   quizCount,
   setQuizCount,
   isPendingQuizCount,
   maxQuizCount,
-}: Props['QuizCountSelector']) => {
+}: Props['QuizCountSelector']) {
   return (
     <Select
       defaultValue={String(DEFAULT_QUIZ_COUNT)}
@@ -139,4 +148,4 @@ export const QuizCountSelector = ({
       </SelectContent>
     </Select>
   )
-}
+})
