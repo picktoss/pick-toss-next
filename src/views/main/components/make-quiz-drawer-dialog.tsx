@@ -23,7 +23,7 @@ interface Props {
 }
 
 // MakeQuizModal 컴포넌트
-const MakeQuizModal = ({ trigger, categories, quizType = 'MIX_UP' }: Props) => {
+const MakeQuizDrawerDialog = ({ trigger, categories, quizType = 'MIX_UP' }: Props) => {
   const { data: session } = useSession()
   const router = useRouter()
   const [open, setOpen] = useState(false)
@@ -155,4 +155,4 @@ const MakeQuizModal = ({ trigger, categories, quizType = 'MIX_UP' }: Props) => {
   )
 }
 
-export default MakeQuizModal
+export default MakeQuizDrawerDialog
