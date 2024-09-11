@@ -10,7 +10,8 @@ interface Props extends Category {
   onOpenChange: (open: boolean) => void
 }
 
-export default function DeleteCategoryModal({ id, name, documents, open, onOpenChange }: Props) {
+// DeleteCategoryModal 컴포넌트
+const DeleteCategoryModal = ({ id, name, documents, open, onOpenChange }: Props) => {
   const { mutate: deleteCategoryMutate } = useDeleteCategoryMutation()
 
   const handleDeleteCategory = () => {
@@ -41,3 +42,5 @@ export default function DeleteCategoryModal({ id, name, documents, open, onOpenC
     </Dialog>
   )
 }
+
+export default DeleteCategoryModal

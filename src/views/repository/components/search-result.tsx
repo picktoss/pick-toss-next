@@ -9,7 +9,8 @@ interface Props {
   onReSearch: ({ term }: { term: string }) => void
 }
 
-export function SearchResult({ term, documents, onReSearch }: Props) {
+// SearchResult 컴포넌트
+const SearchResult = ({ term, documents, onReSearch }: Props) => {
   return (
     <CommonLayout
       title="노트 검색"
@@ -64,6 +65,9 @@ export function SearchResult({ term, documents, onReSearch }: Props) {
   )
 }
 
+export default SearchResult
+
+// SearchResult 내부에서 사용되는 컴포넌트들
 function NoResult() {
   return (
     <div className="center text-center text-text-regular text-gray-09">

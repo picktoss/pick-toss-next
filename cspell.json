@@ -4,18 +4,20 @@
   "ignorePaths": ["node_modules", ".next", "*.js", "*.json", "*.html", "*.css", "*.md", "*.svg"],
   "files": ["src/**/*.tsx", "src/**/*.ts"],
   "words": [
-    "picktoss",
-    "kakao",
-    "nextauth",
-    "remirror",
-    "Tanstack",
-    "vaul",
-    "KEYPOINT",
-    "lotties",
     "classname",
-    "svgs",
-    "metadatas",
+    "kakao",
+    "KEYPOINT",
     "kisa",
-    "lukemorales"
+    "lotties",
+    "lukemorales",
+    "metadatas",
+    "nextauth",
+    "picktoss",
+    "remirror",
+    "svgs",
+    "Tanstack",
+    "Uncapitalize",
+    "vaul",
+    "yxxx"
   ]
 }

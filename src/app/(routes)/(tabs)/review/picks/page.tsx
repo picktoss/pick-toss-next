@@ -11,7 +11,6 @@ import { KeyPointCard } from './components/key-point-card'
 import { useToggleBookmarkMutation } from '@/actions/fetchers/key-point/toggle-bookmark/mutation'
 import { LOCAL_KEY } from '@/constants/local-key'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
-// import { CategorySelect } from './components/category-select'
 
 export default function Picks() {
   const queryClient = useQueryClient()

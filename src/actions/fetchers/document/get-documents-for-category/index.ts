@@ -22,7 +22,7 @@ interface GetDocumentsForCategory extends NextFetchRequestConfig {
   sortOption?: 'createdAt' | 'name' | 'updatedAt'
 }
 
-interface GetDocumentsForCategoryResponse {
+export interface GetDocumentsForCategoryResponse {
   documents: Document[]
 }
 

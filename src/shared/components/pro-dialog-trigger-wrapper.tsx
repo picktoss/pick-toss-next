@@ -21,12 +21,12 @@ export default function ProDialogTriggerWrapper({ open, onOpenChange, children, 
       <DialogTrigger
         {...props}
         asChild
-        onClick={() =>
+        onClick={() => {
           clickedEvent({
             buttonType: 'pro',
             buttonName: 'pro_dialog_trigger',
           })
-        }
+        }}
       >
         {children}
       </DialogTrigger>

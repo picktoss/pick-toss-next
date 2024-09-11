@@ -30,18 +30,17 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
   categoryId: number
 }
 
-export default function DocumentList({ categoryId, className }: Props) {
+// DocumentList 컴포넌트
+const DocumentList = ({ categoryId, className }: Props) => {
   const [sortOption, setSortOption] = useState<SortOption>('createdAt')
 
-  const { data, isError, isPending } = useQuery({
-    ...queries.document.list(categoryId, sortOption),
-  })
+  const { data, isError, isLoading } = useQuery(queries.document.list(categoryId, sortOption))
 
   const handleSortOptionClick = (option: SortOption) => {
     setSortOption(option)
   }
 
-  if (isPending)
+  if (isLoading)
     return (
       <div className="relative h-[70vh]">
         <Loading size="small" center />
@@ -92,6 +91,9 @@ export default function DocumentList({ categoryId, className }: Props) {
   )
 }
 
+export default DocumentList
+
+// DocumentList 내부에서 사용되는 컴포넌트들
 function NoContent({ categoryId }: { categoryId: number }) {
   return (
     <div className="flex h-[70vh] flex-col items-center justify-center">

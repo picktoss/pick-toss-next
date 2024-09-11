@@ -20,7 +20,8 @@ interface Props extends Category {
   onOpenChange: (open: boolean) => void
 }
 
-export default function ModifyCategoryModal({ id, name, emoji, tag, open, onOpenChange }: Props) {
+// ModifyCategoryModal 컴포넌트
+const ModifyCategoryModal = ({ id, name, emoji, tag, open, onOpenChange }: Props) => {
   const [newName, setNewName] = useState(name)
   const [newEmoji, setNewEmoji] = useState(emoji || '📁')
   const [newTag, setNewTag] = useState<CategoryTagType>(tag)
@@ -97,3 +98,5 @@ export default function ModifyCategoryModal({ id, name, emoji, tag, open, onOpen
     </Dialog>
   )
 }
+
+export default ModifyCategoryModal
