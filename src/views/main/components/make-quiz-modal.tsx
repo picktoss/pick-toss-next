@@ -1,6 +1,6 @@
 'use client'
 
-import { ReactNode, useState } from 'react'
+import { ReactNode, useMemo, useState } from 'react'
 import { CategoryDTO } from '@/actions/types/dto/category.dto'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
@@ -22,8 +22,8 @@ interface Props {
   quizType?: QuizType
 }
 
-// MakeQuizDrawerDialog 컴포넌트
-const MakeQuizDrawerDialog = ({ trigger, categories, quizType = 'MIX_UP' }: Props) => {
+// MakeQuizModal 컴포넌트
+const MakeQuizModal = ({ trigger, categories, quizType = 'MIX_UP' }: Props) => {
   const { data: session } = useSession()
   const router = useRouter()
   const [open, setOpen] = useState(false)
@@ -35,6 +35,20 @@ const MakeQuizDrawerDialog = ({ trigger, categories, quizType = 'MIX_UP' }: Prop
   const { clickedEvent, quizMadeEvent } = useAmplitudeContext()
 
   const { mutate: mutateCreateQuizzes } = useCreateQuizzesMutation()
+
+  const filteredIgnoreIds = useMemo(() => {
+    const ignoreIds = categories.flatMap((category) =>
+      category.documents
+        .filter(
+          (document) =>
+            document.documentStatus === 'UNPROCESSED' ||
+            document.documentStatus === 'DEFAULT_DOCUMENT'
+        )
+        .map((document) => document.id)
+    )
+
+    return ignoreIds
+  }, [categories])
 
   const handleCreateQuizzes = ({
     documentIds,
@@ -98,6 +112,7 @@ const MakeQuizDrawerDialog = ({ trigger, categories, quizType = 'MIX_UP' }: Prop
               categories={categories}
               handleCreateQuizzes={handleCreateQuizzes}
               quizType={quizType}
+              filteredIgnoreIds={filteredIgnoreIds}
             />
           )}
         </DialogContent>
@@ -131,6 +146,7 @@ const MakeQuizDrawerDialog = ({ trigger, categories, quizType = 'MIX_UP' }: Prop
               handleCreateQuizzes={handleCreateQuizzes}
               closeDrawer={() => setOpen(false)}
               quizType={quizType}
+              filteredIgnoreIds={filteredIgnoreIds}
             />
           )}
         </Div100vh>
@@ -139,4 +155,4 @@ const MakeQuizDrawerDialog = ({ trigger, categories, quizType = 'MIX_UP' }: Prop
   )
 }
 
-export default MakeQuizDrawerDialog
+export default MakeQuizModal

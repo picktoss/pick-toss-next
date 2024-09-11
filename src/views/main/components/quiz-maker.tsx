@@ -4,10 +4,10 @@ import icons from '@/constants/icons'
 import Image from 'next/image'
 import { BlankLottie, MultipleLottie, OXLottie } from './lotties'
 import { ReactNode, forwardRef } from 'react'
-import MakeQuizDrawerDialog from './make-quiz-drawer-dialog'
 import Loading from '@/shared/components/loading'
 import { useQuery } from '@tanstack/react-query'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
+import MakeQuizModal from './make-quiz-modal'
 
 export default function QuizMaker() {
   const { data, isLoading } = useQuery({
@@ -40,7 +40,7 @@ export default function QuizMaker() {
           </>
         ) : (
           <>
-            <MakeQuizDrawerDialog
+            <MakeQuizModal
               categories={data?.categories ?? []}
               quizType="MULTIPLE_CHOICE"
               trigger={
@@ -51,7 +51,7 @@ export default function QuizMaker() {
                 />
               }
             />
-            <MakeQuizDrawerDialog
+            <MakeQuizModal
               categories={data?.categories ?? []}
               quizType="MIX_UP"
               trigger={

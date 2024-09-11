@@ -5,7 +5,7 @@ import { DEFAULT_QUIZ_COUNT, QUIZ_COUNT_OPTIONS } from '@/constants/quiz'
 import { useCheckList } from '@/shared/hooks/use-check-list'
 import { SelectDocumentItem } from '@/types/quiz'
 import { useSession } from 'next-auth/react'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from '@/shared/components/ui/button'
 import Image from 'next/image'
 import icons from '@/constants/icons'
@@ -15,10 +15,16 @@ interface Props {
   categories: CategoryDTO[]
   handleCreateQuizzes: ({ documentIds, count }: { documentIds: number[]; count: number }) => void
   quizType: QuizType
+  filteredIgnoreIds: number[]
 }
 
 // MakeQuizDialog 컴포넌트
-const MakeQuizDialog = ({ categories, handleCreateQuizzes, quizType }: Props) => {
+const MakeQuizDialog = ({
+  categories,
+  handleCreateQuizzes,
+  quizType,
+  filteredIgnoreIds,
+}: Props) => {
   const { data: session } = useSession()
   const userPoints = session?.user.dto.point || 0
 
@@ -39,20 +45,6 @@ const MakeQuizDialog = ({ categories, handleCreateQuizzes, quizType }: Props) =>
       }, {} as Record<CategoryDTO['id'], SelectDocumentItem[]>)
     }
   )
-
-  const filteredIgnoreIds = useMemo(() => {
-    const ignoreIds = categories.flatMap((category) =>
-      category.documents
-        .filter(
-          (document) =>
-            document.documentStatus === 'UNPROCESSED' ||
-            document.documentStatus === 'DEFAULT_DOCUMENT'
-        )
-        .map((document) => document.id)
-    )
-
-    return ignoreIds
-  }, [categories])
 
   const { list: documentList, set: setDocumentList } = useCheckList([] as SelectDocumentItem[], {
     ignoreIds: filteredIgnoreIds,
