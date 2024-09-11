@@ -71,6 +71,11 @@ const MakeQuizDrawer = ({
               setQuizCount(DEFAULT_QUIZ_COUNT)
             }
           },
+          // 필요할 경우 에러 처리 추가
+          // onError: (error) => {
+          //   // 에러 핸들링 로직 추가
+          //   console.error('퀴즈 수를 불러오는 중 오류가 발생했습니다.', error);
+          // },
         }
       )
     }

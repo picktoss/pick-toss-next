@@ -1,6 +1,6 @@
 'use client'
 
-import { ReactNode, useMemo, useState } from 'react'
+import { ReactNode, useCallback, useMemo, useState } from 'react'
 import { CategoryDTO } from '@/actions/types/dto/category.dto'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
@@ -50,43 +50,40 @@ const MakeQuizDrawerDialog = ({ trigger, categories, quizType = 'MIX_UP' }: Prop
     return ignoreIds
   }, [categories])
 
-  const handleCreateQuizzes = ({
-    documentIds,
-    count,
-  }: {
-    documentIds: number[]
-    count: number
-  }) => {
-    if (documentIds.length < 1) {
-      /** TODO: Toast 메시지로 대체 */
-      alert('문서를 선택 해 주세요.')
-      return
-    }
-    if (userPoints < count) {
-      /** TODO: Toast 메시지로 대체 */
-      alert('보유 별이 부족합니다.')
-      return
-    }
-
-    setStartedState(true)
-
-    mutateCreateQuizzes(
-      {
-        documentIds,
-        point: count,
-        quizType,
-      },
-      {
-        onSuccess: ({ quizSetId }) => {
-          quizMadeEvent({
-            quizType: quizType === 'MULTIPLE_CHOICE' ? 'multiple' : 'ox',
-            count,
-          })
-          router.push(`/quiz?quizSetId=${quizSetId}`)
-        },
+  const handleCreateQuizzes = useCallback(
+    ({ documentIds, count }: { documentIds: number[]; count: number }) => {
+      if (documentIds.length < 1) {
+        /** TODO: Toast 메시지로 대체 */
+        alert('문서를 선택 해 주세요.')
+        return
       }
-    )
-  }
+      if (userPoints < count) {
+        /** TODO: Toast 메시지로 대체 */
+        alert('보유 별이 부족합니다.')
+        return
+      }
+
+      setStartedState(true)
+
+      mutateCreateQuizzes(
+        {
+          documentIds,
+          point: count,
+          quizType,
+        },
+        {
+          onSuccess: ({ quizSetId }) => {
+            quizMadeEvent({
+              quizType: quizType === 'MULTIPLE_CHOICE' ? 'multiple' : 'ox',
+              count,
+            })
+            router.push(`/quiz?quizSetId=${quizSetId}`)
+          },
+        }
+      )
+    },
+    [userPoints, quizType, mutateCreateQuizzes, quizMadeEvent, router]
+  )
 
   if (isDesktop) {
     return (
