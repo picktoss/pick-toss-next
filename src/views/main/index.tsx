@@ -1,17 +1,16 @@
-import icons from "@/constants/icons"
-import { CommonLayout } from "@/shared/components/common-layout"
-import Image from "next/image"
-import QuizBanner from "./components/quiz-banner"
-import Achievements from "./components/achievements"
-import QuizMaker from "./components/quiz-maker"
-import { RewordDialog } from "./components/reward-alert"
+import icons from '@/constants/icons'
+import { CommonLayout } from '@/shared/components/common-layout'
+import Image from 'next/image'
+import QuizBanner from './components/quiz-banner'
+import Achievements from './components/achievements'
+import QuizMaker from './components/quiz-maker'
+import { RewordDialog } from './components/reward-alert'
 
 export interface MainProps {
   reward?: string
 }
 
-const Main = ({ reward }:MainProps) => {
-
+const Main = ({ reward }: MainProps) => {
   return (
     <>
       <CommonLayout
@@ -40,7 +39,6 @@ const Main = ({ reward }:MainProps) => {
       <RewordDialog reward={reward} />
     </>
   )
-
 }
 
 export default Main

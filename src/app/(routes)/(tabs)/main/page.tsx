@@ -17,14 +17,16 @@ const Page = async ({ searchParams: { reward } }: Props) => {
   await Promise.all([
     queryClient.prefetchQuery(queries.category.list()),
     queryClient.prefetchQuery(queries.quiz.today()),
-    queryClient.prefetchQuery(queries.quiz.monthAnswerRate({
-      categoryId: 0,
-      date: {
-        year: 2024,
-        month: currentMonth(),
-      },
-    })),
-  ]);
+    queryClient.prefetchQuery(
+      queries.quiz.monthAnswerRate({
+        categoryId: 0,
+        date: {
+          year: 2024,
+          month: currentMonth(),
+        },
+      })
+    ),
+  ])
 
   // 클라이언트로 데이터를 전달하기 위해 queryClient를 dehydrate 처리
   const dehydratedState = dehydrate(queryClient)
