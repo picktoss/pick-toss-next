@@ -1,3 +1,5 @@
+'use client'
+
 import { useQuizCountMutation } from '@/actions/fetchers/document/quiz-count/mutation'
 import { CategoryDTO } from '@/actions/types/dto/category.dto'
 import { QuizType } from '@/actions/types/dto/quiz.dto'

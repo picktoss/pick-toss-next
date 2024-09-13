@@ -47,20 +47,19 @@ const MakeQuizDrawer = ({
     return checkList
   }, [categories])
 
-  const { list: documentList, getCheckedIds: getDocumentCheckedIds } = useCheckList(
-    [] as SelectDocumentItem[],
-    {
-      ignoreIds: filteredIgnoreIds,
-    }
-  )
+  const folder = useCheckList(initialCheckList)
 
-  const documentLength = getDocumentCheckedIds().length
+  const doc = useCheckList([] as SelectDocumentItem[], {
+    ignoreIds: filteredIgnoreIds,
+  })
+
+  const documentLength = doc.getCheckedIds().length
 
   useEffect(() => {
     if (documentLength > 0) {
       quizCountMutate(
         {
-          documentIds: getDocumentCheckedIds() as number[],
+          documentIds: doc.getCheckedIds() as number[],
           type: quizType,
         },
         {
@@ -106,8 +105,8 @@ const MakeQuizDrawer = ({
               categories={categories}
               step={step}
               setStep={setStep}
-              initialCheckList={initialCheckList}
-              filteredIgnoreIds={filteredIgnoreIds}
+              folder={folder}
+              doc={doc}
             />
           </div>
 
@@ -117,8 +116,8 @@ const MakeQuizDrawer = ({
               categories={categories}
               step={step}
               setStep={setStep}
-              initialCheckList={initialCheckList}
-              filteredIgnoreIds={filteredIgnoreIds}
+              folder={folder}
+              doc={doc}
             />
           </div>
         </div>
@@ -126,8 +125,8 @@ const MakeQuizDrawer = ({
         <div className="mt-[12px] line-clamp-2 text-body2-regular text-orange-06">
           선택된 노트:{' '}
           <span className="text-body2-bold">
-            {documentList
-              .filter((document) => getDocumentCheckedIds().includes(document.id))
+            {doc.list
+              .filter((document) => doc.getCheckedIds().includes(document.id))
               .map((document) => document.name)
               .join(', ')}
           </span>
@@ -154,7 +153,7 @@ const MakeQuizDrawer = ({
           className="flex w-[335px] gap-[10px] text-white"
           onClick={() => {
             handleCreateQuizzes({
-              documentIds: getDocumentCheckedIds() as number[],
+              documentIds: doc.getCheckedIds() as number[],
               count: quizCount,
             })
           }}

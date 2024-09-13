@@ -1,3 +1,5 @@
+'use client'
+
 import { CategoryDTO } from '@/actions/types/dto/category.dto'
 import { FakeSelectTrigger } from '@/shared/components/fake-select-trigger'
 import {

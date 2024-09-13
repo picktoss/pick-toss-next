@@ -2,8 +2,7 @@ import { FakeSelectTrigger } from '@/shared/components/fake-select-trigger'
 import { Drawer, DrawerContent, DrawerTrigger } from '@/shared/components/ui/drawer'
 import SelectDrawerContent from './select-drawer-content'
 import SelectCheckItems from './select-check-items'
-import { useCheckList } from '@/shared/hooks/use-check-list'
-import { CheckItem, SelectDocumentItem } from '@/types/quiz'
+import { ReturnUseCheckList, SelectCategoryItem, SelectDocumentItem } from '@/types/quiz'
 import { CategoryDTO } from '@/actions/types/dto/category.dto'
 import { useState } from 'react'
 
@@ -12,39 +11,13 @@ interface Props {
   categories: CategoryDTO[]
   step: 'folder' | 'document'
   setStep: (step: 'folder' | 'document') => void
-  initialCheckList: CheckItem[]
-  filteredIgnoreIds: number[]
+  folder: ReturnUseCheckList<SelectCategoryItem>
+  doc: ReturnUseCheckList<SelectDocumentItem>
 }
 
 // FolderDrawer 컴포넌트
-export const FolderDrawer = ({
-  categories,
-  step,
-  setStep,
-  initialCheckList,
-  filteredIgnoreIds,
-}: Props) => {
+export const FolderDrawer = ({ categories, step, setStep, folder, doc }: Props) => {
   const [openFolderDrawer, setOpenFolderDrawer] = useState(false)
-
-  const {
-    list: categoryList,
-    isAllChecked: isCategoryAllChecked,
-    checkAll: checkCategoryAll,
-    unCheckAll: unCheckCategoryAll,
-    getCheckedIds: getCategoryCheckedIds,
-    toggle: toggleCategoryChecked,
-  } = useCheckList(initialCheckList)
-
-  const {
-    list: documentList,
-    set: setDocumentList,
-    toggle: toggleDocumentChecked,
-    isAllCheckedWithoutIgnored: isDocumentAllCheckedWithoutIgnored,
-    checkAllWithoutIgnored: checkDocumentAllWithoutIgnored,
-    unCheckAllWithoutIgnored: unCheckDocumentAllWithoutIgnored,
-  } = useCheckList([] as SelectDocumentItem[], {
-    ignoreIds: filteredIgnoreIds,
-  })
 
   const curCategory = categories[0]
 
@@ -54,7 +27,7 @@ export const FolderDrawer = ({
         className="cursor-pointer"
         onClick={() => {
           setStep('folder')
-          unCheckDocumentAllWithoutIgnored()
+          doc.unCheckAllWithoutIgnored()
         }}
       >
         <FakeSelectTrigger
@@ -68,25 +41,25 @@ export const FolderDrawer = ({
           step={step}
           selectCheckItems={
             <SelectCheckItems
-              items={step === 'folder' ? categoryList : documentList}
+              items={step === 'folder' ? folder.list : doc.list}
               isAllChecked={
-                step === 'folder' ? isCategoryAllChecked() : isDocumentAllCheckedWithoutIgnored()
+                step === 'folder' ? folder.isAllChecked() : doc.isAllCheckedWithoutIgnored()
               }
-              unCheckAll={step === 'folder' ? unCheckCategoryAll : unCheckDocumentAllWithoutIgnored}
-              checkAll={step === 'folder' ? checkCategoryAll : checkDocumentAllWithoutIgnored}
-              toggle={step === 'folder' ? toggleCategoryChecked : toggleDocumentChecked}
+              unCheckAll={step === 'folder' ? folder.unCheckAll : doc.unCheckAllWithoutIgnored}
+              checkAll={step === 'folder' ? folder.checkAll : doc.checkAllWithoutIgnored}
+              toggle={step === 'folder' ? folder.toggle : doc.toggle}
               selectType={step === 'folder' ? 'category' : 'document'}
             />
           }
           init={() => {
-            unCheckCategoryAll()
-            unCheckDocumentAllWithoutIgnored()
+            folder.unCheckAll()
+            doc.unCheckAllWithoutIgnored()
             setStep('folder')
           }}
           next={() => {
             if (step === 'folder') {
-              const checkedCategoryIds = getCategoryCheckedIds()
-              setDocumentList(
+              const checkedCategoryIds = folder.getCheckedIds()
+              doc.set(
                 categories
                   .filter((category) => checkedCategoryIds.includes(category.id))
                   .flatMap((category) =>
@@ -108,65 +81,38 @@ export const FolderDrawer = ({
 }
 
 // DocumentDrawer 컴포넌트
-export const DocumentDrawer = ({
-  categories,
-  step,
-  setStep,
-  initialCheckList,
-  filteredIgnoreIds,
-}: Props) => {
+export const DocumentDrawer = ({ categories, step, setStep, folder, doc }: Props) => {
   const [openDocumentDrawer, setOpenDocumentDrawer] = useState(false)
-
-  const {
-    list: categoryList,
-    isAllChecked: isCategoryAllChecked,
-    checkAll: checkCategoryAll,
-    unCheckAll: unCheckCategoryAll,
-    getCheckedIds: getCategoryCheckedIds,
-    toggle: toggleCategoryChecked,
-  } = useCheckList(initialCheckList)
-
-  const {
-    list: documentList,
-    set: setDocumentList,
-    getCheckedIds: getDocumentCheckedIds,
-    toggle: toggleDocumentChecked,
-    isAllCheckedWithoutIgnored: isDocumentAllCheckedWithoutIgnored,
-    checkAllWithoutIgnored: checkDocumentAllWithoutIgnored,
-    unCheckAllWithoutIgnored: unCheckDocumentAllWithoutIgnored,
-  } = useCheckList([] as SelectDocumentItem[], {
-    ignoreIds: filteredIgnoreIds,
-  })
 
   return (
     <Drawer open={openDocumentDrawer} onOpenChange={setOpenDocumentDrawer}>
       <DrawerTrigger className="cursor-pointer">
-        <FakeSelectTrigger className="w-[74px]" value={`${getDocumentCheckedIds().length}개`} />
+        <FakeSelectTrigger className="w-[74px]" value={`${doc.getCheckedIds().length}개`} />
       </DrawerTrigger>
       <DrawerContent className="h-[510px]">
         <SelectDrawerContent
           step={step}
           selectCheckItems={
             <SelectCheckItems
-              items={step === 'folder' ? categoryList : documentList}
+              items={step === 'folder' ? folder.list : doc.list}
               isAllChecked={
-                step === 'folder' ? isCategoryAllChecked() : isDocumentAllCheckedWithoutIgnored()
+                step === 'folder' ? folder.isAllChecked() : doc.isAllCheckedWithoutIgnored()
               }
-              unCheckAll={step === 'folder' ? unCheckCategoryAll : unCheckDocumentAllWithoutIgnored}
-              checkAll={step === 'folder' ? checkCategoryAll : checkDocumentAllWithoutIgnored}
-              toggle={step === 'folder' ? toggleCategoryChecked : toggleDocumentChecked}
+              unCheckAll={step === 'folder' ? folder.unCheckAll : doc.unCheckAllWithoutIgnored}
+              checkAll={step === 'folder' ? folder.checkAll : doc.checkAllWithoutIgnored}
+              toggle={step === 'folder' ? folder.toggle : doc.toggle}
               selectType={step === 'folder' ? 'category' : 'document'}
             />
           }
           init={() => {
-            unCheckCategoryAll()
-            unCheckDocumentAllWithoutIgnored()
+            folder.unCheckAll()
+            doc.unCheckAllWithoutIgnored()
             setStep('folder')
           }}
           next={() => {
             if (step === 'folder') {
-              const checkedCategoryIds = getCategoryCheckedIds()
-              setDocumentList(
+              const checkedCategoryIds = folder.getCheckedIds()
+              doc.set(
                 categories
                   .filter((category) => checkedCategoryIds.includes(category.id))
                   .flatMap((category) =>
