@@ -10,7 +10,7 @@ import { calculateTimeUntilTomorrowMidnight } from '@/shared/utils/date'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
-import { BannerBottomContent, BannerImage, BannerTopContent } from './quiz-banner-content'
+import { BannerBottomContent, BannerImage, BannerTopContent } from './quiz-banner-contents'
 import { removeLocalStorage } from '@/shared/utils/storage'
 
 // QuizBanner 컴포넌트
