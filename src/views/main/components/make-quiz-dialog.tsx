@@ -11,9 +11,11 @@ import { useEffect, useState } from 'react'
 import { Button } from '@/shared/components/ui/button'
 import Image from 'next/image'
 import icons from '@/constants/icons'
-import { CategorySelector, DocumentSelector, QuizCountSelector } from './make-quiz-dialog-selector'
+import { CategorySelector, DocumentSelector, QuizCountSelector } from './make-quiz-dialog-selectors'
+import Loading from '@/shared/components/loading'
 
 interface Props {
+  startedCreate: boolean
   categories: CategoryDTO[]
   handleCreateQuizzes: ({ documentIds, count }: { documentIds: number[]; count: number }) => void
   quizType: QuizType
@@ -22,6 +24,7 @@ interface Props {
 
 // MakeQuizDialog 컴포넌트
 const MakeQuizDialog = ({
+  startedCreate,
   categories,
   handleCreateQuizzes,
   quizType,
@@ -85,6 +88,10 @@ const MakeQuizDialog = ({
       )
     }
   }, [allSelectedDocuments.length])
+
+  if (startedCreate) {
+    return <Loading center />
+  }
 
   return (
     <div className="">

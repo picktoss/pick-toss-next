@@ -5,13 +5,11 @@ import { CategoryDTO } from '@/actions/types/dto/category.dto'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { QuizType } from '@/actions/types/dto/quiz.dto'
-import Div100vh from 'react-div-100vh'
 import { useCreateQuizzesMutation } from '@/actions/fetchers/quiz/create-quizzes/mutation'
 import { useMediaQuery } from '@/shared/hooks/use-media-query'
 import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
 import { Dialog, DialogContent, DialogTrigger } from '@/shared/components/ui/dialog'
 import { CategoryProtector } from '@/shared/components/category-protector'
-import Loading from '@/shared/components/loading'
 import { Drawer, DrawerContent, DrawerTrigger } from '@/shared/components/ui/drawer'
 import MakeQuizDialog from './make-quiz-dialog'
 import MakeQuizDrawer from './make-quiz-drawer'
@@ -102,16 +100,13 @@ const MakeQuizDrawerDialog = ({ trigger, categories, quizType = 'MIX_UP' }: Prop
           </DialogTrigger>
         </CategoryProtector>
         <DialogContent className="min-h-[480px] min-w-[560px] rounded-[12px] border-none py-[26px]">
-          {startedCreate ? (
-            <Loading center />
-          ) : (
-            <MakeQuizDialog
-              categories={categories}
-              handleCreateQuizzes={handleCreateQuizzes}
-              quizType={quizType}
-              filteredIgnoreIds={filteredIgnoreIds}
-            />
-          )}
+          <MakeQuizDialog
+            startedCreate={startedCreate}
+            categories={categories}
+            handleCreateQuizzes={handleCreateQuizzes}
+            quizType={quizType}
+            filteredIgnoreIds={filteredIgnoreIds}
+          />
         </DialogContent>
       </Dialog>
     )
@@ -134,19 +129,14 @@ const MakeQuizDrawerDialog = ({ trigger, categories, quizType = 'MIX_UP' }: Prop
         </DrawerTrigger>
       </CategoryProtector>
       <DrawerContent className="rounded-none" hideSidebar>
-        <Div100vh>
-          {startedCreate ? (
-            <Loading center />
-          ) : (
-            <MakeQuizDrawer
-              categories={categories}
-              handleCreateQuizzes={handleCreateQuizzes}
-              closeDrawer={() => setOpen(false)}
-              quizType={quizType}
-              filteredIgnoreIds={filteredIgnoreIds}
-            />
-          )}
-        </Div100vh>
+        <MakeQuizDrawer
+          startedCreate={startedCreate}
+          categories={categories}
+          handleCreateQuizzes={handleCreateQuizzes}
+          closeDrawer={() => setOpen(false)}
+          quizType={quizType}
+          filteredIgnoreIds={filteredIgnoreIds}
+        />
       </DrawerContent>
     </Drawer>
   )
