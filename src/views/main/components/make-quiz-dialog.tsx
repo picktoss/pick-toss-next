@@ -45,16 +45,24 @@ const MakeQuizDialog = ({
       }, {} as Record<CategoryDTO['id'], SelectDocumentItem[]>)
     }
   )
+  const [allSelectedDocuments, setAllSelectedDocuments] = useState<SelectDocumentItem[]>([])
 
   const { list: documentList, set: setDocumentList } = useCheckList([] as SelectDocumentItem[], {
     ignoreIds: filteredIgnoreIds,
   })
 
-  const allSelectedDocuments = Object.values(documentMap).flatMap((documents) =>
-    documents.filter((document) => document.checked)
-  )
-
   const curCategory = categories.find((category) => category.id === selectCategoryId)!
+
+  useEffect(() => {
+    setDocumentList(documentMap[selectCategoryId])
+  }, [selectCategoryId])
+
+  useEffect(() => {
+    setDocumentMap((prev) => ({
+      ...prev,
+      [curCategory.id]: documentList,
+    }))
+  }, [documentList])
 
   useEffect(() => {
     if (allSelectedDocuments.length > 0) {
@@ -76,17 +84,6 @@ const MakeQuizDialog = ({
     }
   }, [allSelectedDocuments.length])
 
-  useEffect(() => {
-    setDocumentMap((prev) => ({
-      ...prev,
-      [curCategory.id]: documentList,
-    }))
-  }, [documentList])
-
-  useEffect(() => {
-    setDocumentList(documentMap[selectCategoryId])
-  }, [selectCategoryId])
-
   return (
     <div className="">
       <div className="flex flex-col gap-[8px] text-center">
@@ -107,7 +104,14 @@ const MakeQuizDialog = ({
 
           <div className="flex items-center">
             <div className="w-[52px] shrink-0 text-body2-medium text-gray-08">노트</div>
-            <DocumentSelector documentList={documentList} filteredIgnoreIds={filteredIgnoreIds} />
+            <DocumentSelector
+              documentMap={documentMap}
+              curCategory={curCategory}
+              setDocumentMap={setDocumentMap}
+              documentList={documentList}
+              setAllSelectedDocuments={setAllSelectedDocuments}
+              filteredIgnoreIds={filteredIgnoreIds}
+            />
           </div>
 
           <div className="flex items-center">

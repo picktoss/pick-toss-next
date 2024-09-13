@@ -7,7 +7,7 @@ import {
 } from '@/shared/components/ui/dropdown-menu'
 import { useCheckList } from '@/shared/hooks/use-check-list'
 import { SelectDocumentItem } from '@/types/quiz'
-import { memo, useCallback, useState } from 'react'
+import { Dispatch, memo, SetStateAction, useCallback, useEffect, useState } from 'react'
 import SelectCheckItems from './select-check-items'
 import {
   Select,
@@ -27,7 +27,11 @@ interface Props {
     setSelectCategoryId: (categoryId: number) => void
   }
   DocumentSelector: {
+    documentMap: Record<number, SelectDocumentItem[]>
+    curCategory: CategoryDTO
+    setDocumentMap: Dispatch<SetStateAction<Record<number, SelectDocumentItem[]>>>
     documentList: SelectDocumentItem[]
+    setAllSelectedDocuments: (value: SetStateAction<SelectDocumentItem[]>) => void
     filteredIgnoreIds: number[]
   }
   QuizCountSelector: {
@@ -83,12 +87,18 @@ export const CategorySelector = memo(function CategorySelector({
 
 // DocumentSelector 컴포넌트
 export const DocumentSelector = memo(function DocumentSelector({
+  curCategory,
+  documentMap,
+  setDocumentMap,
   documentList,
+  setAllSelectedDocuments,
   filteredIgnoreIds,
 }: Props['DocumentSelector']) {
   const [openSelectDocuments, setOpenSelectDocuments] = useState(false)
 
   const {
+    list: newDocumentList,
+    set: setDocumentList,
     getCheckedIds: getDocumentCheckedIds,
     toggle: toggleDocumentChecked,
     isAllCheckedWithoutIgnored: isDocumentAllCheckedWithoutIgnored,
@@ -98,6 +108,24 @@ export const DocumentSelector = memo(function DocumentSelector({
     ignoreIds: filteredIgnoreIds,
   })
 
+  useEffect(() => {
+    setDocumentList(documentList)
+  }, [documentList])
+
+  useEffect(() => {
+    setDocumentMap((prev) => ({
+      ...prev,
+      [curCategory.id]: newDocumentList,
+    }))
+  }, [newDocumentList])
+
+  useEffect(() => {
+    const selectedDocuments = Object.values(documentMap).flatMap((documents) =>
+      documents.filter((document) => document.checked)
+    )
+    setAllSelectedDocuments(selectedDocuments)
+  }, [documentMap])
+
   return (
     <DropdownMenu open={openSelectDocuments} onOpenChange={setOpenSelectDocuments}>
       <DropdownMenuTrigger className="w-[95px]">
@@ -105,7 +133,7 @@ export const DocumentSelector = memo(function DocumentSelector({
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-[320px]">
         <SelectCheckItems
-          items={documentList}
+          items={newDocumentList}
           isAllChecked={isDocumentAllCheckedWithoutIgnored()}
           unCheckAll={unCheckDocumentAllWithoutIgnored}
           checkAll={checkDocumentAllWithoutIgnored}
