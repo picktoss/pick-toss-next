@@ -19,7 +19,7 @@ const QuizBanner = () => {
   const queryClient = useQueryClient()
 
   const { data } = useQuery(queries.quiz.today())
-  const [remainingTime, setRemainingTime] = useState(calculateTimeUntilTomorrowMidnight())
+  const [remainingTime, setRemainingTime] = useState(() => calculateTimeUntilTomorrowMidnight())
   const [type, setType] = useState<TodayQuizSetType | 'CREATING' | null>(null)
   const [resultScore, setResultScore] = useState<number | null>(null)
 
