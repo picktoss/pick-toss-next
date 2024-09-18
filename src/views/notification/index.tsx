@@ -4,8 +4,8 @@ import icons from '@/constants/icons'
 import { useUser } from '@/shared/hooks/use-user'
 import Link from 'next/link'
 
-const ProfileNotification = () => {
-  const { user } = useUser()
+const ProfileNotification = async () => {
+  const { user } = await useUser()
 
   return (
     <div className="px-[20px] py-[10px]">

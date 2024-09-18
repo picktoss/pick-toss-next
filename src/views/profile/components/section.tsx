@@ -7,7 +7,8 @@ interface SectionProps {
   className?: HTMLAttributes<HTMLElement>['className']
 }
 
-export default function Section({ title, content, className }: SectionProps) {
+// Section 컴포넌트
+const Section = ({ title, content, className }: SectionProps) => {
   return (
     <section className={cn('text-body1-medium', className)}>
       {title ? <h5 className="pb-[13px] pl-[4px] text-small1-bold text-gray-06">{title}</h5> : null}
@@ -15,3 +16,5 @@ export default function Section({ title, content, className }: SectionProps) {
     </section>
   )
 }
+
+export default Section
