@@ -1,14 +1,7 @@
-'use client'
-
-import { CommonLayout } from '@/shared/components/common-layout'
-import VisualViewport from '@/shared/components/react/visual-viewport'
-import { Viewer } from './components/viewer'
-import { DocumentDetailProvider } from './contexts/document-detail-context'
-import { AiPick } from './components/ai-pick'
-import Loading from '@/shared/components/loading'
-import { notFound } from 'next/navigation'
-import { useQuery } from '@tanstack/react-query'
+import { getQueryClient } from '@/shared/lib/tanstack-query/client'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
+import Document from '@/views/document'
+import { HydrationBoundary, dehydrate } from '@tanstack/react-query'
 
 interface Props {
   params: {
@@ -16,49 +9,20 @@ interface Props {
   }
 }
 
-export default function Document({ params: { documentId } }: Props) {
-  const { data: document, isError } = useQuery({
-    ...queries.document.item(Number(documentId)),
-  })
+const Page = async ({ params: { documentId } }: Props) => {
+  const queryClient = getQueryClient()
 
-  if (isError) {
-    notFound()
-  }
+  // 서버에서 미리 데이터 prefetching
+  await Promise.all([queryClient.prefetchQuery(queries.category.list())])
 
-  if (!document)
-    return (
-      <div className="relative size-full h-screen">
-        <Loading center />
-      </div>
-    )
-
-  if (isError) {
-    notFound()
-  }
-
-  const { documentName, status, createdAt, content, keyPoints } = document
+  // 클라이언트로 데이터를 전달하기 위해 queryClient를 dehydrate 처리
+  const dehydratedState = dehydrate(queryClient)
 
   return (
-    <VisualViewport hideYScrollbar>
-      <CommonLayout
-        hideHeader
-        mobileOptions={{
-          hasBackButton: true,
-        }}
-      >
-        <DocumentDetailProvider>
-          <main className="flex h-screen justify-center">
-            <Viewer
-              documentName={documentName}
-              status={status}
-              createdAt={createdAt}
-              content={content}
-            />
-
-            <AiPick initKeyPoints={keyPoints} initStatus={status} />
-          </main>
-        </DocumentDetailProvider>
-      </CommonLayout>
-    </VisualViewport>
+    <HydrationBoundary state={dehydratedState}>
+      <Document documentId={documentId} />
+    </HydrationBoundary>
   )
 }
+
+export default Page
