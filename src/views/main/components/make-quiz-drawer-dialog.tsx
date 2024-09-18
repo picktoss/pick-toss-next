@@ -11,8 +11,8 @@ import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
 import { Dialog, DialogContent, DialogTrigger } from '@/shared/components/ui/dialog'
 import { CategoryProtector } from '@/shared/components/category-protector'
 import { Drawer, DrawerContent, DrawerTrigger } from '@/shared/components/ui/drawer'
-import MakeQuizDialog from './make-quiz-dialog'
-import MakeQuizDrawer from './make-quiz-drawer'
+import MakeQuizDialogContent from './make-quiz-dialog-content'
+import MakeQuizDrawerContent from './make-quiz-drawer-content'
 
 interface Props {
   categories: CategoryDTO[]
@@ -100,7 +100,7 @@ const MakeQuizDrawerDialog = ({ trigger, categories, quizType = 'MIX_UP' }: Prop
           </DialogTrigger>
         </CategoryProtector>
         <DialogContent className="min-h-[480px] min-w-[560px] rounded-[12px] border-none py-[26px]">
-          <MakeQuizDialog
+          <MakeQuizDialogContent
             startedCreate={startedCreate}
             categories={categories}
             handleCreateQuizzes={handleCreateQuizzes}
@@ -129,7 +129,7 @@ const MakeQuizDrawerDialog = ({ trigger, categories, quizType = 'MIX_UP' }: Prop
         </DrawerTrigger>
       </CategoryProtector>
       <DrawerContent className="rounded-none" hideSidebar>
-        <MakeQuizDrawer
+        <MakeQuizDrawerContent
           startedCreate={startedCreate}
           categories={categories}
           handleCreateQuizzes={handleCreateQuizzes}

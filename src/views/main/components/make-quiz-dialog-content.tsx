@@ -23,7 +23,7 @@ interface Props {
 }
 
 // MakeQuizDialog 컴포넌트
-const MakeQuizDialog = ({
+const MakeQuizDialogContent = ({
   startedCreate,
   categories,
   handleCreateQuizzes,
@@ -174,4 +174,4 @@ const MakeQuizDialog = ({
   )
 }
 
-export default MakeQuizDialog
+export default MakeQuizDialogContent

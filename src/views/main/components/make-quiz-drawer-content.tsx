@@ -10,7 +10,7 @@ import { useSession } from 'next-auth/react'
 import { useEffect, useMemo, useState } from 'react'
 import Image from 'next/image'
 import icons from '@/constants/icons'
-import { FolderDrawer, DocumentDrawer } from './make-quiz-drawer-contents'
+import { FolderDrawer, DocumentDrawer } from './make-quiz-drawer-steps'
 import { QuizCountSelector } from './make-quiz-dialog-selectors'
 import Div100vh from 'react-div-100vh'
 import Loading from '@/shared/components/loading'
@@ -25,7 +25,7 @@ interface Props {
 }
 
 // MakeQuizDrawer 컴포넌트
-const MakeQuizDrawer = ({
+const MakeQuizDrawerContent = ({
   startedCreate,
   categories,
   handleCreateQuizzes,
@@ -184,4 +184,4 @@ const MakeQuizDrawer = ({
   )
 }
 
-export default MakeQuizDrawer
+export default MakeQuizDrawerContent
