@@ -13,6 +13,7 @@ import { CategoryProtector } from '@/shared/components/category-protector'
 import { Drawer, DrawerContent, DrawerTrigger } from '@/shared/components/ui/drawer'
 import MakeQuizDialogContent from './make-quiz-dialog-content'
 import MakeQuizDrawerContent from './make-quiz-drawer-content'
+import { DocumentCheckProvider } from '../context/use-document-check'
 
 interface Props {
   categories: CategoryDTO[]
@@ -100,13 +101,14 @@ const MakeQuizDrawerDialog = ({ trigger, categories, quizType = 'MIX_UP' }: Prop
           </DialogTrigger>
         </CategoryProtector>
         <DialogContent className="min-h-[480px] min-w-[560px] rounded-[12px] border-none py-[26px]">
-          <MakeQuizDialogContent
-            startedCreate={startedCreate}
-            categories={categories}
-            handleCreateQuizzes={handleCreateQuizzes}
-            quizType={quizType}
-            filteredIgnoreIds={filteredIgnoreIds}
-          />
+          <DocumentCheckProvider filteredIgnoreIds={filteredIgnoreIds}>
+            <MakeQuizDialogContent
+              startedCreate={startedCreate}
+              categories={categories}
+              handleCreateQuizzes={handleCreateQuizzes}
+              quizType={quizType}
+            />
+          </DocumentCheckProvider>
         </DialogContent>
       </Dialog>
     )

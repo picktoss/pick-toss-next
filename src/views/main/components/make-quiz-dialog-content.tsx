@@ -4,8 +4,7 @@ import { useQuizCountMutation } from '@/actions/fetchers/document/quiz-count/mut
 import { CategoryDTO } from '@/actions/types/dto/category.dto'
 import { QuizType } from '@/actions/types/dto/quiz.dto'
 import { DEFAULT_QUIZ_COUNT, QUIZ_COUNT_OPTIONS } from '@/constants/quiz'
-import { useCheckList } from '@/shared/hooks/use-check-list'
-import { SelectDocumentItem } from '@/types/quiz'
+import { ReturnUseCheckListDialogDoc, SelectDocumentItem } from '@/types/quiz'
 import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 import { Button } from '@/shared/components/ui/button'
@@ -13,13 +12,13 @@ import Image from 'next/image'
 import icons from '@/constants/icons'
 import { CategorySelector, DocumentSelector, QuizCountSelector } from './make-quiz-dialog-selectors'
 import Loading from '@/shared/components/loading'
+import { useDocumentCheck } from '../context/use-document-check'
 
 interface Props {
   startedCreate: boolean
   categories: CategoryDTO[]
   handleCreateQuizzes: ({ documentIds, count }: { documentIds: number[]; count: number }) => void
   quizType: QuizType
-  filteredIgnoreIds: number[]
 }
 
 // MakeQuizDialog 컴포넌트
@@ -28,7 +27,6 @@ const MakeQuizDialogContent = ({
   categories,
   handleCreateQuizzes,
   quizType,
-  filteredIgnoreIds,
 }: Props) => {
   const { data: session } = useSession()
   const userPoints = session?.user.dto.point || 0
@@ -52,21 +50,22 @@ const MakeQuizDialogContent = ({
   )
   const [allSelectedDocuments, setAllSelectedDocuments] = useState<SelectDocumentItem[]>([])
 
-  const { list: documentList, set: setDocumentList } = useCheckList([] as SelectDocumentItem[], {
-    ignoreIds: filteredIgnoreIds,
-  })
+  const { list: documentList, set: setDocumentList } =
+    useDocumentCheck() as ReturnUseCheckListDialogDoc
 
   const curCategory = categories.find((category) => category.id === selectCategoryId)!
 
   useEffect(() => {
-    setDocumentList(documentMap[selectCategoryId])
+    if (setDocumentList) setDocumentList(documentMap[selectCategoryId])
   }, [selectCategoryId])
 
   useEffect(() => {
-    setDocumentMap((prev) => ({
-      ...prev,
-      [curCategory.id]: documentList,
-    }))
+    if (documentList) {
+      setDocumentMap((prev) => ({
+        ...prev,
+        [curCategory.id]: documentList,
+      }))
+    }
   }, [documentList])
 
   useEffect(() => {
@@ -96,7 +95,9 @@ const MakeQuizDialogContent = ({
   return (
     <div className="">
       <div className="flex flex-col gap-[8px] text-center">
-        <h4 className="text-h4-bold text-gray-09">객관식 퀴즈</h4>
+        <h4 className="text-h4-bold text-gray-09">
+          {quizType === 'MULTIPLE_CHOICE' ? '객관식 퀴즈' : 'OX 퀴즈'}
+        </h4>
         <p className="text-text-medium text-gray-07">원하는 폴더와 노트, 퀴즈 수를 선택해주세요</p>
       </div>
 
@@ -115,11 +116,7 @@ const MakeQuizDialogContent = ({
             <div className="w-[52px] shrink-0 text-body2-medium text-gray-08">노트</div>
             <DocumentSelector
               documentMap={documentMap}
-              curCategory={curCategory}
-              setDocumentMap={setDocumentMap}
-              documentList={documentList}
               setAllSelectedDocuments={setAllSelectedDocuments}
-              filteredIgnoreIds={filteredIgnoreIds}
             />
           </div>
 

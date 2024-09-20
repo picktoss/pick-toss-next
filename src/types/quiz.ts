@@ -49,3 +49,14 @@ export type ReturnUseCheckList<T extends Item> = {
   checkAllWithoutIgnored: () => void
   unCheckAllWithoutIgnored: () => void
 }
+
+export type ReturnUseCheckListDialogDoc = Pick<
+  ReturnUseCheckList<SelectDocumentItem>,
+  | 'list'
+  | 'set'
+  | 'getCheckedIds'
+  | 'toggle'
+  | 'isAllCheckedWithoutIgnored'
+  | 'checkAllWithoutIgnored'
+  | 'unCheckAllWithoutIgnored'
+>

@@ -7,9 +7,8 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from '@/shared/components/ui/dropdown-menu'
-import { useCheckList } from '@/shared/hooks/use-check-list'
-import { SelectDocumentItem } from '@/types/quiz'
-import { Dispatch, memo, SetStateAction, useCallback, useEffect, useState } from 'react'
+import { ReturnUseCheckListDialogDoc, SelectDocumentItem } from '@/types/quiz'
+import { memo, SetStateAction, useCallback, useEffect, useState } from 'react'
 import SelectCheckItems from './select-check-items'
 import {
   Select,
@@ -20,6 +19,7 @@ import {
 } from '@/shared/components/ui/select'
 import Loading from '@/shared/components/loading'
 import { DEFAULT_QUIZ_COUNT, QUIZ_COUNT_OPTIONS } from '@/constants/quiz'
+import { useDocumentCheck } from '../context/use-document-check'
 
 // MakeQuizDialog 내부에서 사용되는 selector 컴포넌트들
 interface Props {
@@ -30,11 +30,7 @@ interface Props {
   }
   DocumentSelector: {
     documentMap: Record<number, SelectDocumentItem[]>
-    curCategory: CategoryDTO
-    setDocumentMap: Dispatch<SetStateAction<Record<number, SelectDocumentItem[]>>>
-    documentList: SelectDocumentItem[]
     setAllSelectedDocuments: (value: SetStateAction<SelectDocumentItem[]>) => void
-    filteredIgnoreIds: number[]
   }
   QuizCountSelector: {
     quizCount: number
@@ -89,37 +85,19 @@ export const CategorySelector = memo(function CategorySelector({
 
 // DocumentSelector 컴포넌트
 export const DocumentSelector = memo(function DocumentSelector({
-  curCategory,
   documentMap,
-  setDocumentMap,
-  documentList,
   setAllSelectedDocuments,
-  filteredIgnoreIds,
 }: Props['DocumentSelector']) {
   const [openSelectDocuments, setOpenSelectDocuments] = useState(false)
 
   const {
-    list: newDocumentList,
-    set: setDocumentList,
+    list: documentList,
     getCheckedIds: getDocumentCheckedIds,
     toggle: toggleDocumentChecked,
     isAllCheckedWithoutIgnored: isDocumentAllCheckedWithoutIgnored,
     checkAllWithoutIgnored: checkDocumentAllWithoutIgnored,
     unCheckAllWithoutIgnored: unCheckDocumentAllWithoutIgnored,
-  } = useCheckList(documentList, {
-    ignoreIds: filteredIgnoreIds,
-  })
-
-  useEffect(() => {
-    setDocumentList(documentList)
-  }, [documentList])
-
-  useEffect(() => {
-    setDocumentMap((prev) => ({
-      ...prev,
-      [curCategory.id]: newDocumentList,
-    }))
-  }, [newDocumentList])
+  } = useDocumentCheck() as ReturnUseCheckListDialogDoc
 
   useEffect(() => {
     const selectedDocuments = Object.values(documentMap).flatMap((documents) =>
@@ -135,7 +113,7 @@ export const DocumentSelector = memo(function DocumentSelector({
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-[320px]">
         <SelectCheckItems
-          items={newDocumentList}
+          items={documentList}
           isAllChecked={isDocumentAllCheckedWithoutIgnored()}
           unCheckAll={unCheckDocumentAllWithoutIgnored}
           checkAll={checkDocumentAllWithoutIgnored}
