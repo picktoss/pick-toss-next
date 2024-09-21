@@ -33,28 +33,35 @@ const ModifyDocumentNameModal = ({ id, name, sortOption, open, onOpenChange }: P
         queries.document.list(Number(categoryId), sortOption).queryKey
       )
 
-      queryClient.setQueryData(
-        queries.document.list(Number(categoryId), sortOption).queryKey,
-        (prevDocuments: Document[]) =>
-          prevDocuments.map((document) => {
-            if (id !== document.id) return document
+      // prevDocuments가 배열인지 확인 후 map 실행
+      if (Array.isArray(prevDocuments)) {
+        queryClient.setQueryData(
+          queries.document.list(Number(categoryId), sortOption).queryKey,
+          (prevDocuments: Document[]) =>
+            prevDocuments.map((document) => {
+              if (id !== document.id) return document
 
-            return {
-              ...document,
-              name: documentName,
-            }
-          })
-      )
+              return {
+                ...document,
+                name: documentName,
+              }
+            })
+        )
+      }
 
       return prevDocuments
     },
-    onError: (_, __, context) => {
+    onError: (error, __, context) => {
+      console.error('Error in onError handler:', error) // 에러를 확인합니다.
       queryClient.setQueryData(
         queries.document.list(Number(categoryId), sortOption).queryKey,
         context
       )
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: queries.document._def }),
+    onSuccess: async () =>
+      await queryClient.invalidateQueries({
+        queryKey: queries.document._def,
+      }),
   })
 
   const handleModifyName = () => {
