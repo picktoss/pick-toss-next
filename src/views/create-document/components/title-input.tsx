@@ -1,7 +1,8 @@
 import { Input } from '@/shared/components/ui/input'
 import { useCreateDocumentContext } from '../contexts/create-document-context'
 
-export function TitleInput() {
+// TitleInput 컴포넌트
+const TitleInput = () => {
   const { documentName, changeDocumentName } = useCreateDocumentContext()
 
   return (
@@ -16,3 +17,5 @@ export function TitleInput() {
     </div>
   )
 }
+
+export default TitleInput

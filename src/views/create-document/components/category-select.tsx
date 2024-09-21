@@ -12,7 +12,8 @@ interface Props {
   categories: CategoryDTO[]
 }
 
-export function CategorySelect({ categories }: Props) {
+// CategorySelect 컴포넌트
+const CategorySelect = ({ categories }: Props) => {
   const { selectedCategoryId, selectCategory } = useCreateDocumentContext()
 
   const defaultCategory = categories.find((category) => category.id === selectedCategoryId)
@@ -43,3 +44,5 @@ export function CategorySelect({ categories }: Props) {
     </Select>
   )
 }
+
+export default CategorySelect

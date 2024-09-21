@@ -3,7 +3,7 @@
 import { CategoryDTO } from '@/actions/types/dto/category.dto'
 import { Button } from '@/shared/components/ui/button'
 import { useRouter } from 'next/navigation'
-import { CategorySelect } from './category-select'
+import CategorySelect from './category-select'
 import { useCreateDocumentContext } from '../contexts/create-document-context'
 import { cn } from '@/shared/lib/utils'
 import { MAX_CONTENT_LENGTH } from '@/constants/document'
@@ -23,7 +23,8 @@ interface Props {
   isLoading: boolean
 }
 
-export function Header({ categories, handleSubmit, isLoading }: Props) {
+// Header 컴포넌트
+const Header = ({ categories, handleSubmit, isLoading }: Props) => {
   const router = useRouter()
   const { documentName, selectedCategoryId, editorMarkdownContent } = useCreateDocumentContext()
   const { data: session } = useSession()
@@ -85,3 +86,5 @@ export function Header({ categories, handleSubmit, isLoading }: Props) {
     </div>
   )
 }
+
+export default Header
