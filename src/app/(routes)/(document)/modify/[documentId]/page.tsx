@@ -1,111 +1,31 @@
-'use client'
-
-import { useMutation, useQuery } from '@tanstack/react-query'
-import { useParams, useRouter } from 'next/navigation'
-import { EditDocumentProvider } from '../contexts/edit-document-context'
-import { Header } from '../components/header'
-import Loading from '@/shared/components/loading'
-import { TitleInput } from '../components/title-input'
-import VisualEditor from '../components/visual-editor'
-import { updateDocumentContent } from '@/actions/fetchers/document/update-document-content'
-import { useState } from 'react'
-import { useToast } from '@/shared/hooks/use-toast'
-import { MAX_CONTENT_LENGTH, MIN_CONTENT_LENGTH } from '@/constants/document'
-import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
+import { getQueryClient } from '@/shared/lib/tanstack-query/client'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
-import { useSession } from 'next-auth/react'
+import ModifyDocument from '@/views/modify-document'
+import { HydrationBoundary, dehydrate } from '@tanstack/react-query'
 
-export default function Modify() {
-  const { documentId } = useParams()
-  const { toast } = useToast()
-  const [isLoading, setIsLoading] = useState(false)
-  const router = useRouter()
-  const { data: session } = useSession()
-
-  const { data: modifyTargetDocument } = useQuery({
-    ...queries.document.item(Number(documentId)),
-  })
-
-  const { documentEditedEvent } = useAmplitudeContext()
-
-  const { mutate } = useMutation({
-    mutationFn: (data: { name: string; file: File }) =>
-      updateDocumentContent({
-        documentId: Number(documentId),
-        ...data,
-        accessToken: session?.user.accessToken || '',
-      }),
-  })
-
-  const handleSubmit = ({
-    documentName,
-    editorContent,
-  }: {
-    documentName: string
-    editorContent: string
-  }) => {
-    if (
-      documentName === modifyTargetDocument?.documentName &&
-      editorContent === modifyTargetDocument?.content
-    ) {
-      router.push(`/document/${Number(documentId)}`)
-    }
-
-    if (isLoading || !documentName || !editorContent) {
-      return
-    }
-
-    if (editorContent.length < MIN_CONTENT_LENGTH) {
-      alert('최소 150자 이상의 본문을 입력해주세요.')
-      return
-    } else if (editorContent.length > MAX_CONTENT_LENGTH) {
-      alert('본문의 길이는 15,000자를 넘길 수 없습니다.')
-      return
-    }
-
-    setIsLoading(true)
-
-    const documentBlob = new Blob([editorContent], { type: 'text/markdown' })
-    const file = new File([documentBlob], `${documentName}.md`, { type: 'text/markdown' })
-
-    mutate(
-      {
-        name: documentName,
-        file,
-      },
-      {
-        onSuccess: () => {
-          documentEditedEvent({
-            length: editorContent.length,
-          })
-
-          toast({
-            description: '노트가 수정되었습니다',
-          })
-          router.push(`/document/${Number(documentId)}`)
-        },
-      }
-    )
+interface Props {
+  params: {
+    documentId: string
   }
+}
 
-  if (!modifyTargetDocument) {
-    return <Loading center />
-  }
+const Page = async ({ params: { documentId } }: Props) => {
+  const queryClient = getQueryClient()
+
+  // 서버에서 미리 데이터 prefetching
+  await Promise.all([
+    queryClient.prefetchQuery(queries.category.list()),
+    queryClient.prefetchQuery(queries.document.item(Number(documentId))),
+  ])
+
+  // 클라이언트로 데이터를 전달하기 위해 queryClient를 dehydrate 처리
+  const dehydratedState = dehydrate(queryClient)
 
   return (
-    <EditDocumentProvider
-      prevTitle={modifyTargetDocument.documentName}
-      prevContent={modifyTargetDocument.content}
-    >
-      <Header
-        categoryId={modifyTargetDocument?.category.id}
-        handleSubmit={handleSubmit}
-        isLoading={isLoading}
-      />
-      <div className="mt-[22px] min-h-screen rounded-t-[20px] bg-white shadow-sm">
-        <TitleInput />
-        <VisualEditor />
-      </div>
-    </EditDocumentProvider>
+    <HydrationBoundary state={dehydratedState}>
+      <ModifyDocument documentId={documentId} />
+    </HydrationBoundary>
   )
 }
+
+export default Page

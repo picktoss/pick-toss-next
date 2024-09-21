@@ -20,12 +20,11 @@ interface Props {
   isLoading: boolean
 }
 
-export function Header({ categoryId, handleSubmit, isLoading }: Props) {
+// Header 컴포넌트
+const Header = ({ categoryId, handleSubmit, isLoading }: Props) => {
   const router = useRouter()
   const { documentName, editorMarkdownContent } = useEditDocumentContext()
-  const { data: category } = useQuery({
-    ...queries.category.item(categoryId),
-  })
+  const { data: category } = useQuery(queries.category.item(categoryId))
 
   return (
     <div className="sticky top-0 z-10 bg-gray-01 opacity-95 shadow-md">
@@ -76,3 +75,5 @@ export function Header({ categoryId, handleSubmit, isLoading }: Props) {
     </div>
   )
 }
+
+export default Header

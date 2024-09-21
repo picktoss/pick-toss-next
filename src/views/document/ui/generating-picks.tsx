@@ -1,5 +1,5 @@
 import Lottie from 'react-lottie-player'
-import sparkleData from '../../../../../../../../public/lottie/sparkle.json'
+import sparkleData from '@/../../public/lottie/sparkle.json'
 
 export function GeneratingPicks() {
   return (

@@ -16,7 +16,8 @@ import { useEditDocumentContext } from '../contexts/edit-document-context'
 
 interface VisualEditorProps {}
 
-export default function VisualEditor({}: VisualEditorProps) {
+// VisualEditor 컴포넌트
+const VisualEditor = ({}: VisualEditorProps) => {
   const { manager } = useRemirror({
     extensions,
     stringHandler: 'markdown',
@@ -64,3 +65,5 @@ export default function VisualEditor({}: VisualEditorProps) {
     </ThemeProvider>
   )
 }
+
+export default VisualEditor
