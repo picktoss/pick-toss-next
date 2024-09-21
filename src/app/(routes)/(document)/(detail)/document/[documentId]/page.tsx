@@ -13,7 +13,11 @@ const Page = async ({ params: { documentId } }: Props) => {
   const queryClient = getQueryClient()
 
   // 서버에서 미리 데이터 prefetching
-  await Promise.all([queryClient.prefetchQuery(queries.category.list())])
+  await Promise.all([
+    queryClient.prefetchQuery(queries.category.list()),
+    queryClient.prefetchQuery(queries.document.item(Number(documentId))),
+    queryClient.prefetchQuery(queries.keyPoints.item(Number(documentId))),
+  ])
 
   // 클라이언트로 데이터를 전달하기 위해 queryClient를 dehydrate 처리
   const dehydratedState = dehydrate(queryClient)

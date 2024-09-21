@@ -30,9 +30,7 @@ const CreateDocument = () => {
 
   const [isLoading, setIsLoading] = useState(false)
 
-  const { data } = useQuery({
-    ...queries.category.list(),
-  })
+  const { data } = useQuery(queries.category.list())
 
   const { mutate } = useCreateDocumentMutation()
   const { documentCreatedEvent } = useAmplitudeContext()

@@ -11,9 +11,7 @@ import { useQuery } from '@tanstack/react-query'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
 
 const Document = ({ documentId }: { documentId: string }) => {
-  const { data: document, isError } = useQuery({
-    ...queries.document.item(Number(documentId)),
-  })
+  const { data: document, isError } = useQuery(queries.document.item(Number(documentId)))
 
   if (isError) {
     notFound()
