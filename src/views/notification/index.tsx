@@ -1,11 +1,13 @@
+'use client'
+
 import Image from 'next/image'
 import QuizNotificationSwitch from './components/quiz-notification-switch'
 import icons from '@/constants/icons'
 import { useUser } from '@/shared/hooks/use-user'
 import Link from 'next/link'
 
-const ProfileNotification = async () => {
-  const { user } = await useUser()
+const ProfileNotification = () => {
+  const { user } = useUser()
 
   return (
     <div className="px-[20px] py-[10px]">

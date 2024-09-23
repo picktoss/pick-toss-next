@@ -11,10 +11,9 @@ import { ChangeEvent, useRef, useState } from 'react'
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 const codeRegex = /^[0-9]{6}$/
 
-// eslint-disable-next-line @next/next/no-async-client-component
-const EmailSettingForm = async () => {
+const EmailSettingForm = () => {
   const router = useRouter()
-  const { user } = await useUser()
+  const { user } = useUser()
   const { toast } = useToast()
 
   const [emailInput, setEmailInput] = useState(user?.email || '')

@@ -1,7 +1,7 @@
-import { auth } from '@/app/api/auth/[...nextauth]/auth'
+import { useSession } from 'next-auth/react'
 
-export const useUser = async () => {
-  const session = await auth()
+export const useUser = () => {
+  const { data: session } = useSession()
   const user = session?.user.dto
 
   return { user }
