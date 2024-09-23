@@ -3,7 +3,7 @@
 import { Drawer, DrawerContent, DrawerTrigger } from '@/shared/components/ui/drawer'
 import { useDocumentDetailContext } from '../contexts/document-detail-context'
 import { Button } from '@/shared/components/ui/button'
-import { StarsIcon } from './ai-pick-icons'
+import { StarsIcon } from '../ui/pick-icons'
 import Image from 'next/image'
 import icons from '@/constants/icons'
 import { PickBanner } from '../ui/pick-banner'

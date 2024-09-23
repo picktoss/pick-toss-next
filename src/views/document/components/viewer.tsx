@@ -50,7 +50,7 @@ const Viewer = ({ documentName, createdAt, content, status }: Props) => {
 
 export default Viewer
 
-// Viewer 컴포넌트 내부에서 사용되는 컴포넌트
+// Viewer 컴포넌트 내부에서 사용되는 컴포넌트 렌더링 함수
 const handleMarkDownCodeBlock = (
   props: ClassAttributes<HTMLElement> & HTMLAttributes<HTMLElement> & ExtraProps
 ) => {

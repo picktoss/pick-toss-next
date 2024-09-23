@@ -9,6 +9,7 @@ import {
 import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
 import { cn } from '@/shared/lib/utils'
 import { ChevronDown } from 'lucide-react'
+import { AddBookMarkIcon, FilledBookMarkIcon } from './pick-icons'
 
 export function PickAccordion({
   keyPoints,
@@ -94,42 +95,5 @@ export function PickAccordion({
         </AccordionItem>
       ))}
     </Accordion>
-  )
-}
-
-function AddBookMarkIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path
-        d="M7.5549 3.11035C4.63809 3.11035 6.73723 3.11035 3.82042 3.11035C3.18329 3.11035 2.66602 3.58891 2.66602 4.17836V14.9431C2.66602 15.2524 3.03505 15.4362 3.31576 15.2699L7.5549 12.7399L11.794 15.2699V15.267C12.0748 15.4362 12.4438 15.2495 12.4438 14.9402V7.99924"
-        stroke="#A2A6AB"
-        strokeWidth="1.33329"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M10 3.11035L14.8889 3.11035"
-        stroke="#A2A6AB"
-        strokeWidth="1.33329"
-        strokeLinecap="round"
-      />
-      <path
-        d="M12.4434 0.666016L12.4434 5.5549"
-        stroke="#A2A6AB"
-        strokeWidth="1.33329"
-        strokeLinecap="round"
-      />
-    </svg>
-  )
-}
-
-function FilledBookMarkIcon() {
-  return (
-    <svg width="10" height="13" viewBox="0 0 10 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path
-        d="M9.33548 12.9333L5 10.2424L0.664516 12.9333C0.377419 13.1103 0 12.9147 0 12.5857V1.13597C0 0.509016 0.529032 0 1.18064 0H8.81935C9.47097 0 10 0.509016 10 1.13597V12.5826C10 12.9116 9.62258 13.1103 9.33548 12.9302V12.9333Z"
-        fill="#577CFF"
-      />
-    </svg>
   )
 }
