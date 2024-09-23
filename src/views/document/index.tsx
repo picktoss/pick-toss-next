@@ -2,9 +2,9 @@
 
 import { CommonLayout } from '@/shared/components/common-layout'
 import VisualViewport from '@/shared/components/react/visual-viewport'
-import { Viewer } from './components/viewer'
+import Viewer from './components/viewer'
 import { DocumentDetailProvider } from './contexts/document-detail-context'
-import { AiPick } from './components/ai-pick'
+import AiPick from './components/ai-pick'
 import Loading from '@/shared/components/loading'
 import { notFound } from 'next/navigation'
 import { useQuery } from '@tanstack/react-query'
@@ -38,7 +38,7 @@ const Document = ({ documentId }: { documentId: string }) => {
           hasBackButton: true,
         }}
       >
-        <DocumentDetailProvider>
+        <DocumentDetailProvider initKeyPoints={keyPoints} initStatus={status}>
           <main className="flex h-screen justify-center">
             <Viewer
               documentName={documentName}
@@ -47,7 +47,7 @@ const Document = ({ documentId }: { documentId: string }) => {
               content={content}
             />
 
-            <AiPick initKeyPoints={keyPoints} initStatus={status} />
+            <AiPick />
           </main>
         </DocumentDetailProvider>
       </CommonLayout>
