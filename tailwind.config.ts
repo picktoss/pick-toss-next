@@ -138,7 +138,7 @@ const config = {
             letterSpacing: '-0.02em',
           },
         ],
-        'button-1': [
+        button1: [
           '18px',
           {
             fontWeight: '600',
@@ -146,7 +146,7 @@ const config = {
             letterSpacing: '-0.02em',
           },
         ],
-        'button-2': [
+        button2: [
           '16px',
           {
             fontWeight: '600',
@@ -154,7 +154,7 @@ const config = {
             letterSpacing: '-0.02em',
           },
         ],
-        'button-3': [
+        button3: [
           '14px',
           {
             fontWeight: '600',
@@ -162,7 +162,7 @@ const config = {
             letterSpacing: '-0.02em',
           },
         ],
-        'button-4': [
+        button4: [
           '14px',
           {
             fontWeight: '500',
@@ -170,7 +170,7 @@ const config = {
             letterSpacing: '-0.02em',
           },
         ],
-        'button-5': [
+        button5: [
           '12px',
           {
             fontWeight: '600',
