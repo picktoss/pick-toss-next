@@ -60,9 +60,6 @@
     @apply box-border;
     font-synthesis: none !important;
   }
-  body {
-    @apply bg-background text-foreground;
-  }
 }
 
 @layer utilities {
