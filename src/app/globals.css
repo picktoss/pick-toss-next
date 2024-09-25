@@ -57,7 +57,7 @@
 
 @layer base {
   * {
-    @apply border-border;
+    @apply box-border;
     font-synthesis: none !important;
   }
   body {
@@ -68,5 +68,8 @@
 @layer utilities {
   .center {
     @apply absolute bottom-1/2 right-1/2 translate-x-1/2 translate-y-1/2;
+  }
+  .flex-center {
+    @apply flex justify-center items-center;
   }
 }
