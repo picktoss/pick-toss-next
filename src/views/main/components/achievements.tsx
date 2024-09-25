@@ -6,7 +6,8 @@ import MyStarsDrawerDialog from './my-stars-drawer-dialog'
 import { useSession } from 'next-auth/react'
 import ContinuousQuizDrawerDialog from './continuous-quiz-drawer-dialog'
 
-export default function Achievements() {
+// Achievements 컴포넌트
+const Achievements = () => {
   const { data: session } = useSession()
   const userDTO = session?.user.dto
 
@@ -54,3 +55,5 @@ export default function Achievements() {
     </div>
   )
 }
+
+export default Achievements

@@ -2,17 +2,15 @@
 
 import icons from '@/constants/icons'
 import Image from 'next/image'
-import { BlackLottie, MultipleLottie, OXLottie } from './lotties'
+import { BlankLottie, MultipleLottie, OXLottie } from './lotties'
 import { ReactNode, forwardRef } from 'react'
-import MakeQuizDrawerDialog from './make-quiz-drawer-dialog'
 import Loading from '@/shared/components/loading'
 import { useQuery } from '@tanstack/react-query'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
+import MakeQuizDrawerDialog from './make-quiz-drawer-dialog'
 
 export default function QuizMaker() {
-  const { data, isLoading } = useQuery({
-    ...queries.category.list(),
-  })
+  const { data, isPending } = useQuery(queries.category.list())
 
   return (
     <section className="flex flex-col gap-[24px]">
@@ -27,7 +25,7 @@ export default function QuizMaker() {
       </div>
 
       <div className="flex flex-col gap-[16px] lg:flex-row">
-        {isLoading ? (
+        {isPending ? (
           <>
             {Array.from({ length: 3 }).map((_, idx) => (
               <div
@@ -66,7 +64,7 @@ export default function QuizMaker() {
               title="빈칸 채우기"
               description="주어진 문장의 빈 곳을 채우는 퀴즈"
               comingSoon
-              lottie={<BlackLottie />}
+              lottie={<BlankLottie />}
             />
           </>
         )}

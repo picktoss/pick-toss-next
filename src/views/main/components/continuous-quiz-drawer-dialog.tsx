@@ -18,11 +18,12 @@ interface ContinuousQuizDrawerDialog {
   trigger: ReactNode
 }
 
-export default function ContinuousQuizDrawerDialog({
+// ContinuousQuizDrawerDialog 컴포넌트
+const ContinuousQuizDrawerDialog = ({
   trigger,
   continuousQuizDatesCount,
   maxContinuousQuizDatesCount,
-}: ContinuousQuizDrawerDialog) {
+}: ContinuousQuizDrawerDialog) => {
   const [open, setOpen] = useState(false)
   const isDesktop = useMediaQuery('(min-width: 1024px)')
 
@@ -76,6 +77,9 @@ export default function ContinuousQuizDrawerDialog({
   )
 }
 
+export default ContinuousQuizDrawerDialog
+
+// ContinuousQuizDrawerDialog 내부에서 사용되는 컴포넌트들
 function ContinuousQuizContent({
   continuousQuizDatesCount,
   maxContinuousQuizDatesCount,
@@ -111,15 +115,15 @@ function QuizCalendar() {
   const thisMonth = today.getMonth() + 1
   const firstDayOfThisMonth = new Date(today.getFullYear(), today.getMonth(), 1).getDay()
 
-  const { data } = useQuery({
-    ...queries.quiz.monthAnswerRate({
+  const { data } = useQuery(
+    queries.quiz.monthAnswerRate({
       categoryId: 0,
       date: {
         year: 2024,
         month: thisMonth,
       },
-    }),
-  })
+    })
+  )
 
   if (!data) {
     return (
