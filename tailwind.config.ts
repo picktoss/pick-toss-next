@@ -26,204 +26,164 @@ const config = {
         'dm-suit': ['var(--font-dm-sans)', 'var(--font-suit)'],
       },
       fontSize: {
-        h1: [
+        hero: [
           '36px',
           {
-            lineHeight: 'normal',
             fontWeight: 'bold',
+            lineHeight: '120%',
             letterSpacing: '-0.02em',
           },
         ],
-        'h2-bold': [
-          '32px',
+        title1: [
+          '30px',
           {
-            lineHeight: 'normal',
             fontWeight: 'bold',
+            lineHeight: '120%',
             letterSpacing: '-0.02em',
           },
         ],
-        'h2-bold-eng': [
-          '32px',
-          {
-            lineHeight: 'normal',
-            fontWeight: 'bold',
-            letterSpacing: '-0.02em',
-          },
-        ],
-        'h2-medium': [
-          '32px',
-          {
-            lineHeight: 'normal',
-            fontWeight: '500',
-            letterSpacing: '-0.02em',
-          },
-        ],
-        'h3-bold': [
+        title2: [
           '24px',
           {
-            lineHeight: 'normal',
             fontWeight: 'bold',
+            lineHeight: '120%',
             letterSpacing: '-0.02em',
           },
         ],
-        'h3-bold-eng': [
-          '24px',
-          {
-            lineHeight: 'normal',
-            fontWeight: 'bold',
-            letterSpacing: '-0.02em',
-          },
-        ],
-        'h3-medium': [
-          '24px',
-          {
-            lineHeight: 'normal',
-            fontWeight: '500',
-            letterSpacing: '-0.02em',
-          },
-        ],
-        'h4-bold': [
+        title3: [
           '20px',
           {
-            lineHeight: 'normal',
             fontWeight: 'bold',
+            lineHeight: '120%',
             letterSpacing: '-0.02em',
           },
         ],
-        'h4-medium': [
-          '20px',
+        'subtitle1-bold': [
+          '18px',
           {
+            fontWeight: 'bold',
             lineHeight: '150%',
-            fontWeight: 'normal',
             letterSpacing: '-0.02em',
           },
         ],
-        button: [
+        'subtitle2-bold': [
           '16px',
           {
-            lineHeight: 'normal',
             fontWeight: 'bold',
-            letterSpacing: '-0.02em',
-          },
-        ],
-        'body1-bold': [
-          '16px',
-          {
-            lineHeight: '120%',
-            fontWeight: 'bold',
-            letterSpacing: '-0.02em',
-          },
-        ],
-        'body1-bold-eng': [
-          '16px',
-          {
-            lineHeight: '120%',
-            fontWeight: 'bold',
-            letterSpacing: '-0.02em',
-          },
-        ],
-        'body1-medium': [
-          '16px',
-          {
-            lineHeight: '120%',
-            fontWeight: '500',
-            letterSpacing: '-0.02em',
-          },
-        ],
-        'body2-bold': [
-          '14px',
-          {
-            lineHeight: '120%',
-            fontWeight: 'bold',
-            letterSpacing: '-0.02em',
-          },
-        ],
-        'body2-medium': [
-          '14px',
-          {
-            lineHeight: '120%',
-            fontWeight: '500',
-            letterSpacing: '-0.02em',
-          },
-        ],
-        'body2-regular': [
-          '14px',
-          {
-            lineHeight: '120%',
-            fontWeight: 'normal',
-            letterSpacing: '-0.02em',
-          },
-        ],
-        'body2-regular-eng': [
-          '14px',
-          {
-            lineHeight: 'normal',
-            fontWeight: 'normal',
-            letterSpacing: '-0.02em',
-          },
-        ],
-        'text-medium': [
-          '14px',
-          {
             lineHeight: '150%',
-            fontWeight: '500',
             letterSpacing: '-0.02em',
           },
         ],
-        'text-bold': [
+        'subtitle2-medium': [
+          '16px',
+          {
+            fontWeight: '500',
+            lineHeight: '150%',
+            letterSpacing: '-0.02em',
+          },
+        ],
+        'text1-bold': [
           '14px',
           {
-            lineHeight: '150%',
             fontWeight: 'bold',
+            lineHeight: '150%',
+            letterSpacing: '-0.02em',
+          },
+        ],
+        'text1-medium': [
+          '14px',
+          {
+            fontWeight: '500',
+            lineHeight: '150%',
+            letterSpacing: '-0.02em',
+          },
+        ],
+        'text1-regular': [
+          '14px',
+          {
+            fontWeight: 'normal',
+            lineHeight: '150%',
             letterSpacing: '-0.02em',
           },
         ],
         'text2-bold': [
+          '12px',
+          {
+            fontWeight: 'bold',
+            lineHeight: '150%',
+            letterSpacing: '-0.02em',
+          },
+        ],
+        'text2-medium': [
+          '12px',
+          {
+            fontWeight: '500',
+            lineHeight: '150%',
+            letterSpacing: '-0.02em',
+          },
+        ],
+        'caption-bold': [
+          '10px',
+          {
+            fontWeight: 'bold',
+            lineHeight: '150%',
+            letterSpacing: '-0.02em',
+          },
+        ],
+        'caption-medium': [
+          '10px',
+          {
+            fontWeight: '500',
+            lineHeight: '150%',
+            letterSpacing: '-0.02em',
+          },
+        ],
+        'button-1': [
+          '18px',
+          {
+            fontWeight: '600',
+            lineHeight: 'normal',
+            letterSpacing: '-0.02em',
+          },
+        ],
+        'button-2': [
           '16px',
           {
-            lineHeight: '150%',
-            fontWeight: 'bold',
+            fontWeight: '600',
+            lineHeight: 'normal',
             letterSpacing: '-0.02em',
           },
         ],
-        'text-regular': [
+        'button-3': [
           '14px',
           {
-            lineHeight: '150%',
-            fontWeight: 'normal',
+            fontWeight: '600',
+            lineHeight: 'normal',
             letterSpacing: '-0.02em',
           },
         ],
-        'small1-bold': [
+        'button-4': [
+          '14px',
+          {
+            fontWeight: '500',
+            lineHeight: 'normal',
+            letterSpacing: '-0.02em',
+          },
+        ],
+        'button-5': [
           '12px',
           {
+            fontWeight: '600',
             lineHeight: 'normal',
+            letterSpacing: '-0.02em',
+          },
+        ],
+        question: [
+          '20px',
+          {
             fontWeight: 'bold',
-            letterSpacing: '-0.02em',
-          },
-        ],
-        'small1-regular': [
-          '12px',
-          {
-            lineHeight: 'normal',
-            fontWeight: 'normal',
-            letterSpacing: '-0.02em',
-          },
-        ],
-        tag: [
-          '10px',
-          {
             lineHeight: '150%',
-            fontWeight: 'normal',
-            letterSpacing: '0em',
-          },
-        ],
-        'tag-eng': [
-          '10px',
-          {
-            lineHeight: '150%',
-            fontWeight: 'normal',
-            letterSpacing: '-0.03em',
+            letterSpacing: '-0.02em',
           },
         ],
       },
