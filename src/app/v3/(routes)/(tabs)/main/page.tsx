@@ -1,5 +1,6 @@
 import { Button } from '@/shared/components/ui/button'
 import { Input } from '@/shared/components/ui/input'
+import { CloseCircle } from '@/shared/components/v3/icon/svg-components'
 
 const Home = () => {
   return (
@@ -29,6 +30,12 @@ const Home = () => {
       </Button>
       <Input type="text" placeholder="입력해주세요" variant="search" />
       <Input type="text" placeholder="입력해주세요" variant="default" />
+      <Input
+        type="text"
+        placeholder="입력해주세요"
+        variant="default"
+        right={<CloseCircle width="24" height="24" fill="#B6C1C9" stroke="#4C5052" />}
+      />
     </div>
   )
 }

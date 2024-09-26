@@ -11,6 +11,8 @@ const inputVariants = cva(
         none: '',
         default:
           'rounded-[8px] border-none bg-background-base-02 focus:bg-background-base-01 focus:ring-1 focus:ring-border-focused',
+        info: '',
+        disabled: '',
         search:
           'rounded-[56px] border-none bg-background-base-03 px-[16px] py-[12px] placeholder:text-text-placeholder-01',
       },
@@ -23,17 +25,22 @@ const inputVariants = cva(
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
-    VariantProps<typeof inputVariants> {}
+    VariantProps<typeof inputVariants> {
+  right?: React.ReactNode
+}
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, variant, type, ...props }, ref) => {
+  ({ className, variant, type, right, ...props }, ref) => {
     return (
-      <input
-        type={type}
-        className={cn(inputVariants({ variant }), className)}
-        ref={ref}
-        {...props}
-      />
+      <div className="relative w-full">
+        <input
+          type={type}
+          className={cn(inputVariants({ variant }), className)}
+          ref={ref}
+          {...props}
+        />
+        {right && <div className="absolute right-3 top-3 flex items-center">{right}</div>}
+      </div>
     )
   }
 )
