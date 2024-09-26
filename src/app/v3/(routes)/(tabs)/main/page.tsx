@@ -1,40 +1,41 @@
-import { Button } from '@/shared/components/ui/button'
+import Text from '@/shared/components/text'
 import { Input } from '@/shared/components/ui/input'
-import { CloseCircle } from '@/shared/components/v3/icon/svg-components'
+import Icon from '@/shared/components/v3/icon'
 
 const Home = () => {
   return (
     <div className="flex flex-col gap-[10px] p-[40px]">
-      {/* default variant largeRound, default color primary */}
-      <Button left={<div>ㅁ</div>}>버튼명</Button>
-      <Button variant="mediumIcon" colors="special">
-        X
-      </Button>
-      <Button variant="mediumRound" colors="outlined" right={<div>ㅁ</div>}>
-        버튼명
-      </Button>
-      <Button variant="mediumSquare" colors="primary-loading" left={<div>ㅁ</div>}>
-        버튼명
-      </Button>
-      <Button variant="smallRound" colors="secondary" right={<div>ㅁ</div>}>
-        버튼명
-      </Button>
-      <Button variant="smallSquare" colors="selected" left={<div>ㅁ</div>}>
-        버튼명
-      </Button>
-      <Button variant="tinySquare" colors="tertiary">
-        버튼명
-      </Button>
-      <Button variant="tinySquare" colors="unselected">
-        버튼명
-      </Button>
+      <Text as="p" typography="subtitle1-bold">
+        example
+      </Text>
+      {/* a 태그가 됨 */}
+      <Text as="a" typography="text1-bold" href="" className="">
+        example
+      </Text>
       <Input type="text" placeholder="입력해주세요" variant="search" />
       <Input type="text" placeholder="입력해주세요" variant="default" />
       <Input
         type="text"
         placeholder="입력해주세요"
         variant="default"
-        right={<CloseCircle width="24" height="24" fill="#B6C1C9" stroke="#4C5052" />}
+        right={<Icon name="close-circle" className="size-[24px]" fill="#B6C1C9" stroke="#4C5052" />}
+      />
+      <Input
+        type="text"
+        placeholder="입력해주세요"
+        variant="info"
+        message="메세지입니다"
+        label="라벨명"
+        right={<Icon name="close-circle" className="size-[24px]" fill="#B6C1C9" stroke="#4C5052" />}
+      />
+      <Input
+        type="text"
+        placeholder="입력해주세요"
+        message="메세지입니다"
+        label="라벨명"
+        variant="default"
+        hasError={true}
+        right={<Icon name="close-circle" className="size-[24px]" fill="#B6C1C9" stroke="#4C5052" />}
       />
     </div>
   )
