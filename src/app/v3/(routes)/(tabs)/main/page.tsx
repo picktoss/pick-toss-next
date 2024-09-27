@@ -13,30 +13,66 @@ const Home = () => {
         example
       </Text>
       <Input type="text" placeholder="입력해주세요" variant="search" />
-      <Input type="text" placeholder="입력해주세요" variant="default" />
+      <Input placeholder="입력해주세요" variant="default" />
       <Input
-        type="text"
         placeholder="입력해주세요"
         variant="default"
-        right={<Icon name="close-circle" className="size-[24px]" fill="#B6C1C9" stroke="#4C5052" />}
+        right={
+          <Icon
+            name="close-circle"
+            className="mr-[6px] size-[24px]"
+            fill="#B6C1C9"
+            stroke="#4C5052"
+          />
+        }
       />
       <Input
-        type="text"
+        placeholder="입력해주세요"
+        variant="default"
+        message="메세지입니다"
+        label="라벨명"
+        right={
+          <Icon
+            name="close-circle"
+            className="mr-[6px] size-[24px]"
+            fill="#B6C1C9"
+            stroke="#4C5052"
+          />
+        }
+        TextComponent={Text}
+        IconComponent={Icon}
+      />
+      <Input
         placeholder="입력해주세요"
         variant="info"
         message="메세지입니다"
         label="라벨명"
-        right={<Icon name="close-circle" className="size-[24px]" fill="#B6C1C9" stroke="#4C5052" />}
+        essential={true}
+        right={
+          <Icon
+            name="close-circle"
+            className="mr-[6px] size-[24px]"
+            fill="#B6C1C9"
+            stroke="#4C5052"
+          />
+        }
       />
       <Input
-        type="text"
         placeholder="입력해주세요"
+        variant="default"
         message="메세지입니다"
         label="라벨명"
-        variant="default"
         hasError={true}
-        right={<Icon name="close-circle" className="size-[24px]" fill="#B6C1C9" stroke="#4C5052" />}
+        right={
+          <Icon
+            name="close-circle"
+            className="mr-[6px] size-[24px]"
+            fill="#B6C1C9"
+            stroke="#4C5052"
+          />
+        }
       />
+      <Input placeholder="입력해주세요" variant="note-title" />
     </div>
   )
 }
