@@ -19,7 +19,7 @@ const Home = () => {
         variant="default"
         right={
           <Icon
-            name="close-circle"
+            name="cancel-circle"
             className="mr-[6px] size-[24px]"
             fill="#B6C1C9"
             stroke="#4C5052"
@@ -33,7 +33,7 @@ const Home = () => {
         label="라벨명"
         right={
           <Icon
-            name="close-circle"
+            name="cancel-circle"
             className="mr-[6px] size-[24px]"
             fill="#B6C1C9"
             stroke="#4C5052"
@@ -50,7 +50,7 @@ const Home = () => {
         essential={true}
         right={
           <Icon
-            name="close-circle"
+            name="cancel-circle"
             className="mr-[6px] size-[24px]"
             fill="#B6C1C9"
             stroke="#4C5052"
@@ -65,7 +65,7 @@ const Home = () => {
         hasError={true}
         right={
           <Icon
-            name="close-circle"
+            name="cancel-circle"
             className="mr-[6px] size-[24px]"
             fill="#B6C1C9"
             stroke="#4C5052"
@@ -73,6 +73,7 @@ const Home = () => {
         }
       />
       <Input placeholder="입력해주세요" variant="note-title" />
+      <Icon name="person" fill="#FB8320" />
     </div>
   )
 }
