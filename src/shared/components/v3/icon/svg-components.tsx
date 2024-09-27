@@ -1163,3 +1163,22 @@ export const Download = ({ ...props }) => {
     </svg>
   )
 }
+
+// (*)
+export const Essential = ({ ...props }) => {
+  return (
+    <svg
+      width="7"
+      height="15"
+      viewBox="0 0 7 15"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M3.928 1V2.776L5.584 2.248L5.884 3.172L4.228 3.7L5.296 5.164L4.528 5.764L3.436 4.276L2.356 5.764L1.6 5.152L2.668 3.7L1 3.172L1.3 2.248L2.956 2.776L2.944 1H3.928Z"
+        fill="#FB8320"
+      />
+    </svg>
+  )
+}
