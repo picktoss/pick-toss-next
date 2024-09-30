@@ -4,7 +4,7 @@ import { cn } from '@/shared/lib/utils'
 import { cva, VariantProps } from 'class-variance-authority'
 import Text from '../text'
 import Icon from '../v3/icon'
-import { Label } from './label'
+import Label from './label'
 
 const inputVariants = cva(
   'flex h-[48px] w-full border bg-background-base-01 p-[12px] !text-subtitle2-medium text-text-primary ring-offset-transparent file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-subtitle2-medium placeholder:text-text-placeholder-01 focus-visible:outline-none disabled:cursor-not-allowed disabled:bg-background-disabled disabled:opacity-50 disabled:placeholder:text-text-disabled',
@@ -32,11 +32,8 @@ export interface InputProps
   label?: string
   essential?: boolean
   right?: React.ReactNode
-  message?: string
+  bottomText?: string
   hasError?: boolean
-  LabelComponent?: React.ElementType
-  TextComponent?: React.ElementType
-  IconComponent?: React.ElementType
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
@@ -48,31 +45,18 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       label,
       essential,
       right,
-      message,
+      bottomText,
       hasError = false,
-      LabelComponent = Label,
-      TextComponent = Text,
-      IconComponent = Icon,
       ...props
     },
     ref
   ) => {
-    const errorIcon =
-      hasError && IconComponent ? (
-        <IconComponent
-          name="close-circle"
-          className="size-[16px]"
-          fill="#F4502C"
-          stroke="#EBEFF3"
-        />
-      ) : null
-
     return (
       <div className={className}>
-        {label && LabelComponent && (
-          <LabelComponent essential={essential} hasError={hasError}>
+        {label && (
+          <Label essential={essential} hasError={hasError}>
             {label}
-          </LabelComponent>
+          </Label>
         )}
         <div className="relative w-full">
           <input
@@ -92,17 +76,19 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             </div>
           )}
         </div>
-        {message && TextComponent && (
-          <TextComponent
+        {bottomText && (
+          <Text
             typography="text2-medium"
             className={cn('mt-[8px] flex items-center gap-[5px] text-text-caption', {
               'text-text-info': variant === 'info',
               'text-text-critical': hasError,
             })}
           >
-            {errorIcon}
-            {message}
-          </TextComponent>
+            {hasError ? (
+              <Icon name="cancel-circle" className="size-[16px]" fill="#F4502C" stroke="#EBEFF3" />
+            ) : null}
+            {bottomText}
+          </Text>
         )}
       </div>
     )

@@ -29,7 +29,7 @@ const Home = () => {
       <Input
         placeholder="입력해주세요"
         variant="default"
-        message="메세지입니다"
+        bottomText="메세지입니다"
         label="라벨명"
         right={
           <Icon
@@ -39,13 +39,11 @@ const Home = () => {
             stroke="#4C5052"
           />
         }
-        TextComponent={Text}
-        IconComponent={Icon}
       />
       <Input
         placeholder="입력해주세요"
         variant="info"
-        message="메세지입니다"
+        bottomText="메세지입니다"
         label="라벨명"
         essential={true}
         right={
@@ -60,7 +58,7 @@ const Home = () => {
       <Input
         placeholder="입력해주세요"
         variant="default"
-        message="메세지입니다"
+        bottomText="메세지입니다"
         label="라벨명"
         hasError={true}
         right={
@@ -73,7 +71,6 @@ const Home = () => {
         }
       />
       <Input placeholder="입력해주세요" variant="note-title" />
-      <Icon name="person" fill="#FB8320" />
     </div>
   )
 }
