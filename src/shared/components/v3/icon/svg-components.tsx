@@ -6,7 +6,7 @@ function generateUUID() {
   })
 }
 
-export const Add = ({ ...props }) => {
+export const Plus = ({ ...props }) => {
   return (
     <svg
       width="20"
@@ -22,7 +22,7 @@ export const Add = ({ ...props }) => {
   )
 }
 
-export const AddCircle = ({ ...props }) => {
+export const PlusCircle = ({ ...props }) => {
   const { fill, stroke, ...rest } = props
 
   return (
@@ -96,7 +96,7 @@ export const Search = ({ ...props }) => {
   )
 }
 
-export const LeftArrow = ({ ...props }) => {
+export const ArrowLeft = ({ ...props }) => {
   return (
     <svg
       width="20"
@@ -123,7 +123,7 @@ export const LeftArrow = ({ ...props }) => {
   )
 }
 
-export const RightArrow = ({ ...props }) => {
+export const ArrowRight = ({ ...props }) => {
   return (
     <svg
       width="20"
@@ -150,7 +150,7 @@ export const RightArrow = ({ ...props }) => {
   )
 }
 
-export const Close = ({ ...props }) => {
+export const Cancel = ({ ...props }) => {
   return (
     <svg
       width="20"
@@ -178,7 +178,7 @@ export const Close = ({ ...props }) => {
   )
 }
 
-export const CloseCircle = ({ ...props }) => {
+export const CancelCircle = ({ ...props }) => {
   const { fill, stroke, ...rest } = props
 
   return (
@@ -587,24 +587,6 @@ export const Folder = ({ ...props }) => {
   )
 }
 
-export const Picktoss = ({ ...props }) => {
-  return (
-    <svg
-      width="20"
-      height="20"
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
-      <path
-        d="M17.1104 0.883103C17.1104 0.883103 17.0876 0.886781 17.0773 0.891212C12.3453 2.09202 7.30589 3.76434 3.57904 7.0713C1.99569 8.47894 0.736296 10.3127 0.605521 12.4895C0.400969 15.8944 2.98387 18.8202 6.37408 19.0239C7.76975 19.1077 9.16955 18.7044 10.3099 17.8889C11.4058 17.1036 12.1524 15.9362 12.7606 14.7275C13.7005 12.8544 16.3134 7.7454 16.3134 7.7454C16.4044 7.57154 16.2326 7.37433 16.0497 7.44669C15.1837 7.62955 13.2418 8.22512 12.4989 8.66037C12.3973 8.71993 12.2749 8.62165 12.3093 8.51006C12.6391 7.41606 13.3921 6.35002 13.9855 5.43097C14.9756 3.89424 16.0909 2.49131 17.3495 1.17276C17.3897 1.13224 17.4303 1.08417 17.4338 1.02628C17.4421 0.887874 17.2526 0.861334 17.1103 0.88562L17.1104 0.883103Z"
-        fill="white"
-      />
-    </svg>
-  )
-}
-
 export const Setting = ({ ...props }) => {
   const clipId = generateUUID()
 
@@ -848,7 +830,7 @@ export const Notion = ({ ...props }) => {
   )
 }
 
-export const DownChevron = ({ ...props }) => {
+export const ChevronDown = ({ ...props }) => {
   return (
     <svg
       width="16"
@@ -869,7 +851,7 @@ export const DownChevron = ({ ...props }) => {
   )
 }
 
-export const UpChevron = ({ ...props }) => {
+export const ChevronUp = ({ ...props }) => {
   return (
     <svg
       width="16"
@@ -890,7 +872,7 @@ export const UpChevron = ({ ...props }) => {
   )
 }
 
-export const LeftChevron = ({ ...props }) => {
+export const ChevronLeft = ({ ...props }) => {
   return (
     <svg
       width="16"
@@ -911,7 +893,7 @@ export const LeftChevron = ({ ...props }) => {
   )
 }
 
-export const RightChevron = ({ ...props }) => {
+export const ChevronRight = ({ ...props }) => {
   return (
     <svg
       width="16"
@@ -932,7 +914,7 @@ export const RightChevron = ({ ...props }) => {
   )
 }
 
-export const LeftTriangle = ({ ...props }) => {
+export const TriangleLeft = ({ ...props }) => {
   return (
     <svg
       width="16"
@@ -947,7 +929,7 @@ export const LeftTriangle = ({ ...props }) => {
   )
 }
 
-export const RightTriangle = ({ ...props }) => {
+export const TriangleRight = ({ ...props }) => {
   return (
     <svg
       width="16"
@@ -1159,6 +1141,120 @@ export const Download = ({ ...props }) => {
         stroke="currentColor"
         strokeWidth="1.37065"
         strokeLinecap="square"
+      />
+    </svg>
+  )
+}
+
+// (*)
+export const Asterisk = ({ ...props }) => {
+  return (
+    <svg
+      width="7"
+      height="15"
+      viewBox="0 0 7 15"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M3.928 1V2.776L5.584 2.248L5.884 3.172L4.228 3.7L5.296 5.164L4.528 5.764L3.436 4.276L2.356 5.764L1.6 5.152L2.668 3.7L1 3.172L1.3 2.248L2.956 2.776L2.944 1H3.928Z"
+        fill="#FB8320"
+      />
+    </svg>
+  )
+}
+
+// GNB
+export const Person = ({ ...props }) => {
+  const { fill, ...rest } = props
+
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...rest}
+    >
+      <circle cx="12" cy="6" r="5" fill={(fill as string) ?? '#D3DCE4'} />
+      <path
+        d="M22 20.3269C22 24.3734 17.5228 23.9903 12 23.9903C6.47715 23.9903 2 24.3734 2 20.3269C2 16.2803 6.47715 13 12 13C17.5228 13 22 16.2803 22 20.3269Z"
+        fill={(fill as string) ?? '#D3DCE4'}
+      />
+    </svg>
+  )
+}
+
+export const Planet = ({ ...props }) => {
+  const { fill, ...rest } = props
+  const clipId = generateUUID()
+
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...rest}
+    >
+      <g clip-path={`url(#${clipId})`}>
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M0.715456 23.1813C2.26657 24.7324 6.01863 23.6774 10.2426 20.8285C10.811 20.941 11.3986 21 12 21C16.9706 21 21 16.9706 21 12C21 11.412 20.9436 10.8371 20.8359 10.2806C23.7569 5.99919 24.8529 2.18057 23.2845 0.612185C21.7043 -0.9681 17.8395 0.156629 13.5186 3.12759C13.025 3.04369 12.5176 3 12 3C7.02944 3 3 7.02944 3 12C3 12.5309 3.04598 13.0511 3.13416 13.5568C0.235651 17.8204 -0.847566 21.6182 0.715456 23.1813ZM2.53126 19.7402C3.08904 20.298 4.45617 19.9469 6.24551 18.9203C6.23825 18.9142 6.231 18.9082 6.22376 18.9021C7.08452 18.4667 7.9482 17.7608 8.98693 16.681C9.15617 16.5051 8.86763 16.1874 8.65899 16.3142C7.14643 17.2329 5.94069 17.5613 5.05767 17.7279C4.5864 17.1573 4.18411 16.5277 3.86357 15.8518C2.51134 17.7242 1.92687 19.1358 2.53126 19.7402ZM19.8218 2.44962C20.3906 3.01837 20.0144 4.42862 18.9405 6.26995C18.1021 5.25558 17.0456 4.42809 15.8428 3.85932C17.7601 2.4614 19.2123 1.84008 19.8218 2.44962Z"
+          fill={(fill as string) ?? '#D3DCE4'}
+        />
+      </g>
+      <defs>
+        <clipPath id={clipId}>
+          <rect width="24" height="24" fill="white" />
+        </clipPath>
+      </defs>
+    </svg>
+  )
+}
+
+export const QuizNote = ({ ...props }) => {
+  const { fill, ...rest } = props
+
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...rest}
+    >
+      <path
+        d="M1 4.32722C1 3.57554 1.57318 2.94789 2.32177 2.87984C5.04576 2.6322 7.78193 3.19924 10.1832 4.50901L12 5.5L13.8168 4.50901C16.2181 3.19924 18.9542 2.6322 21.6782 2.87984C22.4268 2.94789 23 3.57554 23 4.32722V18.5293C23 19.2951 22.3065 19.8739 21.553 19.7369C18.9304 19.2601 16.2236 19.6962 13.8835 20.9726L12.7689 21.5806C12.2896 21.842 11.7104 21.842 11.2311 21.5806L10.1165 20.9726C7.77636 19.6962 5.06956 19.2601 2.44698 19.7369C1.69354 19.8739 1 19.2951 1 18.5293V4.32722Z"
+        fill={(fill as string) ?? '#D3DCE4'}
+      />
+      <circle cx="6.95" cy="12.25" r="1.25" fill="white" />
+      <circle cx="11.95" cy="12.25" r="1.25" fill="white" />
+      <circle cx="16.95" cy="12.25" r="1.25" fill="white" />
+    </svg>
+  )
+}
+
+export const Picktoss = ({ ...props }) => {
+  const { fill, ...rest } = props
+
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...rest}
+    >
+      <path
+        d="M17.1104 0.883103C17.1104 0.883103 17.0876 0.886781 17.0773 0.891212C12.3453 2.09202 7.30589 3.76434 3.57904 7.0713C1.99569 8.47894 0.736296 10.3127 0.605521 12.4895C0.400969 15.8944 2.98387 18.8202 6.37408 19.0239C7.76975 19.1077 9.16955 18.7044 10.3099 17.8889C11.4058 17.1036 12.1524 15.9362 12.7606 14.7275C13.7005 12.8544 16.3134 7.7454 16.3134 7.7454C16.4044 7.57154 16.2326 7.37433 16.0497 7.44669C15.1837 7.62955 13.2418 8.22512 12.4989 8.66037C12.3973 8.71993 12.2749 8.62165 12.3093 8.51006C12.6391 7.41606 13.3921 6.35002 13.9855 5.43097C14.9756 3.89424 16.0909 2.49131 17.3495 1.17276C17.3897 1.13224 17.4303 1.08417 17.4338 1.02628C17.4421 0.887874 17.2526 0.861334 17.1103 0.88562L17.1104 0.883103Z"
+        fill={(fill as string) ?? '#D3DCE4'}
       />
     </svg>
   )
