@@ -2,7 +2,6 @@
 
 import { Button } from './ui/button'
 import Link from 'next/link'
-import { findActiveNavItem, navigationItems } from '@/constants/navigation-items'
 import { useMemo } from 'react'
 import { useSelectedLayoutSegments } from 'next/navigation'
 import { cn } from '@/shared/lib/utils'
@@ -17,6 +16,7 @@ import { useSession } from 'next-auth/react'
 import { AIPickDialog } from './ai-pick-dialog'
 import { CreateDocumentProtector } from './create-document-protector'
 import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
+import { findActiveNavItem } from './bottom-navigation'
 
 /** @deprecated v2임 */
 export default function LeftSidebar() {
@@ -34,7 +34,7 @@ export default function LeftSidebar() {
   const activeItem = useMemo(() => findActiveNavItem(segments), [segments])
 
   return (
-    <div className="fixed left-0 z-50 flex h-screen w-[240px] flex-col items-center border-r border-gray-04 bg-white py-[24px]">
+    <div className="border-gray-04 fixed left-0 z-50 flex h-screen w-[240px] flex-col items-center border-r bg-white py-[24px]">
       <div className="mb-[24px] flex h-[48px] items-center justify-center">
         <Link href="/main">
           <LogoIcon />
@@ -43,7 +43,7 @@ export default function LeftSidebar() {
       <div className="mb-[35px]">
         <CreateDocumentProtector
           skeleton={
-            <Button className="h-[47px] w-[151px] gap-[13px] rounded-[16px] bg-orange-05 hover:bg-orange-05/90">
+            <Button className="bg-orange-05 hover:bg-orange-05/90 h-[47px] w-[151px] gap-[13px] rounded-[16px]">
               <span className="text-body2-bold">노트 추가하기</span>
               <PlusIcon />
             </Button>
@@ -120,9 +120,9 @@ export default function LeftSidebar() {
               {possessDocumentCount}/{freePlanMaxPossessDocumentCount}
             </div>
             <div className="relative h-[4px] overflow-hidden rounded-full *:h-full">
-              <div className="w-full bg-gray-02" />
+              <div className="bg-gray-02 w-full" />
               <div
-                className="absolute left-0 top-0 bg-orange-05"
+                className="bg-orange-05 absolute left-0 top-0"
                 style={{ width: `${uploadableRate}%` }}
               />
             </div>
@@ -142,7 +142,7 @@ const AddNoteButton = () => {
 
   return (
     <Button
-      className="h-[47px] w-[151px] gap-[13px] rounded-[16px] bg-orange-05 hover:bg-orange-05/90"
+      className="bg-orange-05 hover:bg-orange-05/90 h-[47px] w-[151px] gap-[13px] rounded-[16px]"
       onClick={() =>
         clickedEvent({
           buttonType: 'addNote',

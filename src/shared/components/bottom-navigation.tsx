@@ -4,6 +4,7 @@ import { cn } from '@/shared/lib/utils'
 import Link from 'next/link'
 import { useSelectedLayoutSegments } from 'next/navigation'
 import { useMemo } from 'react'
+import Icon from './v3/icon'
 
 export const navigationItems = [
   {
@@ -11,14 +12,11 @@ export const navigationItems = [
     title: '홈',
     icon: ({ isActive }: { isActive: boolean }) => {
       return (
-        <div className="flex-center size-[24px]">
-          <div
-            className={cn(
-              'size-[18px] rounded-full',
-              isActive ? 'bg-icon-primary' : 'bg-icon-disabled'
-            )}
-          />
-        </div>
+        <Icon
+          name="picktoss"
+          className="size-[24px]"
+          fill={isActive ? 'var(--color-orange-500)' : 'var(--color-gray-200)'}
+        />
       )
     },
     segments: ['main'],
@@ -28,14 +26,11 @@ export const navigationItems = [
     title: '퀴즈 노트',
     icon: ({ isActive }: { isActive: boolean }) => {
       return (
-        <div className="flex-center size-[24px]">
-          <div
-            className={cn(
-              'size-[18px] rounded-full',
-              isActive ? 'bg-icon-primary' : 'bg-icon-disabled'
-            )}
-          />
-        </div>
+        <Icon
+          name="quiz-note"
+          className="size-[24px]"
+          fill={isActive ? 'var(--color-orange-500)' : 'var(--color-gray-200)'}
+        />
       )
     },
     segments: ['note'],
@@ -45,14 +40,11 @@ export const navigationItems = [
     title: '컬렉션',
     icon: ({ isActive }: { isActive: boolean }) => {
       return (
-        <div className="flex-center size-[24px]">
-          <div
-            className={cn(
-              'size-[18px] rounded-full',
-              isActive ? 'bg-icon-primary' : 'bg-icon-disabled'
-            )}
-          />
-        </div>
+        <Icon
+          name="planet"
+          className="size-[24px]"
+          fill={isActive ? 'var(--color-orange-500)' : 'var(--color-gray-200)'}
+        />
       )
     },
     segments: ['collection'],
@@ -62,14 +54,11 @@ export const navigationItems = [
     title: '마이',
     icon: ({ isActive }: { isActive: boolean }) => {
       return (
-        <div className="flex-center size-[24px]">
-          <div
-            className={cn(
-              'size-[18px] rounded-full',
-              isActive ? 'bg-icon-primary' : 'bg-icon-disabled'
-            )}
-          />
-        </div>
+        <Icon
+          name="person"
+          className="size-[24px]"
+          fill={isActive ? 'var(--color-orange-500)' : 'var(--color-gray-200)'}
+        />
       )
     },
     segments: ['profile'],
@@ -82,16 +71,23 @@ const BottomNavigation = () => {
   const activeItem = useMemo(() => findActiveNavItem(segments), [segments])
 
   return (
-    <div className="h-[54px] w-full">
-      <div className="flex justify-between px-[50px]">
+    <div className="fixed bottom-0 h-[88px] w-full max-w-[430px] border border-border-default pb-[24px] pt-[18px]">
+      <div className="flex px-[20px]">
         {navigationItems.map((item) => {
           const { title, href, icon: Icon } = item
           const isActive = activeItem === item
 
           return (
-            <Link key={title} href={href} className="flex flex-col items-center gap-[4px]">
+            <Link key={title} href={href} className="flex flex-1 flex-col items-center gap-[4px]">
               <Icon isActive={isActive} />
-              <span className={cn('text-gray-06', isActive && 'text-orange-06')}>{title}</span>
+              <span
+                className={cn(
+                  'text-text2-bold text-button-text-disabled',
+                  isActive && 'text-button-text-primary'
+                )}
+              >
+                {title}
+              </span>
             </Link>
           )
         })}
@@ -102,7 +98,7 @@ const BottomNavigation = () => {
 
 export default BottomNavigation
 
-const findActiveNavItem = (currentSegments: string[]) => {
+export const findActiveNavItem = (currentSegments: string[]) => {
   const activeItem = navigationItems.find((item) => {
     return item.segments.some((segment) => currentSegments.includes(segment))
   })
