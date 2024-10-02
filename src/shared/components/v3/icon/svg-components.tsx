@@ -1147,7 +1147,7 @@ export const Download = ({ ...props }) => {
 }
 
 // (*)
-export const Essential = ({ ...props }) => {
+export const Asterisk = ({ ...props }) => {
   return (
     <svg
       width="7"

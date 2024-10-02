@@ -13,11 +13,8 @@ const inputVariants = cva(
       variant: {
         default:
           'rounded-[8px] border-none bg-background-base-02 focus:bg-background-base-01 focus:ring-1 focus:ring-border-focused',
-        info: 'rounded-[8px] border-none bg-background-base-02 focus:bg-background-base-01 focus:ring-1 focus:ring-border-focused',
-        search:
+        round:
           'rounded-[56px] border-none bg-background-base-03 px-[16px] py-[12px] placeholder:text-text-placeholder-01',
-        'note-title':
-          'h-fit border-none px-[16px] pb-[19px] pt-[24px] !text-title2 placeholder:text-text-placeholder-02',
       },
     },
     defaultVariants: {
@@ -32,7 +29,7 @@ export interface InputProps
   label?: string
   essential?: boolean
   right?: React.ReactNode
-  bottomText?: string
+  bottomText?: string | { text: string; type: 'info' }
   hasError?: boolean
 }
 
@@ -58,6 +55,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             {label}
           </Label>
         )}
+
         <div className="relative w-full">
           <input
             type={type}
@@ -76,18 +74,19 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             </div>
           )}
         </div>
+
         {bottomText && (
           <Text
             typography="text2-medium"
             className={cn('mt-[8px] flex items-center gap-[5px] text-text-caption', {
-              'text-text-info': variant === 'info',
+              'text-text-info': bottomText instanceof Object && bottomText.type === 'info',
               'text-text-critical': hasError,
             })}
           >
             {hasError ? (
               <Icon name="cancel-circle" className="size-[16px]" fill="#F4502C" stroke="#EBEFF3" />
             ) : null}
-            {bottomText}
+            {bottomText instanceof Object ? bottomText.text : bottomText}
           </Text>
         )}
       </div>

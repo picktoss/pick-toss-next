@@ -12,11 +12,10 @@ const Home = () => {
       <Text as="a" typography="text1-bold" href="" className="">
         example
       </Text>
-      <Input type="text" placeholder="입력해주세요" variant="search" />
-      <Input placeholder="입력해주세요" variant="default" />
+      <Input type="text" placeholder="입력해주세요" variant="round" />
+      <Input placeholder="입력해주세요" />
       <Input
         placeholder="입력해주세요"
-        variant="default"
         right={
           <Icon
             name="cancel-circle"
@@ -28,7 +27,6 @@ const Home = () => {
       />
       <Input
         placeholder="입력해주세요"
-        variant="default"
         bottomText="메세지입니다"
         label="라벨명"
         right={
@@ -42,8 +40,7 @@ const Home = () => {
       />
       <Input
         placeholder="입력해주세요"
-        variant="info"
-        bottomText="메세지입니다"
+        bottomText={{ text: '메세지입니다', type: 'info' }}
         label="라벨명"
         essential={true}
         right={
@@ -57,7 +54,6 @@ const Home = () => {
       />
       <Input
         placeholder="입력해주세요"
-        variant="default"
         bottomText="메세지입니다"
         label="라벨명"
         hasError={true}
@@ -70,7 +66,7 @@ const Home = () => {
           />
         }
       />
-      <Input placeholder="입력해주세요" variant="note-title" />
+      <Input placeholder="입력해주세요" />
     </div>
   )
 }

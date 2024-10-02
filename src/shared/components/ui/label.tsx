@@ -20,7 +20,7 @@ interface LabelProps
 
 const Label = React.forwardRef<React.ElementRef<typeof LabelPrimitive.Root>, LabelProps>(
   ({ className, essential = false, hasError = false, ...props }, ref) => {
-    const essentialIcon = essential ? <Icon name="essential" /> : null
+    const essentialIcon = essential ? <Icon name="asterisk" /> : null
 
     return (
       <LabelPrimitive.Root
