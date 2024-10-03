@@ -1,9 +1,9 @@
-import { HTMLAttributes, memo } from 'react'
+import { SVGAttributes, memo } from 'react'
 import * as SvgElement from './svg-components'
 
 type SvgElementKeys = keyof typeof SvgElement
 
-interface IconProps extends HTMLAttributes<HTMLElement> {
+interface IconProps extends SVGAttributes<SVGElement> {
   name: KebabCase<SvgElementKeys>
   className?: HTMLElement['className']
 }

@@ -5,17 +5,35 @@ import * as LabelPrimitive from '@radix-ui/react-label'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 import { cn } from '@/shared/lib/utils'
+import Icon from '../v3/icon'
 
 const labelVariants = cva(
-  'text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+  'mb-[8px] !flex items-center !text-text1-medium leading-none text-text-sub peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
 )
 
-const Label = React.forwardRef<
-  React.ElementRef<typeof LabelPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root> & VariantProps<typeof labelVariants>
->(({ className, ...props }, ref) => (
-  <LabelPrimitive.Root ref={ref} className={cn(labelVariants(), className)} {...props} />
-))
+interface LabelProps
+  extends React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root>,
+    VariantProps<typeof labelVariants> {
+  essential?: boolean
+  hasError?: boolean
+}
+
+const Label = React.forwardRef<React.ElementRef<typeof LabelPrimitive.Root>, LabelProps>(
+  ({ className, essential = false, hasError = false, ...props }, ref) => {
+    const essentialIcon = essential ? <Icon name="asterisk" /> : null
+
+    return (
+      <LabelPrimitive.Root
+        ref={ref}
+        className={cn(labelVariants(), className, hasError && 'text-text-critical')}
+        {...props}
+      >
+        <span>{props.children}</span>
+        {essentialIcon}
+      </LabelPrimitive.Root>
+    )
+  }
+)
 Label.displayName = LabelPrimitive.Root.displayName
 
-export { Label }
+export default Label
