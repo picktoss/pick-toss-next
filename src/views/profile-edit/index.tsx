@@ -7,7 +7,7 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { ChangeEvent, useState } from 'react'
 
-export default function EditForm() {
+const EditForm = () => {
   const { data: session } = useSession()
   const router = useRouter()
   const { toast } = useToast()
@@ -69,3 +69,5 @@ export default function EditForm() {
     </div>
   )
 }
+
+export default EditForm

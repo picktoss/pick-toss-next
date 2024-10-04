@@ -3,7 +3,8 @@ import { Button } from '@/shared/components/ui/button'
 import icons from '@/constants/icons'
 import Image from 'next/image'
 
-export default function SignOut() {
+// SignOut 컴포넌트
+const SignOut = () => {
   return (
     <form
       action={async () => {
@@ -21,3 +22,5 @@ export default function SignOut() {
     </form>
   )
 }
+
+export default SignOut

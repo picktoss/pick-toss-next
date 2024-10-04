@@ -11,7 +11,7 @@ import { ChangeEvent, useRef, useState } from 'react'
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 const codeRegex = /^[0-9]{6}$/
 
-export default function EmailSettingForm() {
+const EmailSettingForm = () => {
   const router = useRouter()
   const { user } = useUser()
   const { toast } = useToast()
@@ -140,3 +140,5 @@ export default function EmailSettingForm() {
     </div>
   )
 }
+
+export default EmailSettingForm

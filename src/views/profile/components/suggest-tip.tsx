@@ -2,7 +2,8 @@
 
 import { useSession } from 'next-auth/react'
 
-export function SuggestTip() {
+// SuggestTip 컴포넌트
+const SuggestTip = () => {
   const { data: session } = useSession()
   const user = session?.user.dto
   if (!user || user.email) return
@@ -13,3 +14,5 @@ export function SuggestTip() {
     </div>
   )
 }
+
+export default SuggestTip

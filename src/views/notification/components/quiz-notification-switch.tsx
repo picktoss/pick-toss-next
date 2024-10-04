@@ -4,7 +4,8 @@ import { useUpdateQuizNotificationMutation } from '@/actions/fetchers/user/updat
 import { Switch } from '@/shared/components/ui/switch'
 import { useSession } from 'next-auth/react'
 
-export default function QuizNotificationSwitch() {
+// QuizNotificationSwitch 컴포넌트
+const QuizNotificationSwitch = () => {
   const { data: session } = useSession()
   const { mutate: mutateUpdateQuiz } = useUpdateQuizNotificationMutation()
 
@@ -27,3 +28,5 @@ export default function QuizNotificationSwitch() {
     </div>
   )
 }
+
+export default QuizNotificationSwitch
