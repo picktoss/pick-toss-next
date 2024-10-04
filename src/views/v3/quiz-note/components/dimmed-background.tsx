@@ -7,11 +7,11 @@ const DimmedBackground = ({ isExpanded }: { isExpanded: boolean }) => {
   return (
     <div
       className={cn(
-        'absolute left-0 top-0 h-screen w-screen z-40 opacity-0 transition-all duration-300',
+        'fixed left-0 top-0 h-screen w-screen z-40 opacity-0 transition-all duration-300',
         isExpanded && 'opacity-100'
       )}
     >
-      <div className="absolute left-0 top-0 z-10 h-screen w-screen bg-black opacity-75"></div>
+      <div className="fixed left-0 top-0 z-10 h-screen w-screen bg-black opacity-75"></div>
       <div className="flex-center absolute bottom-[396px] right-[16px] z-20 h-[32px] w-[243px] rounded-[16px] bg-background-tooltip opacity-100">
         <Text as="span" typography="text2-medium" className="text-text-primary-inverse">
           노션 페이지를 수정해도 업데이트 할 수 있어요
