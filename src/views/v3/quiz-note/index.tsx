@@ -2,13 +2,15 @@
 
 import { cn } from '@/shared/lib/utils'
 import Header from './components/header'
-import note_img from './assets/note.png'
-import Image from 'next/image'
 import AnimatedButtons from './components/animate-buttons'
 import { useState } from 'react'
-import Text from '@/shared/components/text'
 import DimmedBackground from './components/dimmed-background'
 import BottomNavigation from '@/shared/components/bottom-navigation'
+import NoteCard from './components/note-card'
+import { QuizNoteProvider } from './context/quiz-note-context'
+// import note_img from './assets/note.png'
+// import Image from 'next/image'
+// import Text from '@/shared/components/text'
 
 const isDesktop = false
 
@@ -22,10 +24,12 @@ const QuizNote = () => {
         isDesktop && 'max-w-[430px]'
       )}
     >
-      <div className="flex grow flex-col bg-background-base-02 px-[14px]">
-        <Header />
-        <div className="flex-center grow overflow-y-scroll pt-[108px]">
+      <QuizNoteProvider>
+        <div className="flex grow flex-col bg-background-base-02 px-[14px]">
+          <Header />
+
           {/* 노트가 하나도 없을 경우 아래 렌더링 */}
+          {/* <div className="flex-center grow overflow-y-scroll pt-[108px]">
           <div className="flex-center relative size-[202px] flex-col">
             <Image src={note_img} alt="노트 작성" objectPosition="center" width={100} />
             <div className="flex-center mx-[12px] grow flex-col">
@@ -35,14 +39,19 @@ const QuizNote = () => {
               </Text>
             </div>
           </div>
+        </div> */}
 
           {/* 노트 리스트 렌더링 */}
-          <></>
-        </div>
+          <div className="flex grow flex-col gap-[8px] overflow-x-hidden overflow-y-scroll pt-[132px]">
+            {/* 리스트 길이만큼 map */}
+            <NoteCard />
+            <NoteCard />
+          </div>
 
-        <AnimatedButtons isExpanded={isExpanded} setIsExpanded={setIsExpanded} />
-        <DimmedBackground isExpanded={isExpanded} />
-      </div>
+          <AnimatedButtons isExpanded={isExpanded} setIsExpanded={setIsExpanded} />
+          <DimmedBackground isExpanded={isExpanded} />
+        </div>
+      </QuizNoteProvider>
       <BottomNavigation />
     </div>
   )
