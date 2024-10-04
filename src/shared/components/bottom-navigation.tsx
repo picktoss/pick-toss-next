@@ -1,36 +1,107 @@
 'use client'
 
-import { findActiveNavItem, navigationItems } from '@/constants/navigation-items'
 import { cn } from '@/shared/lib/utils'
 import Link from 'next/link'
 import { useSelectedLayoutSegments } from 'next/navigation'
 import { useMemo } from 'react'
+import Icon from './v3/icon'
 
-/** @deprecated v2임 */
-export default function BottomNavigation() {
+export const navigationItems = [
+  {
+    href: '/main',
+    title: '홈',
+    icon: ({ isActive }: { isActive: boolean }) => {
+      return (
+        <Icon
+          name="picktoss"
+          className="size-[24px]"
+          fill={isActive ? 'var(--color-orange-500)' : 'var(--color-gray-200)'}
+        />
+      )
+    },
+    segments: ['main'],
+  },
+  {
+    href: '/note',
+    title: '퀴즈 노트',
+    icon: ({ isActive }: { isActive: boolean }) => {
+      return (
+        <Icon
+          name="quiz-note"
+          className="size-[24px]"
+          fill={isActive ? 'var(--color-orange-500)' : 'var(--color-gray-200)'}
+        />
+      )
+    },
+    segments: ['note'],
+  },
+  {
+    href: '/collection',
+    title: '컬렉션',
+    icon: ({ isActive }: { isActive: boolean }) => {
+      return (
+        <Icon
+          name="planet"
+          className="size-[24px]"
+          fill={isActive ? 'var(--color-orange-500)' : 'var(--color-gray-200)'}
+        />
+      )
+    },
+    segments: ['collection'],
+  },
+  {
+    href: '/profile',
+    title: '마이',
+    icon: ({ isActive }: { isActive: boolean }) => {
+      return (
+        <Icon
+          name="person"
+          className="size-[24px]"
+          fill={isActive ? 'var(--color-orange-500)' : 'var(--color-gray-200)'}
+        />
+      )
+    },
+    segments: ['profile'],
+  },
+]
+
+const BottomNavigation = () => {
   const segments = useSelectedLayoutSegments()
 
   const activeItem = useMemo(() => findActiveNavItem(segments), [segments])
 
   return (
-    <div className="w-full">
-      <div className="fixed bottom-0 flex h-[84px] w-full justify-around border-t border-gray-02 bg-white px-[20px] lg:hidden">
+    <div className="fixed bottom-0 h-[88px] w-full max-w-[430px] border border-border-default pb-[24px] pt-[18px]">
+      <div className="flex px-[20px]">
         {navigationItems.map((item) => {
           const { title, href, icon: Icon } = item
           const isActive = activeItem === item
 
           return (
-            <Link
-              key={title}
-              href={href}
-              className="flex flex-1 flex-col items-center gap-1 pt-[16px] text-tag"
-            >
+            <Link key={title} href={href} className="flex flex-1 flex-col items-center gap-[4px]">
               <Icon isActive={isActive} />
-              <span className={cn('text-gray-06', isActive && 'text-orange-06')}>{title}</span>
+              <span
+                className={cn(
+                  'text-text2-bold text-button-text-disabled',
+                  isActive && 'text-button-text-primary'
+                )}
+              >
+                {title}
+              </span>
             </Link>
           )
         })}
       </div>
     </div>
   )
+}
+
+export default BottomNavigation
+
+export const findActiveNavItem = (currentSegments: string[]) => {
+  const activeItem = navigationItems.find((item) => {
+    return item.segments.some((segment) => currentSegments.includes(segment))
+  })
+
+  return activeItem
 }
