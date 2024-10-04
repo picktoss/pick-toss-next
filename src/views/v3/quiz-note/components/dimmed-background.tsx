@@ -2,7 +2,6 @@ import Text from '@/shared/components/text'
 import { addNoteText } from '../constants/add-note-buttons'
 import { cn } from '@/shared/lib/utils'
 
-// DimmedBackground 컴포넌트
 const DimmedBackground = ({ isExpanded }: { isExpanded: boolean }) => {
   return (
     <div

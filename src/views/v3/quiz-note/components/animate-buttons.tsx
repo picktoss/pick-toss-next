@@ -5,7 +5,12 @@ import { Button, ButtonProps } from '@/shared/components/ui/button'
 import Icon, { IconProps } from '@/shared/components/v3/icon'
 import { useEffect, useState } from 'react'
 import { cn } from '@/shared/lib/utils'
-import { addNoteButtons } from '../constants/add-note-buttons'
+
+const addNoteButtons = [
+  { key: 'pencil', position: 76 },
+  { key: 'clip', position: 144 },
+  { key: 'notion', position: 212 },
+] as const
 
 type Custom = number | 'plus' | 'cancel'
 
@@ -14,7 +19,6 @@ interface Props {
   setIsExpanded: (isExpanded: boolean) => void
 }
 
-// AnimatedButtons 컴포넌트
 const AnimatedButtons = ({ isExpanded, setIsExpanded }: Props) => {
   const [isFirstRender, setIsFirstRender] = useState(true)
 
