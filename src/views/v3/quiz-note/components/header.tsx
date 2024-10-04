@@ -1,5 +1,6 @@
 import Icon, { IconProps } from '@/shared/components/v3/icon'
 
+// Header 컴포넌트
 const Header = () => {
   const iconList = ['search', 'sort', 'menu-dots'] as IconProps['name'][]
 
