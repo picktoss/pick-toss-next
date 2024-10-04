@@ -6,7 +6,7 @@ const DimmedBackground = ({ isExpanded }: { isExpanded: boolean }) => {
   return (
     <div
       className={cn(
-        'absolute left-0 top-0 z-10 h-screen w-screen opacity-0 transition-opacity duration-200',
+        'absolute left-0 top-0 h-screen w-screen z-40 opacity-0 transition-all duration-300',
         isExpanded && 'opacity-100'
       )}
     >

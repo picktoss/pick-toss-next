@@ -78,36 +78,38 @@ const AnimatedButtons = ({ isExpanded, setIsExpanded }: Props) => {
   )
 
   return (
-    <div className="relative mb-[32px] mr-[8px] self-end">
-      <AnimatePresence>
-        {!isExpanded &&
-          renderMotionButton(
-            'plus',
-            'plus',
-            'plus',
-            { variant: 'mediumIcon', colors: 'special' },
-            () => setIsExpanded(true)
+    <div className="absolute bottom-[120px] right-[22px]">
+      <div className="relative">
+        <AnimatePresence>
+          {!isExpanded &&
+            renderMotionButton(
+              'plus',
+              'plus',
+              'plus',
+              { variant: 'mediumIcon', colors: 'special' },
+              () => setIsExpanded(true)
+            )}
+
+          {isExpanded && (
+            <>
+              {renderMotionButton(
+                'cancel',
+                'cancel',
+                'cancel',
+                { variant: 'mediumIcon', colors: 'tertiary' },
+                () => setIsExpanded(false)
+              )}
+
+              {addNoteButtons.map((button) =>
+                renderMotionButton(button.key, button.position, button.key, {
+                  variant: 'mediumIcon',
+                  colors: 'outlined',
+                })
+              )}
+            </>
           )}
-
-        {isExpanded && (
-          <>
-            {renderMotionButton(
-              'cancel',
-              'cancel',
-              'cancel',
-              { variant: 'mediumIcon', colors: 'tertiary' },
-              () => setIsExpanded(false)
-            )}
-
-            {addNoteButtons.map((button) =>
-              renderMotionButton(button.key, button.position, button.key, {
-                variant: 'mediumIcon',
-                colors: 'outlined',
-              })
-            )}
-          </>
-        )}
-      </AnimatePresence>
+        </AnimatePresence>
+      </div>
     </div>
   )
 }

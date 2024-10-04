@@ -23,7 +23,7 @@ const QuizNote = () => {
     >
       <div className="flex grow flex-col bg-background-base-02 px-[14px]">
         <Header />
-        <div className="flex-center grow">
+        <div className="flex-center grow pb-[88px] pt-[108px]">
           {/* 노트가 하나도 없을 경우 아래 렌더링 */}
           <div className="flex-center relative size-[202px] flex-col">
             <Image src={note_img} alt="노트 작성" objectPosition="center" width={100} />
@@ -42,7 +42,7 @@ const QuizNote = () => {
         <AnimatedButtons isExpanded={isExpanded} setIsExpanded={setIsExpanded} />
         <DimmedBackground isExpanded={isExpanded} />
       </div>
-      <div className="h-[88px] w-full bg-background-base-01"></div>
+      <div className="fixed bottom-0 left-0 z-30 h-[88px] w-full bg-background-base-01"></div>
     </div>
   )
 }
