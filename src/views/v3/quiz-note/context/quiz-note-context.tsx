@@ -1,12 +1,15 @@
 'use client'
 
-import { PropsWithChildren, createContext, useContext, useMemo, useState } from 'react'
+import { PropsWithChildren, createContext, useCallback, useContext, useMemo, useState } from 'react'
 
 interface QuizNoteContextValues {
   isDrawerOpen: boolean
   setIsDrawerOpen: (value: boolean) => void
   selectedFolderId: string
   setSelectedFolderId: (id: string) => void
+  dialogState: { isOpen: boolean; type: 'create' | 'edit' | 'delete' }
+  setDialogState: (state: QuizNoteContextValues['dialogState']) => void
+  initDialog: () => void
 }
 
 const QuizNoteContext = createContext<QuizNoteContextValues | null>(null)
@@ -14,6 +17,12 @@ const QuizNoteContext = createContext<QuizNoteContextValues | null>(null)
 export function QuizNoteProvider({ children }: PropsWithChildren) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   const [selectedFolderId, setSelectedFolderId] = useState('')
+  const [dialogState, setDialogState] = useState<QuizNoteContextValues['dialogState']>({
+    isOpen: false,
+    type: 'create',
+  })
+
+  const initDialog = useCallback(() => setDialogState({ isOpen: false, type: 'create' }), [])
 
   const values = useMemo(
     () => ({
@@ -21,8 +30,19 @@ export function QuizNoteProvider({ children }: PropsWithChildren) {
       setIsDrawerOpen,
       selectedFolderId,
       setSelectedFolderId,
+      dialogState,
+      setDialogState,
+      initDialog,
     }),
-    [isDrawerOpen, setIsDrawerOpen, selectedFolderId, setSelectedFolderId]
+    [
+      isDrawerOpen,
+      setIsDrawerOpen,
+      selectedFolderId,
+      setSelectedFolderId,
+      dialogState,
+      setDialogState,
+      initDialog,
+    ]
   )
 
   return <QuizNoteContext.Provider value={values}>{children}</QuizNoteContext.Provider>

@@ -3,10 +3,11 @@ import Icon from '@/shared/components/v3/icon'
 import { EllipseIcon, FolderFillIcon } from './svg-icons'
 
 const NoteCard = () => {
+  // data : 노트 제목, 미리보기 문장, 문제 수, 글자수, 소속 폴더 이름 필요
   return (
     <div className="flex h-[104px] max-w-full items-center rounded-[16px] bg-white px-[16px] pb-[20px] pt-[17px]">
       <NoteTypeIcon type="write" />
-      <div className="ml-[16px] flex w-fit flex-col">
+      <div className="ml-[16px] flex w-full flex-col">
         <h4 className="w-fit text-subtitle2-bold">최근 이슈</h4>
         <Text
           as="p"

@@ -8,6 +8,7 @@ import DimmedBackground from './components/dimmed-background'
 import BottomNavigation from '@/shared/components/bottom-navigation'
 import NoteCard from './components/note-card'
 import { QuizNoteProvider } from './context/quiz-note-context'
+import QuizNoteDialog from './components/quiz-note-dialog'
 // import note_img from './assets/note.png'
 // import Image from 'next/image'
 // import Text from '@/shared/components/text'
@@ -45,6 +46,8 @@ const QuizNote = () => {
 
           <AnimatedButtons isExpanded={isExpanded} setIsExpanded={setIsExpanded} />
           <DimmedBackground isExpanded={isExpanded} />
+
+          <QuizNoteDialog />
         </div>
       </QuizNoteProvider>
       <BottomNavigation />

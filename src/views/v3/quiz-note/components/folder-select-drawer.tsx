@@ -6,7 +6,7 @@ import { cn } from '@/shared/lib/utils'
 import { useEffect } from 'react'
 
 const FolderSelectDrawer = () => {
-  const { isDrawerOpen, setIsDrawerOpen, selectedFolderId, setSelectedFolderId } =
+  const { isDrawerOpen, setIsDrawerOpen, selectedFolderId, setSelectedFolderId, setDialogState } =
     useQuizNoteContext()
 
   // 목데이터
@@ -77,7 +77,10 @@ const FolderSelectDrawer = () => {
               ))}
             </div>
           </div>
-          <button className="my-[7px] flex items-center px-[20px] py-[10px]">
+          <button
+            className="my-[7px] flex items-center px-[20px] py-[10px]"
+            onClick={() => setDialogState({ isOpen: true, type: 'create' })}
+          >
             <Icon name="plus-circle" className="mr-[16px]" />
             폴더 추가
           </button>
