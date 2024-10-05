@@ -4,6 +4,7 @@ import Text from '@/shared/components/text'
 import { cn } from '@/shared/lib/utils'
 import { useState } from 'react'
 import Collection from '../components/collection'
+import CollectionList from '../components/collection-list'
 
 const tabs = [
   { key: 'create-collection', label: '만든 컬렉션' },
@@ -37,23 +38,21 @@ const MyCollection = () => {
         ))}
       </div>
 
-      <div className="h-[calc(100dvh-88px-114px)] overflow-y-scroll bg-gray-50 px-[16px] pb-[60px] pt-[24px]">
-        <div className="grid grid-cols-2 gap-[11px]">
-          {Array.from({ length: 10 }).map((_, idx) => (
-            <Collection
-              key={idx}
-              emoji="🔥"
-              title="파이썬 OX"
-              category="IT·프로그래밍"
-              problemCount={35}
-              lastUpdated="2일 전"
-              href="#"
-              isBookMarked={true}
-              bookMarkCount={123}
-            />
-          ))}
-        </div>
-      </div>
+      <CollectionList>
+        {Array.from({ length: 10 }).map((_, idx) => (
+          <Collection
+            key={idx}
+            emoji="🔥"
+            title="파이썬 OX"
+            category="IT·프로그래밍"
+            problemCount={35}
+            lastUpdated="2일 전"
+            href="#"
+            isBookMarked={true}
+            bookMarkCount={123}
+          />
+        ))}
+      </CollectionList>
     </>
   )
 }
