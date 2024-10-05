@@ -39,7 +39,7 @@ const Header = () => {
   }
 
   return (
-    <div className="fixed left-0 top-0 z-50 flex h-[108px] w-full flex-col justify-end px-[14px]">
+    <div className="fixed right-1/2 top-0 z-50 flex h-[108px] w-full max-w-[430px] translate-x-1/2 flex-col justify-end px-[14px]">
       <div className="flex h-1/2 w-full items-center justify-between">
         <FolderSelectDrawer />
 

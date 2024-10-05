@@ -76,38 +76,44 @@ const AnimatedButtons = ({ isExpanded, setIsExpanded }: Props) => {
   )
 
   return (
-    <div className={cn('absolute bottom-[120px] right-[22px]', isDrawerOpen && 'hidden')}>
-      <div className="relative">
-        <AnimatePresence>
-          {!isExpanded &&
-            renderMotionButton(
-              'plus',
-              'plus',
-              'plus',
-              { variant: 'mediumIcon', colors: 'special' },
-              () => setIsExpanded(true)
+    <div
+      className={cn(
+        'relative bottom-[32px] right-[8px]',
+        isDrawerOpen && 'hidden'
+        // 'bottom-0 right-0'
+      )}
+    >
+      {/* <div className="relative"> */}
+      <AnimatePresence>
+        {!isExpanded &&
+          renderMotionButton(
+            'plus',
+            'plus',
+            'plus',
+            { variant: 'mediumIcon', colors: 'special' },
+            () => setIsExpanded(true)
+          )}
+
+        {isExpanded && (
+          <>
+            {renderMotionButton(
+              'cancel',
+              'cancel',
+              'cancel',
+              { variant: 'mediumIcon', colors: 'tertiary' },
+              () => setIsExpanded(false)
             )}
 
-          {isExpanded && (
-            <>
-              {renderMotionButton(
-                'cancel',
-                'cancel',
-                'cancel',
-                { variant: 'mediumIcon', colors: 'tertiary' },
-                () => setIsExpanded(false)
-              )}
-
-              {addNoteButtons.map((button) =>
-                renderMotionButton(button.key, button.position, button.key, {
-                  variant: 'mediumIcon',
-                  colors: 'outlined',
-                })
-              )}
-            </>
-          )}
-        </AnimatePresence>
-      </div>
+            {addNoteButtons.map((button) =>
+              renderMotionButton(button.key, button.position, button.key, {
+                variant: 'mediumIcon',
+                colors: 'outlined',
+              })
+            )}
+          </>
+        )}
+      </AnimatePresence>
+      {/* </div> */}
     </div>
   )
 }

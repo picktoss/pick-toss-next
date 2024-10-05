@@ -2,9 +2,34 @@ import Text from '@/shared/components/text'
 import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from '@/shared/components/ui/drawer'
 import Icon from '@/shared/components/v3/icon'
 import { useQuizNoteContext } from '../context/quiz-note-context'
+import { cn } from '@/shared/lib/utils'
+import { useEffect } from 'react'
 
 const FolderSelectDrawer = () => {
-  const { isDrawerOpen, setIsDrawerOpen } = useQuizNoteContext()
+  const { isDrawerOpen, setIsDrawerOpen, selectedFolderId, setSelectedFolderId } =
+    useQuizNoteContext()
+
+  // 목데이터
+  const folderList = [
+    {
+      id: '0',
+      folderName: '📊 전공 공부',
+      noteAmount: 3,
+    },
+    {
+      id: '1',
+      folderName: '📊 전공 공부',
+      noteAmount: 12,
+    },
+    {
+      id: '2',
+      folderName: '📊 전공 공부',
+      noteAmount: 15,
+    },
+  ]
+  useEffect(() => {
+    setSelectedFolderId('0')
+  }, [])
 
   return (
     <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
@@ -36,22 +61,20 @@ const FolderSelectDrawer = () => {
             </div>
             <div className="mb-[11px] mt-[9px] flex flex-col">
               {/* 폴더 개수만큼 렌더링 */}
-              <button className="flex items-center justify-between py-[10px]">
-                <Text as="span" typography="subtitle2-medium">
-                  📊 전공 공부
-                </Text>
-                <Text as="span" typography="text1-medium" className="text-text-caption">
-                  노트 3개
-                </Text>
-              </button>
-              <button className="flex items-center justify-between py-[10px]">
-                <Text as="span" typography="subtitle2-medium">
-                  📊 전공 공부
-                </Text>
-                <Text as="span" typography="text1-medium" className="text-text-caption">
-                  노트 12개
-                </Text>
-              </button>
+              {folderList.map((folder) => (
+                <button key={folder.id} className="flex items-center justify-between py-[10px]">
+                  <Text
+                    as="span"
+                    typography="subtitle2-medium"
+                    className={cn(folder.id === selectedFolderId && 'text-text-accent')}
+                  >
+                    {folder.folderName}
+                  </Text>
+                  <Text as="span" typography="text1-medium" className="text-text-caption">
+                    노트 {folder.noteAmount}개
+                  </Text>
+                </button>
+              ))}
             </div>
           </div>
           <button className="my-[7px] flex items-center px-[20px] py-[10px]">

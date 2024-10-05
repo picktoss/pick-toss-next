@@ -12,18 +12,13 @@ import { QuizNoteProvider } from './context/quiz-note-context'
 // import Image from 'next/image'
 // import Text from '@/shared/components/text'
 
-const isDesktop = false
+// const isDesktop = true
 
 const QuizNote = () => {
   const [isExpanded, setIsExpanded] = useState(false)
 
   return (
-    <div
-      className={cn(
-        'flex flex-col h-[calc(100vh-88px)] w-screen text-text-primary',
-        isDesktop && 'max-w-[430px]'
-      )}
-    >
+    <div className={cn('flex flex-col h-[calc(100vh-88px)] text-text-primary w-full')}>
       <QuizNoteProvider>
         <div className="flex grow flex-col bg-background-base-02 px-[14px]">
           <Header />
@@ -42,7 +37,7 @@ const QuizNote = () => {
         </div> */}
 
           {/* 노트 리스트 렌더링 */}
-          <div className="flex grow flex-col gap-[8px] overflow-x-hidden overflow-y-scroll pt-[132px]">
+          <div className="flex grow flex-col gap-[8px] overflow-x-hidden overflow-y-scroll pt-[132px] scrollbar-hide">
             {/* 리스트 길이만큼 map */}
             <NoteCard />
             <NoteCard />
