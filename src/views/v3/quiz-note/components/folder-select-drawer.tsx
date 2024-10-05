@@ -5,6 +5,7 @@ import { useQuizNoteContext } from '../context/quiz-note-context'
 import { cn } from '@/shared/lib/utils'
 import { useEffect } from 'react'
 
+// FolderSelectDrawer 컴포넌트
 const FolderSelectDrawer = () => {
   const { isDrawerOpen, setIsDrawerOpen, selectedFolderId, setSelectedFolderId, setDialogState } =
     useQuizNoteContext()

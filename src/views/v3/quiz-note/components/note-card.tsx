@@ -2,6 +2,7 @@ import Text from '@/shared/components/text'
 import Icon from '@/shared/components/v3/icon'
 import { EllipseIcon, FolderFillIcon } from './svg-icons'
 
+// NoteCard 컴포넌트
 const NoteCard = () => {
   // data : 노트 제목, 미리보기 문장, 문제 수, 글자수, 소속 폴더 이름 필요
   return (

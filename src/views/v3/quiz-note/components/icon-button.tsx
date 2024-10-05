@@ -10,6 +10,7 @@ import { cn } from '@/shared/lib/utils'
 import Text from '@/shared/components/text'
 import { useQuizNoteContext } from '../context/quiz-note-context'
 
+// IconButton 컴포넌트
 const IconButton = ({ iconName }: { iconName: IconProps['name'] }) => {
   const { setDialogState } = useQuizNoteContext()
 

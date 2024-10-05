@@ -10,6 +10,7 @@ import {
 import EmojiPicker from 'emoji-picker-react'
 import { cn } from '@/shared/lib/utils'
 
+// QuizNoteDialog 컴포넌트
 const QuizNoteDialog = () => {
   const [name, setName] = useState('')
   const [emoji, setEmoji] = useState('📁')
@@ -42,9 +43,9 @@ const QuizNoteDialog = () => {
             <>
               <DropdownMenu>
                 <DropdownMenuTrigger>
-                  <button className="flex-center mr-[10px] size-[40px] rounded-[8px] bg-background-base-02">
-                    <Text className="text-2xl">{emoji}</Text>
-                  </button>
+                  <div className="flex-center mr-[10px] size-[40px] rounded-[8px] bg-background-base-02 text-xl">
+                    {emoji}
+                  </div>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
                   <EmojiPicker
