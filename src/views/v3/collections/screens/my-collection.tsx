@@ -5,6 +5,8 @@ import { cn } from '@/shared/lib/utils'
 import { useState } from 'react'
 import Collection from '../components/collection'
 import CollectionList from '../components/collection-list'
+import Link from 'next/link'
+import Icon from '@/shared/components/v3/icon'
 
 const tabs = [
   { key: 'create-collection', label: '만든 컬렉션' },
@@ -39,6 +41,15 @@ const MyCollection = () => {
       </div>
 
       <CollectionList>
+        {activeTab === 'create-collection' && (
+          <Link
+            href="#"
+            className="flex flex-col items-center gap-[12px] rounded-[16px] border-[3px] border-dashed border-border-default pt-[70px]"
+          >
+            <Icon name="plus-circle" className="size-[24px]" />
+            <Text typography="subtitle2-bold">만들기</Text>
+          </Link>
+        )}
         {Array.from({ length: 10 }).map((_, idx) => (
           <Collection
             key={idx}
