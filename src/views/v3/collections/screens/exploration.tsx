@@ -3,14 +3,14 @@ import Collection from '../components/collection'
 import CollectionList from '../components/collection-list'
 import Text from '@/shared/components/text'
 
-const controllButtons = ['분야', '퀴즈 유형', '문제 수']
+const controlButtons = ['분야', '퀴즈 유형', '문제 수']
 
 const Exploration = () => {
   return (
     <>
       <div className="flex h-[60px] items-center justify-between px-[16px]">
         <div className="flex gap-[8px]">
-          {controllButtons.map((button) => (
+          {controlButtons.map((button) => (
             <button
               key={button}
               className="flex items-center gap-[4px] rounded-full border bg-button-fill-outlined py-[7.5px] pl-[14px] pr-[10px]"
