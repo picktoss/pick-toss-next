@@ -7,30 +7,33 @@ import { useState } from 'react'
 import Text from '@/shared/components/text'
 import { cn } from '@/shared/lib/utils'
 
+const tabs = [
+  { key: 'exploration', label: '탐색', component: <Exploration /> },
+  { key: 'my-collection', label: '내 컬렉션', component: <MyCollection /> },
+] as const
+
 const Collections = () => {
-  const [tab, setTab] = useState<'exploration' | 'my-collection'>('exploration')
+  const [activeTab, setActiveTab] = useState<'exploration' | 'my-collection'>('my-collection')
 
   return (
     <div>
       <header className="h-[54px]">
         <div className="flex items-center justify-between pl-[5px] pr-[16px]">
           <div className="text-text-disabled">
-            <button onClick={() => setTab('exploration')} className="px-[12px] py-[14px]">
-              <Text
-                typography="title2"
-                className={cn('transition-colors', tab === 'exploration' && 'text-text-primary')}
+            {tabs.map((tab) => (
+              <button
+                key={tab.key}
+                onClick={() => setActiveTab(tab.key)}
+                className="px-[12px] py-[14px]"
               >
-                탐색
-              </Text>
-            </button>
-            <button onClick={() => setTab('my-collection')} className="px-[12px] py-[14px]">
-              <Text
-                typography="title2"
-                className={cn('transition-colors', tab === 'my-collection' && 'text-text-primary')}
-              >
-                내 컬렉션
-              </Text>
-            </button>
+                <Text
+                  typography="title2"
+                  className={cn('transition-colors', activeTab === tab.key && 'text-text-primary')}
+                >
+                  {tab.label}
+                </Text>
+              </button>
+            ))}
           </div>
           <div className="flex items-center gap-[16px]">
             <Icon name="search" className="size-[24px]" />
@@ -39,7 +42,7 @@ const Collections = () => {
         </div>
       </header>
 
-      {tab === 'exploration' ? <Exploration /> : <MyCollection />}
+      {tabs.find((tab) => tab.key === activeTab)?.component}
     </div>
   )
 }
