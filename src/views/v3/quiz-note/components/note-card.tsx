@@ -1,30 +1,48 @@
 import Text from '@/shared/components/text'
 import Icon from '@/shared/components/v3/icon'
 import { EllipseIcon, FolderFillIcon } from './svg-icons'
+import { useQuizNoteContext } from '../context/quiz-note-context'
+import { Checkbox } from '@/shared/components/ui/checkbox'
+
+interface Props {
+  id: number
+  title: string
+  content: string
+  quizCount: number
+  characterCount: number
+  folder: string
+}
 
 // NoteCard 컴포넌트
-const NoteCard = () => {
+const NoteCard = ({ id, title, content, quizCount, characterCount, folder }: Props) => {
+  const { isSelectMode } = useQuizNoteContext()
   // data : 노트 제목, 미리보기 문장, 문제 수, 글자수, 소속 폴더 이름 필요
+
   return (
     <div className="flex h-[104px] max-w-full items-center rounded-[16px] bg-white px-[16px] pb-[20px] pt-[17px]">
-      <NoteTypeIcon type="write" />
+      {isSelectMode ? (
+        <Checkbox id={'note_' + id} className="mx-[8px] size-[20px]" />
+      ) : (
+        <NoteTypeIcon type="write" />
+      )}
+
       <div className="ml-[16px] flex w-full flex-col">
-        <h4 className="w-fit text-subtitle2-bold">최근 이슈</h4>
+        <h4 className="w-fit text-subtitle2-bold">{title}</h4>
         <Text
           as="p"
           typography="text1-regular"
           className="w-[calc(100%-55px)] truncate text-nowrap break-all text-text-sub"
         >
-          미리보기 문장 이러이러합니다 한줄이내로 작성해주세요.
+          {content}
         </Text>
         <Text typography="text2-medium" className="flex w-fit items-center text-text-sub">
-          <Text as="span">28문제</Text>
+          <Text as="span">{quizCount}문제</Text>
           <EllipseIcon />
-          <Text as="span">2382자</Text>
+          <Text as="span">{characterCount}자</Text>
           <EllipseIcon />
           <Text as="span" className="flex items-center">
             <FolderFillIcon className="mr-[2px]" />
-            전공 공부
+            {folder}
           </Text>
         </Text>
       </div>
