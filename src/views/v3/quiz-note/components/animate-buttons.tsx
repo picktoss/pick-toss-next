@@ -75,12 +75,16 @@ const AnimatedButtons = ({ isExpanded, setIsExpanded }: Props) => {
     </motion.div>
   )
 
+  // 임시
+  // 뷰포트가 달라져도 fixed 버튼 서비스 영역 내에 위치시킬 방법 생각해봐야함
+  const isDesktop = false
+
   return (
     <div
       className={cn(
         'fixed bottom-[120px] right-[22px] z-50',
-        isDrawerOpen && 'hidden'
-        // 'bottom-0 right-0'
+        isDrawerOpen && 'hidden',
+        isDesktop && 'right-1/2 translate-x-[192px]'
       )}
     >
       <AnimatePresence>
@@ -104,10 +108,16 @@ const AnimatedButtons = ({ isExpanded, setIsExpanded }: Props) => {
             )}
 
             {addNoteButtons.map((button) =>
-              renderMotionButton(button.key, button.position, button.key, {
-                variant: 'mediumIcon',
-                colors: 'outlined',
-              })
+              renderMotionButton(
+                button.key,
+                button.position,
+                button.key,
+                {
+                  variant: 'mediumIcon',
+                  colors: 'outlined',
+                },
+                () => alert('clicked button ' + button.key)
+              )
             )}
           </>
         )}
