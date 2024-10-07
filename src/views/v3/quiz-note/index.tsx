@@ -1,14 +1,13 @@
 'use client'
 
-import { cn } from '@/shared/lib/utils'
 import Header from './components/header'
 import AnimatedButtons from './components/animate-buttons'
 import { useState } from 'react'
 import DimmedBackground from './components/dimmed-background'
-import BottomNavigation from '@/shared/components/bottom-navigation'
 import NoteCard from './components/note-card'
 import { QuizNoteProvider } from './context/quiz-note-context'
 import QuizNoteDialog from './components/quiz-note-dialog'
+import NoteList from './components/note-list'
 // import note_img from './assets/note.png'
 // import Image from 'next/image'
 // import Text from '@/shared/components/text'
@@ -19,38 +18,44 @@ const QuizNote = () => {
   const [isExpanded, setIsExpanded] = useState(false)
 
   return (
-    <div className={cn('flex flex-col h-[calc(100vh-88px)] text-text-primary w-full')}>
+    <div className="flex h-full flex-col overflow-hidden bg-background-base-02 px-[14px] pb-[30px] text-text-primary">
       <QuizNoteProvider>
-        <div className="flex grow flex-col bg-background-base-02 px-[14px]">
-          <Header />
+        <Header />
 
-          {/* 노트가 하나도 없을 경우 아래 렌더링 */}
-          {/* <div className="flex-center grow overflow-y-scroll pt-[108px]">
-          <div className="flex-center relative size-[202px] flex-col">
-            <Image src={note_img} alt="노트 작성" objectPosition="center" width={100} />
-            <div className="flex-center mx-[12px] grow flex-col">
-              <h3 className="mb-[8px] text-title3">노트를 등록해보세요</h3>
-              <Text as="p" typography="text1-medium" className="text-center text-text-sub">
-                직접 추가하거나 연동한 노트에서 <br /> 퀴즈를 만들 수 있어요
-              </Text>
+        {/* 노트가 하나도 없을 경우 아래 렌더링 */}
+        {/* <div className="flex-center grow overflow-y-scroll pt-[108px]">
+            <div className="flex-center relative size-[202px] flex-col">
+              <Image src={note_img} alt="노트 작성" objectPosition="center" width={100} />
+              <div className="flex-center mx-[12px] grow flex-col">
+                <h3 className="mb-[8px] text-title3">노트를 등록해보세요</h3>
+                <Text as="p" typography="text1-medium" className="text-center text-text-sub">
+                  직접 추가하거나 연동한 노트에서 <br /> 퀴즈를 만들 수 있어요
+                </Text>
+              </div>
             </div>
-          </div>
-        </div> */}
+          </div> */}
 
-          {/* 노트 리스트 렌더링 */}
-          <div className="flex grow flex-col gap-[8px] overflow-x-hidden overflow-y-scroll pt-[132px] scrollbar-hide">
-            {/* 리스트 길이만큼 map */}
-            <NoteCard />
-            <NoteCard />
-          </div>
+        {/* 노트 리스트 렌더링 */}
+        {/* todo: useCheckList 훅 이용해 체크 구현 */}
+        <NoteList>
+          {Array.from({ length: 10 }).map((_, idx) => (
+            <NoteCard
+              key={idx}
+              id={idx}
+              title="최근 이슈"
+              content="미리보기 문장 이러이러합니다 한줄이내로 작성해주세요."
+              quizCount={28}
+              characterCount={2382}
+              folder="전공 공부"
+            />
+          ))}
+        </NoteList>
 
-          <AnimatedButtons isExpanded={isExpanded} setIsExpanded={setIsExpanded} />
-          <DimmedBackground isExpanded={isExpanded} />
+        <AnimatedButtons isExpanded={isExpanded} setIsExpanded={setIsExpanded} />
+        <DimmedBackground isExpanded={isExpanded} />
 
-          <QuizNoteDialog />
-        </div>
+        <QuizNoteDialog />
       </QuizNoteProvider>
-      <BottomNavigation />
     </div>
   )
 }

@@ -78,12 +78,11 @@ const AnimatedButtons = ({ isExpanded, setIsExpanded }: Props) => {
   return (
     <div
       className={cn(
-        'relative bottom-[32px] right-[8px]',
+        'fixed bottom-[120px] right-[22px] z-50',
         isDrawerOpen && 'hidden'
         // 'bottom-0 right-0'
       )}
     >
-      {/* <div className="relative"> */}
       <AnimatePresence>
         {!isExpanded &&
           renderMotionButton(
@@ -113,7 +112,6 @@ const AnimatedButtons = ({ isExpanded, setIsExpanded }: Props) => {
           </>
         )}
       </AnimatePresence>
-      {/* </div> */}
     </div>
   )
 }

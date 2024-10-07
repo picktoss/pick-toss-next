@@ -12,14 +12,16 @@ import { useQuizNoteContext } from '../context/quiz-note-context'
 
 // IconButton 컴포넌트
 const IconButton = ({ iconName }: { iconName: IconProps['name'] }) => {
-  const { setDialogState } = useQuizNoteContext()
+  const { setDialogState, setIsSelectMode } = useQuizNoteContext()
 
-  const handleClickMenuItem = (text: string) => {
-    if (text === '폴더 이름 바꾸기') {
-      setDialogState({ isOpen: true, type: 'edit' })
+  const handleClickMenuItem = (key: string) => {
+    if (key === 'select') {
+      setIsSelectMode(true)
+      return
     }
-    if (text === '폴더 삭제') {
-      setDialogState({ isOpen: true, type: 'delete' })
+    if (key === 'edit' || key === 'delete') {
+      setDialogState({ isOpen: true, type: key })
+      return
     }
   }
 
@@ -37,19 +39,19 @@ const IconButton = ({ iconName }: { iconName: IconProps['name'] }) => {
             {iconName === 'menu-dots' &&
               menuItems.map((menuItem, index) => (
                 <DropdownMenuItem
-                  key={menuItem.text}
+                  key={menuItem.key}
                   className={cn(
                     'border-t border-border-divider w-[240px] px-[20px] py-[16px]',
                     index === 0 && 'border-none'
                   )}
-                  onClick={() => handleClickMenuItem(menuItem.text)}
+                  onClick={() => handleClickMenuItem(menuItem.key)}
                 >
                   <Text
-                    key={menuItem.text}
+                    key={menuItem.key}
                     typography="subtitle2-medium"
                     className="flex w-full items-center justify-between"
                   >
-                    {menuItem.text}
+                    {menuItem.label}
                     <Icon name={menuItem.iconName as IconProps['name']} />
                   </Text>
                 </DropdownMenuItem>
@@ -58,19 +60,19 @@ const IconButton = ({ iconName }: { iconName: IconProps['name'] }) => {
             {iconName === 'sort' &&
               sortItems.map((menuItem, index) => (
                 <DropdownMenuItem
-                  key={menuItem}
+                  key={menuItem.key}
                   className={cn(
                     'border-t border-border-divider w-[240px] px-[20px] py-[16px]',
                     index === 0 && 'border-none'
                   )}
-                  onClick={() => alert('clicked ' + menuItem)}
+                  onClick={() => alert('clicked ' + menuItem.label)}
                 >
                   <Text
-                    key={menuItem}
+                    key={menuItem.key}
                     typography="subtitle2-medium"
                     className="flex w-full items-center justify-between"
                   >
-                    {menuItem}
+                    {menuItem.label}
                   </Text>
                 </DropdownMenuItem>
               ))}
