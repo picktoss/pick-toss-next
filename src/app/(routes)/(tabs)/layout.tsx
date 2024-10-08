@@ -1,4 +1,3 @@
-import LeftSidebar from '@/shared/components/left-sidebar'
 import BottomNavigation from '@/shared/components/bottom-navigation'
 import { Viewport } from 'next'
 import { PropsWithChildren } from 'react'
@@ -15,9 +14,6 @@ export const viewport: Viewport = {
 const TabsLayout = ({ children }: LayoutProps) => {
   return (
     <div className="lg:flex lg:justify-end">
-      <div className="hidden lg:block">
-        <LeftSidebar />
-      </div>
       <div className="lg:flex lg:w-[calc(100vw-240px)] lg:justify-center">
         <div className="flex min-h-screen flex-col pb-[84px] lg:block lg:min-h-0 lg:w-full lg:max-w-[1072px] lg:pb-0">
           {children}

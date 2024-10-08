@@ -1,4 +1,3 @@
-import LeftSidebar from '@/shared/components/left-sidebar'
 import { Viewport } from 'next'
 import { PropsWithChildren } from 'react'
 
@@ -15,7 +14,6 @@ const DocumentLayout = ({ children }: LayoutProps) => {
   return (
     <>
       <div className="hidden justify-end lg:flex">
-        <LeftSidebar />
         <div className="flex w-[calc(100vw-240px)] justify-center">
           <div className="w-full">{children}</div>
         </div>

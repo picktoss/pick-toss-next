@@ -36,7 +36,7 @@ export const navigationItems = [
     segments: ['note'],
   },
   {
-    href: '/collection',
+    href: '/v3/collections',
     title: '컬렉션',
     icon: ({ isActive }: { isActive: boolean }) => {
       return (
@@ -47,7 +47,7 @@ export const navigationItems = [
         />
       )
     },
-    segments: ['collection'],
+    segments: ['collections'],
   },
   {
     href: '/profile',
