@@ -1,3 +1,5 @@
+'use client'
+
 import { Dialog, DialogClose, DialogContent, DialogTitle } from '@/shared/components/ui/dialog'
 import { useQuizNoteContext } from '../context/quiz-note-context'
 import Text from '@/shared/components/text'

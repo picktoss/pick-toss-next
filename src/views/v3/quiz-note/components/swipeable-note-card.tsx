@@ -1,3 +1,5 @@
+'use client'
+
 import { useState } from 'react'
 import { motion, PanInfo } from 'framer-motion'
 import { EllipseIcon, FolderFillIcon } from './svg-icons'

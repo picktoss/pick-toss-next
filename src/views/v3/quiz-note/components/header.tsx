@@ -1,3 +1,5 @@
+'use client'
+
 import Icon, { IconProps } from '@/shared/components/v3/icon'
 import IconButton from './icon-button'
 import { useQuizNoteContext } from '../context/quiz-note-context'

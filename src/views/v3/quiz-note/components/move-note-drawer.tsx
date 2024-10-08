@@ -1,3 +1,5 @@
+'use client'
+
 import Text from '@/shared/components/text'
 import { Button } from '@/shared/components/ui/button'
 import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from '@/shared/components/ui/drawer'

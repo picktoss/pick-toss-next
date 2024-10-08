@@ -1,3 +1,5 @@
+'use client'
+
 import Text from '@/shared/components/text'
 import Icon from '@/shared/components/v3/icon'
 import { EllipseIcon, FolderFillIcon } from './svg-icons'
