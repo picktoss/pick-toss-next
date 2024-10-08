@@ -1,4 +1,4 @@
-import { Dialog, DialogClose, DialogContent } from '@/shared/components/ui/dialog'
+import { Dialog, DialogClose, DialogContent, DialogTitle } from '@/shared/components/ui/dialog'
 import { useQuizNoteContext } from '../context/quiz-note-context'
 import Text from '@/shared/components/text'
 import { useState } from 'react'
@@ -26,11 +26,11 @@ const QuizNoteDialog = () => {
         className="flex min-h-[190px] w-[280px] flex-col items-center justify-between rounded-[16px] bg-background-base-01"
         displayCloseButton={false}
       >
-        <h4 className="mb-[32px] w-full text-subtitle2-bold">
+        <DialogTitle className="mb-[32px] w-full text-subtitle2-bold">
           {dialogState.type === 'create' && '폴더 만들기'}
           {dialogState.type === 'edit' && '폴더 이름 바꾸기'}
           {dialogState.type === 'delete' && '폴더 삭제'}
-        </h4>
+        </DialogTitle>
 
         <div className="flex h-[40px] w-full">
           {dialogState.type === 'delete' ? (
