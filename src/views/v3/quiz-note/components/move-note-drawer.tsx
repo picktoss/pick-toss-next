@@ -1,0 +1,91 @@
+import Text from '@/shared/components/text'
+import { Button } from '@/shared/components/ui/button'
+import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from '@/shared/components/ui/drawer'
+import Label from '@/shared/components/ui/label'
+import { RadioGroup, RadioGroupItem } from '@/shared/components/ui/radio-group'
+import Icon from '@/shared/components/v3/icon'
+import { cn } from '@/shared/lib/utils'
+import { useState } from 'react'
+
+// MoveNoteDrawer 컴포넌트
+const MoveNoteDrawer = () => {
+  const [isOpen, setIsOpen] = useState(false)
+  const [selectedFolderId, setSelectedFolderId] = useState('0')
+
+  // 목데이터
+  const folderList = [
+    {
+      id: '0',
+      folderName: '📊 전공 공부',
+    },
+    {
+      id: '1',
+      folderName: '📊 전공 공부',
+    },
+    {
+      id: '2',
+      folderName: '📊 전공 공부',
+    },
+  ]
+
+  return (
+    <Drawer open={isOpen} onOpenChange={setIsOpen}>
+      <DrawerTrigger asChild>
+        <button className="flex-center w-[72px] flex-col rounded-lg bg-background-container-03 p-2 text-text1-medium text-text-info">
+          <Icon name="move" className="mb-[4px]" />
+          이동
+        </button>
+      </DrawerTrigger>
+
+      <DrawerContent className="rounded-t-[16px]">
+        <div className="my-[24px] flex h-[85dvh] flex-col items-center">
+          <div className="w-full px-[18px]">
+            <div className="flex items-center justify-between">
+              <h3 className="text-title3">다른 폴더로 이동</h3>
+              <DrawerClose asChild>
+                <button className="text-text-primary" onClick={() => setIsOpen(false)}>
+                  <Icon name="cancel" className="size-[24px]"></Icon>
+                </button>
+              </DrawerClose>
+            </div>
+            <Text typography="text1-medium" className="mt-[8px] text-text-sub">
+              노트를 이동시킬 폴더를 선택해주세요.
+            </Text>
+            <div className="mt-[24px] flex items-center">
+              <Text as="span" typography="subtitle2-medium">
+                전체
+              </Text>
+            </div>
+            <RadioGroup
+              className="mb-[11px] mt-[9px] flex flex-col"
+              defaultValue={selectedFolderId}
+              onValueChange={(value) => setSelectedFolderId(value)}
+            >
+              {/* 폴더 개수만큼 렌더링 */}
+              {folderList.map((folder) => (
+                <div key={folder.id} className="flex items-center py-[10px]">
+                  <RadioGroupItem
+                    value={folder.id}
+                    id={folder.id}
+                    className={cn(
+                      'mr-[12px]',
+                      selectedFolderId === folder.id && 'bg-fill-primary-orange border-none'
+                    )}
+                  />
+                  <Label htmlFor={folder.id} className="cursor-pointer text-subtitle2-medium">
+                    {folder.folderName}
+                  </Label>
+                </div>
+              ))}
+            </RadioGroup>
+          </div>
+          <Button variant={'largeRound'} className="mt-[25px] w-[335px]">
+            이동하기
+          </Button>
+        </div>
+      </DrawerContent>
+    </Drawer>
+  )
+}
+
+export default MoveNoteDrawer

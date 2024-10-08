@@ -3,8 +3,6 @@
 import { PropsWithChildren, createContext, useContext, useMemo, useState } from 'react'
 
 interface QuizNoteContextValues {
-  isDrawerOpen: boolean
-  setIsDrawerOpen: (value: boolean) => void
   selectedFolderId: string
   setSelectedFolderId: (id: string) => void
   dialogState: { isOpen: boolean; type: 'create' | 'edit' | 'delete' }
@@ -16,7 +14,6 @@ interface QuizNoteContextValues {
 const QuizNoteContext = createContext<QuizNoteContextValues | null>(null)
 
 export function QuizNoteProvider({ children }: PropsWithChildren) {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   const [selectedFolderId, setSelectedFolderId] = useState('')
   const [dialogState, setDialogState] = useState<QuizNoteContextValues['dialogState']>({
     isOpen: false,
@@ -26,8 +23,6 @@ export function QuizNoteProvider({ children }: PropsWithChildren) {
 
   const values = useMemo(
     () => ({
-      isDrawerOpen,
-      setIsDrawerOpen,
       selectedFolderId,
       setSelectedFolderId,
       dialogState,
@@ -36,8 +31,6 @@ export function QuizNoteProvider({ children }: PropsWithChildren) {
       setIsSelectMode,
     }),
     [
-      isDrawerOpen,
-      setIsDrawerOpen,
       selectedFolderId,
       setSelectedFolderId,
       dialogState,

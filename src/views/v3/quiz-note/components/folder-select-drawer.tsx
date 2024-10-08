@@ -3,12 +3,12 @@ import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from '@/shared/comp
 import Icon from '@/shared/components/v3/icon'
 import { useQuizNoteContext } from '../context/quiz-note-context'
 import { cn } from '@/shared/lib/utils'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 // FolderSelectDrawer 컴포넌트
 const FolderSelectDrawer = () => {
-  const { isDrawerOpen, setIsDrawerOpen, selectedFolderId, setSelectedFolderId, setDialogState } =
-    useQuizNoteContext()
+  const { selectedFolderId, setSelectedFolderId, setDialogState } = useQuizNoteContext()
+  const [isOpen, setIsOpen] = useState(false)
 
   // 목데이터
   const folderList = [
@@ -33,7 +33,7 @@ const FolderSelectDrawer = () => {
   }, [])
 
   return (
-    <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
+    <Drawer open={isOpen} onOpenChange={setIsOpen}>
       <DrawerTrigger asChild>
         <button className="flex size-fit items-center">
           <h2 className="mr-[8px] text-title2">전체 노트</h2>
@@ -47,7 +47,7 @@ const FolderSelectDrawer = () => {
             <div className="flex items-center justify-between">
               <h3 className="text-title3">폴더 선택</h3>
               <DrawerClose asChild>
-                <button className="text-text-primary" onClick={() => setIsDrawerOpen(false)}>
+                <button className="text-text-primary" onClick={() => setIsOpen(false)}>
                   <Icon name="cancel" className="size-[24px]"></Icon>
                 </button>
               </DrawerClose>

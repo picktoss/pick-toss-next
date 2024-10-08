@@ -5,6 +5,8 @@ import Icon from '@/shared/components/v3/icon'
 import { useQuizNoteContext } from '../context/quiz-note-context'
 import { cn } from '@/shared/lib/utils'
 import { Checkbox } from '@/shared/components/ui/checkbox'
+import MoveNoteDrawer from './move-note-drawer'
+import Text from '@/shared/components/text'
 
 interface NoteProps {
   id: string
@@ -46,7 +48,7 @@ const SwipeableNoteCard = ({
       {/* Swipe 영역 */}
       <motion.div
         className={cn(
-          `flex h-[104px] max-w-full items-center rounded-[16px] px-[16px] pb-[20px] pt-[17px]`,
+          `flex h-[104px] max-w-full items-center rounded-[16px] px-[16px] py-[17px]`,
           isSwiped && 'translate-x-[-116px]'
         )}
         drag="x"
@@ -64,10 +66,14 @@ const SwipeableNoteCard = ({
 
         <div className="ml-[16px] flex w-full flex-col">
           <h4 className="w-fit text-subtitle2-bold">{title}</h4>
-          <p className="w-[calc(100%-55px)] truncate text-nowrap break-all text-text-sub">
+          <Text
+            as="p"
+            typography="text1-regular"
+            className="w-[calc(100%-55px)] truncate text-nowrap break-all text-text-sub"
+          >
             {content}
-          </p>
-          <div className="flex w-fit items-center text-text-sub">
+          </Text>
+          <Text typography="text2-medium" className="flex w-fit items-center text-text-sub">
             <span>{quizCount}문제</span>
             <EllipseIcon />
             <span>{characterCount}자</span>
@@ -76,7 +82,7 @@ const SwipeableNoteCard = ({
               <FolderFillIcon className="mr-[2px]" />
               {folder}
             </span>
-          </div>
+          </Text>
         </div>
 
         {/* Swipe로 보여지는 버튼 영역 */}
@@ -86,20 +92,8 @@ const SwipeableNoteCard = ({
             isSwiped && 'translate-x-[-16px]'
           )}
         >
-          <button
-            className="flex-center w-[72px] flex-col rounded-lg bg-background-container-03 p-2 text-text1-medium text-text-info"
-            onClick={() => alert('clicked 이동')}
-          >
-            <Icon name="move" className="mb-[4px]" />
-            이동
-          </button>
-          <button
-            className="flex-center w-[72px] flex-col rounded-lg bg-background-critical p-2 text-text1-medium text-text-primary-inverse"
-            onClick={() => alert('clicked 삭제')}
-          >
-            <Icon name="bin" className="mb-[4px]" />
-            삭제
-          </button>
+          <MoveNoteDrawer />
+          <DeleteBtn />
         </div>
       </motion.div>
     </div>
@@ -133,4 +127,16 @@ function NoteTypeIcon({ type }: { type: 'write' | 'file' | 'notion' }) {
       </div>
     )
   }
+}
+
+function DeleteBtn() {
+  return (
+    <button
+      className="flex-center w-[72px] flex-col rounded-lg bg-background-critical p-2 text-text1-medium text-text-primary-inverse"
+      onClick={() => alert('clicked 삭제')}
+    >
+      <Icon name="bin" className="mb-[4px]" />
+      삭제
+    </button>
+  )
 }

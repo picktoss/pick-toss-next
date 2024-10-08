@@ -12,8 +12,6 @@ import SwipeableNoteCard from './components/swipeable-note-card'
 // import Image from 'next/image'
 // import Text from '@/shared/components/text'
 
-// const isDesktop = true
-
 const QuizNote = () => {
   const [isExpanded, setIsExpanded] = useState(false)
 

@@ -13,6 +13,7 @@ interface Props {
   folder: string
 }
 
+// 임시 (swipe 구현 안된 컴포넌트)
 // NoteCard 컴포넌트
 const NoteCard = ({ id, title, content, quizCount, characterCount, folder }: Props) => {
   const { isSelectMode } = useQuizNoteContext()
