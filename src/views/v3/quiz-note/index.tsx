@@ -4,10 +4,10 @@ import Header from './components/header'
 import AnimatedButtons from './components/animate-buttons'
 import { useState } from 'react'
 import DimmedBackground from './components/dimmed-background'
-import NoteCard from './components/note-card'
 import { QuizNoteProvider } from './context/quiz-note-context'
 import QuizNoteDialog from './components/quiz-note-dialog'
 import NoteList from './components/note-list'
+import SwipeableNoteCard from './components/swipeable-note-card'
 // import note_img from './assets/note.png'
 // import Image from 'next/image'
 // import Text from '@/shared/components/text'
@@ -39,9 +39,10 @@ const QuizNote = () => {
         {/* todo: useCheckList 훅 이용해 체크 구현 */}
         <NoteList>
           {Array.from({ length: 10 }).map((_, idx) => (
-            <NoteCard
+            <SwipeableNoteCard
               key={idx}
-              id={idx}
+              id={idx.toString()}
+              createType="write"
               title="최근 이슈"
               content="미리보기 문장 이러이러합니다 한줄이내로 작성해주세요."
               quizCount={28}
