@@ -3,6 +3,8 @@
 import { PropsWithChildren, createContext, useContext, useMemo, useState } from 'react'
 
 interface QuizNoteContextValues {
+  buttonHidden: boolean
+  setButtonHidden: (value: boolean) => void
   selectedFolderId: string
   setSelectedFolderId: (id: string) => void
   dialogState: { isOpen: boolean; type: 'create' | 'edit' | 'delete' }
@@ -20,6 +22,7 @@ export function QuizNoteProvider({ children }: PropsWithChildren) {
     type: 'create',
   })
   const [isSelectMode, setIsSelectMode] = useState(false)
+  const [buttonHidden, setButtonHidden] = useState(false)
 
   const values = useMemo(
     () => ({
@@ -29,6 +32,8 @@ export function QuizNoteProvider({ children }: PropsWithChildren) {
       setDialogState,
       isSelectMode,
       setIsSelectMode,
+      buttonHidden,
+      setButtonHidden,
     }),
     [
       selectedFolderId,
@@ -37,6 +42,8 @@ export function QuizNoteProvider({ children }: PropsWithChildren) {
       setDialogState,
       isSelectMode,
       setIsSelectMode,
+      buttonHidden,
+      setButtonHidden,
     ]
   )
 

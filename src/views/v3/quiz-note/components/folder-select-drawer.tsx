@@ -1,14 +1,21 @@
+'use client'
+
+import { Drawer as MaterialDrawer } from '@material-tailwind/react'
 import Text from '@/shared/components/text'
-import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from '@/shared/components/ui/drawer'
 import Icon from '@/shared/components/v3/icon'
 import { useQuizNoteContext } from '../context/quiz-note-context'
 import { cn } from '@/shared/lib/utils'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
+
+interface Props {
+  isDrawerOpen: boolean
+  setIsDrawerOpen: (value: boolean) => void
+}
 
 // FolderSelectDrawer 컴포넌트
-const FolderSelectDrawer = () => {
-  const { selectedFolderId, setSelectedFolderId, setDialogState } = useQuizNoteContext()
-  const [isOpen, setIsOpen] = useState(false)
+const FolderSelectDrawer = ({ isDrawerOpen, setIsDrawerOpen }: Props) => {
+  const { selectedFolderId, setDialogState, setButtonHidden } = useQuizNoteContext()
+  const overlayRef = useRef(null)
 
   // 목데이터
   const folderList = [
@@ -28,30 +35,30 @@ const FolderSelectDrawer = () => {
       noteAmount: 15,
     },
   ]
+
   useEffect(() => {
-    setSelectedFolderId('0')
-  }, [])
+    if (isDrawerOpen) {
+      setButtonHidden(true)
+    } else {
+      setButtonHidden(false)
+    }
+  }, [isDrawerOpen, setButtonHidden])
 
   return (
-    <Drawer open={isOpen} onOpenChange={setIsOpen}>
-      <DrawerTrigger asChild>
-        <button className="flex size-fit items-center">
-          <h2 className="mr-[8px] text-title2">전체 노트</h2>
-          <Icon name="chevron-down" className="size-[20px]"></Icon>
-        </button>
-      </DrawerTrigger>
-
-      <DrawerContent className="rounded-t-[16px]">
-        <div className="my-[24px] flex h-[85dvh] flex-col">
+    <>
+      <div ref={overlayRef}></div>
+      <MaterialDrawer
+        placement="top"
+        open={isDrawerOpen}
+        onClose={() => setIsDrawerOpen(false)}
+        size={370}
+        overlayRef={overlayRef}
+        overlayProps={{ className: 'z-10 bg-opacity-60' }}
+        transition={{ duration: 0.4 }}
+        className="absolute z-10"
+      >
+        <div className="my-[24px] mt-[108px] flex h-fit flex-col bg-background-base-01">
           <div className="border-b border-border-divider px-[18px]">
-            <div className="flex items-center justify-between">
-              <h3 className="text-title3">폴더 선택</h3>
-              <DrawerClose asChild>
-                <button className="text-text-primary" onClick={() => setIsOpen(false)}>
-                  <Icon name="cancel" className="size-[24px]"></Icon>
-                </button>
-              </DrawerClose>
-            </div>
             <div className="mt-[24px] flex items-center justify-between">
               <Text as="span" typography="subtitle2-medium">
                 전체 노트
@@ -67,7 +74,7 @@ const FolderSelectDrawer = () => {
                   <Text
                     as="span"
                     typography="subtitle2-medium"
-                    className={cn(folder.id === selectedFolderId && 'text-text-accent')}
+                    className={cn(folder.id === selectedFolderId && 'text-text-accent font-bold')}
                   >
                     {folder.folderName}
                   </Text>
@@ -86,8 +93,8 @@ const FolderSelectDrawer = () => {
             폴더 추가
           </button>
         </div>
-      </DrawerContent>
-    </Drawer>
+      </MaterialDrawer>
+    </>
   )
 }
 

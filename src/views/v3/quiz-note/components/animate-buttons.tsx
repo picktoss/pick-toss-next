@@ -6,6 +6,7 @@ import Icon, { IconProps } from '@/shared/components/v3/icon'
 import { useEffect, useState } from 'react'
 import { cn } from '@/shared/lib/utils'
 import { addNoteButtons } from '../constants/add-note-buttons'
+import { useQuizNoteContext } from '../context/quiz-note-context'
 
 type Custom = number | 'plus' | 'cancel'
 
@@ -17,6 +18,7 @@ interface Props {
 // AnimatedButtons 컴포넌트
 const AnimatedButtons = ({ isExpanded, setIsExpanded }: Props) => {
   const [isFirstRender, setIsFirstRender] = useState(true)
+  const { buttonHidden } = useQuizNoteContext()
 
   useEffect(() => {
     setIsFirstRender(false)
@@ -81,7 +83,8 @@ const AnimatedButtons = ({ isExpanded, setIsExpanded }: Props) => {
     <div
       className={cn(
         'fixed bottom-[120px] right-[22px] z-50',
-        isDesktop && 'right-1/2 translate-x-[192px]'
+        isDesktop && 'right-1/2 translate-x-[192px]',
+        buttonHidden && 'z-0'
       )}
     >
       <AnimatePresence>
