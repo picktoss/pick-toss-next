@@ -8,7 +8,7 @@ import { cn } from '@/shared/lib/utils'
 import Icon from '../v3/icon'
 
 const labelVariants = cva(
-  'mb-[8px] !flex items-center !text-text1-medium leading-none text-text-sub peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+  'flex items-center text-text1-medium leading-none text-text-sub peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
 )
 
 interface LabelProps

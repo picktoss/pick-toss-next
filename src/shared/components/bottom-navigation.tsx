@@ -22,7 +22,7 @@ export const navigationItems = [
     segments: ['main'],
   },
   {
-    href: '/note',
+    href: '/v3/note',
     title: '퀴즈 노트',
     icon: ({ isActive }: { isActive: boolean }) => {
       return (
@@ -71,7 +71,7 @@ const BottomNavigation = () => {
   const activeItem = useMemo(() => findActiveNavItem(segments), [segments])
 
   return (
-    <div className="fixed bottom-0 h-[88px] w-full max-w-[430px] border border-border-default pb-[24px] pt-[18px]">
+    <div className="fixed bottom-0 h-[88px] w-full max-w-[430px] border border-border-default bg-background-base-01 pb-[24px] pt-[18px]">
       <div className="flex px-[20px]">
         {navigationItems.map((item) => {
           const { title, href, icon: Icon } = item
