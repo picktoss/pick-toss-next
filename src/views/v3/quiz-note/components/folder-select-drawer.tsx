@@ -53,7 +53,7 @@ const FolderSelectDrawer = ({ isDrawerOpen, setIsDrawerOpen }: Props) => {
         onClose={() => setIsDrawerOpen(false)}
         overlayRef={overlayRef}
         overlayProps={{ className: 'fixed z-10 bg-opacity-60' }}
-        transition={{ duration: 0.4 }}
+        transition={{ duration: 0.3 }}
         className={cn(
           'max-w-[430px] fixed top-[-108px] z-10 transition-all ease-out duration-100',
           isDrawerOpen && 'top-0'
