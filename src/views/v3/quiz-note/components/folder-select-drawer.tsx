@@ -51,15 +51,17 @@ const FolderSelectDrawer = ({ isDrawerOpen, setIsDrawerOpen }: Props) => {
         placement="top"
         open={isDrawerOpen}
         onClose={() => setIsDrawerOpen(false)}
-        size={370}
         overlayRef={overlayRef}
-        overlayProps={{ className: 'z-10 bg-opacity-60' }}
+        overlayProps={{ className: 'fixed z-10 bg-opacity-60' }}
         transition={{ duration: 0.4 }}
-        className="absolute z-10"
+        className={cn(
+          'max-w-[430px] fixed top-[-108px] z-10 transition-all ease-out duration-100',
+          isDrawerOpen && 'top-0'
+        )}
       >
         <div className="my-[24px] mt-[108px] flex h-fit flex-col bg-background-base-01">
-          <div className="border-b border-border-divider px-[18px]">
-            <div className="mt-[24px] flex items-center justify-between">
+          <div className="border-b border-border-divider">
+            <div className="mt-[24px] flex items-center justify-between px-[18px]">
               <Text as="span" typography="subtitle2-medium">
                 전체 노트
               </Text>
@@ -67,7 +69,7 @@ const FolderSelectDrawer = ({ isDrawerOpen, setIsDrawerOpen }: Props) => {
                 노트 30개
               </Text>
             </div>
-            <div className="mb-[11px] mt-[9px] flex flex-col">
+            <div className="mb-[11px] mt-[9px] flex max-h-[220px] flex-col overflow-y-scroll px-[18px]">
               {/* 폴더 개수만큼 렌더링 */}
               {folderList.map((folder) => (
                 <button key={folder.id} className="flex items-center justify-between py-[10px]">
