@@ -21,7 +21,7 @@ const QuizNote = () => {
         <Header />
 
         {/* 노트가 하나도 없을 경우 아래 렌더링 */}
-        {/* <div className="flex-center grow overflow-y-scroll pt-[108px]">
+        {/* <div className="flex-center grow overflow-y-scroll pt-[54px]">
             <div className="flex-center relative size-[202px] flex-col">
               <Image src={note_img} alt="노트 작성" objectPosition="center" width={100} />
               <div className="flex-center mx-[12px] grow flex-col">
