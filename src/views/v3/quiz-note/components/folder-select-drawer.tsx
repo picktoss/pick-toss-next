@@ -1,11 +1,11 @@
 'use client'
 
-import { Drawer as MaterialDrawer } from '@material-tailwind/react'
 import Text from '@/shared/components/text'
 import Icon from '@/shared/components/v3/icon'
 import { useQuizNoteContext } from '../context/quiz-note-context'
 import { cn } from '@/shared/lib/utils'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
+import { Drawer, DrawerContent, DrawerTrigger } from '@/shared/components/ui/drawer'
 
 interface Props {
   isDrawerOpen: boolean
@@ -15,7 +15,6 @@ interface Props {
 // FolderSelectDrawer 컴포넌트
 const FolderSelectDrawer = ({ isDrawerOpen, setIsDrawerOpen }: Props) => {
   const { selectedFolderId, setDialogState, setButtonHidden } = useQuizNoteContext()
-  const overlayRef = useRef(null)
 
   // 목데이터
   const folderList = [
@@ -46,56 +45,57 @@ const FolderSelectDrawer = ({ isDrawerOpen, setIsDrawerOpen }: Props) => {
 
   return (
     <>
-      <div ref={overlayRef}></div>
-      <MaterialDrawer
-        placement="top"
-        open={isDrawerOpen}
-        onClose={() => setIsDrawerOpen(false)}
-        overlayRef={overlayRef}
-        overlayProps={{ className: 'fixed z-10 bg-opacity-60' }}
-        transition={{ duration: 0.3 }}
-        className={cn(
-          'max-w-[430px] fixed top-[-54px] z-10 transition-all ease-out duration-100',
-          isDrawerOpen && 'top-0'
-        )}
-      >
-        <div className="my-[24px] mt-[54px] flex h-fit flex-col bg-background-base-01">
-          <div className="border-b border-border-divider">
-            <div className="mt-[24px] flex items-center justify-between px-[18px]">
-              <Text as="span" typography="subtitle2-medium">
-                전체 노트
-              </Text>
-              <Text as="span" typography="text1-medium" className="text-text-caption">
-                노트 30개
-              </Text>
-            </div>
-            <div className="mb-[11px] mt-[9px] flex max-h-[220px] flex-col overflow-y-scroll px-[18px]">
-              {/* 폴더 개수만큼 렌더링 */}
-              {folderList.map((folder) => (
-                <button key={folder.id} className="flex items-center justify-between py-[10px]">
-                  <Text
-                    as="span"
-                    typography="subtitle2-medium"
-                    className={cn(folder.id === selectedFolderId && 'text-text-accent font-bold')}
-                  >
-                    {folder.folderName}
-                  </Text>
-                  <Text as="span" typography="text1-medium" className="text-text-caption">
-                    노트 {folder.noteAmount}개
-                  </Text>
-                </button>
-              ))}
-            </div>
-          </div>
-          <button
-            className="my-[7px] flex items-center px-[20px] py-[10px]"
-            onClick={() => setDialogState({ isOpen: true, type: 'create' })}
-          >
-            <Icon name="plus-circle" className="mr-[16px]" />
-            폴더 추가
+      <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen} direction="top">
+        <DrawerTrigger asChild>
+          <button className="flex size-fit items-center">
+            <h2 className="mr-[8px] text-title2">전체 노트</h2>
+            <Icon name="chevron-down" className="size-[20px]"></Icon>
           </button>
-        </div>
-      </MaterialDrawer>
+        </DrawerTrigger>
+
+        <DrawerContent
+          className="z-[19] mt-[54px]"
+          overlayProps={{ className: 'z-[19] bg-black/60' }}
+          hideSidebar
+        >
+          <div className="flex h-fit flex-col bg-background-base-01">
+            <div className="border-b border-border-divider">
+              <div className="mt-[24px] flex items-center justify-between px-[18px]">
+                <Text as="span" typography="subtitle2-medium">
+                  전체 노트
+                </Text>
+                <Text as="span" typography="text1-medium" className="text-text-caption">
+                  노트 30개
+                </Text>
+              </div>
+              <div className="mb-[11px] mt-[9px] flex max-h-[220px] flex-col overflow-y-scroll px-[18px]">
+                {/* 폴더 개수만큼 렌더링 */}
+                {folderList.map((folder) => (
+                  <button key={folder.id} className="flex items-center justify-between py-[10px]">
+                    <Text
+                      as="span"
+                      typography="subtitle2-medium"
+                      className={cn(folder.id === selectedFolderId && 'text-text-accent font-bold')}
+                    >
+                      {folder.folderName}
+                    </Text>
+                    <Text as="span" typography="text1-medium" className="text-text-caption">
+                      노트 {folder.noteAmount}개
+                    </Text>
+                  </button>
+                ))}
+              </div>
+            </div>
+            <button
+              className="my-[7px] flex items-center px-[20px] py-[10px]"
+              onClick={() => setDialogState({ isOpen: true, type: 'create' })}
+            >
+              <Icon name="plus-circle" className="mr-[16px]" />
+              폴더 추가
+            </button>
+          </div>
+        </DrawerContent>
+      </Drawer>
     </>
   )
 }

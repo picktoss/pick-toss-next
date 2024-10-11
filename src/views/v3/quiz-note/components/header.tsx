@@ -23,7 +23,7 @@ const Header = () => {
       <header
         className={cn(
           'fixed right-1/2 top-0 z-20 flex h-[54px] w-full max-w-[430px] translate-x-1/2 flex-col justify-end bg-background-base-02 px-[14px] transition-all',
-          isDrawerOpen && 'bg-background-base-01 max-w-screen'
+          isDrawerOpen && 'bg-background-base-01 max-w-screen z-[9999]'
         )}
       >
         <div className="flex size-full items-center justify-between">
@@ -39,22 +39,19 @@ const Header = () => {
             </>
           ) : (
             <>
-              <button className="flex size-fit items-center" onClick={() => setIsDrawerOpen(true)}>
-                <h2 className="mr-[8px] text-title2">전체 노트</h2>
-                <Icon name="chevron-down" className="size-[20px]"></Icon>
-              </button>
+              <FolderSelectDrawer isDrawerOpen={isDrawerOpen} setIsDrawerOpen={setIsDrawerOpen} />
 
-              <div className="flex size-fit items-center gap-[16px]">
-                {iconList.map((iconName) => (
-                  <IconButton key={iconName} iconName={iconName} />
-                ))}
-              </div>
+              {!isDrawerOpen && (
+                <div className="flex size-fit items-center gap-[16px]">
+                  {iconList.map((iconName) => (
+                    <IconButton key={iconName} iconName={iconName} />
+                  ))}
+                </div>
+              )}
             </>
           )}
         </div>
       </header>
-
-      <FolderSelectDrawer isDrawerOpen={isDrawerOpen} setIsDrawerOpen={setIsDrawerOpen} />
     </>
   )
 }
