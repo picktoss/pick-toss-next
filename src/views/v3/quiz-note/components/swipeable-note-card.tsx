@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { motion, PanInfo } from 'framer-motion'
+import { motion, PanInfo, useAnimation, useMotionValue } from 'framer-motion'
 import { EllipseIcon, FolderFillIcon } from './svg-icons'
 import Icon from '@/shared/components/v3/icon'
 import { useQuizNoteContext } from '../context/quiz-note-context'
@@ -31,15 +31,16 @@ const SwipeableNoteCard = ({
 }: NoteProps) => {
   const { isSelectMode } = useQuizNoteContext()
   const [isSwiped, setIsSwiped] = useState(false)
-  const [dragX, setDragX] = useState(0)
+  const x = useMotionValue(0)
+  const controls = useAnimation()
 
   const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-    if (info.offset.x < -10) {
-      setIsSwiped(true) // 10px 이상 드래그하면 스와이프
-      setDragX(-130) // 요소가 -130px 이동
+    if (info.offset.x < -30) {
+      setIsSwiped(true) // 30px 이상 드래그하면 스와이프
+      void controls.start({ x: -130 }) // 요소 왼쪽으로 130px 이동
     } else {
       setIsSwiped(false) // 스와이프 취소
-      setDragX(0) // 원래 위치로 돌아옴
+      void controls.start({ x: 0 }) // 원래 위치로 이동
     }
   }
 
@@ -55,10 +56,10 @@ const SwipeableNoteCard = ({
         )}
         drag="x"
         dragConstraints={{ left: -130, right: 0 }}
-        onDrag={(event, info) => setDragX(info.point.x)}
         onDragEnd={handleDragEnd}
-        animate={{ x: dragX }}
-        transition={{ type: 'spring', stiffness: 300, damping: 30 }} // 애니메이션 스프링 효과 적용
+        animate={controls}
+        style={{ x }}
+        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
       >
         {isSelectMode ? (
           <Checkbox id={'note_' + id} className="mx-[8px] size-[20px]" />
