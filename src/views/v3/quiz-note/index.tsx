@@ -1,13 +1,12 @@
 'use client'
 
 import Header from './components/header'
-import AnimatedButtons from './components/animate-buttons'
 import { useState } from 'react'
-import DimmedBackground from './components/dimmed-background'
 import { QuizNoteProvider } from './context/quiz-note-context'
 import QuizNoteDialog from './components/quiz-note-dialog'
 import NoteList from './components/note-list'
 import SwipeableNoteCard from './components/swipeable-note-card'
+import AddNoteMenu from './components/add-note-menu'
 // import note_img from './assets/note.png'
 // import Image from 'next/image'
 // import Text from '@/shared/components/text'
@@ -50,8 +49,7 @@ const QuizNote = () => {
           ))}
         </NoteList>
 
-        <AnimatedButtons isExpanded={isExpanded} setIsExpanded={setIsExpanded} />
-        <DimmedBackground isExpanded={isExpanded} />
+        <AddNoteMenu isExpanded={isExpanded} setIsExpanded={setIsExpanded} />
 
         <QuizNoteDialog />
       </QuizNoteProvider>

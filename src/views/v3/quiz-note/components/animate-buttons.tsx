@@ -7,16 +7,13 @@ import { useEffect, useState } from 'react'
 import { cn } from '@/shared/lib/utils'
 import { addNoteButtons } from '../constants/add-note-buttons'
 import { useQuizNoteContext } from '../context/quiz-note-context'
+import Text from '@/shared/components/text'
+import { AddNoteProps } from './add-note-menu'
 
 type Custom = number | 'plus' | 'cancel'
 
-interface Props {
-  isExpanded: boolean
-  setIsExpanded: (isExpanded: boolean) => void
-}
-
 // AnimatedButtons 컴포넌트
-const AnimatedButtons = ({ isExpanded, setIsExpanded }: Props) => {
+const AnimatedButtons = ({ isExpanded, setIsExpanded }: AddNoteProps) => {
   const [isFirstRender, setIsFirstRender] = useState(true)
   const { buttonHidden } = useQuizNoteContext()
 
@@ -54,36 +51,45 @@ const AnimatedButtons = ({ isExpanded, setIsExpanded }: Props) => {
       variant: ButtonProps['variant']
       colors: ButtonProps['colors']
     },
-    handleTap?: () => void
+    handleTap?: () => void,
+    text?: { bottomCss: string; content: string }
   ) => (
-    <motion.div
-      key={key}
-      custom={custom}
-      variants={buttonVariants}
-      initial={isFirstRender && custom === 'plus' ? false : 'hidden'}
-      animate="visible"
-      exit="exit"
-      className="absolute bottom-0 right-0"
-      onTap={handleTap}
-    >
-      <Button {...buttonProps}>
-        <Icon
-          name={iconName}
-          className={cn('size-[24px]', key === 'plus' && 'text-text-primary-inverse')}
-        />
-      </Button>
-    </motion.div>
-  )
+    <div key={key} className="absolute bottom-0 right-0 w-full">
+      <motion.div
+        custom={custom}
+        variants={buttonVariants}
+        initial={isFirstRender && custom === 'plus' ? false : 'hidden'}
+        animate="visible"
+        exit="exit"
+        className="absolute bottom-0 right-0"
+        onTap={handleTap}
+      >
+        <Button {...buttonProps}>
+          <Icon
+            name={iconName}
+            className={cn('size-[24px]', key === 'plus' && 'text-text-primary-inverse')}
+          />
+        </Button>
+      </motion.div>
 
-  // 임시
-  // 뷰포트가 달라져도 fixed 버튼 서비스 영역 내에 위치시킬 방법 생각해봐야함
-  const isDesktop = false
+      {text && (
+        <Text
+          className={cn(
+            'absolute text-text-primary-inverse text-sm opacity-0 transition-all duration-500 right-[64px]',
+            isExpanded && 'opacity-100 z-40',
+            text.bottomCss
+          )}
+        >
+          {text.content}
+        </Text>
+      )}
+    </div>
+  )
 
   return (
     <div
       className={cn(
-        'fixed bottom-[120px] right-[22px] z-50',
-        isDesktop && 'right-1/2 translate-x-[192px]',
+        'fixed w-full bottom-[120px] right-[22px] z-50 opacity-100',
         buttonHidden && 'z-0'
       )}
     >
@@ -116,7 +122,8 @@ const AnimatedButtons = ({ isExpanded, setIsExpanded }: Props) => {
                   variant: 'mediumIcon',
                   colors: 'outlined',
                 },
-                () => alert('clicked button ' + button.key)
+                () => alert('clicked button ' + button.key),
+                button.text
               )
             )}
           </>

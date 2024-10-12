@@ -376,7 +376,6 @@ const config = {
     require('tailwindcss-animate'),
     require('@tailwindcss/typography'),
     require('tailwind-scrollbar-hide'),
-    require('@material-tailwind/react/utils/withMT'),
   ],
 } satisfies Config
 
