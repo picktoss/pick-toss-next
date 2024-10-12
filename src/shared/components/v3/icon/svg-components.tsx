@@ -1,14 +1,14 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useId } from 'react'
 
-function generateUUID() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-    const r = (Math.random() * 16) | 0,
-      v = c == 'x' ? r : (r & 0x3) | 0x8
-    return v.toString(16)
-  })
-}
+// function generateUUID() {
+//   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+//     const r = (Math.random() * 16) | 0,
+//       v = c == 'x' ? r : (r & 0x3) | 0x8
+//     return v.toString(16)
+//   })
+// }
 
 export const Plus = ({ ...props }) => {
   return (
@@ -592,11 +592,7 @@ export const Folder = ({ ...props }) => {
 }
 
 export const Setting = ({ ...props }) => {
-  const [clipId, setClipId] = useState<string>('')
-
-  useEffect(() => {
-    setClipId(generateUUID())
-  }, [])
+  const clipId = useId()
 
   return (
     <svg
@@ -808,14 +804,8 @@ export const Clip = ({ ...props }) => {
 }
 
 export const Notion = ({ ...props }) => {
-  // 클라이언트에서만 UUID를 생성하기 위해 useState와 useEffect 사용
-  const [patternId, setPatternId] = useState<string>('')
-  const [imageId, setImageId] = useState<string>('')
-
-  useEffect(() => {
-    setPatternId(generateUUID())
-    setImageId(generateUUID())
-  }, [])
+  const patternId = useId()
+  const imageId = useId()
 
   return (
     <svg
@@ -1204,11 +1194,7 @@ export const Person = ({ ...props }) => {
 
 export const Planet = ({ ...props }) => {
   const { fill, ...rest } = props
-  const [clipId, setClipId] = useState<string>('')
-
-  useEffect(() => {
-    setClipId(generateUUID())
-  }, [])
+  const clipId = useId()
 
   return (
     <svg
