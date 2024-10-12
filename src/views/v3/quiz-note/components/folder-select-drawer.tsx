@@ -70,7 +70,7 @@ const FolderSelectDrawer = ({ isDrawerOpen, setIsDrawerOpen }: Props) => {
                   노트 30개
                 </Text>
               </DrawerTitle>
-              <div className="mb-[11px] mt-[9px] flex max-h-[220px] flex-col overflow-y-scroll px-[18px]">
+              <div className="mb-[11px] mt-[9px] flex max-h-[220px] flex-col overflow-y-auto px-[18px]">
                 {/* 폴더 개수만큼 렌더링 */}
                 {folderList.map((folder) => (
                   <button key={folder.id} className="flex items-center justify-between py-[10px]">
