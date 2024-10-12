@@ -7,8 +7,6 @@ interface QuizNoteContextValues {
   setButtonHidden: (value: boolean) => void
   selectedFolderId: string
   setSelectedFolderId: (id: string) => void
-  dialogState: { isOpen: boolean; type: 'create' | 'edit' | 'delete' }
-  setDialogState: (state: QuizNoteContextValues['dialogState']) => void
   isSelectMode: boolean
   setIsSelectMode: (value: boolean) => void
 }
@@ -17,10 +15,6 @@ const QuizNoteContext = createContext<QuizNoteContextValues | null>(null)
 
 export function QuizNoteProvider({ children }: PropsWithChildren) {
   const [selectedFolderId, setSelectedFolderId] = useState('')
-  const [dialogState, setDialogState] = useState<QuizNoteContextValues['dialogState']>({
-    isOpen: false,
-    type: 'create',
-  })
   const [isSelectMode, setIsSelectMode] = useState(false)
   const [buttonHidden, setButtonHidden] = useState(false)
 
@@ -28,8 +22,6 @@ export function QuizNoteProvider({ children }: PropsWithChildren) {
     () => ({
       selectedFolderId,
       setSelectedFolderId,
-      dialogState,
-      setDialogState,
       isSelectMode,
       setIsSelectMode,
       buttonHidden,
@@ -38,8 +30,6 @@ export function QuizNoteProvider({ children }: PropsWithChildren) {
     [
       selectedFolderId,
       setSelectedFolderId,
-      dialogState,
-      setDialogState,
       isSelectMode,
       setIsSelectMode,
       buttonHidden,

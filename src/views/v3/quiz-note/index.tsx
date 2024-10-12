@@ -3,7 +3,6 @@
 import Header from './components/header'
 import { useState } from 'react'
 import { QuizNoteProvider } from './context/quiz-note-context'
-import QuizNoteDialog from './components/quiz-note-dialog'
 import NoteList from './components/note-list'
 import SwipeableNoteCard from './components/swipeable-note-card'
 import AddNoteMenu from './components/add-note-menu'
@@ -50,8 +49,6 @@ const QuizNote = () => {
         </NoteList>
 
         <AddNoteMenu isExpanded={isExpanded} setIsExpanded={setIsExpanded} />
-
-        <QuizNoteDialog />
       </QuizNoteProvider>
     </div>
   )

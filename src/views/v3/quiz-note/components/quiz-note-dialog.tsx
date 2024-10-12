@@ -1,8 +1,6 @@
 'use client'
 
 import { Dialog, DialogClose, DialogContent, DialogTitle } from '@/shared/components/ui/dialog'
-import { useQuizNoteContext } from '../context/quiz-note-context'
-import Text from '@/shared/components/text'
 import { useState } from 'react'
 import {
   DropdownMenu,
@@ -12,35 +10,31 @@ import {
 import EmojiPicker from 'emoji-picker-react'
 import { cn } from '@/shared/lib/utils'
 
+interface Props {
+  open: boolean
+  onOpenChange: (value: boolean) => void
+  title: string
+  content?: JSX.Element
+  onConfirm: () => void
+  confirmText: string
+}
+
 // QuizNoteDialog 컴포넌트
-const QuizNoteDialog = () => {
+const QuizNoteDialog = ({ open, onOpenChange, title, content, onConfirm, confirmText }: Props) => {
   const [name, setName] = useState('')
   const [emoji, setEmoji] = useState('📁')
-  const { dialogState, setDialogState } = useQuizNoteContext()
-
-  const handleDialogOpen = (value: boolean) => {
-    setDialogState({ ...dialogState, isOpen: value })
-  }
 
   return (
-    <Dialog open={dialogState.isOpen} onOpenChange={handleDialogOpen}>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
         className="flex min-h-[190px] w-[280px] flex-col items-center justify-between rounded-[16px] bg-background-base-01"
         displayCloseButton={false}
       >
-        <DialogTitle className="mb-[32px] w-full text-subtitle2-bold">
-          {dialogState.type === 'create' && '폴더 만들기'}
-          {dialogState.type === 'edit' && '폴더 이름 바꾸기'}
-          {dialogState.type === 'delete' && '폴더 삭제'}
-        </DialogTitle>
+        <DialogTitle className="mb-[32px] w-full text-subtitle2-bold">{title}</DialogTitle>
 
         <div className="flex h-[40px] w-full">
-          {dialogState.type === 'delete' ? (
-            // data : 해당 폴더 이름, 노트 개수 필요
-            <Text typography="text1-medium">
-              전공 공부 폴더와 <span className="text-text-wrong">14개의 노트</span>가 <br /> 모두
-              삭제됩니다
-            </Text>
+          {content ? (
+            content
           ) : (
             <>
               <DropdownMenu>
@@ -76,14 +70,13 @@ const QuizNoteDialog = () => {
           </DialogClose>
           <DialogClose asChild>
             <button
+              onClick={onConfirm}
               className={cn(
                 'ml-[21px] p-[4px] text-button-text-primary',
-                dialogState.type === 'delete' && 'text-button-text-critical'
+                confirmText === '삭제하기' && 'text-button-text-critical'
               )}
             >
-              {dialogState.type === 'create' && '만들기'}
-              {dialogState.type === 'edit' && '저장'}
-              {dialogState.type === 'delete' && '삭제하기'}
+              {confirmText}
             </button>
           </DialogClose>
         </div>

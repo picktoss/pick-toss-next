@@ -4,8 +4,9 @@ import Text from '@/shared/components/text'
 import Icon from '@/shared/components/v3/icon'
 import { useQuizNoteContext } from '../context/quiz-note-context'
 import { cn } from '@/shared/lib/utils'
-import React, { useEffect } from 'react'
-import { Drawer, DrawerContent, DrawerTrigger } from '@/shared/components/ui/drawer'
+import React, { useEffect, useState } from 'react'
+import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from '@/shared/components/ui/drawer'
+import QuizNoteDialog from './quiz-note-dialog'
 
 interface Props {
   isDrawerOpen: boolean
@@ -14,7 +15,8 @@ interface Props {
 
 // FolderSelectDrawer 컴포넌트
 const FolderSelectDrawer = ({ isDrawerOpen, setIsDrawerOpen }: Props) => {
-  const { selectedFolderId, setDialogState, setButtonHidden } = useQuizNoteContext()
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const { selectedFolderId, setButtonHidden } = useQuizNoteContext()
 
   // 목데이터
   const folderList = [
@@ -60,14 +62,14 @@ const FolderSelectDrawer = ({ isDrawerOpen, setIsDrawerOpen }: Props) => {
         >
           <div className="flex h-fit flex-col bg-background-base-01">
             <div className="border-b border-border-divider">
-              <div className="mt-[24px] flex items-center justify-between px-[18px]">
+              <DrawerTitle className="mt-[24px] flex items-center justify-between px-[18px]">
                 <Text as="span" typography="subtitle2-medium">
                   전체 노트
                 </Text>
                 <Text as="span" typography="text1-medium" className="text-text-caption">
                   노트 30개
                 </Text>
-              </div>
+              </DrawerTitle>
               <div className="mb-[11px] mt-[9px] flex max-h-[220px] flex-col overflow-y-scroll px-[18px]">
                 {/* 폴더 개수만큼 렌더링 */}
                 {folderList.map((folder) => (
@@ -88,7 +90,7 @@ const FolderSelectDrawer = ({ isDrawerOpen, setIsDrawerOpen }: Props) => {
             </div>
             <button
               className="my-[7px] flex items-center px-[20px] py-[10px]"
-              onClick={() => setDialogState({ isOpen: true, type: 'create' })}
+              onClick={() => setIsDialogOpen(true)}
             >
               <Icon name="plus-circle" className="mr-[16px]" />
               폴더 추가
@@ -96,6 +98,14 @@ const FolderSelectDrawer = ({ isDrawerOpen, setIsDrawerOpen }: Props) => {
           </div>
         </DrawerContent>
       </Drawer>
+
+      <QuizNoteDialog
+        open={isDialogOpen}
+        onOpenChange={setIsDialogOpen}
+        title={'폴더 만들기'}
+        onConfirm={() => {}}
+        confirmText={'만들기'}
+      />
     </>
   )
 }
