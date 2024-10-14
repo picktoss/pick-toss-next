@@ -3,7 +3,7 @@ import * as SvgElement from './svg-components'
 
 type SvgElementKeys = keyof typeof SvgElement
 
-interface IconProps extends SVGAttributes<SVGElement> {
+export interface IconProps extends SVGAttributes<SVGElement> {
   name: KebabCase<SvgElementKeys>
   className?: HTMLElement['className']
 }

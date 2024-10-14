@@ -4,6 +4,7 @@
     "source.fixAll.eslint": "always"
   },
   "cSpell.words": [
-    "lucide"
+    "lucide",
+    "Swipeable"
   ]
 }
