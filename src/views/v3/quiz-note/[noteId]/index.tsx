@@ -31,7 +31,7 @@ const Note = () => {
 
       <main className="min-h-screen">
         {/* tab */}
-        <div className="sticky top-[108px] flex items-center justify-between bg-background-base-01 text-text-disabled">
+        <div className="sticky top-[54px] flex items-center justify-between bg-background-base-01 text-text-disabled">
           {tabs.map((tab) => (
             <button
               key={tab.key}

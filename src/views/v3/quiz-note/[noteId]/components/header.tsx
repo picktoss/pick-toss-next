@@ -13,10 +13,10 @@ const Header = () => {
       <header>
         <div
           className={cn(
-            'fixed right-1/2 top-0 z-20 flex h-[108px] w-full max-w-[430px] translate-x-1/2 flex-col justify-end bg-background-base-01 px-[16px] transition-all'
+            'fixed right-1/2 top-0 z-20 flex h-[54px] w-full max-w-[430px] translate-x-1/2 bg-background-base-01 px-[16px] transition-all'
           )}
         >
-          <div className="flex h-1/2 w-full items-center justify-between">
+          <div className="flex size-full items-center justify-between">
             <div className="flex items-center">
               <button>
                 <Icon name="cancel" className="size-[24px]" />
@@ -42,7 +42,7 @@ const Header = () => {
         </div>
 
         {/* data: 노트 제목, 문제 수, 글자 수, 마지막 수정 날짜 */}
-        <div className="mt-[108px] px-[16px] pb-[18px] pt-[12px]">
+        <div className="mt-[54px] px-[16px] pb-[18px] pt-[12px]">
           <h2 className="mb-[8px] text-title2">최근 이슈</h2>
           <div className="flex items-center text-text1-medium text-text-sub">
             <Text as="span">28문제</Text>
