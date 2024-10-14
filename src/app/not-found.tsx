@@ -10,7 +10,7 @@ export default function NotFound() {
       <NotFoundIcon className="h-[128px] w-[204px] lg:h-[215px] lg:w-[341px]" />
       <div className="mt-[22.4px] flex flex-col items-center gap-[10px] lg:mt-[15.7px] lg:gap-[16px] lg:py-0">
         <div className="text-h4-bold text-gray-08 lg:text-h2-bold">페이지를 찾을 수 없습니다.</div>
-        <div className="px-[45px] text-center text-text-medium text-gray-07 lg:text-body1-medium">
+        <div className="text-text-medium text-gray-07 lg:text-body1-medium px-[45px] text-center">
           존재하지 않는 주소를 입력했거나, 요청하신 페이지의 주소가 변경, 삭제되어 찾을 수 없습니다.
         </div>
       </div>
@@ -44,9 +44,9 @@ function RedirectOption({
   return (
     <button
       onClick={onClick}
-      className="flex w-full items-center gap-[16px] rounded-[12px] border border-gray-02 bg-white px-[11px] py-[9px] text-start text-text-medium text-gray-08"
+      className="border-gray-02 text-text-medium text-gray-08 flex w-full items-center gap-[16px] rounded-[12px] border bg-white px-[11px] py-[9px] text-start"
     >
-      <div className="flex size-[36px] items-center justify-center rounded-full bg-gray-02 text-body1-bold-eng">
+      <div className="bg-gray-02 text-body1-bold-eng flex size-[36px] items-center justify-center rounded-full">
         {order}
       </div>
       <div>{label}</div>

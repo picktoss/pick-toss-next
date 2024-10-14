@@ -2,8 +2,8 @@ import * as React from 'react'
 
 import { cn } from '@/shared/lib/utils'
 import { cva, VariantProps } from 'class-variance-authority'
-import Text from '../text'
-import Icon from '../v3/icon'
+import Text from './text'
+import Icon from '../icon'
 import Label from './label'
 
 const inputVariants = cva(

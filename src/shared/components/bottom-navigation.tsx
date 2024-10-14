@@ -4,7 +4,7 @@ import { cn } from '@/shared/lib/utils'
 import Link from 'next/link'
 import { useSelectedLayoutSegments } from 'next/navigation'
 import { useMemo } from 'react'
-import Icon from './v3/icon'
+import Icon from './icon'
 
 export const navigationItems = [
   {
@@ -22,7 +22,7 @@ export const navigationItems = [
     segments: ['main'],
   },
   {
-    href: '/v3/note',
+    href: '/note',
     title: '퀴즈 노트',
     icon: ({ isActive }: { isActive: boolean }) => {
       return (
@@ -36,7 +36,7 @@ export const navigationItems = [
     segments: ['note'],
   },
   {
-    href: '/v3/collections',
+    href: '/collections',
     title: '컬렉션',
     icon: ({ isActive }: { isActive: boolean }) => {
       return (
