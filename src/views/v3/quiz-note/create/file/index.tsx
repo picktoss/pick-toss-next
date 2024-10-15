@@ -2,7 +2,7 @@ import Icon from '@/shared/components/v3/icon'
 import TitleInput from './components/title-input'
 import { CreateNoteProvider } from './context/create-note-context'
 import Text from '@/shared/components/text'
-import CreateQuizButton from './components/create-quiz-button'
+import CreateQuizButton from '../components/create-quiz-button'
 
 const CreateWithFile = () => {
   return (
