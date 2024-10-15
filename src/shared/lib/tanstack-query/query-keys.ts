@@ -1,6 +1,6 @@
 import { api } from '@/actions/fetchers'
 import { getWeekQuizAnswerRate } from '@/actions/fetchers/quiz'
-import { SORT_OPTION } from '@/constants/document'
+import { SORT_OPTION } from '@/constants'
 import { createQueryKeyStore } from '@lukemorales/query-key-factory'
 
 export const queries = createQueryKeyStore({

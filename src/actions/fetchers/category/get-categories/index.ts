@@ -4,7 +4,18 @@ import { apiClient } from '@/actions/api-client'
 import { API_ENDPOINT } from '@/actions/endpoints'
 
 import { DocumentStatus } from '@/actions/types/dto/document.dto'
-import { CATEGORY_TAG_TYPE } from '@/types/category'
+
+const CATEGORY_TAG_TYPE = [
+  'IT',
+  'ECONOMY',
+  'HISTORY',
+  'LANGUAGE',
+  'MATH',
+  'ART',
+  'MEDICINE',
+  'ETC',
+  'DEFAULT',
+] as const
 
 export type CategoryTagType = (typeof CATEGORY_TAG_TYPE)[number]
 
