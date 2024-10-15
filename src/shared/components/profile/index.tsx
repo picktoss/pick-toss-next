@@ -6,8 +6,6 @@ import { Dialog, DialogContent, DialogTrigger } from '../ui/dialog'
 import { cn } from '@/shared/lib/utils'
 import { NavItemsId, profileNav } from './config'
 import { Switch } from '../ui/switch'
-import Image from 'next/image'
-import icons from '@/constants/icons'
 
 interface ProfileProps {
   trigger: ReactNode
@@ -31,22 +29,22 @@ export default function Profile({ trigger }: ProfileProps) {
     <Dialog>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent className="flex max-w-full overflow-hidden rounded-[12px] p-0 shadow-modal md:h-[560px] md:w-[800px]">
-        <div className="flex h-full w-[200px] flex-col justify-between bg-gray-01 px-[12px] pb-[30px] pt-[32px]">
+        <div className="bg-gray-01 flex h-full w-[200px] flex-col justify-between px-[12px] pb-[30px] pt-[32px]">
           <div className="mb-[27px] flex items-center gap-[8px] px-[10px]">
             <LogoIcon />
             <div className="flex flex-col">
               <span className="text-[14px]">
                 <span className="font-bold">픽토스</span> 님
               </span>
-              <span className="text-[10px] font-[500] text-gray-07">picktoss@gmail.com</span>
+              <span className="text-gray-07 text-[10px] font-[500]">picktoss@gmail.com</span>
             </div>
           </div>
 
           <div>
             {profileNav.map(({ id, name, items, styles }) => (
               <div key={id} className={cn('border-b border-gray-04', styles)}>
-                <div className="mb-[9px] px-[14px] text-[12px] font-[700] text-gray-06">{name}</div>
-                <div className="flex flex-col *:text-gray-07">
+                <div className="text-gray-06 mb-[9px] px-[14px] text-[12px] font-[700]">{name}</div>
+                <div className="*:text-gray-07 flex flex-col">
                   {items.map((item) => (
                     <Button
                       key={item.id}
@@ -60,7 +58,7 @@ export default function Profile({ trigger }: ProfileProps) {
                       <div className="flex items-center gap-[8px]">
                         <span>{item.label}</span>
                         {item.disabled && (
-                          <div className="w-[72px] rounded-[3px] bg-[#D9D9D9] text-[10px] text-gray-08">
+                          <div className="text-gray-08 w-[72px] rounded-[3px] bg-[#D9D9D9] text-[10px]">
                             Coming soon
                           </div>
                         )}
@@ -70,8 +68,8 @@ export default function Profile({ trigger }: ProfileProps) {
                 </div>
               </div>
             ))}
-            <div className="flex gap-[10px] pt-[16px] *:text-gray-07">
-              <Button className="h-[17px] w-full justify-start bg-inherit px-[12px] !text-[14px] text-gray-07 hover:bg-inherit">
+            <div className="*:text-gray-07 flex gap-[10px] pt-[16px]">
+              <Button className="text-gray-07 h-[17px] w-full justify-start bg-inherit px-[12px] !text-[14px] hover:bg-inherit">
                 <div className="flex items-center gap-[10px]">
                   로그아웃
                   <LogOutIcon />
@@ -80,7 +78,7 @@ export default function Profile({ trigger }: ProfileProps) {
             </div>
           </div>
 
-          <div className="mt-auto px-[12px] text-[10px] text-gray-06">버전 정보 2.1.1</div>
+          <div className="text-gray-06 mt-auto px-[12px] text-[10px]">버전 정보 2.1.1</div>
         </div>
 
         <div className="w-full px-[40px] pb-[30px] pt-[32px]">
@@ -102,15 +100,15 @@ function NotificationConfig() {
 
   return (
     <div>
-      <div className="border-b border-gray-02 pb-[15px]">
+      <div className="border-gray-02 border-b pb-[15px]">
         <div className="mb-[18px]">
-          <div className="text-[20px] font-[700] text-gray-08">퀴즈 알림</div>
-          <div className="text-[12px] font-[400] text-gray-06">
+          <div className="text-gray-08 text-[20px] font-[700]">퀴즈 알림</div>
+          <div className="text-gray-06 text-[12px] font-[400]">
             연동된 이메일로 매일 오늘의 퀴즈 링크를 받을 수 있어요
           </div>
         </div>
         <div className="mb-[16px] flex h-[28px] items-center gap-[12px]">
-          <span className="text-[12px] font-[500] text-gray-07">퀴즈 알림</span>
+          <span className="text-gray-07 text-[12px] font-[500]">퀴즈 알림</span>
           <div className="flex items-center gap-[10px]">
             <span
               className={cn(
@@ -124,23 +122,20 @@ function NotificationConfig() {
           </div>
         </div>
         <div className="mb-[24px] flex flex-col gap-[8px]">
-          <span className="text-[12px] font-[500] text-gray-07">알림 시간</span>
-          <div className="flex w-[195px] items-center justify-between rounded-[4px] bg-gray-01 px-[11px] py-[8px]">
-            <div className="text-[16px] font-[500] text-gray-08">오전 09시 12분</div>
-            <Button className="h-[23px] w-[45px] bg-orange-02 text-[12px] font-[700] text-orange-06 hover:bg-orange-02/80">
+          <span className="text-gray-07 text-[12px] font-[500]">알림 시간</span>
+          <div className="bg-gray-01 flex w-[195px] items-center justify-between rounded-[4px] px-[11px] py-[8px]">
+            <div className="text-gray-08 text-[16px] font-[500]">오전 09시 12분</div>
+            <Button className="bg-orange-02 text-orange-06 hover:bg-orange-02/80 h-[23px] w-[45px] text-[12px] font-[700]">
               변경
             </Button>
           </div>
         </div>
-        <div className="flex h-[64px] w-full items-center gap-[13.7px] overflow-hidden rounded-[8px] bg-blue-01 px-[11px]">
-          <div className="relative h-full w-[50.32px]">
-            <Image src={icons.mobileApp} alt="" fill />
-          </div>
+        <div className="bg-blue-01 flex h-[64px] w-full items-center gap-[13.7px] overflow-hidden rounded-[8px] px-[11px]">
           <div className="flex flex-col">
-            <span className="text-[12px] font-[500] text-gray-07">
+            <span className="text-gray-07 text-[12px] font-[500]">
               모바일로도 퀴즈 알림을 받고 싶다면?
             </span>
-            <span className="text-[14px] font-[700] text-blue-05 underline">
+            <span className="text-blue-05 text-[14px] font-[700] underline">
               픽토스 앱 다운로드
             </span>
           </div>
@@ -148,13 +143,13 @@ function NotificationConfig() {
       </div>
       <div className="mt-[24px]">
         <div className="mb-[20px]">
-          <div className="text-[20px] font-[700] text-gray-08">픽토스 소식 알림</div>
-          <div className="text-[12px] font-[400] text-gray-06">
+          <div className="text-gray-08 text-[20px] font-[700]">픽토스 소식 알림</div>
+          <div className="text-gray-06 text-[12px] font-[400]">
             픽토스에 새롭게 추가된 기능과 이벤트 소식을 받을 수 있어요
           </div>
         </div>
         <div className="mb-[8px] flex h-[28px] w-[162px] items-center justify-between gap-[12px] pr-[5px]">
-          <span className="text-[12px] font-[500] text-gray-07">업데이트 알림</span>
+          <span className="text-gray-07 text-[12px] font-[500]">업데이트 알림</span>
           <div className="flex items-center gap-[10px]">
             <span
               className={cn(
@@ -171,7 +166,7 @@ function NotificationConfig() {
           </div>
         </div>
         <div className="flex h-[28px] w-[162px] items-center justify-between gap-[12px] pr-[5px]">
-          <span className="text-[12px] font-[500] text-gray-07">이벤트 알림</span>
+          <span className="text-gray-07 text-[12px] font-[500]">이벤트 알림</span>
           <div className="flex items-center gap-[10px]">
             <span
               className={cn(
