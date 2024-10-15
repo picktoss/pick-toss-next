@@ -26,22 +26,21 @@ export function LoginDialog({ trigger }: Props) {
       >
         <DialogHeader className="!text-center">
           <DialogTitle className="!text-h4-bold text-gray-09">픽토스 시작하기</DialogTitle>
-          <DialogDescription className="!mt-[8px] !text-small1-regular text-gray-07 lg:!text-text-medium">
+          <DialogDescription className="!text-small1-regular text-gray-07 lg:!text-text-medium !mt-[8px]">
             간편 로그인으로 3초만에 픽토스를 시작해보세요
           </DialogDescription>
         </DialogHeader>
 
         <div className="mt-[51px] flex flex-col items-center lg:mt-[36px]">
           <Button
-            variant="outline"
-            className="h-[48px] w-full max-w-[328px] gap-[12px] rounded-[6px] border-gray-02 !text-body2-medium"
+            className="border-gray-02 !text-body2-medium h-[48px] w-full max-w-[328px] gap-[12px] rounded-[6px]"
             onClick={() => signIn('google')}
           >
             <GoogleIcon />
             <div>Google로 로그인</div>
           </Button>
           <Button
-            className="mt-[14px] h-[48px] w-full max-w-[328px] gap-[16px] rounded-[6px] bg-[#FBE44D] !text-body2-medium text-[#3C1E1E] hover:bg-[#FBE44D]/80"
+            className="!text-body2-medium mt-[14px] h-[48px] w-full max-w-[328px] gap-[16px] rounded-[6px] bg-[#FBE44D] text-[#3C1E1E] hover:bg-[#FBE44D]/80"
             onClick={() => signIn('kakao')}
           >
             <KakaoIcon />
@@ -49,7 +48,7 @@ export function LoginDialog({ trigger }: Props) {
           </Button>
         </div>
 
-        <p className="mt-[21px] text-center text-tag-eng text-gray-06 lg:mt-[30px] lg:pb-[24px]">
+        <p className="text-tag-eng text-gray-06 mt-[21px] text-center lg:mt-[30px] lg:pb-[24px]">
           로그인 시 <span className="underline underline-offset-2">개인정보보호 정책</span> 및{' '}
           <span className="underline underline-offset-2">서비스 이용약관</span>에 동의하는 것으로
           <br />
