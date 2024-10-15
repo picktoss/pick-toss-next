@@ -4,8 +4,8 @@ import { CreateNoteProvider } from './context/create-note-context'
 import Text from '@/shared/components/text'
 import dynamic from 'next/dynamic'
 import Loading from '@/shared/components/loading'
-import CreateQuizButton from '../components/create-quiz-button'
-import Header from '../components/header'
+import CreateQuizButton from '../ui/create-quiz-button'
+import Header from '../ui/header'
 
 // Remirror가 브라우저 전용 라이브러리라 서버에서 렌더링될 때 오류 발생, 이를 해결하기 위해 dynamic import를 사용
 const VisualEditor = dynamic(() => import('./components/visual-editor'), {

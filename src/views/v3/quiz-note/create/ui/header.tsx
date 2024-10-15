@@ -1,5 +1,6 @@
 import Text from '@/shared/components/text'
 import Icon from '@/shared/components/v3/icon'
+import FolderSelectDrawer from './folder-select-drawer'
 
 const Header = () => {
   return (
@@ -12,7 +13,7 @@ const Header = () => {
         </div>
         <div className="flex items-center text-text1-medium">
           <Text className="mr-[12px] text-text-sub">폴더</Text>
-          <div className="rounded-full bg-background-base-02 px-[16px] py-[5px]">📊 전공 공부</div>
+          <FolderSelectDrawer />
         </div>
       </div>
     </header>

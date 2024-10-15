@@ -8,6 +8,7 @@ import Quiz from './screens/quiz'
 import { useState } from 'react'
 import { cn } from '@/shared/lib/utils'
 import { QuizListProvider } from './context/quiz-list-context'
+import NewQuizDrawer from '../shared/new-quiz-drawer'
 
 const tabs = [
   { key: 'note-content', label: '노트', component: <NoteContent /> },
@@ -62,12 +63,21 @@ const Note = () => {
             <Icon name="past-record" className="mr-[4px] size-[16px]" />
             <Text className="text-button-text-secondary">다시풀기</Text>
           </button>
-          <button className="flex-center py-[5.5px] pl-[20px]">
-            <Icon name="picktoss" fill="var(--color-orange-500)" className="mr-[4px] size-[16px]" />
-            <Text className="bg-gradient-to-r from-orange-500 to-blue-400 bg-clip-text text-transparent">
-              퀴즈 만들기
-            </Text>
-          </button>
+
+          <NewQuizDrawer
+            triggerComponent={
+              <button className="flex-center py-[5.5px] pl-[20px]">
+                <Icon
+                  name="picktoss"
+                  fill="var(--color-orange-500)"
+                  className="mr-[4px] size-[16px]"
+                />
+                <Text className="bg-gradient-to-r from-orange-500 to-blue-400 bg-clip-text text-transparent">
+                  퀴즈 만들기
+                </Text>
+              </button>
+            }
+          />
         </div>
       </main>
     </>
