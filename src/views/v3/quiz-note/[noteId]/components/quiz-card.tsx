@@ -6,13 +6,14 @@ import { useState } from 'react'
 
 interface Props {
   question: string
+  type: 'multiple' | 'ox'
   selectors: { key: string; sentence: string }[]
   answer: string
   explanation: string
 }
 
 // QuizCard 컴포넌트
-const QuizCard = ({ question, selectors, answer, explanation }: Props) => {
+const QuizCard = ({ question, type, selectors, answer, explanation }: Props) => {
   const { showAnswer } = useQuizListContext()
   const [isOpenExplanation, setIsOpenExplanation] = useState(false)
 
@@ -26,24 +27,56 @@ const QuizCard = ({ question, selectors, answer, explanation }: Props) => {
           <Icon name="menu-dots" />
         </div>
 
-        <h3 className="mb-[12px] text-text1-bold">{question}</h3>
-        <div className="flex flex-col gap-[4px]">
-          {/* 선택지들 아래 요소로 map */}
-          {selectors.map((selector) => (
-            <Text
-              key={selector.key}
-              typography="text1-medium"
-              className={cn(
-                'flex text-text-secondary',
-                (showAnswer || isOpenExplanation) &&
-                  (answer === selector.key ? 'text-text-accent' : 'text-text-caption')
-              )}
-            >
-              <span className="mr-[2px]">{selector.key}.</span>
-              <span>{selector.sentence}</span>
-            </Text>
-          ))}
-        </div>
+        <h3 className="text-text1-bold">{question}</h3>
+
+        {type === 'multiple' && (
+          <div className="mt-[12px] flex flex-col gap-[4px]">
+            {/* 선택지들 아래 요소로 map */}
+            {selectors.map((selector) => (
+              <Text
+                key={selector.key}
+                typography="text1-medium"
+                className={cn(
+                  'flex text-text-secondary',
+                  (showAnswer || isOpenExplanation) &&
+                    (answer === selector.key ? 'text-text-accent' : 'text-text-caption')
+                )}
+              >
+                <span className="mr-[2px]">{selector.key}.</span>
+                <span>{selector.sentence}</span>
+              </Text>
+            ))}
+          </div>
+        )}
+
+        {type === 'ox' && (
+          <div className="flex-center mt-[16px] gap-[6px]">
+            <button>
+              <Text
+                typography="title3"
+                className={cn(
+                  'font-suit text-text-secondary',
+                  (showAnswer || isOpenExplanation) &&
+                    (answer === 'o' ? 'text-text-accent' : 'text-text-caption')
+                )}
+              >
+                O
+              </Text>
+            </button>
+            <button>
+              <Text
+                typography="title3"
+                className={cn(
+                  'font-suit text-text-secondary',
+                  (showAnswer || isOpenExplanation) &&
+                    (answer === 'x' ? 'text-text-accent' : 'text-text-caption')
+                )}
+              >
+                X
+              </Text>
+            </button>
+          </div>
+        )}
 
         {isOpenExplanation && (
           <Text typography="text2-medium" className="mt-[20px] w-full text-text-sub">

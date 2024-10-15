@@ -18,6 +18,7 @@ interface NoteProps {
   quizCount: number
   characterCount: number
   folder: string
+  className?: string
 }
 
 const SwipeableNoteCard = ({
@@ -28,6 +29,7 @@ const SwipeableNoteCard = ({
   quizCount,
   characterCount,
   folder,
+  className,
 }: NoteProps) => {
   const { isSelectMode } = useQuizNoteContext()
   const [isSwiped, setIsSwiped] = useState(false)
@@ -46,7 +48,10 @@ const SwipeableNoteCard = ({
 
   return (
     <div
-      className={`relative flex h-[104px] max-w-full items-center overflow-hidden rounded-[16px] bg-white px-[16px] pb-[20px] pt-[17px]`}
+      className={cn(
+        `relative flex h-[104px] max-w-full items-center overflow-hidden rounded-[16px] bg-white px-[16px] pb-[20px] pt-[17px] shrink-0`,
+        className
+      )}
     >
       {/* Swipe 영역 */}
       <motion.div

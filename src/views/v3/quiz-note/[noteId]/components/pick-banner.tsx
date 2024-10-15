@@ -6,7 +6,7 @@ import Image from 'next/image'
 // PickBanner 컴포넌트
 const PickBanner = () => {
   return (
-    <div className="flex-center mb-[24px] h-[44px] w-[343px] max-w-full gap-[4px] rounded-[12px] bg-background-container-03">
+    <div className="flex-center mb-[14px] h-[44px] w-full gap-[4px] bg-background-container-03">
       <Text typography="text1-medium" className="flex-center gap-[16px] text-text-info">
         <Text className="flex items-center">
           <Image src={icons.pin} alt="" width={16} height={16} className="mr-[2.5px]" />

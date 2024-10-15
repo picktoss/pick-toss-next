@@ -6,6 +6,7 @@ import { QuizNoteProvider } from './context/quiz-note-context'
 import NoteList from './components/note-list'
 import SwipeableNoteCard from './components/swipeable-note-card'
 import AddNoteMenu from './components/add-note-menu'
+import { cn } from '@/shared/lib/utils'
 // import note_img from './assets/note.png'
 // import Image from 'next/image'
 // import Text from '@/shared/components/text'
@@ -14,12 +15,12 @@ const QuizNote = () => {
   const [isExpanded, setIsExpanded] = useState(false)
 
   return (
-    <div className="flex h-full flex-col overflow-hidden bg-background-base-02 px-[14px] pb-[30px] text-text-primary">
+    <div className="flex h-[calc(100dvh-88px)] w-full flex-col overflow-hidden bg-background-base-02 text-text-primary">
       <QuizNoteProvider>
         <Header />
 
         {/* 노트가 하나도 없을 경우 아래 렌더링 */}
-        {/* <div className="flex-center grow overflow-y-scroll pt-[54px]">
+        {/* <div className="flex-center grow overflow-y-scroll">
             <div className="flex-center relative size-[202px] flex-col">
               <Image src={note_img} alt="노트 작성" objectPosition="center" width={100} />
               <div className="flex-center mx-[12px] grow flex-col">
@@ -44,6 +45,7 @@ const QuizNote = () => {
               quizCount={28}
               characterCount={2382}
               folder="전공 공부"
+              className={cn(idx === 9 && 'mb-[30px]')}
             />
           ))}
         </NoteList>

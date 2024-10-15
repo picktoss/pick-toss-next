@@ -12,7 +12,7 @@ const VisualEditor = dynamic(() => import('./components/visual-editor'), {
   loading: () => <Loading center />,
 })
 
-const Create = () => {
+const CreateWithEditor = () => {
   return (
     <CreateNoteProvider>
       <TitleInput />
@@ -36,4 +36,4 @@ const Create = () => {
   )
 }
 
-export default Create
+export default CreateWithEditor
