@@ -3,10 +3,11 @@
 import Text from '@/shared/components/ui/text'
 import { cn } from '@/shared/lib/utils'
 import { useState } from 'react'
-import Collection from '../components/collection'
-import CollectionList from '../components/collection-list'
+import Collection from '../../components/collection'
+import CollectionList from '../../components/collection-list'
 import Link from 'next/link'
 import Icon from '@/shared/components/icon'
+import StartQuizDrawer from '../../components/start-quiz-drawer'
 
 const tabs = [
   { key: 'create-collection', label: '만든 컬렉션' },
@@ -51,16 +52,28 @@ const MyCollection = () => {
           </Link>
         )}
         {Array.from({ length: 10 }).map((_, idx) => (
-          <Collection
+          <StartQuizDrawer
             key={idx}
+            collectionId={idx.toString()}
             emoji="🔥"
-            title="파이썬 OX"
+            multipleChoiceCount={30}
+            oxCount={5}
             category="IT·프로그래밍"
-            problemCount={35}
-            lastUpdated="2일 전"
-            href="#"
+            title="파이썬기본문법과응용"
+            description="이 퀴즈는 제가 파이썬을 공부하며 생성한 퀴즈 중 자주 틀린 퀴즈만 모은 컬렉션입니다 공부에 도움이 되시길 바라며..."
             isBookMarked={true}
             bookMarkCount={123}
+            trigger={
+              <Collection
+                emoji="🔥"
+                title="파이썬 OX"
+                category="IT·프로그래밍"
+                problemCount={35}
+                lastUpdated="2일 전"
+                isBookMarked={true}
+                bookMarkCount={123}
+              />
+            }
           />
         ))}
       </CollectionList>

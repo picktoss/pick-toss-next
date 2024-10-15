@@ -1,4 +1,4 @@
-import Collections from '@/views/collections'
+import Collections from '@/views/collections/collections'
 
 const CollectionsPage = () => {
   return (

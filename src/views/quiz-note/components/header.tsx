@@ -22,7 +22,7 @@ const Header = () => {
     <>
       <header
         className={cn(
-          'fixed right-1/2 top-0 z-20 flex h-[54px] w-full max-w-[430px] translate-x-1/2 flex-col justify-end bg-background-base-02 px-[14px] transition-all',
+          'fixed right-1/2 top-0 z-20 flex h-[54px] w-full max-w-mobile translate-x-1/2 flex-col justify-end bg-background-base-02 px-[14px] transition-all',
           isDrawerOpen && 'bg-background-base-01 max-w-screen'
         )}
       >

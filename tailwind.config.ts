@@ -19,6 +19,9 @@ const config = {
       },
     },
     extend: {
+      maxWidth: {
+        mobile: '430px',
+      },
       fontFamily: {
         sans: ['var(--font-sans)', ...fontFamily.sans],
         suit: ['var(--font-suit)'],

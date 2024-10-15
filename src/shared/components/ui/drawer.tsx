@@ -69,7 +69,7 @@ const DrawerContent = React.forwardRef<
         {...props}
       >
         {!hideSidebar && (
-          <div className="bg-gray-04 mx-auto mt-[4px] h-[4px] w-[40px] rounded-full" />
+          <div className="mx-auto mt-[8px] h-[4px] w-[48px] rounded-full bg-icon-tertiary" />
         )}
         {children}
       </DrawerPrimitive.Content>
@@ -84,7 +84,7 @@ const DrawerHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivEleme
 DrawerHeader.displayName = 'DrawerHeader'
 
 const DrawerFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn('mt-auto flex flex-col gap-2 p-4', className)} {...props} />
+  <div className={cn('mt-auto flex flex-col gap-2 p-[20px] pb-[36px]', className)} {...props} />
 )
 DrawerFooter.displayName = 'DrawerFooter'
 
