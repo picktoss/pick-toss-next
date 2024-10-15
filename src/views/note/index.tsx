@@ -9,6 +9,7 @@ import { QuizListProvider } from './context/quiz-list-context'
 import Text from '@/shared/components/ui/text'
 import Icon from '@/shared/components/icon'
 import NewQuizDrawer from '../shared/new-quiz-drawer'
+import PickBanner from './components/pick-banner'
 
 const tabs = [
   { key: 'note-content', label: '노트', component: <NoteContent /> },
@@ -32,27 +33,30 @@ const Note = () => {
 
       <main className="min-h-screen">
         {/* tab */}
-        <div className="sticky top-[54px] flex items-center justify-between bg-background-base-01 text-text-disabled">
-          {tabs.map((tab) => (
-            <button
-              key={tab.key}
-              onClick={() => setActiveTab(tab.key)}
-              className={cn(
-                'grow px-[16px] pb-[12px] mt-[12px] border-b border-border-divider',
-                activeTab === tab.key && 'border-b-2 border-button-fill-selected'
-              )}
-            >
-              <Text
-                typography="subtitle2-medium"
+        <div className="sticky top-[54px]">
+          <div className="flex items-center justify-between bg-background-base-01 text-text-disabled">
+            {tabs.map((tab) => (
+              <button
+                key={tab.key}
+                onClick={() => setActiveTab(tab.key)}
                 className={cn(
-                  'transition-colors',
-                  activeTab === tab.key && 'text-text-primary font-bold'
+                  'grow px-[16px] pb-[12px] mt-[12px] border-b border-border-divider',
+                  activeTab === tab.key && 'border-b-2 border-button-fill-selected'
                 )}
               >
-                {tab.label}
-              </Text>
-            </button>
-          ))}
+                <Text
+                  typography="subtitle2-medium"
+                  className={cn(
+                    'transition-colors',
+                    activeTab === tab.key && 'text-text-primary font-bold'
+                  )}
+                >
+                  {tab.label}
+                </Text>
+              </button>
+            ))}
+          </div>
+          <PickBanner />
         </div>
 
         {tabs.find((tab) => tab.key === activeTab)?.component}

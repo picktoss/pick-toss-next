@@ -4,7 +4,7 @@ import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from '@/shared/comp
 import Text from '@/shared/components/ui/text'
 import { useState } from 'react'
 
-// MoveNoteDrawer 컴포넌트
+// NewQuizDrawer 컴포넌트
 const NewQuizDrawer = ({ triggerComponent }: { triggerComponent: JSX.Element }) => {
   const [isOpen, setIsOpen] = useState(false)
 

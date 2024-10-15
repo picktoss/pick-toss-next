@@ -1,7 +1,7 @@
 import Icon from '@/shared/components/icon'
 import Text from '@/shared/components/ui/text'
 import Image from 'next/image'
-import * as pin from '@/../../public/icons/star.svg'
+import * as pin from '@/../../public/icons/pin.svg'
 
 // PickBanner 컴포넌트
 const PickBanner = () => {
