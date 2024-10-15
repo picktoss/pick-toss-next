@@ -1,4 +1,4 @@
-import CreateWithNotion from '@/views/v3/quiz-note/create/notion'
+import CreateWithNotion from '@/views/create-note/notion'
 
 const Page = () => {
   return (

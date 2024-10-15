@@ -1,4 +1,4 @@
-import Modify from '@/views/v3/quiz-note/modify'
+import Modify from '@/views/modify-note'
 
 const Page = () => {
   return (

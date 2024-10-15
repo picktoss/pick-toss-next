@@ -1,4 +1,4 @@
-import CreateWithFile from '@/views/v3/quiz-note/create/file'
+import CreateWithFile from '@/views/create-note/file'
 
 const Page = () => {
   return (

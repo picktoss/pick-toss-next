@@ -12,7 +12,7 @@ export function Intro() {
       <Image src={mobileSkySource} fill alt="" className="xl:hidden" />
       <Image src={desktopSkySource} fill alt="" className="hidden xl:block" />
       <div className="z-40">
-        <div className="text-center text-h2-bold text-gray-09 xl:text-[64px]">
+        <div className="text-h2-bold text-gray-09 text-center xl:text-[64px]">
           나의{'\u00A0'}
           {'\u00A0'}
           <span className="text-blue-06">
@@ -29,7 +29,7 @@ export function Intro() {
           </span>
         </div>
 
-        <div className="mt-[16px] h-[61px] text-center text-text-medium text-gray-08 xl:mt-[32px] xl:text-h4-medium">
+        <div className="text-text-medium text-gray-08 xl:text-h4-medium mt-[16px] h-[61px] text-center xl:mt-[32px]">
           내가 등록한 노트로부터 만들어진 퀴즈를 풀며
           <br />
           매일 5분으로 배운 것들을 나의 것으로 만들어보세요
@@ -38,10 +38,7 @@ export function Intro() {
         <div className="mt-[33px] flex justify-center xl:mt-[64px]">
           <LoginDialog
             trigger={
-              <Button
-                variant="gradation"
-                className="flex h-[52px] w-[190px] gap-[8px] rounded-[32px] !text-body1-bold text-white xl:w-[240px]"
-              >
+              <Button className="!text-body1-bold flex h-[52px] w-[190px] gap-[8px] rounded-[32px] text-white xl:w-[240px]">
                 <div>픽토스 시작하기</div>
                 <ArrowRightIcon />
               </Button>

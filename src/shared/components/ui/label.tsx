@@ -5,7 +5,7 @@ import * as LabelPrimitive from '@radix-ui/react-label'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 import { cn } from '@/shared/lib/utils'
-import Icon from '../v3/icon'
+import Icon from '../icon'
 
 const labelVariants = cva(
   'flex items-center text-text1-medium leading-none text-text-sub peer-disabled:cursor-not-allowed peer-disabled:opacity-70'

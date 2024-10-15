@@ -12,7 +12,7 @@ export function Footer() {
         <Image src={mobileNightSkySource} fill alt="" />
         <div className="z-10 flex flex-col items-center pt-[162px]">
           <PicktossIcon />
-          <div className="mt-[16px] text-center text-h3-bold text-gray-02">
+          <div className="text-h3-bold text-gray-02 mt-[16px] text-center">
             매일 유성처럼 나에게 도착하는
             <br />
             퀴즈를 받아보세요
@@ -22,7 +22,7 @@ export function Footer() {
         <div className="z-10 px-[20px] pb-[56px]">
           <div className="flex items-center gap-[8px]">
             <span className="text-h3-bold-eng text-orange-06">Q</span>
-            <span className="mt-[4px] text-h4-bold text-gray-09">
+            <span className="text-h4-bold text-gray-09 mt-[4px]">
               픽토스를 어떻게 시작하시겠어요?
             </span>
           </div>
@@ -34,10 +34,7 @@ export function Footer() {
                 await signIn('google')
               }}
             >
-              <Button
-                variant="outline"
-                className="w-full justify-start gap-[16px] rounded-[12px] border-[1.5px] border-gray-02 p-[12px] !text-text-medium text-gray-08"
-              >
+              <Button className="border-gray-02 !text-text-medium text-gray-08 w-full justify-start gap-[16px] rounded-[12px] border-[1.5px] p-[12px]">
                 <GoogleIcon />
                 구글로 시작하기
               </Button>
@@ -48,17 +45,14 @@ export function Footer() {
                 await signIn('kakao')
               }}
             >
-              <Button
-                variant="outline"
-                className="w-full justify-start gap-[16px] rounded-[12px] border-[1.5px] border-gray-02 p-[12px] !text-text-medium text-gray-08"
-              >
+              <Button className="border-gray-02 !text-text-medium text-gray-08 w-full justify-start gap-[16px] rounded-[12px] border-[1.5px] p-[12px]">
                 <KakaoIcon />
                 카카오로 시작하기
               </Button>
             </form>
           </div>
 
-          <p className="mt-[32px] text-center text-[14px] leading-[120%] text-gray-07">
+          <p className="text-gray-07 mt-[32px] text-center text-[14px] leading-[120%]">
             ⓒ 2024. picktoss all rights reserved
           </p>
         </div>
@@ -68,7 +62,7 @@ export function Footer() {
         <Image src={desktopNightSkySource} fill alt="" />
         <div className="z-10 flex flex-col items-center pt-[364px]">
           <PicktossIcon svgKey="desktop-picktoss" className="size-[120px]" />
-          <div className="mt-[35px] text-center text-h1 text-gray-02">
+          <div className="text-h1 text-gray-02 mt-[35px] text-center">
             매일 유성처럼 나에게 도착하는 퀴즈를 받아보세요
           </div>
         </div>
@@ -76,7 +70,7 @@ export function Footer() {
         <div className="z-10 mx-auto">
           <div className="flex items-center justify-center gap-[8px]">
             <span className="text-h2-bold-eng text-orange-06">Q</span>
-            <span className="mt-[4px] text-h3-bold text-gray-09">
+            <span className="text-h3-bold text-gray-09 mt-[4px]">
               픽토스를 어떻게 시작하시겠어요?
             </span>
           </div>
@@ -88,10 +82,7 @@ export function Footer() {
                 await signIn('google')
               }}
             >
-              <Button
-                variant="outline"
-                className="w-[335px] justify-start gap-[16px] rounded-[12px] border-[1.5px] border-gray-02 p-[12px] !text-text-medium text-gray-08"
-              >
+              <Button className="border-gray-02 !text-text-medium text-gray-08 w-[335px] justify-start gap-[16px] rounded-[12px] border-[1.5px] p-[12px]">
                 <GoogleIcon />
                 구글로 시작하기
               </Button>
@@ -102,22 +93,19 @@ export function Footer() {
                 await signIn('kakao')
               }}
             >
-              <Button
-                variant="outline"
-                className="w-[335px] justify-start gap-[16px] rounded-[12px] border-[1.5px] border-gray-02 p-[12px] !text-text-medium text-gray-08"
-              >
+              <Button className="border-gray-02 !text-text-medium text-gray-08 w-[335px] justify-start gap-[16px] rounded-[12px] border-[1.5px] p-[12px]">
                 <KakaoIcon />
                 카카오로 시작하기
               </Button>
             </form>
           </div>
 
-          <p className="mt-[32px] pb-[121px] text-center text-[14px] leading-[120%] text-gray-07">
+          <p className="text-gray-07 mt-[32px] pb-[121px] text-center text-[14px] leading-[120%]">
             ⓒ 2024. picktoss all rights reserved
           </p>
 
           <div className="z-10 flex h-[54px] w-[1032px] justify-end">
-            <div className="flex items-center gap-[40px] pr-[20px] text-body2-regular text-gray-06">
+            <div className="text-body2-regular text-gray-06 flex items-center gap-[40px] pr-[20px]">
               <div>개인 정보 보호 정책</div>
               <div>서비스 이용약관</div>
             </div>

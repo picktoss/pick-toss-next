@@ -26,7 +26,7 @@ export async function middleware(request: NextRequest) {
     // 로그인 상태
   } else {
     if (exists) {
-      return NextResponse.redirect(new URL('/v3/main', request.url))
+      return NextResponse.redirect(new URL('/main', request.url))
     }
   }
 }

@@ -1,4 +1,4 @@
-import CreateWithEditor from '@/views/v3/quiz-note/create/editor'
+import CreateWithEditor from '@/views/create-note/editor'
 
 const Page = () => {
   return (

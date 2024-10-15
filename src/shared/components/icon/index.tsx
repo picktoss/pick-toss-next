@@ -1,14 +1,13 @@
-import { HTMLAttributes, memo } from 'react'
+import { SVGAttributes, memo } from 'react'
 import * as SvgElement from './svg-components'
 
 type SvgElementKeys = keyof typeof SvgElement
 
-interface IconProps extends HTMLAttributes<HTMLElement> {
+export interface IconProps extends SVGAttributes<SVGElement> {
   name: KebabCase<SvgElementKeys>
   className?: HTMLElement['className']
 }
 
-/** @deprecated v3 하위의 Icon 컴포넌트 사용해야함 */
 const Icon = memo(function Icon({ name, className, ...props }: IconProps) {
   const IconElement = SvgElement[kebabToPascal(name) as SvgElementKeys]
 
