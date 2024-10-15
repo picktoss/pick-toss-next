@@ -69,7 +69,7 @@ const DrawerContent = React.forwardRef<
         {...props}
       >
         {!hideSidebar && (
-          <div className="bg-gray-04 mx-auto mt-[4px] h-[4px] w-[40px] rounded-full" />
+          <div className="mx-auto mt-[8px] h-[4px] w-[48px] rounded-full bg-icon-tertiary" />
         )}
         {children}
       </DrawerPrimitive.Content>
