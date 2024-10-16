@@ -9,6 +9,7 @@ import { cn } from '@/shared/lib/utils'
 import { Checkbox } from '@/shared/components/ui/checkbox'
 import MoveNoteDrawer from './move-note-drawer'
 import Text from '@/shared/components/ui/text'
+import Link from 'next/link'
 
 interface NoteProps {
   id: string
@@ -47,7 +48,8 @@ const SwipeableNoteCard = ({
   }
 
   return (
-    <div
+    <Link
+      href={'note/' + id}
       className={cn(
         `relative flex h-[104px] max-w-full items-center overflow-hidden rounded-[16px] bg-white px-[16px] pb-[20px] pt-[17px] shrink-0`,
         className
@@ -104,7 +106,7 @@ const SwipeableNoteCard = ({
           <DeleteBtn />
         </div>
       </motion.div>
-    </div>
+    </Link>
   )
 }
 
