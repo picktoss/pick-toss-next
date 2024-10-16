@@ -591,6 +591,24 @@ export const Folder = ({ ...props }) => {
   )
 }
 
+export const FolderFill = ({ ...props }) => {
+  return (
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 14 14"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M1.1665 2.91667C1.1665 2.27233 1.68884 1.75 2.33317 1.75H4.42158C4.76216 1.75 5.08573 1.89882 5.30738 2.15741L6.35896 3.38426C6.58061 3.64284 6.90418 3.79167 7.24476 3.79167H9.9165H11.6665C12.3108 3.79167 12.8332 4.314 12.8332 4.95833V11.0833C12.8332 11.7277 12.3108 12.25 11.6665 12.25H2.33317C1.68884 12.25 1.1665 11.7277 1.1665 11.0833V2.91667Z"
+        fill="currentColor"
+      />
+    </svg>
+  )
+}
+
 export const Setting = ({ ...props }) => {
   const clipId = useId()
 
@@ -1311,12 +1329,55 @@ export const Star = ({ ...props }) => {
           y2="6.61394"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.12" stop-color="#FFB95E" />
-          <stop offset="0.78" stop-color="#FF832A" />
+          <stop offset="0.12" stopColor="#FFB95E" />
+          <stop offset="0.78" stopColor="#FF832A" />
         </linearGradient>
         <clipPath id="clip0_9622_411">
           <rect width="15" height="14.3333" fill="white" transform="translate(0.666504 1)" />
         </clipPath>
+      </defs>
+    </svg>
+  )
+}
+
+export const Pin = ({ ...props }) => {
+  return (
+    <svg
+      width="32"
+      height="32"
+      viewBox="0 0 32 32"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M18.0186 17.9751L15.3795 16.4515L9.03099 27.4474C8.61025 28.1762 8.85994 29.108 9.58869 29.5288C10.3174 29.9495 11.2493 29.6998 11.67 28.9711L18.0186 17.9751Z"
+        fill="#D2D6DB"
+      />
+      <rect
+        width="3.04729"
+        height="9.14188"
+        transform="matrix(-0.866025 -0.5 -0.5 0.866025 20.5596 13.5771)"
+        fill="#A2A6AB"
+      />
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M29.7561 6.31729C30.1116 6.52254 30.2335 6.97712 30.0282 7.33263L29.6567 7.97613C28.9637 9.17631 27.5604 9.71061 26.2845 9.35451L21.7318 17.24C22.6782 18.1669 22.9172 19.6495 22.2242 20.8497L21.8527 21.4932C21.6474 21.8487 21.1929 21.9705 20.8374 21.7652L10.5388 15.8193C10.1832 15.6141 10.0614 15.1595 10.2667 14.804L10.6382 14.1605C11.3306 12.9613 12.7323 12.4269 14.0074 12.7813L18.5609 4.89439C17.6163 3.96733 17.3783 2.48621 18.0707 1.28695L18.4422 0.643448C18.6475 0.287943 19.102 0.166138 19.4575 0.371389L29.7561 6.31729Z"
+        fill="url(#paint0_linear_2808_1902)"
+      />
+      <defs>
+        <linearGradient
+          id="paint0_linear_2808_1902"
+          x1="24.6069"
+          y1="3.34436"
+          x2="15.688"
+          y2="18.7923"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#7095F8" />
+          <stop offset="1" stopColor="#A9C0FF" />
+        </linearGradient>
       </defs>
     </svg>
   )

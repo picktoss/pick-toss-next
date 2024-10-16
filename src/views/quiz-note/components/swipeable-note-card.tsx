@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { motion, PanInfo, useAnimation, useMotionValue } from 'framer-motion'
-import { EllipseIcon, FolderFillIcon } from './svg-icons'
 import Icon from '@/shared/components/icon'
 import { useQuizNoteContext } from '../context/quiz-note-context'
 import { cn } from '@/shared/lib/utils'
@@ -10,6 +9,7 @@ import { Checkbox } from '@/shared/components/ui/checkbox'
 import MoveNoteDrawer from './move-note-drawer'
 import Text from '@/shared/components/ui/text'
 import Link from 'next/link'
+import NoteTypeIcon from '@/views/shared/note-type-icon'
 
 interface NoteProps {
   id: string
@@ -20,6 +20,7 @@ interface NoteProps {
   characterCount: number
   folder: string
   className?: string
+  reviewCount?: number
 }
 
 const SwipeableNoteCard = ({
@@ -31,6 +32,7 @@ const SwipeableNoteCard = ({
   characterCount,
   folder,
   className,
+  reviewCount,
 }: NoteProps) => {
   const { isSelectMode } = useQuizNoteContext()
   const [isSwiped, setIsSwiped] = useState(false)
@@ -71,11 +73,24 @@ const SwipeableNoteCard = ({
         {isSelectMode ? (
           <Checkbox id={'note_' + id} className="mx-[8px] size-[20px]" />
         ) : (
-          <NoteTypeIcon type={createType} />
+          <NoteTypeIcon
+            type={createType}
+            containerClassName="size-[36px]"
+            iconClassName="size-[16px]"
+          />
         )}
 
         <div className="ml-[16px] flex w-full flex-col">
-          <h4 className="w-fit text-subtitle2-bold">{title}</h4>
+          <div className="flex gap-[8px] items-center mb-[2px]">
+            <h4 className="w-fit text-subtitle2-bold">{title}</h4>
+
+            {reviewCount && (
+              <div className="px-[6px] py-[2px] bg-button-fill-secondary rounded-[4px] text-button-label-secondary">
+                <Text typography="caption-medium">복습 필요 {reviewCount}</Text>
+              </div>
+            )}
+          </div>
+
           <Text
             as="p"
             typography="text1-regular"
@@ -85,11 +100,11 @@ const SwipeableNoteCard = ({
           </Text>
           <Text typography="text2-medium" className="flex w-fit items-center text-text-sub">
             <span>{quizCount}문제</span>
-            <EllipseIcon />
+            <Icon name="middle-dot" className="mx-[8px]" />
             <span>{characterCount}자</span>
-            <EllipseIcon />
+            <Icon name="middle-dot" className="mx-[8px]" />
             <span className="flex items-center">
-              <FolderFillIcon className="mr-[2px]" />
+              <Icon name="folder-fill" className="mr-[2px] text-icon-tertiary" />
               {folder}
             </span>
           </Text>
@@ -113,32 +128,6 @@ const SwipeableNoteCard = ({
 export default SwipeableNoteCard
 
 // NoteCard 내부에서 사용되는 컴포넌트
-function NoteTypeIcon({ type }: { type: 'write' | 'file' | 'notion' }) {
-  if (type === 'write') {
-    return (
-      <div className="flex-center size-[36px] shrink-0 rounded-full bg-fill-secondary-orange text-text-primary-inverse">
-        <Icon name="document" className="size-[16px]" />
-      </div>
-    )
-  }
-
-  if (type === 'file') {
-    return (
-      <div className="flex-center size-[36px] shrink-0 rounded-full bg-fill-secondary-blue text-text-primary-inverse">
-        <Icon name="clip" className="size-[16px]" />
-      </div>
-    )
-  }
-
-  if (type === 'notion') {
-    return (
-      <div className="flex-center size-[36px] shrink-0 rounded-full border border-border-default bg-background-base-01 text-text-primary-inverse">
-        <Icon name="notion" className="size-[19px]" />
-      </div>
-    )
-  }
-}
-
 function DeleteBtn() {
   return (
     <button
