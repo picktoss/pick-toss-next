@@ -9,8 +9,8 @@ import { QuizListProvider } from './context/quiz-list-context'
 import Text from '@/shared/components/ui/text'
 import Icon from '@/shared/components/icon'
 import NewQuizDrawer from '../shared/new-quiz-drawer'
-import PickBanner from './components/pick-banner'
 import ReplayQuizDrawer from '../shared/replay-quiz-drawer'
+import PickDrawer from './components/pick-drawer'
 
 const tabs = [
   { key: 'note-content', label: '노트', component: <NoteContent /> },
@@ -59,7 +59,7 @@ const Note = () => {
           </div>
         </div>
 
-        <PickBanner />
+        <PickDrawer />
 
         {tabs.find((tab) => tab.key === activeTab)?.component}
 

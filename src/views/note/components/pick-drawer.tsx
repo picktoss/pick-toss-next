@@ -1,0 +1,53 @@
+import Icon from '@/shared/components/icon'
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerTitle,
+  DrawerTrigger,
+} from '@/shared/components/ui/drawer'
+import Text from '@/shared/components/ui/text'
+import { useState } from 'react'
+
+const PickDrawer = () => {
+  const [isOpen, setIsOpen] = useState(false)
+
+  return (
+    <Drawer open={isOpen} onOpenChange={setIsOpen}>
+      <DrawerTrigger asChild>
+        <div className="flex-center mb-[14px] h-[44px] w-full gap-[4px] bg-background-container-03">
+          <Text typography="text1-medium" className="flex-center gap-[16px] text-text-info">
+            <Text className="flex items-center">
+              <Icon name="pin" className="mr-[2.5px] size-[16px]" />
+              내가 어려워했던 문제는?
+            </Text>
+            <Text className="font-bold">
+              복습 <i>p</i>ick
+            </Text>
+          </Text>
+          <Icon name="chevron-down" className="text-icon-tertiary" />
+        </div>
+      </DrawerTrigger>
+
+      <DrawerContent className="rounded-t-[16px]">
+        <div className="my-[24px] flex h-[85dvh] flex-col items-center">
+          <div className="w-full px-[18px]">
+            <DrawerTitle className="text-title3">
+              복습 <i>p</i>ick
+            </DrawerTitle>
+            <Text typography="text1-medium" className="mt-[8px] text-text-sub">
+              7일 이내에 틀린 적이 있거나, 시간이 오래 걸린 문제들이에요
+            </Text>
+
+            {/* 퀴즈 카드 리스트 컨테이너 */}
+            <div className="overflow-y-auto mt-[24px] h-[calc(85dvh-75px)] pb-[14px]">
+              {/* 카드 리스트 map */}
+            </div>
+          </div>
+        </div>
+      </DrawerContent>
+    </Drawer>
+  )
+}
+
+export default PickDrawer
