@@ -10,6 +10,7 @@ import Text from '@/shared/components/ui/text'
 import Icon from '@/shared/components/icon'
 import NewQuizDrawer from '../shared/new-quiz-drawer'
 import PickBanner from './components/pick-banner'
+import ReplayQuizDrawer from '../shared/replay-quiz-drawer'
 
 const tabs = [
   { key: 'note-content', label: '노트', component: <NoteContent /> },
@@ -56,17 +57,22 @@ const Note = () => {
               </button>
             ))}
           </div>
-          <PickBanner />
         </div>
+
+        <PickBanner />
 
         {tabs.find((tab) => tab.key === activeTab)?.component}
 
         {/* bottom button */}
         <div className="flex-center fixed bottom-[130px] right-1/2 w-[266px] translate-x-1/2 rounded-full border border-border-default bg-background-base-01 px-[28px] py-[10px] text-button2 shadow-custom-shadow">
-          <button className="flex-center border-r border-border-divider py-[5.5px] pr-[20px]">
-            <Icon name="past-record" className="mr-[4px] size-[16px]" />
-            <Text className="text-button-text-secondary">다시풀기</Text>
-          </button>
+          <ReplayQuizDrawer
+            triggerComponent={
+              <button className="flex-center border-r border-border-divider py-[5.5px] pr-[20px]">
+                <Icon name="past-record" className="mr-[4px] size-[16px]" />
+                <Text className="text-button-text-secondary">다시풀기</Text>
+              </button>
+            }
+          />
 
           <NewQuizDrawer
             triggerComponent={
