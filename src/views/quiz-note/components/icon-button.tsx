@@ -13,6 +13,7 @@ import Text from '@/shared/components/ui/text'
 import { useQuizNoteContext } from '../context/quiz-note-context'
 import QuizNoteDialog from './quiz-note-dialog'
 import { useState } from 'react'
+import Link from 'next/link'
 
 // IconButton 컴포넌트
 const IconButton = ({ iconName }: { iconName: IconProps['name'] }) => {
@@ -30,9 +31,9 @@ const IconButton = ({ iconName }: { iconName: IconProps['name'] }) => {
   return (
     <>
       {iconName === 'search' ? (
-        <button>
+        <Link href={'/note/search'}>
           <Icon name={iconName} className="size-[24px]"></Icon>
-        </button>
+        </Link>
       ) : (
         <>
           <DropdownMenu key={iconName}>

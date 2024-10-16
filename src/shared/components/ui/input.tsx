@@ -14,7 +14,7 @@ const inputVariants = cva(
         default:
           'rounded-[8px] border-none bg-background-base-02 focus:bg-background-base-01 focus:ring-1 focus:ring-border-focused',
         round:
-          'rounded-[56px] border-none bg-background-base-03 px-[16px] py-[12px] placeholder:text-text-placeholder-01',
+          'h-fit rounded-[56px] border-none bg-background-base-02 py-[8px] pl-[40px] pr-[16px] placeholder:text-text-placeholder-01',
       },
     },
     defaultVariants: {

@@ -3,8 +3,6 @@
 import Icon from '@/shared/components/icon'
 import Text from '@/shared/components/ui/text'
 import { cn } from '@/shared/lib/utils'
-import Image from 'next/image'
-import * as star from '@/../../public/icons/star.svg'
 
 // Header 컴포넌트
 const Header = () => {
@@ -13,7 +11,7 @@ const Header = () => {
       <header>
         <div
           className={cn(
-            'fixed right-1/2 top-0 z-20 flex h-[54px] w-full max-w-[430px] translate-x-1/2 bg-background-base-01 px-[16px] transition-all'
+            'fixed right-1/2 top-0 z-20 flex h-[54px] w-full max-w-[430px] translate-x-1/2 bg-background-base-01 px-[16px]'
           )}
         >
           <div className="flex size-full items-center justify-between">
@@ -24,8 +22,9 @@ const Header = () => {
               {/* 스크롤을 내려 제목이 뷰포트에서 사라지면 생길 텍스트 */}
               {/* <h2 className="ml-[16px] text-text1-medium">최근 이슈</h2> */}
             </div>
+
             <div className="flex">
-              <Image src={star} width={16} height={16} alt="" className="mr-[4px]" />
+              <Icon name="star" className="mr-[4px] size-[16px]" />
               <Text as="span" typography="subtitle2-medium">
                 130
               </Text>
@@ -34,7 +33,7 @@ const Header = () => {
                 {/* 노션일 경우 아래 아이콘 렌더링 */}
                 {/* <Icon name="refresh" /> */}
               </button>
-              <button className="ml-[16px]">
+              <button className="ml-[16px] focus:text-icon-disabled">
                 <Icon name="menu-dots" className="size-[24px]" />
               </button>
             </div>

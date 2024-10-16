@@ -46,6 +46,7 @@ const QuizNote = () => {
               characterCount={2382}
               folder="전공 공부"
               className={cn(idx === 9 && 'mb-[30px]')}
+              reviewCount={idx % 2 === 1 ? idx : undefined}
             />
           ))}
         </NoteList>

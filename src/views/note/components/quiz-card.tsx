@@ -24,7 +24,9 @@ const QuizCard = ({ question, type, selectors, answer, explanation }: Props) => 
           <Text typography="title3" className="font-suit text-text-accent">
             Q.
           </Text>
-          <Icon name="menu-dots" />
+          <button className="focus:text-icon-disabled">
+            <Icon name="menu-dots" />
+          </button>
         </div>
 
         <h3 className="text-text1-bold">{question}</h3>
