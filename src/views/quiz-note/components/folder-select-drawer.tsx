@@ -7,6 +7,7 @@ import { cn } from '@/shared/lib/utils'
 import React, { useEffect, useState } from 'react'
 import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from '@/shared/components/ui/drawer'
 import QuizNoteDialog from '@/views/shared/quiz-note-dialog'
+import SetFolderNameContent from './set-folder-name-content'
 
 interface Props {
   isDrawerOpen: boolean
@@ -103,6 +104,7 @@ const FolderSelectDrawer = ({ isDrawerOpen, setIsDrawerOpen }: Props) => {
         open={isDialogOpen}
         onOpenChange={setIsDialogOpen}
         title={'폴더 만들기'}
+        content={<SetFolderNameContent />}
         onConfirm={() => {}}
         confirmText={'만들기'}
       />

@@ -6,11 +6,12 @@ import Icon from '@/shared/components/icon'
 import { useQuizNoteContext } from '../context/quiz-note-context'
 import { cn } from '@/shared/lib/utils'
 import { Checkbox } from '@/shared/components/ui/checkbox'
-import MoveNoteDrawer from './move-note-drawer'
 import Text from '@/shared/components/ui/text'
 import NoteTypeIcon from '@/views/shared/note-type-icon'
 import Tag from '@/shared/components/ui/tag'
 import { useRouter } from 'next/navigation'
+import MoveNoteDrawer from '@/views/shared/move-note-drawer'
+import DeleteNoteBtn from './delete-note-button'
 
 interface NoteProps {
   id: string
@@ -117,8 +118,15 @@ const SwipeableNoteCard = ({
             isSwiped && 'translate-x-[-16px]'
           )}
         >
-          <MoveNoteDrawer />
-          <DeleteBtn />
+          <MoveNoteDrawer
+            triggerComponent={
+              <button className="flex-center w-[72px] flex-col rounded-lg bg-background-container-03 p-2 text-text1-medium text-text-info">
+                <Icon name="move" className="mb-[4px]" />
+                이동
+              </button>
+            }
+          />
+          <DeleteNoteBtn />
         </div>
       </motion.div>
     </div>
@@ -126,16 +134,3 @@ const SwipeableNoteCard = ({
 }
 
 export default SwipeableNoteCard
-
-// NoteCard 내부에서 사용되는 컴포넌트
-function DeleteBtn() {
-  return (
-    <button
-      className="flex-center w-[72px] flex-col rounded-lg bg-background-critical p-2 text-text1-medium text-text-primary-inverse"
-      onClick={() => alert('clicked 삭제')}
-    >
-      <Icon name="bin" className="mb-[4px]" />
-      삭제
-    </button>
-  )
-}
