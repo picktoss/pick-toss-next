@@ -1,3 +1,5 @@
+'use client'
+
 import Icon from '@/shared/components/icon'
 import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from '@/shared/components/ui/drawer'
 import Text from '@/shared/components/ui/text'

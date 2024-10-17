@@ -1,3 +1,5 @@
+'use client'
+
 import Text from '@/shared/components/ui/text'
 import { useQuizListContext } from '../context/quiz-list-context'
 import { cn } from '@/shared/lib/utils'

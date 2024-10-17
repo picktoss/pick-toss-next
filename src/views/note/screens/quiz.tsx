@@ -1,3 +1,5 @@
+'use client'
+
 import { Button } from '@/shared/components/ui/button'
 import { quizTypeFilters } from '../constants/quiz-type'
 import { useState } from 'react'
