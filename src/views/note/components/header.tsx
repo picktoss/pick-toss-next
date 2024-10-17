@@ -1,11 +1,25 @@
 'use client'
 
-import Icon from '@/shared/components/icon'
+import Icon, { IconProps } from '@/shared/components/icon'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/shared/components/ui/dropdown-menu'
 import Text from '@/shared/components/ui/text'
 import { cn } from '@/shared/lib/utils'
+import { useState } from 'react'
 
 // Header 컴포넌트
 const Header = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const menuItems = [
+    { key: 'download', label: 'docx로 퀴즈 다운로드', iconName: 'download' },
+    { key: 'move', label: '노트 이동', iconName: 'move' },
+    { key: 'delete', label: '노트 삭제', iconName: 'bin' },
+  ]
+
   return (
     <>
       <header>
@@ -33,9 +47,38 @@ const Header = () => {
                 {/* 노션일 경우 아래 아이콘 렌더링 */}
                 {/* <Icon name="refresh" /> */}
               </button>
-              <button className="ml-[16px] focus:text-icon-disabled">
-                <Icon name="menu-dots" className="size-[24px]" />
-              </button>
+
+              {/* menu */}
+              <DropdownMenu onOpenChange={(open) => setIsMenuOpen(open)}>
+                <DropdownMenuTrigger
+                  className={cn('ml-[16px]', isMenuOpen && 'text-icon-disabled')}
+                >
+                  <Icon name="menu-dots" className="size-[24px]" />
+                </DropdownMenuTrigger>
+
+                <DropdownMenuContent className="bg-background-base-01 p-0">
+                  {menuItems.map((menuItem, index) => (
+                    <DropdownMenuItem
+                      key={menuItem.key}
+                      className={cn(
+                        'border-t border-border-divider w-[240px] px-[20px] py-[16px]',
+                        index === 0 && 'border-none',
+                        menuItem.key === 'delete' && 'text-text-critical'
+                      )}
+                      onClick={() => alert('clicked' + menuItem.label)}
+                    >
+                      <Text
+                        key={menuItem.key}
+                        typography="subtitle2-medium"
+                        className="flex w-full items-center justify-between"
+                      >
+                        {menuItem.label}
+                        <Icon name={menuItem.iconName as IconProps['name']} />
+                      </Text>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
         </div>
