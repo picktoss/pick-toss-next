@@ -1,11 +1,5 @@
 import Icon from '@/shared/components/icon'
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerTitle,
-  DrawerTrigger,
-} from '@/shared/components/ui/drawer'
+import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from '@/shared/components/ui/drawer'
 import Text from '@/shared/components/ui/text'
 import { useState } from 'react'
 
@@ -40,7 +34,7 @@ const PickDrawer = () => {
             </Text>
 
             {/* 퀴즈 카드 리스트 컨테이너 */}
-            <div className="overflow-y-auto mt-[24px] h-[calc(85dvh-75px)] pb-[14px]">
+            <div className="mt-[24px] h-[calc(85dvh-75px)] overflow-y-auto pb-[14px]">
               {/* 카드 리스트 map */}
             </div>
           </div>
