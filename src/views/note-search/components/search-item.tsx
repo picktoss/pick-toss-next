@@ -1,4 +1,5 @@
 import Icon from '@/shared/components/icon'
+import Tag from '@/shared/components/ui/tag'
 import Text from '@/shared/components/ui/text'
 import { cn } from '@/shared/lib/utils'
 import NoteTypeIcon from '@/views/shared/note-type-icon'
@@ -27,7 +28,7 @@ const SearchItem = ({
         lastItem && 'border-none'
       )}
     >
-      <div className="flex items-center mb-[8px]">
+      <div className="mb-[8px] flex items-center">
         <NoteTypeIcon
           type={noteType}
           containerClassName="size-[20px] mr-[8px]"
@@ -39,16 +40,13 @@ const SearchItem = ({
       {/* todo: 키워드와 일치하는 부분 색상 accent표시 하는 로직 필요 */}
       <Text>{matchingSentence}</Text>
 
-      <div className="flex items-center mt-[8px]">
-        <Text
-          typography="caption-medium"
-          className="px-[6px] py-[2px] bg-background-base-03 rounded-[4px] text-text-sub mr-[8px]"
-        >
+      <div className="mt-[8px] flex items-center">
+        <Tag colors={'tertiary'} className="mr-[8px]">
           {resultType === 'note' && '노트 결과'}
           {resultType === 'quiz' && '퀴즈 결과'}
-        </Text>
+        </Tag>
         <div className="flex items-center">
-          <Icon name="folder-fill" className="text-icon-tertiary size-[14px] mr-[4px]" />
+          <Icon name="folder-fill" className="mr-[4px] size-[14px] text-icon-tertiary" />
           <Text>{noteFolder}</Text>
         </div>
       </div>

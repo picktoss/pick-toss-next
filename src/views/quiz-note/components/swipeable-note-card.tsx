@@ -10,6 +10,7 @@ import MoveNoteDrawer from './move-note-drawer'
 import Text from '@/shared/components/ui/text'
 import Link from 'next/link'
 import NoteTypeIcon from '@/views/shared/note-type-icon'
+import Tag from '@/shared/components/ui/tag'
 
 interface NoteProps {
   id: string
@@ -81,14 +82,10 @@ const SwipeableNoteCard = ({
         )}
 
         <div className="ml-[16px] flex w-full flex-col">
-          <div className="flex gap-[8px] items-center mb-[2px]">
+          <div className="mb-[2px] flex items-center gap-[8px]">
             <h4 className="w-fit text-subtitle2-bold">{title}</h4>
 
-            {reviewCount && (
-              <div className="px-[6px] py-[2px] bg-button-fill-secondary rounded-[4px] text-button-label-secondary">
-                <Text typography="caption-medium">복습 필요 {reviewCount}</Text>
-              </div>
-            )}
+            {reviewCount && <Tag colors={'secondary'}>복습 필요 {reviewCount}</Tag>}
           </div>
 
           <Text
