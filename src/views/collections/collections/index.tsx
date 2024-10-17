@@ -1,7 +1,7 @@
 'use client'
 
-import Exploration from './screens/exploration'
-import MyCollection from './screens/my-collection'
+import Exploration from './components/exploration'
+import MyCollection from './components/my-collection'
 import Icon from '@/shared/components/icon'
 import { useState } from 'react'
 import Text from '@/shared/components/ui/text'

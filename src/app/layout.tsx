@@ -17,7 +17,7 @@ export default function RootLayout({
     <html lang="ko">
       <body className={cn(suit.variable, dmSans.variable, 'bg-gray-01 font-dm-suit')}>
         <Providers>
-          <div className="mx-auto min-h-screen max-w-[430px] shadow-lg">{children}</div>
+          <div className="mx-auto min-h-screen max-w-mobile shadow-lg">{children}</div>
         </Providers>
         <Toaster />
       </body>

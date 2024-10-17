@@ -1,6 +1,6 @@
 import Icon from '@/shared/components/icon'
-import Collection from '../components/collection'
-import CollectionList from '../components/collection-list'
+import Collection from '../../components/collection'
+import CollectionList from '../../components/collection-list'
 import Text from '@/shared/components/ui/text'
 
 const controlButtons = ['분야', '퀴즈 유형', '문제 수']
@@ -34,7 +34,6 @@ const Exploration = () => {
             category="IT·프로그래밍"
             problemCount={35}
             lastUpdated="2일 전"
-            href="#"
             isBookMarked={true}
             bookMarkCount={123}
           />

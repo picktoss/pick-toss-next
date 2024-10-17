@@ -14,7 +14,7 @@ const NoteList = ({ children }: PropsWithChildren) => {
       </div>
 
       {isSelectMode && (
-        <div className="fixed bottom-0 left-1/2 z-30 flex h-[86px] w-full max-w-[430px] -translate-x-1/2 flex-col bg-background-base-01">
+        <div className="fixed bottom-0 left-1/2 z-30 flex h-[86px] w-full max-w-mobile -translate-x-1/2 flex-col bg-background-base-01">
           <div className="flex h-1/2 w-full items-center justify-between pl-[42px] pr-[64px] pt-[18px] text-text1-medium">
             <button
               className="flex-center text-text-secondary"
