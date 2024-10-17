@@ -1,16 +1,17 @@
 'use client'
 
-import Icon, { IconProps } from '@/shared/components/icon'
-import IconButton from './icon-button'
+import Icon from '@/shared/components/icon'
 import { useQuizNoteContext } from '../context/quiz-note-context'
 import Text from '@/shared/components/ui/text'
 import { useEffect, useState } from 'react'
 import { cn } from '@/shared/lib/utils'
 import FolderSelectDrawer from './folder-select-drawer'
+import SortIconBtn from './sort-icon-button'
+import Link from 'next/link'
+import MenuDotsBtn from './menu-dots-button'
 
 // Header 컴포넌트
 const Header = () => {
-  const iconList = ['search', 'sort', 'menu-dots'] as IconProps['name'][]
   const { setSelectedFolderId, isSelectMode, setIsSelectMode } = useQuizNoteContext()
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
@@ -22,7 +23,7 @@ const Header = () => {
     <>
       <header
         className={cn(
-          'fixed right-1/2 top-0 z-20 flex h-[54px] w-full max-w-mobile translate-x-1/2 flex-col justify-end bg-background-base-02 px-[14px] transition-all',
+          'fixed right-1/2 top-0 z-20 translate-x-1/2 flex h-[54px] w-full max-w-[430px] flex-col justify-end bg-background-base-02 px-[16px] transition-all',
           isDrawerOpen && 'bg-background-base-01 max-w-screen'
         )}
       >
@@ -43,9 +44,13 @@ const Header = () => {
 
               {!isDrawerOpen && (
                 <div className="flex size-fit items-center gap-[16px]">
-                  {iconList.map((iconName) => (
-                    <IconButton key={iconName} iconName={iconName} />
-                  ))}
+                  <Link href="/note/search">
+                    <Icon name="search" className="size-[24px]" />
+                  </Link>
+
+                  <SortIconBtn />
+
+                  <MenuDotsBtn />
                 </div>
               )}
             </>

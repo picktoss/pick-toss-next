@@ -350,6 +350,7 @@ const config = {
       boxShadow: {
         modal: '0px 4px 12px 0px #00000040',
         'custom-shadow': '2px 2.5px 12.5px rgba(93, 99, 110, 0.15)',
+        'dropdown-shadow': '0px 2px 32px 0px rgba(0, 0, 0, 0.15)',
       },
       borderRadius: {
         lg: 'var(--radius)',

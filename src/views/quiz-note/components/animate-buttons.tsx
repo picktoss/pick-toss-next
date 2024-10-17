@@ -50,6 +50,7 @@ const AnimatedButtons = ({ isExpanded, setIsExpanded }: AddNoteProps) => {
     buttonProps: {
       variant: ButtonProps['variant']
       colors: ButtonProps['colors']
+      className?: string
     },
     handleTap?: () => void,
     text?: { bottomCss: string; content: string }
@@ -99,7 +100,11 @@ const AnimatedButtons = ({ isExpanded, setIsExpanded }: AddNoteProps) => {
             'plus',
             'plus',
             'plus',
-            { variant: 'mediumIcon', colors: 'special' },
+            {
+              variant: 'mediumIcon',
+              colors: 'special',
+              className: 'bg-gradient-to-r from-blue-400 via-none to-orange-500',
+            },
             () => setIsExpanded(true)
           )}
 
