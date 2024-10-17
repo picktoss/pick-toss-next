@@ -48,7 +48,8 @@ const IconButton = ({ iconName }: { iconName: IconProps['name'] }) => {
                     key={menuItem.key}
                     className={cn(
                       'border-t border-border-divider w-[240px] px-[20px] py-[16px]',
-                      index === 0 && 'border-none'
+                      index === 0 && 'border-none',
+                      menuItem.key === 'delete' && 'text-text-critical'
                     )}
                     onClick={() => handleClickMenuItem(menuItem.key)}
                   >

@@ -29,34 +29,34 @@ const Note = () => {
       <Header />
 
       <main className="min-h-screen">
-        {/* tab */}
-        <div className="sticky top-[54px]">
-          <div className="flex items-center justify-between bg-background-base-01 text-text-disabled">
-            {tabs.map((tab) => (
-              <button
-                key={tab.key}
-                onClick={() => setActiveTab(tab.key)}
-                className={cn(
-                  'grow px-[16px] pb-[12px] mt-[12px] border-b border-border-divider',
-                  activeTab === tab.key && 'border-b-2 border-button-fill-selected'
-                )}
-              >
-                <Text
-                  typography="subtitle2-medium"
+        <QuizListProvider>
+          {/* tab */}
+          <div className="sticky top-[54px]">
+            <div className="flex items-center justify-between bg-background-base-01 text-text-disabled">
+              {tabs.map((tab) => (
+                <button
+                  key={tab.key}
+                  onClick={() => setActiveTab(tab.key)}
                   className={cn(
-                    'transition-colors',
-                    activeTab === tab.key && 'text-text-primary font-bold'
+                    'grow px-[16px] pb-[12px] mt-[12px] border-b border-border-divider',
+                    activeTab === tab.key && 'border-b-2 border-button-fill-selected'
                   )}
                 >
-                  {tab.label}
-                </Text>
-              </button>
-            ))}
-          </div>
-        </div>
+                  <Text
+                    typography="subtitle2-medium"
+                    className={cn(
+                      'transition-colors',
+                      activeTab === tab.key && 'text-text-primary font-bold'
+                    )}
+                  >
+                    {tab.label}
+                  </Text>
+                </button>
+              ))}
+            </div>
 
-        <QuizListProvider>
-          <PickDrawer />
+            <PickDrawer />
+          </div>
 
           {tabs.find((tab) => tab.key === activeTab)?.component}
         </QuizListProvider>
