@@ -1,6 +1,6 @@
 'use client'
 
-import Icon, { IconProps } from '@/shared/components/icon'
+import Icon from '@/shared/components/icon'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,24 +10,23 @@ import {
 import Text from '@/shared/components/ui/text'
 import { cn } from '@/shared/lib/utils'
 import QuizNoteDialog from '@/views/shared/quiz-note-dialog'
-import { useState } from 'react'
+import { MouseEvent, useState } from 'react'
+import AddCollectionDrawer from './add-collection-drawer'
+import { Dialog, DialogClose, DialogContent } from '@/shared/components/ui/dialog'
+import { DialogTitle } from '@radix-ui/react-dialog'
+import { Button } from '@/shared/components/ui/button'
 
 const QuizCardMenu = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isOpenDelete, setIsOpenDelete] = useState(false)
+  const [isOpenCollection, setIsOpenCollection] = useState(false)
 
-  const menuItems = [
-    { key: 'add-collection', label: '컬렉션에 추가', iconName: 'book-mark' },
-    { key: 'delete', label: '문제 삭제', iconName: 'bin' },
-  ]
+  // 임시
+  const isEmptyCollection = false
 
-  const handleClickMenuItem = (menuItemKey: string) => {
-    if (menuItemKey === 'delete') {
-      setIsOpenDelete(true)
-    }
-    if (menuItemKey === 'add-collection') {
-      alert('clicked ' + menuItemKey)
-    }
+  const openMakeCollectionDialog = (e: MouseEvent) => {
+    e.preventDefault()
+    setIsOpenCollection(true)
   }
 
   return (
@@ -39,28 +38,60 @@ const QuizCardMenu = () => {
         </DropdownMenuTrigger>
 
         <DropdownMenuContent className="bg-background-base-01 p-0">
-          {menuItems.map((menuItem, index) => (
-            <DropdownMenuItem
-              key={menuItem.key}
-              className={cn(
-                'border-t border-border-divider w-[240px] px-[20px] py-[16px]',
-                index === 0 && 'border-none',
-                menuItem.key === 'delete' && 'text-text-critical'
-              )}
-              onClick={() => handleClickMenuItem(menuItem.key)}
-            >
-              <Text
-                key={menuItem.key}
-                typography="subtitle2-medium"
-                className="flex w-full items-center justify-between"
+          <AddCollectionDrawer
+            triggerComponent={
+              <DropdownMenuItem
+                className={cn('border-none w-[240px] px-[20px] py-[16px]')}
+                onClick={isEmptyCollection ? (e) => openMakeCollectionDialog(e) : () => {}}
+                onSelect={(e) => {
+                  e.preventDefault()
+                }}
               >
-                {menuItem.label}
-                <Icon name={menuItem.iconName as IconProps['name']} className="size-[20px]" />
-              </Text>
-            </DropdownMenuItem>
-          ))}
+                <Text
+                  typography="subtitle2-medium"
+                  className="flex w-full items-center justify-between"
+                >
+                  컬렉션에 추가
+                  <Icon name="book-mark" className="size-[20px]" />
+                </Text>
+              </DropdownMenuItem>
+            }
+          />
+
+          <DropdownMenuItem
+            className={cn(
+              'border-t border-border-divider w-[240px] px-[20px] py-[16px] text-text-critical'
+            )}
+            onClick={() => setIsOpenDelete(true)}
+          >
+            <Text
+              typography="subtitle2-medium"
+              className="flex w-full items-center justify-between"
+            >
+              문제 삭제
+              <Icon name="bin" className="size-[20px]" />
+            </Text>
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+
+      <Dialog open={isOpenCollection} onOpenChange={setIsOpenCollection}>
+        <DialogContent
+          displayCloseButton={false}
+          className="flex-center size-fit flex-col rounded-[20px] bg-background-base-01 px-[24px] py-[28px]"
+        >
+          <DialogTitle className="mb-[8px] font-suit text-title3">아직 컬렉션이 없어요</DialogTitle>
+          <Text typography="text1-medium" className="mb-[36px] text-center text-text-sub">
+            다른 사람들과 함께 공유할 <br />
+            퀴즈 컬렉션을 만드시겠어요?
+          </Text>
+
+          <Button variant={'largeRound'} colors={'primary'} className="mb-[16px]">
+            컬렉션 만들러 가기
+          </Button>
+          <DialogClose>다음에 만들기</DialogClose>
+        </DialogContent>
+      </Dialog>
 
       <QuizNoteDialog
         open={isOpenDelete}
