@@ -11,9 +11,9 @@ import { menuItems, sortItems } from '../constants/dropdown-menu'
 import { cn } from '@/shared/lib/utils'
 import Text from '@/shared/components/ui/text'
 import { useQuizNoteContext } from '../context/quiz-note-context'
-import QuizNoteDialog from './quiz-note-dialog'
 import { useState } from 'react'
 import Link from 'next/link'
+import QuizNoteDialog from '@/views/shared/quiz-note-dialog'
 
 // IconButton 컴포넌트
 const IconButton = ({ iconName }: { iconName: IconProps['name'] }) => {

@@ -4,7 +4,13 @@ import Text from '@/shared/components/ui/text'
 import { useQuizListContext } from '../context/quiz-list-context'
 import { cn } from '@/shared/lib/utils'
 import { useState } from 'react'
-import Icon from '@/shared/components/icon'
+import Icon, { IconProps } from '@/shared/components/icon'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/shared/components/ui/dropdown-menu'
 
 interface Props {
   headerComponent: JSX.Element
@@ -30,15 +36,47 @@ const QuizCard = ({
 }: Props) => {
   const { showAnswer } = useQuizListContext()
   const [isOpenExplanation, setIsOpenExplanation] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const menuItems = [
+    { key: 'add-collection', label: '컬렉션에 추가', iconName: 'book-mark' },
+    { key: 'delete', label: '문서 삭제', iconName: 'bin' },
+  ]
 
   return (
     <div className="w-full rounded-[16px] border border-border-default">
       <div className="px-[16px] py-[20px]">
-        <div className="mb-[8px] flex items-center justify-between text-icon-tertiary">
+        <div className="relative mb-[8px] flex items-center justify-between text-icon-tertiary">
           {headerComponent}
-          <button className="focus:text-icon-disabled">
-            <Icon name="menu-dots" />
-          </button>
+
+          {/* menu */}
+          <DropdownMenu onOpenChange={(open) => setIsMenuOpen(open)}>
+            <DropdownMenuTrigger className={cn('ml-[16px]', isMenuOpen && 'text-icon-disabled')}>
+              <Icon name="menu-dots" className="size-[24px]" />
+            </DropdownMenuTrigger>
+
+            <DropdownMenuContent className="bg-background-base-01 p-0">
+              {menuItems.map((menuItem, index) => (
+                <DropdownMenuItem
+                  key={menuItem.key}
+                  className={cn(
+                    'border-t border-border-divider w-[240px] px-[20px] py-[16px]',
+                    index === 0 && 'border-none',
+                    menuItem.key === 'delete' && 'text-text-critical'
+                  )}
+                  onClick={() => alert('clicked' + menuItem.label)}
+                >
+                  <Text
+                    key={menuItem.key}
+                    typography="subtitle2-medium"
+                    className="flex w-full items-center justify-between"
+                  >
+                    {menuItem.label}
+                    <Icon name={menuItem.iconName as IconProps['name']} />
+                  </Text>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
 
         <h3 className="text-text1-bold">{question}</h3>

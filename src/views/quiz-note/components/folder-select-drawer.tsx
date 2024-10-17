@@ -6,7 +6,7 @@ import { useQuizNoteContext } from '../context/quiz-note-context'
 import { cn } from '@/shared/lib/utils'
 import React, { useEffect, useState } from 'react'
 import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from '@/shared/components/ui/drawer'
-import QuizNoteDialog from './quiz-note-dialog'
+import QuizNoteDialog from '@/views/shared/quiz-note-dialog'
 
 interface Props {
   isDrawerOpen: boolean

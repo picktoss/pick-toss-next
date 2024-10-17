@@ -8,9 +8,9 @@ import { cn } from '@/shared/lib/utils'
 import { Checkbox } from '@/shared/components/ui/checkbox'
 import MoveNoteDrawer from './move-note-drawer'
 import Text from '@/shared/components/ui/text'
-import Link from 'next/link'
 import NoteTypeIcon from '@/views/shared/note-type-icon'
 import Tag from '@/shared/components/ui/tag'
+import { useRouter } from 'next/navigation'
 
 interface NoteProps {
   id: string
@@ -39,6 +39,7 @@ const SwipeableNoteCard = ({
   const [isSwiped, setIsSwiped] = useState(false)
   const x = useMotionValue(0)
   const controls = useAnimation()
+  const router = useRouter()
 
   const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     if (info.offset.x < -30) {
@@ -51,8 +52,10 @@ const SwipeableNoteCard = ({
   }
 
   return (
-    <Link
-      href={'note/' + id}
+    <div
+      onClick={() => {
+        !isSelectMode && !isSwiped && router.push('note/' + id)
+      }}
       className={cn(
         `relative flex h-[104px] max-w-full items-center overflow-hidden rounded-[16px] bg-white px-[16px] pb-[20px] pt-[17px] shrink-0`,
         className
@@ -118,7 +121,7 @@ const SwipeableNoteCard = ({
           <DeleteBtn />
         </div>
       </motion.div>
-    </Link>
+    </div>
   )
 }
 
