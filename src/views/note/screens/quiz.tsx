@@ -50,7 +50,12 @@ const Quiz = () => {
         {Array.from({ length: 5 }).map((_, idx) => (
           <QuizCard
             key={idx}
-            type="multiple"
+            headerComponent={
+              <Text typography="title3" className="font-suit text-text-accent">
+                Q.
+              </Text>
+            }
+            quizType="multiple"
             question={'식물기반 단백질 시장에서 대기업의 참여가 늘어나는 이유는 무엇인가요?'}
             selectors={fakeSelectors}
             answer={'A'}

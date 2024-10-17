@@ -17,11 +17,7 @@ const tabs = [
   {
     key: 'quiz',
     label: '퀴즈',
-    component: (
-      <QuizListProvider>
-        <Quiz />
-      </QuizListProvider>
-    ),
+    component: <Quiz />,
   },
 ] as const
 
@@ -59,9 +55,11 @@ const Note = () => {
           </div>
         </div>
 
-        <PickDrawer />
+        <QuizListProvider>
+          <PickDrawer />
 
-        {tabs.find((tab) => tab.key === activeTab)?.component}
+          {tabs.find((tab) => tab.key === activeTab)?.component}
+        </QuizListProvider>
 
         {/* bottom button */}
         <div className="flex-center fixed bottom-[130px] right-1/2 w-[266px] translate-x-1/2 rounded-full border border-border-default bg-background-base-01 px-[28px] py-[10px] text-button2 shadow-custom-shadow">
