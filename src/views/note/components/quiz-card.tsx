@@ -35,7 +35,7 @@ const QuizCard = ({
   return (
     <div className="w-full rounded-[16px] border border-border-default">
       <div className="px-[16px] py-[20px]">
-        <div className="relative mb-[8px] flex items-center justify-between text-icon-tertiary">
+        <div className="mb-[8px] flex items-center justify-between text-icon-tertiary">
           {headerComponent}
 
           <QuizCardMenu />
