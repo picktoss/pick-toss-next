@@ -9,17 +9,31 @@ import { addNoteButtons } from '../constants/add-note-buttons'
 import { useQuizNoteContext } from '../context/quiz-note-context'
 import Text from '@/shared/components/ui/text'
 import { AddNoteProps } from './add-note-menu'
+import { useRouter } from 'next/navigation'
 
 type Custom = number | 'plus' | 'cancel'
 
 // AnimatedButtons 컴포넌트
 const AnimatedButtons = ({ isExpanded, setIsExpanded }: AddNoteProps) => {
+  const router = useRouter()
   const [isFirstRender, setIsFirstRender] = useState(true)
   const { buttonHidden } = useQuizNoteContext()
 
   useEffect(() => {
     setIsFirstRender(false)
   }, [])
+
+  const handleClickCreate = (buttonKey: string) => {
+    if (buttonKey === 'pencil') {
+      router.push('/note/editor')
+    }
+    if (buttonKey === 'clip') {
+      router.push('/note/file')
+    }
+    if (buttonKey === 'notion') {
+      router.push('/note/notion')
+    }
+  }
 
   const buttonVariants = {
     hidden: (custom: Custom) => ({
@@ -50,6 +64,7 @@ const AnimatedButtons = ({ isExpanded, setIsExpanded }: AddNoteProps) => {
     buttonProps: {
       variant: ButtonProps['variant']
       colors: ButtonProps['colors']
+      className?: string
     },
     handleTap?: () => void,
     text?: { bottomCss: string; content: string }
@@ -99,7 +114,11 @@ const AnimatedButtons = ({ isExpanded, setIsExpanded }: AddNoteProps) => {
             'plus',
             'plus',
             'plus',
-            { variant: 'mediumIcon', colors: 'special' },
+            {
+              variant: 'mediumIcon',
+              colors: 'special',
+              className: 'bg-gradient-to-r from-blue-400 via-none to-orange-500',
+            },
             () => setIsExpanded(true)
           )}
 
@@ -122,7 +141,7 @@ const AnimatedButtons = ({ isExpanded, setIsExpanded }: AddNoteProps) => {
                   variant: 'mediumIcon',
                   colors: 'outlined',
                 },
-                () => alert('clicked button ' + button.key),
+                () => handleClickCreate(button.key),
                 button.text
               )
             )}

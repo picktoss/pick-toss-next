@@ -16,7 +16,7 @@ import { cn } from '@/shared/lib/utils'
 import { useState } from 'react'
 
 // MoveNoteDrawer 컴포넌트
-const MoveNoteDrawer = () => {
+const MoveNoteDrawer = ({ triggerComponent }: { triggerComponent: JSX.Element }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [selectedFolderId, setSelectedFolderId] = useState('all')
 
@@ -38,12 +38,7 @@ const MoveNoteDrawer = () => {
 
   return (
     <Drawer open={isOpen} onOpenChange={setIsOpen}>
-      <DrawerTrigger asChild>
-        <button className="flex-center w-[72px] flex-col rounded-lg bg-background-container-03 p-2 text-text1-medium text-text-info">
-          <Icon name="move" className="mb-[4px]" />
-          이동
-        </button>
-      </DrawerTrigger>
+      <DrawerTrigger asChild>{triggerComponent}</DrawerTrigger>
 
       <DrawerContent className="rounded-t-[16px]">
         <div className="my-[24px] flex h-[85dvh] flex-col items-center">

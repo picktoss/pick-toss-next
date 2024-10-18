@@ -9,7 +9,7 @@ const NoteList = ({ children }: PropsWithChildren) => {
 
   return (
     <>
-      <div className="mt-[78px] flex grow flex-col gap-[8px] overflow-x-hidden overflow-y-scroll scrollbar-hide">
+      <div className="mt-[54px] flex h-[calc(100dvh-54px-88px)] w-full flex-col gap-[8px] overflow-y-auto overflow-x-hidden px-[14px]">
         {children}
       </div>
 
