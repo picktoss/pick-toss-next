@@ -11,10 +11,13 @@ import Text from '@/shared/components/ui/text'
 import { cn } from '@/shared/lib/utils'
 import MoveNoteDrawer from '@/views/shared/move-note-drawer'
 import QuizNoteDialog from '@/views/shared/quiz-note-dialog'
+import Link from 'next/link'
+import { useParams } from 'next/navigation'
 import { useState } from 'react'
 
 // Header 컴포넌트
 const Header = () => {
+  const { noteId } = useParams()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isOpenDelete, setIsOpenDelete] = useState(false)
   const menuItems = [
@@ -54,11 +57,14 @@ const Header = () => {
               <Text as="span" typography="subtitle2-medium">
                 130
               </Text>
-              <button className="ml-[14px]">
+
+              <Link href={`${noteId[0]}/modify`} className="ml-[14px]">
                 <Icon name="write-line" className="size-[24px]" />
-                {/* 노션일 경우 아래 아이콘 렌더링 */}
-                {/* <Icon name="refresh" /> */}
-              </button>
+              </Link>
+              {/* 노션일 경우 아래 아이콘 렌더링 */}
+              {/* <button>
+                <Icon name="refresh" />
+              </button> */}
 
               {/* menu */}
               <DropdownMenu onOpenChange={(open) => setIsMenuOpen(open)}>
