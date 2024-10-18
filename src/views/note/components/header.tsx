@@ -12,11 +12,12 @@ import { cn } from '@/shared/lib/utils'
 import MoveNoteDrawer from '@/views/shared/move-note-drawer'
 import QuizNoteDialog from '@/views/shared/quiz-note-dialog'
 import Link from 'next/link'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 // Header 컴포넌트
 const Header = () => {
+  const router = useRouter()
   const { noteId } = useParams()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isOpenDelete, setIsOpenDelete] = useState(false)
@@ -45,7 +46,7 @@ const Header = () => {
         >
           <div className="flex size-full items-center justify-between">
             <div className="flex items-center">
-              <button>
+              <button onClick={() => router.back()}>
                 <Icon name="cancel" className="size-[24px]" />
               </button>
               {/* 스크롤을 내려 제목이 뷰포트에서 사라지면 생길 텍스트 */}
