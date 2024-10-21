@@ -1,4 +1,4 @@
-import CreateWithFile from '@/views/create-note/file'
+import CreateWithFile from '@/views/note/create-note/file'
 
 const Page = () => {
   return (

@@ -1,4 +1,4 @@
-import Note from '@/views/note'
+import Note from '@/views/note/note-detail'
 
 const Page = () => {
   return (

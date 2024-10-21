@@ -1,4 +1,4 @@
-import CreateWithNotion from '@/views/create-note/notion'
+import CreateWithNotion from '@/views/note/create-note/notion'
 
 const Page = () => {
   return (

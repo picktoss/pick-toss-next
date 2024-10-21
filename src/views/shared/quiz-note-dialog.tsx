@@ -1,11 +1,16 @@
 'use client'
 
-import { Dialog, DialogClose, DialogContent, DialogTitle } from '@/shared/components/ui/dialog'
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from '@/shared/components/ui/dialog'
 import { cn } from '@/shared/lib/utils'
 
 interface Props {
-  open: boolean
-  onOpenChange: (value: boolean) => void
+  triggerComponent: JSX.Element
   title: string
   content: JSX.Element
   onConfirm: () => void
@@ -13,9 +18,11 @@ interface Props {
 }
 
 // QuizNoteDialog 컴포넌트
-const QuizNoteDialog = ({ open, onOpenChange, title, content, onConfirm, confirmText }: Props) => {
+const QuizNoteDialog = ({ triggerComponent, title, content, onConfirm, confirmText }: Props) => {
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog>
+      <DialogTrigger asChild>{triggerComponent}</DialogTrigger>
+
       <DialogContent
         className="flex min-h-[190px] w-[280px] flex-col items-center justify-between rounded-[16px] bg-background-base-01"
         displayCloseButton={false}

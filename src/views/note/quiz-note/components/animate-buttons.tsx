@@ -23,18 +23,6 @@ const AnimatedButtons = ({ isExpanded, setIsExpanded }: AddNoteProps) => {
     setIsFirstRender(false)
   }, [])
 
-  const handleClickCreate = (buttonKey: string) => {
-    if (buttonKey === 'pencil') {
-      router.push('/note/editor')
-    }
-    if (buttonKey === 'clip') {
-      router.push('/note/file')
-    }
-    if (buttonKey === 'notion') {
-      router.push('/note/notion')
-    }
-  }
-
   const buttonVariants = {
     hidden: (custom: Custom) => ({
       opacity: 0,
@@ -141,7 +129,7 @@ const AnimatedButtons = ({ isExpanded, setIsExpanded }: AddNoteProps) => {
                   variant: 'mediumIcon',
                   colors: 'outlined',
                 },
-                () => handleClickCreate(button.key),
+                () => router.push(button.href),
                 button.text
               )
             )}

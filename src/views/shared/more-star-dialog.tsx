@@ -1,4 +1,10 @@
-import { Dialog, DialogClose, DialogContent, DialogTitle } from '@/shared/components/ui/dialog'
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from '@/shared/components/ui/dialog'
 import moreStarImage from './assets/need-more-star.png'
 import Image from 'next/image'
 import Text from '@/shared/components/ui/text'
@@ -12,6 +18,8 @@ interface Props {
 const MoreStarDialog = ({ isOpen, setIsOpen }: Props) => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogTrigger asChild></DialogTrigger>
+
       <DialogContent
         displayCloseButton={false}
         className="flex-center size-fit flex-col rounded-[20px] bg-background-base-01 px-[24px] py-[28px]"

@@ -8,8 +8,8 @@ import { cn } from '@/shared/lib/utils'
 import { QuizListProvider } from './context/quiz-list-context'
 import Text from '@/shared/components/ui/text'
 import Icon from '@/shared/components/icon'
-import NewQuizDrawer from '../shared/new-quiz-drawer'
-import ReplayQuizDrawer from '../shared/replay-quiz-drawer'
+import NewQuizDrawer from '../../shared/new-quiz-drawer'
+import ReplayQuizDrawer from '../../shared/replay-quiz-drawer'
 import PickDrawer from './components/pick-drawer'
 
 const tabs = [

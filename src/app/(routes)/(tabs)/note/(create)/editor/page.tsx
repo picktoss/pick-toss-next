@@ -1,4 +1,4 @@
-import CreateWithEditor from '@/views/create-note/editor'
+import CreateWithEditor from '@/views/note/create-note/editor'
 
 const Page = () => {
   return (

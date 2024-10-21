@@ -3,8 +3,8 @@ import { cn } from '@/shared/lib/utils'
 
 interface Props {
   type: 'write' | 'file' | 'notion'
-  containerClassName: string
-  iconClassName: string
+  containerClassName: HTMLElement['className']
+  iconClassName: HTMLElement['className']
 }
 
 // NoteCard 내부에서 사용되는 컴포넌트

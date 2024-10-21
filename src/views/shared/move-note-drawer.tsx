@@ -17,7 +17,6 @@ import { useState } from 'react'
 
 // MoveNoteDrawer 컴포넌트
 const MoveNoteDrawer = ({ triggerComponent }: { triggerComponent: JSX.Element }) => {
-  const [isOpen, setIsOpen] = useState(false)
   const [selectedFolderId, setSelectedFolderId] = useState('all')
 
   // 목데이터
@@ -37,23 +36,26 @@ const MoveNoteDrawer = ({ triggerComponent }: { triggerComponent: JSX.Element })
   ]
 
   return (
-    <Drawer open={isOpen} onOpenChange={setIsOpen}>
+    <Drawer>
       <DrawerTrigger asChild>{triggerComponent}</DrawerTrigger>
 
       <DrawerContent className="rounded-t-[16px]">
         <div className="my-[24px] flex h-[85dvh] flex-col items-center">
           <div className="w-full px-[18px]">
-            <div className="flex items-center justify-between">
+            <header className="flex items-center justify-between">
               <DrawerTitle className="text-title3">다른 폴더로 이동</DrawerTitle>
+
               <DrawerClose asChild>
-                <button className="text-text-primary" onClick={() => setIsOpen(false)}>
+                <button className="text-text-primary">
                   <Icon name="cancel" className="size-[24px]"></Icon>
                 </button>
               </DrawerClose>
-            </div>
+            </header>
+
             <Text typography="text1-medium" className="mt-[8px] text-text-sub">
               노트를 이동시킬 폴더를 선택해주세요.
             </Text>
+
             <RadioGroup
               className="mb-[11px] mt-[24px] flex flex-col gap-1"
               defaultValue={selectedFolderId}
@@ -72,6 +74,7 @@ const MoveNoteDrawer = ({ triggerComponent }: { triggerComponent: JSX.Element })
                   전체 노트
                 </Label>
               </div>
+
               {/* 폴더 개수만큼 렌더링 */}
               {folderList.map((folder) => (
                 <div key={folder.id} className="flex items-center py-[10px]">
@@ -90,6 +93,7 @@ const MoveNoteDrawer = ({ triggerComponent }: { triggerComponent: JSX.Element })
               ))}
             </RadioGroup>
           </div>
+
           <Button variant={'largeRound'} className="mt-[25px] w-[335px]">
             이동하기
           </Button>

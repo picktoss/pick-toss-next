@@ -12,7 +12,6 @@ const SAVED_QUIZ_COUNT = 34
 
 // ReplayQuizDrawer 컴포넌트
 const ReplayQuizDrawer = ({ triggerComponent }: { triggerComponent: JSX.Element }) => {
-  const [isOpen, setIsOpen] = useState(false)
   const [quizType, setQuizType] = useState('random')
   const [quizCount, setQuizCount] = useState(10)
 
@@ -21,7 +20,7 @@ const ReplayQuizDrawer = ({ triggerComponent }: { triggerComponent: JSX.Element 
   }, [])
 
   return (
-    <Drawer open={isOpen} onOpenChange={setIsOpen}>
+    <Drawer>
       <DrawerTrigger asChild>{triggerComponent}</DrawerTrigger>
 
       <DrawerContent className="rounded-t-[16px]">
@@ -47,6 +46,7 @@ const ReplayQuizDrawer = ({ triggerComponent }: { triggerComponent: JSX.Element 
                 모든 유형 <br /> 랜덤으로 섞기
               </Text>
             </button>
+
             <button
               onClick={() => setQuizType('multiple')}
               className={cn(
@@ -62,6 +62,7 @@ const ReplayQuizDrawer = ({ triggerComponent }: { triggerComponent: JSX.Element 
                 4개 선택지 중 <br /> 정답 고르기
               </Text>
             </button>
+
             <button
               onClick={() => setQuizType('ox')}
               className={cn(

@@ -1,24 +1,17 @@
 import Icon from '@/shared/components/icon'
 import Text from '@/shared/components/ui/text'
 import QuizNoteDialog from '@/views/shared/quiz-note-dialog'
-import { useState } from 'react'
 
-const DeleteNoteBtn = () => {
-  const [isOpenDelete, setIsOpenDelete] = useState(false)
-
+const DeleteNoteDialog = () => {
   return (
     <>
-      <button
-        className="flex-center w-[72px] flex-col rounded-lg bg-background-critical p-2 text-text1-medium text-text-primary-inverse"
-        onClick={() => setIsOpenDelete(true)}
-      >
-        <Icon name="bin" className="mb-[4px]" />
-        삭제
-      </button>
-
       <QuizNoteDialog
-        open={isOpenDelete}
-        onOpenChange={setIsOpenDelete}
+        triggerComponent={
+          <button className="flex-center w-[72px] flex-col rounded-lg bg-background-critical p-2 text-text1-medium text-text-primary-inverse">
+            <Icon name="bin" className="mb-[4px]" />
+            삭제
+          </button>
+        }
         title={'노트를 삭제할까요?'}
         content={
           // data : 해당 노트 이름, 문제 개수 필요
@@ -34,4 +27,4 @@ const DeleteNoteBtn = () => {
   )
 }
 
-export default DeleteNoteBtn
+export default DeleteNoteDialog

@@ -1,6 +1,6 @@
 'use client'
 
-import Icon, { IconProps } from '@/shared/components/icon'
+import Icon from '@/shared/components/icon'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,26 +13,15 @@ import MoveNoteDrawer from '@/views/shared/move-note-drawer'
 import QuizNoteDialog from '@/views/shared/quiz-note-dialog'
 import Link from 'next/link'
 import { useParams, useRouter } from 'next/navigation'
-import { useState } from 'react'
 
 // Header 컴포넌트
 const Header = () => {
   const router = useRouter()
   const { noteId } = useParams()
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [isOpenDelete, setIsOpenDelete] = useState(false)
-  const menuItems = [
-    { key: 'download', label: 'docx로 퀴즈 다운로드', iconName: 'download' },
-    { key: 'move', label: '노트 이동', iconName: 'move' },
-    { key: 'delete', label: '노트 삭제', iconName: 'bin' },
-  ]
 
-  const handleClickMenuItem = (menuItemKey: string) => {
+  const handleClickDownload = (menuItemKey: string) => {
     if (menuItemKey === 'download') {
       alert('clicked ' + menuItemKey)
-    }
-    if (menuItemKey === 'delete') {
-      setIsOpenDelete(true)
     }
   }
 
@@ -68,62 +57,75 @@ const Header = () => {
               </button> */}
 
               {/* menu */}
-              <DropdownMenu onOpenChange={(open) => setIsMenuOpen(open)}>
+              <DropdownMenu>
                 <DropdownMenuTrigger
-                  className={cn('ml-[16px]', isMenuOpen && 'text-icon-disabled')}
+                  className={cn('ml-[16px] data-[state=open]:text-icon-disabled')}
                 >
                   <Icon name="menu-dots" className="size-[24px]" />
                 </DropdownMenuTrigger>
 
                 <DropdownMenuContent className="bg-background-base-01 p-0">
-                  {menuItems.map((menuItem, index) =>
-                    menuItem.key === 'move' ? (
-                      <MoveNoteDrawer
-                        key={'note-dropdown' + menuItem.key}
-                        triggerComponent={
-                          <DropdownMenuItem
-                            key={'note-dropdown' + menuItem.key}
-                            className={cn(
-                              'border-t border-border-divider w-[240px] px-[20px] py-[16px]'
-                            )}
-                            onSelect={(e) => e.preventDefault()}
-                          >
-                            <Text
-                              typography="subtitle2-medium"
-                              className="flex w-full items-center justify-between"
-                            >
-                              {menuItem.label}
-                              <Icon
-                                name={menuItem.iconName as IconProps['name']}
-                                className="size-[20px]"
-                              />
-                            </Text>
-                          </DropdownMenuItem>
-                        }
-                      />
-                    ) : (
+                  {/* 다운로드 */}
+                  <DropdownMenuItem
+                    className={cn('border-b border-border-divider w-[240px] px-[20px] py-[16px]')}
+                    onClick={() => handleClickDownload('download')}
+                  >
+                    <Text
+                      typography="subtitle2-medium"
+                      className="flex w-full items-center justify-between"
+                    >
+                      docx로 퀴즈 다운로드
+                      <Icon name="download" className="size-[20px]" />
+                    </Text>
+                  </DropdownMenuItem>
+
+                  {/* 노트 이동 */}
+                  <MoveNoteDrawer
+                    triggerComponent={
                       <DropdownMenuItem
-                        key={'note-dropdown' + menuItem.key}
                         className={cn(
-                          'border-t border-border-divider w-[240px] px-[20px] py-[16px]',
-                          index === 0 && 'border-none',
-                          menuItem.key === 'delete' && 'text-text-critical'
+                          'border-b border-border-divider w-[240px] px-[20px] py-[16px]'
                         )}
-                        onClick={() => handleClickMenuItem(menuItem.key)}
+                        onSelect={(e) => e.preventDefault()}
                       >
                         <Text
                           typography="subtitle2-medium"
                           className="flex w-full items-center justify-between"
                         >
-                          {menuItem.label}
-                          <Icon
-                            name={menuItem.iconName as IconProps['name']}
-                            className="size-[20px]"
-                          />
+                          노트 이동
+                          <Icon name="move" className="size-[20px]" />
                         </Text>
                       </DropdownMenuItem>
-                    )
-                  )}
+                    }
+                  />
+
+                  {/* 노트 삭제 */}
+                  <QuizNoteDialog
+                    triggerComponent={
+                      <DropdownMenuItem
+                        className={cn('w-[240px] px-[20px] py-[16px] text-text-critical')}
+                        onSelect={(e) => e.preventDefault()}
+                      >
+                        <Text
+                          typography="subtitle2-medium"
+                          className="flex w-full items-center justify-between"
+                        >
+                          노트 삭제
+                          <Icon name="bin" className="size-[20px]" />
+                        </Text>
+                      </DropdownMenuItem>
+                    }
+                    title="노트를 삭제할까요?"
+                    content={
+                      <Text typography="text1-medium">
+                        최근 이슈 노트와 <span className="text-text-wrong">14개의 문제</span>가{' '}
+                        <br />
+                        모두 삭제됩니다.
+                      </Text>
+                    }
+                    onConfirm={() => {}}
+                    confirmText="삭제하기"
+                  />
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
@@ -151,21 +153,6 @@ const Header = () => {
           </div>
         </div>
       </header>
-
-      <QuizNoteDialog
-        open={isOpenDelete}
-        onOpenChange={setIsOpenDelete}
-        title={'노트를 삭제할까요?'}
-        content={
-          // data : 해당 노트 이름, 문제 개수 필요
-          <Text typography="text1-medium">
-            최근 이슈 노트와 <span className="text-text-wrong">14개의 문제</span>가 <br /> 모두
-            삭제됩니다
-          </Text>
-        }
-        onConfirm={() => {}}
-        confirmText="삭제하기"
-      />
     </>
   )
 }

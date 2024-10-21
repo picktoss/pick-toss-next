@@ -11,7 +11,7 @@ import NoteTypeIcon from '@/views/shared/note-type-icon'
 import Tag from '@/shared/components/ui/tag'
 import { useRouter } from 'next/navigation'
 import MoveNoteDrawer from '@/views/shared/move-note-drawer'
-import DeleteNoteBtn from './delete-note-button'
+import DeleteNoteDialog from './delete-note-dialog'
 
 interface NoteProps {
   id: string
@@ -126,7 +126,7 @@ const SwipeableNoteCard = ({
               </button>
             }
           />
-          <DeleteNoteBtn />
+          <DeleteNoteDialog />
         </div>
       </motion.div>
     </div>

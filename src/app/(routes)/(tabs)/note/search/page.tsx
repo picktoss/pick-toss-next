@@ -1,4 +1,4 @@
-import Search from '@/views/note-search'
+import Search from '@/views/note/note-search'
 
 const Page = () => {
   return (
