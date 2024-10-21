@@ -9,7 +9,7 @@ import QuizCardMenu from './quiz-card-menu'
 import { SwitchCase } from '@/shared/components/react/switch-case'
 
 interface Props {
-  headerComponent: JSX.Element
+  headerComponent: React.ReactNode
   question: string
   quizType: 'multiple' | 'ox'
   selectors?: { key: string; sentence: string }[]

@@ -11,7 +11,7 @@ import { cn } from '@/shared/lib/utils'
 const SAVED_QUIZ_COUNT = 34
 
 // ReplayQuizDrawer 컴포넌트
-const ReplayQuizDrawer = ({ triggerComponent }: { triggerComponent: JSX.Element }) => {
+const ReplayQuizDrawer = ({ triggerComponent }: { triggerComponent: React.ReactNode }) => {
   const [quizType, setQuizType] = useState('random')
   const [quizCount, setQuizCount] = useState(10)
 

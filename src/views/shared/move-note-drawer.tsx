@@ -16,7 +16,7 @@ import { cn } from '@/shared/lib/utils'
 import { useState } from 'react'
 
 // MoveNoteDrawer 컴포넌트
-const MoveNoteDrawer = ({ triggerComponent }: { triggerComponent: JSX.Element }) => {
+const MoveNoteDrawer = ({ triggerComponent }: { triggerComponent: React.ReactNode }) => {
   const [selectedFolderId, setSelectedFolderId] = useState('all')
 
   // 목데이터

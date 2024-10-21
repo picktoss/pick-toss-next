@@ -16,12 +16,8 @@ const Search = () => {
 
   return (
     <>
-      <header className="flex-center relative right-1/2 z-20 h-[56px] w-full max-w-[430px] grow translate-x-1/2  bg-background-base-01 px-[16px] text-subtitle2-medium">
+      <header className="flex-center relative right-1/2 z-20 h-[56px] w-full max-w-mobile grow translate-x-1/2  bg-background-base-01 px-[16px] text-subtitle2-medium">
         <div className="relative grow">
-          <Icon
-            name="search-bar"
-            className="absolute left-[12px] top-[10px] z-10 size-[20px] text-icon-secondary"
-          />
           <Input
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
@@ -30,6 +26,7 @@ const Search = () => {
             placeholder="노트명, 노트, 퀴즈 검색"
             className="h-[40px] placeholder:text-text-placeholder-01"
             variant={'round'}
+            left={<Icon name="search-bar" className="size-[20px] text-icon-secondary" />}
             right={
               <button>
                 <Icon

@@ -15,7 +15,7 @@ import EmojiPicker from 'emoji-picker-react'
 import { useEffect, useState } from 'react'
 
 interface Props {
-  triggerComponent: JSX.Element
+  triggerComponent: React.ReactNode
   title: string
   onConfirm: () => void
   confirmText: string

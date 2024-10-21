@@ -10,9 +10,9 @@ import {
 import { cn } from '@/shared/lib/utils'
 
 interface Props {
-  triggerComponent: JSX.Element
+  triggerComponent: React.ReactNode
   title: string
-  content: JSX.Element
+  content: React.ReactNode
   onConfirm: () => void
   confirmText: string
 }

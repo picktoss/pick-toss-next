@@ -10,7 +10,7 @@ import { cn } from '@/shared/lib/utils'
 import MoreStarDialog from './more-star-dialog'
 
 // NewQuizDrawer 컴포넌트
-const NewQuizDrawer = ({ triggerComponent }: { triggerComponent: JSX.Element }) => {
+const NewQuizDrawer = ({ triggerComponent }: { triggerComponent: React.ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [quizType, setQuizType] = useState('multiple')
   const [quizCount, setQuizCount] = useState(10) // 초기값 10

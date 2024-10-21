@@ -28,6 +28,7 @@ export interface InputProps
     VariantProps<typeof inputVariants> {
   label?: string
   essential?: boolean
+  left?: React.ReactNode
   right?: React.ReactNode
   bottomText?: string | { text: string; type: 'info' }
   hasError?: boolean
@@ -41,6 +42,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       type = 'text',
       label,
       essential,
+      left,
       right,
       bottomText,
       hasError = false,
@@ -56,6 +58,12 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           </Label>
         )}
 
+        {left && (
+          <div className="absolute bottom-1/2 left-[12px] z-10 flex translate-y-1/2 items-center">
+            {left}
+          </div>
+        )}
+
         <div className="relative w-full">
           <input
             type={type}
@@ -68,6 +76,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             aria-invalid={hasError}
             {...props}
           />
+
           {right && (
             <div className="absolute bottom-1/2 right-[12px] flex translate-y-1/2 items-center">
               {right}

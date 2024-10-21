@@ -5,7 +5,7 @@ import { Button } from '@/shared/components/ui/button'
 import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from '@/shared/components/ui/drawer'
 
 // AddCollectionDrawer 컴포넌트
-const AddCollectionDrawer = ({ triggerComponent }: { triggerComponent: JSX.Element }) => {
+const AddCollectionDrawer = ({ triggerComponent }: { triggerComponent: React.ReactNode }) => {
   return (
     <Drawer>
       <DrawerTrigger asChild>{triggerComponent}</DrawerTrigger>
