@@ -1,11 +1,16 @@
 'use client'
 
 import Icon from '@/shared/components/icon'
-import { Dialog, DialogClose, DialogContent, DialogTitle } from '@/shared/components/ui/dialog'
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from '@/shared/components/ui/dialog'
 import Text from '@/shared/components/ui/text'
 import { cn } from '@/shared/lib/utils'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
 
 const Header = () => {
   const router = useRouter()
