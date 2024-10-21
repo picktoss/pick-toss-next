@@ -7,22 +7,44 @@ import { Input } from '@/shared/components/ui/input'
 // import NoteTypeIcon from '../shared/note-type-icon'
 import SearchItem from './components/search-item'
 import SearchList from './components/search-list'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Text from '@/shared/components/ui/text'
+import { useRouter } from 'next/navigation'
 
 const Search = () => {
+  const router = useRouter()
   const [keyword, setKeyword] = useState('')
   const [isSearchFocused, setIsSearchFocused] = useState(false)
+  const searchInputRef = useRef<HTMLDivElement>(null)
+  const searchContainerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        !searchInputRef.current?.contains(e.target as Node) &&
+        !searchContainerRef.current?.contains(e.target as Node)
+      ) {
+        setIsSearchFocused(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [])
 
   return (
     <>
-      <header className="flex-center relative right-1/2 z-20 h-[56px] w-full max-w-mobile grow translate-x-1/2  bg-background-base-01 px-[16px] text-subtitle2-medium">
-        <div className="relative grow">
+      <header
+        ref={searchInputRef}
+        className="flex-center relative right-1/2 z-20 h-[56px] w-full max-w-mobile grow translate-x-1/2  bg-background-base-01 px-[16px] text-subtitle2-medium"
+      >
+        <div tabIndex={-1} className="relative grow">
           <Input
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
             onFocus={() => setIsSearchFocused(true)}
-            onBlur={() => setIsSearchFocused(false)}
             placeholder="노트명, 노트, 퀴즈 검색"
             className="h-[40px] placeholder:text-text-placeholder-01"
             variant={'round'}
@@ -39,10 +61,19 @@ const Search = () => {
             }
           />
         </div>
-        <button className="ml-[17px] w-fit text-text-secondary">취소</button>
+        <button
+          onClick={() => {
+            if (isSearchFocused) {
+              setIsSearchFocused(false)
+            } else router.back()
+          }}
+          className="ml-[17px] w-fit text-text-secondary"
+        >
+          취소
+        </button>
       </header>
 
-      <main>
+      <main ref={searchContainerRef}>
         {/* input 클릭 시 나타날 최근 검색어 */}
         {isSearchFocused && (
           <div className="flex flex-col border-t border-border-divider px-[16px] py-[20px]">
