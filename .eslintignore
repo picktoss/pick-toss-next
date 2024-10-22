@@ -1,0 +1,5 @@
+# 예시 stories
+src/stories/**/*
+
+# prev ver of landing
+src/app/(routes)/(landing)/**/*

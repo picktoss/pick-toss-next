@@ -1,8 +1,0 @@
-{
-  "rules": {
-    "@typescript-eslint/no-useless-template-literals": "off",
-    "filename-rules/match": "off",
-    "no-console": "off",
-    "@typescript-eslint/no-misused-promises": "off"
-  }
-}
