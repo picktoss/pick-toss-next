@@ -15,13 +15,13 @@ const Search = () => {
   const router = useRouter()
   const [keyword, setKeyword] = useState('')
   const [isSearchFocused, setIsSearchFocused] = useState(false)
-  const searchInputRef = useRef<HTMLDivElement>(null)
+  const searchHeaderRef = useRef<HTMLDivElement>(null)
   const searchContainerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (
-        !searchInputRef.current?.contains(e.target as Node) &&
+        !searchHeaderRef.current?.contains(e.target as Node) &&
         !searchContainerRef.current?.contains(e.target as Node)
       ) {
         setIsSearchFocused(false)
@@ -37,7 +37,7 @@ const Search = () => {
   return (
     <>
       <header
-        ref={searchInputRef}
+        ref={searchHeaderRef}
         className="flex-center relative right-1/2 z-20 h-[56px] w-full max-w-mobile grow translate-x-1/2  bg-background-base-01 px-[16px] text-subtitle2-medium"
       >
         <div tabIndex={-1} className="relative grow">
