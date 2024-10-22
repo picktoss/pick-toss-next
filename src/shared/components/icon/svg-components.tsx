@@ -1505,6 +1505,104 @@ export const RandomQuizIcon = ({ ...props }) => {
   )
 }
 
+export const Note = ({ ...props }) => {
+  return (
+    <svg
+      width="32"
+      height="32"
+      viewBox="0 0 32 32"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <rect x="4" y="1" width="25" height="29" rx="2.12499" fill="#FEC473" />
+      <path
+        d="M4 3.12498C4 1.95139 4.95139 1 6.12499 1H8V30H6.12499C4.95139 30 4 29.0486 4 27.875V3.12498Z"
+        fill="#FDA53A"
+      />
+      <rect x="10" y="5" width="16" height="5" rx="0.708328" fill="#FFDEA9" />
+      <path
+        d="M25.4019 14.9282L21.5 12.0303L17.5981 14.9282C17.3397 15.1187 17 14.9082 17 14.5539V1.00097C18.125 1.00057 17.4761 1 18.0626 1H24.9374C25.5239 1 25.4375 1.00059 26 1.00057V14.5505C26 14.9048 25.6603 15.1187 25.4019 14.9249V14.9282Z"
+        fill="#7A9EFF"
+      />
+    </svg>
+  )
+}
+
+export const Graph = ({ ...props }) => {
+  return (
+    <svg
+      width="32"
+      height="32"
+      viewBox="0 0 32 32"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M11.2441 8.05725C11.2441 7.22579 11.9182 6.55176 12.7496 6.55176H19.252C20.0835 6.55176 20.7575 7.22579 20.7575 8.05725V31.6325H11.2441V8.05725Z"
+        fill="#A0C2FF"
+      />
+      <path
+        d="M0 15.8405C0 15.009 0.674031 14.335 1.50549 14.335H8.00789C8.83935 14.335 9.51338 15.009 9.51338 15.8405V31.632H0V15.8405Z"
+        fill="#7A9EFF"
+      />
+      <path
+        d="M22.4868 19.2994C22.4868 18.468 23.1608 17.7939 23.9923 17.7939H30.4947C31.3262 17.7939 32.0002 18.468 32.0002 19.2994V31.6316H22.4868V19.2994Z"
+        fill="#A0C2FF"
+      />
+      <ellipse cx="22.8087" cy="6.15539" rx="5.78722" ry="5.78722" fill="#FB8320" />
+      <path
+        d="M20.4253 6.21448L22.1819 7.85679L25.1912 4.79297"
+        stroke="#F5F7F9"
+        strokeWidth="1.18519"
+        strokeLinecap="square"
+      />
+    </svg>
+  )
+}
+
+export const Calendar = ({ ...props }) => {
+  return (
+    <svg
+      width="32"
+      height="32"
+      viewBox="0 0 32 32"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <rect y="3.30664" width="31.6585" height="28.3511" rx="3.45277" fill="#EAECEF" />
+      <path
+        d="M0 6.7594C0 4.85249 1.54586 3.30664 3.45277 3.30664H28.2057C30.1126 3.30664 31.6585 4.8525 31.6585 6.75941V10.3944H0V6.7594Z"
+        fill="#FB8320"
+      />
+      <rect
+        x="9.45068"
+        width="6.14378"
+        height="3.30817"
+        rx="1.15092"
+        transform="rotate(90 9.45068 0)"
+        fill="#63686C"
+      />
+      <rect
+        x="25.5166"
+        width="6.14378"
+        height="3.30817"
+        rx="1.15092"
+        transform="rotate(90 25.5166 0)"
+        fill="#63686C"
+      />
+      <rect x="4.25049" y="13.5029" width="6.14374" height="6.14378" fill="#D2D6DB" />
+      <rect x="12.7588" y="13.5029" width="6.14374" height="6.14378" fill="#D2D6DB" />
+      <rect x="4.25049" y="22.2061" width="6.14374" height="6.14378" fill="#D2D6DB" />
+      <rect x="12.7588" y="22.2061" width="6.14374" height="6.14378" fill="#D2D6DB" />
+      <rect x="21.2612" y="13.5029" width="6.14374" height="6.14378" fill="#D2D6DB" />
+      <rect x="21.2612" y="22.1738" width="6.14374" height="6.14378" rx="3.07187" fill="#A0C2FF" />
+    </svg>
+  )
+}
+
 export const Kakao = ({ ...props }) => {
   const clipId = useId()
 
