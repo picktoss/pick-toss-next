@@ -3,9 +3,10 @@
 import Icon from '@/shared/components/icon'
 import Header from './components/header'
 import Text from '@/shared/components/ui/text'
-import { profileMenuList } from './constants/profile-menu-list'
+import { PROFILE_MENU_LIST } from './constants/profile-menu-list'
 import { useRouter } from 'next/navigation'
 import CategoryTooltip from './components/category-tooltip'
+import Link from 'next/link'
 // import CategoryTag from '@/shared/components/category-tag'
 // import Image from 'next/image'
 // import sampleProfileImg from '@/../../public/images/og-800x400.png'
@@ -100,7 +101,7 @@ const Profile = () => {
           className="mt-[24px] flex w-full items-center justify-between rounded-[12px] bg-background-container-02 py-[12px] pl-[18px] pr-[16px]"
         >
           <div className="flex-center gap-[8px]">
-            {/* <Icon name='star' className="size-[20px]"/> */}
+            <Icon name="star" className="size-[20px]" />
             <Text typography="text1-medium" className="text-text-accent">
               오늘의 퀴즈 출석 현황
             </Text>
@@ -113,45 +114,45 @@ const Profile = () => {
             <Text typography="text2-medium" className="mb-[6px] text-text-caption">
               사용자 설정
             </Text>
-            {profileMenuList.userSetting.map((item) => (
-              <button
-                onClick={() => router.push(item.href)}
+            {PROFILE_MENU_LIST.userSetting.map((item) => (
+              <Link
+                href={item.href}
                 key={item.key}
                 className="flex items-center justify-between py-[10px]"
               >
                 <Text typography="text1-medium">{item.label}</Text>
                 <Icon name="chevron-right" className="size-[12px]" />
-              </button>
+              </Link>
             ))}
           </div>
           <div className="flex flex-col">
             <Text typography="text2-medium" className="mb-[6px] text-text-caption">
               별 내역
             </Text>
-            {profileMenuList.star.map((item) => (
-              <button
-                onClick={() => router.push(item.href)}
+            {PROFILE_MENU_LIST.star.map((item) => (
+              <Link
+                href={item.href}
                 key={item.key}
                 className="flex items-center justify-between py-[10px]"
               >
                 <Text typography="text1-medium">{item.label}</Text>
                 <Icon name="chevron-right" className="size-[12px]" />
-              </button>
+              </Link>
             ))}
           </div>
           <div className="flex flex-col">
             <Text typography="text2-medium" className="mb-[6px] text-text-caption">
               문의 및 알림
             </Text>
-            {profileMenuList.service.map((item) => (
-              <button
-                onClick={() => router.push(item.href)}
+            {PROFILE_MENU_LIST.service.map((item) => (
+              <Link
+                href={item.href}
                 key={item.key}
                 className="flex items-center justify-between py-[10px]"
               >
                 <Text typography="text1-medium">{item.label}</Text>
                 <Icon name="chevron-right" className="size-[12px]" />
-              </button>
+              </Link>
             ))}
           </div>
         </div>

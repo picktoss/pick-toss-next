@@ -1,4 +1,4 @@
-export const profileMenuList = {
+export const PROFILE_MENU_LIST = {
   userSetting: [
     {
       key: 'account',
