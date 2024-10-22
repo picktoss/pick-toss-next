@@ -18,8 +18,16 @@ const ProfileEdit = () => {
         </Text>
       </header>
 
-      <main className="flex h-[calc(100dvh-54px-88px)] w-full flex-col overflow-y-auto">
-        <div className="flex-center h-fit w-full pb-[44px] pt-[24px]"></div>
+      <main className="flex h-[calc(100dvh-54px-88px)] w-full flex-col overflow-y-auto px-[16px]">
+        <div className="flex-center h-fit w-full pb-[44px] pt-[24px]">
+          <div className="flex-center size-[96px] rounded-full bg-background-base-03">
+            <Icon name="person" className="size-[48px] text-icon-tertiary" />
+          </div>
+        </div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
       </main>
     </>
   )
