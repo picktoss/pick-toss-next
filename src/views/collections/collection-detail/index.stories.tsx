@@ -7,6 +7,13 @@ const meta = {
   parameters: {
     nextjs: { appDirectory: true },
   },
+  decorators: [
+    (Story) => (
+      <div className="max-w-mobile mx-auto">
+        <Story />
+      </div>
+    ),
+  ],
 } satisfies Meta<typeof CollectionDetail>
 
 export default meta
