@@ -1,4 +1,4 @@
-import QuizNote from '@/views/quiz-note'
+import QuizNote from '@/views/note/quiz-note'
 
 const Page = () => {
   return (

@@ -1,4 +1,4 @@
-import Profile from '@/views/profile'
+import Profile from '@/views/profile/main'
 
 const Page = () => {
   return (

@@ -14,7 +14,7 @@ const inputVariants = cva(
         default:
           'rounded-[8px] border-none bg-background-base-02 focus:bg-background-base-01 focus:ring-1 focus:ring-border-focused',
         round:
-          'rounded-[56px] border-none bg-background-base-03 px-[16px] py-[12px] placeholder:text-text-placeholder-01',
+          'h-fit rounded-[56px] border-none bg-background-base-02 px-[16px] py-[8px] placeholder:text-text-placeholder-01',
       },
     },
     defaultVariants: {
@@ -28,6 +28,7 @@ export interface InputProps
     VariantProps<typeof inputVariants> {
   label?: string
   essential?: boolean
+  left?: React.ReactNode
   right?: React.ReactNode
   bottomText?: string | { text: string; type: 'info' }
   hasError?: boolean
@@ -41,6 +42,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       type = 'text',
       label,
       essential,
+      left,
       right,
       bottomText,
       hasError = false,
@@ -57,17 +59,24 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         )}
 
         <div className="relative w-full">
+          {left && (
+            <div className="absolute bottom-1/2 left-[12px] z-10 flex translate-y-1/2 items-center">
+              {left}
+            </div>
+          )}
           <input
             type={type}
             className={cn(
               inputVariants({ variant }),
               hasError && 'ring-1 ring-border-error placeholder:text-text-primary',
+              left && 'pl-[40px]',
               right && 'pr-[58px]'
             )}
             ref={ref}
             aria-invalid={hasError}
             {...props}
           />
+
           {right && (
             <div className="absolute bottom-1/2 right-[12px] flex translate-y-1/2 items-center">
               {right}
