@@ -33,7 +33,7 @@ const ProfileEdit = () => {
               htmlFor="userImage"
               className="flex-center absolute bottom-[-7px] right-0 size-[32px] rounded-full border border-border-default bg-background-base-01"
             >
-              <Icon name="camera" className="size-[16px]" />
+              <Icon name="camera" className="size-[16px] cursor-pointer" />
             </label>
           </div>
         </div>

@@ -15,6 +15,7 @@ import Text from '@/shared/components/ui/text'
 import { useState } from 'react'
 import SetCategoryCompleteDialog from './set-category-complete-dialog'
 import CategoryTag from '@/shared/components/category-tag'
+import { cn } from '@/shared/lib/utils'
 
 const CategoryDrawer = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -41,8 +42,8 @@ const CategoryDrawer = () => {
           </button>
         </DrawerTrigger>
 
-        <DrawerContent className="rounded-t-[16px]">
-          <div className="mt-[20px] flex h-fit flex-col px-[17px]">
+        <DrawerContent className="mx-auto flex h-[80dvh] w-dvw max-w-mobile flex-col rounded-t-[16px]">
+          <div className="mt-[20px] flex h-[calc(100%-100px-32px)] flex-col px-[17px]">
             <header className="mb-[14px]">
               <DrawerTitle className="mb-[8px] text-title3">관심분야 선택</DrawerTitle>
               <Text typography="text1-medium" className="text-text-sub">
@@ -50,12 +51,15 @@ const CategoryDrawer = () => {
               </Text>
             </header>
 
-            <div className="mb-[28px] flex h-fit flex-col overflow-y-auto">
-              {CATEGORY_OPTION.map((category) => (
+            <div className="flex grow flex-col overflow-y-auto">
+              {CATEGORY_OPTION.map((category, index) => (
                 <label
                   htmlFor={category.key}
                   key={category.key}
-                  className="flex cursor-pointer items-center py-[10px]"
+                  className={cn(
+                    'flex cursor-pointer items-center py-[10px]',
+                    index === CATEGORY_OPTION.length - 1 && 'mb-[28px]'
+                  )}
                 >
                   <Checkbox id={category.key} className="mr-[12px] size-[20px]" />
                   <Text>{category.label}</Text>
@@ -64,11 +68,11 @@ const CategoryDrawer = () => {
             </div>
           </div>
 
-          <DrawerFooter className="flex-center flex-row gap-[6px] px-[16px] pb-[36px] pt-[12px]">
+          <DrawerFooter className="flex-center w-full flex-row gap-[6px] px-[16px] pb-[36px] pt-[12px]">
             <Button
               variant={'largeRound'}
               colors={'tertiary'}
-              className="w-fit px-[35.5px] py-[15px]"
+              className="w-[35%] px-[35.5px] py-[15px]"
             >
               초기화
             </Button>
@@ -78,7 +82,7 @@ const CategoryDrawer = () => {
               onClick={() => setIsOpen(true)}
               variant={'largeRound'}
               colors={'primary'}
-              className="w-fit px-[78px] py-[15px]"
+              className="w-[65%] px-[78px] py-[15px]"
             >
               저장하기
             </Button>
