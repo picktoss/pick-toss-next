@@ -1,6 +1,7 @@
 import Text from '@/shared/components/ui/text'
 import DimmedBackground from './dimmed-background'
 import AnimatedButtons from './animate-buttons'
+import { cn } from '@/shared/lib/utils'
 
 export interface AddNoteProps {
   isExpanded: boolean
@@ -9,7 +10,12 @@ export interface AddNoteProps {
 
 const AddNoteMenu = ({ isExpanded, setIsExpanded }: AddNoteProps) => {
   return (
-    <>
+    <div
+      className={cn(
+        'absolute right-1/2 top-0 h-screen w-dvw max-w-mobile translate-x-1/2 pointer-events-none',
+        isExpanded && 'z-40'
+      )}
+    >
       <DimmedBackground isExpanded={isExpanded}>
         <div className="flex-center absolute bottom-[396px] right-[16px] z-20 h-[32px] w-[243px] rounded-[16px] bg-background-tooltip opacity-100">
           <Text as="span" typography="text2-medium" className="text-text-primary-inverse">
@@ -31,7 +37,7 @@ const AddNoteMenu = ({ isExpanded, setIsExpanded }: AddNoteProps) => {
         </div>
       </DimmedBackground>
       <AnimatedButtons isExpanded={isExpanded} setIsExpanded={setIsExpanded} />
-    </>
+    </div>
   )
 }
 
