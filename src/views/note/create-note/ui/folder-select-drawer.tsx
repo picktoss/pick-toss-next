@@ -35,36 +35,6 @@ const FolderSelectDrawer = () => {
       folderName: '📊 전공 공부',
       noteAmount: 15,
     },
-    {
-      id: '2',
-      folderName: '📊 전공 공부',
-      noteAmount: 15,
-    },
-    {
-      id: '2',
-      folderName: '📊 전공 공부',
-      noteAmount: 15,
-    },
-    {
-      id: '2',
-      folderName: '📊 전공 공부',
-      noteAmount: 15,
-    },
-    {
-      id: '2',
-      folderName: '📊 전공 공부',
-      noteAmount: 15,
-    },
-    {
-      id: '2',
-      folderName: '📊 전공 공부',
-      noteAmount: 15,
-    },
-    {
-      id: '2',
-      folderName: '📊 전공 공부',
-      noteAmount: 15,
-    },
   ]
 
   return (
