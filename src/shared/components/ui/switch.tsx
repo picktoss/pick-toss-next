@@ -5,11 +5,12 @@ import * as SwitchPrimitives from '@radix-ui/react-switch'
 import { cn } from '@/shared/lib/utils'
 
 interface Props extends React.ComponentPropsWithoutRef<typeof SwitchPrimitives.Root> {
+  thumbClassName?: HTMLElement['className']
   displayStatus?: boolean
 }
 
 const Switch = React.forwardRef<React.ElementRef<typeof SwitchPrimitives.Root>, Props>(
-  ({ className, displayStatus, ...props }, ref) => {
+  ({ className, thumbClassName, displayStatus, ...props }, ref) => {
     const switchContent = (
       <SwitchPrimitives.Root
         className={cn(
@@ -21,7 +22,8 @@ const Switch = React.forwardRef<React.ElementRef<typeof SwitchPrimitives.Root>, 
       >
         <SwitchPrimitives.Thumb
           className={cn(
-            'pointer-events-none size-[12px] rounded-full bg-button-fill-adjust shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-[14px] data-[state=unchecked]:translate-x-0 block *:data-[state=unchecked]:hidden relative'
+            'pointer-events-none size-[12px] rounded-full bg-button-fill-adjust shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-[14px] data-[state=unchecked]:translate-x-0 block *:data-[state=unchecked]:hidden relative',
+            thumbClassName
           )}
         ></SwitchPrimitives.Thumb>
       </SwitchPrimitives.Root>
