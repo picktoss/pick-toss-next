@@ -36,7 +36,7 @@ const TodayQuiz = () => {
 
         <DayCheck />
 
-        <button className="bg-background-container-03 w-full h-[56px] rounded-[12px] px-[20px] py-[10px] flex items-center justify-between mt-[20px]">
+        <button className="bg-background-container-03 w-full h-[56px] rounded-[12px] px-[20px] py-[10px] flex items-center justify-between my-[20px]">
           <div className="flex-center gap-[8px]">
             <Tag className="bg-fill-primary-blue">EVENT</Tag>
             <Text typography="text1-bold" className="text-text-info">
