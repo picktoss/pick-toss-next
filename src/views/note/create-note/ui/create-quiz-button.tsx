@@ -3,7 +3,7 @@ import NewQuizDrawer from '@/views/shared/new-quiz-drawer'
 
 const CreateQuizButton = () => {
   return (
-    <div className="flex-center fixed bottom-[87px] right-1/2 h-[100px] w-full translate-x-1/2 bg-background-base-01 pb-[36px] pt-[12px]">
+    <div className="flex-center fixed bottom-[87px] right-1/2 h-[100px] w-full max-w-mobile translate-x-1/2 bg-background-base-01 pb-[36px] pt-[12px]">
       <NewQuizDrawer
         triggerComponent={
           <Button

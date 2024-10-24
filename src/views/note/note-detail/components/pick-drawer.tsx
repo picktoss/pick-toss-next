@@ -34,9 +34,12 @@ const PickDrawer = () => {
         </div>
       </DrawerTrigger>
 
-      <DrawerContent className="rounded-t-[16px]">
-        <div className="my-[24px] flex h-[85dvh] flex-col items-center">
-          <div className="w-full px-[9px]">
+      <DrawerContent
+        overlayProps={{ className: 'max-w-mobile mx-auto' }}
+        className="mx-auto h-[80dvh] max-w-mobile rounded-t-[20px]"
+      >
+        <div className="my-[24px] flex h-[calc(100%-70px)] flex-col items-center">
+          <div className="flex size-full flex-col px-[9px]">
             <header className="flex flex-col px-[9px]">
               <DrawerTitle className="text-title3">
                 복습 <i>p</i>ick
@@ -46,7 +49,7 @@ const PickDrawer = () => {
               </Text>
             </header>
 
-            <div className="mt-[24px] flex h-[calc(85dvh-75px)] flex-col gap-[14px] overflow-y-auto px-[9px] pb-[14px]">
+            <div className="mt-[24px] flex grow flex-col gap-[14px] overflow-y-auto px-[9px] pb-[14px]">
               {/* 카드 리스트 map */}
               {Array.from({ length: 5 }).map((_, idx) => (
                 <QuizCard

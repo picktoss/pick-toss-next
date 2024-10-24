@@ -23,8 +23,11 @@ const ReplayQuizDrawer = ({ triggerComponent }: { triggerComponent: React.ReactN
     <Drawer>
       <DrawerTrigger asChild>{triggerComponent}</DrawerTrigger>
 
-      <DrawerContent className="rounded-t-[16px]">
-        <div className="my-[24px] flex h-fit flex-col items-center px-[16px]">
+      <DrawerContent
+        overlayProps={{ className: 'max-w-mobile mx-auto' }}
+        className="mx-auto h-fit max-h-[90dvh] max-w-mobile rounded-t-[20px]"
+      >
+        <div className="my-[24px] flex h-fit flex-col items-center overflow-y-auto overflow-x-hidden px-[16px]">
           <DrawerTitle className="mb-[38px] w-full font-suit text-title3">
             원하는 유형과 문제 수를 선택해주세요
           </DrawerTitle>

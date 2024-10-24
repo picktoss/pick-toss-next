@@ -78,8 +78,8 @@ const AnimatedButtons = ({ isExpanded, setIsExpanded }: AddNoteProps) => {
       {text && (
         <Text
           className={cn(
-            'absolute text-text-primary-inverse text-sm opacity-0 transition-all duration-500 right-[64px]',
-            isExpanded && 'opacity-100 z-40',
+            'absolute text-text-primary-inverse text-sm opacity-0 transition-all right-[64px]',
+            isExpanded && 'opacity-100',
             text.bottomCss
           )}
         >
@@ -92,7 +92,7 @@ const AnimatedButtons = ({ isExpanded, setIsExpanded }: AddNoteProps) => {
   return (
     <div
       className={cn(
-        'fixed w-full bottom-[120px] right-[22px] z-50 opacity-100',
+        'absolute w-full bottom-[120px] right-[22px] z-50 pointer-events-auto',
         buttonHidden && 'z-0'
       )}
     >

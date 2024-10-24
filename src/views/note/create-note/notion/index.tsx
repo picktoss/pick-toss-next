@@ -10,7 +10,7 @@ const CreateWithNotion = () => {
       <Header />
 
       <CreateNoteProvider>
-        <div className="fixed top-[54px] flex w-full items-center justify-between bg-background-base-02 px-[16px] py-[11px]">
+        <div className="fixed top-[54px] flex w-full max-w-mobile items-center justify-between bg-background-base-02 px-[16px] py-[11px]">
           <div className="flex items-center">
             <Icon name="info" className="mr-[8px] size-[16px]" />
             <Text as="span" typography="text2-medium" className="mr-[4px] text-text-secondary">

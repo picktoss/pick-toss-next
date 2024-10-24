@@ -38,6 +38,7 @@ const SwipeableNoteCard = ({
 }: NoteProps) => {
   const { isSelectMode } = useQuizNoteContext()
   const [isSwiped, setIsSwiped] = useState(false)
+  const [isDragging, setIsDragging] = useState(false)
   const x = useMotionValue(0)
   const controls = useAnimation()
   const router = useRouter()
@@ -50,12 +51,13 @@ const SwipeableNoteCard = ({
       setIsSwiped(false) // 스와이프 취소
       void controls.start({ x: 0 }) // 원래 위치로 이동
     }
+    setIsDragging(false)
   }
 
   return (
     <div
       onClick={() => {
-        !isSelectMode && !isSwiped && router.push('note/' + id)
+        !isSelectMode && !isDragging && !isSwiped && router.push('note/' + id)
       }}
       className={cn(
         `relative flex h-[104px] max-w-full items-center overflow-hidden rounded-[16px] bg-white px-[16px] pb-[20px] pt-[17px] shrink-0`,
@@ -70,6 +72,7 @@ const SwipeableNoteCard = ({
         )}
         drag="x"
         dragConstraints={{ left: -130, right: 0 }}
+        onDrag={() => setIsDragging(true)}
         onDragEnd={handleDragEnd}
         animate={controls}
         style={{ x }}

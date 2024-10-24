@@ -55,8 +55,8 @@ const FolderSelectDrawer = ({ isDrawerOpen, setIsDrawerOpen }: Props) => {
         </DrawerTrigger>
 
         <DrawerContent
-          className="z-[19] mt-[54px]"
-          overlayProps={{ className: 'z-[19] bg-black/60' }}
+          className="z-[19] mx-auto mt-[54px] max-w-mobile"
+          overlayProps={{ className: 'z-[19] bg-black/60 max-w-mobile mx-auto' }}
           hideSidebar
         >
           <div className="flex h-fit flex-col bg-background-base-01">

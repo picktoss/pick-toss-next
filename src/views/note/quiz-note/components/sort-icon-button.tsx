@@ -20,7 +20,7 @@ const SortIconBtn = () => {
         <Icon name="sort" className="size-[24px]"></Icon>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className="bg-background-base-01 p-0">
+      <DropdownMenuContent align="end" className="bg-background-base-01 p-0">
         {sortItems.map((menuItem, index) => (
           <DropdownMenuItem
             key={menuItem.key}

@@ -47,6 +47,13 @@
   }
 }
 
+body {
+  -ms-overflow-style: none; /* IE, Edge */
+}
+body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
 .list-line-clamp-1 {
   overflow-x: hidden;
   flex-shrink: 0;

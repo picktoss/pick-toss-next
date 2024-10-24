@@ -38,7 +38,9 @@ export default function VisualEditor({}: VisualEditorProps) {
             &.ProseMirror {
               padding: 16px 20px;
               margin-bottom: 100px;
-              min-width: 100vw;
+              width: 100%;
+              /* min-width: 100vw; */
+              max-width: 430px;
               min-height: 80vh;
 
               .remirror-ul-list-content {

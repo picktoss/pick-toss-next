@@ -2,7 +2,13 @@
 
 import Text from '@/shared/components/ui/text'
 import { Button } from '@/shared/components/ui/button'
-import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from '@/shared/components/ui/drawer'
+import {
+  Drawer,
+  DrawerContent,
+  DrawerFooter,
+  DrawerTitle,
+  DrawerTrigger,
+} from '@/shared/components/ui/drawer'
 
 // AddCollectionDrawer 컴포넌트
 const AddCollectionDrawer = ({ triggerComponent }: { triggerComponent: React.ReactNode }) => {
@@ -10,11 +16,14 @@ const AddCollectionDrawer = ({ triggerComponent }: { triggerComponent: React.Rea
     <Drawer>
       <DrawerTrigger asChild>{triggerComponent}</DrawerTrigger>
 
-      <DrawerContent className="rounded-t-[16px]">
-        <div className="my-[24px] flex h-[60dvh] flex-col px-[17px]">
+      <DrawerContent
+        overlayProps={{ className: 'max-w-mobile mx-auto' }}
+        className="mx-auto h-[80dvh] max-w-mobile rounded-t-[16px]"
+      >
+        <div className="my-[24px] flex h-[calc(100%-150px)] flex-col px-[17px]">
           <DrawerTitle className="mb-[20px] text-title3">원하는 컬렉션에 추가해주세요</DrawerTitle>
 
-          <div className="flex h-full flex-col gap-[24px] overflow-y-auto border-t py-[25px]">
+          <div className="flex grow flex-col gap-[24px] overflow-y-auto border-t py-[25px]">
             {/* 컬렉션 map */}
             {Array.from({ length: 5 }).map((_, idx) => (
               <div key={idx} className="flex items-center justify-between">
@@ -28,11 +37,11 @@ const AddCollectionDrawer = ({ triggerComponent }: { triggerComponent: React.Rea
           </div>
         </div>
 
-        <div className="px-[16px] pb-[36px] pt-[12px]">
+        <DrawerFooter>
           <Button variant={'largeRound'} colors={'primary'} className="w-full">
             완료
           </Button>
-        </div>
+        </DrawerFooter>
       </DrawerContent>
     </Drawer>
   )
