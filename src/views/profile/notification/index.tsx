@@ -3,24 +3,32 @@
 import Icon from '@/shared/components/icon'
 import { Switch } from '@/shared/components/ui/switch'
 import Text from '@/shared/components/ui/text'
+import { cn } from '@/shared/lib/utils'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 const Notification = () => {
   const router = useRouter()
 
-  const [AllowNotification, setAllowNotification] = useState(false)
+  const [allowNotification, setAllowNotification] = useState(false)
   const [switchStates, setSwitchStates] = useState({
-    pushTodayQuiz: false,
-    wrongAnswerStatus: false,
-    inviteReward: false,
-    pushAnnouncements: false,
-    emailTodayQuiz: false,
-    emailAnnouncements: false,
+    push: {
+      todayQuiz: false,
+      wrongAnswerStatus: false,
+      inviteReward: false,
+      announcements: false,
+    },
+    email: {
+      todayQuiz: false,
+      announcements: false,
+    },
   })
 
   useEffect(() => {
-    if (Object.values(switchStates).find((value) => value === true)) {
+    const pushValues = Object.values(switchStates.push)
+    const emailValues = Object.values(switchStates.email)
+
+    if (pushValues.find((value) => value === true) || emailValues.find((value) => value === true)) {
       setAllowNotification(true)
     }
   }, [switchStates])
@@ -28,20 +36,37 @@ const Notification = () => {
   const handleAllowNotification = (checked: boolean) => {
     setAllowNotification(checked)
     setSwitchStates({
-      pushTodayQuiz: checked,
-      wrongAnswerStatus: checked,
-      inviteReward: checked,
-      pushAnnouncements: checked,
-      emailTodayQuiz: checked,
-      emailAnnouncements: checked,
+      push: {
+        todayQuiz: checked,
+        wrongAnswerStatus: checked,
+        inviteReward: checked,
+        announcements: checked,
+      },
+      email: {
+        todayQuiz: checked,
+        announcements: checked,
+      },
     })
   }
 
-  const handleSwitchChange = (name: string, checked: boolean) => {
-    setSwitchStates((prev) => ({
-      ...prev,
-      [name]: checked,
-    }))
+  const handleSwitchChange = (type: 'push' | 'email', name: string, checked: boolean) => {
+    if (type === 'push') {
+      setSwitchStates((prev) => ({
+        ...prev,
+        push: {
+          ...prev.push,
+          [name]: checked,
+        },
+      }))
+    } else {
+      setSwitchStates((prev) => ({
+        ...prev,
+        email: {
+          ...prev.email,
+          [name]: checked,
+        },
+      }))
+    }
   }
 
   return (
@@ -61,12 +86,17 @@ const Notification = () => {
           <Switch
             className="h-[20px] w-[36px]"
             thumbClassName="size-[16px] data-[state=checked]:translate-x-[17px]"
-            checked={AllowNotification}
+            checked={allowNotification}
             onCheckedChange={handleAllowNotification}
           />
         </div>
 
-        <div className="mb-[56px] flex flex-col gap-[20px]">
+        <div
+          className={cn(
+            'mb-[56px] flex flex-col gap-[20px]',
+            !allowNotification && 'text-text-disabled'
+          )}
+        >
           <Text typography="subtitle2-bold">푸시 알림</Text>
 
           <div className="flex items-center justify-between">
@@ -74,8 +104,8 @@ const Notification = () => {
             <Switch
               className="h-[20px] w-[36px]"
               thumbClassName="size-[16px] data-[state=checked]:translate-x-[17px]"
-              checked={switchStates.pushTodayQuiz}
-              onCheckedChange={(checked) => handleSwitchChange('pushTodayQuiz', checked)}
+              checked={switchStates.push.todayQuiz}
+              onCheckedChange={(checked) => handleSwitchChange('push', 'todayQuiz', checked)}
             />
           </div>
           <div className="flex items-center justify-between">
@@ -83,8 +113,10 @@ const Notification = () => {
             <Switch
               className="h-[20px] w-[36px]"
               thumbClassName="size-[16px] data-[state=checked]:translate-x-[17px]"
-              checked={switchStates.wrongAnswerStatus}
-              onCheckedChange={(checked) => handleSwitchChange('wrongAnswerStatus', checked)}
+              checked={switchStates.push.wrongAnswerStatus}
+              onCheckedChange={(checked) =>
+                handleSwitchChange('push', 'wrongAnswerStatus', checked)
+              }
             />
           </div>
           <div className="flex items-center justify-between">
@@ -92,8 +124,8 @@ const Notification = () => {
             <Switch
               className="h-[20px] w-[36px]"
               thumbClassName="size-[16px] data-[state=checked]:translate-x-[17px]"
-              checked={switchStates.inviteReward}
-              onCheckedChange={(checked) => handleSwitchChange('inviteReward', checked)}
+              checked={switchStates.push.inviteReward}
+              onCheckedChange={(checked) => handleSwitchChange('push', 'inviteReward', checked)}
             />
           </div>
           <div className="flex items-center justify-between">
@@ -101,8 +133,8 @@ const Notification = () => {
             <Switch
               className="h-[20px] w-[36px]"
               thumbClassName="size-[16px] data-[state=checked]:translate-x-[17px]"
-              checked={switchStates.pushAnnouncements}
-              onCheckedChange={(checked) => handleSwitchChange('pushAnnouncements', checked)}
+              checked={switchStates.push.announcements}
+              onCheckedChange={(checked) => handleSwitchChange('push', 'announcements', checked)}
             />
           </div>
         </div>
@@ -111,7 +143,12 @@ const Notification = () => {
           1. 카카오 가입자의 경우, 이메일 알림 토글 off상태
           2. 토글 on 시, 이메일 등록 팝업 노출
           3. '다음에 등록하기'터치 시, 토글 off */}
-        <div className="mb-[20px] flex flex-col gap-[20px]">
+        <div
+          className={cn(
+            'mb-[20px] flex flex-col gap-[20px]',
+            !allowNotification && 'text-text-disabled'
+          )}
+        >
           <Text typography="subtitle2-bold">이메일 알림</Text>
 
           <div className="flex items-center justify-between">
@@ -119,8 +156,8 @@ const Notification = () => {
             <Switch
               className="h-[20px] w-[36px]"
               thumbClassName="size-[16px] data-[state=checked]:translate-x-[17px]"
-              checked={switchStates.emailTodayQuiz}
-              onCheckedChange={(checked) => handleSwitchChange('emailTodayQuiz', checked)}
+              checked={switchStates.email.todayQuiz}
+              onCheckedChange={(checked) => handleSwitchChange('email', 'todayQuiz', checked)}
             />
           </div>
           <div className="flex items-center justify-between">
@@ -128,8 +165,8 @@ const Notification = () => {
             <Switch
               className="h-[20px] w-[36px]"
               thumbClassName="size-[16px] data-[state=checked]:translate-x-[17px]"
-              checked={switchStates.emailAnnouncements}
-              onCheckedChange={(checked) => handleSwitchChange('emailAnnouncements', checked)}
+              checked={switchStates.email.announcements}
+              onCheckedChange={(checked) => handleSwitchChange('email', 'announcements', checked)}
             />
           </div>
         </div>
