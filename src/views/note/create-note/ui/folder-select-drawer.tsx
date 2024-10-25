@@ -58,8 +58,8 @@ const FolderSelectDrawer = () => {
           </DrawerClose>
         </div>
 
-        <div className="flex h-[calc(100%-58px)] w-full flex-col bg-background-base-01">
-          <div className="flex h-[calc(100%-58px)] flex-col border-b border-border-divider">
+        <div className="flex h-[calc(100%-52px)] w-full flex-col bg-background-base-01">
+          <div className="flex max-h-[calc(100%-58px)] flex-col border-b border-border-divider">
             <DrawerTitle className="mt-[24px] flex items-center justify-between px-[18px]">
               <Text as="span" typography="subtitle2-medium">
                 전체 노트
