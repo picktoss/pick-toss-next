@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import DayItem from './day-item'
+import DayItem from '.'
 
 const meta: Meta<typeof DayItem> = {
   title: 'today-quiz/DayItem',

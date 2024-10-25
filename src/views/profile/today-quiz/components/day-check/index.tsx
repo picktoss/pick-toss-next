@@ -1,4 +1,4 @@
-import DayItem from '../day-item/day-item'
+import DayItem from '../day-item'
 
 const DayCheck = () => {
   const fakeCheckData = [

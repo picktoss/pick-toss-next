@@ -4,7 +4,7 @@ import Icon from '@/shared/components/icon'
 import Tag from '@/shared/components/ui/tag'
 import Text from '@/shared/components/ui/text'
 import { useRouter } from 'next/navigation'
-import DayCheck from './components/day-check/day-check'
+import DayCheck from './components/day-check'
 
 const TodayQuiz = () => {
   const router = useRouter()
