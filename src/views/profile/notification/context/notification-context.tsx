@@ -1,6 +1,14 @@
 'use client'
 
-import { createContext, useContext, useState, ReactNode, useEffect } from 'react'
+import {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useEffect,
+  useCallback,
+  useMemo,
+} from 'react'
 
 interface NotificationContextType {
   switchStates: SwitchStates
@@ -60,7 +68,7 @@ export const NotificationProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [offEmail])
 
-  const handleAllowNotification = (checked: boolean) => {
+  const handleAllowNotification = useCallback((checked: boolean) => {
     setAllowNotification(checked)
     setSwitchStates({
       push: {
@@ -74,32 +82,34 @@ export const NotificationProvider = ({ children }: { children: ReactNode }) => {
         announcements: checked,
       },
     })
-  }
+  }, [])
 
-  const handleSwitchChange = (type: 'push' | 'email', name: string, checked: boolean) => {
-    setSwitchStates((prev) => ({
-      ...prev,
-      [type]: {
-        ...prev[type],
-        [name]: checked,
-      },
-    }))
-  }
-
-  return (
-    <NotificationContext.Provider
-      value={{
-        switchStates,
-        allowNotification,
-        offEmail,
-        setOffEmail,
-        handleAllowNotification,
-        handleSwitchChange,
-      }}
-    >
-      {children}
-    </NotificationContext.Provider>
+  const handleSwitchChange = useCallback(
+    (type: 'push' | 'email', name: string, checked: boolean) => {
+      setSwitchStates((prev) => ({
+        ...prev,
+        [type]: {
+          ...prev[type],
+          [name]: checked,
+        },
+      }))
+    },
+    []
   )
+
+  const values = useMemo(
+    () => ({
+      switchStates,
+      allowNotification,
+      offEmail,
+      setOffEmail,
+      handleAllowNotification,
+      handleSwitchChange,
+    }),
+    [switchStates, allowNotification, offEmail, handleAllowNotification, handleSwitchChange]
+  )
+
+  return <NotificationContext.Provider value={values}>{children}</NotificationContext.Provider>
 }
 
 // Context를 쉽게 사용할 수 있도록 훅 생성
