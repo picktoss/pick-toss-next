@@ -49,7 +49,7 @@ const DialogContent = React.forwardRef<
     >
       {children}
       {displayCloseButton && (
-        <DialogPrimitive.Close className="absolute  right-[17px] top-[20px] rounded-sm ring-offset-background transition-opacity hover:opacity-100 focus:outline-none disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+        <DialogPrimitive.Close className="ring-offset-background  data-[state=open]:bg-accent data-[state=open]:text-muted-foreground absolute right-[17px] top-[20px] rounded-sm transition-opacity hover:opacity-100 focus:outline-none disabled:pointer-events-none">
           <div className="p-[6px]">
             <XIcon />
           </div>
