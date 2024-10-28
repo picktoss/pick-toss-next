@@ -1,28 +1,24 @@
 'use client'
 
-import Icon from '@/shared/components/icon'
 import { Button } from '@/shared/components/ui/button'
 import Text from '@/shared/components/ui/text'
-import { useRouter } from 'next/navigation'
 import DateContainer from './components/date-container'
 import ListItem from './components/list-item'
 import { useState } from 'react'
 import { fakeData } from './mock/fake-data'
 import NoHistory from './components/no-history'
+import GoBackButton from '@/shared/components/go-back-button'
 
 type Tab = 'all' | 'payment' | 'expend' | 'reward'
 // const fakeData = []
 
 const StarHistory = () => {
-  const router = useRouter()
   const [tab, setTab] = useState<Tab>('all')
 
   return (
     <>
       <header className="relative flex h-[54px] w-full items-center bg-background-base-01 px-[16px]">
-        <button className="justify-self-start" onClick={() => router.back()}>
-          <Icon name="arrow-left" className="size-[24px]" />
-        </button>
+        <GoBackButton />
         <Text typography="subtitle2-medium" className="center">
           별 내역
         </Text>
