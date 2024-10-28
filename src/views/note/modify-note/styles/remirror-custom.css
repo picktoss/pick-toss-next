@@ -1,11 +1,22 @@
 .remirror-editor-wrapper {
   padding: 0;
+  width: 100%;
+  max-width: 430px;
+  box-sizing: border-box;
 }
 
 .ProseMirror {
   padding: 16px 20px;
-  min-width: 100vw;
+  width: 100%;
+  /* min-width: 100vw; */
+  max-width: 430px;
   min-height: 80vh;
+  box-sizing: border-box;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.ProseMirror::-webkit-scrollbar {
+  display: none;
 }
 
 .remirror-ul-list-content {

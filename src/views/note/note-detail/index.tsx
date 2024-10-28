@@ -62,12 +62,12 @@ const Note = () => {
         </QuizListProvider>
 
         {/* bottom button */}
-        <div className="flex-center fixed bottom-[130px] right-1/2 w-[266px] translate-x-1/2 rounded-full border border-border-default bg-background-base-01 px-[28px] py-[10px] text-button2 shadow-custom-shadow">
+        <div className="flex-center fixed bottom-[130px] right-1/2 w-[266px] translate-x-1/2 rounded-full border border-border-default bg-background-toast px-[28px] py-[10px] text-button2 text-button-label-primary shadow-custom-shadow">
           <ReplayQuizDrawer
             triggerComponent={
-              <button className="flex-center border-r border-border-divider py-[5.5px] pr-[20px]">
+              <button className="flex-center border-r border-icon-secondary py-[5.5px] pr-[20px]">
                 <Icon name="past-record" className="mr-[4px] size-[16px]" />
-                <Text className="text-button-text-secondary">다시풀기</Text>
+                <Text className="text-button-label-primary">다시풀기</Text>
               </button>
             }
           />

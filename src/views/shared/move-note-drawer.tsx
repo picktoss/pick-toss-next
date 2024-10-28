@@ -4,14 +4,13 @@ import Text from '@/shared/components/ui/text'
 import { Button } from '@/shared/components/ui/button'
 import {
   Drawer,
-  DrawerClose,
   DrawerContent,
+  DrawerFooter,
   DrawerTitle,
   DrawerTrigger,
 } from '@/shared/components/ui/drawer'
 import Label from '@/shared/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/shared/components/ui/radio-group'
-import Icon from '@/shared/components/icon'
 import { cn } from '@/shared/lib/utils'
 import { useState } from 'react'
 
@@ -39,65 +38,60 @@ const MoveNoteDrawer = ({ triggerComponent }: { triggerComponent: React.ReactNod
     <Drawer>
       <DrawerTrigger asChild>{triggerComponent}</DrawerTrigger>
 
-      <DrawerContent className="rounded-t-[16px]">
-        <div className="my-[24px] flex h-[85dvh] flex-col items-center">
-          <div className="w-full px-[18px]">
-            <header className="flex items-center justify-between">
-              <DrawerTitle className="text-title3">다른 폴더로 이동</DrawerTitle>
+      <DrawerContent
+        overlayProps={{ className: 'max-w-mobile mx-auto' }}
+        className="mx-auto h-[80dvh] max-w-mobile rounded-t-[20px]"
+      >
+        <div className="mt-[24px] flex max-h-[calc(100%-154px)] w-full flex-col px-[18px]">
+          <DrawerTitle className="text-title3">다른 폴더로 이동</DrawerTitle>
 
-              <DrawerClose asChild>
-                <button className="text-text-primary">
-                  <Icon name="cancel" className="size-[24px]"></Icon>
-                </button>
-              </DrawerClose>
-            </header>
+          <Text typography="text1-medium" className="mt-[8px] text-text-sub">
+            노트를 이동시킬 폴더를 선택해주세요.
+          </Text>
 
-            <Text typography="text1-medium" className="mt-[8px] text-text-sub">
-              노트를 이동시킬 폴더를 선택해주세요.
-            </Text>
+          <RadioGroup
+            className="mt-[24px] flex grow flex-col gap-1 overflow-y-auto"
+            defaultValue={selectedFolderId}
+            onValueChange={(value) => setSelectedFolderId(value)}
+          >
+            <div className="flex items-center py-[10px]">
+              <RadioGroupItem
+                value={'all'}
+                id={'all'}
+                className={cn(
+                  'mr-[12px]',
+                  selectedFolderId === 'all' && 'bg-fill-primary-orange border-none'
+                )}
+              />
+              <Label htmlFor={'all'} className="cursor-pointer text-subtitle2-medium">
+                전체 노트
+              </Label>
+            </div>
 
-            <RadioGroup
-              className="mb-[11px] mt-[24px] flex flex-col gap-1"
-              defaultValue={selectedFolderId}
-              onValueChange={(value) => setSelectedFolderId(value)}
-            >
-              <div className="flex items-center py-[10px]">
+            {/* 폴더 개수만큼 렌더링 */}
+            {folderList.map((folder) => (
+              <div key={folder.id} className="flex items-center py-[10px]">
                 <RadioGroupItem
-                  value={'all'}
-                  id={'all'}
+                  value={folder.id}
+                  id={folder.id}
                   className={cn(
                     'mr-[12px]',
-                    selectedFolderId === 'all' && 'bg-fill-primary-orange border-none'
+                    selectedFolderId === folder.id && 'bg-fill-primary-orange border-none'
                   )}
                 />
-                <Label htmlFor={'all'} className="cursor-pointer text-subtitle2-medium">
-                  전체 노트
+                <Label htmlFor={folder.id} className="cursor-pointer text-subtitle2-medium">
+                  {folder.folderName}
                 </Label>
               </div>
+            ))}
+          </RadioGroup>
+        </div>
 
-              {/* 폴더 개수만큼 렌더링 */}
-              {folderList.map((folder) => (
-                <div key={folder.id} className="flex items-center py-[10px]">
-                  <RadioGroupItem
-                    value={folder.id}
-                    id={folder.id}
-                    className={cn(
-                      'mr-[12px]',
-                      selectedFolderId === folder.id && 'bg-fill-primary-orange border-none'
-                    )}
-                  />
-                  <Label htmlFor={folder.id} className="cursor-pointer text-subtitle2-medium">
-                    {folder.folderName}
-                  </Label>
-                </div>
-              ))}
-            </RadioGroup>
-          </div>
-
-          <Button variant={'largeRound'} className="mt-[25px] w-[335px]">
+        <DrawerFooter className="mt-[5px]">
+          <Button variant={'largeRound'} className="w-full">
             이동하기
           </Button>
-        </div>
+        </DrawerFooter>
       </DrawerContent>
     </Drawer>
   )

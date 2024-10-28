@@ -19,23 +19,25 @@ const CreateWithEditor = () => {
       <Header />
 
       <CreateNoteProvider>
-        <TitleInput />
+        <div className="w-full max-w-mobile">
+          <TitleInput />
 
-        <div className="sticky top-[54px] z-10 flex items-center justify-between bg-background-base-02 px-[16px] py-[11px]">
-          <div className="flex items-center">
-            <Icon name="info" className="mr-[4px] size-[16px]" />
-            <Text as="span" typography="text2-medium" className="text-text-caption">
-              최소 500자, 최대 15000자 입력 가능
+          <div className="sticky top-[54px] z-10 flex w-full items-center justify-between bg-background-base-02 px-[16px] py-[11px]">
+            <div className="flex items-center">
+              <Icon name="info" className="mr-[4px] size-[16px]" />
+              <Text as="span" typography="text2-medium" className="text-text-caption">
+                최소 500자, 최대 15000자 입력 가능
+              </Text>
+            </div>
+            <Text typography="text1-medium" className="text-text-secondary">
+              <span className="text-text-caption">{0}</span> / 15000
             </Text>
           </div>
-          <Text typography="text1-medium" className="text-text-secondary">
-            <span className="text-text-caption">{0}</span> / 15000
-          </Text>
+
+          <VisualEditor />
+
+          <CreateQuizButton />
         </div>
-
-        <VisualEditor />
-
-        <CreateQuizButton />
       </CreateNoteProvider>
     </>
   )

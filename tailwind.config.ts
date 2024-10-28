@@ -251,7 +251,7 @@ const config = {
           'container-alert': 'var(--color-red-200)',
           'container-success': 'var(--color-green-200)',
           menu: 'var(--color-white)',
-          toast: 'var(--color-gray-700)',
+          toast: 'var(--color-gray-800)',
           disabled: 'var(--color-gray-100)',
           tooltip: 'var(--color-blue-500)',
           critical: 'var(--color-red-500)',
