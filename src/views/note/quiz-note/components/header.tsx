@@ -24,7 +24,7 @@ const Header = () => {
       <header
         className={cn(
           'fixed right-1/2 top-0 z-20 translate-x-1/2 flex h-[54px] w-full max-w-[430px] flex-col justify-end bg-background-base-02 px-[16px] transition-all',
-          isDrawerOpen && 'bg-background-base-01 max-w-screen'
+          isDrawerOpen && 'bg-background-base-01'
         )}
       >
         <div className="flex size-full items-center justify-between">

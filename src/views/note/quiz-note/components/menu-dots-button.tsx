@@ -21,7 +21,7 @@ const MenuDotsBtn = () => {
         <Icon name="menu-dots" className="size-[24px]" />
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className="bg-background-base-01 p-0">
+      <DropdownMenuContent align="end" className="bg-background-base-01 p-0">
         {/* 노트 선택 */}
         <DropdownMenuItem
           className="w-[240px] border-t border-border-divider px-[20px] py-[16px]"
