@@ -1,3 +1,5 @@
+'use client'
+
 import { Switch } from '@/shared/components/ui/switch'
 import Text from '@/shared/components/ui/text'
 import { cn } from '@/shared/lib/utils'
