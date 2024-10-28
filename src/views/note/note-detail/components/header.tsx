@@ -64,7 +64,7 @@ const Header = () => {
                   <Icon name="menu-dots" className="size-[24px]" />
                 </DropdownMenuTrigger>
 
-                <DropdownMenuContent className="bg-background-base-01 p-0">
+                <DropdownMenuContent align="end" className="bg-background-base-01 p-0">
                   {/* 다운로드 */}
                   <DropdownMenuItem
                     className={cn('border-b border-border-divider w-[240px] px-[20px] py-[16px]')}
@@ -133,7 +133,7 @@ const Header = () => {
         </div>
 
         {/* data: 노트 제목, 문제 수, 글자 수, 마지막 수정 날짜 */}
-        <div className="mt-[54px] px-[16px] pb-[18px] pt-[12px]">
+        <div className=" px-[16px] pb-[18px] pt-[66px]">
           <h2 className="mb-[8px] text-title2">최근 이슈</h2>
           <div className="flex items-center text-text1-medium text-text-sub">
             <Text as="span">28문제</Text>

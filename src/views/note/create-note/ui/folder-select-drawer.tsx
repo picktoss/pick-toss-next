@@ -45,8 +45,11 @@ const FolderSelectDrawer = () => {
         </button>
       </DrawerTrigger>
 
-      <DrawerContent className="flex h-[85dvh] flex-col rounded-t-[16px]">
-        <div className="mt-[16px] flex items-center justify-between px-[18px]">
+      <DrawerContent
+        overlayProps={{ className: 'max-w-mobile mx-auto' }}
+        className="mx-auto flex h-[80dvh] max-w-mobile flex-col rounded-t-[20px]"
+      >
+        <div className="mt-[16px] flex w-full items-center justify-between px-[18px]">
           <DrawerTitle className="text-title3">폴더 선택</DrawerTitle>
           <DrawerClose asChild>
             <button className="text-text-primary" onClick={() => setIsOpen(false)}>
@@ -55,8 +58,8 @@ const FolderSelectDrawer = () => {
           </DrawerClose>
         </div>
 
-        <div className="flex h-fit flex-col bg-background-base-01">
-          <div className="border-b border-border-divider">
+        <div className="flex h-[calc(100%-52px)] w-full flex-col bg-background-base-01">
+          <div className="flex max-h-[calc(100%-58px)] flex-col border-b border-border-divider">
             <DrawerTitle className="mt-[24px] flex items-center justify-between px-[18px]">
               <Text as="span" typography="subtitle2-medium">
                 전체 노트
@@ -65,7 +68,7 @@ const FolderSelectDrawer = () => {
                 노트 30개
               </Text>
             </DrawerTitle>
-            <div className="mb-[11px] mt-[9px] flex max-h-[50dvh] flex-col overflow-y-auto px-[18px]">
+            <div className="mb-[11px] mt-[9px] flex grow flex-col overflow-y-auto px-[18px]">
               {/* 폴더 개수만큼 렌더링 */}
               {folderList.map((folder) => (
                 <button key={folder.id} className="flex items-center justify-between py-[10px]">

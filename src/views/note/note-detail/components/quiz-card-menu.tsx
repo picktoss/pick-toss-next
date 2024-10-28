@@ -34,7 +34,7 @@ const QuizCardMenu = () => {
           <Icon name="menu-dots" className="size-[24px]" />
         </DropdownMenuTrigger>
 
-        <DropdownMenuContent className="bg-background-base-01 p-0">
+        <DropdownMenuContent align="end" className="bg-background-base-01 p-0">
           {/* 컬렉션에 추가 */}
           <AddCollectionDrawer
             triggerComponent={
