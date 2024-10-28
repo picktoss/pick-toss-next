@@ -1,17 +1,9 @@
 import DayItem from '../day-item'
 
-const DayCheck = () => {
-  const fakeCheckData = [
-    { day: 1, isComplete: true },
-    { day: 2, isComplete: true },
-    { day: 3, isComplete: false },
-    { day: 4, isComplete: false },
-    { day: 5, isComplete: false },
-  ]
-
+const DayCheck = ({ checkData }: { checkData: { day: number; isComplete: boolean }[] }) => {
   return (
-    <div className="h-fit w-full bg-background-base-02 rounded-[20px] px-[40px] pt-[16px] pb-[23px] flex-center gap-[16px] mt-[32px]">
-      {fakeCheckData.map(({ day, isComplete }) => (
+    <div className="flex-center mt-[32px] h-fit w-full gap-[16px] rounded-[20px] bg-background-base-02 px-[40px] pb-[23px] pt-[16px]">
+      {checkData.map(({ day, isComplete }) => (
         <DayItem key={day} day={day} isComplete={isComplete} isLast={day === 5} />
       ))}
     </div>

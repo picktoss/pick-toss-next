@@ -1,5 +1,6 @@
 import Icon from '@/shared/components/icon'
 import Text from '@/shared/components/ui/text'
+import { cn } from '@/shared/lib/utils'
 
 interface Props {
   day: number
@@ -19,12 +20,15 @@ const DayItem = ({ day, isComplete, isLast }: Props) => {
       </Text>
 
       {isComplete ? (
-        <div className="size-[40px] bg-fill-secondary-orange rounded-full flex-center mt-[8px]">
+        <div className="flex-center mt-[8px] size-[40px] rounded-full bg-fill-secondary-orange">
           <Icon name="check-round" className="text-white" />
         </div>
       ) : (
-        <div className="size-[40px] rounded-full flex-center mt-[8px] bg-[#EAECEF]">
-          <Text typography="text2-bold" className={isLast ? 'text-[#FB7E20]' : 'text-[#797D81]'}>
+        <div className="flex-center mt-[8px] size-[40px] rounded-full bg-[#EAECEF]">
+          <Text
+            typography="text2-bold"
+            className={cn(isLast ? 'text-[#FB7E20]' : 'text-[#797D81]')}
+          >
             +{isLast ? LAST_REWARD : REWARD}
           </Text>
         </div>

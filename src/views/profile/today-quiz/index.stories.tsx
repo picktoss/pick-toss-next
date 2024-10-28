@@ -9,7 +9,7 @@ const meta = {
   },
   decorators: [
     (Story: StoryFn) => (
-      <div className="max-w-mobile mx-auto">
+      <div className="mx-auto max-w-mobile">
         <Story />
       </div>
     ),

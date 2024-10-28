@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import DayCheck from '.'
-import DayItem from '../day-item'
 
 const meta: Meta<typeof DayCheck> = {
   title: 'today-quiz/DayCheck',
@@ -9,52 +8,48 @@ const meta: Meta<typeof DayCheck> = {
     layout: 'centered',
   },
   tags: ['autodocs'],
+  argTypes: {
+    checkData: { control: 'object', description: '오늘의 퀴즈 5일 연속 출석 정보를 담은 데이터' },
+  },
 } satisfies Meta<typeof DayCheck>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-// 기본 (체크 x)
-export const Default: Story = {
-  render: () => {
-    const customCheckData = [
-      { day: 1, isComplete: false },
-      { day: 2, isComplete: false },
-      { day: 3, isComplete: false },
-      { day: 4, isComplete: false },
-      { day: 5, isComplete: false },
-    ]
+const sampleCheckData = [
+  { day: 1, isComplete: true },
+  { day: 2, isComplete: true },
+  { day: 3, isComplete: false },
+  { day: 4, isComplete: false },
+  { day: 5, isComplete: false },
+]
 
-    return (
-      <div className="w-full max-w-[400px]">
-        <div className="h-fit w-full bg-background-base-02 rounded-[20px] px-[40px] pt-[16px] pb-[23px] flex-center gap-[16px] mt-[32px]">
-          {customCheckData.map(({ day, isComplete }) => (
-            <DayItem key={day} day={day} isComplete={isComplete} isLast={day === 5} />
-          ))}
-        </div>
-      </div>
-    )
+export const Default: Story = {
+  args: {
+    checkData: sampleCheckData,
   },
 }
-// 전체 완료 상태
+
 export const AllCompleted: Story = {
-  render: () => {
-    const customCheckData = [
+  args: {
+    checkData: [
       { day: 1, isComplete: true },
       { day: 2, isComplete: true },
       { day: 3, isComplete: true },
       { day: 4, isComplete: true },
       { day: 5, isComplete: true },
-    ]
+    ],
+  },
+}
 
-    return (
-      <div className="w-full max-w-[400px]">
-        <div className="h-fit w-full bg-background-base-02 rounded-[20px] px-[40px] pt-[16px] pb-[23px] flex-center gap-[16px] mt-[32px]">
-          {customCheckData.map(({ day, isComplete }) => (
-            <DayItem key={day} day={day} isComplete={isComplete} isLast={day === 5} />
-          ))}
-        </div>
-      </div>
-    )
+export const NoneCompleted: Story = {
+  args: {
+    checkData: [
+      { day: 1, isComplete: false },
+      { day: 2, isComplete: false },
+      { day: 3, isComplete: false },
+      { day: 4, isComplete: false },
+      { day: 5, isComplete: false },
+    ],
   },
 }
