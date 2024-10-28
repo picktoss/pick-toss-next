@@ -26,12 +26,7 @@ const NotificationControlArea = ({ isKakaoUser }: { isKakaoUser: boolean }) => {
     <main className="h-[calc(100dvh-54px-88px)] w-full overflow-y-auto px-[16px]">
       <div className="mb-[37px] mt-[10px] flex items-center gap-[20px]">
         <Text typography="subtitle2-bold">서비스 알림</Text>
-        <Switch
-          className="h-[20px] w-[36px]"
-          thumbClassName="size-[16px] data-[state=checked]:translate-x-[17px]"
-          checked={allowNotification}
-          onCheckedChange={handleAllowNotification}
-        />
+        <Switch size={'md'} checked={allowNotification} onCheckedChange={handleAllowNotification} />
       </div>
 
       <div
@@ -45,8 +40,7 @@ const NotificationControlArea = ({ isKakaoUser }: { isKakaoUser: boolean }) => {
         <div className="flex items-center justify-between">
           <Text>오늘의 퀴즈</Text>
           <Switch
-            className="h-[20px] w-[36px]"
-            thumbClassName="size-[16px] data-[state=checked]:translate-x-[17px]"
+            size={'md'}
             checked={switchStates.push.todayQuiz}
             onCheckedChange={(checked) => handleSwitchChange('push', 'todayQuiz', checked)}
           />
@@ -54,8 +48,7 @@ const NotificationControlArea = ({ isKakaoUser }: { isKakaoUser: boolean }) => {
         <div className="flex items-center justify-between">
           <Text>오답 터뜨리기 현황</Text>
           <Switch
-            className="h-[20px] w-[36px]"
-            thumbClassName="size-[16px] data-[state=checked]:translate-x-[17px]"
+            size={'md'}
             checked={switchStates.push.wrongAnswerStatus}
             onCheckedChange={(checked) => handleSwitchChange('push', 'wrongAnswerStatus', checked)}
           />
@@ -63,8 +56,7 @@ const NotificationControlArea = ({ isKakaoUser }: { isKakaoUser: boolean }) => {
         <div className="flex items-center justify-between">
           <Text>친구 초대 보상</Text>
           <Switch
-            className="h-[20px] w-[36px]"
-            thumbClassName="size-[16px] data-[state=checked]:translate-x-[17px]"
+            size={'md'}
             checked={switchStates.push.inviteReward}
             onCheckedChange={(checked) => handleSwitchChange('push', 'inviteReward', checked)}
           />
@@ -72,8 +64,7 @@ const NotificationControlArea = ({ isKakaoUser }: { isKakaoUser: boolean }) => {
         <div className="flex items-center justify-between">
           <Text>공지사항 및 업데이트</Text>
           <Switch
-            className="h-[20px] w-[36px]"
-            thumbClassName="size-[16px] data-[state=checked]:translate-x-[17px]"
+            size={'md'}
             checked={switchStates.push.announcements}
             onCheckedChange={(checked) => handleSwitchChange('push', 'announcements', checked)}
           />
@@ -91,8 +82,7 @@ const NotificationControlArea = ({ isKakaoUser }: { isKakaoUser: boolean }) => {
         <div className="flex items-center justify-between">
           <Text>오늘의 퀴즈</Text>
           <Switch
-            className="h-[20px] w-[36px]"
-            thumbClassName="size-[16px] data-[state=checked]:translate-x-[17px]"
+            size={'md'}
             checked={switchStates.email.todayQuiz}
             onCheckedChange={(checked) => handleSwitchChange('email', 'todayQuiz', checked)}
           />
@@ -100,8 +90,7 @@ const NotificationControlArea = ({ isKakaoUser }: { isKakaoUser: boolean }) => {
         <div className="flex items-center justify-between">
           <Text>공지사항 및 업데이트</Text>
           <Switch
-            className="h-[20px] w-[36px]"
-            thumbClassName="size-[16px] data-[state=checked]:translate-x-[17px]"
+            size={'md'}
             checked={switchStates.email.announcements}
             onCheckedChange={(checked) => handleSwitchChange('email', 'announcements', checked)}
           />

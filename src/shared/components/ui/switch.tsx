@@ -3,27 +3,42 @@
 import * as React from 'react'
 import * as SwitchPrimitives from '@radix-ui/react-switch'
 import { cn } from '@/shared/lib/utils'
+import { cva, VariantProps } from 'class-variance-authority'
 
-interface Props extends React.ComponentPropsWithoutRef<typeof SwitchPrimitives.Root> {
-  thumbClassName?: HTMLElement['className']
+const switchVariants = cva(
+  'focus-visible:ring-ring focus-visible:ring-offset-background peer inline-flex h-[16px] w-[30px] shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-fill-primary-orange data-[state=unchecked]:bg-background-container-01',
+  {
+    variants: {
+      size: {
+        sm: '',
+        md: 'h-[20px] w-[36px]',
+      },
+    },
+    defaultVariants: {
+      size: 'sm',
+    },
+  }
+)
+
+interface SwitchProps
+  extends React.ComponentPropsWithoutRef<typeof SwitchPrimitives.Root>,
+    VariantProps<typeof switchVariants> {
   displayStatus?: boolean
 }
 
-const Switch = React.forwardRef<React.ElementRef<typeof SwitchPrimitives.Root>, Props>(
-  ({ className, thumbClassName, displayStatus, ...props }, ref) => {
+const Switch = React.forwardRef<React.ElementRef<typeof SwitchPrimitives.Root>, SwitchProps>(
+  ({ size = 'sm', className, displayStatus, ...props }, ref) => {
     const switchContent = (
       <SwitchPrimitives.Root
-        className={cn(
-          'peer inline-flex h-[16px] w-[30px] shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 data-[state=unchecked]:bg-background-container-01 data-[state=checked]:bg-fill-primary-orange',
-          className
-        )}
+        className={cn(switchVariants({ size }), className)}
         {...props}
         ref={ref}
       >
         <SwitchPrimitives.Thumb
           className={cn(
-            'pointer-events-none size-[12px] rounded-full bg-button-fill-adjust shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-[14px] data-[state=unchecked]:translate-x-0 block *:data-[state=unchecked]:hidden relative',
-            thumbClassName
+            'pointer-events-none  rounded-full bg-button-fill-adjust shadow-lg ring-0 transition-transform  data-[state=unchecked]:translate-x-0 block *:data-[state=unchecked]:hidden relative',
+            size === 'sm' && 'size-[12px] data-[state=checked]:translate-x-[14px]',
+            size === 'md' && 'size-[16px] data-[state=checked]:translate-x-[17px]'
           )}
         ></SwitchPrimitives.Thumb>
       </SwitchPrimitives.Root>
