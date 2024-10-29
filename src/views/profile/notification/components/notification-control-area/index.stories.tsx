@@ -5,11 +5,14 @@ import NotificationControlArea from '.'
 const meta: Meta<typeof NotificationControlArea> = {
   title: 'notification/NotificationControlArea',
   component: NotificationControlArea,
+  tags: ['autodocs'],
   decorators: [
     (Story) => (
-      <NotificationProvider>
-        <Story />
-      </NotificationProvider>
+      <div className="mx-auto max-w-mobile">
+        <NotificationProvider>
+          <Story />
+        </NotificationProvider>
+      </div>
     ),
   ],
   argTypes: {
