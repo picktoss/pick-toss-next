@@ -330,7 +330,7 @@ const config = {
           secondary: 'var(--color-gray-800)',
           tertiary: 'var(--color-gray-500)',
           critical: 'var(--color-red-500)',
-          link: 'var(--color-blue-600)',
+          link: 'var(--color-blue-400)',
           disabled: 'var(--color-gray-200)',
         },
         quiz: {
