@@ -96,8 +96,8 @@ const Profile = () => {
           </div>
         </div>
 
-        <button
-          onClick={() => router.push('profile/today-quiz')}
+        <Link
+          href={'profile/today-quiz'}
           className="mt-[24px] flex w-full items-center justify-between rounded-[12px] bg-background-container-02 py-[12px] pl-[18px] pr-[16px]"
         >
           <div className="flex-center gap-[8px]">
@@ -107,7 +107,7 @@ const Profile = () => {
             </Text>
           </div>
           <Icon name="chevron-right" className="size-[12px] text-icon-tertiary" />
-        </button>
+        </Link>
 
         <div className="mb-[30px] mt-[40px] flex flex-col gap-[22px]">
           <div className="flex flex-col">
