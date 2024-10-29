@@ -53,8 +53,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className={className}>
         {label && (
-          <Label essential={essential} hasError={hasError} className="mb-[8px] text-text1-medium">
-            {label}
+          <Label essential={essential} hasError={hasError} className="mb-[8px] text-text-sub">
+            <Text typography="text1-medium">{label}</Text>
           </Label>
         )}
 

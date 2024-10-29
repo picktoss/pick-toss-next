@@ -1,18 +1,29 @@
-import GoBackButton from '@/shared/components/go-back-button'
-import Text from '@/shared/components/ui/text'
+import { InquiryProvider } from './context/inquiry-context'
+import InquiryType from './components/inquiry-type'
+import TitleAndContent from './components/title-and-content'
+import SetEmail from './components/set-email'
+import Confirm from './components/confirm'
+import Header from './components/header'
 
 const Inquiry = () => {
   return (
-    <>
-      <header className="relative flex h-[54px] w-full items-center bg-background-base-01 px-[16px]">
-        <GoBackButton />
-        <Text typography="subtitle2-medium" className="center">
-          문의하기
-        </Text>
-      </header>
+    <InquiryProvider>
+      <Header />
 
-      <main className="h-[calc(100dvh-54px-88px)] w-full overflow-y-auto px-[16px]"></main>
-    </>
+      <main className="h-[calc(100dvh-54px-88px)] w-full overflow-y-auto">
+        <InquiryType />
+
+        <div className="h-[8px] w-full bg-background-base-02"></div>
+
+        <TitleAndContent />
+
+        <div className="h-[8px] w-full bg-background-base-02"></div>
+
+        <SetEmail />
+
+        <Confirm />
+      </main>
+    </InquiryProvider>
   )
 }
 
