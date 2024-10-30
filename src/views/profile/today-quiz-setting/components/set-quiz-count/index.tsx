@@ -2,10 +2,10 @@
 
 import { Slider } from '@/shared/components/ui/slider'
 import Text from '@/shared/components/ui/text'
-import { useState } from 'react'
+import { useTodayQuizSetting } from '../../context/today-quiz-setting-context'
 
 const SetQuizCount = () => {
-  const [quizCount, setQuizCount] = useState(10)
+  const { quizCount, setQuizCount } = useTodayQuizSetting()
 
   return (
     <div className="w-full border-b border-border-divider py-[5px] pb-[16px]">
@@ -20,6 +20,7 @@ const SetQuizCount = () => {
         min={5}
         max={20}
         step={1}
+        value={[quizCount]}
         defaultValue={[10]}
         onValueChange={(value) => setQuizCount(value[0])}
       />
