@@ -17,7 +17,7 @@ const SetNameDialog = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <div className="flex w-full items-center justify-between">
+        <div className="flex w-full cursor-pointer items-center justify-between">
           <div className="flex flex-col items-start gap-[4px]">
             <Text typography="text2-medium" className="text-text-sub">
               이름

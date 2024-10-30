@@ -112,7 +112,6 @@ export const NotificationProvider = ({ children }: { children: ReactNode }) => {
   return <NotificationContext.Provider value={values}>{children}</NotificationContext.Provider>
 }
 
-// Context를 쉽게 사용할 수 있도록 훅 생성
 export const useNotification = () => {
   const context = useContext(NotificationContext)
   if (!context) {

@@ -76,4 +76,7 @@ body::-webkit-scrollbar {
   .flex-center {
     @apply flex justify-center items-center;
   }
+  .input-basic {
+    @apply rounded-[8px] bg-background-base-02 p-[12px] text-text1-medium text-text-primary ring-offset-transparent placeholder:text-text1-medium placeholder:text-text-caption focus:bg-background-base-01 focus:ring-1 focus:ring-border-focused focus-visible:outline-none disabled:cursor-not-allowed disabled:bg-background-disabled disabled:opacity-50 disabled:placeholder:text-text-disabled;
+  }
 }

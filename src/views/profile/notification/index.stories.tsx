@@ -4,7 +4,6 @@ import Notification from '.'
 const meta: Meta<typeof Notification> = {
   title: 'Page/Notification',
   component: Notification,
-  tags: ['autodocs'],
   parameters: {
     nextjs: { appDirectory: true },
   },

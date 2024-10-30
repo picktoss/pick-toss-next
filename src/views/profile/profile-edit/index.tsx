@@ -31,9 +31,9 @@ const ProfileEdit = () => {
             <input type="file" name="file" id="userImage" className="hidden" />
             <label
               htmlFor="userImage"
-              className="flex-center absolute bottom-[-7px] right-0 size-[32px] rounded-full border border-border-default bg-background-base-01"
+              className="flex-center absolute bottom-[-7px] right-0 size-[32px] cursor-pointer rounded-full border border-border-default bg-background-base-01"
             >
-              <Icon name="camera" className="size-[16px] cursor-pointer" />
+              <Icon name="camera" className="size-[16px]" />
             </label>
           </div>
         </div>
