@@ -22,7 +22,7 @@ export const EmailVerificationProvider = ({ children }: { children: ReactNode })
   const [email, setEmail] = useState<string>('')
   const [isValid, setIsValid] = useState<boolean>(false)
 
-  const [isAllowed, setIsAllowed] = useState<null | boolean>(null)
+  const [isAllowed, setIsAllowed] = useState<null | boolean>(true)
   const [activeSaveButton, setActiveSaveButton] = useState(false)
 
   const values = useMemo(

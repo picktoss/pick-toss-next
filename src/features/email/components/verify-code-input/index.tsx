@@ -13,8 +13,15 @@ const VerifyCodeInput = () => {
     codeInputRef.current?.focus()
   }, [])
 
-  const handleCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.length === 6) setActiveSaveButton(true)
+  const handleCodeChange = (e: React.FormEvent<HTMLInputElement>) => {
+    const input = e.currentTarget
+    const value = input.value
+
+    if (!/^\d*$/.test(value)) {
+      input.value = value.replace(/\D/g, '') // 숫자가 아닌 문자 제거
+    }
+
+    setActiveSaveButton(input.value.length === 6)
   }
 
   return (
@@ -30,7 +37,7 @@ const VerifyCodeInput = () => {
         </Button>
       }
       // hasError일 경우, bottomText={'인증번호가 올바르지 않습니다.'}
-      onChange={handleCodeChange}
+      onInput={handleCodeChange}
     />
   )
 }
