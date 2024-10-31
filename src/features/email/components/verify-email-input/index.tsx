@@ -5,7 +5,7 @@ import { useEmailVerification } from '../../context/email-verification-context'
 import { Input } from '@/shared/components/ui/input'
 import { Button } from '@/shared/components/ui/button'
 import Text from '@/shared/components/ui/text'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { DOMAIN_SUGGESTIONS } from '../../constants/domain'
 
 const VerifyEmailInput = () => {
@@ -20,6 +20,15 @@ const VerifyEmailInput = () => {
   } = useEmailVerification()
 
   const [suggestions, setSuggestions] = useState<string[]>([])
+
+  // 유저 정보에서 등록된 이메일이 있다면 input value로 설정
+  // useEffect(() => {
+  //   setEmail('picktos@gmail.com')
+  // }, [])
+
+  useEffect(() => {
+    setIsValid(validateEmail(email))
+  }, [email])
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
@@ -77,7 +86,7 @@ const VerifyEmailInput = () => {
       />
 
       {/* 이메일 자동완성 노출 박스 */}
-      {email.length > 0 && (
+      {email.length > 0 && !isValid && (
         <div className="mt-[11px] flex flex-col rounded-[12px] bg-background-base-02 px-[16px] py-[10px]">
           {suggestions.map((suggestion) => (
             <Text

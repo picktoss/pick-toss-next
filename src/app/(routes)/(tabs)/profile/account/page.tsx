@@ -38,7 +38,7 @@ const AccountPage = () => {
 
           <CategoryDrawer />
 
-          <Link href={'email'} className="flex w-full items-center justify-between">
+          <Link href={'verify-email'} className="flex w-full items-center justify-between">
             <div className="flex flex-col items-start gap-[4px]">
               <Text typography="text2-medium" className="text-text-sub">
                 이메일
