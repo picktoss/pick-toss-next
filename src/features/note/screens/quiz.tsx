@@ -41,7 +41,7 @@ const Quiz = () => {
       {/* 퀴즈 카드 */}
       <QuizList>
         {quizzes.map((quiz) => (
-          <QuizCard key={quiz.id} quiz={quiz} showExplanation={showAnswer} />
+          <QuizCard key={quiz.id} quiz={quiz} showMenu showAnswer={showAnswer} />
         ))}
       </QuizList>
     </div>
