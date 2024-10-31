@@ -6,6 +6,7 @@ import CategoryTooltip from '@/features/user/category-tooltip'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { PROFILE_MENU_LIST } from '@/features/user/constants/profile-menu-list'
+import Header from '@/features/user/header'
 
 const ProfilePage = () => {
   const router = useRouter()
@@ -13,7 +14,7 @@ const ProfilePage = () => {
 
   return (
     <>
-      {/* <Header /> */}
+      <Header />
 
       <main className="h-[calc(100dvh-54px-88px)] w-full overflow-y-auto px-[16px] pb-[54px]">
         <button
