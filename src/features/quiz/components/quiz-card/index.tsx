@@ -27,7 +27,7 @@ const QuizCard = ({
 }: Props) => {
   const [openExplanation, setOpenExplanation] = useState(showExplanation)
 
-  const shouldShowAnswer = showAnswer ?? openExplanation
+  const shouldShowAnswer = showAnswer || openExplanation
 
   const renderOptions = () => {
     if (quiz.type === 'multiple' && quiz.options) {
