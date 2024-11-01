@@ -1,23 +1,18 @@
-'use client'
-
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
 import { cn } from '@/shared/lib/utils'
 import CategoryDrawer from '@/features/note/components/category-drawer'
 import SetNameDialog from '@/features/user/components/set-name-dialog'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import GoBackButton from '@/shared/components/custom/go-back-button'
 
 const AccountPage = () => {
-  const router = useRouter()
   const email = 'picktoss@gmail.com'
 
   return (
     <>
       <header className="relative flex h-[54px] w-full items-center bg-background-base-01 px-[16px]">
-        <button className="justify-self-start" onClick={() => router.back()}>
-          <Icon name="arrow-left" className="size-[24px]" />
-        </button>
+        <GoBackButton />
         <Text typography="subtitle2-medium" className="center">
           계정 정보
         </Text>
@@ -43,7 +38,7 @@ const AccountPage = () => {
 
           <CategoryDrawer />
 
-          <Link href={'email'} className="flex w-full items-center justify-between">
+          <Link href={'verify-email'} className="flex w-full items-center justify-between">
             <div className="flex flex-col items-start gap-[4px]">
               <Text typography="text2-medium" className="text-text-sub">
                 이메일

@@ -4,6 +4,7 @@ import { Button } from '@/shared/components/ui/button'
 import { Dialog, DialogContent, DialogTitle } from '@/shared/components/ui/dialog'
 import Text from '@/shared/components/ui/text'
 import { useNotification } from '../contexts/notification-context'
+import { useRouter } from 'next/navigation'
 
 interface Props {
   isOpen: boolean
@@ -11,6 +12,7 @@ interface Props {
 }
 
 const SetEmailDialog = ({ isOpen, setIsOpen }: Props) => {
+  const router = useRouter()
   const { setOffEmail } = useNotification()
 
   return (
@@ -37,6 +39,7 @@ const SetEmailDialog = ({ isOpen, setIsOpen }: Props) => {
             variant={'largeRound'}
             colors={'primary'}
             className="w-full px-[64.5px] py-[15px]"
+            onClick={() => router.push('verify-email')}
           >
             지금 바로 등록하기
           </Button>

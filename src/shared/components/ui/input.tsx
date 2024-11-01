@@ -54,7 +54,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       <div className={className}>
         {label && (
           <Label essential={essential} hasError={hasError} className="mb-[8px] text-text-sub">
-            <Text typography="text1-medium">{label}</Text>
+            <Text typography="text2-medium">{label}</Text>
           </Label>
         )}
 

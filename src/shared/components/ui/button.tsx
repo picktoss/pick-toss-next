@@ -13,7 +13,7 @@ const buttonVariants = cva(
         mediumRound: 'h-[44px] w-fit rounded-full px-[39px] !text-button2',
         smallSquare: 'h-[36px] w-fit rounded-[10px] px-[16px] !text-button4',
         smallRound: 'h-[32px] w-fit rounded-full px-[14px] !text-button3',
-        tinySquare: 'h-[28px] w-fit rounded-[4px] px-[8px] !text-button5',
+        tinySquare: 'h-[28px] w-fit rounded-[8px] px-[8px] !text-button5',
         mediumIcon: 'size-[52px] rounded-full !text-icon-system',
       },
       colors: {
