@@ -13,7 +13,6 @@ interface Props {
   setIsAllowed: (value: boolean) => void
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const VerifyEmailInput = ({ isAllowed, setIsAllowed }: Props) => {
   const [isValid, setIsValid] = useState(false)
   const [email, setEmail] = useState('')
@@ -53,7 +52,7 @@ const VerifyEmailInput = ({ isAllowed, setIsAllowed }: Props) => {
 
   // todo: 이메일 확인 버튼 눌렀을 때 실행될 로직 구현
   const handleClickConfirm = () => {
-    // setIsAllowed(true)
+    setIsAllowed(true)
   }
 
   const renderRightComponent = (isAllowed: null | boolean) => {
