@@ -3,8 +3,8 @@ import * as React from 'react'
 import { cn } from '@/shared/lib/utils'
 import { cva, VariantProps } from 'class-variance-authority'
 import Text from './text'
-import Icon from '../icon'
 import Label from './label'
+import Icon from '../custom/icon'
 
 const inputVariants = cva(
   'flex h-[48px] w-full border bg-background-base-01 p-[12px] !text-subtitle2-medium text-text-primary ring-offset-transparent file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-subtitle2-medium placeholder:text-text-placeholder-01 focus-visible:outline-none disabled:cursor-not-allowed disabled:bg-background-disabled disabled:opacity-50 disabled:placeholder:text-text-disabled',

@@ -1,4 +1,4 @@
-import Loading from '@/shared/components/loading'
+import Loading from '@/shared/components/custom/loading'
 
 export default function RootLoading() {
   return (

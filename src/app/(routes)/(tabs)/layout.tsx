@@ -1,4 +1,4 @@
-import BottomNavigation from '@/shared/components/bottom-navigation'
+import BottomNavigation from '@/shared/components/custom/bottom-navigation'
 
 const TabsLayout = ({
   children,

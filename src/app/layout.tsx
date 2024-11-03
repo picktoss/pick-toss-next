@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import { cn } from '@/shared/lib/utils'
 import { dmSans, suit } from '@/shared/lib/fonts'
-import { Metadatas } from '@/features/metadata'
+import { Metadatas } from '@/features/common/metadata'
 import { Providers } from '@/providers'
 import { Toaster } from '@/shared/components/ui/toaster'
 
