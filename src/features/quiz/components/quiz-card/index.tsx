@@ -1,95 +1,107 @@
 'use client'
 
-import { Quiz } from '@/app/(routes)/(tabs)/collections/[id]/page'
 import Icon from '@/shared/components/custom/icon'
-import { SwitchCase } from '@/shared/components/custom/react/switch-case'
 import Text from '@/shared/components/ui/text'
 import { cn } from '@/shared/lib/utils'
-import { useState } from 'react'
+import React, { useState } from 'react'
+import QuizCardMenu from '../quiz-card-menu'
+import Tag from '@/shared/components/ui/tag'
 
 interface Props {
-  quiz: Quiz
+  quiz: Quiz.Item
+  header?: string
+  showMenu?: boolean
+  showAnswer?: boolean
+  showExplanation?: boolean
+  // userAnswer를 받으면 정답과 오답을 표시함
+  userAnswer?: string
 }
 
-const QuizCard = ({ quiz }: Props) => {
-  const [isOpenExplanation, setIsOpenExplanation] = useState(false)
+const QuizCard = ({
+  quiz,
+  header,
+  showMenu,
+  showAnswer = false,
+  showExplanation = false,
+  userAnswer,
+}: Props) => {
+  const [openExplanation, setOpenExplanation] = useState(showExplanation)
+
+  const shouldShowAnswer = showAnswer ?? openExplanation
+
+  const renderOptions = () => {
+    if (quiz.type === 'multiple' && quiz.options) {
+      const chosenAlphabet = userAnswer
+        ? String.fromCharCode(65 + quiz.options.findIndex((option) => option === userAnswer))
+        : undefined
+
+      return (
+        <div className="mt-[12px] flex flex-col gap-[4px]">
+          {quiz.options.map((option, index) => (
+            <MultipleChoiceOption
+              key={option}
+              option={option}
+              // chosenAlphabet을 넘기면 정답과 오답을 표시함
+              chosenAlphabet={chosenAlphabet}
+              optionAlphabet={String.fromCharCode(65 + index)}
+              showAnswer={shouldShowAnswer}
+              isAnswer={quiz.answer === option}
+            />
+          ))}
+        </div>
+      )
+    }
+
+    return (
+      <div className="flex-center mt-[16px] gap-[6px]">
+        {(['O', 'X'] as const).map((value) => (
+          <OXChoice
+            key={value}
+            value={value}
+            // chosenAnswer을 넘기면 정답과 오답을 표시함
+            chosenAnswer={userAnswer}
+            isAnswer={quiz.answer === value}
+            showAnswer={shouldShowAnswer}
+          />
+        ))}
+      </div>
+    )
+  }
 
   return (
     <div className="w-full rounded-[16px] border border-border-default bg-white">
       <div className="px-[16px] py-[20px]">
-        <Text typography="title3" className="font-suit text-text-accent">
-          Q.
-        </Text>
+        <div className="flex items-center justify-between text-icon-tertiary">
+          {header ? (
+            <Tag colors={'tertiary'}>{header}</Tag>
+          ) : (
+            <Text typography="title3" className="text-text-accent">
+              Q.
+            </Text>
+          )}
+          {showMenu && <QuizCardMenu />}
+        </div>
 
         <Text as="h3" typography="text1-bold" className="mt-[8px]">
           {quiz.question}
         </Text>
 
-        <SwitchCase
-          value={quiz.type}
-          caseBy={{
-            multiple: (
-              <div className="mt-[12px] flex flex-col gap-[4px]">
-                {quiz.type === 'multiple' &&
-                  quiz.options?.map((option, idx) => (
-                    <Text
-                      key={option}
-                      typography="text1-medium"
-                      className={cn(
-                        'flex text-text-secondary',
-                        isOpenExplanation &&
-                          (quiz.answer === option ? 'text-text-accent' : 'text-text-caption')
-                      )}
-                    >
-                      <span className="mr-[2px]">{getAlphabetIndex(idx)}.</span>
-                      <span>{option}</span>
-                    </Text>
-                  ))}
-              </div>
-            ),
+        {renderOptions()}
 
-            ox: (
-              <div className="flex-center mt-[16px] gap-[6px]">
-                <Text
-                  typography="title3"
-                  className={cn(
-                    'font-suit text-text-secondary',
-                    quiz.type === 'ox' &&
-                      (quiz.answer === 'O' ? 'text-text-accent' : 'text-text-caption')
-                  )}
-                >
-                  O
-                </Text>
-                <Text
-                  typography="title3"
-                  className={cn(
-                    'font-suit text-text-secondary',
-                    quiz.type === 'ox' &&
-                      (quiz.answer === 'X' ? 'text-text-accent' : 'text-text-caption')
-                  )}
-                >
-                  X
-                </Text>
-              </div>
-            ),
-          }}
-        />
-
-        {isOpenExplanation && (
+        {openExplanation && (
           <Text typography="text2-medium" className="mt-[20px] w-full text-text-sub">
             <b>해설</b>: {quiz.explanation}
           </Text>
         )}
       </div>
 
-      {/* 해설 버튼 */}
       <button
-        onClick={() => setIsOpenExplanation(!isOpenExplanation)}
+        onClick={() => setOpenExplanation((prev) => !prev)}
         className="flex-center w-full border-t border-border-divider py-[12px] text-text-sub"
       >
-        <Text typography="text2-medium">{isOpenExplanation ? '닫기' : '해설 보기'}</Text>
+        <Text typography="text2-medium">{openExplanation ? '닫기' : '해설 보기'}</Text>
         <Icon
-          name={isOpenExplanation ? 'chevron-up' : 'chevron-down'}
+          name={openExplanation ? 'chevron-up' : 'chevron-down'}
           className="ml-[4px] size-[12px] text-icon-tertiary"
         />
       </button>
@@ -99,4 +111,59 @@ const QuizCard = ({ quiz }: Props) => {
 
 export default QuizCard
 
-const getAlphabetIndex = (idx: number) => String.fromCharCode(65 + idx)
+interface MultipleChoiceOptionProps {
+  option: string
+  optionAlphabet: string
+  showAnswer: boolean
+  isAnswer: boolean
+  chosenAlphabet?: string
+}
+
+const MultipleChoiceOption = ({
+  option,
+  showAnswer,
+  optionAlphabet,
+  isAnswer,
+  chosenAlphabet,
+}: MultipleChoiceOptionProps) => {
+  return (
+    <Text
+      typography="text1-medium"
+      className={cn(
+        'flex text-text-secondary',
+        showAnswer && isAnswer && 'text-text-accent',
+        chosenAlphabet && isAnswer && 'text-text-success',
+        chosenAlphabet === optionAlphabet && !isAnswer && 'text-text-wrong'
+      )}
+    >
+      <span className="mr-[2px]">{optionAlphabet}.</span>
+      <span>{option}</span>
+    </Text>
+  )
+}
+
+const OXChoice = ({
+  value,
+  isAnswer,
+  showAnswer,
+  chosenAnswer,
+}: {
+  value: 'O' | 'X'
+  isAnswer: boolean
+  showAnswer: boolean
+  chosenAnswer?: string
+}) => {
+  return (
+    <Text
+      typography="title3"
+      className={cn(
+        'font-suit text-text-secondary',
+        showAnswer && isAnswer && 'text-text-accent',
+        chosenAnswer && isAnswer && 'text-text-success',
+        chosenAnswer === value && !isAnswer && 'text-text-wrong'
+      )}
+    >
+      {value}
+    </Text>
+  )
+}

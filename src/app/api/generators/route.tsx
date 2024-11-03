@@ -1,5 +1,5 @@
-import EmailVerificationEmail from '@/shared/components/email/email-verification'
-import TodayQuizEmail from '@/shared/components/email/today-quiz'
+import EmailVerificationEmail from '@/shared/components/custom/email/email-verification'
+import TodayQuizEmail from '@/shared/components/custom/email/today-quiz'
 import { render } from '@react-email/render'
 import { NextRequest } from 'next/server'
 
