@@ -1,26 +1,27 @@
-import Confirm from '@/features/user/components/confirm'
+import InquiryConfirm from '@/features/user/components/inquiry-confirm'
 import InquiryType from '@/features/user/components/inquiry-type'
-import SetEmail from '@/features/user/components/set-email'
-import TitleAndContent from '@/features/user/components/title-and-content'
+import InquirySetEmail from '@/features/user/components/inquiry-set-email'
+import InquiryTitleAndContent from '@/features/user/components/inquiry-title-and-content'
 import { InquiryProvider } from '@/features/user/contexts/inquiry-context'
+import Header from './ui'
 
 const InquiryPage = () => {
   return (
     <InquiryProvider>
-      {/* <Header /> */}
+      <Header />
 
       <main className="h-[calc(100dvh-54px-88px)] w-full overflow-y-auto">
         <InquiryType />
 
         <div className="h-[8px] w-full bg-background-base-02"></div>
 
-        <TitleAndContent />
+        <InquiryTitleAndContent />
 
         <div className="h-[8px] w-full bg-background-base-02"></div>
 
-        <SetEmail />
+        <InquirySetEmail />
 
-        <Confirm />
+        <InquiryConfirm />
       </main>
     </InquiryProvider>
   )

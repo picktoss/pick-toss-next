@@ -1,9 +1,9 @@
 'use client'
 
+import Header from './ui/header'
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
 import { cn } from '@/shared/lib/utils'
-import Header from '@/views/note/note-detail/components/header'
 import PickDrawer from '@/features/quiz/components/pick-drawer'
 import { QuizListProvider } from '@/features/note/contexts/quiz-list-context'
 import NewQuizDrawer from '@/features/quiz/components/new-quiz-drawer'

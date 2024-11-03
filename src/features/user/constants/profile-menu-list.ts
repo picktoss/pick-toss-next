@@ -11,9 +11,9 @@ export const PROFILE_MENU_LIST = {
       href: 'profile/notification',
     },
     {
-      key: 'todayQuiz',
+      key: 'todayQuizSetting',
       label: '오늘의 퀴즈 관리',
-      href: 'profile/today-quiz',
+      href: 'profile/today-quiz-setting',
     },
   ],
   star: [
