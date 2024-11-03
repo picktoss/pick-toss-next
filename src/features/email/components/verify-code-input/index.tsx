@@ -3,11 +3,13 @@
 import { Button } from '@/shared/components/ui/button'
 import { Input } from '@/shared/components/ui/input'
 import React, { useEffect, useRef } from 'react'
-import { useEmailVerification } from '../../context/email-verification-context'
 
-const VerifyCodeInput = () => {
+interface Props {
+  setActiveSaveButton: (value: boolean) => void
+}
+
+const VerifyCodeInput = ({ setActiveSaveButton }: Props) => {
   const codeInputRef = useRef<HTMLInputElement>(null)
-  const { setActiveSaveButton } = useEmailVerification()
 
   useEffect(() => {
     codeInputRef.current?.focus()

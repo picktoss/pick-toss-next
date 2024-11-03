@@ -1,7 +1,7 @@
+import Header from '../ui/header'
 import TitleInput from '@/features/note/components/title-input'
 import { CreateNoteProvider } from '@/features/note/contexts/create-note-context'
 import CreateQuizButton from '@/features/note/components/create-quiz-button'
-import Header from '@/features/note/components/header'
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
 

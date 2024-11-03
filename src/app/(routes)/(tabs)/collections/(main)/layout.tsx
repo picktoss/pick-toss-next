@@ -9,10 +9,10 @@ interface LayoutProps extends PropsWithChildren {
 
 const Layout: FunctionComponent<LayoutProps> = ({ header, children }) => {
   return (
-    <div className="flex flex-col">
+    <>
       {header}
       {children}
-    </div>
+    </>
   )
 }
 

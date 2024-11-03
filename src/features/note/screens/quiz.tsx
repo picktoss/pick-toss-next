@@ -8,7 +8,7 @@ import { useQuizListContext } from '../contexts/quiz-list-context'
 import { quizTypeFilters } from '../constants/quiz-type'
 import QuizList from '@/features/quiz/components/quiz-list'
 import QuizCard from '@/features/quiz/components/quiz-card'
-import { quizzes } from '@/app/(routes)/(tabs)/collections/[id]/page'
+import { quizzes } from '@/features/quiz/config'
 
 const Quiz = () => {
   const [quizType, setQuizType] = useState('ALL')

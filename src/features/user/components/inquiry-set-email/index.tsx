@@ -4,7 +4,7 @@ import { Input } from '@/shared/components/ui/input'
 import Text from '@/shared/components/ui/text'
 import { useInquiry } from '../../contexts/inquiry-context'
 
-const SetEmail = () => {
+const InquirySetEmail = () => {
   const { email, setEmail } = useInquiry()
 
   return (
@@ -31,4 +31,4 @@ const SetEmail = () => {
   )
 }
 
-export default SetEmail
+export default InquirySetEmail

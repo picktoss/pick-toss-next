@@ -1,11 +1,6 @@
-'use client'
-
 import Text from '@/shared/components/ui/text'
-import { useEmailVerification } from '../../context/email-verification-context'
 
-const VerifyStateHeader = () => {
-  const { isAllowed } = useEmailVerification()
-
+const VerifyStateHeader = ({ isAllowed }: { isAllowed: null | boolean }) => {
   return isAllowed ? (
     <Text typography="subtitle1-bold" className="mt-[8px]">
       이메일 주소로 전송된 <br />

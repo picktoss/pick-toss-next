@@ -7,7 +7,7 @@ import { Button } from '@/shared/components/ui/button'
 import { useInquiry } from '../../contexts/inquiry-context'
 import TermsAndConditionsDrawer from '../terms-and-conditions-drawer'
 
-const Confirm = () => {
+const InquiryConfirm = () => {
   const { isAgreeChecked, setIsAgreeChecked } = useInquiry()
 
   return (
@@ -42,4 +42,4 @@ const Confirm = () => {
   )
 }
 
-export default Confirm
+export default InquiryConfirm

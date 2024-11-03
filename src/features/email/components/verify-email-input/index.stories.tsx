@@ -1,69 +1,49 @@
 import { Meta, StoryObj } from '@storybook/react'
-import { useEffect } from 'react'
-import {
-  EmailVerificationProvider,
-  useEmailVerification,
-} from '../../context/email-verification-context'
+import { useEffect, useState } from 'react'
 import VerifyEmailInput from '.'
 
 const meta: Meta<typeof VerifyEmailInput> = {
   title: 'email/VerifyEmailInput',
   component: VerifyEmailInput,
   tags: ['autodocs'],
-  decorators: [
-    (Story) => (
-      <div className="mx-auto max-w-mobile p-4">
-        <EmailVerificationProvider>
-          <Story />
-        </EmailVerificationProvider>
-      </div>
-    ),
-  ],
   argTypes: {
     isAllowed: {
       control: 'boolean',
-      description: '서버에서 이메일 허용 여부',
+      description: '이메일 사용 가능 여부',
     },
-    isValid: {
-      control: 'boolean',
-      description: '이메일 형식 유효성 여부',
-    },
+    setIsAllowed: { action: 'setIsAllowed' },
   },
-} satisfies Meta<typeof VerifyEmailInput>
+  decorators: [
+    (Story) => (
+      <div className="mx-auto max-w-mobile p-4">
+        <Story />
+      </div>
+    ),
+  ],
+}
 
 export default meta
-type Story = StoryObj<typeof VerifyEmailInputWithArgs>
+type Story = StoryObj<typeof VerifyEmailInput>
 
+// 기본 상태 스토리
 export const Default: Story = {
-  args: {
-    isAllowed: true,
-    isValid: true,
+  render: (args) => {
+    const [isAllowed, setIsAllowed] = useState<null | boolean>(null)
+
+    useEffect(() => {
+      setIsAllowed(args.isAllowed)
+    }, [args.isAllowed])
+
+    return <VerifyEmailInput isAllowed={isAllowed} setIsAllowed={setIsAllowed} />
   },
-  render: (args) => <VerifyEmailInputWithArgs {...args} />,
 }
 
-export const InvalidEmail: Story = {
+// 이메일이 사용 가능해 체크 아이콘이 표시된 상태
+export const EmailConfirmed: Story = {
   args: {
     isAllowed: true,
-    isValid: false,
   },
-  render: (args) => <VerifyEmailInputWithArgs {...args} />,
-}
-
-const VerifyEmailInputWithArgs = ({
-  isAllowed,
-  isValid,
-}: {
-  isAllowed: boolean
-  isValid: boolean
-}) => {
-  const { setIsAllowed, setIsValid, setEmail } = useEmailVerification()
-
-  useEffect(() => {
-    setIsAllowed(isAllowed)
-    setIsValid(isValid)
-    setEmail('') // 초기 이메일 값 설정
-  }, [isAllowed, isValid, setIsAllowed, setIsValid, setEmail])
-
-  return <VerifyEmailInput />
+  render: (args) => {
+    return <VerifyEmailInput {...args} />
+  },
 }

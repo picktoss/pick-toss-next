@@ -1,5 +1,5 @@
+import Header from './ui/header'
 import Icon from '@/shared/components/custom/icon'
-import Header from '@/views/note/modify-note/components/header'
 import { EditNoteProvider } from '@/features/note/contexts/edit-note-context'
 import Text from '@/shared/components/ui/text'
 import TitleInput from '@/features/editor/components/title-input'
