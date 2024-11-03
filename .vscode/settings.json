@@ -3,8 +3,4 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "always"
   },
-  "cSpell.words": [
-    "lucide",
-    "Swipeable"
-  ]
 }
