@@ -1,10 +1,10 @@
 import { Meta, StoryObj } from '@storybook/react'
-import { TodayQuizSettingProvider } from './context/today-quiz-setting-context'
-import TodayQuizSetting from '.'
+import TodayQuizSettingPage from './page'
+import { TodayQuizSettingProvider } from '@/features/quiz/today-quiz-setting/context/today-quiz-setting-context'
 
-const meta: Meta<typeof TodayQuizSetting> = {
+const meta: Meta<typeof TodayQuizSettingPage> = {
   title: 'Page/TodayQuizSetting',
-  component: TodayQuizSetting,
+  component: TodayQuizSettingPage,
   parameters: {
     nextjs: { appDirectory: true },
   },
@@ -21,8 +21,8 @@ const meta: Meta<typeof TodayQuizSetting> = {
 
 export default meta
 
-type Story = StoryObj<typeof TodayQuizSetting>
+type Story = StoryObj<typeof TodayQuizSettingPage>
 
 export const Default: Story = {
-  render: () => <TodayQuizSetting />,
+  render: () => <TodayQuizSettingPage />,
 }

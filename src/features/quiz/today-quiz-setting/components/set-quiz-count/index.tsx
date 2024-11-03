@@ -25,13 +25,10 @@ const SetQuizCount = () => {
         onValueChange={(value) => setQuizCount(value[0])}
       />
 
-      <Text
-        typography="text2-medium"
-        className="mt-[10px] flex items-center justify-between text-text-sub"
-      >
-        <span>5 문제</span>
-        <span>20 문제</span>
-      </Text>
+      <div className="mt-[10px] flex items-center justify-between text-text2-medium text-text-sub">
+        <Text>5 문제</Text>
+        <Text>20 문제</Text>
+      </div>
     </div>
   )
 }
