@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import VerifyEmailInput from '.'
 
 const meta: Meta<typeof VerifyEmailInput> = {
@@ -29,14 +29,21 @@ type Story = StoryObj<typeof VerifyEmailInput>
 export const Default: Story = {
   render: (args) => {
     const [isAllowed, setIsAllowed] = useState<null | boolean>(null)
-    return <VerifyEmailInput {...args} isAllowed={isAllowed} setIsAllowed={setIsAllowed} />
+
+    useEffect(() => {
+      setIsAllowed(args.isAllowed)
+    }, [args.isAllowed])
+
+    return <VerifyEmailInput isAllowed={isAllowed} setIsAllowed={setIsAllowed} />
   },
 }
 
 // 이메일이 사용 가능해 체크 아이콘이 표시된 상태
 export const EmailConfirmed: Story = {
+  args: {
+    isAllowed: true,
+  },
   render: (args) => {
-    const [isAllowed, setIsAllowed] = useState<null | boolean>(true)
-    return <VerifyEmailInput {...args} isAllowed={isAllowed} setIsAllowed={setIsAllowed} />
+    return <VerifyEmailInput {...args} />
   },
 }

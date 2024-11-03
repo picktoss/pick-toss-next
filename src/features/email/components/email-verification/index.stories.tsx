@@ -1,5 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react'
 import EmailVerification from '.'
+import { useEffect, useState } from 'react'
+import { userEvent, within } from '@storybook/test'
 
 const meta: Meta<typeof EmailVerification> = {
   title: 'email/EmailVerification',
@@ -26,8 +28,25 @@ type Story = StoryObj<typeof EmailVerification>
 
 // 기본 상태
 export const Default: Story = {
-  args: {
-    isAllowed: false,
+  render: (args) => {
+    const [isAllowed, setIsAllowed] = useState<null | boolean>(null)
+
+    useEffect(() => {
+      setIsAllowed(args.isAllowed)
+    }, [args.isAllowed])
+
+    return <EmailVerification isAllowed={isAllowed} setIsAllowed={setIsAllowed} />
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+
+    const emailInput = canvas.getByPlaceholderText('이메일 주소를 입력해주세요')
+    await userEvent.type(emailInput, 'example-email@email.com', {
+      delay: 70,
+    })
+
+    const confirmButton = canvas.getByRole('button', { name: '확인' })
+    await userEvent.click(confirmButton)
   },
 }
 
@@ -35,5 +54,8 @@ export const Default: Story = {
 export const EmailAllowed: Story = {
   args: {
     isAllowed: true,
+  },
+  render: (args) => {
+    return <EmailVerification {...args} />
   },
 }
