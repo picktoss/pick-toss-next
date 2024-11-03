@@ -1,55 +1,38 @@
 import { Meta, StoryObj } from '@storybook/react'
-import { useEffect } from 'react'
-import {
-  EmailVerificationProvider,
-  useEmailVerification,
-} from '../../context/email-verification-context'
 import VerifyStateHeader from '.'
 
 const meta: Meta<typeof VerifyStateHeader> = {
   title: 'email/VerifyStateHeader',
   component: VerifyStateHeader,
   tags: ['autodocs'],
-  decorators: [
-    (Story) => (
-      <div className="mx-auto max-w-mobile">
-        <EmailVerificationProvider>
-          <Story />
-        </EmailVerificationProvider>
-      </div>
-    ),
-  ],
   argTypes: {
     isAllowed: {
       control: 'boolean',
-      description: '이메일 인증 허용 여부',
+      description: '이메일 인증 상태를 나타냅니다.',
     },
   },
-} satisfies Meta<typeof VerifyStateHeader>
-
-export default meta
-type Story = StoryObj<typeof VerifyStateHeaderWithArgs>
-
-export const Allowed: Story = {
-  args: {
-    isAllowed: true,
-  },
-  render: (args: { isAllowed: boolean }) => <VerifyStateHeaderWithArgs {...args} />,
+  decorators: [
+    (Story) => (
+      <div className="mx-auto max-w-mobile p-4">
+        <Story />
+      </div>
+    ),
+  ],
 }
 
-export const NotAllowed: Story = {
+export default meta
+type Story = StoryObj<typeof VerifyStateHeader>
+
+// 기본 상태: 이메일 인증이 허용되지 않은 상태
+export const Default: Story = {
   args: {
     isAllowed: false,
   },
-  render: (args: { isAllowed: boolean }) => <VerifyStateHeaderWithArgs {...args} />,
 }
 
-const VerifyStateHeaderWithArgs = ({ isAllowed }: { isAllowed: boolean }) => {
-  const { setIsAllowed } = useEmailVerification()
-
-  useEffect(() => {
-    setIsAllowed(isAllowed)
-  }, [isAllowed, setIsAllowed])
-
-  return <VerifyStateHeader />
+// 인증이 허용된 상태: 인증번호 입력 안내 메시지 표시
+export const AllowedState: Story = {
+  args: {
+    isAllowed: true,
+  },
 }

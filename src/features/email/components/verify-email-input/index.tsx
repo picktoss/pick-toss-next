@@ -1,24 +1,22 @@
 'use client'
 
 import { validateEmail } from '@/shared/utils/email'
-import { useEmailVerification } from '../../context/email-verification-context'
 import { Input } from '@/shared/components/ui/input'
 import { Button } from '@/shared/components/ui/button'
 import Text from '@/shared/components/ui/text'
 import { useEffect, useState } from 'react'
 import { DOMAIN_SUGGESTIONS } from '../../constants/domain'
+import Icon from '@/shared/components/custom/icon'
 
-const VerifyEmailInput = () => {
-  const {
-    isEmailFocused,
-    setIsEmailFocused,
-    email,
-    setEmail,
-    isValid, // isValid - 이메일 양식 체크
-    setIsValid,
-    isAllowed, // isAllowed - 서버에 이메일을 보낸 후의 응답
-  } = useEmailVerification()
+interface Props {
+  isAllowed: null | boolean
+  setIsAllowed: (value: boolean) => void
+}
 
+const VerifyEmailInput = ({ isAllowed, setIsAllowed }: Props) => {
+  const [isValid, setIsValid] = useState(false)
+  const [email, setEmail] = useState('')
+  const [isEmailFocused, setIsEmailFocused] = useState(false)
   const [suggestions, setSuggestions] = useState<string[]>([])
 
   // 유저 정보에서 등록된 이메일이 있다면 input value로 설정
@@ -52,6 +50,28 @@ const VerifyEmailInput = () => {
     }
   }
 
+  // todo: 이메일 확인 버튼 눌렀을 때 실행될 로직 구현
+  const handleClickConfirm = () => {
+    setIsAllowed(true)
+  }
+
+  const renderRightComponent = (isAllowed: null | boolean) => {
+    if (isAllowed) {
+      return <Icon name="check" className="size-[16px] text-icon-tertiary" />
+    } else {
+      return (
+        <Button
+          variant={'tinySquare'}
+          colors={'outlined'}
+          disabled={!isValid}
+          onClick={handleClickConfirm}
+        >
+          확인
+        </Button>
+      )
+    }
+  }
+
   const renderBottomText = (): undefined | string | { text: string; type: 'info' } => {
     if (isAllowed === false) {
       // Input에 hasError를 넘기고 사유에 따라
@@ -64,8 +84,6 @@ const VerifyEmailInput = () => {
     return undefined
   }
 
-  // todo: 이메일 확인 버튼 눌렀을 때 실행될 로직 구현
-
   return (
     <>
       <Input
@@ -74,11 +92,7 @@ const VerifyEmailInput = () => {
         label="이메일"
         placeholder="이메일 주소를 입력해주세요"
         className="mt-[36px]"
-        right={
-          <Button variant={'tinySquare'} colors={'outlined'} disabled={!isValid}>
-            확인
-          </Button>
-        }
+        right={renderRightComponent(isAllowed)}
         value={email}
         onChange={handleEmailChange}
         onFocus={() => setIsEmailFocused(true)}

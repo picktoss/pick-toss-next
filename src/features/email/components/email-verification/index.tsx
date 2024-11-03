@@ -1,18 +1,23 @@
 'use client'
 
 import { Button } from '@/shared/components/ui/button'
-import { useEmailVerification } from '../../context/email-verification-context'
 import VerifyCodeInput from '../verify-code-input'
 import VerifyEmailInput from '../verify-email-input'
+import { useState } from 'react'
 
-const EmailVerification = () => {
-  const { isAllowed, activeSaveButton } = useEmailVerification()
+interface Props {
+  isAllowed: null | boolean
+  setIsAllowed: (value: boolean) => void
+}
+
+const EmailVerification = ({ isAllowed, setIsAllowed }: Props) => {
+  const [activeSaveButton, setActiveSaveButton] = useState(false)
 
   return (
     <>
-      {isAllowed && <VerifyCodeInput />}
+      {isAllowed && <VerifyCodeInput setActiveSaveButton={setActiveSaveButton} />}
 
-      <VerifyEmailInput />
+      <VerifyEmailInput isAllowed={isAllowed} setIsAllowed={setIsAllowed} />
 
       {isAllowed && (
         <Button variant={'largeRound'} className="mt-[48px] w-full" disabled={!activeSaveButton}>
