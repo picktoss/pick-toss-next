@@ -12,7 +12,7 @@ import { useQuizNoteContext } from '../contexts/quiz-note-context'
 import QuizNoteDialog from '@/features/quiz/components/quiz-note-dialog'
 import SetFolderNameDialog from './set-folder-name-dialog'
 
-const MenuDotsBtn = () => {
+const FolderMenuDots = () => {
   const { setIsSelectMode } = useQuizNoteContext()
 
   return (
@@ -86,4 +86,4 @@ const MenuDotsBtn = () => {
   )
 }
 
-export default MenuDotsBtn
+export default FolderMenuDots

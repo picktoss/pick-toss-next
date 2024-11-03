@@ -1,8 +1,8 @@
 'use client'
 
-import DateContainer from '@/features/analysis/date-container'
-import ListItem from '@/features/analysis/list-item'
-import NoHistory from '@/features/analysis/no-history'
+import DateContainer from '@/features/star/date-container'
+import ListItem from '@/features/star/list-item'
+import NoHistory from '@/features/star/no-history'
 import { fakeData } from '@/features/user/mock/fake-data'
 import GoBackButton from '@/shared/components/custom/go-back-button'
 import { Button } from '@/shared/components/ui/button'

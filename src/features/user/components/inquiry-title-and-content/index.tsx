@@ -6,7 +6,7 @@ import { useInquiry } from '../../contexts/inquiry-context'
 // import Image from 'next/image'
 // import sample from '@/../../public/images/og-800x400.png'
 
-const TitleAndContent = () => {
+const InquiryTitleAndContent = () => {
   const { title, setTitle, content, setContent } = useInquiry()
 
   return (
@@ -60,4 +60,4 @@ const TitleAndContent = () => {
   )
 }
 
-export default TitleAndContent
+export default InquiryTitleAndContent

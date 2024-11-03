@@ -1,7 +1,7 @@
 'use client'
 
+import FolderSelectDrawer from '@/features/note/components/folder-select-drawer'
 import Icon from '@/shared/components/custom/icon'
-import FolderSelectDrawer from './folder-select-drawer'
 import Text from '@/shared/components/ui/text'
 import { useRouter } from 'next/navigation'
 
