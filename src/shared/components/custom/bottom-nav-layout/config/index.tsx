@@ -1,4 +1,4 @@
-import Icon from '../../custom/icon'
+import Icon from '../../icon'
 
 export const navigationItems = [
   {
