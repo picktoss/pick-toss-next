@@ -1,8 +1,8 @@
 import Icon from '@/shared/components/custom/icon'
 
 interface Props {
-  selectedCategoryId: number | null
-  selectCategoryId: (categoryId?: number) => void
+  selectedCategoryId: string | null
+  selectCategoryId: (categoryId?: string) => void
 }
 
 const CategorySelect = ({}: Props) => {
