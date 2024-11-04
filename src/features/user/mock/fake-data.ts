@@ -13,6 +13,8 @@ interface StarHistoryDateItem {
   list: StarHistoryListItem[]
 }
 
+// export const fakeData: StarHistoryDateItem[] = []
+
 export const fakeData: StarHistoryDateItem[] = [
   {
     date: '2024.10.15',

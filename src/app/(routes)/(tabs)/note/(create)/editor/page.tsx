@@ -1,4 +1,3 @@
-import Header from '../ui/header'
 import dynamic from 'next/dynamic'
 import CreateQuizButton from '@/features/note/components/create-quiz-button'
 import Icon from '@/shared/components/custom/icon'
@@ -15,31 +14,27 @@ const VisualEditor = dynamic(() => import('@/features/editor/components/visual-e
 
 const CreateWithEditorPage = () => {
   return (
-    <>
-      <Header />
+    <CreateNoteProvider>
+      <div className="w-full max-w-mobile">
+        <TitleInput />
 
-      <CreateNoteProvider>
-        <div className="w-full max-w-mobile">
-          <TitleInput />
-
-          <div className="sticky top-[54px] z-10 flex w-full items-center justify-between bg-background-base-02 px-[16px] py-[11px]">
-            <div className="flex items-center">
-              <Icon name="info" className="mr-[4px] size-[16px]" />
-              <Text as="span" typography="text2-medium" className="text-text-caption">
-                최소 500자, 최대 15000자 입력 가능
-              </Text>
-            </div>
-            <Text typography="text1-medium" className="text-text-secondary">
-              <span className="text-text-caption">{0}</span> / 15000
+        <div className="sticky top-[54px] z-10 flex w-full items-center justify-between bg-background-base-02 px-[16px] py-[11px]">
+          <div className="flex items-center">
+            <Icon name="info" className="mr-[4px] size-[16px]" />
+            <Text as="span" typography="text2-medium" className="text-text-caption">
+              최소 500자, 최대 15000자 입력 가능
             </Text>
           </div>
-
-          <VisualEditor />
-
-          <CreateQuizButton />
+          <Text typography="text1-medium" className="text-text-secondary">
+            <span className="text-text-caption">{0}</span> / 15000
+          </Text>
         </div>
-      </CreateNoteProvider>
-    </>
+
+        <VisualEditor />
+
+        <CreateQuizButton />
+      </div>
+    </CreateNoteProvider>
   )
 }
 

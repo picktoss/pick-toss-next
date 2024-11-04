@@ -9,11 +9,11 @@ const meta: Meta<typeof NoHistory> = {
     nextjs: { appDirectory: true },
   },
   argTypes: {
-    tab: {
-      control: {
-        type: 'select',
-        options: ['all', 'payment', 'expend', 'reward'],
-      },
+    activeTab: {
+      control: 'select',
+      options: ['all', 'payment', 'expend', 'reward'],
+      description: '활성화된 탭을 설정합니다.',
+      defaultValue: 'all',
     },
   },
 } satisfies Meta<typeof NoHistory>
@@ -21,7 +21,5 @@ const meta: Meta<typeof NoHistory> = {
 export default meta
 
 export const Default: StoryObj<typeof NoHistory> = {
-  args: {
-    tab: 'all',
-  },
+  render: (args) => <NoHistory {...args} />,
 }

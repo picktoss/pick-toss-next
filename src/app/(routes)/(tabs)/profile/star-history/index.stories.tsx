@@ -1,5 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react'
 import StarHistoryPage from './page'
+import Layout from './layout'
 
 const meta: Meta<typeof StarHistoryPage> = {
   title: 'Page/StarHistory',
@@ -18,4 +19,10 @@ const meta: Meta<typeof StarHistoryPage> = {
 
 export default meta
 
-export const Default: StoryObj<typeof StarHistoryPage> = {}
+export const Default: StoryObj<typeof StarHistoryPage> = {
+  render: () => (
+    <Layout>
+      <StarHistoryPage />
+    </Layout>
+  ),
+}

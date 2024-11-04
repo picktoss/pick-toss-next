@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react'
 import TodayQuizSettingPage from './page'
 import { TodayQuizSettingProvider } from '@/features/quiz/today-quiz-setting/context/today-quiz-setting-context'
+import Layout from './layout'
 
 const meta: Meta<typeof TodayQuizSettingPage> = {
   title: 'Page/TodayQuizSetting',
@@ -24,5 +25,9 @@ export default meta
 type Story = StoryObj<typeof TodayQuizSettingPage>
 
 export const Default: Story = {
-  render: () => <TodayQuizSettingPage />,
+  render: () => (
+    <Layout>
+      <TodayQuizSettingPage />
+    </Layout>
+  ),
 }

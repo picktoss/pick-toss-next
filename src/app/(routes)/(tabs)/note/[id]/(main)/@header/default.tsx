@@ -17,7 +17,7 @@ import { useParams, useRouter } from 'next/navigation'
 // Header 컴포넌트
 const Header = () => {
   const router = useRouter()
-  const { noteId } = useParams()
+  const { id } = useParams()
 
   const handleClickDownload = (menuItemKey: string) => {
     if (menuItemKey === 'download') {
@@ -48,7 +48,7 @@ const Header = () => {
                 130
               </Text>
 
-              <Link href={`${noteId[0]}/modify`} className="ml-[14px]">
+              <Link href={`${id[0]}/modify`} className="ml-[14px]">
                 <Icon name="write-line" className="size-[24px]" />
               </Link>
               {/* 노션일 경우 아래 아이콘 렌더링 */}

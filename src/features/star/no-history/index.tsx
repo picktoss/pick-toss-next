@@ -1,16 +1,22 @@
 import Text from '@/shared/components/ui/text'
 import Image from 'next/image'
 import Link from 'next/link'
+import NO_STAR_HISTORY_IMG from '@/../../public/assets/no-star-history.png'
+import { StarHistoryTab } from '../history-tab'
 
-const NoHistory = ({ tab }: { tab: 'all' | 'payment' | 'expend' | 'reward' }) => {
+interface Props {
+  activeTab: StarHistoryTab
+}
+
+const NoHistory = ({ activeTab }: Props) => {
   return (
     <div className="flex-center size-full flex-col">
-      <Image src="/assets-no-star-history.png" alt="" className="mb-[24px] size-[96px]" />
+      <Image src={NO_STAR_HISTORY_IMG} alt="" className="mb-[24px] size-[96px]" />
       <Text typography="subtitle1-bold" className="mb-[4px]">
-        {tab === 'all' && ''}
-        {tab === 'payment' && '결제 '}
-        {tab === 'expend' && '사용 '}
-        {tab === 'reward' && '적립 '}
+        {activeTab === 'all' && ''}
+        {activeTab === 'payment' && '결제 '}
+        {activeTab === 'expend' && '사용 '}
+        {activeTab === 'reward' && '적립 '}
         내역이 없습니다
       </Text>
       <Text typography="text1-medium" className="mb-[32px] text-text-sub">
