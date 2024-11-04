@@ -21,7 +21,7 @@ const TodayQuizSettingPage = () => {
 
         <SetNote />
 
-        <FixedBottom className="bottom-[88px] right-1/2 flex translate-x-1/2 gap-[6px] pb-[36px]">
+        <FixedBottom className="flex gap-[6px]">
           <Button variant={'largeRound'} colors={'tertiary'} className="w-[35%]">
             초기화
           </Button>
