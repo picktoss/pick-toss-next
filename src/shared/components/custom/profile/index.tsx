@@ -1,11 +1,11 @@
 'use client'
 
 import { ReactNode, useCallback, useState } from 'react'
-import { Button } from '../ui/button'
-import { Dialog, DialogContent, DialogTrigger } from '../ui/dialog'
 import { cn } from '@/shared/lib/utils'
 import { NavItemsId, profileNav } from './config'
-import { Switch } from '../ui/switch'
+import { Dialog, DialogContent, DialogTrigger } from '../../ui/dialog'
+import { Button } from '../../ui/button'
+import { Switch } from '../../ui/switch'
 
 interface ProfileProps {
   trigger: ReactNode
