@@ -42,7 +42,7 @@ const SelectQuizFromCollection = () => {
   const selectedQuizCount = selectedQuizIds.length
 
   return (
-    <div className="mt-[24px] pb-[100px]">
+    <div className="mt-[24px] pb-[120px]">
       <div className="sticky top-[54px] z-20 flex h-[44px] items-center justify-between bg-white">
         <CategorySelect
           selectedCategoryId={selectedCategoryId}
