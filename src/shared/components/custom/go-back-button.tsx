@@ -5,11 +5,11 @@ import { useRouter } from 'next/navigation'
 import React from 'react'
 import Icon from './icon'
 
-const GoBackButton = ({
-  className,
-  onClick,
-  ...props
-}: React.ButtonHTMLAttributes<HTMLButtonElement>) => {
+interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  icon?: 'arrow-left' | 'cancel'
+}
+
+const GoBackButton = ({ className, onClick, icon = 'arrow-left', ...props }: Props) => {
   const router = useRouter()
 
   return (
@@ -18,7 +18,7 @@ const GoBackButton = ({
       onClick={onClick ? onClick : () => router.back()}
       {...props}
     >
-      <Icon name="arrow-left" className="size-[24px]" />
+      <Icon name={icon === 'arrow-left' ? 'arrow-left' : 'cancel'} className="size-[24px]" />
     </button>
   )
 }
