@@ -2,8 +2,8 @@ import SetNote from '@/features/quiz/today-quiz-setting/components/set-note'
 import SetQuizCount from '@/features/quiz/today-quiz-setting/components/set-quiz-count'
 import { TodayQuizSettingProvider } from '@/features/quiz/today-quiz-setting/context/today-quiz-setting-context'
 import GoBackButton from '@/shared/components/custom/go-back-button'
-import TwoRatioButton from '@/shared/components/custom/two-ratio-button'
 import Text from '@/shared/components/ui/text'
+import FixedBottomButtons from '@/features/quiz/today-quiz-setting/components/fixed-bottom-buttons'
 
 const TodayQuizSettingPage = () => {
   return (
@@ -20,10 +20,7 @@ const TodayQuizSettingPage = () => {
 
         <SetNote />
 
-        <TwoRatioButton
-          buttonA={{ label: '초기화', className: 'w-[35%]' }}
-          buttonB={{ label: '저장하기', className: 'w-[65%]' }}
-        />
+        <FixedBottomButtons />
       </main>
     </TodayQuizSettingProvider>
   )
