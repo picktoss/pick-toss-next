@@ -3,7 +3,6 @@ import { CreateNoteProvider } from './context/create-note-context'
 import dynamic from 'next/dynamic'
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
-import Header from '../note/components/header'
 import Loading from '@/shared/components/custom/loading'
 import CreateQuizButton from '../note/components/create-quiz-button'
 
@@ -16,7 +15,7 @@ const VisualEditor = dynamic(() => import('./components/visual-editor'), {
 const CreateWithEditor = () => {
   return (
     <>
-      <Header />
+      {/* <Header /> */}
 
       <CreateNoteProvider>
         <div className="w-full max-w-mobile">
