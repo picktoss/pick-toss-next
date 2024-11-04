@@ -1,19 +1,7 @@
-'use client'
-
-import EmailVerification from '@/features/email/components/email-verification'
-import VerifyStateHeader from '@/features/email/components/verify-state-header'
-import { useState } from 'react'
+import Verification from '@/features/email/screen/verification'
 
 const EmailPage = () => {
-  const [isAllowed, setIsAllowed] = useState<null | boolean>(null)
-
-  return (
-    <>
-      <VerifyStateHeader isAllowed={isAllowed} />
-
-      <EmailVerification isAllowed={isAllowed} setIsAllowed={setIsAllowed} />
-    </>
-  )
+  return <Verification />
 }
 
 export default EmailPage

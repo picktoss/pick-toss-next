@@ -11,18 +11,14 @@ import Icon from '@/shared/components/custom/icon'
 interface Props {
   isAllowed: null | boolean
   setIsAllowed: (value: boolean) => void
+  prevEmail?: string
 }
 
-const VerifyEmailInput = ({ isAllowed, setIsAllowed }: Props) => {
+const VerifyEmailInput = ({ isAllowed, setIsAllowed, prevEmail }: Props) => {
   const [isValid, setIsValid] = useState(false)
-  const [email, setEmail] = useState('')
+  const [email, setEmail] = useState(prevEmail ?? '')
   const [isEmailFocused, setIsEmailFocused] = useState(false)
   const [suggestions, setSuggestions] = useState<string[]>([])
-
-  // 유저 정보에서 등록된 이메일이 있다면 input value로 설정
-  // useEffect(() => {
-  //   setEmail('picktos@gmail.com')
-  // }, [])
 
   useEffect(() => {
     setIsValid(validateEmail(email))

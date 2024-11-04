@@ -17,7 +17,11 @@ const EmailVerification = ({ isAllowed, setIsAllowed }: Props) => {
     <>
       {isAllowed && <VerifyCodeInput setActiveSaveButton={setActiveSaveButton} />}
 
-      <VerifyEmailInput isAllowed={isAllowed} setIsAllowed={setIsAllowed} />
+      <VerifyEmailInput
+        isAllowed={isAllowed}
+        setIsAllowed={setIsAllowed}
+        // prevEmail="picktoss@example.com" // 기존 등록된 이메일이 있을 경우
+      />
 
       {isAllowed && (
         <Button variant={'largeRound'} className="mt-[48px] w-full" disabled={!activeSaveButton}>
