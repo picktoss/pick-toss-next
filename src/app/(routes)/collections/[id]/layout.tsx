@@ -1,6 +1,6 @@
 import { FunctionComponent, PropsWithChildren } from 'react'
 import type { Metadata } from 'next'
-import BottomNavLayout from '@/shared/components/bottom-nav-layout'
+import BottomNavLayout from '@/shared/components/custom/bottom-nav-layout'
 
 export const metadata: Metadata = {}
 
