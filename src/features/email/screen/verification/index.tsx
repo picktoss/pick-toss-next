@@ -1,8 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import EmailVerification from '../../components/email-verification'
-import VerifyStateHeader from '../../components/verify-state-header'
+import EmailVerification from '../../components/verification/email-verification'
+import VerifyStateHeader from '../../components/verification/state-header'
 
 const Verification = () => {
   const [isAllowed, setIsAllowed] = useState<null | boolean>(null)

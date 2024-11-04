@@ -1,5 +1,5 @@
-import SetNote from '@/features/quiz/today-quiz-setting/components/set-note'
-import SetQuizCount from '@/features/quiz/today-quiz-setting/components/set-quiz-count'
+import SetNote from '@/features/quiz/components/today-quiz-setting/set-note'
+import SetQuizCount from '@/features/quiz/components/today-quiz-setting/set-quiz-count'
 import FixedBottom from '@/shared/components/custom/fixed-bottom'
 import { Button } from '@/shared/components/ui/button'
 

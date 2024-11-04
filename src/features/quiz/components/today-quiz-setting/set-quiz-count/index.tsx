@@ -2,7 +2,7 @@
 
 import { Slider } from '@/shared/components/ui/slider'
 import Text from '@/shared/components/ui/text'
-import { useTodayQuizSetting } from '../../context/today-quiz-setting-context'
+import { useTodayQuizSetting } from '../../../context/today-quiz-setting-context'
 
 const SetQuizCount = () => {
   const { quizCount, setQuizCount } = useTodayQuizSetting()

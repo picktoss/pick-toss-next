@@ -1,7 +1,7 @@
-import InquiryConfirm from '@/features/user/components/inquiry-confirm'
-import InquiryType from '@/features/user/components/inquiry-type'
-import InquirySetEmail from '@/features/user/components/inquiry-set-email'
-import InquiryTitleAndContent from '@/features/user/components/inquiry-title-and-content'
+import InquiryConfirm from '@/features/user/components/inquiry/confirm'
+import InquiryType from '@/features/user/components/inquiry/type'
+import InquirySetEmail from '@/features/user/components/inquiry/set-email'
+import InquiryTitleAndContent from '@/features/user/components/inquiry/title-and-content'
 
 const InquiryPage = () => {
   return (

@@ -1,4 +1,4 @@
-import DayCheck from '@/features/quiz/components/day-check'
+import DayCheck from '@/features/quiz/components/today-quiz-check/day-check'
 import Icon from '@/shared/components/custom/icon'
 import Tag from '@/shared/components/ui/tag'
 import Text from '@/shared/components/ui/text'

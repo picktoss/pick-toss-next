@@ -1,6 +1,6 @@
 import { FunctionComponent, PropsWithChildren } from 'react'
 import type { Metadata } from 'next'
-import { TodayQuizSettingProvider } from '@/features/quiz/today-quiz-setting/context/today-quiz-setting-context'
+import { TodayQuizSettingProvider } from '@/features/quiz/context/today-quiz-setting-context'
 import GoBackButton from '@/shared/components/custom/go-back-button'
 import Text from '@/shared/components/ui/text'
 

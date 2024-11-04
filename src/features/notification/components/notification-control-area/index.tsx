@@ -5,7 +5,7 @@ import Text from '@/shared/components/ui/text'
 import { cn } from '@/shared/lib/utils'
 import { useEffect, useState } from 'react'
 import SetEmailDialog from '../set-email-dialog'
-import { useNotification } from '../contexts/notification-context'
+import { useNotification } from '../../contexts/notification-context'
 
 const NotificationControlArea = ({ isKakaoUser }: { isKakaoUser: boolean }) => {
   const [isOpen, setIsOpen] = useState(false)

@@ -2,7 +2,7 @@
 
 import { Input } from '@/shared/components/ui/input'
 import Text from '@/shared/components/ui/text'
-import { useInquiry } from '../../contexts/inquiry-context'
+import { useInquiry } from '../../../contexts/inquiry-context'
 
 const InquirySetEmail = () => {
   const { email, setEmail } = useInquiry()

@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react'
 import {
   TodayQuizSettingProvider,
   useTodayQuizSetting,
-} from '../../context/today-quiz-setting-context'
+} from '../../../context/today-quiz-setting-context'
 import { useEffect } from 'react'
 import SetNote from '.'
 

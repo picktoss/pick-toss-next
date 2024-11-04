@@ -4,7 +4,7 @@ import SetQuizCount from '.'
 import {
   TodayQuizSettingProvider,
   useTodayQuizSetting,
-} from '../../context/today-quiz-setting-context'
+} from '../../../context/today-quiz-setting-context'
 
 const meta: Meta<typeof SetQuizCount> = {
   title: 'today-quiz-setting/SetQuizCount',

@@ -2,7 +2,7 @@
 
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
-import { useInquiry } from '../../contexts/inquiry-context'
+import { useInquiry } from '../../../contexts/inquiry-context'
 // import Image from 'next/image'
 // import sample from '@/../../public/images/og-800x400.png'
 

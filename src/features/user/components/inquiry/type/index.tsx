@@ -2,7 +2,7 @@
 
 import { Button } from '@/shared/components/ui/button'
 import Text from '@/shared/components/ui/text'
-import { Type, useInquiry } from '../../contexts/inquiry-context'
+import { Type, useInquiry } from '../../../contexts/inquiry-context'
 
 const inquiryTypes = [
   { key: 'error', label: '오류문의' },

@@ -4,8 +4,8 @@ import { Checkbox } from '@/shared/components/ui/checkbox'
 import Label from '@/shared/components/ui/label'
 import Text from '@/shared/components/ui/text'
 import { Button } from '@/shared/components/ui/button'
-import { useInquiry } from '../../contexts/inquiry-context'
-import TermsAndConditionsDrawer from '../terms-and-conditions-drawer'
+import { useInquiry } from '../../../contexts/inquiry-context'
+import TermsAndConditionsDrawer from '../../terms-and-conditions-drawer'
 
 const InquiryConfirm = () => {
   const { isAgreeChecked, setIsAgreeChecked } = useInquiry()

@@ -2,7 +2,7 @@
 import { Meta, StoryObj } from '@storybook/react'
 import SetEmailDialog from '.'
 import { useEffect, useState } from 'react'
-import { NotificationProvider } from '../contexts/notification-context'
+import { NotificationProvider } from '../../contexts/notification-context'
 
 const meta: Meta<typeof SetEmailDialog> = {
   title: 'notification/SetEmailDialog',

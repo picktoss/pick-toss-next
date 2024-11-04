@@ -3,7 +3,7 @@
 import { Checkbox } from '@/shared/components/ui/checkbox'
 import Text from '@/shared/components/ui/text'
 import { cn } from '@/shared/lib/utils'
-import { useTodayQuizSetting } from '../../context/today-quiz-setting-context'
+import { useTodayQuizSetting } from '../../../context/today-quiz-setting-context'
 
 const SetNote = () => {
   // todo: useCheckList로 노트 선택 로직 구현

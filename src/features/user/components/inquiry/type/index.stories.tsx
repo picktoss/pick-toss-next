@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react'
 import InquiryType from '.'
 import { useEffect } from 'react'
-import { InquiryProvider, Type, useInquiry } from '../../contexts/inquiry-context'
+import { InquiryProvider, Type, useInquiry } from '../../../contexts/inquiry-context'
 
 const meta: Meta<typeof InquiryType> = {
   title: 'inquiry/InquiryType',

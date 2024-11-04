@@ -1,5 +1,5 @@
 import { NotificationProvider } from '@/features/notification/contexts/notification-context'
-import NotificationControlArea from '@/features/notification/notification-control-area'
+import NotificationControlArea from '@/features/notification/components/notification-control-area'
 
 const NotificationPage = () => {
   const isKakaoUser = true

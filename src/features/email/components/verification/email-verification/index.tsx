@@ -1,8 +1,8 @@
 'use client'
 
 import { Button } from '@/shared/components/ui/button'
-import VerifyCodeInput from '../verify-code-input'
-import VerifyEmailInput from '../verify-email-input'
+import VerifyCodeInput from '../code-input'
+import VerifyEmailInput from '../email-input'
 import { useState } from 'react'
 
 interface Props {

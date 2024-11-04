@@ -3,7 +3,7 @@
 import { Button } from '@/shared/components/ui/button'
 import { Dialog, DialogContent, DialogTitle } from '@/shared/components/ui/dialog'
 import Text from '@/shared/components/ui/text'
-import { useNotification } from '../contexts/notification-context'
+import { useNotification } from '../../contexts/notification-context'
 import { useRouter } from 'next/navigation'
 
 interface Props {

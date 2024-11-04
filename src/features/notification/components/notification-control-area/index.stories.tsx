@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react'
 import NotificationControlArea from '.'
-import { NotificationProvider } from '../contexts/notification-context'
+import { NotificationProvider } from '../../contexts/notification-context'
 
 const meta: Meta<typeof NotificationControlArea> = {
   title: 'notification/NotificationControlArea',

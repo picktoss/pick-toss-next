@@ -3,10 +3,10 @@
 import { fakeData } from '@/features/user/mock/fake-data'
 import { useSearchParams } from 'next/navigation'
 import { useEffect } from 'react'
-import NoHistory from '../no-history'
-import DateContainer from '../date-container'
-import ListItem from '../list-item'
-import { StarHistoryTab } from '../history-tab'
+import NoHistory from '../components/history/no-history'
+import DateContainer from '../components/history/date-container'
+import ListItem from '../components/history/list-item'
+import { StarHistoryTab } from '../components/history/history-tab'
 
 const StarHistory = () => {
   const tab = useSearchParams().get('tab') ?? ''

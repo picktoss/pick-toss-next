@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react'
 import SetEmail from '.'
 import { useEffect } from 'react'
-import { InquiryProvider, useInquiry } from '../../contexts/inquiry-context'
+import { InquiryProvider, useInquiry } from '../../../contexts/inquiry-context'
 
 const meta: Meta<typeof SetEmail> = {
   title: 'inquiry/SetEmail',
