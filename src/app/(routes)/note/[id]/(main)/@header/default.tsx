@@ -12,12 +12,25 @@ import { cn } from '@/shared/lib/utils'
 import MoveNoteDrawer from '@/features/note/components/move-note-drawer'
 import QuizNoteDialog from '@/features/quiz/components/quiz-note-dialog'
 import Link from 'next/link'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams, useRouter, useSearchParams } from 'next/navigation'
+import { useEffect } from 'react'
 
 // Header 컴포넌트
 const Header = () => {
   const router = useRouter()
   const { id } = useParams()
+  const searchParams = useSearchParams()
+
+  // cancel 버튼은 depth가 확실하지 않아 여러 페이지에서 넘어올 수도 있다는 가정 하에 쿼리로 이전 path를 같이 보내도록 함
+  useEffect(() => {
+    const previousPath = searchParams.get('previousPath') || '/'
+    sessionStorage.setItem('prevPath', previousPath)
+  }, [])
+
+  const handleClickCancel = () => {
+    const previousPath = sessionStorage.getItem('prevPath')
+    previousPath ? router.replace(previousPath) : router.replace('/')
+  }
 
   const handleClickDownload = (menuItemKey: string) => {
     if (menuItemKey === 'download') {
@@ -35,7 +48,7 @@ const Header = () => {
         >
           <div className="flex size-full items-center justify-between">
             <div className="flex items-center">
-              <button onClick={() => router.back()}>
+              <button onClick={handleClickCancel}>
                 <Icon name="cancel" className="size-[24px]" />
               </button>
               {/* 스크롤을 내려 제목이 뷰포트에서 사라지면 생길 텍스트 */}

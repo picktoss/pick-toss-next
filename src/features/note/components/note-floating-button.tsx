@@ -5,7 +5,7 @@ import Text from '@/shared/components/ui/text'
 
 const NoteFloatingButton = () => {
   return (
-    <div className="flex-center fixed bottom-[130px] right-1/2 w-[266px] translate-x-1/2 rounded-full border border-border-default bg-background-toast px-[28px] py-[10px] text-button2 text-button-label-primary shadow-custom-shadow">
+    <div className="flex-center fixed bottom-[43px] right-1/2 w-[266px] translate-x-1/2 rounded-full border border-border-default bg-background-toast px-[28px] py-[10px] text-button2 text-button-label-primary shadow-custom-shadow">
       <ReplayQuizDrawer
         triggerComponent={
           <button className="flex-center border-r border-icon-secondary py-[5.5px] pr-[20px]">

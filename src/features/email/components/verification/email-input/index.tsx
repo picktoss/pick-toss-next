@@ -5,8 +5,8 @@ import { Input } from '@/shared/components/ui/input'
 import { Button } from '@/shared/components/ui/button'
 import Text from '@/shared/components/ui/text'
 import { useEffect, useState } from 'react'
-import { DOMAIN_SUGGESTIONS } from '../../constants/domain'
 import Icon from '@/shared/components/custom/icon'
+import { DOMAIN_SUGGESTIONS } from '@/features/email/constants/domain'
 
 interface Props {
   isAllowed: null | boolean
