@@ -12,23 +12,17 @@ import { cn } from '@/shared/lib/utils'
 import MoveNoteDrawer from '@/features/note/components/move-note-drawer'
 import QuizNoteDialog from '@/features/quiz/components/quiz-note-dialog'
 import Link from 'next/link'
-import { useParams, useRouter, useSearchParams } from 'next/navigation'
-import { useEffect } from 'react'
+import { useParams, useRouter } from 'next/navigation'
+import usePreviousPath from '@/shared/hooks/use-previous-path'
 
 // Header 컴포넌트
 const Header = () => {
   const router = useRouter()
   const { id } = useParams()
-  const searchParams = useSearchParams()
-
-  // cancel 버튼은 depth가 확실하지 않아 여러 페이지에서 넘어올 수도 있다는 가정 하에 쿼리로 이전 path를 같이 보내도록 함
-  useEffect(() => {
-    const previousPath = searchParams.get('previousPath') || '/'
-    sessionStorage.setItem('prevPath', previousPath)
-  }, [])
+  const { getPreviousPath } = usePreviousPath(true)
 
   const handleClickCancel = () => {
-    const previousPath = sessionStorage.getItem('prevPath')
+    const previousPath = getPreviousPath()
     previousPath ? router.replace(previousPath) : router.replace('/')
   }
 
