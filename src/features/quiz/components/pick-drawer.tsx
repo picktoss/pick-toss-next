@@ -10,7 +10,7 @@ const PickDrawer = () => {
   return (
     <Drawer>
       <DrawerTrigger asChild>
-        <div className="flex-center mb-[14px] h-[44px] w-full gap-[4px] bg-background-container-03">
+        <div className="flex-center mb-[14px] h-[44px] w-full cursor-pointer gap-[4px] bg-background-container-03">
           <Text typography="text1-medium" className="flex-center gap-[16px] text-text-info">
             <Text className="flex items-center">
               <Icon name="pin" className="mr-[2.5px] size-[16px]" />

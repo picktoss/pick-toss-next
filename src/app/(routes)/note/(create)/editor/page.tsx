@@ -2,9 +2,9 @@ import dynamic from 'next/dynamic'
 import CreateQuizButton from '@/features/note/components/create-quiz-button'
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
-import { CreateNoteProvider } from '@/features/note/contexts/create-note-context'
 import Loading from '@/shared/components/custom/loading'
 import TitleInput from '@/features/editor/components/title-input'
+import { CreateNoteProvider } from '@/features/editor/context/create-note-context'
 
 // Remirror가 브라우저 전용 라이브러리라 서버에서 렌더링될 때 오류 발생, 이를 해결하기 위해 dynamic import를 사용
 const VisualEditor = dynamic(() => import('@/features/editor/components/visual-editor'), {

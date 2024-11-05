@@ -24,7 +24,7 @@ const FolderMenuDots = () => {
       <DropdownMenuContent align="end" className="bg-background-base-01 p-0">
         {/* 노트 선택 */}
         <DropdownMenuItem
-          className="w-[240px] border-t border-border-divider px-[20px] py-[16px]"
+          className="w-[240px] cursor-pointer border-t border-border-divider px-[20px] py-[16px]"
           onClick={() => setIsSelectMode(true)}
         >
           <Text typography="subtitle2-medium" className="flex w-full items-center justify-between">
@@ -37,7 +37,7 @@ const FolderMenuDots = () => {
         <SetFolderNameDialog
           triggerComponent={
             <DropdownMenuItem
-              className="w-[240px] border-t border-border-divider px-[20px] py-[16px]"
+              className="w-[240px] cursor-pointer border-t border-border-divider px-[20px] py-[16px]"
               onSelect={(e) => e.preventDefault()}
             >
               <Text
@@ -59,7 +59,7 @@ const FolderMenuDots = () => {
         <QuizNoteDialog
           triggerComponent={
             <DropdownMenuItem
-              className="w-[240px] border-t border-border-divider px-[20px] py-[16px] text-text-critical"
+              className="w-[240px] cursor-pointer border-t border-border-divider px-[20px] py-[16px] text-text-critical"
               onSelect={(e) => e.preventDefault()}
             >
               <Text

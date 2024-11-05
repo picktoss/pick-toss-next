@@ -67,7 +67,9 @@ const Header = () => {
                 <DropdownMenuContent align="end" className="bg-background-base-01 p-0">
                   {/* 다운로드 */}
                   <DropdownMenuItem
-                    className={cn('border-b border-border-divider w-[240px] px-[20px] py-[16px]')}
+                    className={cn(
+                      'border-b border-border-divider w-[240px] px-[20px] py-[16px] cursor-pointer'
+                    )}
                     onClick={() => handleClickDownload('download')}
                   >
                     <Text
@@ -84,7 +86,7 @@ const Header = () => {
                     triggerComponent={
                       <DropdownMenuItem
                         className={cn(
-                          'border-b border-border-divider w-[240px] px-[20px] py-[16px]'
+                          'border-b border-border-divider w-[240px] px-[20px] py-[16px] cursor-pointer'
                         )}
                         onSelect={(e) => e.preventDefault()}
                       >
@@ -103,7 +105,9 @@ const Header = () => {
                   <QuizNoteDialog
                     triggerComponent={
                       <DropdownMenuItem
-                        className={cn('w-[240px] px-[20px] py-[16px] text-text-critical')}
+                        className={cn(
+                          'w-[240px] px-[20px] py-[16px] text-text-critical cursor-pointer'
+                        )}
                         onSelect={(e) => e.preventDefault()}
                       >
                         <Text

@@ -1,8 +1,8 @@
-import TitleInput from '@/features/note/components/title-input'
-import { CreateNoteProvider } from '@/features/note/contexts/create-note-context'
 import CreateQuizButton from '@/features/note/components/create-quiz-button'
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
+import { CreateNoteProvider } from '@/features/editor/context/create-note-context'
+import TitleInput from '@/features/editor/components/title-input'
 
 const CreateWithFilePage = () => {
   return (

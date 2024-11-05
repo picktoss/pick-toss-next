@@ -24,7 +24,7 @@ const NoteDetailController = () => {
             key={tab.key}
             href={`/note/${id[0]}?tab=${tab.key}`}
             className={cn(
-              'grow px-[16px] pb-[12px] mt-[12px] border-b border-border-divider',
+              'grow px-[16px] pb-[12px] mt-[12px] border-b border-border-divider flex-center',
               activeTab === tab.key && 'border-b-2 border-button-fill-selected'
             )}
           >

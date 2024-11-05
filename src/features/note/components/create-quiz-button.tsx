@@ -1,21 +1,18 @@
 import { Button } from '@/shared/components/ui/button'
 import NewQuizDrawer from '@/features/quiz/components/new-quiz-drawer'
+import FixedBottom from '@/shared/components/custom/fixed-bottom'
 
 const CreateQuizButton = () => {
   return (
-    <div className="flex-center fixed bottom-[87px] right-1/2 h-[100px] w-full max-w-mobile translate-x-1/2 bg-background-base-01 pb-[36px] pt-[12px]">
+    <FixedBottom className="px-[20px]">
       <NewQuizDrawer
         triggerComponent={
-          <Button
-            variant={'largeRound'}
-            colors={'primary'}
-            className="flex-center h-[52px] w-[335px]"
-          >
+          <Button variant={'largeRound'} colors={'primary'} className="flex-center h-[52px] w-full">
             퀴즈 만들기
           </Button>
         }
       />
-    </div>
+    </FixedBottom>
   )
 }
 

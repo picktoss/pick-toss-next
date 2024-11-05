@@ -1,5 +1,5 @@
+import { CreateNoteProvider } from '@/features/editor/context/create-note-context'
 import CreateQuizButton from '@/features/note/components/create-quiz-button'
-import { CreateNoteProvider } from '@/features/note/contexts/create-note-context'
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
 

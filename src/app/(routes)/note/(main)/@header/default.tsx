@@ -31,7 +31,10 @@ const Header = () => {
         <div className="flex size-full items-center justify-between">
           {isSelectMode ? (
             <>
-              <Icon name="cancel" className="size-[24px]" onClick={() => setIsSelectMode(false)} />
+              <button onClick={() => setIsSelectMode(false)}>
+                <Icon name="cancel" className="size-[24px]" />
+              </button>
+
               <Text as="span" typography="subtitle2-medium" className="ml-[35px]">
                 전공 공부
               </Text>
