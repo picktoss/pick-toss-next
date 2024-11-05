@@ -1,12 +1,12 @@
 import CreateQuizButton from '@/features/note/components/create-quiz-button'
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
-import { CreateNoteProvider } from '@/features/editor/context/create-note-context'
+import { EditNoteProvider } from '@/features/editor/context/edit-note-context'
 import TitleInput from '@/features/editor/components/title-input'
 
 const CreateWithFilePage = () => {
   return (
-    <CreateNoteProvider>
+    <EditNoteProvider>
       <TitleInput />
 
       {/* 파일 첨부 영역 : 첨부된 파일이 없을 때 노출 */}
@@ -52,7 +52,7 @@ const CreateWithFilePage = () => {
         </div> */}
 
       <CreateQuizButton />
-    </CreateNoteProvider>
+    </EditNoteProvider>
   )
 }
 

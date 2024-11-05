@@ -1,4 +1,4 @@
-import { CreateNoteProvider } from '@/features/editor/context/create-note-context'
+import { EditNoteProvider } from '@/features/editor/context/edit-note-context'
 import CreateQuizButton from '@/features/note/components/create-quiz-button'
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
@@ -6,7 +6,7 @@ import Text from '@/shared/components/ui/text'
 const CreateWithNotionPage = () => {
   return (
     <>
-      <CreateNoteProvider>
+      <EditNoteProvider>
         <div className="fixed top-[54px] flex w-full max-w-mobile items-center justify-between bg-background-base-02 px-[16px] py-[11px]">
           <div className="flex items-center">
             <Icon name="info" className="mr-[8px] size-[16px]" />
@@ -34,7 +34,7 @@ const CreateWithNotionPage = () => {
             }
           </div>
         </div>
-      </CreateNoteProvider>
+      </EditNoteProvider>
 
       <CreateQuizButton />
     </>

@@ -12,7 +12,7 @@ import {
   useRemirror,
 } from '@remirror/react'
 import { extensions } from '../libs/extensions'
-import { useCreateNoteContext } from '../context/create-note-context'
+import { useEditNoteContext } from '../context/edit-note-context'
 
 interface VisualEditorProps {}
 
@@ -22,7 +22,7 @@ export default function VisualEditor({}: VisualEditorProps) {
     stringHandler: 'markdown',
     // content: '**Markdown** content is the _best_',
   })
-  const { editorMarkdownContent, setEditorMarkdownContent } = useCreateNoteContext()
+  const { editorMarkdownContent, setEditorMarkdownContent } = useEditNoteContext()
 
   return (
     <ThemeProvider>

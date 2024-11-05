@@ -1,9 +1,9 @@
 'use client'
 
-import { useCreateNoteContext } from '../context/create-note-context'
+import { useEditNoteContext } from '../context/edit-note-context'
 
 const TitleInput = () => {
-  const { noteTitle, setNoteTitle } = useCreateNoteContext()
+  const { noteTitle, setNoteTitle } = useEditNoteContext()
 
   return (
     <input

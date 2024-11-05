@@ -1,5 +1,5 @@
 import TitleInput from './components/title-input'
-import { CreateNoteProvider } from './context/create-note-context'
+import { EditNoteProvider } from './context/edit-note-context'
 import dynamic from 'next/dynamic'
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
@@ -17,7 +17,7 @@ const CreateWithEditor = () => {
     <>
       {/* <Header /> */}
 
-      <CreateNoteProvider>
+      <EditNoteProvider>
         <div className="w-full max-w-mobile">
           <TitleInput />
 
@@ -37,7 +37,7 @@ const CreateWithEditor = () => {
 
           <CreateQuizButton />
         </div>
-      </CreateNoteProvider>
+      </EditNoteProvider>
     </>
   )
 }

@@ -4,7 +4,7 @@ import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
 import Loading from '@/shared/components/custom/loading'
 import TitleInput from '@/features/editor/components/title-input'
-import { CreateNoteProvider } from '@/features/editor/context/create-note-context'
+import { EditNoteProvider } from '@/features/editor/context/edit-note-context'
 
 // Remirror가 브라우저 전용 라이브러리라 서버에서 렌더링될 때 오류 발생, 이를 해결하기 위해 dynamic import를 사용
 const VisualEditor = dynamic(() => import('@/features/editor/components/visual-editor'), {
@@ -14,7 +14,7 @@ const VisualEditor = dynamic(() => import('@/features/editor/components/visual-e
 
 const CreateWithEditorPage = () => {
   return (
-    <CreateNoteProvider>
+    <EditNoteProvider>
       <div className="w-full max-w-mobile">
         <TitleInput />
 
@@ -34,7 +34,7 @@ const CreateWithEditorPage = () => {
 
         <CreateQuizButton />
       </div>
-    </CreateNoteProvider>
+    </EditNoteProvider>
   )
 }
 

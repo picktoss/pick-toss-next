@@ -2,11 +2,11 @@ import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
 import VisualEditor from '@/features/editor/components/visual-editor'
 import TitleInput from '@/features/editor/components/title-input'
-import { CreateNoteProvider } from '@/features/editor/context/create-note-context'
+import { EditNoteProvider } from '@/features/editor/context/edit-note-context'
 
 const ModifyPage = () => {
   return (
-    <CreateNoteProvider prevTitle="최근 이슈" prevContent="기존 노트 내용...">
+    <EditNoteProvider prevTitle="최근 이슈" prevContent="기존 노트 내용...">
       <TitleInput />
 
       <div className="sticky top-[54px] z-10 flex items-center justify-between bg-background-base-02 px-[16px] py-[11px]">
@@ -22,7 +22,7 @@ const ModifyPage = () => {
       </div>
 
       <VisualEditor />
-    </CreateNoteProvider>
+    </EditNoteProvider>
   )
 }
 

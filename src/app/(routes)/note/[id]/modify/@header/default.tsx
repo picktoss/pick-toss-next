@@ -25,7 +25,7 @@ const Header = () => {
         <div className="flex size-full items-center justify-between">
           {/* CancelDialog 컴포넌트로 추상화 가능 */}
           <Dialog>
-            <DialogTrigger asChild>
+            <DialogTrigger asChild className="cursor-pointer">
               <Icon name="cancel" className="size-[24px]" />
             </DialogTrigger>
             <DialogContent
