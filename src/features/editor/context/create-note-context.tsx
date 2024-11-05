@@ -11,9 +11,14 @@ interface CreateNoteContextValues {
 
 const CreateNoteContext = createContext<CreateNoteContextValues | null>(null)
 
-export function CreateNoteProvider({ children }: PropsWithChildren) {
-  const [noteTitle, setNoteTitle] = useState('')
-  const [editorMarkdownContent, setEditorMarkdownContent] = useState('')
+interface Props extends PropsWithChildren {
+  prevTitle?: string
+  prevContent?: string
+}
+
+export function CreateNoteProvider({ children, prevTitle, prevContent }: Props) {
+  const [noteTitle, setNoteTitle] = useState(prevTitle ?? '')
+  const [editorMarkdownContent, setEditorMarkdownContent] = useState(prevContent ?? '')
 
   const values = useMemo(
     () => ({

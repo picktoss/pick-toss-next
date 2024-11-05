@@ -22,13 +22,14 @@ export default function VisualEditor({}: VisualEditorProps) {
     stringHandler: 'markdown',
     // content: '**Markdown** content is the _best_',
   })
-  const { setEditorMarkdownContent } = useCreateNoteContext()
+  const { editorMarkdownContent, setEditorMarkdownContent } = useCreateNoteContext()
 
   return (
     <ThemeProvider>
       <Remirror
         manager={manager}
         autoRender="end"
+        initialContent={editorMarkdownContent}
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         onChange={({ helpers, state }) => setEditorMarkdownContent(helpers.getMarkdown(state))}
         placeholder="본문을 작성해보세요!"
