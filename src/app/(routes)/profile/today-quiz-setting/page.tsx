@@ -20,18 +20,7 @@ const TodayQuizSettingPage = () => {
 
         <SetNote />
 
-<<<<<<< HEAD:src/app/(routes)/(tabs)/profile/today-quiz-setting/page.tsx
         <FixedBottomButtons />
-=======
-        <FixedBottom className="flex gap-[6px]">
-          <Button variant={'largeRound'} colors={'tertiary'} className="w-[35%]">
-            초기화
-          </Button>
-          <Button variant={'largeRound'} colors={'primary'} className="w-[65%]">
-            저장하기
-          </Button>
-        </FixedBottom>
->>>>>>> 21de552d4b98a7c9fc0038944fda4b8c3e1d7b56:src/app/(routes)/profile/today-quiz-setting/page.tsx
       </main>
     </TodayQuizSettingProvider>
   )
