@@ -34,10 +34,12 @@ const OXChoice = ({ condition, answer, onSelect }: OXChoiceProps) => {
         fill: type !== answer ? '#3acc83' : '#f4502c',
       }
     }
+
+    return defaultColors
   }
 
   return (
-    <div className="flex w-full gap-[13px]">
+    <div className="flex w-full gap-[13px] transition-all">
       <button
         className="flex-1"
         disabled={disabled}
