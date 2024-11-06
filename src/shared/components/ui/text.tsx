@@ -71,22 +71,22 @@ const typographyStyles: Record<Typography, string> = {
 }
 
 const TextColorStyles: Record<TextColor, string> = {
-  primary: 'var(--color-gray-900)',
-  'primary-inverse': 'var(--color-white)',
-  secondary: 'var(--color-gray-700)',
-  'secondary-inverse': 'var(--color-gray-100)',
-  sub: 'var(--color-gray-500)',
-  caption: 'var(--color-gray-300)',
-  success: 'var(--color-green-500)',
-  critical: 'var(--color-red-500)',
-  info: 'var(--color-blue-500)',
-  accent: 'var(--color-orange-500)',
-  selected: 'var(--color-orange-600)',
-  'placeholder-01': 'var(--color-gray-400)',
-  'placeholder-02': 'var(--color-gray-200)',
-  disabled: 'var(--color-gray-300)',
-  right: 'var(--color-green-500)',
-  wrong: 'var(--color-red-500)',
+  primary: 'text-text-primary',
+  'primary-inverse': 'text-text-primary-inverse',
+  secondary: 'text-text-secondary',
+  'secondary-inverse': 'text-text-secondary-inverse',
+  sub: 'text-text-sub',
+  caption: 'text-text-caption',
+  success: 'text-text-success',
+  critical: 'text-text-critical',
+  info: 'text-text-info',
+  accent: 'text-text-accent',
+  selected: 'text-text-selected',
+  'placeholder-01': 'text-text-placeholder-01',
+  'placeholder-02': 'text-text-placeholder-02',
+  disabled: 'text-text-disabled',
+  right: 'text-text-right',
+  wrong: 'text-text-wrong',
 }
 
 const Text = forwardRef(
