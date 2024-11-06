@@ -13,11 +13,18 @@ import MoveNoteDrawer from '@/features/note/components/move-note-drawer'
 import QuizNoteDialog from '@/features/quiz/components/quiz-note-dialog'
 import Link from 'next/link'
 import { useParams, useRouter } from 'next/navigation'
+import usePreviousPath from '@/shared/hooks/use-previous-path'
 
 // Header 컴포넌트
 const Header = () => {
   const router = useRouter()
   const { id } = useParams()
+  const { getPreviousPath } = usePreviousPath({ getCustomPath: true })
+
+  const handleClickCancel = () => {
+    const previousPath = getPreviousPath()
+    previousPath ? router.replace(previousPath) : router.replace('/')
+  }
 
   const handleClickDownload = (menuItemKey: string) => {
     if (menuItemKey === 'download') {
@@ -35,7 +42,7 @@ const Header = () => {
         >
           <div className="flex size-full items-center justify-between">
             <div className="flex items-center">
-              <button onClick={() => router.back()}>
+              <button onClick={handleClickCancel}>
                 <Icon name="cancel" className="size-[24px]" />
               </button>
               {/* 스크롤을 내려 제목이 뷰포트에서 사라지면 생길 텍스트 */}

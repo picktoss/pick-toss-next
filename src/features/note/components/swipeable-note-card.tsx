@@ -12,6 +12,7 @@ import { useRouter } from 'next/navigation'
 import MoveNoteDrawer from '@/features/note/components/move-note-drawer'
 import { useQuizNoteContext } from '../contexts/quiz-note-context'
 import DeleteNoteDialog from './delete-note-dialog'
+import usePreviousPath from '@/shared/hooks/use-previous-path'
 
 interface NoteProps {
   id: string
@@ -42,6 +43,7 @@ const SwipeableNoteCard = ({
   const x = useMotionValue(0)
   const controls = useAnimation()
   const router = useRouter()
+  const { setPreviousPath } = usePreviousPath()
 
   const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     if (info.offset.x < -30) {
@@ -57,7 +59,10 @@ const SwipeableNoteCard = ({
   return (
     <div
       onClick={() => {
-        !isSelectMode && !isDragging && !isSwiped && router.push('note/' + id)
+        if (!isSelectMode && !isDragging && !isSwiped) {
+          setPreviousPath('/note')
+          router.push(`/note/${id}`)
+        }
       }}
       className={cn(
         `relative flex h-[104px] max-w-full items-center overflow-hidden rounded-[16px] bg-white px-[16px] pb-[20px] pt-[17px] shrink-0 cursor-pointer`,
