@@ -15,11 +15,20 @@ interface QuizNoteContextValues {
 
 const QuizNoteContext = createContext<QuizNoteContextValues | null>(null)
 
-export function QuizNoteProvider({ children }: PropsWithChildren) {
+interface InitialValues {
+  isSelectMode?: boolean
+  buttonHidden?: boolean
+  isExpandedBtns?: boolean
+}
+
+export function QuizNoteProvider({
+  initialValues,
+  children,
+}: PropsWithChildren & { initialValues?: InitialValues }) {
   const [selectedFolderId, setSelectedFolderId] = useState('')
-  const [isSelectMode, setIsSelectMode] = useState(false)
-  const [buttonHidden, setButtonHidden] = useState(false)
-  const [isExpandedBtns, setIsExpandedBtns] = useState(false)
+  const [isSelectMode, setIsSelectMode] = useState(initialValues?.isSelectMode ?? false)
+  const [buttonHidden, setButtonHidden] = useState(initialValues?.buttonHidden ?? false)
+  const [isExpandedBtns, setIsExpandedBtns] = useState(initialValues?.isExpandedBtns ?? false)
 
   const values = useMemo(
     () => ({

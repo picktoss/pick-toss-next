@@ -1,8 +1,10 @@
-import CreateQuizButton from '@/features/note/components/create-quiz-button'
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
 import { EditNoteProvider } from '@/features/editor/context/edit-note-context'
 import TitleInput from '@/features/editor/components/title-input'
+import FixedBottom from '@/shared/components/custom/fixed-bottom'
+import NewQuizDrawer from '@/features/quiz/components/new-quiz-drawer'
+import { Button } from '@/shared/components/ui/button'
 
 const CreateWithFilePage = () => {
   return (
@@ -51,7 +53,19 @@ const CreateWithFilePage = () => {
           }
         </div> */}
 
-      <CreateQuizButton />
+      <FixedBottom className="px-[20px]">
+        <NewQuizDrawer
+          triggerComponent={
+            <Button
+              variant={'largeRound'}
+              colors={'primary'}
+              className="flex-center h-[52px] w-full"
+            >
+              퀴즈 만들기
+            </Button>
+          }
+        />
+      </FixedBottom>
     </EditNoteProvider>
   )
 }

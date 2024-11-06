@@ -1,6 +1,8 @@
 import { EditNoteProvider } from '@/features/editor/context/edit-note-context'
-import CreateQuizButton from '@/features/note/components/create-quiz-button'
+import NewQuizDrawer from '@/features/quiz/components/new-quiz-drawer'
+import FixedBottom from '@/shared/components/custom/fixed-bottom'
 import Icon from '@/shared/components/custom/icon'
+import { Button } from '@/shared/components/ui/button'
 import Text from '@/shared/components/ui/text'
 
 const CreateWithNotionPage = () => {
@@ -36,7 +38,19 @@ const CreateWithNotionPage = () => {
         </div>
       </EditNoteProvider>
 
-      <CreateQuizButton />
+      <FixedBottom className="px-[20px]">
+        <NewQuizDrawer
+          triggerComponent={
+            <Button
+              variant={'largeRound'}
+              colors={'primary'}
+              className="flex-center h-[52px] w-full"
+            >
+              퀴즈 만들기
+            </Button>
+          }
+        />
+      </FixedBottom>
     </>
   )
 }

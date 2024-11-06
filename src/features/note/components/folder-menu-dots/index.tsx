@@ -8,9 +8,9 @@ import {
   DropdownMenuTrigger,
 } from '@/shared/components/ui/dropdown-menu'
 import Text from '@/shared/components/ui/text'
-import { useQuizNoteContext } from '../contexts/quiz-note-context'
+import { useQuizNoteContext } from '../../contexts/quiz-note-context'
 import QuizNoteDialog from '@/features/quiz/components/quiz-note-dialog'
-import SetFolderNameDialog from './set-folder-name-dialog'
+import SetFolderNameDialog from '../set-folder-name-dialog'
 
 const FolderMenuDots = () => {
   const { setIsSelectMode } = useQuizNoteContext()
