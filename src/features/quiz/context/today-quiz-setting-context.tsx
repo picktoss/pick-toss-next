@@ -5,24 +5,24 @@ import { createContext, useContext, ReactNode, useMemo, useState } from 'react'
 interface TodayQuizSettingContextType {
   quizCount: number
   setQuizCount: (value: number) => void
-  selectedFolderId: number
-  setSelectedFolderId: (value: number) => void
+  selectedDirectoryId: number
+  setSelectedDirectoryId: (value: number) => void
 }
 
 const TodayQuizSettingContext = createContext<TodayQuizSettingContextType | undefined>(undefined)
 
 export const TodayQuizSettingProvider = ({ children }: { children: ReactNode }) => {
   const [quizCount, setQuizCount] = useState(10)
-  const [selectedFolderId, setSelectedFolderId] = useState(0)
+  const [selectedDirectoryId, setSelectedDirectoryId] = useState(0)
 
   const values = useMemo(
     () => ({
       quizCount,
       setQuizCount,
-      selectedFolderId,
-      setSelectedFolderId,
+      selectedDirectoryId,
+      setSelectedDirectoryId,
     }),
-    [quizCount, setQuizCount, selectedFolderId, setSelectedFolderId]
+    [quizCount, setQuizCount, selectedDirectoryId, setSelectedDirectoryId]
   )
 
   return (

@@ -13,7 +13,7 @@ import {
 } from '@/shared/components/ui/drawer'
 import Text from '@/shared/components/ui/text'
 import { useState } from 'react'
-import SetCategoryCompleteDialog from '../../../note/components/set-category-complete-dialog'
+import SetCategoryCompleteDialog from '../../../document/components/set-category-complete-dialog'
 import { cn } from '@/shared/lib/utils'
 import CategoryTag from '@/shared/components/custom/category-tag'
 

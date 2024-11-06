@@ -14,7 +14,7 @@ export interface Values {
     buttonName: string
     buttonType:
       | 'todayQuiz'
-      | 'addNote'
+      | 'addDocument'
       | 'aiPickDialog'
       | 'myStar'
       | 'continuousQuizDates'
@@ -69,7 +69,7 @@ export const AmplitudeContextProvider = ({ children }: PropsWithChildren) => {
           | 'makeQuiz'
           | 'continuousQuizDates'
           | 'myStar'
-          | 'addNote'
+          | 'addDocument'
           | 'quizPractice'
           | 'quizAnalysis'
           | 'topFive'

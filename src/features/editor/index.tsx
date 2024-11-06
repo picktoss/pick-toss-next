@@ -1,5 +1,5 @@
 import TitleInput from './components/title-input'
-import { EditNoteProvider } from './context/edit-note-context'
+import { EditDocumentProvider } from './context/edit-document-context'
 import dynamic from 'next/dynamic'
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
@@ -19,7 +19,7 @@ const CreateWithEditor = () => {
     <>
       {/* <Header /> */}
 
-      <EditNoteProvider>
+      <EditDocumentProvider>
         <div className="w-full max-w-mobile">
           <TitleInput />
 
@@ -51,7 +51,7 @@ const CreateWithEditor = () => {
             />
           </FixedBottom>
         </div>
-      </EditNoteProvider>
+      </EditDocumentProvider>
     </>
   )
 }

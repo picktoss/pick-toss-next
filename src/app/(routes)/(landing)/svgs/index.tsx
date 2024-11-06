@@ -1934,7 +1934,7 @@ export function PercentageOfCorrectAnswersGraphIcon({
   )
 }
 
-export function FrequentlyWrongNoteIcon({ className }: SVGProps) {
+export function FrequentlyWrongDocumentIcon({ className }: SVGProps) {
   return (
     <svg
       width="374"
@@ -2350,7 +2350,7 @@ export function PercentageGraphIcon() {
   )
 }
 
-export function LongFrequentlyWrongNoteIcon({ className }: SVGProps) {
+export function LongFrequentlyWrongDocumentIcon({ className }: SVGProps) {
   return (
     <svg
       width="530"
