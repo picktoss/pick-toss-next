@@ -8,6 +8,7 @@ import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
 import QuizProgressBar from '../components/quiz-progress-bar'
 import MultipleOption from '../components/multiple-option'
+import OXChoice from '../components/ox-choice'
 
 const mockQuizzes = quizzes
 
@@ -16,7 +17,7 @@ const QuizView = () => {
 
   // 선지가 노출된 후 카운트 활성화
 
-  const currentQuizInput = 0
+  const currentQuizInput = 1
 
   const curQuiz = mockQuizzes[currentQuizInput]
 
@@ -51,7 +52,11 @@ const QuizView = () => {
                   ))}
                 </div>
               )}
-              {curQuiz.type === 'ox' && <div className="mt-[74px]"></div>}
+              {curQuiz.type === 'ox' && (
+                <div className="mt-[74px]">
+                  <OXChoice condition="wrong" answer="X" onSelect={(answer: 'O' | 'X') => {}} />
+                </div>
+              )}
             </div>
           </div>
         ),
