@@ -60,7 +60,7 @@ const SwipeableNoteCard = ({
     <div
       onClick={() => {
         if (!isSelectMode && !isDragging && !isSwiped) {
-          setPreviousPath()
+          setPreviousPath('/note')
           router.push(`/note/${id}`)
         }
       }}

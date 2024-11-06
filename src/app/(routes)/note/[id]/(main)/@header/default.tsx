@@ -19,7 +19,7 @@ import usePreviousPath from '@/shared/hooks/use-previous-path'
 const Header = () => {
   const router = useRouter()
   const { id } = useParams()
-  const { getPreviousPath } = usePreviousPath(true)
+  const { getPreviousPath } = usePreviousPath({ getCustomPath: true })
 
   const handleClickCancel = () => {
     const previousPath = getPreviousPath()
