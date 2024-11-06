@@ -1,5 +1,5 @@
 import { cn } from '@/shared/lib/utils'
-import React, { ElementType, ComponentPropsWithoutRef, forwardRef } from 'react'
+import React, { ElementType, forwardRef } from 'react'
 
 type Typography =
   | 'hero'
@@ -23,10 +23,29 @@ type Typography =
   | 'button5'
   | 'question'
 
-type TextProps<T extends ElementType> = {
-  typography: Typography
+type TextColor =
+  | 'primary'
+  | 'primary-inverse'
+  | 'secondary'
+  | 'secondary-inverse'
+  | 'sub'
+  | 'caption'
+  | 'success'
+  | 'critical'
+  | 'info'
+  | 'accent'
+  | 'selected'
+  | 'placeholder-01'
+  | 'placeholder-02'
+  | 'disabled'
+  | 'right'
+  | 'wrong'
+
+export interface TextProps<T extends ElementType> extends React.HTMLAttributes<T> {
+  typography?: Typography
+  color?: TextColor
   as?: T
-} & Omit<ComponentPropsWithoutRef<T>, 'as' | 'typography'>
+}
 
 const typographyStyles: Record<Typography, string> = {
   hero: 'text-[36px] font-bold leading-[120%] tracking-[-0.02em]',
@@ -51,15 +70,42 @@ const typographyStyles: Record<Typography, string> = {
   question: 'text-[20px] font-bold leading-[150%] tracking-[-0.02em]',
 }
 
+const TextColorStyles: Record<TextColor, string> = {
+  primary: 'var(--color-gray-900)',
+  'primary-inverse': 'var(--color-white)',
+  secondary: 'var(--color-gray-700)',
+  'secondary-inverse': 'var(--color-gray-100)',
+  sub: 'var(--color-gray-500)',
+  caption: 'var(--color-gray-300)',
+  success: 'var(--color-green-500)',
+  critical: 'var(--color-red-500)',
+  info: 'var(--color-blue-500)',
+  accent: 'var(--color-orange-500)',
+  selected: 'var(--color-orange-600)',
+  'placeholder-01': 'var(--color-gray-400)',
+  'placeholder-02': 'var(--color-gray-200)',
+  disabled: 'var(--color-gray-300)',
+  right: 'var(--color-green-500)',
+  wrong: 'var(--color-red-500)',
+}
+
 const Text = forwardRef(
   <T extends ElementType = 'div'>(
-    { typography, className, as, children, ...props }: TextProps<T>,
+    { typography, color, className, as, children, ...props }: TextProps<T>,
     ref?: React.ComponentPropsWithRef<T>['ref']
   ) => {
-    const Component = as || 'div'
+    const Component = as || ('div' as ElementType)
 
     return (
-      <Component ref={ref} className={cn(typographyStyles[typography], className)} {...props}>
+      <Component
+        ref={ref}
+        className={cn(
+          typography && typographyStyles[typography],
+          color && TextColorStyles[color],
+          className
+        )}
+        {...props}
+      >
         {children}
       </Component>
     )
