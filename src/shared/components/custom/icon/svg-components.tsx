@@ -1722,3 +1722,52 @@ export const TodayQuiz = ({ ...props }) => {
     </svg>
   )
 }
+
+export const CorrectCheckRound = ({ ...props }) => {
+  return (
+    <svg
+      width="32"
+      height="32"
+      viewBox="0 0 32 32"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <circle cx="16" cy="16" r="16" fill="#3ACC83" />
+      <path
+        d="M9.77734 15.3017L14.6469 20.4446L22.2218 12.4446"
+        stroke="white"
+        strokeWidth="2.66667"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
+export const WrongXRound = ({ ...props }) => {
+  return (
+    <svg
+      width="32"
+      height="32"
+      viewBox="0 0 32 32"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <circle cx="16" cy="16" r="16" fill="#F4502C" />
+      <path
+        d="M10.668 10.666L21.3346 21.3327"
+        stroke="white"
+        strokeWidth="2.66667"
+        strokeLinecap="round"
+      />
+      <path
+        d="M21.332 10.666L10.6654 21.3327"
+        stroke="white"
+        strokeWidth="2.66667"
+        strokeLinecap="round"
+      />
+    </svg>
+  )
+}

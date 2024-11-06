@@ -9,9 +9,16 @@ import Text from '@/shared/components/ui/text'
 import DocumentTypeIcon from '@/features/document/components/document-type-icon'
 import Tag from '@/shared/components/ui/tag'
 import { useRouter } from 'next/navigation'
+<<<<<<< HEAD:src/features/document/components/swipeable-document-card.tsx
 import MoveDocumentDrawer from '@/features/document/components/move-document-drawer'
 import { useDirectoryContext } from '../contexts/directory-context'
 import DeleteDocumentDialog from './delete-document-dialog'
+=======
+import MoveNoteDrawer from '@/features/note/components/move-note-drawer'
+import { useQuizNoteContext } from '../contexts/quiz-note-context'
+import DeleteNoteDialog from './delete-note-dialog'
+import usePreviousPath from '@/shared/hooks/use-previous-path'
+>>>>>>> 59f54535c16a31f5ee741cd7c65fe7c84597fcf8:src/features/note/components/swipeable-note-card.tsx
 
 interface DocumentProps {
   id: string
@@ -42,6 +49,7 @@ const SwipeableDocumentCard = ({
   const x = useMotionValue(0)
   const controls = useAnimation()
   const router = useRouter()
+  const { setPreviousPath } = usePreviousPath()
 
   const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     if (info.offset.x < -30) {
@@ -57,7 +65,14 @@ const SwipeableDocumentCard = ({
   return (
     <div
       onClick={() => {
+<<<<<<< HEAD:src/features/document/components/swipeable-document-card.tsx
         !isSelectMode && !isDragging && !isSwiped && router.push('document/' + id)
+=======
+        if (!isSelectMode && !isDragging && !isSwiped) {
+          setPreviousPath('/note')
+          router.push(`/note/${id}`)
+        }
+>>>>>>> 59f54535c16a31f5ee741cd7c65fe7c84597fcf8:src/features/note/components/swipeable-note-card.tsx
       }}
       className={cn(
         `relative flex h-[104px] max-w-full items-center overflow-hidden rounded-[16px] bg-white px-[16px] pb-[20px] pt-[17px] shrink-0 cursor-pointer`,
