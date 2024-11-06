@@ -1,5 +1,5 @@
 import { cn } from '@/shared/lib/utils'
-import React, { ElementType, forwardRef } from 'react'
+import React, { ElementType, forwardRef, HTMLAttributes } from 'react'
 
 type Typography =
   | 'hero'
@@ -41,11 +41,15 @@ type TextColor =
   | 'right'
   | 'wrong'
 
-export interface TextProps<T extends ElementType> extends React.HTMLAttributes<T> {
+interface BaseTextProps {
   typography?: Typography
   color?: TextColor
-  as?: T
 }
+
+type TextProps<T extends ElementType> = BaseTextProps & {
+  as?: T
+  htmlFor?: string | undefined
+} & HTMLAttributes<T>
 
 const typographyStyles: Record<Typography, string> = {
   hero: 'text-[36px] font-bold leading-[120%] tracking-[-0.02em]',
