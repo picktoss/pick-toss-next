@@ -11,6 +11,9 @@ interface QuizExplanationDrawerProps {
   correctAnswer?: string
 }
 
+const MIN_HEIGHT = '125px'
+const MAX_HEIGHT = '80vh'
+
 const QuizExplanationDrawer = ({
   isCorrect,
   correctAnswer,
@@ -19,7 +22,7 @@ const QuizExplanationDrawer = ({
   const [open, setOpen] = useState(true)
   const controls = useAnimation()
   const y = useMotionValue(0)
-  const height = useMotionValue('80vh')
+  const height = useMotionValue(MIN_HEIGHT)
 
   const backgroundColor = useTransform(
     y,
@@ -28,12 +31,12 @@ const QuizExplanationDrawer = ({
   )
 
   const handleOpen = useCallback(async () => {
-    await controls.start({ height: '80vh', y: 0 })
+    await controls.start({ height: MAX_HEIGHT, y: 0 })
   }, [controls])
 
   const handleClose = async () => {
     setOpen(false)
-    await controls.start({ height: '125px', y: 0 })
+    await controls.start({ height: MIN_HEIGHT, y: 0 })
   }
 
   const handleDragEnd = async (
@@ -45,7 +48,7 @@ const QuizExplanationDrawer = ({
       await handleClose()
     } else {
       setOpen(true)
-      await controls.start({ height: '80vh', y: 0 })
+      await handleOpen()
     }
   }
 
@@ -57,7 +60,7 @@ const QuizExplanationDrawer = ({
     <motion.div
       drag="y"
       dragConstraints={{ top: 0, bottom: 0 }}
-      dragElastic={0.2}
+      dragElastic={0.3}
       onDragEnd={handleDragEnd}
       style={{
         backgroundColor,
@@ -65,7 +68,7 @@ const QuizExplanationDrawer = ({
         height,
       }}
       animate={controls}
-      initial={{ height: '125px' }}
+      initial={{ height: MIN_HEIGHT }}
       className="fixed bottom-0 w-full max-w-mobile select-none overflow-hidden rounded-t-[20px] px-4 shadow-[0_-3px_16px_0px_rgba(0,0,0,0.1)] transition-colors"
     >
       <div className="relative size-full">
@@ -114,7 +117,6 @@ const QuizExplanationDrawer = ({
         </motion.div>
 
         <motion.div
-          initial={false}
           animate={{
             y: 0,
             top: open ? 'auto' : '24px',
