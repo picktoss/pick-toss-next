@@ -54,7 +54,11 @@ const QuizView = () => {
               )}
               {curQuiz.type === 'ox' && (
                 <div className="mt-[74px]">
-                  <OXChoice condition="wrong" answer="X" onSelect={(answer: 'O' | 'X') => {}} />
+                  <OXChoice
+                    condition="wrong"
+                    userAnswer="X"
+                    onSelect={(userAnswer: 'O' | 'X') => {}}
+                  />
                 </div>
               )}
             </div>

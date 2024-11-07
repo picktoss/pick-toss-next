@@ -4,11 +4,11 @@ import { SVGProps } from 'react'
 
 interface OXChoiceProps {
   condition: 'idle' | 'correct' | 'wrong'
-  answer?: 'O' | 'X'
-  onSelect: (answer: 'O' | 'X') => void
+  userAnswer?: 'O' | 'X'
+  onSelect: (userAnswer: 'O' | 'X') => void
 }
 
-const OXChoice = ({ condition, answer, onSelect }: OXChoiceProps) => {
+const OXChoice = ({ condition, userAnswer, onSelect }: OXChoiceProps) => {
   const disabled = condition === 'correct' || condition === 'wrong'
 
   const getIconColors = (type: 'O' | 'X') => {
@@ -23,15 +23,15 @@ const OXChoice = ({ condition, answer, onSelect }: OXChoiceProps) => {
 
     if (condition === 'correct') {
       return {
-        bg: type === answer ? '#e6f7e3' : '#ebeff3',
-        fill: type === answer ? '#3acc83' : 'white',
+        bg: type === userAnswer ? '#e6f7e3' : '#ebeff3',
+        fill: type === userAnswer ? '#3acc83' : 'white',
       }
     }
 
     if (condition === 'wrong') {
       return {
-        bg: type !== answer ? '#e6f7e3' : '#ebeff3',
-        fill: type !== answer ? '#3acc83' : '#f4502c',
+        bg: type !== userAnswer ? '#e6f7e3' : '#ebeff3',
+        fill: type !== userAnswer ? '#3acc83' : '#f4502c',
       }
     }
 
