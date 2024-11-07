@@ -10,6 +10,7 @@ import QuizProgressBar from '../components/quiz-progress-bar'
 import MultipleOption from '../components/multiple-option'
 import OXChoice from '../components/ox-choice'
 import ResultQuizErrorDialog from '../components/report-quiz-error-dialog'
+import QuizTimer from '../components/quiz-timer'
 
 const mockQuizzes = quizzes
 
@@ -32,7 +33,9 @@ const QuizView = () => {
           <div>
             <header className="relative flex h-[54px] items-center justify-between px-[16px]">
               <GoBackButton icon="cancel" onClick={() => {}} />
-              <div className="absolute right-1/2 translate-x-1/2">타이머</div>
+              <div className="absolute right-1/2 translate-x-1/2">
+                <QuizTimer />
+              </div>
               <Icon name="adjust-controls" className="size-[24px]" />
             </header>
 
