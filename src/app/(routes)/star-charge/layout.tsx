@@ -4,11 +4,9 @@ import NIGHT_SKY_IMG from '@/../../public/images/star-background.png'
 
 export const metadata: Metadata = {}
 
-interface LayoutProps extends PropsWithChildren {
-  header: React.ReactNode
-}
+interface LayoutProps extends PropsWithChildren {}
 
-const Layout: FunctionComponent<LayoutProps> = ({ header, children }) => {
+const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
   return (
     <div
       className="size-full min-h-screen"
@@ -18,7 +16,6 @@ const Layout: FunctionComponent<LayoutProps> = ({ header, children }) => {
         backgroundRepeat: 'no-repeat',
       }}
     >
-      {header}
       {children}
     </div>
   )
