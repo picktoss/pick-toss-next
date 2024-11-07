@@ -1,7 +1,7 @@
 import DocumentDetailController from '@/features/document/components/document-detail-controller'
 import DocumentFloatingButton from '@/features/document/components/document-floating-button'
 import { QuizListProvider } from '@/features/document/contexts/quiz-list-context'
-import DocumentContent from '@/features/document/screens/note-content'
+import DocumentContent from '@/features/document/screens/document-content'
 import Quiz from '@/features/document/screens/quiz'
 
 interface Props {
