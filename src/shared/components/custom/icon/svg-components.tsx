@@ -572,7 +572,7 @@ export const Share = ({ ...props }) => {
   )
 }
 
-export const Folder = ({ ...props }) => {
+export const Directory = ({ ...props }) => {
   return (
     <svg
       width="20"
@@ -591,7 +591,7 @@ export const Folder = ({ ...props }) => {
   )
 }
 
-export const FolderFill = ({ ...props }) => {
+export const DirectoryFill = ({ ...props }) => {
   return (
     <svg
       width="14"
@@ -685,7 +685,7 @@ export const Sort = ({ ...props }) => {
   )
 }
 
-// note
+// document
 export const Document = ({ ...props }) => {
   return (
     <svg
@@ -735,7 +735,7 @@ export const PastRecord = ({ ...props }) => {
 }
 
 // write
-export const WriteNote = ({ ...props }) => {
+export const WriteDocument = ({ ...props }) => {
   return (
     <svg
       width="20"
@@ -1526,7 +1526,7 @@ export const RandomQuizIcon = ({ ...props }) => {
   )
 }
 
-export const Note = ({ ...props }) => {
+export const MyCollection = ({ ...props }) => {
   return (
     <svg
       width="32"

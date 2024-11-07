@@ -6,7 +6,7 @@ import { PROFILE_MENU_LIST } from '@/features/user/constants/profile-menu-list'
 import Footer from '@/features/user/components/footer'
 
 const ProfilePage = () => {
-  const extraNoteCount = 28
+  const extraDocumentCount = 28
 
   return (
     <main className="h-[calc(100dvh-54px-88px)] w-full overflow-y-auto px-[16px] pb-[54px]">
@@ -56,7 +56,7 @@ const ProfilePage = () => {
         </div>
         <div className="relative h-[8px] w-full overflow-hidden rounded-[12px] bg-background-base-02">
           <div
-            style={{ width: (extraNoteCount / 40) * 100 + '%' }}
+            style={{ width: (extraDocumentCount / 40) * 100 + '%' }}
             className="absolute right-0 top-0 z-10 h-full bg-fill-secondary-orange"
           ></div>
         </div>
@@ -68,7 +68,7 @@ const ProfilePage = () => {
       <div className="flex-center mt-[28px] gap-[40px]">
         <div className="flex-center flex-col">
           <div className="rounded-[20px] bg-[#f8f8f8] p-[16px]">
-            <Icon name="note" className="size-[32px]" />
+            <Icon name="my-collection" className="size-[32px]" />
           </div>
           <Text typography="text2-medium">내 컬렉션</Text>
         </div>

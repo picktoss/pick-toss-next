@@ -16,7 +16,7 @@ export const navigationItems = [
     segments: [['main']],
   },
   {
-    href: '/note',
+    href: '/document',
     title: '퀴즈 노트' as const,
     Icon: ({ isActive }: { isActive: boolean }) => {
       return (
@@ -27,7 +27,7 @@ export const navigationItems = [
         />
       )
     },
-    segments: [['note']],
+    segments: [['document']],
   },
   {
     href: '/collections',
