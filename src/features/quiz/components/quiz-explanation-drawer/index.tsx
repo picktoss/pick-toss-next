@@ -69,35 +69,19 @@ const QuizExplanationDrawer = ({
       className="fixed bottom-0 w-full max-w-mobile select-none overflow-hidden rounded-t-[20px] px-4 shadow-[0_-3px_16px_0px_rgba(0,0,0,0.1)] transition-colors"
     >
       <div className="relative size-full">
-        <motion.div
-          className="mx-auto mt-[8px] h-[4px] w-[48px] cursor-grab rounded-full bg-icon-tertiary active:cursor-grabbing"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-        />
+        <div className="mx-auto mt-[8px] h-[4px] w-[48px] cursor-grab rounded-full bg-icon-tertiary active:cursor-grabbing" />
 
         <motion.div
           className="mt-[24px]"
-          initial={false}
           animate={{ opacity: open ? 1 : 0 }}
-          transition={{ duration: 0.2 }}
+          transition={{ duration: 0.3 }}
         >
-          <motion.div
-            className="flex items-center gap-[16px]"
-            initial={{ x: 0 }}
-            animate={{ x: open ? 0 : -20 }}
-            transition={{ duration: 0.2 }}
-          >
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ type: 'spring', duration: 0.5 }}
-            >
-              {isCorrect ? (
-                <Icon name="correct-check-round" className="size-[48px]" />
-              ) : (
-                <Icon name="wrong-x-round" className="size-[48px]" />
-              )}
-            </motion.div>
+          <div className="flex items-center gap-[16px]">
+            {isCorrect ? (
+              <Icon name="correct-check-round" className="size-[48px]" />
+            ) : (
+              <Icon name="wrong-x-round" className="size-[48px]" />
+            )}
             {isCorrect ? (
               <Text typography="title1" color="right">
                 정답!
@@ -107,7 +91,7 @@ const QuizExplanationDrawer = ({
                 오답
               </Text>
             )}
-          </motion.div>
+          </div>
 
           {!isCorrect && (
             <Text typography="subtitle2-bold" color="secondary" className="mt-[28px]">
@@ -115,11 +99,7 @@ const QuizExplanationDrawer = ({
             </Text>
           )}
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: open ? 1 : 0, y: open ? 0 : 20 }}
-            transition={{ duration: 0.2 }}
-          >
+          <div>
             <Text
               as="p"
               typography="text1-medium"
@@ -130,7 +110,7 @@ const QuizExplanationDrawer = ({
             <Text typography="text2-medium" color="sub" className="mt-[12px]">
               전공 공부 {'>'} 최근 이슈
             </Text>
-          </motion.div>
+          </div>
         </motion.div>
 
         <motion.div
