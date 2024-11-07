@@ -68,7 +68,7 @@ const ProfilePage = () => {
       <div className="flex-center mt-[28px] gap-[40px]">
         <div className="flex-center flex-col">
           <div className="rounded-[20px] bg-[#f8f8f8] p-[16px]">
-            <Icon name="collection" className="size-[32px]" />
+            <Icon name="my-collection" className="size-[32px]" />
           </div>
           <Text typography="text2-medium">내 컬렉션</Text>
         </div>

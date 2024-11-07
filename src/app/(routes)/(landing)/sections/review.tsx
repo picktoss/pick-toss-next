@@ -1,7 +1,7 @@
 import { Section } from '../components/section'
 import {
-  FrequentlyWrongDocumentIcon,
-  LongFrequentlyWrongDocumentIcon,
+  FrequentlyWrongNoteIcon,
+  LongFrequentlyWrongNoteIcon,
   PercentageGraphIcon,
   PercentageOfCorrectAnswersGraphIcon,
   ReviewInfoIcon,
@@ -25,7 +25,7 @@ export function Review() {
           <div className="flex flex-col items-center *:mt-[-8px]">
             <ReviewInfoIcon />
             <PercentageOfCorrectAnswersGraphIcon />
-            <FrequentlyWrongDocumentIcon />
+            <FrequentlyWrongNoteIcon />
           </div>
         </div>
       </Section>
@@ -44,7 +44,7 @@ export function Review() {
           <div className="relative z-20 mt-[-35px] h-[527px] w-full">
             <ReviewInfoIcon className="absolute left-[-17px] top-[85px]" />
             <PercentageOfCorrectAnswersGraphIcon className="absolute bottom-[-30px] left-[137px]" />
-            <LongFrequentlyWrongDocumentIcon className="absolute right-[-22px] top-[-10px]" />
+            <LongFrequentlyWrongNoteIcon className="absolute right-[-22px] top-[-10px]" />
           </div>
         </div>
         <div className="absolute bottom-0 right-0">

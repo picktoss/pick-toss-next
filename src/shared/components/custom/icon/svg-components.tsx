@@ -1526,7 +1526,7 @@ export const RandomQuizIcon = ({ ...props }) => {
   )
 }
 
-export const Collection = ({ ...props }) => {
+export const MyCollection = ({ ...props }) => {
   return (
     <svg
       width="32"
