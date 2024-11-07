@@ -60,8 +60,8 @@ const SwipeableDocumentCard = ({
     <div
       onClick={() => {
         if (!isSelectMode && !isDragging && !isSwiped) {
-          setPreviousPath('/note')
-          router.push(`/note/${id}`)
+          setPreviousPath('/document')
+          router.push(`/document/${id}`)
         }
       }}
       className={cn(
