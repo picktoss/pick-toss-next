@@ -8,6 +8,18 @@ type Collection = {
   quizCount: number
 }
 
+type CollectionField =
+  | 'IT'
+  | 'LAW'
+  | 'BUSINESS_ECONOMY'
+  | 'SOCIETY_POLITICS'
+  | 'LANGUAGE'
+  | 'MEDICINE_PHARMACY'
+  | 'ART'
+  | 'SCIENCE_ENGINEERING'
+  | 'HISTORY_PHILOSOPHY'
+  | 'OTHER'
+
 /** GET /api/v2/collections */
 interface AllCollectionsResponse {
   collections: Collection[]
@@ -81,17 +93,7 @@ interface UpdateCollectionInfoPayload {
   name: string
   emoji: string
   description: string
-  collectionField:
-    | 'IT'
-    | 'LAW'
-    | 'BUSINESS_ECONOMY'
-    | 'SOCIETY_POLITICS'
-    | 'LANGUAGE'
-    | 'MEDICINE_PHARMACY'
-    | 'ART'
-    | 'SCIENCE_ENGINEERING'
-    | 'HISTORY_PHILOSOPHY'
-    | 'OTHER'
+  collectionField: CollectionField
 }
 
 /** PATCH /api/v2/collections/{collection_id}/update-collection-result */
@@ -114,23 +116,14 @@ interface CreateCollectionPayload {
   name: string
   emoji: string
   description: string
-  collectionField:
-    | 'IT'
-    | 'LAW'
-    | 'BUSINESS_ECONOMY'
-    | 'SOCIETY_POLITICS'
-    | 'LANGUAGE'
-    | 'MEDICINE_PHARMACY'
-    | 'ART'
-    | 'SCIENCE_ENGINEERING'
-    | 'HISTORY_PHILOSOPHY'
-    | 'OTHER'
+  collectionField: CollectionField
   quizzes: number[]
 }
 
 declare namespace Collection {
   type Item = Collection
   type List = Collection[]
+  type Field = CollectionField
 
   declare namespace Request {
     /** GET /api/v2/collections
