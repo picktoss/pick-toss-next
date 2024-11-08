@@ -1,13 +1,4 @@
-type Collection = {
-  id: number
-  name: string
-  emoji: string
-  bookmarkCount: number
-  collectionField: string
-  memberName: string
-  quizCount: number
-}
-
+// Common Types
 type CollectionField =
   | 'IT'
   | 'LAW'
@@ -19,6 +10,40 @@ type CollectionField =
   | 'SCIENCE_ENGINEERING'
   | 'HISTORY_PHILOSOPHY'
   | 'OTHER'
+
+type QuizType = 'MIX_UP' | 'MULTIPLE_CHOICE'
+
+type BaseQuiz = {
+  question: string
+  answer: string
+  explanation: string
+  options: string[]
+}
+
+type QuizWithType = BaseQuiz & {
+  quizType: QuizType
+}
+
+type Collection = {
+  id: number
+  name: string
+  emoji: string
+  bookmarkCount: number
+  collectionField: CollectionField
+  memberName: string
+  quizCount: number
+}
+
+type CollectionQuizResult = {
+  quizId: number
+  elapsedTimeMs: number
+  isAnswer: boolean
+  choseAnswer: string
+}
+
+type AnsweredQuiz = BaseQuiz & {
+  choseAnswer: string
+}
 
 /** GET /api/v2/collections */
 interface AllCollectionsResponse {
@@ -33,14 +58,8 @@ interface KeywordCollectionsResponse {
 /** GET /api/v2/collections/{collection_id}/record */
 interface CollectionRecordResponse {
   createdAt: string
-  elapsedTime: numberz
-  quizzes: {
-    question: string
-    answer: string
-    explanation: string
-    options: string[]
-    choseAnswer: string
-  }[]
+  elapsedTime: number
+  quizzes: AnsweredQuiz[]
 }
 
 /** GET /api/v2/collections/{collection_id}/collection_info */
@@ -50,13 +69,7 @@ interface CollectionInfoResponse {
   description: string
   solvedCount: number
   bookmarkCount: number
-  quizzes: {
-    question: string
-    answer: string
-    explanation: string
-    options: string[]
-    quizType: 'MIX_UP' | 'MULTIPLE_CHOICE'
-  }[]
+  quizzes: QuizWithType[]
 }
 
 /** GET /api/v2/collections/my-collections */
@@ -98,12 +111,7 @@ interface UpdateCollectionInfoPayload {
 
 /** PATCH /api/v2/collections/{collection_id}/update-collection-result */
 interface UpdateCollectionResultPayload {
-  collectionQuizzes: {
-    quizId: number
-    elapsedTimeMs: number
-    isAnswer: boolean
-    choseAnswer: string
-  }[]
+  collectionQuizzes: CollectionQuizResult[]
 }
 
 /** PATCH /api/v2/collection/{collection_id}/add-quiz */
@@ -123,54 +131,54 @@ interface CreateCollectionPayload {
 declare namespace Collection {
   type Item = Collection
   type List = Collection[]
-  type Field = CollectionField
+  type QuizResult = CollectionQuizResult
+  type AnsweredQuiz = AnsweredQuiz
 
   declare namespace Request {
     /** GET /api/v2/collections
-     * 모든 컬렉션 가져오기
+     * 모든 컬렉션 가져오기(탐색)
      */
-    type AllCollections = void
+    type GetAllCollections = void
 
     /** GET /api/v2/collections/{keyword}
-     * 키워드로 컬렉션 검색하기
+     * 컬렉션 검색하기
      */
-    type KeywordCollections = void
+    type GetCollectionsByKeyword = void
 
     /** GET /api/v2/collections/{collection_id}/record
-     * 퀴즈를 푼 컬렉션의 상세 기록 가져오기
+     * 퀴즈를 푼 컬렉션의 상세 기록
      */
-    type CollectionRecord = void
+    type GetCollectionRecord = void
 
     /** GET /api/v2/collections/{collection_id}/collection_info
-     * 특정 컬렉션의 상세 정보 가져오기
+     * 만든 컬렉션 상세 정보 가져오기
      */
-    type CollectionInfo = void
+    type GetCollectionInfo = void
 
     /** GET /api/v2/collections/my-collections
      * 직접 생성한 컬렉션 가져오기
      */
-    type MyCollections = void
+    type GetMyCollections = void
 
     /** GET /api/v2/collections/interest-field-collection
      * 사용자 관심 분야 컬렉션 가져오기
      */
-    type InterestFieldCollections = void
+    type GetInterestFieldCollections = void
 
     /** GET /api/v2/collections/bookmarked-collections
      * 북마크한 컬렉션 가져오기
      */
-    type BookmarkedCollections = void
+    type GetBookmarkedCollections = void
 
     /** GET /api/v2/collections-analysis
      * 컬렉션 분석
      */
-    type CollectionAnalysis = void
+    type GetCollectionsAnalysis = void
 
-    // PATCH Requests
     /** PATCH /api/v2/collections/{collection_id}/update-quizzes
      * 컬렉션 문제 편집
      */
-    type UpdateQuizzes = UpdateQuizzesPayload
+    type UpdateQuizzes = UpdateCollectionQuizzesPayload
 
     /** PATCH /api/v2/collections/{collection_id}/update-info
      * 컬렉션 정보 수정
@@ -178,7 +186,7 @@ declare namespace Collection {
     type UpdateInfo = UpdateCollectionInfoPayload
 
     /** PATCH /api/v2/collections/{collection_id}/update-collection-result
-     * 컬렉션 퀴즈 결과 업데이트
+     * 컬렉션을 풀었을 때 결과 업데이트
      */
     type UpdateCollectionResult = UpdateCollectionResultPayload
 
@@ -187,16 +195,10 @@ declare namespace Collection {
      */
     type AddQuiz = AddQuizPayload
 
-    // POST Requests
     /** POST /api/v2/collections
      * 컬렉션 생성
      */
     type CreateCollection = CreateCollectionPayload
-
-    /** POST /api/v2/collections/{collection_id}/create-bookmark
-     * 컬렉션 북마크하기
-     */
-    type CreateBookmark = void
 
     // DELETE Requests
     /** DELETE /api/v2/collections/{collection_id}/delete-collection
@@ -205,53 +207,52 @@ declare namespace Collection {
     type DeleteCollection = void
 
     /** DELETE /api/v2/collections/{collection_id}/delete-bookmark
-     * 컬렉션 북마크 삭제
+     * 컬렉션 북마크 취소하기
      */
     type DeleteBookmark = void
   }
 
   declare namespace Response {
     /** GET /api/v2/collections
-     * 모든 컬렉션 가져오기
+     * 모든 컬렉션 가져오기(탐색)
      */
-    type AllCollections = AllCollectionsResponse
+    type GetAllCollections = AllCollectionsResponse
 
     /** GET /api/v2/collections/{keyword}
-     * 키워드로 컬렉션 검색하기
+     * 컬렉션 검색하기
      */
-    type KeywordCollections = KeywordCollectionsResponse
+    type GetCollectionsByKeyword = KeywordCollectionsResponse
 
     /** GET /api/v2/collections/{collection_id}/record
-     * 퀴즈를 푼 컬렉션의 상세 기록 가져오기
+     * 퀴즈를 푼 컬렉션의 상세 기록
      */
-    type CollectionRecord = CollectionRecordResponse
+    type GetCollectionRecord = CollectionRecordResponse
 
     /** GET /api/v2/collections/{collection_id}/collection_info
-     * 특정 컬렉션의 상세 정보 가져오기
+     * 만든 컬렉션 상세 정보 가져오기
      */
-    type CollectionInfo = CollectionInfoResponse
+    type GetCollectionInfo = CollectionInfoResponse
 
     /** GET /api/v2/collections/my-collections
      * 직접 생성한 컬렉션 가져오기
      */
-    type MyCollections = MyCollectionsResponse
+    type GetMyCollections = MyCollectionsResponse
 
     /** GET /api/v2/collections/interest-field-collection
      * 사용자 관심 분야 컬렉션 가져오기
      */
-    type InterestFieldCollections = InterestFieldCollectionsResponse
+    type GetInterestFieldCollections = InterestFieldCollectionsResponse
 
     /** GET /api/v2/collections/bookmarked-collections
      * 북마크한 컬렉션 가져오기
      */
-    type BookmarkedCollections = BookmarkedCollectionsResponse
+    type GetBookmarkedCollections = BookmarkedCollectionsResponse
 
     /** GET /api/v2/collections-analysis
      * 컬렉션 분석
      */
-    type CollectionAnalysis = CollectionAnalysisResponse
+    type GetCollectionsAnalysis = CollectionAnalysisResponse
 
-    // PATCH Responses
     /** PATCH /api/v2/collections/{collection_id}/update-quizzes
      * 컬렉션 문제 편집
      */
@@ -263,7 +264,7 @@ declare namespace Collection {
     type UpdateInfo = void
 
     /** PATCH /api/v2/collections/{collection_id}/update-collection-result
-     * 컬렉션 퀴즈 결과 업데이트
+     * 컬렉션을 풀었을 때 결과 업데이트
      */
     type UpdateCollectionResult = void
 
@@ -272,25 +273,18 @@ declare namespace Collection {
      */
     type AddQuiz = void
 
-    // POST Responses
     /** POST /api/v2/collections
      * 컬렉션 생성
      */
     type CreateCollection = Collection
 
-    /** POST /api/v2/collections/{collection_id}/create-bookmark
-     * 컬렉션 북마크하기
-     */
-    type CreateBookmark = void
-
-    // DELETE Responses
     /** DELETE /api/v2/collections/{collection_id}/delete-collection
      * 컬렉션 삭제
      */
     type DeleteCollection = void
 
     /** DELETE /api/v2/collections/{collection_id}/delete-bookmark
-     * 컬렉션 북마크 삭제
+     * 컬렉션 북마크 취소하기
      */
     type DeleteBookmark = void
   }
