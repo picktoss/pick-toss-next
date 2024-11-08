@@ -24,21 +24,21 @@ const InviteReward = () => {
         overlayProps={{ className: 'max-w-mobile mx-auto' }}
         className="mx-auto flex h-[80dvh] max-w-mobile flex-col rounded-t-[20px]"
       >
-        <div className="px-[45px] my-[20px] overflow-y-auto flex flex-col w-full h-[calc(80dvh-12px)] gap-[40px]">
-          <header className="mt-[40px] flex flex-col w-full items-center gap-[24px]">
+        <div className="my-[20px] flex h-[calc(80dvh-12px)] w-full flex-col gap-[40px] overflow-y-auto px-[45px]">
+          <header className="mt-[40px] flex w-full flex-col items-center gap-[24px]">
             <div className="relative">
               <Icon name="star" className="size-[82px]" />
               <Text
                 typography="title3"
                 color="secondary"
-                className="absolute right-0 bottom-0 font-suit"
+                className="absolute bottom-0 right-0 font-suit"
               >
                 x50
               </Text>
             </div>
 
             <div className="flex flex-col items-center gap-[8px]">
-              <DrawerTitle className="text-title3 font-suit">초대할 때마다 별 50개!</DrawerTitle>
+              <DrawerTitle className="font-suit text-title3">초대할 때마다 별 50개!</DrawerTitle>
 
               <Text typography="text1-regular" color="secondary" className="text-center">
                 친구, 가족, 지인들에게 픽토스를 공유해주세요 <br />
@@ -64,14 +64,14 @@ const InviteReward = () => {
             <div className="flex flex-col gap-[8px]">
               <Button
                 variant={'mediumRound'}
-                className="bg-background-kakao hover:bg-background-kakao text-icon-kakao w-full"
+                className="w-full bg-background-kakao text-icon-kakao hover:bg-background-kakao"
               >
-                <Icon name="kakao" className="size-[20px] mr-[12px]" />
+                <Icon name="kakao" className="mr-[12px] size-[20px]" />
                 카카오톡에 공유하기
               </Button>
 
               <Button variant={'mediumRound'} className="w-full">
-                <Icon name="share" className="size-[20px] mr-[8px]" />
+                <Icon name="share" className="mr-[8px] size-[20px]" />
                 링크 공유하기
               </Button>
             </div>
