@@ -2,14 +2,14 @@ import Icon from '@/shared/components/custom/icon'
 import Tag from '@/shared/components/ui/tag'
 import Text from '@/shared/components/ui/text'
 import { cn } from '@/shared/lib/utils'
-import NoteTypeIcon from '@/features/note/components/note-type-icon'
+import DocumentTypeIcon from '@/features/document/components/document-type-icon'
 
 interface Props {
   noteType: 'file' | 'write' | 'notion'
   noteTitle: string
   matchingSentence: string
-  resultType: 'note' | 'quiz'
-  noteFolder: string
+  resultType: 'document' | 'quiz'
+  noteDirectory: string
   lastItem?: boolean
 }
 
@@ -18,7 +18,7 @@ const SearchItem = ({
   noteTitle,
   matchingSentence,
   resultType,
-  noteFolder,
+  noteDirectory,
   lastItem,
 }: Props) => {
   return (
@@ -29,7 +29,7 @@ const SearchItem = ({
       )}
     >
       <div className="mb-[8px] flex items-center">
-        <NoteTypeIcon
+        <DocumentTypeIcon
           type={noteType}
           containerClassName="size-[20px] mr-[8px]"
           iconClassName="size-[10px]"
@@ -42,12 +42,12 @@ const SearchItem = ({
 
       <div className="mt-[8px] flex items-center">
         <Tag colors={'tertiary'} className="mr-[8px]">
-          {resultType === 'note' && '노트 결과'}
+          {resultType === 'document' && '노트 결과'}
           {resultType === 'quiz' && '퀴즈 결과'}
         </Tag>
         <div className="flex items-center">
-          <Icon name="folder-fill" className="mr-[4px] size-[14px] text-icon-tertiary" />
-          <Text>{noteFolder}</Text>
+          <Icon name="directory-fill" className="mr-[4px] size-[14px] text-icon-tertiary" />
+          <Text>{noteDirectory}</Text>
         </div>
       </div>
     </div>

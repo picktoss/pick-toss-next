@@ -9,10 +9,10 @@ import {
 } from '@/shared/components/ui/dropdown-menu'
 import Text from '@/shared/components/ui/text'
 import { cn } from '@/shared/lib/utils'
-import QuizNoteDialog from '@/features/quiz/components/quiz-note-dialog'
 import { MouseEvent, useState } from 'react'
 import AddCollectionDrawer from '../../collection/components/add-collection-drawer'
 import NoCollectionDialog from '../../collection/components/no-collection-dialog'
+import DirectoryDialog from './directory-dialog'
 
 const QuizCardMenu = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -57,7 +57,7 @@ const QuizCardMenu = () => {
           <NoCollectionDialog isOpen={isOpenCollection} onOpenChange={setIsOpenCollection} />
 
           {/* 문서 삭제 */}
-          <QuizNoteDialog
+          <DirectoryDialog
             triggerComponent={
               <DropdownMenuItem
                 className={cn(

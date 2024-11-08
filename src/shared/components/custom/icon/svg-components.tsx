@@ -572,7 +572,7 @@ export const Share = ({ ...props }) => {
   )
 }
 
-export const Folder = ({ ...props }) => {
+export const Directory = ({ ...props }) => {
   return (
     <svg
       width="20"
@@ -591,7 +591,7 @@ export const Folder = ({ ...props }) => {
   )
 }
 
-export const FolderFill = ({ ...props }) => {
+export const DirectoryFill = ({ ...props }) => {
   return (
     <svg
       width="14"
@@ -685,7 +685,7 @@ export const Sort = ({ ...props }) => {
   )
 }
 
-// note
+// document
 export const Document = ({ ...props }) => {
   return (
     <svg
@@ -735,7 +735,7 @@ export const PastRecord = ({ ...props }) => {
 }
 
 // write
-export const WriteNote = ({ ...props }) => {
+export const WriteDocument = ({ ...props }) => {
   return (
     <svg
       width="20"
@@ -1583,7 +1583,7 @@ export const RandomQuizIcon = ({ ...props }) => {
   )
 }
 
-export const Note = ({ ...props }) => {
+export const MyCollection = ({ ...props }) => {
   return (
     <svg
       width="32"
@@ -1776,6 +1776,55 @@ export const TodayQuiz = ({ ...props }) => {
           <stop offset="1" stopColor="#FDA53A" />
         </linearGradient>
       </defs>
+    </svg>
+  )
+}
+
+export const CorrectCheckRound = ({ ...props }) => {
+  return (
+    <svg
+      width="32"
+      height="32"
+      viewBox="0 0 32 32"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <circle cx="16" cy="16" r="16" fill="#3ACC83" />
+      <path
+        d="M9.77734 15.3017L14.6469 20.4446L22.2218 12.4446"
+        stroke="white"
+        strokeWidth="2.66667"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
+export const WrongXRound = ({ ...props }) => {
+  return (
+    <svg
+      width="32"
+      height="32"
+      viewBox="0 0 32 32"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <circle cx="16" cy="16" r="16" fill="#F4502C" />
+      <path
+        d="M10.668 10.666L21.3346 21.3327"
+        stroke="white"
+        strokeWidth="2.66667"
+        strokeLinecap="round"
+      />
+      <path
+        d="M21.332 10.666L10.6654 21.3327"
+        stroke="white"
+        strokeWidth="2.66667"
+        strokeLinecap="round"
+      />
     </svg>
   )
 }

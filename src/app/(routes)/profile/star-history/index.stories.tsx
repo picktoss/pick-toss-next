@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react'
 import StarHistoryPage from './page'
 import Layout from './layout'
+import Header from './@header/default'
 
 const meta: Meta<typeof StarHistoryPage> = {
   title: 'Page/StarHistory',
@@ -21,7 +22,7 @@ export default meta
 
 export const Default: StoryObj<typeof StarHistoryPage> = {
   render: () => (
-    <Layout>
+    <Layout header={<Header />}>
       <StarHistoryPage />
     </Layout>
   ),
