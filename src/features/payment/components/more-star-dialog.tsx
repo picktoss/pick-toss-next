@@ -8,6 +8,7 @@ import {
 import Image from 'next/image'
 import Text from '@/shared/components/ui/text'
 import { Button } from '@/shared/components/ui/button'
+import { useRouter } from 'next/navigation'
 
 interface Props {
   isOpen: boolean
@@ -15,6 +16,8 @@ interface Props {
 }
 
 const MoreStarDialog = ({ isOpen, setIsOpen }: Props) => {
+  const router = useRouter()
+
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild></DialogTrigger>
@@ -39,7 +42,12 @@ const MoreStarDialog = ({ isOpen, setIsOpen }: Props) => {
             퀴즈 한 문제당 별 하나가 필요해요
           </Text>
         </div>
-        <Button variant={'largeRound'} colors={'primary'} className="mb-[16px]">
+        <Button
+          variant={'largeRound'}
+          colors={'primary'}
+          className="mb-[16px]"
+          onClick={() => router.push('/star-charge')}
+        >
           별 충전하기
         </Button>
         <DialogClose className="text-button-text-tertiary">닫기</DialogClose>
