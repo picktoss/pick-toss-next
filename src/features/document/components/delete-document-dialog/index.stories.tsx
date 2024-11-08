@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react'
 import DeleteDocumentDialog from '.'
 
-const meta: Meta<typeof DeleteDocumentDialog> = {
+const meta = {
   title: 'document/DeleteDocumentDialog',
   component: DeleteDocumentDialog,
   tags: ['autodocs'],
@@ -15,7 +15,7 @@ const meta: Meta<typeof DeleteDocumentDialog> = {
       </div>
     ),
   ],
-}
+} satisfies Meta<typeof DeleteDocumentDialog>
 
 export default meta
 
