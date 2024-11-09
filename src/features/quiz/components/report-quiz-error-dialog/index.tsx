@@ -36,7 +36,7 @@ const ResultQuizErrorDialog = () => {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger>
+      <DialogTrigger asChild>
         <button className="flex items-center gap-[4px]">
           <Icon name="question" />
           <Text typography="text2-medium" color="sub">
