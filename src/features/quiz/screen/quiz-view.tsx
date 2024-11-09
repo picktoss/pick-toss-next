@@ -9,6 +9,7 @@ import Text from '@/shared/components/ui/text'
 import QuizProgressBar from '../components/quiz-progress-bar'
 import MultipleOption from '../components/multiple-option'
 import OXChoice from '../components/ox-choice'
+import ResultQuizErrorDialog from '../components/report-quiz-error-dialog'
 
 const mockQuizzes = quizzes
 
@@ -61,6 +62,10 @@ const QuizView = () => {
                   />
                 </div>
               )}
+            </div>
+
+            <div className="mt-[40px] px-[16px]">
+              <ResultQuizErrorDialog />
             </div>
           </div>
         ),
