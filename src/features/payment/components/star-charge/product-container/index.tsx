@@ -1,6 +1,6 @@
 'use client'
 
-import { productInfoList } from '@/features/payment/constants/product-info-list'
+import { productInfoList } from '@/features/payment/config/product-info-list'
 import { motion, useAnimation, useMotionValue } from 'framer-motion'
 import ItemCard from '../item-card'
 import { useEffect, useRef, useState } from 'react'
