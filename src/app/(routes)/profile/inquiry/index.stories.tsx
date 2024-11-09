@@ -2,6 +2,7 @@ import { Meta, StoryObj } from '@storybook/react'
 import InquiryPage from './page'
 import Header from './@header/default'
 import { InquiryProvider } from '@/features/user/contexts/inquiry-context'
+import Layout from './layout'
 
 const meta: Meta<typeof InquiryPage> = {
   title: 'Page/Inquiry',
@@ -27,9 +28,8 @@ type Story = StoryObj<typeof InquiryPage>
 
 export const Default: Story = {
   render: () => (
-    <>
-      <Header />
+    <Layout header={<Header />}>
       <InquiryPage />
-    </>
+    </Layout>
   ),
 }
