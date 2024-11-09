@@ -5,7 +5,9 @@ import STARS_IN_POCKET from '@/../../public/images/stars-in-pocket.png'
 export const productInfoList = [
   {
     key: 'box',
-    image: <Image src={STARS_IN_BOX} alt="" className="ml-[5px] h-[89px] w-auto" />,
+    image: (
+      <Image src={STARS_IN_BOX} alt="" className="pointer-events-none ml-[5px] h-[89px] w-auto" />
+    ),
     tagMessage: '+50% 보너스',
     starCount: 100,
     bonusCount: 40,
@@ -13,7 +15,7 @@ export const productInfoList = [
   },
   {
     key: 'pocket',
-    image: <Image src={STARS_IN_POCKET} alt="" className="h-[89px] w-auto" />,
+    image: <Image src={STARS_IN_POCKET} alt="" className="pointer-events-none h-[89px] w-auto" />,
     tagMessage: '+50% 보너스',
     starCount: 80,
     bonusCount: 30,
@@ -21,7 +23,7 @@ export const productInfoList = [
   },
   {
     key: 'another',
-    image: <Image src={STARS_IN_POCKET} alt="" className="h-[89px] w-auto" />,
+    image: <Image src={STARS_IN_POCKET} alt="" className="pointer-events-none h-[89px] w-auto" />,
     tagMessage: '+50% 보너스',
     starCount: 80,
     bonusCount: 30,
