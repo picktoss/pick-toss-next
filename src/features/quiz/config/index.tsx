@@ -58,3 +58,6 @@ export const reportOptions = [
   { id: '2', label: '퀴즈 유형과 질문이 맞지 않아요' },
   { id: '3', label: '퀴즈가 노트와 관련 없는 내용이에요' },
 ] as const
+
+export const QUIZ_ANIMATION_DURATION = 1
+export const UNTIL_EXPLANATION_DRAWER_OPEN = 800

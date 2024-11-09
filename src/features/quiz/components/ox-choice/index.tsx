@@ -4,16 +4,16 @@ import { SVGProps } from 'react'
 
 interface OXChoiceProps {
   condition: 'idle' | 'correct' | 'wrong'
-  userAnswer?: 'O' | 'X'
-  onSelect: (userAnswer: 'O' | 'X') => void
+  userAnswer?: 'correct' | 'wrong'
+  onSelect: (userAnswer: 'correct' | 'wrong') => void
 }
 
 const OXChoice = ({ condition, userAnswer, onSelect }: OXChoiceProps) => {
   const disabled = condition === 'correct' || condition === 'wrong'
 
-  const getIconColors = (type: 'O' | 'X') => {
+  const getIconColors = (type: 'correct' | 'wrong') => {
     const defaultColors = {
-      bg: type === 'O' ? '#4D7BF9' : '#FB8320', // 기본 배경색
+      bg: type === 'correct' ? '#4D7BF9' : '#FB8320', // 기본 배경색
       fill: 'white', // 기본 채우기색
     }
 
@@ -44,19 +44,19 @@ const OXChoice = ({ condition, userAnswer, onSelect }: OXChoiceProps) => {
         className="flex-1"
         disabled={disabled}
         onClick={() => {
-          onSelect('O')
+          onSelect('correct')
         }}
       >
-        <CorrectOptionIcon className="size-full" {...getIconColors('O')} />
+        <CorrectOptionIcon className="size-full" {...getIconColors('correct')} />
       </button>
       <button
         className="flex-1"
         disabled={disabled}
         onClick={() => {
-          onSelect('X')
+          onSelect('wrong')
         }}
       >
-        <WrongOptionIcon className="size-full" {...getIconColors('X')} />
+        <WrongOptionIcon className="size-full" {...getIconColors('wrong')} />
       </button>
     </div>
   )
