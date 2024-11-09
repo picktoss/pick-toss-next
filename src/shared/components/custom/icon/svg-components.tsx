@@ -1642,6 +1642,39 @@ export const Kakao = ({ ...props }) => {
   )
 }
 
+export const KakaoWithBackground = ({ ...props }) => {
+  const clipId = useId()
+
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <circle cx="10" cy="10" r="9.58333" fill="#FFE45F" stroke="#FFE45F" strokeWidth="0.833333" />
+      <g clipPath={`url(#${clipId})`}>
+        <path
+          d="M9.99989 5.8157C7.10077 5.8157 4.75 7.62162 4.75 9.85066C4.75 11.2824 5.72365 12.5395 7.18585 13.2571L6.69117 15.0537C6.67224 15.1088 6.68795 15.1672 6.72904 15.207C6.75732 15.2347 6.79508 15.25 6.83606 15.25C6.86768 15.25 6.89909 15.2378 6.92749 15.2163L9.05453 13.8181C9.36345 13.861 9.67861 13.8855 9.99989 13.8855C12.899 13.8855 15.25 12.0797 15.25 9.85066C15.25 7.62162 12.899 5.8157 9.99989 5.8157Z"
+          fill="#3C1E1E"
+        />
+      </g>
+      <defs>
+        <clipPath id={clipId}>
+          <rect
+            width="11.6667"
+            height="11.6667"
+            fill="white"
+            transform="translate(4.1665 4.16602)"
+          />
+        </clipPath>
+      </defs>
+    </svg>
+  )
+}
+
 export const Google = ({ ...props }) => {
   return (
     <svg

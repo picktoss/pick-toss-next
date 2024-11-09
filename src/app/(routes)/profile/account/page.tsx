@@ -53,7 +53,7 @@ const AccountPage = () => {
             </Text>
             <div className="flex items-center gap-[8px]">
               {/* 카카오 로그인 */}
-              <Icon name="kakao" className="size-[20px]" />
+              <Icon name="kakao-with-background" className="size-[20px]" />
               <Text typography="subtitle2-medium">카카오 로그인</Text>
 
               {/* 구글 로그인 */}
