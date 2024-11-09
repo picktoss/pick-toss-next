@@ -1,22 +1,31 @@
+import BombQuizView from '@/features/quiz/screen/bomb-quiz-view'
 import QuizView from '@/features/quiz/screen/quiz-view'
+import RandomQuizView from '@/features/quiz/screen/random-quiz-view'
+import { fetchQuizSet } from '@/requests/quiz'
+import { notFound } from 'next/navigation'
 
-// interface Props {
-//   params: {
-//     id: string
-//   }
-// }
+interface Props {
+  params: {
+    id: string
+  }
+  searchParams: {
+    quizType: 'today' | 'bomb' | 'random'
+  }
+}
 
-const QuizDetailPage = (/* { params }: Props */) => {
-  //   const quizId = params.id
-  // TODO: 퀴즈 가져옴 server side
+const QuizDetailPage = async ({ params, searchParams }: Props) => {
+  const quizType = searchParams.quizType
+  const quizSet = await fetchQuizSet({ quizSetId: params.id })
 
-  const quizType: 'today' | 'bomb' | 'random' = 'today'
+  if (!quizSet) {
+    notFound()
+  }
 
   return (
     <>
-      {quizType === 'today' && <QuizView />}
-      {/* {quizType === 'random' && <RandomQuizView />} */}
-      {/* {quizType === 'bomb' && <BombQuizView />} */}
+      {quizType === 'today' && <QuizView quizzes={quizSet.quizzes} />}
+      {quizType === 'random' && <RandomQuizView />}
+      {quizType === 'bomb' && <BombQuizView />}
     </>
   )
 }
