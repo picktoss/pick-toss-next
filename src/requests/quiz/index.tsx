@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use server'
 
 import { auth } from '@/app/api/auth/[...nextauth]/auth'
@@ -17,7 +19,7 @@ export const fetchTodayQuizSetId = async () => {
       }
     )
     return data
-  } catch (error) {
+  } catch (error: any) {
     console.error(error.status)
     throw error
   }
@@ -36,7 +38,7 @@ export const fetchQuizSet = async ({ quizSetId }: { quizSetId: string }) => {
       }
     )
     return data
-  } catch (error) {
+  } catch (error: any) {
     console.error(error.status)
   }
 }

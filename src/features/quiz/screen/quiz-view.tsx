@@ -17,6 +17,7 @@ interface Props {
 }
 
 const QuizView = ({ quizzes }: Props) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [step, setStep] = useState<'idle' | 'solve' | 'result'>('solve')
 
   // 선지가 노출된 후 카운트 활성화
@@ -58,11 +59,12 @@ const QuizView = ({ quizzes }: Props) => {
                   ))}
                 </div>
               )}
-              {curQuiz.type === 'ox' && (
+              {curQuiz.quizType === 'ox' && (
                 <div className="mt-[74px]">
                   <OXChoice
                     condition="wrong"
                     userAnswer="X"
+                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
                     onSelect={(userAnswer: 'O' | 'X') => {}}
                   />
                 </div>
