@@ -4,6 +4,7 @@ import {
   Drawer,
   DrawerClose,
   DrawerContent,
+  DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
 } from '@/shared/components/ui/drawer'
@@ -23,15 +24,15 @@ const StarInstructionDrawer = () => {
         overlayProps={{ className: 'max-w-mobile mx-auto' }}
         className="mx-auto flex h-[60dvh] max-w-mobile flex-col rounded-t-[20px]"
       >
-        <header className="mt-[16px] flex w-full items-center justify-between px-[18px] mt-[24px]">
+        <DrawerHeader className="mt-[24px] flex w-full items-center justify-between px-[18px]">
           <DrawerTitle className="text-title3">별 사용 안내</DrawerTitle>
           <DrawerClose asChild className="cursor-pointer text-text-primary">
             <Icon name="cancel" className="size-[24px]"></Icon>
           </DrawerClose>
-        </header>
+        </DrawerHeader>
 
-        <div className="px-[18px] py-[24px] overflow-y-auto">
-          <div className="flex flex-col mb-[30px]">
+        <div className="overflow-y-auto px-[18px] py-[24px]">
+          <div className="mb-[30px] flex flex-col">
             <Text typography="subtitle2-bold" className="mb-[12px]">
               별은 어떻게 사용되나요?
             </Text>

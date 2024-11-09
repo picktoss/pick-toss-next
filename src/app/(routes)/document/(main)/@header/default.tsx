@@ -10,6 +10,7 @@ import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from '@/shared/comp
 import SortIconBtn from '@/features/document/components/sort-icon-button'
 import DirectoryMenuDots from '@/features/document/components/directory-menu-dots'
 import SetDirectoryNameDialog from '@/features/document/components/set-directory-name-dialog'
+import GoBackButton from '@/shared/components/custom/go-back-button'
 
 // Header 컴포넌트
 const Header = () => {
@@ -31,9 +32,7 @@ const Header = () => {
         <div className="flex size-full items-center justify-between">
           {isSelectMode ? (
             <>
-              <button onClick={() => setIsSelectMode(false)}>
-                <Icon name="cancel" className="size-[24px]" />
-              </button>
+              <GoBackButton icon="cancel" onClick={() => setIsSelectMode(false)} />
 
               <Text as="span" typography="subtitle2-medium" className="ml-[35px]">
                 전공 공부
