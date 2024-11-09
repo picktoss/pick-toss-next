@@ -1608,6 +1608,8 @@ export const MyCollection = ({ ...props }) => {
 }
 
 export const Graph = ({ ...props }) => {
+  const { fill, ...rest } = props
+
   return (
     <svg
       width="32"
@@ -1615,7 +1617,7 @@ export const Graph = ({ ...props }) => {
       viewBox="0 0 32 32"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      {...props}
+      {...rest}
     >
       <path
         d="M11.2441 8.05725C11.2441 7.22579 11.9182 6.55176 12.7496 6.55176H19.252C20.0835 6.55176 20.7575 7.22579 20.7575 8.05725V31.6325H11.2441V8.05725Z"
@@ -1629,7 +1631,13 @@ export const Graph = ({ ...props }) => {
         d="M22.4868 19.2994C22.4868 18.468 23.1608 17.7939 23.9923 17.7939H30.4947C31.3262 17.7939 32.0002 18.468 32.0002 19.2994V31.6316H22.4868V19.2994Z"
         fill="#A0C2FF"
       />
-      <ellipse cx="22.8087" cy="6.15539" rx="5.78722" ry="5.78722" fill="#FB8320" />
+      <ellipse
+        cx="22.8087"
+        cy="6.15539"
+        rx="5.78722"
+        ry="5.78722"
+        fill={(fill as string) ?? '#FB8320'}
+      />
       <path
         d="M20.4253 6.21448L22.1819 7.85679L25.1912 4.79297"
         stroke="#F5F7F9"

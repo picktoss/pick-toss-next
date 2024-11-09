@@ -7,7 +7,7 @@ const Header = () => {
       <Icon name="logo" className="h-[36px]" />
 
       <div className="flex-center gap-[16px]">
-        <Text typography="subtitle2-bold" className="flex-center text-text-secondary">
+        <Text typography="subtitle2-bold" color="secondary" className="flex-center">
           <Icon name="star" className="mr-[4px] size-[20px]" />
           130
         </Text>
