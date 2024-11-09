@@ -1,5 +1,4 @@
 import StarChargeHeader from '@/features/payment/components/star-charge/star-charge-header'
-import SHINY_STAR_IMG from '@/../../public/images/star-shiny.png'
 import Image from 'next/image'
 import Text from '@/shared/components/ui/text'
 import Icon from '@/shared/components/custom/icon'
@@ -12,32 +11,27 @@ const StarChargePage = () => {
     <div className="flex size-full h-screen flex-col justify-between overflow-x-hidden">
       <StarChargeHeader />
 
-      <main className="flex h-[calc(100dvh-54px)] w-full flex-col justify-between overflow-y-auto overflow-x-hidden">
-        <div className="mt-[10px] flex max-h-[calc(350px-54px)] w-full grow flex-col">
-          <div className="w-full flex-col">
-            <Image
-              src={SHINY_STAR_IMG}
-              alt=""
-              className="size-[20dvh] max-h-[160px] max-w-[160px] justify-self-center"
-            />
-
-            <div className="mt-[2dvh] flex flex-col items-center gap-[9px]">
-              <Text typography="title3" color="primary-inverse">
-                별을 충전해{' '}
-                <Text as="span" color="accent">
-                  퀴즈
-                </Text>
-                를 만들어보세요
+      <main className="flex h-[calc(100dvh-54px)] w-full flex-col gap-[30px] overflow-y-auto overflow-x-hidden">
+        <div className="flex w-full grow flex-col items-center justify-center">
+          <div className="relative size-[20dvh] flex-col">
+            <Image src="/images/star-shiny.png" fill alt="" className="justify-self-center" />
+          </div>
+          <div className="mt-[2dvh] flex flex-col items-center gap-[9px]">
+            <Text typography="title3" color="primary-inverse">
+              별을 충전해{' '}
+              <Text as="span" color="accent">
+                퀴즈
               </Text>
+              를 만들어보세요
+            </Text>
 
-              <Text typography="text2-medium" color="primary-inverse">
-                새로 생긴 퀴즈만큼 나의 실력은 상승할 거예요
-              </Text>
-            </div>
+            <Text typography="text2-medium" color="primary-inverse">
+              새로 생긴 퀴즈만큼 나의 실력은 상승할 거예요
+            </Text>
           </div>
         </div>
 
-        <div className="flex h-fit w-full flex-col pt-[10px]">
+        <div className="flex h-[50dvh] min-h-fit w-full flex-col justify-center pt-[10px]">
           <div className="mb-[10px] flex items-center justify-between px-[16px]">
             <div className="flex items-center">
               <Icon name="star" className="mr-[4px] size-[16px]" />
