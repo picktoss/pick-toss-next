@@ -7,8 +7,8 @@ const meta = {
   title: 'Page/Directory',
   component: DirectoryPage,
   parameters: {
-    nextjs: { appDirectory: true },
     layout: 'fullscreen',
+    nextjs: { appDirectory: true },
   },
   decorators: [
     (Story) => (

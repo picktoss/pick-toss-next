@@ -7,6 +7,7 @@ const meta: Meta<typeof InquiryPage> = {
   title: 'Page/Inquiry',
   component: InquiryPage,
   parameters: {
+    layout: 'fullscreen',
     nextjs: { appDirectory: true },
   },
   decorators: [

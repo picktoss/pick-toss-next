@@ -6,8 +6,8 @@ const meta: Meta<typeof AccountPage> = {
   title: 'Page/AccountPage',
   component: AccountPage,
   parameters: {
-    nextjs: { appDirectory: true },
     layout: 'fullscreen',
+    nextjs: { appDirectory: true },
   },
   decorators: [
     (Story) => (
