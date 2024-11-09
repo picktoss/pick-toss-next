@@ -10,12 +10,18 @@ import {
 import { Input } from '@/shared/components/ui/input'
 import Tag from '@/shared/components/ui/tag'
 import Text from '@/shared/components/ui/text'
+import { cn } from '@/shared/lib/utils'
 
-const InviteReward = () => {
+const InviteReward = ({ className }: { className?: HTMLElement['className'] }) => {
   return (
     <Drawer>
       <DrawerTrigger asChild>
-        <button className="flex h-[56px] w-full items-center justify-between rounded-[12px] bg-background-container-03 px-[20px] py-[10px]">
+        <button
+          className={cn(
+            'flex h-[56px] w-full items-center justify-between rounded-[12px] bg-background-container-03 px-[20px] py-[10px]',
+            className
+          )}
+        >
           <div className="flex-center gap-[8px]">
             <Tag className="bg-fill-primary-blue">EVENT</Tag>
             <Text typography="text1-bold" className="text-text-info">
