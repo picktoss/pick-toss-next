@@ -52,3 +52,9 @@ export const tabs = [
   { key: 'exploration', label: '탐색' },
   { key: 'my-collection', label: '내 컬렉션' },
 ] as const
+
+export const reportOptions = [
+  { id: '1', label: '선지 혹은 질문이 보이지 않아요' },
+  { id: '2', label: '퀴즈 유형과 질문이 맞지 않아요' },
+  { id: '3', label: '퀴즈가 노트와 관련 없는 내용이에요' },
+] as const

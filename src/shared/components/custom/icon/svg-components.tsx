@@ -1828,3 +1828,37 @@ export const WrongXRound = ({ ...props }) => {
     </svg>
   )
 }
+
+export const Timer = ({ ...props }) => {
+  return (
+    <svg
+      width="16"
+      height="17"
+      viewBox="0 0 16 17"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <circle cx="8" cy="9.83337" r="6" stroke="currentColor" strokeWidth="1.2" />
+      <path d="M8 6.5L8 9.83333" stroke="currentColor" strokeWidth="1.2" strokeLinecap="square" />
+      <path
+        d="M13.8379 3.95782L12.5118 5.28394"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M10 1.83337L6 1.83337"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        strokeLinecap="square"
+      />
+      <path
+        d="M14.666 4.57849L13.2543 3.16671"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        strokeLinecap="square"
+      />
+    </svg>
+  )
+}
