@@ -1,11 +1,11 @@
 import Icon from '@/shared/components/custom/icon'
 
 interface Props {
-  selectedCategoryId: string | null
-  selectCategoryId: (categoryId?: string) => void
+  selectedDirectoryId: string | null
+  selectDirectoryId: (categoryId?: string) => void
 }
 
-const CategorySelect = ({}: Props) => {
+const DirectorySelect = ({}: Props) => {
   return (
     <button className="flex items-center gap-[8px]">
       <span>📚</span>
@@ -15,4 +15,4 @@ const CategorySelect = ({}: Props) => {
   )
 }
 
-export default CategorySelect
+export default DirectorySelect

@@ -10,8 +10,8 @@ import DocumentTypeIcon from '@/features/document/components/document-type-icon'
 import Tag from '@/shared/components/ui/tag'
 import { useRouter } from 'next/navigation'
 import MoveDocumentDrawer from '@/features/document/components/move-document-drawer'
-import { useDirectoryContext } from '../contexts/directory-context'
-import DeleteDocumentDialog from './delete-document-dialog'
+import { useDirectoryContext } from '../../contexts/directory-context'
+import DeleteDocumentDialog from '../delete-document-dialog'
 import usePreviousPath from '@/shared/hooks/use-previous-path'
 
 interface DocumentProps {

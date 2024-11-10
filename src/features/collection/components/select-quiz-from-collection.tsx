@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import CategorySelect from '../../category/components/category-select'
+import DirectorySelect from '../../directory/components/directory-select'
 import FixedBottom from '@/shared/components/custom/fixed-bottom'
 import { Button } from '@/shared/components/ui/button'
 import Text from '@/shared/components/ui/text'
@@ -11,8 +11,8 @@ import { Checkbox } from '@/shared/components/ui/checkbox'
 import Label from '@/shared/components/ui/label'
 
 const SelectQuizFromCollection = () => {
-  // TODO: 전체 or 카테고리 배열의 첫 번째 요소 | null이면 전체
-  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null)
+  // TODO: 전체 or 디렉토리 배열의 첫 번째 요소 | null이면 전체
+  const [selectedDirectoryId, setSelectedDirectoryId] = useState<string | null>(null)
   const [selectedQuizIds, setSelectedQuizIds] = useState<string[]>([])
   const [allChecked, setAllChecked] = useState(false)
 
@@ -44,9 +44,9 @@ const SelectQuizFromCollection = () => {
   return (
     <div className="mt-[24px] pb-[120px]">
       <div className="sticky top-[54px] z-20 flex h-[44px] items-center justify-between bg-white">
-        <CategorySelect
-          selectedCategoryId={selectedCategoryId}
-          selectCategoryId={(categoryId?: string) => setSelectedCategoryId(categoryId ?? null)}
+        <DirectorySelect
+          selectedDirectoryId={selectedDirectoryId}
+          selectDirectoryId={(directoryId?: string) => setSelectedDirectoryId(directoryId ?? null)}
         />
         <Text typography="text2-bold" className="text-text-accent">
           {selectedQuizCount}개 선택됨

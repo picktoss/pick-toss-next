@@ -6,12 +6,12 @@ import Quiz from '@/features/document/screens/quiz'
 
 interface Props {
   searchParams: {
-    tab: 'document-content' | 'quiz'
+    tab?: 'document-content' | 'quiz'
   }
 }
 
 const DocumentDetailPage = ({ searchParams }: Props) => {
-  const tab = searchParams.tab
+  const tab = searchParams.tab ?? 'document-content'
   const activeTab = ['document-content', 'quiz'].includes(tab) ? tab : 'document-content'
 
   return (
