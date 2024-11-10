@@ -6,6 +6,9 @@ const meta: Meta<typeof NotificationControlArea> = {
   title: 'notification/NotificationControlArea',
   component: NotificationControlArea,
   tags: ['autodocs'],
+  parameters: {
+    nextjs: { appDirectory: true },
+  },
   decorators: [
     (Story) => (
       <div className="mx-auto max-w-mobile">

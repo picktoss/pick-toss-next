@@ -1,4 +1,4 @@
-import QuizSolvedToday from '@/features/quiz/components/quiz-solved-today'
+import QuizSolvedToday from '@/features/analysis/components/quiz-solved-today'
 import CountdownToMidnight from '@/features/quiz/components/countdown-to-midnight'
 import Text from '@/shared/components/ui/text'
 import BOMB from '@/../../public/images/bomb.png'
