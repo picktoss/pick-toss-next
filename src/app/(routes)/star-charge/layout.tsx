@@ -9,7 +9,7 @@ interface LayoutProps extends PropsWithChildren {}
 const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
   return (
     <div
-      className="size-full min-h-screen"
+      className="size-full min-h-screen fixed"
       style={{
         backgroundImage: `url(${NIGHT_SKY_IMG.src})`,
         backgroundSize: '100% 100%',
