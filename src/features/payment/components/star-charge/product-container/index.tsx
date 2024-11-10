@@ -55,7 +55,7 @@ const ProductContainer = () => {
     <motion.div
       ref={containerRef}
       onWheel={handleWheel}
-      className="flex h-fit min-h-[200px] w-dvw max-w-mobile select-none snap-x gap-[8px] overflow-x-scroll px-[16px] scrollbar-hide"
+      className="flex h-fit min-h-[200px] w-dvw max-w-mobile select-none snap-x gap-[8px] px-[16px] scrollbar-hide"
       style={{
         scrollSnapType: 'x mandatory',
         scrollBehavior: 'smooth',
