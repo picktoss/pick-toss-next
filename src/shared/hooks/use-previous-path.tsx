@@ -21,11 +21,15 @@ const usePreviousPath = ({ getCustomPath } = { getCustomPath: false }): UsePrevi
     return sessionStorage.setItem(PREVIOUS_PATH_KEY, customPath)
   }, [])
 
-  // 현재 경로를 sessionStorage에 저장
+  // unmount시 현재 경로를 sessionStorage에 저장
   useEffect(() => {
-    if (pathname && !getCustomPath) {
-      sessionStorage.setItem(PREVIOUS_PATH_KEY, pathname)
+    const setPreviousPath = () => {
+      if (pathname && !getCustomPath) {
+        sessionStorage.setItem(PREVIOUS_PATH_KEY, pathname)
+      }
     }
+
+    return () => setPreviousPath()
   }, [pathname, getCustomPath])
 
   return { getPreviousPath, setPreviousPath }

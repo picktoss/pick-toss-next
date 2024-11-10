@@ -7,19 +7,30 @@ import Image from 'next/image'
 import { DirectoryProvider } from '@/features/document/contexts/directory-context'
 import AddDocumentMenu from '@/features/document/components/add-document-menu'
 import Link from 'next/link'
+import Icon from '@/shared/components/custom/icon'
+// import AddFirstDocument from '@/features/document/components/add-first-document'
+// import TodayQuizArrived from '@/features/quiz/components/today-quiz-arrived'
 
 const Home = () => {
   return (
     <main className="h-[calc(100dvh-54px-88px)] w-full overflow-y-auto bg-background-base-02 px-[16px]">
       {/* 오늘의 퀴즈 영역
-        default: 오늘 푼 퀴즈 + 다음 카운트다운
-        caseA: 첫 노트 추가하기
-        caseB: 오늘의 퀴즈 도착
+        default(노트가 있고, 오늘의 퀴즈 도착 상태가 아닐 경우): 오늘 푼 퀴즈 + 다음 카운트다운
+        caseA(노트가 없을 경우): 첫 노트 추가하기
+        caseB(노트가 있고, 오늘의 퀴즈 도착 상태일 경우): 오늘의 퀴즈 도착
       */}
-      <div className="flex flex-col">
+
+      {/* default */}
+      <div className="flex flex-col pt-[25px]">
         <QuizSolvedToday quizCount={15} />
         <CountdownToMidnight />
       </div>
+
+      {/* caseA */}
+      {/* <AddFirstDocument userName={'픽토스'} /> */}
+
+      {/* caseB */}
+      {/* <TodayQuizArrived /> */}
 
       <div className="mt-[16px] flex gap-[9px]">
         <Link
@@ -50,6 +61,15 @@ const Home = () => {
       </div>
 
       {/* 연속으로 푸는 중 */}
+      <button className="mt-[16px] flex h-fit w-full items-center gap-[20px] rounded-[20px] bg-background-base-01 px-[24px] py-[19px]">
+        <Icon name="calendar" className="size-[40px] p-[4px]" />
+        <div className="flex flex-col items-start gap-[4px]">
+          <Text typography="title3">{25}일</Text>
+          <Text typography="text2-medium" color="sub">
+            연속으로 푸는 중
+          </Text>
+        </div>
+      </button>
 
       {/* 복습 필수 노트 TOP5 */}
 

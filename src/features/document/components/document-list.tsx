@@ -1,11 +1,19 @@
 'use client'
 
-import { PropsWithChildren } from 'react'
+import { PropsWithChildren, useEffect } from 'react'
 import Icon from '@/shared/components/custom/icon'
 import { useDirectoryContext } from '../contexts/directory-context'
+import usePreviousPath from '@/shared/hooks/use-previous-path'
 
 const DocumentList = ({ children }: PropsWithChildren) => {
-  const { isSelectMode } = useDirectoryContext()
+  const { getPreviousPath } = usePreviousPath()
+  const { isSelectMode, setIsExpandedBtns } = useDirectoryContext()
+
+  // 메인 페이지에서 '첫 노트 추가하기' 클릭 시 활성화된 상태로 노출
+  useEffect(() => {
+    const previousPath = getPreviousPath()
+    if (previousPath === '/main') setIsExpandedBtns(true)
+  }, [getPreviousPath, setIsExpandedBtns])
 
   return (
     <>
