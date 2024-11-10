@@ -5,13 +5,14 @@ const meta = {
   title: 'main/CountdownToMidnight',
   component: CountdownToMidnight,
   tags: ['autodocs'],
-  decorators: [
-    (Story) => (
-      <div className="mx-auto max-w-mobile p-4">
-        <Story />
-      </div>
-    ),
-  ],
+  parameters: {
+    layout: 'centered',
+    docs: {
+      description: {
+        component: '오늘의 퀴즈가 도착하는 자정까지 남은 시간을 표시하는 컴포넌트입니다.',
+      },
+    },
+  },
 } satisfies Meta<typeof CountdownToMidnight>
 
 export default meta
