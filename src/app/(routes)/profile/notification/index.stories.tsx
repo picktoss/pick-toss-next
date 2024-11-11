@@ -6,6 +6,7 @@ const meta: Meta<typeof NotificationPage> = {
   title: 'Page/Notification',
   component: NotificationPage,
   parameters: {
+    layout: 'fullscreen',
     nextjs: { appDirectory: true },
   },
   decorators: [

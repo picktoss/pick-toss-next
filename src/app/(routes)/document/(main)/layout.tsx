@@ -12,12 +12,12 @@ interface LayoutProps extends PropsWithChildren {
 const Layout: FunctionComponent<LayoutProps> = ({ header, children }) => {
   return (
     <BottomNavLayout where="퀴즈 노트">
-      <div className="flex h-[calc(100dvh-88px)] w-full flex-col overflow-hidden bg-background-base-02 text-text-primary">
-        <DirectoryProvider>
+      <DirectoryProvider>
+        <div className="flex h-[calc(100dvh-88px)] w-full flex-col overflow-hidden bg-background-base-02 text-text-primary">
           {header}
           {children}
-        </DirectoryProvider>
-      </div>
+        </div>
+      </DirectoryProvider>
     </BottomNavLayout>
   )
 }

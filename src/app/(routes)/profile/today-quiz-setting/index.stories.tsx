@@ -7,6 +7,7 @@ const meta: Meta<typeof TodayQuizSettingPage> = {
   title: 'Page/TodayQuizSetting',
   component: TodayQuizSettingPage,
   parameters: {
+    layout: 'fullscreen',
     nextjs: { appDirectory: true },
   },
   decorators: [

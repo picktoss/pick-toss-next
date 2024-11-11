@@ -24,7 +24,9 @@ const SetCategoryCompleteDialog = ({ isOpen, setIsOpen }: Props) => {
           픽토스님이 좋아하실 컬렉션을 <br /> 지금 확인하러 갈까요?
         </Text>
 
-        <Button className="mb-[16px] px-[74px] py-[15px]">컬렉션 보러가기</Button>
+        <Button className="mb-[16px] px-[74px] py-[15px]" onClick={() => setIsOpen(false)}>
+          컬렉션 보러가기
+        </Button>
 
         <DialogClose>
           <Text typography="button4" className="text-button-text-tertiary">

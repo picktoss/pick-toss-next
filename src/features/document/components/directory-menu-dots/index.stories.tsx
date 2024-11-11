@@ -1,8 +1,8 @@
 import { Meta, StoryObj } from '@storybook/react'
-import { DirectoryProvider } from '../../contexts/directory-context'
 import DirectoryMenuDots from '.'
+import { DirectoryProvider } from '../../contexts/directory-context'
 
-const meta: Meta<typeof DirectoryMenuDots> = {
+const meta = {
   title: 'document/DirectoryMenuDots',
   component: DirectoryMenuDots,
   tags: ['autodocs'],
@@ -20,7 +20,7 @@ const meta: Meta<typeof DirectoryMenuDots> = {
       </DirectoryProvider>
     ),
   ],
-}
+} satisfies Meta<typeof DirectoryMenuDots>
 
 export default meta
 
