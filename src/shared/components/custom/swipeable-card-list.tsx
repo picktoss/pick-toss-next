@@ -111,7 +111,7 @@ const SwipeableCardList = ({ cardComponents }: { cardComponents: React.ReactNode
         <motion.div
           key={'motion_' + index}
           ref={itemRef}
-          className={cn(index === cardComponents.length - 1 && 'mr-[32px]')}
+          className={cn(index === cardComponents.length - 1 && 'mr-[16px]')}
           drag="x"
           dragConstraints={constraints}
           style={{ x }}
