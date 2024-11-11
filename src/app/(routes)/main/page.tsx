@@ -1,5 +1,3 @@
-import QuizSolvedToday from '@/features/analysis/components/quiz-solved-today'
-import CountdownToMidnight from '@/features/quiz/components/countdown-to-midnight'
 import Text from '@/shared/components/ui/text'
 import BOMB from '@/../../public/images/bomb.png'
 import RANDOM_QUIZ from '@/../../public/images/random-quiz.png'
@@ -8,29 +6,13 @@ import { DirectoryProvider } from '@/features/document/contexts/directory-contex
 import AddDocumentMenu from '@/features/document/components/add-document-menu'
 import Link from 'next/link'
 import Icon from '@/shared/components/custom/icon'
-// import AddFirstDocument from '@/features/document/components/add-first-document'
-// import TodayQuizArrived from '@/features/quiz/components/today-quiz-arrived'
+import MainTodayQuizArea from '@/features/quiz/components/main-today-quiz-area'
 
 const Home = () => {
   return (
     <main className="h-[calc(100dvh-54px-88px)] w-full overflow-y-auto bg-background-base-02 px-[16px]">
-      {/* 오늘의 퀴즈 영역
-        default(노트가 있고, 오늘의 퀴즈 도착 상태가 아닐 경우): 오늘 푼 퀴즈 + 다음 카운트다운
-        caseA(노트가 없을 경우): 첫 노트 추가하기
-        caseB(노트가 있고, 오늘의 퀴즈 도착 상태일 경우): 오늘의 퀴즈 도착
-      */}
-
-      {/* default */}
-      <div className="flex flex-col pt-[25px]">
-        <QuizSolvedToday quizCount={15} />
-        <CountdownToMidnight />
-      </div>
-
-      {/* caseA */}
-      {/* <AddFirstDocument userName={'픽토스'} /> */}
-
-      {/* caseB */}
-      {/* <TodayQuizArrived /> */}
+      {/* 오늘의 퀴즈 영역 */}
+      <MainTodayQuizArea state="NOT_ARRIVED" />
 
       <div className="mt-[16px] flex gap-[9px]">
         <Link
