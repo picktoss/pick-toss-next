@@ -11,8 +11,8 @@ import {
 import Text from '@/shared/components/ui/text'
 import { useState } from 'react'
 
-const SetNameDialog = () => {
-  const [name, setName] = useState('픽토스') // 유저 정보에서 이름 가져오기
+const SetNameDialog = ({ userName }: { userName: string }) => {
+  const [name, setName] = useState(userName) // 유저 정보에서 이름 가져오기
 
   return (
     <Dialog>

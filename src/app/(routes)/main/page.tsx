@@ -8,9 +8,7 @@ import Link from 'next/link'
 import Icon from '@/shared/components/custom/icon'
 import MainTodayQuizArea from '@/features/quiz/components/main-today-quiz-area'
 import ReviewTop5Container from '@/features/document/components/review-top5-container'
-import SwipeableCardList from '@/shared/components/custom/swipeable-card-list'
-import { InterestedCategoryItems } from '@/features/collection/config/interested-category-items'
-import InterestedCategoryItemCard from '@/features/collection/components/interested-category-item-card'
+import InterestedCategoryCollections from '@/features/collection/components/interested-category-collections'
 
 const Home = () => {
   return (
@@ -63,27 +61,9 @@ const Home = () => {
       {/* 복습 필수 노트 TOP5 */}
       <ReviewTop5Container isEmpty={false} />
 
-      <div className="flex flex-col gap-[32px]">
+      <div className="flex flex-col gap-[32px] pb-[95px]">
         {/* 픽토스님의 관심분야 컬렉션 */}
-        <div className="flex w-full flex-col">
-          <div className="flex items-center justify-between">
-            <Text>픽토스님의 관심분야 컬렉션</Text>
-            <Text>더보기</Text>
-          </div>
-
-          <SwipeableCardList
-            cardComponents={InterestedCategoryItems.map((item) => (
-              <InterestedCategoryItemCard
-                key={item.id}
-                emoji={item.emoji}
-                title={item.name}
-                isBookmarked={false}
-                bookmarkCount={item.bookmarkCount}
-                quizCount={item.quizCount}
-              />
-            ))}
-          />
-        </div>
+        <InterestedCategoryCollections interestedCategory={'IT/프로그래밍'} />
 
         {/* 픽토스 이용 가이드 */}
         {/* 추후 외부 노션 페이지로 연결 */}
