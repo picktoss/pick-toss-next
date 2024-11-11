@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react'
 import CountdownToMidnight from '.'
 
 const meta = {
-  title: 'main/CountdownToMidnight',
+  title: 'quiz/CountdownToMidnight',
   component: CountdownToMidnight,
   tags: ['autodocs'],
   parameters: {

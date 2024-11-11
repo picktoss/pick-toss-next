@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react'
 import QuizSolvedToday from '.'
 
 const meta = {
-  title: 'main/QuizSolvedToday',
+  title: 'analysis/QuizSolvedToday',
   component: QuizSolvedToday,
   tags: ['autodocs'],
   argTypes: {

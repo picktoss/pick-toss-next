@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react'
 import AddFirstDocument from '.'
 
 const meta = {
-  title: 'main/AddFirstDocument',
+  title: 'document/AddFirstDocument',
   component: AddFirstDocument,
   tags: ['autodocs'],
   argTypes: {
