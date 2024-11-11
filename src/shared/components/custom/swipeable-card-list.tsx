@@ -13,6 +13,7 @@ const SwipeableCardList = ({ cardComponents }: { cardComponents: React.ReactNode
   const [constraints, setConstraints] = useState({ left: 0, right: 0 })
 
   const [moveAtOnceWidth, setMoveAtOnceWidth] = useState(0)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [currentOffset, setCurrentOffset] = useState(0)
 
   // 컨테이너와 콘텐츠 너비 설정
@@ -44,7 +45,7 @@ const SwipeableCardList = ({ cardComponents }: { cardComponents: React.ReactNode
         newOffset = prevOffset + Math.min(remainingContentWidth, moveAtOnceWidth)
       }
 
-      controls.start({
+      void controls.start({
         x: newOffset,
         transition: { type: 'tween', duration: 0.5, ease: 'easeInOut' },
       })
@@ -104,7 +105,7 @@ const SwipeableCardList = ({ cardComponents }: { cardComponents: React.ReactNode
     <motion.div
       ref={containerRef}
       onWheel={handleWheel}
-      className="flex h-fit min-h-[200px] w-dvw max-w-mobile select-none gap-[8px] overflow-x-scroll scroll-smooth scrollbar-hide overflow-y-hidden"
+      className="flex h-fit min-h-[200px] w-dvw max-w-mobile select-none gap-[8px] overflow-y-hidden overflow-x-scroll scroll-smooth scrollbar-hide"
     >
       {cardComponents.map((cardComponent, index) => (
         <motion.div
