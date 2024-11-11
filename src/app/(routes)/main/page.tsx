@@ -63,28 +63,49 @@ const Home = () => {
       {/* 복습 필수 노트 TOP5 */}
       <ReviewTop5Container isEmpty={false} />
 
-      {/* 픽토스님의 관심분야 컬렉션 */}
-      <div className="flex w-full flex-col">
-        <div className="flex items-center justify-between">
-          <Text>픽토스님의 관심분야 컬렉션</Text>
-          <Text>더보기</Text>
+      <div className="flex flex-col gap-[32px]">
+        {/* 픽토스님의 관심분야 컬렉션 */}
+        <div className="flex w-full flex-col">
+          <div className="flex items-center justify-between">
+            <Text>픽토스님의 관심분야 컬렉션</Text>
+            <Text>더보기</Text>
+          </div>
+
+          <SwipeableCardList
+            cardComponents={InterestedCategoryItems.map((item) => (
+              <InterestedCategoryItemCard
+                key={item.id}
+                emoji={item.emoji}
+                title={item.name}
+                isBookmarked={false}
+                bookmarkCount={item.bookmarkCount}
+                quizCount={item.quizCount}
+              />
+            ))}
+          />
         </div>
 
-        <SwipeableCardList
-          cardComponents={InterestedCategoryItems.map((item) => (
-            <InterestedCategoryItemCard
-              key={item.id}
-              emoji={item.emoji}
-              title={item.name}
-              isBookmarked={false}
-              bookmarkCount={item.bookmarkCount}
-              quizCount={item.quizCount}
-            />
-          ))}
-        />
-      </div>
+        {/* 픽토스 이용 가이드 */}
+        {/* 추후 외부 노션 페이지로 연결 */}
+        <div className="flex h-fit w-full items-center justify-between rounded-[16px] bg-background-base-03 py-[16px] pl-[15px] pr-[17px]">
+          <div className="flex items-center gap-[12px]">
+            <div className="flex-center size-[32px] rounded-[8px] bg-background-base-01">
+              <Image
+                src="/images/pencil.png"
+                alt=""
+                width={22.3}
+                height={25.57}
+                className="mr-[2px]"
+              ></Image>
+            </div>
+            <Text typography="text1-bold" className="font-suit">
+              픽토스 이용 가이드
+            </Text>
+          </div>
 
-      {/* 픽토스 이용 가이드 */}
+          <Icon name="chevron-right" className="text-icon-tertiary" />
+        </div>
+      </div>
 
       <DirectoryProvider>
         <AddDocumentMenu />
