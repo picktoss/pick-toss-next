@@ -2,9 +2,11 @@ import StarChargeHeader from '@/features/payment/components/star-charge/star-cha
 import Image from 'next/image'
 import Text from '@/shared/components/ui/text'
 import Icon from '@/shared/components/custom/icon'
-import ProductContainer from '@/features/payment/components/star-charge/product-container'
 import StarInstructionDrawer from '@/features/payment/components/star-charge/star-instruction-drawer'
 import InviteReward from '@/features/star/components/invite-reward'
+import SwipeableCardList from '@/shared/components/custom/swipeable-card-list'
+import { productInfoList } from '@/features/payment/config/product-info-list'
+import ItemCard from '@/features/payment/components/star-charge/item-card'
 
 const StarChargePage = () => {
   return (
@@ -48,7 +50,19 @@ const StarChargePage = () => {
           </div>
 
           {/* 상품 카드 */}
-          <ProductContainer />
+          <SwipeableCardList
+            cardComponents={productInfoList.map((product, index) => (
+              <ItemCard
+                key={product.key}
+                image={product.image}
+                tagMessage={product.tagMessage}
+                starCount={product.starCount}
+                bonusCount={product.bonusCount}
+                paymentAmount={product.paymentAmount}
+                isFirst={index === 0}
+              />
+            ))}
+          />
 
           {/* 친구 초대 버튼 */}
           <div className="flex-center px-[16px] pb-[3dvh] pt-[20px]">

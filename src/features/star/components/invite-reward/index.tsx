@@ -34,7 +34,7 @@ const InviteReward = ({ className }: { className?: HTMLElement['className'] }) =
 
       <DrawerContent
         overlayProps={{ className: 'max-w-mobile mx-auto' }}
-        className="mx-auto flex h-[80dvh] max-w-mobile flex-col rounded-t-[20px]"
+        className="mx-auto flex h-[90dvh] max-w-mobile flex-col rounded-t-[20px]"
       >
         <div className="my-[20px] flex h-[calc(80dvh-12px)] w-full flex-col gap-[40px] overflow-y-auto px-[45px]">
           <DrawerHeader className="mt-[40px] flex w-full flex-col items-center gap-[24px]">

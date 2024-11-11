@@ -1,6 +1,7 @@
 import { Button } from '@/shared/components/ui/button'
 import Tag from '@/shared/components/ui/tag'
 import Text from '@/shared/components/ui/text'
+import { cn } from '@/shared/lib/utils'
 
 interface Props {
   image: React.ReactNode
@@ -8,11 +9,17 @@ interface Props {
   starCount: number
   bonusCount?: number
   paymentAmount: number
+  isFirst?: boolean
 }
 
-const ItemCard = ({ image, tagMessage, starCount, bonusCount, paymentAmount }: Props) => {
+const ItemCard = ({ image, tagMessage, starCount, bonusCount, paymentAmount, isFirst }: Props) => {
   return (
-    <div className="flex size-fit flex-col items-center gap-[29px] rounded-[16px] border border-border-default bg-background-base-01 p-[17px]">
+    <div
+      className={cn(
+        'flex size-fit flex-col items-center gap-[29px] rounded-[16px] border border-border-default bg-background-base-01 p-[17px]',
+        isFirst && 'ml-[16px]'
+      )}
+    >
       <div className="relative">
         {image}
 
