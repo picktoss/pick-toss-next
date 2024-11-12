@@ -6,12 +6,12 @@ type BaseQuiz = {
 }
 
 type MultipleChoiceQuiz = BaseQuiz & {
-  quizType: 'multiple'
+  quizType: 'MULTIPLE_CHOICE'
   options: string[]
 }
 
 type OXQuiz = BaseQuiz & {
-  quizType: 'ox'
+  quizType: 'MIX_UP'
   answer: 'O' | 'X'
 }
 

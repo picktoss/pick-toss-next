@@ -4,10 +4,17 @@ import BottomNavLayout from '@/shared/components/custom/bottom-nav-layout'
 
 export const metadata: Metadata = {}
 
-interface LayoutProps extends PropsWithChildren {}
+interface LayoutProps extends PropsWithChildren {
+  header: React.ReactNode
+}
 
-const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
-  return <BottomNavLayout where="홈">{children}</BottomNavLayout>
+const Layout: FunctionComponent<LayoutProps> = ({ header, children }) => {
+  return (
+    <BottomNavLayout where="홈">
+      {header}
+      {children}
+    </BottomNavLayout>
+  )
 }
 
 export default Layout

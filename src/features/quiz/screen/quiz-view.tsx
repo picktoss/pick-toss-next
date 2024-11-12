@@ -17,6 +17,7 @@ interface Props {
 }
 
 const QuizView = ({ quizzes }: Props) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [step, setStep] = useState<'idle' | 'solve' | 'result'>('solve')
 
   // 선지가 노출된 후 카운트 활성화
@@ -51,18 +52,19 @@ const QuizView = ({ quizzes }: Props) => {
                   {curQuiz.question}
                 </Text>
               </div>
-              {curQuiz.quizType === 'multiple' && (
+              {curQuiz.quizType === 'MULTIPLE_CHOICE' && (
                 <div className="mt-[40px] flex flex-col gap-[12px]">
                   {curQuiz.options.map((option, index) => (
                     <MultipleOption key={option} index={index} condition="wrong" option={option} />
                   ))}
                 </div>
               )}
-              {curQuiz.type === 'ox' && (
+              {curQuiz.quizType === 'MIX_UP' && (
                 <div className="mt-[74px]">
                   <OXChoice
                     condition="wrong"
                     userAnswer="X"
+                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
                     onSelect={(userAnswer: 'O' | 'X') => {}}
                   />
                 </div>

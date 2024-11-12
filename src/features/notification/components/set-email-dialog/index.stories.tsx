@@ -8,6 +8,9 @@ const meta: Meta<typeof SetEmailDialog> = {
   title: 'notification/SetEmailDialog',
   component: SetEmailDialog,
   tags: ['autodocs'],
+  parameters: {
+    nextjs: { appDirectory: true },
+  },
   decorators: [
     (Story) => (
       <NotificationProvider>
