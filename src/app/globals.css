@@ -62,6 +62,14 @@ body::-webkit-scrollbar {
   -webkit-line-clamp: 1;
 }
 
+.border-special {
+  border: 2px solid transparent;
+  background-image: linear-gradient(#fff, #fff),
+    linear-gradient(to right, #7a9eff, #ffa25f, #fb8320);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
+
 @layer base {
   * {
     @apply box-border;

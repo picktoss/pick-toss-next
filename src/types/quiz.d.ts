@@ -5,6 +5,8 @@ type BaseQuiz = {
   explanation: string
 }
 
+type MultipleChoiceQuiz = BaseQuiz & {
+  quizType: 'MULTIPLE_CHOICE'
 type MultipleChoiceQuiz = {
   quizType: 'MULTIPLE_CHOICE'
   options: string[]

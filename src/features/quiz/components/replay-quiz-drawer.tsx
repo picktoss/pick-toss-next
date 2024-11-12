@@ -51,10 +51,10 @@ const ReplayQuizDrawer = ({ triggerComponent }: { triggerComponent: React.ReactN
             </button>
 
             <button
-              onClick={() => setQuizType('multiple')}
+              onClick={() => setQuizType('MULTIPLE_CHOICE')}
               className={cn(
                 'flex h-[150px] w-[110px] flex-col justify-end rounded-[16px] border px-[7px] pb-[15px] pt-[20px] focus:border-border-focused focus:bg-background-container-03 focus-visible:outline-none disabled:grayscale disabled:bg-background-disabled disabled:text-text-disabled',
-                quizType === 'multiple' && 'bg-background-container-03 border-border-focused'
+                quizType === 'MULTIPLE_CHOICE' && 'bg-background-container-03 border-border-focused'
               )}
             >
               <Icon name="multiple-quiz-icon" className="mb-[7.05px] w-[70px]" />
@@ -67,10 +67,10 @@ const ReplayQuizDrawer = ({ triggerComponent }: { triggerComponent: React.ReactN
             </button>
 
             <button
-              onClick={() => setQuizType('ox')}
+              onClick={() => setQuizType('MIX_UP')}
               className={cn(
                 'flex h-[150px] w-[110px] flex-col justify-end rounded-[16px] border pb-[15px] pt-[18px] focus:border-border-focused focus:bg-background-container-03 focus-visible:outline-none disabled:grayscale disabled:bg-background-disabled disabled:text-text-disabled',
-                quizType === 'ox' && 'bg-background-container-03 border-border-focused'
+                quizType === 'MIX_UP' && 'bg-background-container-03 border-border-focused'
               )}
             >
               <Icon name="o-x-quiz-icon" className="mb-[10px] w-[81px] pl-[14px]" />

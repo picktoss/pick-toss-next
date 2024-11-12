@@ -10,7 +10,7 @@ import {
 import Text from '@/shared/components/ui/text'
 import { useDirectoryContext } from '../../contexts/directory-context'
 import DirectoryDialog from '@/features/quiz/components/directory-dialog'
-import SetDirectoryNameDialog from '../set-directory-name-dialog'
+import SetDirectoryNameDialog from '../../../directory/components/set-directory-name-dialog'
 
 const DirectoryMenuDots = () => {
   const { setIsSelectMode } = useDirectoryContext()

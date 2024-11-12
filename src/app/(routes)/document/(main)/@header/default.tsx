@@ -8,8 +8,8 @@ import Link from 'next/link'
 import { useDirectoryContext } from '@/features/document/contexts/directory-context'
 import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from '@/shared/components/ui/drawer'
 import SortIconBtn from '@/features/document/components/sort-icon-button'
+import SetDirectoryNameDialog from '@/features/directory/components/set-directory-name-dialog'
 import DirectoryMenuDots from '@/features/document/components/directory-menu-dots'
-import SetDirectoryNameDialog from '@/features/document/components/set-directory-name-dialog'
 
 // Header 컴포넌트
 const Header = () => {

@@ -15,7 +15,6 @@ import { useState } from 'react'
 
 // MoveDocumentDrawer 컴포넌트
 const DirectorySelectDrawer = () => {
-  const [isOpen, setIsOpen] = useState(false)
   const [selectedDirectoryId, setSelectedDirectoryId] = useState('0')
 
   // 목데이터
@@ -38,7 +37,7 @@ const DirectorySelectDrawer = () => {
   ]
 
   return (
-    <Drawer open={isOpen} onOpenChange={setIsOpen}>
+    <Drawer>
       <DrawerTrigger asChild>
         <button className="rounded-full bg-background-base-02 px-[16px] py-[5px]">
           📊 전공 공부
@@ -52,7 +51,7 @@ const DirectorySelectDrawer = () => {
         <div className="mt-[16px] flex w-full items-center justify-between px-[18px]">
           <DrawerTitle className="text-title3">폴더 선택</DrawerTitle>
           <DrawerClose asChild>
-            <button className="text-text-primary" onClick={() => setIsOpen(false)}>
+            <button className="text-text-primary">
               <Icon name="cancel" className="size-[24px]"></Icon>
             </button>
           </DrawerClose>

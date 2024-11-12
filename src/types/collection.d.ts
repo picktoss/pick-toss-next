@@ -14,6 +14,7 @@ type CollectionField =
 type QuizType = 'MIX_UP' | 'MULTIPLE_CHOICE'
 
 type BaseQuiz = {
+  id: string
   question: string
   answer: string
   explanation: string

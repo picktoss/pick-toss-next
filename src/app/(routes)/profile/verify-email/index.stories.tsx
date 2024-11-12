@@ -6,6 +6,7 @@ const meta: Meta<typeof EmailPage> = {
   title: 'Page/Email',
   component: EmailPage,
   parameters: {
+    layout: 'fullscreen',
     nextjs: { appDirectory: true },
   },
   decorators: [
