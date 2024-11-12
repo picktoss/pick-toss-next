@@ -105,7 +105,7 @@ const SwipeableCardList = ({ cardComponents }: { cardComponents: React.ReactNode
     <motion.div
       ref={containerRef}
       onWheel={handleWheel}
-      className="flex h-fit min-h-[200px] w-dvw max-w-mobile select-none gap-[8px] overflow-y-hidden overflow-x-scroll scroll-smooth scrollbar-hide"
+      className="flex h-fit w-dvw max-w-mobile select-none gap-[8px] overflow-y-hidden overflow-x-scroll scroll-smooth scrollbar-hide"
     >
       {cardComponents.map((cardComponent, index) => (
         <motion.div
