@@ -35,6 +35,15 @@ const QuizView = ({ quizzes }: Props) => {
     }
   }
 
+  const calculateElapsedTime = () => {
+    return (
+      totalElapsedTime -
+      quizResults
+        .slice(0, currentIndex)
+        .reduce((acc, result) => acc + (result?.elapsedTime || 0), 0)
+    )
+  }
+
   const onAnswer = ({
     id,
     isCorrect,
@@ -50,11 +59,7 @@ const QuizView = ({ quizzes }: Props) => {
         id,
         answer: isCorrect,
         choseAnswer,
-        elapsedTime:
-          totalElapsedTime -
-          quizResults
-            .slice(0, currentIndex)
-            .reduce((acc, result) => acc + (result?.elapsedTime || 0), 0),
+        elapsedTime: calculateElapsedTime(),
       }
       return newResults
     })
