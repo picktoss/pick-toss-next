@@ -1,7 +1,7 @@
 import { NotificationProvider } from '@/features/notification/contexts/notification-context'
 import NotificationControlArea from '@/features/notification/components/notification-control-area'
 
-const NotificationPage = () => {
+const NotificationSettingPage = () => {
   const isKakaoUser = true
 
   return (
@@ -11,4 +11,4 @@ const NotificationPage = () => {
   )
 }
 
-export default NotificationPage
+export default NotificationSettingPage
