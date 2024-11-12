@@ -52,14 +52,18 @@ const QuizView = ({ quizzes }: Props) => {
                   {curQuiz.question}
                 </Text>
               </div>
-              {curQuiz.quizType === 'multiple' && (
+              {curQuiz.quizType === 'MULTIPLE_CHOICE' && (
                 <div className="mt-[40px] flex flex-col gap-[12px]">
                   {curQuiz.options.map((option, index) => (
                     <MultipleOption key={option} index={index} condition="wrong" option={option} />
                   ))}
                 </div>
               )}
+<<<<<<< HEAD
               {curQuiz.quizType === 'ox' && (
+=======
+              {curQuiz.quizType === 'MIX_UP' && (
+>>>>>>> 8ee6504bd96a64463e6a2fe2625c8fba18fcb482
                 <div className="mt-[74px]">
                   <OXChoice
                     condition="wrong"
