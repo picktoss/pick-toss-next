@@ -10,7 +10,6 @@ import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from '@/shared/comp
 import SortIconBtn from '@/features/document/components/sort-icon-button'
 import SetDirectoryNameDialog from '@/features/directory/components/set-directory-name-dialog'
 import DirectoryMenuDots from '@/features/document/components/directory-menu-dots'
-import SetDirectoryNameDialog from '@/features/document/components/set-directory-name-dialog'
 import GoBackButton from '@/shared/components/custom/go-back-button'
 
 // Header 컴포넌트
