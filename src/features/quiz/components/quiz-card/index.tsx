@@ -30,7 +30,7 @@ const QuizCard = ({
   const shouldShowAnswer = showAnswer ?? openExplanation
 
   const renderOptions = () => {
-    if (quiz.quizType === 'multiple' && quiz.options) {
+    if (quiz.quizType === 'MULTIPLE_CHOICE' && quiz.options) {
       const chosenAlphabet = userAnswer
         ? String.fromCharCode(65 + quiz.options.findIndex((option) => option === userAnswer))
         : undefined
