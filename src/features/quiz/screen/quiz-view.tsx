@@ -59,11 +59,7 @@ const QuizView = ({ quizzes }: Props) => {
                   ))}
                 </div>
               )}
-<<<<<<< HEAD
-              {curQuiz.quizType === 'ox' && (
-=======
               {curQuiz.quizType === 'MIX_UP' && (
->>>>>>> 8ee6504bd96a64463e6a2fe2625c8fba18fcb482
                 <div className="mt-[74px]">
                   <OXChoice
                     condition="wrong"
