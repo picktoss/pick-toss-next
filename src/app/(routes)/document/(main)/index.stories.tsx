@@ -1,10 +1,11 @@
 import { Meta, StoryObj } from '@storybook/react'
-import EmailPage from './page'
 import Layout from './layout'
+import Header from './@header/default'
+import DirectoryPage from './page'
 
-const meta: Meta<typeof EmailPage> = {
-  title: 'Page/Email',
-  component: EmailPage,
+const meta = {
+  title: 'Page/Directory',
+  component: DirectoryPage,
   parameters: {
     layout: 'fullscreen',
     nextjs: { appDirectory: true },
@@ -16,16 +17,14 @@ const meta: Meta<typeof EmailPage> = {
       </div>
     ),
   ],
-}
+} satisfies Meta<typeof DirectoryPage>
 
 export default meta
 
-type Story = StoryObj<typeof EmailPage>
-
-export const Default: Story = {
+export const Default: StoryObj<typeof DirectoryPage> = {
   render: () => (
-    <Layout>
-      <EmailPage />
+    <Layout header={<Header />}>
+      <DirectoryPage />
     </Layout>
   ),
 }

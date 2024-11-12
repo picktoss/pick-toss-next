@@ -2,7 +2,6 @@
 
 import { SwitchCase } from '@/shared/components/custom/react/switch-case'
 import { useState } from 'react'
-import { quizzes } from '../config'
 import GoBackButton from '@/shared/components/custom/go-back-button'
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
@@ -13,16 +12,18 @@ import ResultQuizErrorDialog from '../components/report-quiz-error-dialog'
 import QuizTimer from '../components/quiz-timer'
 import QuizExplanationDrawer from '../components/quiz-explanation-drawer'
 
-const mockQuizzes = quizzes
+interface Props {
+  quizzes: Quiz.ItemWithMetadata[]
+}
 
-const QuizView = () => {
+const QuizView = ({ quizzes }: Props) => {
   const [step, setStep] = useState<'idle' | 'solve' | 'result'>('solve')
 
   // 선지가 노출된 후 카운트 활성화
 
   const currentQuizInput = 1
 
-  const curQuiz = mockQuizzes[currentQuizInput]
+  const curQuiz = quizzes[currentQuizInput]
 
   return (
     <SwitchCase
@@ -50,7 +51,7 @@ const QuizView = () => {
                   {curQuiz.question}
                 </Text>
               </div>
-              {curQuiz.type === 'multiple' && (
+              {curQuiz.quizType === 'multiple' && (
                 <div className="mt-[40px] flex flex-col gap-[12px]">
                   {curQuiz.options.map((option, index) => (
                     <MultipleOption key={option} index={index} condition="wrong" option={option} />

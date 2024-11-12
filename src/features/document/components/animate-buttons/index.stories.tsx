@@ -13,7 +13,7 @@ const AnimatedButtonsWithProvider = ({ isExpandedBtns }: { isExpandedBtns: boole
   return <AnimatedButtons />
 }
 
-const meta: Meta<typeof AnimatedButtonsWithProvider> = {
+const meta = {
   title: 'document/AnimatedButtons',
   component: AnimatedButtonsWithProvider,
   tags: ['autodocs'],
@@ -39,7 +39,7 @@ const meta: Meta<typeof AnimatedButtonsWithProvider> = {
       </DirectoryProvider>
     ),
   ],
-}
+} satisfies Meta<typeof AnimatedButtonsWithProvider>
 
 export default meta
 

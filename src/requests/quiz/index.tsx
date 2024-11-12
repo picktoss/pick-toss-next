@@ -18,7 +18,7 @@ export const fetchTodayQuizSetId = async () => {
     )
     return data
   } catch (error) {
-    console.error(error)
+    console.error(error.status)
     throw error
   }
 }
@@ -37,6 +37,6 @@ export const fetchQuizSet = async ({ quizSetId }: { quizSetId: string }) => {
     )
     return data
   } catch (error) {
-    console.error(error)
+    console.error(error.status)
   }
 }

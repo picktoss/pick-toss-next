@@ -7,6 +7,7 @@ const meta: Meta<typeof StarHistoryPage> = {
   title: 'Page/StarHistory',
   component: StarHistoryPage,
   parameters: {
+    layout: 'fullscreen',
     nextjs: { appDirectory: true },
   },
   decorators: [
