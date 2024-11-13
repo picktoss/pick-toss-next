@@ -1,6 +1,6 @@
 import DayCheck from '@/features/quiz/components/today-quiz-check/day-check'
+import InviteReward from '@/features/payment/components/invite-reward'
 import Icon from '@/shared/components/custom/icon'
-import Tag from '@/shared/components/ui/tag'
 import Text from '@/shared/components/ui/text'
 
 const fakeCheckData = [
@@ -29,15 +29,7 @@ const TodayQuizPage = () => {
 
       <DayCheck checkData={fakeCheckData} />
 
-      <button className="my-[20px] flex h-[56px] w-full items-center justify-between rounded-[12px] bg-background-container-03 px-[20px] py-[10px]">
-        <div className="flex-center gap-[8px]">
-          <Tag className="bg-fill-primary-blue">EVENT</Tag>
-          <Text typography="text1-bold" className="text-text-info">
-            친구 초대하고 무료로 별 받기
-          </Text>
-        </div>
-        <Icon name="chevron-right" className="size-[16px] text-icon-tertiary" />
-      </button>
+      <InviteReward className="mt-[20px]" />
     </main>
   )
 }

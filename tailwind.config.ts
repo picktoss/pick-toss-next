@@ -256,6 +256,7 @@ const config = {
           tooltip: 'var(--color-blue-500)',
           critical: 'var(--color-red-500)',
           accent: 'var(--color-orange-500)',
+          kakao: '#FBE44D',
         },
         fill: {
           'primary-orange': 'var(--color-orange-500)',
@@ -301,6 +302,7 @@ const config = {
           critical: 'var(--color-red-500)',
           success: 'var(--color-green-500)',
           disabled: 'var(--color-gray-200)',
+          kakao: '#3C1E1E',
         },
         'button-fill': {
           primary: 'var(--color-orange-500)',

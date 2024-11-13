@@ -14,6 +14,7 @@ import { cn } from '@/shared/lib/utils'
 import Link from 'next/link'
 import { useParams, useRouter } from 'next/navigation'
 import usePreviousPath from '@/shared/hooks/use-previous-path'
+import GoBackButton from '@/shared/components/custom/go-back-button'
 
 // Header 컴포넌트
 const Header = () => {
@@ -42,9 +43,7 @@ const Header = () => {
         >
           <div className="flex size-full items-center justify-between">
             <div className="flex items-center">
-              <button onClick={handleClickCancel}>
-                <Icon name="cancel" className="size-[24px]" />
-              </button>
+              <GoBackButton icon="cancel" onClick={handleClickCancel} />
               {/* 스크롤을 내려 제목이 뷰포트에서 사라지면 생길 텍스트 */}
               {/* <h2 className="ml-[16px] text-text1-medium">최근 이슈</h2> */}
             </div>
