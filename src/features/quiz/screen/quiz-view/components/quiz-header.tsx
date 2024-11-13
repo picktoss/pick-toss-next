@@ -5,11 +5,12 @@ import Icon from '@/shared/components/custom/icon'
 interface QuizHeaderProps {
   isRunning: boolean
   totalElapsedTime: number
+  handleClickExit: () => void
 }
 
-const QuizHeader = ({ isRunning, totalElapsedTime }: QuizHeaderProps) => (
+const QuizHeader = ({ isRunning, totalElapsedTime, handleClickExit }: QuizHeaderProps) => (
   <header className="relative flex h-[54px] items-center justify-between px-[16px]">
-    <GoBackButton icon="cancel" onClick={() => {}} />
+    <GoBackButton icon="cancel" onClick={() => handleClickExit()} />
     <div className="absolute right-1/2 translate-x-1/2">
       <QuizTimer isRunning={isRunning} totalElapsedTime={totalElapsedTime} />
     </div>

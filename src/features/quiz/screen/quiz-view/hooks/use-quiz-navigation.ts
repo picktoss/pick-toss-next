@@ -10,7 +10,7 @@ export const useQuizNavigation = () => {
 
   const navigateToNext = (currentIndex: number) => {
     searchParams.index = String(currentIndex + 1)
-    router.push(`${pathname}${QS.stringify(searchParams, { addQueryPrefix: true })}`)
+    router.replace(`${pathname}${QS.stringify(searchParams, { addQueryPrefix: true })}`)
   }
 
   return {

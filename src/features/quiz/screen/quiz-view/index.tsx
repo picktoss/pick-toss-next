@@ -10,6 +10,8 @@ import QuizQuestion from './components/quiz-question'
 import QuizOptions from './components/quiz-option'
 import { isQuizSolved } from '../../utils'
 import ResultIcon from '../../components/result-icon'
+import ExitDialog from './components/exit-dialog'
+import { useState } from 'react'
 
 interface Props {
   quizzes: Quiz.ItemWithMetadata[]
@@ -22,6 +24,8 @@ const QuizView = ({ quizzes }: Props) => {
       quizCount: quizzes.length,
       currentIndex,
     })
+
+  const [exitDialogOpen, setExitDialogOpen] = useState(false)
 
   const currentQuiz = quizzes[currentIndex]
   const currentResult = quizResults[currentIndex]
@@ -67,7 +71,11 @@ const QuizView = ({ quizzes }: Props) => {
 
   return (
     <div>
-      <QuizHeader isRunning={isRunning} totalElapsedTime={totalElapsedTime} />
+      <QuizHeader
+        isRunning={isRunning}
+        totalElapsedTime={totalElapsedTime}
+        handleClickExit={() => setExitDialogOpen(true)}
+      />
 
       <div className="px-[16px]">
         <QuizProgressBar totalQuizCount={quizzes.length} currentIndex={currentIndex} />
@@ -98,6 +106,8 @@ const QuizView = ({ quizzes }: Props) => {
       {isQuizSolved(quizResults[currentIndex]) && (
         <ResultIcon isCorrect={quizResults[currentIndex]?.answer === 'correct'} />
       )}
+
+      <ExitDialog index={currentIndex} open={exitDialogOpen} onOpenChange={setExitDialogOpen} />
     </div>
   )
 }
