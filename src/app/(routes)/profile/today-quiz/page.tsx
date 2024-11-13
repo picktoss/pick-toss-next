@@ -1,5 +1,5 @@
 import DayCheck from '@/features/quiz/components/today-quiz-check/day-check'
-import InviteReward from '@/features/star/components/invite-reward'
+import InviteReward from '@/features/payment/components/invite-reward'
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
 

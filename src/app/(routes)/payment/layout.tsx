@@ -1,6 +1,7 @@
 import { FunctionComponent, PropsWithChildren } from 'react'
 import type { Metadata } from 'next'
-import NIGHT_SKY_IMG from '@/../../public/images/star-background.png'
+import NIGHT_SKY_IMG from '@/../../public/images/pro-star-background.png'
+import GoBackButton from '@/shared/components/custom/go-back-button'
 
 export const metadata: Metadata = {}
 
@@ -16,6 +17,10 @@ const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
         backgroundRepeat: 'no-repeat',
       }}
     >
+      <header className="relative z-10 flex h-[54px] w-full items-center px-[16px] text-text-primary-inverse">
+        <GoBackButton icon="cancel" />
+      </header>
+
       {children}
     </div>
   )

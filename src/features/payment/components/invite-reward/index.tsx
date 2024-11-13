@@ -11,6 +11,9 @@ import { Input } from '@/shared/components/ui/input'
 import Tag from '@/shared/components/ui/tag'
 import Text from '@/shared/components/ui/text'
 import { cn } from '@/shared/lib/utils'
+import Image from 'next/image'
+import INFINITE_IMG from '@/../../public/images/infinite-icon.png'
+import InviteRewardInfo from '../invite-reward-info'
 
 const InviteReward = ({ className }: { className?: HTMLElement['className'] }) => {
   return (
@@ -25,7 +28,7 @@ const InviteReward = ({ className }: { className?: HTMLElement['className'] }) =
           <div className="flex-center gap-[8px]">
             <Tag className="bg-fill-primary-blue">EVENT</Tag>
             <Text typography="text1-bold" className="text-text-info">
-              친구 초대하고 무료로 별 받기
+              친구 초대하고 픽토스 PRO 이용하기
             </Text>
           </div>
           <Icon name="chevron-right" className="size-[16px] text-icon-tertiary" />
@@ -34,28 +37,22 @@ const InviteReward = ({ className }: { className?: HTMLElement['className'] }) =
 
       <DrawerContent
         overlayProps={{ className: 'max-w-mobile mx-auto' }}
-        className="mx-auto flex h-[90dvh] max-w-mobile flex-col rounded-t-[20px]"
+        className="mx-auto flex h-[80dvh] max-w-mobile flex-col rounded-t-[20px]"
       >
-        <div className="my-[20px] flex h-[calc(80dvh-12px)] w-full flex-col gap-[40px] overflow-y-auto px-[45px]">
-          <DrawerHeader className="mt-[40px] flex w-full flex-col items-center gap-[24px]">
-            <div className="relative">
-              <Icon name="star" className="size-[82px]" />
-              <Text
-                typography="title3"
-                color="secondary"
-                className="absolute bottom-0 right-0 font-suit"
-              >
-                x50
-              </Text>
-            </div>
+        <div className="my-[20px] flex h-[calc(80dvh-12px)] w-full flex-col gap-[63px] overflow-y-auto px-[45px]">
+          <DrawerHeader className="flex h-fit w-full flex-col items-center gap-[24px] px-0">
+            <Image src={INFINITE_IMG} width={212} height={110} alt="" />
 
             <div className="flex flex-col items-center gap-[8px]">
-              <DrawerTitle className="font-suit text-title3">초대할 때마다 별 50개!</DrawerTitle>
+              <div className="relative">
+                <DrawerTitle className="font-suit text-title3">초대할 때마다 7일!</DrawerTitle>
+                <InviteRewardInfo />
+              </div>
 
               <Text typography="text1-regular" color="secondary" className="text-center">
                 친구, 가족, 지인들에게 픽토스를 공유해주세요 <br />
-                그분이 해당 링크를 통해 픽토스에 가입하실 경우 <br /> 두 분 모두에게 별 50개를
-                드려요!
+                그분이 해당 링크를 통해 픽토스에 가입하실 경우 <br />두 분 모두에게 픽토스 PRO 7일
+                이용권을 드려요!
               </Text>
             </div>
           </DrawerHeader>

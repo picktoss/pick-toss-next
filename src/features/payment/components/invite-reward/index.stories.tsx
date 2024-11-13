@@ -3,7 +3,7 @@ import { Meta, StoryObj } from '@storybook/react'
 import InviteReward from '.'
 
 const meta: Meta<typeof InviteReward> = {
-  title: 'star/InviteReward',
+  title: 'payment/InviteReward',
   component: InviteReward,
   tags: ['autodocs'],
   parameters: {

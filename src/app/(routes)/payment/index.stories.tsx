@@ -1,12 +1,11 @@
 import React from 'react'
 import { Meta, StoryFn, StoryObj } from '@storybook/react'
-import StarChargePage from './page'
+import PaymentPage from './page'
 import Layout from './layout'
-import StarChargeHeader from '@/features/payment/components/star-charge/star-charge-header'
 
-const meta: Meta<typeof StarChargePage> = {
-  title: 'Page/StarChargePage', // Storybook 내에서 보여질 경로
-  component: StarChargePage,
+const meta: Meta<typeof PaymentPage> = {
+  title: 'Page/PaymentPage', // Storybook 내에서 보여질 경로
+  component: PaymentPage,
   parameters: {
     layout: 'fullscreen',
     nextjs: { appDirectory: true },
@@ -21,12 +20,12 @@ const meta: Meta<typeof StarChargePage> = {
 }
 
 export default meta
-type Story = StoryObj<typeof StarChargePage>
+type Story = StoryObj<typeof PaymentPage>
 
 export const Default: Story = {
   render: () => (
     <Layout>
-      <StarChargePage />
+      <PaymentPage />
     </Layout>
   ),
 }
