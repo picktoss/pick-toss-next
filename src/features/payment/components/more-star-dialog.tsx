@@ -46,7 +46,7 @@ const MoreStarDialog = ({ isOpen, setIsOpen }: Props) => {
           variant={'largeRound'}
           colors={'primary'}
           className="mb-[16px]"
-          onClick={() => router.push('/star-charge')}
+          onClick={() => router.push('/payment')}
         >
           별 충전하기
         </Button>
