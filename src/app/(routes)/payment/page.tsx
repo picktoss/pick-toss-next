@@ -12,7 +12,7 @@ const PaymentPage = () => {
     <div className="flex size-full h-screen flex-col justify-between overflow-x-hidden">
       <main className="flex h-[calc(100dvh-54px)] w-full flex-col gap-[30px] overflow-y-auto overflow-x-hidden">
         <div className="flex w-full grow flex-col items-center justify-center">
-          <div className="relative h-[calc(23dvh*1.2)] w-[23dvh] flex-col">
+          <div className="relative h-[calc(24dvh*1.2)] w-[24dvh] flex-col">
             <Image src="/images/infinite-star.png" fill alt="" className="justify-self-center" />
           </div>
           <div className="mt-[1dvh] flex flex-col items-center gap-[9px]">
@@ -27,7 +27,7 @@ const PaymentPage = () => {
               새로 생긴 퀴즈만큼 나의 실력은 상승할 거예요
             </Text>
 
-            <Text typography="subtitle1-bold" color="primary-inverse" className="mt-[16px]">
+            <Text typography="subtitle1-bold" color="primary-inverse" className="mt-[1.5dvh]">
               ₩8,900 / 월
             </Text>
           </div>
