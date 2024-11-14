@@ -12,7 +12,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 const multipleQuiz: Quiz.Item = {
-  id: '1',
+  id: 1,
   quizType: 'MULTIPLE_CHOICE',
   question: '식물기반 단백질 시장에서 대기업의 참여가 늘어나는 이유는 무엇인가요?',
   options: [
@@ -26,10 +26,10 @@ const multipleQuiz: Quiz.Item = {
 }
 
 const oxQuiz: Quiz.Item = {
-  id: '2',
+  id: 2,
   quizType: 'MIX_UP',
   question: '식물기반 단백질 시장에서 대기업의 참여가 늘어나는 이유는 무엇인가요?',
-  answer: 'O',
+  answer: 'correct',
   explanation: '기존의 배양육이 기존방식에서 생산되는 육류보다 토양이 비축된다',
 } as OXQuiz
 

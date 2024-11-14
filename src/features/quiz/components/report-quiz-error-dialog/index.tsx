@@ -13,7 +13,7 @@ import { useState } from 'react'
 import { reportOptions } from '../../config'
 import { cn } from '@/shared/lib/utils'
 
-const ResultQuizErrorDialog = () => {
+const ReportQuizErrorDialog = () => {
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null)
   const [isOpen, setIsOpen] = useState(false)
 
@@ -105,4 +105,4 @@ const ResultQuizErrorDialog = () => {
   )
 }
 
-export default ResultQuizErrorDialog
+export default ReportQuizErrorDialog

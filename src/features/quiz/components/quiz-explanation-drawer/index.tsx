@@ -8,7 +8,8 @@ import Text from '@/shared/components/ui/text'
 interface QuizExplanationDrawerProps {
   isCorrect: boolean
   explanation: string
-  correctAnswer?: string
+  onClickNext: () => void
+  correctAnswer: string
 }
 
 const MIN_HEIGHT = '125px'
@@ -18,6 +19,7 @@ const QuizExplanationDrawer = ({
   isCorrect,
   correctAnswer,
   explanation,
+  onClickNext,
 }: QuizExplanationDrawerProps) => {
   const [open, setOpen] = useState(true)
   const controls = useAnimation()
@@ -124,7 +126,7 @@ const QuizExplanationDrawer = ({
           transition={{ duration: 0.3 }}
           className={cn('w-full', open ? 'mt-[40px]' : 'absolute')}
         >
-          <Button className="w-full" onClick={handleClose}>
+          <Button className="w-full" onClick={onClickNext}>
             다음
           </Button>
         </motion.div>

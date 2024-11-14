@@ -49,6 +49,8 @@ export const Correct: Story = {
   args: {
     isCorrect: true,
     explanation: SAMPLE_EXPLANATION,
+    onClickNext: () => {},
+    correctAnswer: '',
   },
 }
 
@@ -56,6 +58,7 @@ export const Wrong: Story = {
   args: {
     isCorrect: false,
     explanation: SAMPLE_EXPLANATION,
+    onClickNext: () => {},
     correctAnswer: 'A',
   },
 }

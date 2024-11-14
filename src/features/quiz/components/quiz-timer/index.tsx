@@ -1,25 +1,14 @@
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
-import { useTimer } from '@/shared/hooks/use-timer'
 import { cn } from '@/shared/lib/utils'
 import { msToElapsedTime } from '@/shared/utils/time'
-import { useEffect } from 'react'
 
 interface QuizTimerProps {
   isRunning: boolean
+  totalElapsedTime?: number
 }
 
-const QuizTimer = ({ isRunning }: QuizTimerProps) => {
-  const { totalElapsedTime, runTimer, stopTimer } = useTimer()
-
-  useEffect(() => {
-    if (isRunning) {
-      runTimer()
-    } else {
-      stopTimer()
-    }
-  }, [isRunning])
-
+const QuizTimer = ({ isRunning, totalElapsedTime = 0 }: QuizTimerProps) => {
   return (
     <div
       className={cn(

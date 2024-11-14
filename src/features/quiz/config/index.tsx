@@ -1,6 +1,6 @@
 export const quizzes: Quiz.List = [
   {
-    id: '1',
+    id: 1,
     quizType: 'MULTIPLE_CHOICE',
     question: '식물기반 단백질 시장에서 대기업의 참여가 늘어나는 이유는 무엇인가요?',
     options: [
@@ -13,14 +13,14 @@ export const quizzes: Quiz.List = [
     explanation: '기존의 배양육이 기존방식에서 생산되는 육류보다 토양이 비축된다',
   },
   {
-    id: '2',
+    id: 2,
     quizType: 'MIX_UP',
     question: '식물기반 단백질 시장에서 대기업의 참여가 늘어나는 이유는 무엇인가요?',
-    answer: 'O',
+    answer: 'correct',
     explanation: '기존의 배양육이 기존방식에서 생산되는 육류보다 토양이 비축된다',
-  } as OXQuiz,
+  },
   {
-    id: '3',
+    id: 3,
     quizType: 'MULTIPLE_CHOICE',
     question: '식물기반 단백질 시장에서 대기업의 참여가 늘어나는 이유는 무엇인가요?',
     options: [
@@ -33,19 +33,19 @@ export const quizzes: Quiz.List = [
     explanation: '기존의 배양육이 기존방식에서 생산되는 육류보다 토양이 비축된다',
   },
   {
-    id: '5',
+    id: 5,
     quizType: 'MIX_UP',
     question: '식물기반 단백질 시장에서 대기업의 참여가 늘어나는 이유는 무엇인가요?',
-    answer: 'O',
+    answer: 'correct',
     explanation: '기존의 배양육이 기존방식에서 생산되는 육류보다 토양이 비축된다',
-  } as OXQuiz,
+  },
   {
-    id: '4',
+    id: 4,
     quizType: 'MIX_UP',
     question: '식물기반 단백질 시장에서 대기업의 참여가 늘어나는 이유는 무엇인가요?',
-    answer: 'O',
+    answer: 'correct',
     explanation: '기존의 배양육이 기존방식에서 생산되는 육류보다 토양이 비축된다',
-  } as OXQuiz,
+  },
 ]
 
 export const tabs = [
@@ -58,3 +58,6 @@ export const reportOptions = [
   { id: '2', label: '퀴즈 유형과 질문이 맞지 않아요' },
   { id: '3', label: '퀴즈가 노트와 관련 없는 내용이에요' },
 ] as const
+
+export const QUIZ_ANIMATION_DURATION = 1
+export const UNTIL_EXPLANATION_DRAWER_OPEN = 800
