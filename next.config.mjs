@@ -7,7 +7,6 @@ const nextConfig = {
       },
     ],
   },
-  env: { NEXTAUTH_URL: 'https://pick-toss-next.vercel.app' },
   async headers() {
     return [
       {
