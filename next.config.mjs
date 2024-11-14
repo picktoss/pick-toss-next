@@ -7,7 +7,7 @@ const nextConfig = {
       },
     ],
   },
-  env: { NEXTAUTH_URL: 'https://pick-toss-next-deploy-git-develop-smart-consumption.vercel.app' },
+  env: { NEXTAUTH_URL: 'https://pick-toss-next.vercel.app' },
   async headers() {
     return [
       {
