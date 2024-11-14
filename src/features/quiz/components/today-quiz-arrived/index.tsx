@@ -1,7 +1,7 @@
 import { Button } from '@/shared/components/ui/button'
 import Text from '@/shared/components/ui/text'
 import { getCurrentDate } from '@/shared/utils/date'
-import QuizArrivedAnimation from '../../quiz-arrived-animation'
+import QuizArrivedAnimation from '../quiz-arrived-animation'
 
 const TodayQuizArrived = () => {
   const MonthDateDay = getCurrentDate().split('년 ')[1]

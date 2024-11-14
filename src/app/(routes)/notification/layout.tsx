@@ -1,22 +1,16 @@
 import { FunctionComponent, PropsWithChildren } from 'react'
 import type { Metadata } from 'next'
-import GoBackButton from '@/shared/components/custom/go-back-button'
-import Text from '@/shared/components/ui/text'
 
 export const metadata: Metadata = {}
 
-interface LayoutProps extends PropsWithChildren {}
+interface LayoutProps extends PropsWithChildren {
+  header: React.ReactNode
+}
 
-const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
+const Layout: FunctionComponent<LayoutProps> = ({ header, children }) => {
   return (
     <>
-      <header className="relative flex h-[54px] w-full items-center bg-background-base-01 px-[16px]">
-        <GoBackButton />
-        <Text typography="subtitle2-medium" className="center">
-          알림
-        </Text>
-      </header>
-
+      {header}
       {children}
     </>
   )

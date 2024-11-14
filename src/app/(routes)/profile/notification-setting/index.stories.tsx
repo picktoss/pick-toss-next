@@ -1,10 +1,10 @@
 import { Meta, StoryFn, StoryObj } from '@storybook/react'
-import NotificationPage from './page'
+import NotificationSettingPage from './page'
 import Layout from './layout'
 
-const meta: Meta<typeof NotificationPage> = {
-  title: 'Page/Notification',
-  component: NotificationPage,
+const meta: Meta<typeof NotificationSettingPage> = {
+  title: 'Page/NotificationSetting',
+  component: NotificationSettingPage,
   parameters: {
     layout: 'fullscreen',
     nextjs: { appDirectory: true },
@@ -16,14 +16,14 @@ const meta: Meta<typeof NotificationPage> = {
       </div>
     ),
   ],
-} satisfies Meta<typeof NotificationPage>
+} satisfies Meta<typeof NotificationSettingPage>
 
 export default meta
 
-export const Default: StoryObj<typeof NotificationPage> = {
+export const Default: StoryObj<typeof NotificationSettingPage> = {
   render: () => (
     <Layout>
-      <NotificationPage />
+      <NotificationSettingPage />
     </Layout>
   ),
 }
