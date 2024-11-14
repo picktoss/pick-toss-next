@@ -1,5 +1,7 @@
 import { NotificationType } from '../components/notification-item'
 
+// export const NotificationList = []
+
 export const NotificationList = [
   {
     id: 1,
