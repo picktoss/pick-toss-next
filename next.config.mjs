@@ -7,7 +7,7 @@ const nextConfig = {
       },
     ],
   },
-  env: { NEXTAUTH_URL: 'https://pick-toss-next.vercel.app' },
+  env: { NEXTAUTH_URL: 'https://pick-toss-next.vercel.app/api/auth/callback/kakao' },
   async headers() {
     return [
       {
