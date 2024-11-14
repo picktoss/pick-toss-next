@@ -13,7 +13,7 @@ import Label from '@/shared/components/ui/label'
 const SelectQuizFromCollection = () => {
   // TODO: 전체 or 디렉토리 배열의 첫 번째 요소 | null이면 전체
   const [selectedDirectoryId, setSelectedDirectoryId] = useState<string | null>(null)
-  const [selectedQuizIds, setSelectedQuizIds] = useState<string[]>([])
+  const [selectedQuizIds, setSelectedQuizIds] = useState<number[]>([])
   const [allChecked, setAllChecked] = useState(false)
 
   const handleSelectAllClick = (check: boolean) => {
@@ -27,7 +27,7 @@ const SelectQuizFromCollection = () => {
     setSelectedQuizIds([])
   }
 
-  const onSelectableQuizCardClick = (quizId: string) => {
+  const onSelectableQuizCardClick = (quizId: number) => {
     if (selectedQuizIds.includes(quizId)) {
       setSelectedQuizIds(selectedQuizIds.filter((id) => id !== quizId))
       return

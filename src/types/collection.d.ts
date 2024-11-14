@@ -14,11 +14,11 @@ type CollectionField =
 type QuizType = 'MIX_UP' | 'MULTIPLE_CHOICE'
 
 type BaseQuiz = {
-  id: string
+  id: number
   question: string
   answer: string
   explanation: string
-  options: string[]
+  options?: string[]
 }
 
 type QuizWithType = BaseQuiz & {

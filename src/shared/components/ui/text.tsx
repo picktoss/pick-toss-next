@@ -40,6 +40,7 @@ type TextColor =
   | 'disabled'
   | 'right'
   | 'wrong'
+  | 'special'
 
 interface BaseTextProps {
   typography?: Typography
@@ -91,6 +92,7 @@ const TextColorStyles: Record<TextColor, string> = {
   disabled: 'text-text-disabled',
   right: 'text-text-right',
   wrong: 'text-text-wrong',
+  special: 'bg-gradient-to-r from-blue-400 to-orange-500 bg-clip-text text-transparent',
 }
 
 const Text = forwardRef(

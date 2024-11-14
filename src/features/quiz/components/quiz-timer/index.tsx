@@ -5,10 +5,10 @@ import { msToElapsedTime } from '@/shared/utils/time'
 
 interface QuizTimerProps {
   isRunning: boolean
-  totalElapsedTime: number
+  totalElapsedTime?: number
 }
 
-const QuizTimer = ({ isRunning, totalElapsedTime }: QuizTimerProps) => {
+const QuizTimer = ({ isRunning, totalElapsedTime = 0 }: QuizTimerProps) => {
   return (
     <div
       className={cn(

@@ -28,7 +28,7 @@ export const Idle: Story = {
 export const CorrectO: Story = {
   args: {
     condition: 'correct',
-    userAnswer: 'O',
+    userAnswer: 'correct',
   },
 }
 
@@ -36,7 +36,7 @@ export const CorrectO: Story = {
 export const CorrectX: Story = {
   args: {
     condition: 'correct',
-    userAnswer: 'X',
+    userAnswer: 'wrong',
   },
 }
 
@@ -44,7 +44,7 @@ export const CorrectX: Story = {
 export const WrongSelectedX: Story = {
   args: {
     condition: 'wrong',
-    userAnswer: 'X', // X를 선택했지만 O가 정답
+    userAnswer: 'wrong', // X를 선택했지만 O가 정답
   },
 }
 
@@ -52,7 +52,7 @@ export const WrongSelectedX: Story = {
 export const WrongSelectedO: Story = {
   args: {
     condition: 'wrong',
-    userAnswer: 'O', // O를 선택했지만 X가 정답
+    userAnswer: 'correct', // O를 선택했지만 X가 정답
   },
 }
 
