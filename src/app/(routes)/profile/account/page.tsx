@@ -25,9 +25,9 @@ const AccountPage = () => {
       </div>
 
       <div className="flex flex-col gap-[32px]">
-        <SetNameDialog />
+        <SetNameDialog userName={'픽토스'} />
 
-        <CategoryDrawer />
+        <CategoryDrawer interestedCategory={'IT·프로그래밍'} />
 
         <Link href={'verify-email'} className="flex w-full items-center justify-between">
           <div className="flex flex-col items-start gap-[4px]">
