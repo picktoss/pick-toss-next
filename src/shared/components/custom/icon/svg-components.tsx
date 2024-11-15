@@ -1340,6 +1340,40 @@ export const Picktoss = ({ ...props }) => {
   )
 }
 
+export const Timer = ({ ...props }) => {
+  return (
+    <svg
+      width="16"
+      height="17"
+      viewBox="0 0 16 17"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <circle cx="8" cy="9.83337" r="6" stroke="currentColor" strokeWidth="1.2" />
+      <path d="M8 6.5L8 9.83333" stroke="currentColor" strokeWidth="1.2" strokeLinecap="square" />
+      <path
+        d="M13.8379 3.95782L12.5118 5.28394"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M10 1.83337L6 1.83337"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        strokeLinecap="square"
+      />
+      <path
+        d="M14.666 4.57849L13.2543 3.16671"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        strokeLinecap="square"
+      />
+    </svg>
+  )
+}
+
 // 픽토스 로고
 export const Logo = ({ ...props }) => {
   const clipId = useId()
@@ -1855,40 +1889,6 @@ export const WrongXRound = ({ ...props }) => {
   )
 }
 
-export const Timer = ({ ...props }) => {
-  return (
-    <svg
-      width="16"
-      height="17"
-      viewBox="0 0 16 17"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
-      <circle cx="8" cy="9.83337" r="6" stroke="currentColor" strokeWidth="1.2" />
-      <path d="M8 6.5L8 9.83333" stroke="currentColor" strokeWidth="1.2" strokeLinecap="square" />
-      <path
-        d="M13.8379 3.95782L12.5118 5.28394"
-        stroke="currentColor"
-        strokeWidth="1.2"
-        strokeLinecap="round"
-      />
-      <path
-        d="M10 1.83337L6 1.83337"
-        stroke="currentColor"
-        strokeWidth="1.2"
-        strokeLinecap="square"
-      />
-      <path
-        d="M14.666 4.57849L13.2543 3.16671"
-        stroke="currentColor"
-        strokeWidth="1.2"
-        strokeLinecap="square"
-      />
-    </svg>
-  )
-}
-
 export const PicktossColor = ({ ...props }) => {
   const fillId = useId()
 
@@ -2039,6 +2039,132 @@ export const ExitDoor = ({ ...props }) => {
         strokeWidth="2.05134"
         strokeLinecap="round"
       />
+    </svg>
+  )
+}
+
+// 알림 아이콘
+export const NotiTodayQuiz = () => {
+  const paintId = useId()
+
+  return (
+    <svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="16" cy="16.5" r="16" fill="#FFECD0" />
+      <path
+        d="M25.7966 7.5106C25.7966 7.5106 25.7725 7.51447 25.7616 7.51915C20.7714 8.78549 15.457 10.5491 11.5268 14.0365C9.85703 15.521 8.5289 17.4548 8.39099 19.7504C8.17527 23.3411 10.8991 26.4266 14.4744 26.6414C15.9462 26.7298 17.4224 26.3044 18.625 25.4445C19.7806 24.6163 20.568 23.3851 21.2094 22.1106C22.2006 20.1352 24.9561 14.7474 24.9561 14.7474C25.052 14.564 24.8709 14.3561 24.678 14.4324C23.7648 14.6252 21.7168 15.2533 20.9334 15.7123C20.8262 15.7751 20.6972 15.6715 20.7335 15.5538C21.0812 14.4001 21.8754 13.2759 22.5012 12.3066C23.5453 10.6861 24.7215 9.20657 26.0488 7.81606C26.0911 7.77333 26.134 7.72263 26.1376 7.66159C26.1464 7.51563 25.9465 7.48764 25.7965 7.51325L25.7966 7.5106Z"
+        fill="#FB7E20"
+      />
+      <circle
+        cx="4.76573"
+        cy="4.76573"
+        r="4.76573"
+        transform="matrix(1 0 0.000990467 1 10 15.8333)"
+        fill={`url(#${paintId})`}
+      />
+      <path
+        d="M11.7896 7.96904C11.8879 7.78811 12.1118 7.78811 12.2101 7.96904L12.5903 8.66894C12.6063 8.69837 12.6266 8.72421 12.6503 8.74525L13.2337 9.26432C13.3663 9.38237 13.3663 9.61765 13.2337 9.7357L12.6503 10.2548C12.6266 10.2758 12.6063 10.3016 12.5903 10.3311L12.2101 11.031C12.1118 11.2119 11.8879 11.2119 11.7896 11.031L11.4094 10.3311C11.3934 10.3016 11.3731 10.2758 11.3494 10.2548L10.766 9.7357C10.6333 9.61765 10.6333 9.38237 10.766 9.26432L11.3494 8.74525C11.3731 8.72421 11.3934 8.69837 11.4094 8.66894L11.7896 7.96904Z"
+        fill="#95B0F8"
+      />
+      <path
+        d="M7.68467 10.0233C7.83212 9.77002 8.16788 9.77002 8.31533 10.0233L8.88572 11.0032C8.90971 11.0444 8.94015 11.0806 8.97563 11.11L9.85074 11.8367C10.0498 12.002 10.0498 12.3314 9.85074 12.4966L8.97563 13.2233C8.94015 13.2528 8.90971 13.289 8.88572 13.3302L8.31533 14.31C8.16788 14.5633 7.83212 14.5633 7.68467 14.31L7.11428 13.3302C7.09029 13.289 7.05985 13.2528 7.02437 13.2233L6.14926 12.4966C5.95025 12.3314 5.95025 12.002 6.14926 11.8367L7.02437 11.11C7.05985 11.0806 7.09029 11.0444 7.11428 11.0032L7.68467 10.0233Z"
+        fill="#95B0F8"
+      />
+      <defs>
+        <linearGradient
+          id={paintId}
+          x1="4.76573"
+          y1="0"
+          x2="4.76573"
+          y2="9.53145"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#FFAB40" />
+          <stop offset="1" stopColor="#FFDDB2" />
+        </linearGradient>
+      </defs>
+    </svg>
+  )
+}
+
+export const NotiAnalysis = () => {
+  return (
+    <svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="16" cy="16.5" r="16" fill="#F0F4FF" />
+      <path
+        d="M13.2256 9.86942C13.2256 9.31216 13.6773 8.86041 14.2346 8.86041H17.7661C18.3234 8.86041 18.7751 9.31216 18.7751 9.86942V23.491H13.2256V9.86942Z"
+        fill="#95B0F8"
+      />
+      <path
+        d="M6.66699 14.4099C6.66699 13.8527 7.11874 13.4009 7.676 13.4009H11.2075C11.7648 13.4009 12.2165 13.8527 12.2165 14.4099V23.491H6.66699V14.4099Z"
+        fill="#7095F8"
+      />
+      <path
+        d="M19.7842 16.4282C19.7842 15.8709 20.2359 15.4192 20.7932 15.4192H24.3247C24.882 15.4192 25.3337 15.8709 25.3337 16.4282V23.4912H19.7842V16.4282Z"
+        fill="#95B0F8"
+      />
+      <circle cx="19.7573" cy="8.8334" r="3" fill="#FF9100" />
+      <path
+        d="M18.5576 8.68346L19.4576 9.73346L20.9576 8.23346"
+        stroke="#F5F7F9"
+        strokeWidth="0.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
+export const NotiSystem = () => {
+  return (
+    <svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="16" cy="16.5" r="16" fill="#FFECD0" />
+      <rect x="8.6665" y="17.8334" width="2.66667" height="7.33333" rx="0.823045" fill="#FFD180" />
+      <circle cx="22.9998" cy="15.5" r="2.33333" fill="#FB7E20" />
+      <path
+        d="M10.6665 12.1079L21.7039 8.38319C22.5041 8.11313 23.3332 8.70836 23.3332 9.55295V21.4471C23.3332 22.2917 22.5041 22.8869 21.7039 22.6169L10.6665 18.8922V12.1079Z"
+        fill="#FFD180"
+      />
+      <path
+        d="M6 14.3025C6 12.9388 7.10547 11.8334 8.46914 11.8334H11.3333V19.1667H8.46914C7.10547 19.1667 6 18.0612 6 16.6976V14.3025Z"
+        fill="#FFAB40"
+      />
+    </svg>
+  )
+}
+
+export const NotiReward = () => {
+  const clipId = useId()
+  const paintId = useId()
+
+  return (
+    <svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="16" cy="16.5" r="16" fill="#7095F8" />
+      <g clipPath={`url(#${clipId})`}>
+        <path
+          d="M17.3695 7.34726L19.2787 11.2004C19.4999 11.6492 19.9306 11.9626 20.4274 12.0322L24.692 12.6512C25.9454 12.833 26.446 14.3688 25.5379 15.247L22.453 18.2452C22.0921 18.5934 21.9291 19.1002 22.0145 19.5915L22.744 23.8277C22.9574 25.0695 21.6497 26.0212 20.5282 25.4332L16.7137 23.4331C16.2675 23.201 15.7358 23.201 15.2935 23.4331L11.479 25.4332C10.3575 26.0212 9.04978 25.0734 9.26321 23.8277L9.99274 19.5915C10.0781 19.0963 9.91513 18.5934 9.55424 18.2452L6.46926 15.247C5.56123 14.365 6.06181 12.833 7.31521 12.6512L11.5799 12.0322C12.0766 11.9587 12.5073 11.6492 12.7285 11.2004L14.6377 7.34726C15.1965 6.21761 16.8146 6.21761 17.3773 7.34726H17.3695Z"
+          fill="#FFC95E"
+        />
+        <path
+          d="M16.2136 11.85L13.6719 17.4093L15.8255 17.4248L15.2862 21.3862L17.9831 16.1017H15.8255L16.2136 11.85Z"
+          fill={`url(#${paintId})`}
+        />
+      </g>
+      <defs>
+        <linearGradient
+          id={paintId}
+          x1="13.1286"
+          y1="19.2353"
+          x2="18.359"
+          y2="13.985"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop offset="0.12" stopColor="#FFB95E" />
+          <stop offset="0.78" stopColor="#FF832A" />
+        </linearGradient>
+        <clipPath id={clipId}>
+          <rect width="20" height="19.1111" fill="white" transform="translate(6 6.50002)" />
+        </clipPath>
+      </defs>
     </svg>
   )
 }

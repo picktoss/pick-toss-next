@@ -1,8 +1,9 @@
-import { Meta, StoryFn, StoryObj } from '@storybook/react'
-import NotificationPage from './page'
+import { Meta, StoryObj } from '@storybook/react'
+import Header from './@header/default'
 import Layout from './layout'
+import NotificationPage from './page'
 
-const meta: Meta<typeof NotificationPage> = {
+const meta = {
   title: 'Page/Notification',
   component: NotificationPage,
   parameters: {
@@ -10,7 +11,7 @@ const meta: Meta<typeof NotificationPage> = {
     nextjs: { appDirectory: true },
   },
   decorators: [
-    (Story: StoryFn) => (
+    (Story) => (
       <div className="mx-auto max-w-mobile">
         <Story />
       </div>
@@ -20,9 +21,11 @@ const meta: Meta<typeof NotificationPage> = {
 
 export default meta
 
-export const Default: StoryObj<typeof NotificationPage> = {
+type Story = StoryObj<typeof NotificationPage>
+
+export const Default: Story = {
   render: () => (
-    <Layout>
+    <Layout header={<Header />}>
       <NotificationPage />
     </Layout>
   ),

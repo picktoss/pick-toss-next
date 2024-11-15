@@ -1,7 +1,13 @@
+'use client'
+
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
+import usePreviousPath from '@/shared/hooks/use-previous-path'
+import Link from 'next/link'
 
 const Header = () => {
+  usePreviousPath()
+
   return (
     <header className="flex h-[54px] w-full max-w-mobile items-center justify-between bg-background-base-02 px-[18px]">
       <Icon name="logo" className="h-[36px]" />
@@ -14,9 +20,9 @@ const Header = () => {
         <button>
           <Icon name="search" className="size-[24px]" />
         </button>
-        <button>
+        <Link href={'/notification'}>
           <Icon name="notification" className="size-[24px]" />
-        </button>
+        </Link>
       </div>
     </header>
   )
