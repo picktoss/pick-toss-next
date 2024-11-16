@@ -4,9 +4,7 @@
   "ignorePaths": ["node_modules", ".next", "*.js", "*.json", "*.html", "*.css", "*.md", "*.svg"],
   "files": ["src/**/*.tsx", "src/**/*.ts"],
   "words": [
-    "autodocs",
     "classname",
-    "customise",
     "hanmail",
     "kakao",
     "KEYPOINT",
@@ -26,6 +24,10 @@
     "Tanstack",
     "Uncapitalize",
     "vaul",
-    "yxxx"
+    "yxxx",
+
+    // storybook
+    "autodocs",
+    "customise"
   ]
 }
