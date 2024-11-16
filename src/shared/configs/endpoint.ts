@@ -191,9 +191,9 @@ export const API_ENDPOINTS = {
       AUTH: '/oauth',
       /** GET /notion/callback - 노션 accessToken 발급 */
       CALLBACK: '/callback',
-      /** GET /notion/page - 노션 단일 페이지 블록 데이터 가져오기  */
+      /** GET /notion/page - 노션 단일 페이지 데이터 가져오기  */
       PAGE: '/page',
-      /** GET /notion/pages - 노션 여러 페이지 블록 데이터 가져오기 */
+      /** GET /notion/pages - 노션 여러 페이지 데이터 가져오기 */
       PAGES: '/pages',
     },
   },
