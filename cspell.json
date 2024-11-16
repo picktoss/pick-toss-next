@@ -1,32 +1,43 @@
 {
   "version": "8.3.2",
   "language": "en",
-  "ignorePaths": ["node_modules", ".next", "*.js", "*.json", "*.html", "*.css", "*.md", "*.svg"],
-  "files": ["src/**/*.tsx", "src/**/*.ts"],
+  "ignorePaths": [
+    "node_modules",
+    ".next",
+    "*.js",
+    "*.json",
+    "*.html",
+    "*.css",
+    "*.md",
+    "*.svg"
+  ],
+  "files": [
+    "src/**/*.tsx",
+    "src/**/*.ts"
+  ],
   "words": [
+    "autodocs",
     "classname",
+    "customise",
+    "hanmail",
     "kakao",
     "KEYPOINT",
     "kisa",
     "lotties",
+    "lucide",
     "lukemorales",
     "metadatas",
+    "naver",
     "nextauth",
+    "noti",
+    "notionhq",
     "picktoss",
     "remirror",
     "svgs",
+    "swipeable",
     "Tanstack",
     "Uncapitalize",
     "vaul",
-    "yxxx",
-    "swipeable",
-    "lucide",
-    "hanmail",
-    "naver",
-    "noti",
-
-    // storybook
-    "autodocs",
-    "customise"
+    "yxxx"
   ]
 }
