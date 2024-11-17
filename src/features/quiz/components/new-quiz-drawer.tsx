@@ -11,14 +11,13 @@ import MoreStarDialog from '../../payment/components/more-star-dialog'
 
 // NewQuizDrawer 컴포넌트
 const NewQuizDrawer = ({ triggerComponent }: { triggerComponent: React.ReactNode }) => {
-  const [isOpen, setIsOpen] = useState(false)
   const [quizType, setQuizType] = useState('MULTIPLE_CHOICE')
   const [quizCount, setQuizCount] = useState(10) // 초기값 10
   const [isOpenMoreStar, setIsOpenMoreStar] = useState(false)
 
   return (
     <>
-      <Drawer open={isOpen} onOpenChange={setIsOpen}>
+      <Drawer>
         <DrawerTrigger asChild>{triggerComponent}</DrawerTrigger>
 
         <DrawerContent
