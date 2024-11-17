@@ -65,7 +65,12 @@ const NotionDocument = () => {
             <div className="flex items-center">
               <Icon name="info" className="mr-[8px] size-[16px]" />
               <Text as="span" typography="text2-medium" className="mr-[4px] text-text-secondary">
-                연결한 페이지: {title} {' 외 '} {pageCount} {' 개'}
+                연결한 페이지: {title}
+                {pageCount > 1 && (
+                  <>
+                    {' 외 '} {pageCount - 1} {' 개'}
+                  </>
+                )}
               </Text>
               <Text as="span" typography="text2-medium" className="text-text-caption">
                 {characterCount}
