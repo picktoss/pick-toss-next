@@ -18,7 +18,8 @@ const NotionDocument = () => {
   const [characterCount, setCharacterCount] = useState(0)
   const [isReconnect, setIsReconnect] = useState(false)
 
-  const { notionAccessToken, mutate: notionAuth } = useNotionAuthMutation()
+  const { notionAccessToken, mutate: notionAuth, isSuccess } = useNotionAuthMutation()
+
   const { data: notionPages } = useGetNotionPages(notionAccessToken)
   const pageIds = notionPages?.map((pageData) => pageData.id)
   const pageTitle = notionPages && notionPages[0].properties['Title']
@@ -28,6 +29,10 @@ const NotionDocument = () => {
     if (!notionAccessToken) {
       notionAuth()
     }
+    // eslint-disable-next-line no-console
+    console.log(isSuccess)
+    // eslint-disable-next-line no-console
+    console.log(notionAccessToken)
   }, [notionAccessToken, notionAuth])
 
   useEffect(() => {

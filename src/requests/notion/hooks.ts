@@ -32,7 +32,7 @@ export const useGetNotionPages = (notionAccessToken: string | null) => {
   return useQuery({
     queryKey: ['getNotionPages', notionAccessToken],
     queryFn: async () => fetchNotionPages({ notionAccessToken }),
-    enabled: !notionAccessToken,
+    enabled: !!notionAccessToken,
   })
 }
 
@@ -40,6 +40,6 @@ export const useGetNotionMdFile = (notionAccessToken: string, pageIds: string[])
   return useQuery({
     queryKey: ['getNotionPages', notionAccessToken, pageIds],
     queryFn: async () => convertPagesToMarkdownFile(notionAccessToken, pageIds),
-    enabled: !notionAccessToken,
+    enabled: !!notionAccessToken,
   })
 }

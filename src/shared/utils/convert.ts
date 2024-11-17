@@ -8,6 +8,7 @@ export async function convertPagesToMarkdownFile(
 ): Promise<{ file: Buffer; content: string }> {
   const notionClient = new Client({
     auth: notionAccessToken,
+    notionVersion: '2022-06-28',
   })
   const n2m = new NotionToMarkdown({ notionClient })
 
