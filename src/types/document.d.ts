@@ -149,7 +149,8 @@ interface SearchDocumentsResponse {
   quizzes: SearchedQuiz[]
 }
 
-declare namespace Document {
+// 제네릭 형태가 아닌 타입으로 사용하려면 export가 필요하다고 해서 이렇게 해 두었습니다
+export declare namespace Document {
   type Item = Document
   type List = Document[]
   type Status = DocumentStatus

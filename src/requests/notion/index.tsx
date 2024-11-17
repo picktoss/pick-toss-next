@@ -6,40 +6,43 @@
 import { auth } from '@/app/api/auth/[...nextauth]/auth'
 import { API_ENDPOINTS } from '@/shared/configs/endpoint'
 import { http } from '@/shared/lib/axios/http'
+import { Session } from 'next-auth'
 
 export const fetchNotionAuth = async () => {
-  try {
-    const session = await auth()
+  const session = await auth()
 
-    void http.get(API_ENDPOINTS.NOTION.GET.AUTH, {
-      headers: {
-        Authorization: `Bearer ${session?.user.accessToken}`,
-      },
-    })
-  } catch (error: any) {
-    console.error(error.status)
-    throw error
+  if (!session) {
+    throw new Error('Session retrieval failed')
   }
+
+  const response = await http.get(API_ENDPOINTS.NOTION.GET.AUTH, {
+    headers: {
+      Authorization: `Bearer ${session.user.accessToken}`,
+    },
+  })
+
+  if (response.status !== 200) {
+    throw new Error('Authorization failed')
+  }
+
+  return session
 }
 
-export const fetchNotionCallback = async () => {
-  try {
-    const session = await auth()
+export const fetchNotionCallback = async (session: Session) => {
+  const { data } = await http.get<string>(API_ENDPOINTS.NOTION.GET.CALLBACK, {
+    headers: {
+      Authorization: `Bearer ${session.user.accessToken}`,
+    },
+  })
 
-    const { data } = await http.get<string>(API_ENDPOINTS.NOTION.GET.CALLBACK, {
-      headers: {
-        Authorization: `Bearer ${session?.user.accessToken}`,
-      },
-    })
-
-    return data // notion accessToken
-  } catch (error: any) {
-    console.error(error.status)
-    throw error
-  }
+  return data // Notion accessToken
 }
 
-export const fetchNotionPages = async ({ notionAccessToken }: { notionAccessToken: string }) => {
+export const fetchNotionPages = async ({
+  notionAccessToken,
+}: {
+  notionAccessToken: string | null
+}) => {
   try {
     const { data } = await http.get<Notion.Page[]>(API_ENDPOINTS.NOTION.GET.PAGES, {
       headers: {
@@ -57,7 +60,7 @@ export const fetchNotionPages = async ({ notionAccessToken }: { notionAccessToke
 export const fetchNotionSinglePage = async ({
   notionAccessToken,
 }: {
-  notionAccessToken: string
+  notionAccessToken: string | null
 }) => {
   try {
     const { data } = await http.get<Notion.Page[]>(API_ENDPOINTS.NOTION.GET.PAGE, {

@@ -5,7 +5,7 @@ import { NotionToMarkdown } from 'notion-to-md'
 export async function convertPagesToMarkdownFile(
   notionAccessToken: string,
   pageIds: string[]
-): Promise<Buffer> {
+): Promise<{ file: Buffer; content: string }> {
   const notionClient = new Client({
     auth: notionAccessToken,
   })
@@ -19,7 +19,7 @@ export async function convertPagesToMarkdownFile(
     .filter((markdown) => markdown.trim() !== '') // 실패한 페이지 제거
     .join('\n\n')
 
-  return Buffer.from(combinedMarkdown, 'utf-8')
+  return { file: Buffer.from(combinedMarkdown, 'utf-8'), content: combinedMarkdown }
 }
 
 async function fetchSinglePageToMarkdown(
