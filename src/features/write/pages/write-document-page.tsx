@@ -62,7 +62,7 @@ const WriteDocumentPage = () => {
             handleCreateDocument({
               documentName: title,
               file: content,
-              directoryId: 0,
+              directoryId: 2,
               quizType: 'MULTIPLE_CHOICE',
               star: 5,
             })
