@@ -183,6 +183,20 @@ export const API_ENDPOINTS = {
       CREATE: (documentId: number) => `/quizzes/documents/${documentId}/create-quizzes`,
     },
   },
+
+  NOTION: {
+    BASE: '/notion',
+    GET: {
+      /** GET /notion/oauth - 노션 연동 요청 */
+      AUTH: '/oauth',
+      /** GET /notion/callback - 노션 accessToken 발급 */
+      CALLBACK: '/callback',
+      /** GET /notion/page - 노션 단일 페이지 데이터 가져오기  */
+      PAGE: '/page',
+      /** GET /notion/pages - 노션 여러 페이지 데이터 가져오기 */
+      PAGES: '/pages',
+    },
+  },
 } as const
 
 export type ApiEndpoints = typeof API_ENDPOINTS
