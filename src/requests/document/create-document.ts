@@ -8,7 +8,11 @@ export const createDocument = async (
   accessToken: string
 ) => {
   const formData = new FormData()
-  formData.append('file', payload.file)
+
+  const blob = new Blob([payload.file], { type: 'text/markdown' })
+  const file = new File([blob], `${payload.documentName}.md`, { type: 'text/markdown' })
+
+  formData.append('file', file)
   formData.append('directoryId', String(payload.directoryId))
   formData.append('documentName', payload.documentName)
   formData.append('star', String(payload.star))
