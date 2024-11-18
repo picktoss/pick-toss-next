@@ -149,7 +149,7 @@ interface SearchDocumentsResponse {
   quizzes: SearchedQuiz[]
 }
 
-declare namespace Document {
+export declare namespace Document {
   type Item = Document
   type List = Document[]
   type Status = DocumentStatus
