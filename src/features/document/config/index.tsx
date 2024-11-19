@@ -1,9 +1,12 @@
+export const MIN_CHARACTERS = 1000
+export const MAX_CHARACTERS = 50000
+
 export const addDocumentButtons = [
   {
     key: 'pencil',
     position: 76,
     text: { bottomCss: 'bottom-[89.5px]', content: '직접 작성하기' },
-    href: '/document/editor',
+    href: '/document/write',
   },
   {
     key: 'clip',
@@ -17,4 +20,10 @@ export const addDocumentButtons = [
     text: { bottomCss: 'bottom-[225.5px]', content: '페이지 연동하기' },
     href: '/document/notion',
   },
+] as const
+
+export const quizTypeFilters = [
+  { key: 'ALL', label: '전체' },
+  { key: 'MULTIPLE', label: '객관식' },
+  { key: 'OX', label: 'O/X' },
 ] as const
