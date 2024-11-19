@@ -11,18 +11,15 @@ import SortIconBtn from '@/features/document/components/sort-icon-button'
 import SetDirectoryNameDialog from '@/features/directory/components/set-directory-name-dialog'
 import DirectoryMenuDots from '@/features/document/components/directory-menu-dots'
 import GoBackButton from '@/shared/components/custom/go-back-button'
-import { useGetDocuments } from '@/requests/document/hooks'
 
 // Header 컴포넌트
 const Header = () => {
-  const { data } = useGetDocuments()
   const { setSelectedDirectoryId, isSelectMode, setIsSelectMode } = useDirectoryContext()
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
   useEffect(() => {
     setSelectedDirectoryId('0')
   }, [])
-  console.log(data)
 
   return (
     <>
