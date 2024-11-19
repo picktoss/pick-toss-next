@@ -3,6 +3,8 @@ type Directory = {
   name: string
 }
 
+type SortOption = 'CREATED_AT' | 'UPDATED_AT'
+
 type DocumentStatus =
   | 'UNPROCESSED'
   | 'PROCESSED'
@@ -153,6 +155,7 @@ declare namespace Document {
   type Item = DocumentItem
   type List = DocumentItem[]
   type Status = DocumentStatus
+  type Sort = SortOption
 
   declare namespace Request {
     /** GET /api/v2/documents/{document_id}
