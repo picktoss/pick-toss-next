@@ -57,11 +57,15 @@ export const API_ENDPOINTS = {
   },
 
   DIRECTORY: {
-    /** GET /directories - 모든 디렉토리 가져오기 */
-    BASE: '/directories',
     GET: {
+      /** GET /directories - 모든 디렉토리 가져오기 */
+      ALL: '/directories',
       /** GET /directories/{directory_id} - directory_id로 디렉토리 가져오기 */
       BY_ID: (directoryId: number) => `/directories/${directoryId}`,
+    },
+    POST: {
+      /** POST /directories - 디렉토리 생성 */
+      CREATE: '/directories',
     },
     PATCH: {
       /** PATCH /directories/{directory_id}/update-info - 디렉토리 정보 변경 */
