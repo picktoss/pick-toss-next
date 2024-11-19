@@ -8,7 +8,7 @@ import dynamic from 'next/dynamic'
 import FixedBottom from '@/shared/components/custom/fixed-bottom'
 import { Button } from '@/shared/components/ui/button'
 import { useCreateDocument } from '@/requests/document/hooks'
-import { MAX_CHARACTERS, MIN_CHARACTERS } from '@/shared/configs/constants'
+import { MAX_CHARACTERS, MIN_CHARACTERS } from '@/features/document/config'
 
 const Editor = dynamic(() => import('../components/editor'), {
   ssr: false,
