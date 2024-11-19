@@ -3,6 +3,8 @@ type Directory = {
   name: string
 }
 
+type SortOption = 'CREATED_AT' | 'UPDATED_AT'
+
 type DocumentStatus =
   | 'UNPROCESSED'
   | 'PROCESSED'
@@ -23,7 +25,7 @@ type Quiz = {
   quizType: QuizType
 }
 
-type Document = {
+type DocumentItem = {
   id: number
   documentName: string
   status: DocumentStatus
@@ -74,7 +76,7 @@ type SearchedCollection = {
 
 /** GET /api/v2/documents/{document_id} */
 interface DocumentResponse {
-  document: Document
+  document: DocumentItem
 }
 
 /** GET /api/v2/documents/review-need-documents */
@@ -89,7 +91,7 @@ interface ReviewNeedDocumentsResponse {
 
 /** GET /api/v2/directories/documents */
 interface AllDocumentsResponse {
-  documents: Document[]
+  documents: DocumentItem[]
 }
 
 /** PATCH /api/v2/documents/{document_id}/update-name */
@@ -149,10 +151,11 @@ interface SearchDocumentsResponse {
   quizzes: SearchedQuiz[]
 }
 
-export declare namespace Document {
-  type Item = Document
-  type List = Document[]
+declare namespace Document {
+  type Item = DocumentItem
+  type List = DocumentItem[]
   type Status = DocumentStatus
+  type Sort = SortOption
 
   declare namespace Request {
     /** GET /api/v2/documents/{document_id}

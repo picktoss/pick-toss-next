@@ -8,20 +8,19 @@ import Image from 'next/image'
 import Text from '@/shared/components/ui/text'
 import note_img from '@/../../public/assets/note.png'
 import { useGetDocuments } from '@/requests/document/hooks'
-import { useEffect } from 'react'
 
 const DocumentsInDirectory = () => {
   const { data } = useGetDocuments(null, 'CREATED_AT')
 
-  useEffect(() => {
-    // eslint-disable-next-line no-console
-    console.log(data)
-  }, [data])
+  // useEffect(() => {
+  //   // eslint-disable-next-line no-console
+  //   console.log(data)
+  // }, [data])
 
   return (
     <>
       {/* 노트가 하나도 없을 경우 아래 렌더링 */}
-      {data?.length === 0 || !data ? (
+      {data?.documents.length === 0 || !data ? (
         <div className="flex-center grow overflow-y-scroll">
           <div className="flex-center relative size-[202px] flex-col">
             <Image src={note_img} alt="노트 작성" objectPosition="center" width={100} />
