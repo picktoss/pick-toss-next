@@ -23,7 +23,7 @@ type Quiz = {
   quizType: QuizType
 }
 
-type Document = {
+type DocumentItem = {
   id: number
   documentName: string
   status: DocumentStatus
@@ -74,7 +74,7 @@ type SearchedCollection = {
 
 /** GET /api/v2/documents/{document_id} */
 interface DocumentResponse {
-  document: Document
+  document: DocumentItem
 }
 
 /** GET /api/v2/documents/review-need-documents */
@@ -89,7 +89,7 @@ interface ReviewNeedDocumentsResponse {
 
 /** GET /api/v2/directories/documents */
 interface AllDocumentsResponse {
-  documents: Document[]
+  documents: DocumentItem[]
 }
 
 /** PATCH /api/v2/documents/{document_id}/update-name */
@@ -130,7 +130,7 @@ interface IntegratedSearchResponse {
 
 /** POST /api/v2/documents */
 interface CreateDocumentPayload {
-  file: File
+  file: string
   directoryId: number
   documentName: string
   star: number
@@ -150,8 +150,8 @@ interface SearchDocumentsResponse {
 }
 
 declare namespace Document {
-  type Item = Document
-  type List = Document[]
+  type Item = DocumentItem
+  type List = DocumentItem[]
   type Status = DocumentStatus
 
   declare namespace Request {
