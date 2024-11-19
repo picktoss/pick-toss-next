@@ -8,7 +8,7 @@ import { cn } from '@/shared/lib/utils'
 import { useDirectoryContext } from '../../contexts/directory-context'
 import Text from '@/shared/components/ui/text'
 import { useRouter } from 'next/navigation'
-import { addDocumentButtons } from '../../constants/add-document-buttons'
+import { addDocumentButtons } from '../../config'
 
 type Custom = number | 'plus' | 'cancel'
 

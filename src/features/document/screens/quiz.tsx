@@ -5,10 +5,10 @@ import { useState } from 'react'
 import { Switch } from '@/shared/components/ui/switch'
 import Text from '@/shared/components/ui/text'
 import { useQuizListContext } from '../contexts/quiz-list-context'
-import { quizTypeFilters } from '../constants/quiz-type'
 import QuizList from '@/features/quiz/components/quiz-list'
 import QuizCard from '@/features/quiz/components/quiz-card'
 import { quizzes } from '@/features/quiz/config'
+import { quizTypeFilters } from '../config'
 
 const Quiz = () => {
   const [quizType, setQuizType] = useState('ALL')
