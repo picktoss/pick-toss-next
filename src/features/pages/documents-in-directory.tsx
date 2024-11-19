@@ -10,12 +10,7 @@ import note_img from '@/../../public/assets/note.png'
 import { useGetDocuments } from '@/requests/document/hooks'
 
 const DocumentsInDirectory = () => {
-  const { data } = useGetDocuments(null, 'CREATED_AT')
-
-  // useEffect(() => {
-  //   // eslint-disable-next-line no-console
-  //   console.log(data)
-  // }, [data])
+  const { data } = useGetDocuments()
 
   return (
     <>
