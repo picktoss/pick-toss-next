@@ -1,17 +1,3 @@
-type HttpMethod = 'GET' | 'POST' | 'PATCH' | 'DELETE'
-
-export type Endpoint = {
-  url: string
-  method: HttpMethod
-  auth?: boolean
-}
-
-export const createEndPoint = ({ url, method, auth = false }: Endpoint) => ({
-  url,
-  method,
-  auth,
-})
-
 export const API_ENDPOINTS = {
   AUTH: {
     /** GET /oauth/url - Oauth url api */
@@ -88,8 +74,6 @@ export const API_ENDPOINTS = {
   },
 
   DOCUMENT: {
-    /** POST /documents - 문서 생성 */
-    BASE: '/documents',
     GET: {
       /** GET /documents/{document_id} - document_id로 문서 가져오기 */
       BY_ID: (documentId: number) => `/documents/${documentId}`,
@@ -109,6 +93,8 @@ export const API_ENDPOINTS = {
       MOVE: '/documents/move',
     },
     POST: {
+      /** POST /documents - 문서 생성 */
+      CREATE: '/documents',
       /** POST /integrated-search - 통합(문서, 컬렉션, 퀴즈) 검색 */
       SEARCH_ALL: '/integrated-search',
       /** POST /documents/search - 문서 검색 */
