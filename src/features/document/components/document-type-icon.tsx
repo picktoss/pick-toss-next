@@ -2,14 +2,14 @@ import Icon from '@/shared/components/custom/icon'
 import { cn } from '@/shared/lib/utils'
 
 interface Props {
-  type: Document.Item['createType']
+  type: Document.Item['documentType']
   containerClassName: HTMLElement['className']
   iconClassName: HTMLElement['className']
 }
 
 // DocumentCard 내부에서 사용되는 컴포넌트
 const DocumentTypeIcon = ({ type, containerClassName, iconClassName }: Props) => {
-  if (type === 'WRITE') {
+  if (type === 'TEXT') {
     return (
       <div
         className={cn(

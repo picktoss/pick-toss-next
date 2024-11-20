@@ -5,7 +5,7 @@ import { cn } from '@/shared/lib/utils'
 import DocumentTypeIcon from '@/features/document/components/document-type-icon'
 
 interface Props {
-  createType: Document.Item['createType']
+  createType: Document.Item['documentType']
   documentTitle: string
   matchingSentence: string
   resultType: 'document' | 'quiz'

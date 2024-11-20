@@ -40,7 +40,7 @@ const DocumentsInDirectory = () => {
             <SwipeableDocumentCard
               key={document.id}
               id={document.id}
-              createType={document.createType}
+              createType={document.documentType}
               title={document.name}
               content={document.content.slice(0, 40)}
               quizCount={document.totalQuizCount}

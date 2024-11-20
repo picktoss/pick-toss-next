@@ -16,7 +16,7 @@ import usePreviousPath from '@/shared/hooks/use-previous-path'
 
 interface DocumentProps {
   id: number
-  createType: Document.Item['createType']
+  createType: Document.Item['documentType']
   title: string
   content: string
   quizCount: number

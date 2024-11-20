@@ -18,7 +18,7 @@ const meta: Meta<typeof SearchItem> = {
   argTypes: {
     createType: {
       control: 'radio',
-      options: ['FILE', 'WRITE', 'NOTION'],
+      options: ['FILE', 'TEXT', 'NOTION'],
       description: '노트의 타입, 직접 작성 / 파일 첨부 / 노션 연동을 의미',
     },
     documentTitle: { control: 'text', description: '노트의 제목' },
@@ -38,7 +38,7 @@ type Story = StoryObj<typeof SearchItem>
 
 export const Default: Story = {
   args: {
-    createType: 'WRITE',
+    createType: 'TEXT',
     documentTitle: '제무제표 분석하기',
     matchingSentence:
       '...제품을 기존 제품과 구별할 수 있어야 하며, 전통적인 기초 육류, 조개류, 소고기 또는 가금류에 알레르기가 있는 사람들이 세포 기반 제품...',
