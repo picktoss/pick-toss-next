@@ -5,20 +5,20 @@ import { cn } from '@/shared/lib/utils'
 import DocumentTypeIcon from '@/features/document/components/document-type-icon'
 
 interface Props {
-  noteType: 'file' | 'write' | 'notion'
-  noteTitle: string
+  createType: Document.Item['createType']
+  documentTitle: string
   matchingSentence: string
   resultType: 'document' | 'quiz'
-  noteDirectory: string
+  relativeDirectory: string
   lastItem?: boolean
 }
 
 const SearchItem = ({
-  noteType,
-  noteTitle,
+  createType,
+  documentTitle,
   matchingSentence,
   resultType,
-  noteDirectory,
+  relativeDirectory,
   lastItem,
 }: Props) => {
   return (
@@ -30,11 +30,11 @@ const SearchItem = ({
     >
       <div className="mb-[8px] flex items-center">
         <DocumentTypeIcon
-          type={noteType}
+          type={createType}
           containerClassName="size-[20px] mr-[8px]"
           iconClassName="size-[10px]"
         />
-        <Text typography="subtitle2-bold">{noteTitle}</Text>
+        <Text typography="subtitle2-bold">{documentTitle}</Text>
       </div>
 
       {/* todo: 키워드와 일치하는 부분 색상 accent표시 하는 로직 필요 */}
@@ -47,7 +47,7 @@ const SearchItem = ({
         </Tag>
         <div className="flex items-center">
           <Icon name="directory-fill" className="mr-[4px] size-[14px] text-icon-tertiary" />
-          <Text>{noteDirectory}</Text>
+          <Text>{relativeDirectory}</Text>
         </div>
       </div>
     </div>

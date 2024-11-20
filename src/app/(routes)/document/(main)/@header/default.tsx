@@ -74,17 +74,17 @@ const directoryList = [
   {
     id: '0',
     directoryName: '📊 전공 공부',
-    noteAmount: 3,
+    documentCount: 3,
   },
   {
     id: '1',
     directoryName: '📊 전공 공부',
-    noteAmount: 12,
+    documentCount: 12,
   },
   {
     id: '2',
     directoryName: '📊 전공 공부',
-    noteAmount: 15,
+    documentCount: 15,
   },
 ]
 
@@ -147,7 +147,7 @@ const DirectorySelectDrawer = ({ isDrawerOpen, setIsDrawerOpen }: Props) => {
                       {directory.directoryName}
                     </Text>
                     <Text as="span" typography="text1-medium" className="text-text-caption">
-                      노트 {directory.noteAmount}개
+                      노트 {directory.documentCount}개
                     </Text>
                   </button>
                 ))}
