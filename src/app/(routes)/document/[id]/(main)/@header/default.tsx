@@ -15,12 +15,15 @@ import Link from 'next/link'
 import { useParams, useRouter } from 'next/navigation'
 import usePreviousPath from '@/shared/hooks/use-previous-path'
 import GoBackButton from '@/shared/components/custom/go-back-button'
+import { useGetDocumentDetail } from '@/requests/document/hooks'
+import { getRelativeTime } from '@/shared/utils/date'
 
 // Header 컴포넌트
 const Header = () => {
   const router = useRouter()
   const { id } = useParams()
   const { getPreviousPath } = usePreviousPath({ getCustomPath: true })
+  const { data } = useGetDocumentDetail(Number(id[0]))
 
   const handleClickCancel = () => {
     const previousPath = getPreviousPath()
@@ -128,7 +131,8 @@ const Header = () => {
                     title="노트를 삭제할까요?"
                     content={
                       <Text typography="text1-medium">
-                        최근 이슈 노트와 <span className="text-text-wrong">14개의 문제</span>가{' '}
+                        {data?.name} 노트와{' '}
+                        <span className="text-text-wrong">{data?.totalQuizCount}개의 문제</span>가{' '}
                         <br />
                         모두 삭제됩니다.
                       </Text>
@@ -144,13 +148,13 @@ const Header = () => {
 
         {/* data: 노트 제목, 문제 수, 글자 수, 마지막 수정 날짜 */}
         <div className=" px-[16px] pb-[18px] pt-[66px]">
-          <h2 className="mb-[8px] text-title2">최근 이슈</h2>
+          <h2 className="mb-[8px] text-title2">{data?.name}</h2>
           <div className="flex items-center text-text1-medium text-text-sub">
-            <Text as="span">28문제</Text>
+            <Text as="span">{data?.totalQuizCount}문제</Text>
             <Icon name="middle-dot" className="mx-[8px]" />
-            <Text as="span">2382자</Text>
+            <Text as="span">{data?.characterCount}자</Text>
             <Text as="span" typography="text1-regular" className="ml-[12px] text-text-caption">
-              마지막 수정: 3일 전
+              마지막 수정: {getRelativeTime(data?.updatedAt ?? '')}
             </Text>
             {/* 노션일 경우 아래 렌더링 */}
             {/* <Text

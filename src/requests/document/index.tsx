@@ -27,3 +27,19 @@ export const fetchDocuments = async (directoryId: string | null, sortOption: Doc
     throw error
   }
 }
+
+export const fetchDocumentDetail = async (documentId: number) => {
+  try {
+    const session = await auth()
+
+    const { data } = await http.get<Document.Item>(API_ENDPOINTS.DOCUMENT.GET.BY_ID(documentId), {
+      headers: {
+        Authorization: `Bearer ${session?.user.accessToken}`,
+      },
+    })
+    return data
+  } catch (error: unknown) {
+    console.error(error)
+    throw error
+  }
+}

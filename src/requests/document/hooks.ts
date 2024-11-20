@@ -4,7 +4,7 @@ import { useMutation } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 import { createDocument } from './create-document'
 import { useQuery } from '@tanstack/react-query'
-import { fetchDocuments } from '.'
+import { fetchDocumentDetail, fetchDocuments } from '.'
 
 export const useCreateDocument = () => {
   const { data: session } = useSession()
@@ -19,5 +19,12 @@ export const useGetDocuments = (directoryId: string | null, sortOption: Document
   return useQuery({
     queryKey: ['getDocuments', directoryId, sortOption],
     queryFn: async () => fetchDocuments(directoryId, sortOption),
+  })
+}
+
+export const useGetDocumentDetail = (documentId: number) => {
+  return useQuery({
+    queryKey: ['getDocumentDetail', documentId],
+    queryFn: async () => fetchDocumentDetail(documentId),
   })
 }
