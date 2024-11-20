@@ -27,6 +27,6 @@ export const fetchDocuments = async (params?: {
     return data
   } catch (error: unknown) {
     console.error(error)
-    throw Promise.reject(error)
+    throw error
   }
 }
