@@ -1,16 +1,19 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use server'
 
 import { auth } from '@/app/api/auth/[...nextauth]/auth'
 import { API_ENDPOINTS } from '@/shared/configs/endpoint'
 import { http } from '@/shared/lib/axios/http'
 
-export const fetchDocuments = async (directoryId: string | null, sortOption: Document.Sort) => {
+export const fetchDocuments = async (params?: {
+  directoryId?: string
+  sortOption?: Document.Sort
+}) => {
+  const defaultSortOption = 'CREATED_AT'
+
   const DocsParams =
-    directoryId === null
-      ? { 'sort-option': sortOption }
-      : { 'directory-id': directoryId, 'sort-option': sortOption }
+    params?.directoryId == null
+      ? { 'sort-option': params?.sortOption || defaultSortOption }
+      : { 'directory-id': params.directoryId, 'sort-option': params.sortOption }
 
   try {
     const session = await auth()
@@ -22,7 +25,7 @@ export const fetchDocuments = async (directoryId: string | null, sortOption: Doc
       params: DocsParams,
     })
     return data
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error(error)
     throw error
   }

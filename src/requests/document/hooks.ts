@@ -15,9 +15,9 @@ export const useCreateDocument = () => {
   })
 }
 
-export const useGetDocuments = (directoryId: string | null, sortOption: Document.Sort) => {
+export const useGetDocuments = (params?: { directoryId?: string; sortOption?: Document.Sort }) => {
   return useQuery({
-    queryKey: ['getDocuments', directoryId, sortOption],
-    queryFn: async () => fetchDocuments(directoryId, sortOption),
+    queryKey: ['getDocuments', params?.directoryId, params?.sortOption],
+    queryFn: async () => fetchDocuments(params),
   })
 }
