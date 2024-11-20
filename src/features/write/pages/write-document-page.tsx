@@ -8,6 +8,7 @@ import dynamic from 'next/dynamic'
 import FixedBottom from '@/shared/components/custom/fixed-bottom'
 import { Button } from '@/shared/components/ui/button'
 import { useCreateDocument } from '@/requests/document/hooks'
+import { MAX_CHARACTERS, MIN_CHARACTERS } from '@/features/document/config'
 
 const Editor = dynamic(() => import('../components/editor'), {
   ssr: false,
@@ -43,11 +44,21 @@ const WriteDocumentPage = () => {
         <div className="flex items-center">
           <Icon name="info" className="mr-[4px] size-[16px]" />
           <Text as="span" typography="text2-medium" className="text-text-caption">
-            최소 500자, 최대 15000자 입력 가능
+            최소 {MIN_CHARACTERS}자, 최대 {MAX_CHARACTERS}자 입력 가능
           </Text>
         </div>
         <Text typography="text1-medium" className="text-text-secondary">
-          <span className="text-text-caption">{content.length}</span> / 15000
+          <Text
+            as="span"
+            color={
+              content.length < MIN_CHARACTERS || content.length > MAX_CHARACTERS
+                ? 'critical'
+                : 'info'
+            }
+          >
+            {content.length}
+          </Text>{' '}
+          / {MAX_CHARACTERS}
         </Text>
       </div>
 
