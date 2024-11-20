@@ -67,7 +67,7 @@ export const WithTagMenu: Story = {
     header: (
       <div className="flex items-center justify-between text-icon-tertiary">
         <Tag colors="tertiary">오답</Tag>
-        <QuizCardMenu />
+        <QuizCardMenu quizId={0} />
       </div>
     ),
   },
