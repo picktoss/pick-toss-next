@@ -5,6 +5,8 @@ import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from '@/shared/comp
 import Text from '@/shared/components/ui/text'
 import QuizCard from './quiz-card'
 import { quizzes } from '../config'
+import Tag from '@/shared/components/ui/tag'
+import QuizCardMenu from './quiz-card-menu'
 
 const PickDrawer = () => {
   return (
@@ -42,7 +44,18 @@ const PickDrawer = () => {
             <div className="mt-[24px] flex grow flex-col gap-[14px] overflow-y-auto px-[9px] pb-[14px]">
               {/* 카드 리스트 map */}
               {quizzes.map((quiz) => (
-                <QuizCard key={quiz.id} showAnswer header="오답" quiz={quiz} />
+                <QuizCard
+                  key={quiz.id}
+                  showAnswer
+                  header={
+                    <div className="flex items-center justify-between text-icon-tertiary">
+                      {/* 태그에는 pick 사유가 들어갈 예정 (오답 / 20초 이상 소요) */}
+                      <Tag colors="tertiary">오답</Tag>
+                      <QuizCardMenu quizId={quiz.id} />
+                    </div>
+                  }
+                  quiz={quiz}
+                />
               ))}
             </div>
           </div>

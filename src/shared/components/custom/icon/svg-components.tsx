@@ -517,6 +517,28 @@ export const BookMark = ({ ...props }) => {
   )
 }
 
+export const AddBookMark = ({ ...props }) => {
+  return (
+    <svg
+      width="20"
+      height="21"
+      viewBox="0 0 20 21"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M8.61043 4.32861H4.20906C3.3988 4.32861 2.74194 4.98547 2.74194 5.79574L2.74194 18.9998L8.61043 15.4215L14.4789 18.9998V10.1971"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+      />
+      <path d="M14.479 0.807617V7.8498" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M18 4.32861L10.9578 4.32861" stroke="currentColor" strokeWidth="1.5" />
+    </svg>
+  )
+}
+
 export const BookMarkFill = ({ ...props }) => {
   return (
     <svg

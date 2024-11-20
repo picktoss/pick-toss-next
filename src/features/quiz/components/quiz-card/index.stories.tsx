@@ -1,8 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import QuizCard from '.'
+import Text from '@/shared/components/ui/text'
+import Tag from '@/shared/components/ui/tag'
+import QuizCardMenu from '../quiz-card-menu'
 
 const meta = {
-  title: 'collections/QuizCard',
+  title: 'quiz/QuizCard',
   component: QuizCard,
   parameters: { layout: 'centered' },
   tags: ['autodocs'],
@@ -33,35 +36,71 @@ const oxQuiz: Quiz.Item = {
   explanation: '기존의 배양육이 기존방식에서 생산되는 육류보다 토양이 비축된다',
 } as OXQuiz
 
-// Default states
-export const DefaultMultiple: Story = {
-  args: { quiz: multipleQuiz },
-}
-
-export const DefaultOX: Story = {
-  args: { quiz: oxQuiz },
-}
-
-// With header and menu
-export const WithHeaderMenu: Story = {
+const Template: Story = {
   args: {
     quiz: multipleQuiz,
-    header: '오답',
-    showMenu: true,
+    header: (
+      <Text typography="title3" className="text-text-accent">
+        Q.
+      </Text>
+    ),
+  },
+  render: (args) => <QuizCard {...args} />,
+}
+
+// Default states
+export const DefaultMultiple: Story = { ...Template }
+
+export const DefaultOX: Story = {
+  ...Template,
+  args: {
+    ...Template.args,
+    quiz: oxQuiz,
+  },
+}
+
+// With tag and menu
+export const WithTagMenu: Story = {
+  ...Template,
+  args: {
+    ...Template.args,
+    header: (
+      <div className="flex items-center justify-between text-icon-tertiary">
+        <Tag colors="tertiary">오답</Tag>
+        <QuizCardMenu />
+      </div>
+    ),
+  },
+}
+
+// With tag and menu
+export const WithBreadcrumb: Story = {
+  args: {
+    ...Template.args,
+    header: (
+      <div className="flex items-center justify-between text-icon-tertiary">
+        <Text typography="title3" className="text-text-accent">
+          Q.
+        </Text>
+        <Text typography="text2-medium" color="caption">
+          전공 공부 {'>'} 최근이슈
+        </Text>
+      </div>
+    ),
   },
 }
 
 // Multiple Choice - Answer States
 export const MultipleShowAnswer: Story = {
   args: {
-    quiz: multipleQuiz,
+    ...Template.args,
     showAnswer: true,
   },
 }
 
 export const MultipleCorrectUserAnswer: Story = {
   args: {
-    quiz: multipleQuiz,
+    ...Template.args,
     showAnswer: true,
     userAnswer: '기존의 배양육이 기존방식에서 생산되는 육류보다 토양이 비축된다',
   },
@@ -69,39 +108,34 @@ export const MultipleCorrectUserAnswer: Story = {
 
 export const MultipleWrongUserAnswer: Story = {
   args: {
-    quiz: multipleQuiz,
+    ...Template.args,
     showAnswer: true,
     userAnswer: '배양육이 기존방식에서 생산되는 육류보다 토양이 비축된다',
   },
 }
 
-// OX - Answer States
-export const OXShowAnswer: Story = {
-  args: {
-    quiz: oxQuiz,
-    showAnswer: true,
-  },
-}
-
 export const OXCorrectUserAnswer: Story = {
   args: {
+    ...Template.args,
     quiz: oxQuiz,
     showAnswer: true,
-    userAnswer: 'O',
+    userAnswer: 'correct',
   },
 }
 
 export const OXWrongUserAnswer: Story = {
   args: {
+    ...Template.args,
     quiz: oxQuiz,
     showAnswer: true,
-    userAnswer: 'X',
+    userAnswer: 'wrong',
   },
 }
 
 // With Explanation
 export const WithExplanation: Story = {
   args: {
+    ...Template.args,
     quiz: multipleQuiz,
     showExplanation: true,
   },
