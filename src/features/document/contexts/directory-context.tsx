@@ -6,7 +6,7 @@ interface DirectoryContextValues {
   buttonHidden: boolean
   setButtonHidden: (value: boolean) => void
   selectedDirectoryId: number | null
-  setSelectedDirectoryId: (id: number) => void
+  setSelectedDirectoryId: (id: number | null) => void
   isSelectMode: boolean
   setIsSelectMode: (value: boolean) => void
   isExpandedBtns: boolean

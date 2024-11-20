@@ -1,12 +1,13 @@
 'use client'
 
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { updateCategory } from '.'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import { Category } from '../get-categories'
+import { getQueryClient } from '@/shared/lib/tanstack-query/client'
 
 export const useUpdateCategoryMutation = () => {
-  const queryClient = useQueryClient()
+  const queryClient = getQueryClient()
 
   return useMutation({
     mutationFn: updateCategory,

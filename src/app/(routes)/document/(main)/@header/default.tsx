@@ -8,15 +8,15 @@ import Link from 'next/link'
 import { useDirectoryContext } from '@/features/document/contexts/directory-context'
 import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from '@/shared/components/ui/drawer'
 import SortIconBtn from '@/features/document/components/sort-icon-button'
-import SetDirectoryNameDialog from '@/features/directory/components/set-directory-name-dialog'
 import DirectoryMenuDots from '@/features/document/components/directory-menu-dots'
 import GoBackButton from '@/shared/components/custom/go-back-button'
 import { useDirectories } from '@/requests/directory/hooks'
+import CreateDirectoryDialog from '@/features/directory/components/create-directory-dialog'
 
 // Header 컴포넌트
 const Header = () => {
   const { data } = useDirectories()
-  const { setSelectedDirectoryId, isSelectMode, setIsSelectMode } = useDirectoryContext()
+  const { isSelectMode, setIsSelectMode } = useDirectoryContext()
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
   return (
@@ -75,7 +75,7 @@ interface Props {
 }
 
 const DirectorySelectDrawer = ({ isDrawerOpen, setIsDrawerOpen, directories }: Props) => {
-  const { selectedDirectoryId, setButtonHidden } = useDirectoryContext()
+  const { selectedDirectoryId, setButtonHidden, setSelectedDirectoryId } = useDirectoryContext()
 
   useEffect(() => {
     if (isDrawerOpen) {
@@ -109,14 +109,16 @@ const DirectorySelectDrawer = ({ isDrawerOpen, setIsDrawerOpen, directories }: P
         >
           <div className="flex h-fit flex-col bg-background-base-01">
             <div className="border-b border-border-divider">
-              <DrawerTitle className="mt-[24px] flex items-center justify-between px-[18px]">
-                <Text as="span" typography="subtitle2-medium">
-                  전체 노트
-                </Text>
-                <Text as="span" typography="text1-medium" className="text-text-caption">
-                  노트 {totalNotes}개
-                </Text>
-              </DrawerTitle>
+              <button className="w-full" onClick={() => setSelectedDirectoryId(null)}>
+                <DrawerTitle className="mt-[24px] flex items-center justify-between px-[18px]">
+                  <Text as="span" typography="subtitle2-medium">
+                    전체 노트
+                  </Text>
+                  <Text as="span" typography="text1-medium" className="text-text-caption">
+                    노트 {totalNotes}개
+                  </Text>
+                </DrawerTitle>
+              </button>
 
               <div className="mb-[11px] mt-[9px] flex max-h-[220px] flex-col overflow-y-auto px-[18px]">
                 {/* 폴더 개수만큼 렌더링 */}
@@ -124,6 +126,7 @@ const DirectorySelectDrawer = ({ isDrawerOpen, setIsDrawerOpen, directories }: P
                   <button
                     key={directory.id}
                     className="flex items-center justify-between py-[10px]"
+                    onClick={() => setSelectedDirectoryId(directory.id)}
                   >
                     <Text
                       as="span"
@@ -142,17 +145,7 @@ const DirectorySelectDrawer = ({ isDrawerOpen, setIsDrawerOpen, directories }: P
               </div>
             </div>
 
-            <SetDirectoryNameDialog
-              triggerComponent={
-                <button className="my-[7px] flex items-center px-[20px] py-[10px]">
-                  <Icon name="plus-circle" className="mr-[16px]" />
-                  폴더 추가
-                </button>
-              }
-              title={'폴더 만들기'}
-              onConfirm={() => {}}
-              confirmText={'만들기'}
-            />
+            <CreateDirectoryDialog />
           </div>
         </DrawerContent>
       </Drawer>

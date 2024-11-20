@@ -1,11 +1,12 @@
 'use client'
 
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { createCategory } from '.'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
+import { getQueryClient } from '@/shared/lib/tanstack-query/client'
 
 export const useCreateCategoryMutation = () => {
-  const queryClient = useQueryClient()
+  const queryClient = getQueryClient()
 
   return useMutation({
     mutationFn: createCategory,
