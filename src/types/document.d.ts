@@ -5,6 +5,8 @@ type Directory = {
 
 type SortOption = 'CREATED_AT' | 'UPDATED_AT'
 
+type CreateType = 'WRITE' | 'FILE' | 'NOTION'
+
 type DocumentStatus =
   | 'UNPROCESSED'
   | 'PROCESSED'
@@ -27,7 +29,8 @@ type Quiz = {
 
 type DocumentItem = {
   id: number
-  documentName: string
+  createType: CreateType
+  name: string
   status: DocumentStatus
   content: string
   characterCount: number
@@ -35,6 +38,7 @@ type DocumentItem = {
   updatedAt: string
   directory: Directory
   quizzes: Quiz[]
+  reviewNeededQuizCount: number
 }
 
 type SearchedDocument = {

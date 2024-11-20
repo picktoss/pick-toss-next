@@ -2,14 +2,14 @@ import Icon from '@/shared/components/custom/icon'
 import { cn } from '@/shared/lib/utils'
 
 interface Props {
-  type: 'write' | 'file' | 'notion'
+  type: Document.Item['createType']
   containerClassName: HTMLElement['className']
   iconClassName: HTMLElement['className']
 }
 
 // DocumentCard 내부에서 사용되는 컴포넌트
 const DocumentTypeIcon = ({ type, containerClassName, iconClassName }: Props) => {
-  if (type === 'write') {
+  if (type === 'WRITE') {
     return (
       <div
         className={cn(
@@ -22,7 +22,7 @@ const DocumentTypeIcon = ({ type, containerClassName, iconClassName }: Props) =>
     )
   }
 
-  if (type === 'file') {
+  if (type === 'FILE') {
     return (
       <div
         className={cn(
@@ -35,7 +35,7 @@ const DocumentTypeIcon = ({ type, containerClassName, iconClassName }: Props) =>
     )
   }
 
-  if (type === 'notion') {
+  if (type === 'NOTION') {
     return (
       <div
         className={cn(
