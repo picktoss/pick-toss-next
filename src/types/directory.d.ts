@@ -3,6 +3,7 @@ interface DirectoryItem {
   name: string
   tag: string
   emoji: string
+  documentCount: number
 }
 
 interface CreateDirectoryPayload {

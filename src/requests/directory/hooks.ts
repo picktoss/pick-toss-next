@@ -1,3 +1,5 @@
+'use client'
+
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   createDirectory,
@@ -13,7 +15,7 @@ import {
 export const useDirectories = () => {
   return useQuery({
     queryKey: ['directories'],
-    queryFn: fetchDirectories,
+    queryFn: async () => fetchDirectories(),
   })
 }
 
@@ -23,7 +25,7 @@ export const useDirectories = () => {
 export const useDirectory = (directoryId: Directory.Item['id']) => {
   return useQuery({
     queryKey: ['directory', directoryId],
-    queryFn: () => fetchDirectory(directoryId),
+    queryFn: async () => fetchDirectory(directoryId),
   })
 }
 
@@ -34,7 +36,7 @@ export const useCreateDirectory = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: createDirectory,
+    mutationFn: async (payload: Directory.Request.CreateDirectory) => createDirectory(payload),
     onSuccess: async () => {
       // 디렉토리 목록 갱신
       await queryClient.invalidateQueries({ queryKey: ['directories'] })
@@ -49,7 +51,7 @@ export const useDeleteDirectory = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: deleteDirectory,
+    mutationFn: async (directoryId: Directory.Item['id']) => deleteDirectory(directoryId),
     onSuccess: async () => {
       // 디렉토리 목록 갱신
       await queryClient.invalidateQueries({ queryKey: ['directories'] })
@@ -64,7 +66,11 @@ export const useUpdateDirectoryInfo = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: updateDirectoryInfo,
+    mutationFn: async (
+      payload: {
+        directoryId: Directory.Item['id']
+      } & Directory.Request.UpdateDirectoryInfo
+    ) => updateDirectoryInfo(payload),
     onSuccess: async (_, { directoryId }) => {
       // 디렉토리 목록과 해당 디렉토리 상세 정보 갱신
       await Promise.all([

@@ -19,7 +19,7 @@ export const fetchDirectories = async () => {
         },
       }
     )
-    return data.directories
+    return data
   } catch (error: unknown) {
     console.error(error)
     throw error
@@ -41,7 +41,7 @@ export const fetchDirectory = async (directoryId: Directory.Item['id']) => {
         },
       }
     )
-    return data.directories
+    return data
   } catch (error: unknown) {
     console.error(error)
     throw error

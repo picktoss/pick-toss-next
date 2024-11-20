@@ -11,15 +11,13 @@ import SortIconBtn from '@/features/document/components/sort-icon-button'
 import SetDirectoryNameDialog from '@/features/directory/components/set-directory-name-dialog'
 import DirectoryMenuDots from '@/features/document/components/directory-menu-dots'
 import GoBackButton from '@/shared/components/custom/go-back-button'
+import { useDirectories } from '@/requests/directory/hooks'
 
 // Header 컴포넌트
 const Header = () => {
+  const { data } = useDirectories()
   const { setSelectedDirectoryId, isSelectMode, setIsSelectMode } = useDirectoryContext()
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
-
-  useEffect(() => {
-    setSelectedDirectoryId('0')
-  }, [])
 
   return (
     <>
@@ -46,6 +44,7 @@ const Header = () => {
               <DirectorySelectDrawer
                 isDrawerOpen={isDrawerOpen}
                 setIsDrawerOpen={setIsDrawerOpen}
+                directories={data?.directories || []}
               />
 
               {!isDrawerOpen && (
@@ -69,31 +68,13 @@ const Header = () => {
 
 export default Header
 
-// 노트 메인 페이지에 사용되는 directory-select-drawer
-const directoryList = [
-  {
-    id: '0',
-    directoryName: '📊 전공 공부',
-    noteAmount: 3,
-  },
-  {
-    id: '1',
-    directoryName: '📊 전공 공부',
-    noteAmount: 12,
-  },
-  {
-    id: '2',
-    directoryName: '📊 전공 공부',
-    noteAmount: 15,
-  },
-]
-
 interface Props {
   isDrawerOpen: boolean
   setIsDrawerOpen: (value: boolean) => void
+  directories: Directory.List
 }
 
-const DirectorySelectDrawer = ({ isDrawerOpen, setIsDrawerOpen }: Props) => {
+const DirectorySelectDrawer = ({ isDrawerOpen, setIsDrawerOpen, directories }: Props) => {
   const { selectedDirectoryId, setButtonHidden } = useDirectoryContext()
 
   useEffect(() => {
@@ -104,12 +85,19 @@ const DirectorySelectDrawer = ({ isDrawerOpen, setIsDrawerOpen }: Props) => {
     }
   }, [isDrawerOpen, setButtonHidden])
 
+  const currentDirectory = directories.find((directory) => directory.id === selectedDirectoryId)
+  const totalNotes = directories.reduce((acc, directory) => acc + directory.documentCount, 0)
+
   return (
     <>
       <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen} direction="top">
         <DrawerTrigger asChild>
           <button className="flex size-fit items-center">
-            <h2 className="mr-[8px] text-title2">전체 노트</h2>
+            <h2 className="mr-[8px] text-title2">
+              {currentDirectory
+                ? `${currentDirectory.emoji} ${currentDirectory.name}`
+                : '전체 노트'}
+            </h2>
             <Icon name="chevron-down" className="size-[20px]"></Icon>
           </button>
         </DrawerTrigger>
@@ -126,13 +114,13 @@ const DirectorySelectDrawer = ({ isDrawerOpen, setIsDrawerOpen }: Props) => {
                   전체 노트
                 </Text>
                 <Text as="span" typography="text1-medium" className="text-text-caption">
-                  노트 30개
+                  노트 {totalNotes}개
                 </Text>
               </DrawerTitle>
 
               <div className="mb-[11px] mt-[9px] flex max-h-[220px] flex-col overflow-y-auto px-[18px]">
                 {/* 폴더 개수만큼 렌더링 */}
-                {directoryList.map((directory) => (
+                {directories.map((directory) => (
                   <button
                     key={directory.id}
                     className="flex items-center justify-between py-[10px]"
@@ -144,10 +132,10 @@ const DirectorySelectDrawer = ({ isDrawerOpen, setIsDrawerOpen }: Props) => {
                         directory.id === selectedDirectoryId && 'text-text-accent font-bold'
                       )}
                     >
-                      {directory.directoryName}
+                      {`${directory.emoji || '📄'} ${directory.name}`}
                     </Text>
                     <Text as="span" typography="text1-medium" className="text-text-caption">
-                      노트 {directory.noteAmount}개
+                      노트 {directory.documentCount}개
                     </Text>
                   </button>
                 ))}
