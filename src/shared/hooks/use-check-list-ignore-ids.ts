@@ -1,14 +1,15 @@
 import { useCallback, useRef } from 'react'
 import { useForceUpdate } from './use-force-update'
 
-export type UseCheckListReturn<T extends Item> = ReturnType<typeof useCheckList<T>>
-
 interface Item {
   id: string | number
   checked?: boolean
 }
 
-export function useCheckList<T extends Item>(initialItems: T[]) {
+export function useCheckListIgnoreIds<T extends Item>(
+  initialItems: T[],
+  options?: { ignoreIds: Item['id'][] }
+) {
   type IdType = T['id']
   const listRef = useRef<T[]>(initialItems)
   const forceUpdate = useForceUpdate()
@@ -27,6 +28,20 @@ export function useCheckList<T extends Item>(initialItems: T[]) {
 
   const isAllChecked = useCallback(() => listRef.current.every(({ checked }) => checked), [])
 
+  const isAllCheckedWithoutIgnored = useCallback(() => {
+    if (options?.ignoreIds == null || options?.ignoreIds.length === 0) {
+      return isAllChecked()
+    }
+
+    return listRef.current.every(({ id, checked }) => {
+      if (options.ignoreIds.includes(id)) {
+        return true
+      }
+
+      return checked
+    })
+  }, [options, isAllChecked])
+
   const set = useCallback(
     (items: T[]) => {
       listRef.current = items
@@ -43,7 +58,7 @@ export function useCheckList<T extends Item>(initialItems: T[]) {
 
         if (item.checked !== checked) {
           const arr = [...listRef.current]
-          arr[idx] = { ...item, checked }
+          arr[idx] = { ...item, id, checked }
           set(arr)
         }
       }
@@ -87,13 +102,42 @@ export function useCheckList<T extends Item>(initialItems: T[]) {
     [set]
   )
 
+  const updateAllWithoutIgnored = useCallback(
+    (checked: boolean) => {
+      if (
+        listRef.current.every((item) => {
+          if (options?.ignoreIds.includes(item.id)) return true
+
+          return item.checked === checked
+        })
+      ) {
+        return
+      }
+      set(
+        listRef.current.map((item) => ({
+          ...item,
+          checked: options?.ignoreIds.includes(item.id) ? false : checked,
+        }))
+      )
+    },
+    [set, options]
+  )
+
   const checkAll = useCallback(() => {
     updateAll(true)
   }, [updateAll])
 
+  const checkAllWithoutIgnored = useCallback(() => {
+    updateAllWithoutIgnored(true)
+  }, [updateAllWithoutIgnored])
+
   const unCheckAll = useCallback(() => {
     updateAll(false)
   }, [updateAll])
+
+  const unCheckAllWithoutIgnored = useCallback(() => {
+    updateAllWithoutIgnored(false)
+  }, [updateAllWithoutIgnored])
 
   const getCheckedList = useCallback(() => {
     return listRef.current.filter((item) => item.checked)
@@ -118,5 +162,8 @@ export function useCheckList<T extends Item>(initialItems: T[]) {
     updateAll,
     getCheckedList,
     getCheckedIds,
+    isAllCheckedWithoutIgnored,
+    checkAllWithoutIgnored,
+    unCheckAllWithoutIgnored,
   }
 }

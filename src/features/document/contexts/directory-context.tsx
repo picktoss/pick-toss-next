@@ -1,5 +1,7 @@
 'use client'
 
+import { useGetDocuments } from '@/requests/document/hooks'
+import { useCheckList, UseCheckListReturn } from '@/shared/hooks/use-check-list'
 import { PropsWithChildren, createContext, useContext, useMemo, useState } from 'react'
 
 interface DirectoryContextValues {
@@ -11,6 +13,7 @@ interface DirectoryContextValues {
   setIsSelectMode: (value: boolean) => void
   isExpandedBtns: boolean
   setIsExpandedBtns: (value: boolean) => void
+  checkDoc: UseCheckListReturn<{ id: number; checked: boolean }>
 }
 
 const DirectoryContext = createContext<DirectoryContextValues | null>(null)
@@ -30,6 +33,12 @@ export function DirectoryProvider({
   const [buttonHidden, setButtonHidden] = useState(initialValues?.buttonHidden ?? false)
   const [isExpandedBtns, setIsExpandedBtns] = useState(initialValues?.isExpandedBtns ?? false)
 
+  const { data } = useGetDocuments()
+  const documentCheckList =
+    data?.documents.map((document) => ({ id: document.id, checked: false })) ?? []
+
+  const checkDoc = useCheckList(documentCheckList)
+
   const values = useMemo(
     () => ({
       selectedDirectoryId,
@@ -40,6 +49,7 @@ export function DirectoryProvider({
       setButtonHidden,
       isExpandedBtns,
       setIsExpandedBtns,
+      checkDoc,
     }),
     [
       selectedDirectoryId,
@@ -50,6 +60,7 @@ export function DirectoryProvider({
       setButtonHidden,
       isExpandedBtns,
       setIsExpandedBtns,
+      checkDoc,
     ]
   )
 
