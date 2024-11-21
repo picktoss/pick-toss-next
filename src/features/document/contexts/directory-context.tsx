@@ -5,8 +5,8 @@ import { PropsWithChildren, createContext, useContext, useMemo, useState } from 
 interface DirectoryContextValues {
   buttonHidden: boolean
   setButtonHidden: (value: boolean) => void
-  selectedDirectoryId: string
-  setSelectedDirectoryId: (id: string) => void
+  selectedDirectoryId: number | null
+  setSelectedDirectoryId: (id: number | null) => void
   isSelectMode: boolean
   setIsSelectMode: (value: boolean) => void
   isExpandedBtns: boolean
@@ -25,7 +25,7 @@ export function DirectoryProvider({
   initialValues,
   children,
 }: PropsWithChildren & { initialValues?: InitialValues }) {
-  const [selectedDirectoryId, setSelectedDirectoryId] = useState('')
+  const [selectedDirectoryId, setSelectedDirectoryId] = useState<number | null>(null)
   const [isSelectMode, setIsSelectMode] = useState(initialValues?.isSelectMode ?? false)
   const [buttonHidden, setButtonHidden] = useState(initialValues?.buttonHidden ?? false)
   const [isExpandedBtns, setIsExpandedBtns] = useState(initialValues?.isExpandedBtns ?? false)

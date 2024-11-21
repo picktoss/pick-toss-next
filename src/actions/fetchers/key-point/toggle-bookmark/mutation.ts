@@ -1,15 +1,16 @@
 'use client'
 
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { toggleBookmark } from '.'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
+import { getQueryClient } from '@/shared/lib/tanstack-query/client'
 
 interface Props {
   documentId?: number
 }
 
 export function useToggleBookmarkMutation(props?: Props) {
-  const queryClient = useQueryClient()
+  const queryClient = getQueryClient()
 
   return useMutation({
     mutationFn: toggleBookmark,
