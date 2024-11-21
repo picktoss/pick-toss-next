@@ -12,12 +12,13 @@ interface GetDocumentsParams {
 export const fetchDocuments = async (params?: GetDocumentsParams) => {
   const defaultSortOption = 'CREATED_AT'
 
-  const DocsParams = !params?.directoryId
-    ? { 'sort-option': params?.sortOption ?? defaultSortOption }
-    : {
-        'directory-id': params.directoryId,
-        'sort-option': params.sortOption ?? defaultSortOption,
-      }
+  const DocsParams =
+    params?.directoryId == null
+      ? { 'sort-option': params?.sortOption ?? defaultSortOption }
+      : {
+          'directory-id': params.directoryId,
+          'sort-option': params.sortOption ?? defaultSortOption,
+        }
 
   try {
     const session = await auth()
