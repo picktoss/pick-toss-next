@@ -4,10 +4,12 @@ import { auth } from '@/app/api/auth/[...nextauth]/auth'
 import { API_ENDPOINTS } from '@/shared/configs/endpoint'
 import { http } from '@/shared/lib/axios/http'
 
-export const fetchDocuments = async (params?: {
+interface GetDocumentsParams {
   directoryId?: string
   sortOption?: Document.Sort
-}) => {
+}
+
+export const fetchDocuments = async (params?: GetDocumentsParams) => {
   const defaultSortOption = 'CREATED_AT'
 
   const DocsParams = !params?.directoryId

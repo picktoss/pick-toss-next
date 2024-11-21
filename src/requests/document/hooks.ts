@@ -35,5 +35,6 @@ export const useGetDocumentDetail = (documentId: number) => {
   return useQuery({
     queryKey: ['getDocumentDetail', documentId],
     queryFn: async () => fetchDocumentDetail(documentId),
+    enabled: !!documentId,
   })
 }
