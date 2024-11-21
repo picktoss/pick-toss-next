@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
 
+import CreateDirectoryDialog from '@/features/directory/components/create-directory-dialog'
+import { useDirectoryContext } from '@/features/directory/contexts/directory-context'
 import Icon from '@/shared/components/custom/icon'
 import {
   Drawer,
@@ -13,34 +15,23 @@ import Text from '@/shared/components/ui/text'
 import { cn } from '@/shared/lib/utils'
 import { useState } from 'react'
 
-// MoveDocumentDrawer 컴포넌트
 const DirectorySelectDrawer = () => {
-  const [selectedDirectoryId, setSelectedDirectoryId] = useState('0')
+  const [open, setOpen] = useState(false)
+  const { directories, selectDirectoryId, selectedDirectoryId, selectedDirectory } =
+    useDirectoryContext()
 
-  // 목데이터
-  const directoryList = [
-    {
-      id: '0',
-      directoryName: '📊 전공 공부',
-      documentCount: 3,
-    },
-    {
-      id: '1',
-      directoryName: '📊 전공 공부',
-      documentCount: 12,
-    },
-    {
-      id: '2',
-      directoryName: '📊 전공 공부',
-      documentCount: 15,
-    },
-  ]
+  const handleDirectorySelect = (id: number) => {
+    selectDirectoryId(id)
+    setOpen(false)
+  }
+
+  const totalNotes = directories.reduce((acc, directory) => acc + directory.documentCount, 0)
 
   return (
-    <Drawer>
+    <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
         <button className="rounded-full bg-background-base-02 px-[16px] py-[5px]">
-          📊 전공 공부
+          {`${selectedDirectory?.emoji ?? '📁'} ${selectedDirectory?.name ?? '기본 폴더'}`}
         </button>
       </DrawerTrigger>
 
@@ -64,13 +55,16 @@ const DirectorySelectDrawer = () => {
                 전체 노트
               </Text>
               <Text as="span" typography="text1-medium" className="text-text-caption">
-                노트 30개
+                노트 {totalNotes}개
               </Text>
             </DrawerTitle>
             <div className="mb-[11px] mt-[9px] flex grow flex-col overflow-y-auto px-[18px]">
-              {/* 폴더 개수만큼 렌더링 */}
-              {directoryList.map((directory) => (
-                <button key={directory.id} className="flex items-center justify-between py-[10px]">
+              {directories.map((directory) => (
+                <button
+                  key={directory.id}
+                  className="flex items-center justify-between py-[10px]"
+                  onClick={() => handleDirectorySelect(directory.id)}
+                >
                   <Text
                     as="span"
                     typography="subtitle2-medium"
@@ -78,7 +72,7 @@ const DirectorySelectDrawer = () => {
                       directory.id === selectedDirectoryId && 'text-text-accent font-bold'
                     )}
                   >
-                    {directory.directoryName}
+                    {directory.name}
                   </Text>
                   <Text as="span" typography="text1-medium" className="text-text-caption">
                     노트 {directory.documentCount}개
@@ -87,10 +81,8 @@ const DirectorySelectDrawer = () => {
               ))}
             </div>
           </div>
-          <button className="my-[7px] flex items-center px-[20px] py-[10px]">
-            <Icon name="plus-circle" className="mr-[16px]" />
-            폴더 추가
-          </button>
+
+          <CreateDirectoryDialog />
         </div>
       </DrawerContent>
     </Drawer>
