@@ -3,7 +3,7 @@
 import { PropsWithChildren, createContext, useContext, useMemo, useState } from 'react'
 
 interface EditDocumentContextValues {
-  noteTitle: string
+  documentTitle: string
   setDocumentTitle: (title: string) => void
   editorMarkdownContent: string
   setEditorMarkdownContent: (markdown: string) => void
@@ -17,17 +17,17 @@ interface Props extends PropsWithChildren {
 }
 
 export function EditDocumentProvider({ children, prevTitle, prevContent }: Props) {
-  const [noteTitle, setDocumentTitle] = useState(prevTitle ?? '')
+  const [documentTitle, setDocumentTitle] = useState(prevTitle ?? '')
   const [editorMarkdownContent, setEditorMarkdownContent] = useState(prevContent ?? '')
 
   const values = useMemo(
     () => ({
-      noteTitle,
+      documentTitle,
       setDocumentTitle,
       editorMarkdownContent,
       setEditorMarkdownContent,
     }),
-    [noteTitle, setDocumentTitle, editorMarkdownContent, setEditorMarkdownContent]
+    [documentTitle, setDocumentTitle, editorMarkdownContent, setEditorMarkdownContent]
   )
 
   return <EditDocumentContext.Provider value={values}>{children}</EditDocumentContext.Provider>

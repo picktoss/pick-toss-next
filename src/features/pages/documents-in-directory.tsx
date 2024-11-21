@@ -31,18 +31,18 @@ const DocumentsInDirectory = () => {
         // 노트 리스트 렌더링
         // todo: useCheckList 훅 이용해 체크 구현
         <DocumentList>
-          {Array.from({ length: 10 }).map((_, idx) => (
+          {data.documents.map((document, idx) => (
             <SwipeableDocumentCard
-              key={idx}
-              id={idx.toString()}
-              createType="write"
-              title="최근 이슈"
-              content="미리보기 문장 이러이러합니다 한줄이내로 작성해주세요."
-              quizCount={28}
-              characterCount={2382}
-              directory="전공 공부"
+              key={document.id}
+              id={document.id}
+              createType={document.documentType}
+              title={document.name}
+              content={document.content.slice(0, 40)}
+              quizCount={document.totalQuizCount}
+              characterCount={document.characterCount}
+              directory={document.directory.name}
               className={cn(idx === 9 && 'mb-[30px]')}
-              reviewCount={idx % 2 === 1 ? idx : undefined}
+              reviewCount={document.reviewNeededQuizCount}
             />
           ))}
         </DocumentList>

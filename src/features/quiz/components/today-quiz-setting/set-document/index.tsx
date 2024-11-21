@@ -59,11 +59,14 @@ const SetDocument = () => {
 
           {/* 폴더에 속한 노트 수만큼 노출 */}
           {Array.from({ length: 5 }).map((_, idx) => (
-            <div key={'noteId_' + idx} className="flex items-center gap-[8px] px-[10px] py-[12px]">
-              <Checkbox id={'noteId_' + idx} />
+            <div
+              key={'documentId_' + idx}
+              className="flex items-center gap-[8px] px-[10px] py-[12px]"
+            >
+              <Checkbox id={'documentId_' + idx} />
               <Text
                 as="label"
-                htmlFor={'noteId_' + idx}
+                htmlFor={'documentId_' + idx}
                 typography="text1-medium"
                 className="w-full cursor-pointer"
               >
