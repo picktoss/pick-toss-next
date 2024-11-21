@@ -15,8 +15,8 @@ import DeleteDocumentDialog from '../delete-document-dialog'
 import usePreviousPath from '@/shared/hooks/use-previous-path'
 
 interface DocumentProps {
-  id: string
-  createType: 'write' | 'file' | 'notion'
+  id: number
+  createType: Document.Item['documentType']
   title: string
   content: string
   quizCount: number

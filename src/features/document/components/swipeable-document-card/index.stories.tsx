@@ -37,8 +37,8 @@ type Story = StoryObj<typeof SwipeableDocumentCard>
 
 export const Default: Story = {
   args: {
-    id: '1',
-    createType: 'write',
+    id: 1,
+    createType: 'TEXT',
     title: '최근 이슈',
     content: '미리보기 문장 이러이러합니다 한줄이내로 작성해주세요.',
     quizCount: 28,
