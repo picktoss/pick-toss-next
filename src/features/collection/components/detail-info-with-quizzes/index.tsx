@@ -42,7 +42,20 @@ const DetailInfoWithQuizzes = () => {
       <div className="flex-1 bg-background-base-02 px-[16px] py-[24px]">
         <div className="flex flex-col gap-[12px]">
           {quizzes.map((quiz) => (
-            <QuizCard key={quiz.id} quiz={quiz} />
+            <QuizCard
+              header={
+                <div className="flex items-center justify-between text-icon-tertiary">
+                  <Text typography="title3" className="text-text-accent">
+                    Q.
+                  </Text>
+
+                  {/* 내가 만든 컬렉션일 경우 디렉토리 > 문서이름 이런식으로 breadcrumb 필요 */}
+                  {/* <Text typography='text2-medium' color='caption'>전공 공부 {'>'} 최근이슈</Text> */}
+                </div>
+              }
+              key={quiz.id}
+              quiz={quiz}
+            />
           ))}
         </div>
       </div>

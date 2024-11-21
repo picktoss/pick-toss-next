@@ -4,13 +4,10 @@ import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
 import { cn } from '@/shared/lib/utils'
 import React, { useState } from 'react'
-import QuizCardMenu from '../quiz-card-menu'
-import Tag from '@/shared/components/ui/tag'
 
 interface Props {
   quiz: Quiz.Item
-  header?: string
-  showMenu?: boolean
+  header: React.ReactNode
   showAnswer?: boolean
   showExplanation?: boolean
   // userAnswer를 받으면 정답과 오답을 표시함
@@ -20,7 +17,6 @@ interface Props {
 const QuizCard = ({
   quiz,
   header,
-  showMenu,
   showAnswer = false,
   showExplanation = false,
   userAnswer,
@@ -54,7 +50,7 @@ const QuizCard = ({
 
     return (
       <div className="flex-center mt-[16px] gap-[6px]">
-        {(['O', 'X'] as const).map((value) => (
+        {(['correct', 'wrong'] as const).map((value) => (
           <OXChoice
             key={value}
             value={value}
@@ -71,18 +67,9 @@ const QuizCard = ({
   return (
     <div className="w-full rounded-[16px] border border-border-default bg-white">
       <div className="px-[16px] py-[20px]">
-        <div className="flex items-center justify-between text-icon-tertiary">
-          {header ? (
-            <Tag colors={'tertiary'}>{header}</Tag>
-          ) : (
-            <Text typography="title3" className="text-text-accent">
-              Q.
-            </Text>
-          )}
-          {showMenu && <QuizCardMenu />}
-        </div>
+        {header}
 
-        <Text as="h3" typography="text1-bold" className="mt-[8px]">
+        <Text as="h3" typography="text1-bold" className="mt-[10px]">
           {quiz.question}
         </Text>
 
@@ -132,6 +119,7 @@ const MultipleChoiceOption = ({
       className={cn(
         'flex text-text-secondary',
         showAnswer && isAnswer && 'text-text-accent',
+        showAnswer && !isAnswer && 'text-text-caption',
         chosenAlphabet && isAnswer && 'text-text-success',
         chosenAlphabet === optionAlphabet && !isAnswer && 'text-text-wrong'
       )}
@@ -148,7 +136,7 @@ const OXChoice = ({
   showAnswer,
   chosenAnswer,
 }: {
-  value: 'O' | 'X'
+  value: 'correct' | 'wrong'
   isAnswer: boolean
   showAnswer: boolean
   chosenAnswer?: string
@@ -159,11 +147,13 @@ const OXChoice = ({
       className={cn(
         'font-suit text-text-secondary',
         showAnswer && isAnswer && 'text-text-accent',
+        showAnswer && !isAnswer && 'text-text-caption',
         chosenAnswer && isAnswer && 'text-text-success',
         chosenAnswer === value && !isAnswer && 'text-text-wrong'
       )}
     >
-      {value}
+      {value === 'correct' && 'O'}
+      {value === 'wrong' && 'X'}
     </Text>
   )
 }

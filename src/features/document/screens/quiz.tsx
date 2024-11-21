@@ -9,6 +9,7 @@ import QuizList from '@/features/quiz/components/quiz-list'
 import QuizCard from '@/features/quiz/components/quiz-card'
 import { quizzes } from '@/features/quiz/config'
 import { quizTypeFilters } from '../config'
+import QuizCardMenu from '@/features/quiz/components/quiz-card-menu'
 
 const Quiz = () => {
   const [quizType, setQuizType] = useState('ALL')
@@ -41,7 +42,19 @@ const Quiz = () => {
       {/* 퀴즈 카드 */}
       <QuizList>
         {quizzes.map((quiz) => (
-          <QuizCard key={quiz.id} quiz={quiz} showExplanation={showAnswer} />
+          <QuizCard
+            header={
+              <div className="flex items-center justify-between text-icon-tertiary">
+                <Text typography="title3" className="text-text-accent">
+                  Q.
+                </Text>
+                <QuizCardMenu quizId={quiz.id} />
+              </div>
+            }
+            key={quiz.id}
+            quiz={quiz}
+            showExplanation={showAnswer}
+          />
         ))}
       </QuizList>
     </div>
