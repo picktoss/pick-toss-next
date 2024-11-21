@@ -1,7 +1,7 @@
 'use client'
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { queries } from '@/shared/lib/tanstack-query/query-keys'
+import { queries } from '@/shared/lib/tanstack-query/v2/query-keys'
 import { deleteCategory } from '.'
 import { Category } from '../get-categories'
 

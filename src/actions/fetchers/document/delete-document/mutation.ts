@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query'
 import { deleteDocument } from '.'
 import { getQueryClient } from '@/shared/lib/tanstack-query/client'
-import { queries } from '@/shared/lib/tanstack-query/query-keys'
+import { queries } from '@/shared/lib/tanstack-query/v2/query-keys'
 import { useSession } from 'next-auth/react'
 import { GetDocumentsForCategoryResponse } from '../get-documents-for-category'
 

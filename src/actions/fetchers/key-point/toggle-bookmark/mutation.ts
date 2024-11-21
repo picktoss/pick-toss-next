@@ -2,7 +2,7 @@
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toggleBookmark } from '.'
-import { queries } from '@/shared/lib/tanstack-query/query-keys'
+import { queries } from '@/shared/lib/tanstack-query/v2/query-keys'
 
 interface Props {
   documentId?: number
