@@ -10,10 +10,12 @@ export const fetchDocuments = async (params?: {
 }) => {
   const defaultSortOption = 'CREATED_AT'
 
-  const DocsParams =
-    params?.directoryId == null
-      ? { 'sort-option': params?.sortOption || defaultSortOption }
-      : { 'directory-id': params.directoryId, 'sort-option': params.sortOption }
+  const DocsParams = !params?.directoryId
+    ? { 'sort-option': params?.sortOption ?? defaultSortOption }
+    : {
+        'directory-id': params.directoryId,
+        'sort-option': params.sortOption ?? defaultSortOption,
+      }
 
   try {
     const session = await auth()
@@ -41,6 +43,26 @@ export const fetchDocumentDetail = async (documentId: number) => {
       },
     })
     return data
+  } catch (error: unknown) {
+    console.error(error)
+    throw error
+  }
+}
+
+export const updateDocument = async (
+  documentId: number,
+  request: Document.Request.UpdateContent,
+  accessToken: string
+) => {
+  const params = { request }
+
+  try {
+    await http.patch(API_ENDPOINTS.DOCUMENT.PATCH.UPDATE_CONTENT(documentId), null, {
+      params,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
   } catch (error: unknown) {
     console.error(error)
     throw error

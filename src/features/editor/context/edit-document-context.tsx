@@ -11,14 +11,9 @@ interface EditDocumentContextValues {
 
 const EditDocumentContext = createContext<EditDocumentContextValues | null>(null)
 
-interface Props extends PropsWithChildren {
-  prevTitle?: string
-  prevContent?: string
-}
-
-export function EditDocumentProvider({ children, prevTitle, prevContent }: Props) {
-  const [documentTitle, setDocumentTitle] = useState(prevTitle ?? '')
-  const [editorMarkdownContent, setEditorMarkdownContent] = useState(prevContent ?? '')
+export function EditDocumentProvider({ children }: PropsWithChildren) {
+  const [documentTitle, setDocumentTitle] = useState('')
+  const [editorMarkdownContent, setEditorMarkdownContent] = useState('')
 
   const values = useMemo(
     () => ({

@@ -1,18 +1,27 @@
-import { useState } from 'react'
-import TitleInput from '../write/components/title-input'
+'use client'
+
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
-import Editor from '../write/components/editor'
 import { MAX_CHARACTERS, MIN_CHARACTERS } from '../document/config'
+import { useParams } from 'next/navigation'
+import { useGetDocumentDetail } from '@/requests/document/hooks'
+import Loading from '@/shared/components/custom/loading'
+import TitleInput from '../editor/components/title-input'
+import VisualEditor from '../editor/components/visual-editor'
+import { useEditDocumentContext } from '../editor/context/edit-document-context'
 
 const ModifyDocument = () => {
-  // document id로 문서 정보 가져와 기존 title과 content 설정
-  const [title, setTitle] = useState('')
-  const [content, setContent] = useState('')
+  const { id } = useParams()
+  const { data, isPending } = useGetDocumentDetail(Number(id[0]))
+  const { editorMarkdownContent: content } = useEditDocumentContext()
+
+  if (isPending) {
+    return <Loading center />
+  }
 
   return (
     <>
-      <TitleInput value={title} handleChange={setTitle} />
+      <TitleInput prevTitle={data?.name} />
 
       <div className="sticky top-[54px] z-10 flex items-center justify-between bg-background-base-02 px-[16px] py-[11px]">
         <div className="flex items-center">
@@ -36,7 +45,7 @@ const ModifyDocument = () => {
         </Text>
       </div>
 
-      <Editor initialContent={content} handleContentChange={setContent} />
+      <VisualEditor prevContent={data?.content} />
     </>
   )
 }
