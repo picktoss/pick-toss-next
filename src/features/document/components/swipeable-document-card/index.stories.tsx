@@ -1,6 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import SwipeableDocumentCard from '.'
-import { DirectoryProvider } from '../../contexts/directory-context'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { DocumentProvider } from '../../contexts/document-context'
+
+const queryClient = new QueryClient()
 
 const meta: Meta<typeof SwipeableDocumentCard> = {
   title: 'document/SwipeableDocumentCard',
@@ -13,7 +16,7 @@ const meta: Meta<typeof SwipeableDocumentCard> = {
   argTypes: {
     createType: {
       control: 'radio',
-      options: ['write', 'file', 'notion'],
+      options: ['TEXT', 'FILE', 'NOTION'],
       description: '노트의 타입, 직접 작성 / 파일 첨부 / 노션 연동을 의미',
     },
     title: { control: 'text', description: '노트의 제목' },
@@ -25,9 +28,11 @@ const meta: Meta<typeof SwipeableDocumentCard> = {
   },
   decorators: [
     (Story) => (
-      <DirectoryProvider>
-        <Story />
-      </DirectoryProvider>
+      <QueryClientProvider client={queryClient}>
+        <DocumentProvider>
+          <Story />
+        </DocumentProvider>
+      </QueryClientProvider>
     ),
   ],
 }

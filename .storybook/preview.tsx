@@ -1,4 +1,5 @@
 import React from 'react'
+import { Providers } from '../src/providers'
 import type { Preview } from '@storybook/react'
 import '../src/app/globals.css'
 
@@ -11,6 +12,13 @@ const preview: Preview = {
       },
     },
   },
+  decorators: [
+    (Story) => (
+      <Providers>
+        <Story />
+      </Providers>
+    ),
+  ],
 }
 
 export default preview

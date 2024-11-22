@@ -8,12 +8,12 @@ import {
   DropdownMenuTrigger,
 } from '@/shared/components/ui/dropdown-menu'
 import Text from '@/shared/components/ui/text'
-import { useDirectoryContext } from '../../contexts/directory-context'
 import DirectoryDialog from '@/features/quiz/components/directory-dialog'
-import SetDirectoryNameDialog from '../../../directory/components/set-directory-name-dialog'
+import SetDirectoryNameDialog from '../set-directory-name-dialog'
+import { useDocumentContext } from '../../../document/contexts/document-context'
 
 const DirectoryMenuDots = () => {
-  const { setIsSelectMode } = useDirectoryContext()
+  const { setIsSelectMode } = useDocumentContext()
 
   return (
     <DropdownMenu>

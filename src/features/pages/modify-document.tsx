@@ -4,15 +4,16 @@ import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
 import { MAX_CHARACTERS, MIN_CHARACTERS } from '../document/config'
 import { useParams } from 'next/navigation'
-import { useGetDocumentDetail } from '@/requests/document/hooks'
 import Loading from '@/shared/components/custom/loading'
-import TitleInput from '../editor/components/title-input'
-import VisualEditor from '../editor/components/visual-editor'
-import { useEditDocumentContext } from '../editor/context/edit-document-context'
+import TitleInput from '../modify/components/title-input'
+import VisualEditor from '../modify/components/visual-editor'
+import { useEditDocumentContext } from '../modify/context/edit-document-context'
+import { useQuery } from '@tanstack/react-query'
+import { queries } from '@/shared/lib/tanstack-query/query-keys'
 
 const ModifyDocument = () => {
   const { id } = useParams()
-  const { data, isPending } = useGetDocumentDetail(Number(id[0]))
+  const { data, isPending } = useQuery(queries.document.item(Number(id[0])))
   const { editorMarkdownContent: content } = useEditDocumentContext()
 
   if (isPending) {

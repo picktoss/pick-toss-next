@@ -7,11 +7,29 @@ import AddDocumentMenu from '../document/components/add-document-menu'
 import Image from 'next/image'
 import Text from '@/shared/components/ui/text'
 import note_img from '@/../../public/assets/note.png'
-import { useGetDocuments } from '@/requests/document/hooks'
 import Loading from '@/shared/components/custom/loading'
+import { useDirectoryContext } from '../directory/contexts/directory-context'
+import { useQuery } from '@tanstack/react-query'
+import { queries } from '@/shared/lib/tanstack-query/query-keys'
+import { useDocumentContext } from '../document/contexts/document-context'
+import { useEffect } from 'react'
 
 const DocumentsInDirectory = () => {
-  const { data, isPending } = useGetDocuments()
+  const { selectedDirectoryId } = useDirectoryContext()
+  const { checkDoc } = useDocumentContext()
+
+  const params =
+    selectedDirectoryId !== null ? { directoryId: String(selectedDirectoryId) } : undefined
+  const { data, isPending } = useQuery(queries.document.list(params))
+
+  useEffect(() => {
+    if (data) {
+      const documentCheckList =
+        data.documents.map((document) => ({ id: document.id, checked: false })) ?? []
+
+      checkDoc.set(documentCheckList)
+    }
+  }, [data])
 
   if (isPending) {
     return <Loading center />
@@ -33,8 +51,6 @@ const DocumentsInDirectory = () => {
           </div>
         </div>
       ) : (
-        // 노트 리스트 렌더링
-        // todo: useCheckList 훅 이용해 체크 구현
         <DocumentList>
           {data.documents.map((document, idx) => (
             <SwipeableDocumentCard

@@ -8,7 +8,7 @@ interface DirectoryContextValues {
   selectedDirectory: Directory.Item | null
 
   selectedDirectoryId: number | null
-  selectDirectoryId: (id: number) => void
+  selectDirectoryId: (id: number | null) => void
 }
 
 const DirectoryContext = createContext<DirectoryContextValues | null>(null)

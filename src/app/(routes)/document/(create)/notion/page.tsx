@@ -1,4 +1,4 @@
-import { EditDocumentProvider } from '@/features/editor/context/edit-document-context'
+import { EditDocumentProvider } from '@/features/modify/context/edit-document-context'
 import NewQuizDrawer from '@/features/quiz/components/new-quiz-drawer'
 import FixedBottom from '@/shared/components/custom/fixed-bottom'
 import Icon from '@/shared/components/custom/icon'

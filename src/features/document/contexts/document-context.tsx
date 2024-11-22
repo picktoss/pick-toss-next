@@ -1,19 +1,21 @@
 'use client'
 
+import { useCheckList, UseCheckListReturn } from '@/shared/hooks/use-check-list'
+import { queries } from '@/shared/lib/tanstack-query/query-keys'
+import { useQuery } from '@tanstack/react-query'
 import { PropsWithChildren, createContext, useContext, useMemo, useState } from 'react'
 
-interface DirectoryContextValues {
+interface DocumentContextValues {
   buttonHidden: boolean
   setButtonHidden: (value: boolean) => void
-  selectedDirectoryId: number | null
-  setSelectedDirectoryId: (id: number | null) => void
   isSelectMode: boolean
   setIsSelectMode: (value: boolean) => void
   isExpandedBtns: boolean
   setIsExpandedBtns: (value: boolean) => void
+  checkDoc: UseCheckListReturn<{ id: number; checked: boolean }>
 }
 
-const DirectoryContext = createContext<DirectoryContextValues | null>(null)
+const DocumentContext = createContext<DocumentContextValues | null>(null)
 
 interface InitialValues {
   isSelectMode?: boolean
@@ -21,46 +23,50 @@ interface InitialValues {
   isExpandedBtns?: boolean
 }
 
-export function DirectoryProvider({
+export function DocumentProvider({
   initialValues,
   children,
 }: PropsWithChildren & { initialValues?: InitialValues }) {
-  const [selectedDirectoryId, setSelectedDirectoryId] = useState<number | null>(null)
   const [isSelectMode, setIsSelectMode] = useState(initialValues?.isSelectMode ?? false)
   const [buttonHidden, setButtonHidden] = useState(initialValues?.buttonHidden ?? false)
   const [isExpandedBtns, setIsExpandedBtns] = useState(initialValues?.isExpandedBtns ?? false)
 
+  const { data } = useQuery(queries.document.list())
+
+  const documentCheckList =
+    data?.documents.map((document) => ({ id: document.id, checked: false })) ?? []
+
+  const checkDoc = useCheckList(documentCheckList)
+
   const values = useMemo(
     () => ({
-      selectedDirectoryId,
-      setSelectedDirectoryId,
       isSelectMode,
       setIsSelectMode,
       buttonHidden,
       setButtonHidden,
       isExpandedBtns,
       setIsExpandedBtns,
+      checkDoc,
     }),
     [
-      selectedDirectoryId,
-      setSelectedDirectoryId,
       isSelectMode,
       setIsSelectMode,
       buttonHidden,
       setButtonHidden,
       isExpandedBtns,
       setIsExpandedBtns,
+      checkDoc,
     ]
   )
 
-  return <DirectoryContext.Provider value={values}>{children}</DirectoryContext.Provider>
+  return <DocumentContext.Provider value={values}>{children}</DocumentContext.Provider>
 }
 
-export const useDirectoryContext = () => {
-  const values = useContext(DirectoryContext)
+export const useDocumentContext = () => {
+  const values = useContext(DocumentContext)
 
   if (values == null) {
-    throw new Error('DirectoryProvider 내에서 사용해주세요.')
+    throw new Error('DocumentProvider 내에서 사용해주세요.')
   }
 
   return values

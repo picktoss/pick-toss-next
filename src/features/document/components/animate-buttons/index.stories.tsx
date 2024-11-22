@@ -1,10 +1,10 @@
 import { Meta, StoryObj } from '@storybook/react'
 import { useEffect } from 'react'
-import { DirectoryProvider, useDirectoryContext } from '../../contexts/directory-context'
 import AnimatedButtons from '.'
+import { DocumentProvider, useDocumentContext } from '../../contexts/document-context'
 
 const AnimatedButtonsWithProvider = ({ isExpandedBtns }: { isExpandedBtns: boolean }) => {
-  const { setIsExpandedBtns } = useDirectoryContext()
+  const { setIsExpandedBtns } = useDocumentContext()
 
   useEffect(() => {
     setIsExpandedBtns(isExpandedBtns)
@@ -30,13 +30,13 @@ const meta = {
   },
   decorators: [
     (Story, context) => (
-      <DirectoryProvider initialValues={{ isExpandedBtns: context.args.isExpandedBtns }}>
+      <DocumentProvider initialValues={{ isExpandedBtns: context.args.isExpandedBtns }}>
         <div className="relative mx-auto h-[500px] max-w-mobile p-4">
           <div className="absolute bottom-0 right-0">
             <Story {...context.args} />
           </div>
         </div>
-      </DirectoryProvider>
+      </DocumentProvider>
     ),
   ],
 } satisfies Meta<typeof AnimatedButtonsWithProvider>

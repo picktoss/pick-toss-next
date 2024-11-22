@@ -15,15 +15,16 @@ import Link from 'next/link'
 import { useParams, useRouter } from 'next/navigation'
 import usePreviousPath from '@/shared/hooks/use-previous-path'
 import GoBackButton from '@/shared/components/custom/go-back-button'
-import { useGetDocumentDetail } from '@/requests/document/hooks'
 import { getRelativeTime } from '@/shared/utils/date'
+import { useQuery } from '@tanstack/react-query'
+import { queries } from '@/shared/lib/tanstack-query/query-keys'
 
 // Header 컴포넌트
 const Header = () => {
   const router = useRouter()
   const { id } = useParams()
   const { getPreviousPath } = usePreviousPath({ getCustomPath: true })
-  const { data } = useGetDocumentDetail(Number(id[0]))
+  const { data } = useQuery(queries.document.item(Number(id[0])))
 
   const handleClickCancel = () => {
     const previousPath = getPreviousPath()
