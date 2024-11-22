@@ -10,6 +10,7 @@ const CreateWithFilePage = () => {
   return (
     <EditDocumentProvider>
       <TitleInput />
+      {/* write의 editor로 변경해야함 */}
 
       {/* 파일 첨부 영역 : 첨부된 파일이 없을 때 노출 */}
       <div className="flex-center h-[calc(100dvh-131.6px-188px)] flex-col">
