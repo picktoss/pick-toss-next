@@ -2,11 +2,13 @@
 
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
+import { useMessaging } from '@/shared/hooks/use-messaging'
 import usePreviousPath from '@/shared/hooks/use-previous-path'
 import Link from 'next/link'
 
 const Header = () => {
   usePreviousPath()
+  useMessaging()
 
   return (
     <header className="flex h-[54px] w-full max-w-mobile items-center justify-between bg-background-base-02 px-[18px]">
