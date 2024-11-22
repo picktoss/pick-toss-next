@@ -2,15 +2,15 @@
 
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
-import usePreviousPath from '@/shared/hooks/use-previous-path'
 import Link from 'next/link'
 
 const AddFirstDocument = ({ userName }: { userName: string }) => {
-  usePreviousPath()
-
   return (
     <Link
-      href={'document'}
+      href={{
+        pathname: 'document',
+        query: { ref: 'add-first-document' },
+      }}
       className="border-special mt-[12px] flex h-fit w-full items-center justify-between rounded-[20px] py-[22px] pl-[25px] pr-[22px]"
     >
       <div className="flex items-center">

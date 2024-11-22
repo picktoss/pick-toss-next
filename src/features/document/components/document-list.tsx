@@ -2,18 +2,18 @@
 
 import { PropsWithChildren, useEffect } from 'react'
 import Icon from '@/shared/components/custom/icon'
-import usePreviousPath from '@/shared/hooks/use-previous-path'
 import { useDocumentContext } from '../contexts/document-context'
+import { useSearchParams } from 'next/navigation'
 
 const DocumentList = ({ children }: PropsWithChildren) => {
-  const { getPreviousPath } = usePreviousPath()
+  const searchParams = useSearchParams()
+  const ref = searchParams.get('ref')
   const { isSelectMode, setIsExpandedBtns } = useDocumentContext()
 
   // 메인 페이지에서 '첫 노트 추가하기' 클릭 시 활성화된 상태로 노출
   useEffect(() => {
-    const previousPath = getPreviousPath()
-    if (previousPath === '/main') setIsExpandedBtns(true)
-  }, [getPreviousPath, setIsExpandedBtns])
+    ref === 'add-first-document' && setIsExpandedBtns(true)
+  }, [ref, setIsExpandedBtns])
 
   return (
     <>
