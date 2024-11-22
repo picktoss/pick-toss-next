@@ -1,6 +1,6 @@
 import { FunctionComponent, PropsWithChildren } from 'react'
 import type { Metadata } from 'next'
-import { EditDocumentProvider } from '@/features/editor/context/edit-document-context'
+import { EditDocumentProvider } from '@/features/modify/context/edit-document-context'
 
 export const metadata: Metadata = {}
 

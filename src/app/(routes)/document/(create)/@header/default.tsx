@@ -1,4 +1,4 @@
-import DirectorySelectDrawer from '@/features/document/components/directory-select-drawer'
+import DirectorySelectDrawer from '@/features/directory/components/directory-select-drawer'
 import GoBackButton from '@/shared/components/custom/go-back-button'
 import Text from '@/shared/components/ui/text'
 

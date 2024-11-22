@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react'
 import DirectoryMenuDots from '.'
-import { DirectoryProvider } from '../../contexts/directory-context'
+import { DocumentProvider } from '@/features/document/contexts/document-context'
 
 const meta = {
   title: 'document/DirectoryMenuDots',
@@ -11,13 +11,13 @@ const meta = {
   },
   decorators: [
     (Story) => (
-      <DirectoryProvider>
+      <DocumentProvider>
         <div className="relative mx-auto max-w-mobile p-4">
           <div className="absolute bottom-0 right-0">
             <Story />
           </div>
         </div>
-      </DirectoryProvider>
+      </DocumentProvider>
     ),
   ],
 } satisfies Meta<typeof DirectoryMenuDots>

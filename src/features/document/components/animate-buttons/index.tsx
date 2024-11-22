@@ -5,10 +5,10 @@ import { Button, ButtonProps } from '@/shared/components/ui/button'
 import Icon, { IconProps } from '@/shared/components/custom/icon'
 import { useEffect, useState } from 'react'
 import { cn } from '@/shared/lib/utils'
-import { useDirectoryContext } from '../../contexts/directory-context'
 import Text from '@/shared/components/ui/text'
 import { useRouter } from 'next/navigation'
 import { addDocumentButtons } from '../../config'
+import { useDocumentContext } from '../../contexts/document-context'
 
 type Custom = number | 'plus' | 'cancel'
 
@@ -16,7 +16,7 @@ type Custom = number | 'plus' | 'cancel'
 const AnimatedButtons = () => {
   const router = useRouter()
   const [isFirstRender, setIsFirstRender] = useState(true)
-  const { buttonHidden, isExpandedBtns, setIsExpandedBtns } = useDirectoryContext()
+  const { buttonHidden, isExpandedBtns, setIsExpandedBtns } = useDocumentContext()
 
   useEffect(() => {
     setIsFirstRender(false)

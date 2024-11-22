@@ -10,9 +10,9 @@ import DocumentTypeIcon from '@/features/document/components/document-type-icon'
 import Tag from '@/shared/components/ui/tag'
 import { useRouter } from 'next/navigation'
 import MoveDocumentDrawer from '@/features/document/components/move-document-drawer'
-import { useDirectoryContext } from '../../contexts/directory-context'
 import DeleteDocumentDialog from '../delete-document-dialog'
 import usePreviousPath from '@/shared/hooks/use-previous-path'
+import { useDocumentContext } from '../../contexts/document-context'
 
 interface DocumentProps {
   id: number
@@ -37,13 +37,21 @@ const SwipeableDocumentCard = ({
   className,
   reviewCount,
 }: DocumentProps) => {
-  const { isSelectMode } = useDirectoryContext()
+  const { isSelectMode, checkDoc } = useDocumentContext()
   const [isSwiped, setIsSwiped] = useState(false)
   const [isDragging, setIsDragging] = useState(false)
   const x = useMotionValue(0)
   const controls = useAnimation()
   const router = useRouter()
   const { setPreviousPath } = usePreviousPath()
+
+  const isChecked = checkDoc.isChecked(id)
+
+  const handleCheckedChange = (checked: boolean) => {
+    if (!isSelectMode) return
+
+    checked ? checkDoc.check(id) : checkDoc.unCheck(id)
+  }
 
   const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     if (info.offset.x < -30) {
@@ -59,7 +67,11 @@ const SwipeableDocumentCard = ({
   return (
     <div
       onClick={() => {
-        if (!isSelectMode && !isDragging && !isSwiped) {
+        if (isSelectMode) {
+          handleCheckedChange(!isChecked)
+          return
+        }
+        if (!isDragging && !isSwiped) {
           setPreviousPath('/document')
           router.push(`/document/${id}`)
         }
@@ -75,16 +87,21 @@ const SwipeableDocumentCard = ({
           `flex h-[104px] max-w-full items-center rounded-[16px] px-[16px] py-[17px]`,
           isSwiped && 'translate-x-[-116px]'
         )}
-        drag="x"
+        drag={isSelectMode ? false : 'x'}
         dragConstraints={{ left: -130, right: 0 }}
-        onDrag={() => setIsDragging(true)}
+        onDrag={() => !isSelectMode && setIsDragging(true)}
         onDragEnd={handleDragEnd}
         animate={controls}
         style={{ x }}
         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
       >
         {isSelectMode ? (
-          <Checkbox id={'note_' + id} className="mx-[8px] size-[20px]" />
+          <Checkbox
+            onCheckedChange={handleCheckedChange}
+            checked={checkDoc.isChecked(id)}
+            id={'note_' + id}
+            className="mx-[8px] size-[20px]"
+          />
         ) : (
           <DocumentTypeIcon
             type={createType}

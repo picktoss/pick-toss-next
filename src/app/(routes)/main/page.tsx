@@ -2,7 +2,7 @@ import Text from '@/shared/components/ui/text'
 import BOMB from '@/../../public/images/bomb.png'
 import RANDOM_QUIZ from '@/../../public/images/random-quiz.png'
 import Image from 'next/image'
-import { DirectoryProvider } from '@/features/document/contexts/directory-context'
+import { DocumentProvider } from '@/features/document/contexts/document-context'
 import AddDocumentMenu from '@/features/document/components/add-document-menu'
 import Link from 'next/link'
 import Icon from '@/shared/components/custom/icon'
@@ -87,9 +87,9 @@ const Home = () => {
         </div>
       </div>
 
-      <DirectoryProvider>
+      <DocumentProvider>
         <AddDocumentMenu />
-      </DirectoryProvider>
+      </DocumentProvider>
     </main>
   )
 }
