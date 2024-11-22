@@ -17,6 +17,7 @@ export const createDocument = async (
   formData.append('documentName', payload.documentName)
   formData.append('star', String(payload.star))
   formData.append('quizType', payload.quizType)
+  formData.append('documentType', payload.documentType)
 
   try {
     const { data } = await http.post<Document.Response.CreateDocument>(
@@ -31,7 +32,6 @@ export const createDocument = async (
     )
     return data
   } catch (error: unknown) {
-    // console.error(error)
     throw error
   }
 }
