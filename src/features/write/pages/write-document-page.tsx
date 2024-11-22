@@ -6,36 +6,46 @@ import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
 import dynamic from 'next/dynamic'
 import FixedBottom from '@/shared/components/custom/fixed-bottom'
-import { Button } from '@/shared/components/ui/button'
 import { useCreateDocument } from '@/requests/document/hooks'
 import { MAX_CHARACTERS, MIN_CHARACTERS } from '@/features/document/config'
 import { useDirectoryContext } from '@/features/directory/contexts/directory-context'
+import CreateQuizDrawer from '../components/create-quiz-drawer'
+import { useRouter } from 'next/navigation'
 
 const Editor = dynamic(() => import('../components/editor'), {
   ssr: false,
 })
 
 const WriteDocumentPage = () => {
+  const router = useRouter()
+
   const { selectedDirectory } = useDirectoryContext()
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
 
   const { mutate: createDocumentMutate } = useCreateDocument()
 
-  const handleCreateDocument = () => {
+  const handleCreateDocument = ({ quizType, star }: { quizType: Quiz.Type; star: number }) => {
     // TODO: validation
     if (!selectedDirectory) {
       return
     }
 
-    createDocumentMutate({
-      directoryId: selectedDirectory.id,
-      documentName: title,
-      file: content,
-      quizType: 'MULTIPLE_CHOICE',
-      star: 5,
-      documentType: 'TEXT',
-    })
+    createDocumentMutate(
+      {
+        directoryId: selectedDirectory.id,
+        documentName: title,
+        file: content,
+        quizType,
+        star,
+        documentType: 'TEXT',
+      },
+      {
+        onSuccess: ({ id }) => {
+          router.push(`/document/${id}`)
+        },
+      }
+    )
   }
 
   return (
@@ -67,14 +77,7 @@ const WriteDocumentPage = () => {
       <Editor handleContentChange={(value: string) => setContent(value)} />
 
       <FixedBottom className="px-[20px]">
-        <Button
-          variant={'largeRound'}
-          colors={'primary'}
-          className="flex-center h-[52px] w-full"
-          onClick={handleCreateDocument}
-        >
-          퀴즈 만들기
-        </Button>
+        <CreateQuizDrawer handleCreateDocument={handleCreateDocument} />
       </FixedBottom>
     </div>
   )
