@@ -1,19 +1,34 @@
 'use client'
 
-import Icon from '@/shared/components/custom/icon'
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogTitle,
-  DialogTrigger,
-} from '@/shared/components/ui/dialog'
-import Text from '@/shared/components/ui/text'
+import EditCancelDialog from '@/features/document/components/edit-cancel-dialog'
+import { useEditDocumentContext } from '@/features/editor/context/edit-document-context'
+import { useUpdateDocument } from '@/requests/document/hooks'
+import { toast } from '@/shared/hooks/use-toast'
 import { cn } from '@/shared/lib/utils'
-import { useRouter } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 
 const Header = () => {
+  const { id } = useParams()
   const router = useRouter()
+  const { mutate: updateDocumentMutate } = useUpdateDocument()
+  const { documentTitle: title, editorMarkdownContent: content } = useEditDocumentContext()
+
+  const handleClickSave = () => {
+    if (title.trim().length === 0 || content.trim().length === 0) return
+
+    const blob = new Blob([content], { type: 'text/markdown' })
+    const file = new File([blob], `${title}.md`, { type: 'text/markdown' })
+
+    updateDocumentMutate(
+      { documentId: Number(id[0]), request: { name: title, file } },
+      {
+        onSuccess: () => {
+          toast({ description: '노트가 수정되었어요' })
+          router.push(`/document/${id[0]}`)
+        },
+      }
+    )
+  }
 
   return (
     <header>
@@ -23,45 +38,15 @@ const Header = () => {
         )}
       >
         <div className="flex size-full items-center justify-between">
-          {/* CancelDialog 컴포넌트로 추상화 가능 */}
-          <Dialog>
-            <DialogTrigger asChild className="cursor-pointer">
-              <Icon name="cancel" className="size-[24px]" />
-            </DialogTrigger>
-            <DialogContent
-              className="flex min-h-[170px] w-[280px] flex-col items-center justify-between rounded-[16px] bg-background-base-01"
-              displayCloseButton={false}
-            >
-              <DialogTitle className="mb-[16px] w-full text-subtitle2-bold">
-                수정을 취소할까요?
-              </DialogTitle>
-
-              <Text
-                typography="text1-medium"
-                className="flex h-fit w-full whitespace-nowrap text-text-secondary"
-              >
-                지금까지 수정한 내용은 저장되지 않습니다.
-              </Text>
-
-              <div className="mt-[40px] flex w-full justify-end text-button2">
-                <DialogClose asChild>
-                  <button className="p-[4px] text-button-text-tertiary">계속하기</button>
-                </DialogClose>
-                <button
-                  onClick={() => router.back()}
-                  className="ml-[21px] p-[4px] text-button-text-primary"
-                >
-                  수정 취소
-                </button>
-              </div>
-            </DialogContent>
-          </Dialog>
+          <EditCancelDialog />
 
           <div className="rounded-full bg-background-base-02 px-[16px] py-[5px] text-text1-medium">
             📊 전공 공부
           </div>
 
-          <button className="text-button2 text-button-text-primary">저장</button>
+          <button onClick={handleClickSave} className="text-button2 text-button-text-primary">
+            저장
+          </button>
         </div>
       </div>
     </header>

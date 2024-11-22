@@ -14,22 +14,24 @@ import {
 import { extensions } from '../libs/extensions'
 import { useEditDocumentContext } from '../context/edit-document-context'
 
-interface VisualEditorProps {}
+interface VisualEditorProps {
+  prevContent?: string
+}
 
-export default function VisualEditor({}: VisualEditorProps) {
+export default function VisualEditor({ prevContent }: VisualEditorProps) {
   const { manager } = useRemirror({
     extensions,
     stringHandler: 'markdown',
     // content: '**Markdown** content is the _best_',
   })
-  const { editorMarkdownContent, setEditorMarkdownContent } = useEditDocumentContext()
+  const { setEditorMarkdownContent } = useEditDocumentContext()
 
   return (
     <ThemeProvider>
       <Remirror
         manager={manager}
         autoRender="end"
-        initialContent={editorMarkdownContent}
+        initialContent={prevContent}
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         onChange={({ helpers, state }) => setEditorMarkdownContent(helpers.getMarkdown(state))}
         placeholder="본문을 작성해보세요!"

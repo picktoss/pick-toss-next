@@ -1,8 +1,0 @@
-export { createQuizzes } from './create-quizzes'
-export { deleteQuiz } from './delete-quiz'
-export { getExampleQuizSets } from './get-example-quizzes'
-export { getMonthQuizAnswerRate } from './get-month-quiz-answer-rate'
-export { getQuizSets } from './get-quiz-sets'
-export { getTodayQuizSetId } from './get-today-quiz-set-id'
-export { getWeekQuizAnswerRate } from './get-week-quiz-answer-rate'
-export { patchQuizResult } from './patch-quiz-result'

@@ -2,20 +2,17 @@
 
 import Text from '@/shared/components/ui/text'
 import { Button } from '@/shared/components/ui/button'
-import {
-  Drawer,
-  DrawerContent,
-  DrawerFooter,
-  DrawerTitle,
-  DrawerTrigger,
-} from '@/shared/components/ui/drawer'
+import { Drawer, DrawerContent, DrawerFooter, DrawerTitle } from '@/shared/components/ui/drawer'
+
+interface Props {
+  isOpen: boolean
+  onOpenChange: (value: boolean) => void
+}
 
 // AddCollectionDrawer 컴포넌트
-const AddCollectionDrawer = ({ triggerComponent }: { triggerComponent: React.ReactNode }) => {
+const AddCollectionDrawer = ({ isOpen, onOpenChange }: Props) => {
   return (
-    <Drawer>
-      <DrawerTrigger asChild>{triggerComponent}</DrawerTrigger>
-
+    <Drawer open={isOpen} onOpenChange={onOpenChange}>
       <DrawerContent
         overlayProps={{ className: 'max-w-mobile mx-auto' }}
         className="mx-auto h-[80dvh] max-w-mobile rounded-t-[16px]"

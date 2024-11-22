@@ -1,3 +1,5 @@
+import { useCreateDirectory } from '@/requests/directory/hooks'
+import Icon from '@/shared/components/custom/icon'
 import {
   Dialog,
   DialogClose,
@@ -12,46 +14,54 @@ import {
 } from '@/shared/components/ui/dropdown-menu'
 import { cn } from '@/shared/lib/utils'
 import EmojiPicker from 'emoji-picker-react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
-interface Props {
-  triggerComponent: React.ReactNode
-  title: string
-  onConfirm: () => void
-  confirmText: string
-  prev?: { name: string; emoji: string }
-}
+const CreateDirectoryDialog = () => {
+  const [open, setOpen] = useState(false)
 
-const SetDirectoryNameDialog = ({
-  triggerComponent,
-  title,
-  onConfirm,
-  confirmText,
-  prev,
-}: Props) => {
   const [name, setName] = useState('')
   const [emoji, setEmoji] = useState('📁')
 
-  useEffect(() => {
-    if (prev) {
-      setName(prev.name)
-      setEmoji(prev.emoji)
+  const { mutate: createDirectoryMutate } = useCreateDirectory()
+
+  const handleCreateDirectory = () => {
+    if (name.trim() === '') {
+      return
     }
-  }, [prev])
+
+    createDirectoryMutate({
+      name,
+      emoji,
+    })
+
+    setOpen(false)
+  }
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>{triggerComponent}</DialogTrigger>
+    <Dialog
+      open={open}
+      onOpenChange={(value) => {
+        setEmoji('📁')
+        setName('')
+        setOpen(value)
+      }}
+    >
+      <DialogTrigger asChild>
+        <button className="my-[7px] flex items-center px-[20px] py-[10px]">
+          <Icon name="plus-circle" className="mr-[16px]" />
+          폴더 추가
+        </button>
+      </DialogTrigger>
 
       <DialogContent
         className="flex min-h-[190px] w-[280px] flex-col items-center justify-between rounded-[16px] bg-background-base-01"
         displayCloseButton={false}
       >
-        <DialogTitle className="mb-[32px] w-full text-subtitle2-bold">{title}</DialogTitle>
+        <DialogTitle className="mb-[32px] w-full text-subtitle2-bold">폴더 만들가</DialogTitle>
 
         <div className="flex h-[40px] w-full">
           <DropdownMenu>
-            <DropdownMenuTrigger>
+            <DropdownMenuTrigger className="outline-none">
               <div className="flex-center mr-[10px] size-[40px] rounded-[8px] bg-background-base-02 text-xl">
                 {emoji}
               </div>
@@ -70,7 +80,7 @@ const SetDirectoryNameDialog = ({
           </DropdownMenu>
 
           <input
-            className="grow border-b border-border-divider py-[10px]"
+            className="grow border-b border-border-divider py-[10px] outline-none"
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="폴더 이름"
@@ -82,13 +92,10 @@ const SetDirectoryNameDialog = ({
             <button className="p-[4px] text-button-text-tertiary">취소</button>
           </DialogClose>
           <button
-            onClick={onConfirm}
-            className={cn(
-              'ml-[21px] p-[4px] text-button-text-primary',
-              confirmText.includes('삭제') && 'text-button-text-critical'
-            )}
+            onClick={handleCreateDirectory}
+            className={cn('ml-[21px] p-[4px] text-button-text-primary')}
           >
-            {confirmText}
+            만들기
           </button>
         </div>
       </DialogContent>
@@ -96,4 +103,4 @@ const SetDirectoryNameDialog = ({
   )
 }
 
-export default SetDirectoryNameDialog
+export default CreateDirectoryDialog

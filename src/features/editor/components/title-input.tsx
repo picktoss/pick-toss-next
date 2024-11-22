@@ -1,9 +1,16 @@
 'use client'
 
+import { useEffect } from 'react'
 import { useEditDocumentContext } from '../context/edit-document-context'
 
-const TitleInput = () => {
+const TitleInput = ({ prevTitle }: { prevTitle?: string }) => {
   const { documentTitle, setDocumentTitle } = useEditDocumentContext()
+
+  useEffect(() => {
+    if (prevTitle) {
+      setDocumentTitle(prevTitle)
+    }
+  }, [prevTitle, setDocumentTitle])
 
   return (
     <input
