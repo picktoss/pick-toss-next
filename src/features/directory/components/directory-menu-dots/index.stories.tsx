@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react'
 import DirectoryMenuDots from '.'
-import { DirectoryProvider } from '../../../document/contexts/document-context'
+import { DocumentProvider } from '@/features/document/contexts/document-context'
+import ClientLayout from '@/shared/components/custom/client-layout'
 
 const meta = {
   title: 'document/DirectoryMenuDots',
@@ -11,13 +12,15 @@ const meta = {
   },
   decorators: [
     (Story) => (
-      <DirectoryProvider>
-        <div className="relative mx-auto max-w-mobile p-4">
-          <div className="absolute bottom-0 right-0">
-            <Story />
+      <ClientLayout>
+        <DocumentProvider>
+          <div className="relative mx-auto max-w-mobile p-4">
+            <div className="absolute bottom-0 right-0">
+              <Story />
+            </div>
           </div>
-        </div>
-      </DirectoryProvider>
+        </DocumentProvider>
+      </ClientLayout>
     ),
   ],
 } satisfies Meta<typeof DirectoryMenuDots>
