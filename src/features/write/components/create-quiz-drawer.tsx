@@ -1,6 +1,5 @@
 'use client'
 
-import FixedBottom from '@/shared/components/custom/fixed-bottom'
 import Icon from '@/shared/components/custom/icon'
 import { Button } from '@/shared/components/ui/button'
 import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from '@/shared/components/ui/drawer'
