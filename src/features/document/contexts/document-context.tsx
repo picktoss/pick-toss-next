@@ -1,7 +1,8 @@
 'use client'
 
-import { useGetDocuments } from '@/requests/document/hooks'
 import { useCheckList, UseCheckListReturn } from '@/shared/hooks/use-check-list'
+import { queries } from '@/shared/lib/tanstack-query/query-keys'
+import { useQuery } from '@tanstack/react-query'
 import { PropsWithChildren, createContext, useContext, useMemo, useState } from 'react'
 
 interface DocumentContextValues {
@@ -30,7 +31,8 @@ export function DocumentProvider({
   const [buttonHidden, setButtonHidden] = useState(initialValues?.buttonHidden ?? false)
   const [isExpandedBtns, setIsExpandedBtns] = useState(initialValues?.isExpandedBtns ?? false)
 
-  const { data } = useGetDocuments()
+  const { data } = useQuery(queries.document.list())
+
   const documentCheckList =
     data?.documents.map((document) => ({ id: document.id, checked: false })) ?? []
 

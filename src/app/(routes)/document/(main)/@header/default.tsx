@@ -17,6 +17,7 @@ import { useDirectoryContext } from '@/features/directory/contexts/directory-con
 // Header 컴포넌트
 const Header = () => {
   const { data } = useDirectories()
+  const { selectedDirectory } = useDirectoryContext()
   const { isSelectMode, setIsSelectMode } = useDocumentContext()
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
@@ -34,7 +35,7 @@ const Header = () => {
               <GoBackButton icon="cancel" onClick={() => setIsSelectMode(false)} />
 
               <Text as="span" typography="subtitle2-medium" className="ml-[35px]">
-                전공 공부
+                {selectedDirectory?.name}
               </Text>
               <Text as="span" typography="button4" className="text-button-text-primary">
                 전체 선택
@@ -76,7 +77,7 @@ interface Props {
 }
 
 const DirectorySelectDrawer = ({ isDrawerOpen, setIsDrawerOpen, directories }: Props) => {
-  const { selectedDirectoryId, selectDirectoryId } = useDirectoryContext()
+  const { selectedDirectory, selectedDirectoryId, selectDirectoryId } = useDirectoryContext()
   const { setButtonHidden } = useDocumentContext()
 
   useEffect(() => {
@@ -86,9 +87,6 @@ const DirectorySelectDrawer = ({ isDrawerOpen, setIsDrawerOpen, directories }: P
       setButtonHidden(false)
     }
   }, [isDrawerOpen, setButtonHidden])
-
-  const currentDirectory = directories.find((directory) => directory.id === selectedDirectoryId)
-  const totalNotes = directories.reduce((acc, directory) => acc + directory.documentCount, 0)
 
   const handleDirectorySelect = (id: number | null) => {
     selectDirectoryId(id)
@@ -101,8 +99,8 @@ const DirectorySelectDrawer = ({ isDrawerOpen, setIsDrawerOpen, directories }: P
         <DrawerTrigger asChild>
           <button className="flex size-fit items-center">
             <h2 className="mr-[8px] text-title2">
-              {currentDirectory
-                ? `${currentDirectory.emoji ?? '📁'} ${currentDirectory.name}`
+              {selectedDirectory
+                ? `${selectedDirectory.emoji ?? '📁'} ${selectedDirectory.name}`
                 : '전체 노트'}
             </h2>
             <Icon name="chevron-down" className="size-[20px]"></Icon>
@@ -122,7 +120,7 @@ const DirectorySelectDrawer = ({ isDrawerOpen, setIsDrawerOpen, directories }: P
                     전체 노트
                   </Text>
                   <Text as="span" typography="text1-medium" className="text-text-caption">
-                    노트 {totalNotes}개
+                    노트 {selectedDirectory?.documentCount}개
                   </Text>
                 </DrawerTitle>
               </button>
