@@ -2,7 +2,6 @@ import { Meta, StoryObj } from '@storybook/react'
 import Header from './@header/default'
 import Home from './page'
 import Layout from './layout'
-import ClientLayout from '@/shared/components/custom/client-layout'
 
 const meta = {
   title: 'Page/Main',
@@ -26,10 +25,8 @@ type Story = StoryObj<typeof Home>
 
 export const Default: Story = {
   render: () => (
-    <ClientLayout>
-      <Layout header={<Header />}>
-        <Home />
-      </Layout>
-    </ClientLayout>
+    <Layout header={<Header />}>
+      <Home />
+    </Layout>
   ),
 }
