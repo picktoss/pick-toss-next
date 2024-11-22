@@ -137,6 +137,7 @@ interface IntegratedSearchResponse {
 /** POST /api/v2/documents */
 interface CreateDocumentPayload {
   file: string
+  documentType: CreateType
   directoryId: number
   documentName: string
   star: number

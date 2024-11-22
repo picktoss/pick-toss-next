@@ -9,30 +9,32 @@ import FixedBottom from '@/shared/components/custom/fixed-bottom'
 import { Button } from '@/shared/components/ui/button'
 import { useCreateDocument } from '@/requests/document/hooks'
 import { MAX_CHARACTERS, MIN_CHARACTERS } from '@/features/document/config'
+import { useDirectoryContext } from '@/features/directory/contexts/directory-context'
 
 const Editor = dynamic(() => import('../components/editor'), {
   ssr: false,
 })
 
 const WriteDocumentPage = () => {
+  const { selectedDirectory } = useDirectoryContext()
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
 
   const { mutate: createDocumentMutate } = useCreateDocument()
 
-  const handleCreateDocument = ({
-    documentName,
-    file,
-    directoryId,
-    quizType,
-    star,
-  }: Document.Request.CreateDocument) => {
+  const handleCreateDocument = () => {
+    // TODO: validation
+    if (!selectedDirectory) {
+      return
+    }
+
     createDocumentMutate({
-      documentName,
-      file,
-      directoryId,
-      quizType,
-      star,
+      directoryId: selectedDirectory.id,
+      documentName: title,
+      file: content,
+      quizType: 'MULTIPLE_CHOICE',
+      star: 5,
+      documentType: 'TEXT',
     })
   }
 
@@ -69,15 +71,7 @@ const WriteDocumentPage = () => {
           variant={'largeRound'}
           colors={'primary'}
           className="flex-center h-[52px] w-full"
-          onClick={() =>
-            handleCreateDocument({
-              documentName: title,
-              file: content,
-              directoryId: 2,
-              quizType: 'MULTIPLE_CHOICE',
-              star: 5,
-            })
-          }
+          onClick={handleCreateDocument}
         >
           퀴즈 만들기
         </Button>
