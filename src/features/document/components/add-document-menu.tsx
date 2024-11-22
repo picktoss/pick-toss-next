@@ -4,10 +4,10 @@ import Text from '@/shared/components/ui/text'
 import DimmedBackground from './dimmed-background'
 import AnimatedButtons from './animate-buttons'
 import { cn } from '@/shared/lib/utils'
-import { useDirectoryContext } from '../contexts/directory-context'
+import { useDocumentContext } from '../contexts/document-context'
 
 const AddDocumentMenu = () => {
-  const { isExpandedBtns } = useDirectoryContext()
+  const { isExpandedBtns } = useDocumentContext()
 
   return (
     <div

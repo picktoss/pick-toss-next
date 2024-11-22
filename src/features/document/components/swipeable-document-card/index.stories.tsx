@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import SwipeableDocumentCard from '.'
-import { DirectoryProvider } from '../../contexts/directory-context'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { DocumentProvider } from '../../contexts/document-context'
 
 const queryClient = new QueryClient()
 
@@ -29,9 +29,9 @@ const meta: Meta<typeof SwipeableDocumentCard> = {
   decorators: [
     (Story) => (
       <QueryClientProvider client={queryClient}>
-        <DirectoryProvider>
+        <DocumentProvider>
           <Story />
-        </DirectoryProvider>
+        </DocumentProvider>
       </QueryClientProvider>
     ),
   ],

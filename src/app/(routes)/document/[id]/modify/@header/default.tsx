@@ -1,7 +1,8 @@
 'use client'
 
-import EditCancelDialog from '@/features/document/components/edit-cancel-dialog'
-import { useEditDocumentContext } from '@/features/editor/context/edit-document-context'
+import { useDirectoryContext } from '@/features/directory/contexts/directory-context'
+import EditCancelDialog from '@/features/modify/components/edit-cancel-dialog'
+import { useEditDocumentContext } from '@/features/modify/context/edit-document-context'
 import { useUpdateDocument } from '@/requests/document/hooks'
 import { toast } from '@/shared/hooks/use-toast'
 import { cn } from '@/shared/lib/utils'
@@ -12,6 +13,7 @@ const Header = () => {
   const router = useRouter()
   const { mutate: updateDocumentMutate } = useUpdateDocument()
   const { documentTitle: title, editorMarkdownContent: content } = useEditDocumentContext()
+  const { selectedDirectory } = useDirectoryContext()
 
   const handleClickSave = () => {
     if (title.trim().length === 0 || content.trim().length === 0) return
@@ -41,7 +43,7 @@ const Header = () => {
           <EditCancelDialog />
 
           <div className="rounded-full bg-background-base-02 px-[16px] py-[5px] text-text1-medium">
-            📊 전공 공부
+            {selectedDirectory?.emoji} {selectedDirectory?.name}
           </div>
 
           <button onClick={handleClickSave} className="text-button2 text-button-text-primary">

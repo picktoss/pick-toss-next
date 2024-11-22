@@ -5,18 +5,19 @@ import Text from '@/shared/components/ui/text'
 import { useEffect, useState } from 'react'
 import { cn } from '@/shared/lib/utils'
 import Link from 'next/link'
-import { useDirectoryContext } from '@/features/document/contexts/directory-context'
 import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from '@/shared/components/ui/drawer'
 import SortIconBtn from '@/features/document/components/sort-icon-button'
-import DirectoryMenuDots from '@/features/document/components/directory-menu-dots'
+import DirectoryMenuDots from '@/features/directory/components/directory-menu-dots'
 import GoBackButton from '@/shared/components/custom/go-back-button'
 import { useDirectories } from '@/requests/directory/hooks'
 import CreateDirectoryDialog from '@/features/directory/components/create-directory-dialog'
+import { useDocumentContext } from '@/features/document/contexts/document-context'
+import { useDirectoryContext } from '@/features/directory/contexts/directory-context'
 
 // Header 컴포넌트
 const Header = () => {
   const { data } = useDirectories()
-  const { isSelectMode, setIsSelectMode } = useDirectoryContext()
+  const { isSelectMode, setIsSelectMode } = useDocumentContext()
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
   return (
@@ -75,7 +76,8 @@ interface Props {
 }
 
 const DirectorySelectDrawer = ({ isDrawerOpen, setIsDrawerOpen, directories }: Props) => {
-  const { selectedDirectoryId, setButtonHidden, setSelectedDirectoryId } = useDirectoryContext()
+  const { selectedDirectoryId, selectDirectoryId } = useDirectoryContext()
+  const { setButtonHidden } = useDocumentContext()
 
   useEffect(() => {
     if (isDrawerOpen) {
@@ -88,6 +90,11 @@ const DirectorySelectDrawer = ({ isDrawerOpen, setIsDrawerOpen, directories }: P
   const currentDirectory = directories.find((directory) => directory.id === selectedDirectoryId)
   const totalNotes = directories.reduce((acc, directory) => acc + directory.documentCount, 0)
 
+  const handleDirectorySelect = (id: number | null) => {
+    selectDirectoryId(id)
+    setIsDrawerOpen(false)
+  }
+
   return (
     <>
       <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen} direction="top">
@@ -95,7 +102,7 @@ const DirectorySelectDrawer = ({ isDrawerOpen, setIsDrawerOpen, directories }: P
           <button className="flex size-fit items-center">
             <h2 className="mr-[8px] text-title2">
               {currentDirectory
-                ? `${currentDirectory.emoji} ${currentDirectory.name}`
+                ? `${currentDirectory.emoji ?? '📁'} ${currentDirectory.name}`
                 : '전체 노트'}
             </h2>
             <Icon name="chevron-down" className="size-[20px]"></Icon>
@@ -109,7 +116,7 @@ const DirectorySelectDrawer = ({ isDrawerOpen, setIsDrawerOpen, directories }: P
         >
           <div className="flex h-fit flex-col bg-background-base-01">
             <div className="border-b border-border-divider">
-              <button className="w-full" onClick={() => setSelectedDirectoryId(null)}>
+              <button className="w-full" onClick={() => handleDirectorySelect(null)}>
                 <DrawerTitle className="mt-[24px] flex items-center justify-between px-[18px]">
                   <Text as="span" typography="subtitle2-medium">
                     전체 노트
@@ -126,7 +133,7 @@ const DirectorySelectDrawer = ({ isDrawerOpen, setIsDrawerOpen, directories }: P
                   <button
                     key={directory.id}
                     className="flex items-center justify-between py-[10px]"
-                    onClick={() => setSelectedDirectoryId(directory.id)}
+                    onClick={() => handleDirectorySelect(directory.id)}
                   >
                     <Text
                       as="span"
@@ -135,7 +142,7 @@ const DirectorySelectDrawer = ({ isDrawerOpen, setIsDrawerOpen, directories }: P
                         directory.id === selectedDirectoryId && 'text-text-accent font-bold'
                       )}
                     >
-                      {`${directory.emoji || '📄'} ${directory.name}`}
+                      {`${directory.emoji ?? '📁'} ${directory.name}`}
                     </Text>
                     <Text as="span" typography="text1-medium" className="text-text-caption">
                       노트 {directory.documentCount}개

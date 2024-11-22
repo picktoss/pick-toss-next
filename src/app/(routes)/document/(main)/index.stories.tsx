@@ -2,6 +2,7 @@ import { Meta, StoryObj } from '@storybook/react'
 import Layout from './layout'
 import Header from './@header/default'
 import DirectoryPage from './page'
+import ClientLayout from '@/shared/components/custom/client-layout'
 
 const meta = {
   title: 'Page/Directory',
@@ -23,8 +24,10 @@ export default meta
 
 export const Default: StoryObj<typeof DirectoryPage> = {
   render: () => (
-    <Layout header={<Header />}>
-      <DirectoryPage />
-    </Layout>
+    <ClientLayout>
+      <Layout header={<Header />}>
+        <DirectoryPage />
+      </Layout>
+    </ClientLayout>
   ),
 }

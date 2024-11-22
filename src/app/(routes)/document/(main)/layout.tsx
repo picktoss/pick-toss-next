@@ -1,8 +1,8 @@
 import { FunctionComponent, PropsWithChildren } from 'react'
 import { Metadata } from 'next'
 import BottomNavLayout from '@/shared/components/custom/bottom-nav-layout'
-import { DirectoryProvider } from '@/features/document/contexts/directory-context'
-import ClientLayout from '@/shared/components/custom/client-layout'
+import { DocumentProvider } from '@/features/document/contexts/document-context'
+import { DirectoryProvider } from '@/features/directory/contexts/directory-context'
 
 export const metadata: Metadata = {}
 
@@ -13,14 +13,14 @@ interface LayoutProps extends PropsWithChildren {
 const Layout: FunctionComponent<LayoutProps> = ({ header, children }) => {
   return (
     <BottomNavLayout where="퀴즈 노트">
-      <ClientLayout>
-        <DirectoryProvider>
+      <DirectoryProvider>
+        <DocumentProvider>
           <div className="flex h-[calc(100dvh-88px)] w-full flex-col overflow-hidden bg-background-base-02 text-text-primary">
             {header}
             {children}
           </div>
-        </DirectoryProvider>
-      </ClientLayout>
+        </DocumentProvider>
+      </DirectoryProvider>
     </BottomNavLayout>
   )
 }

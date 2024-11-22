@@ -10,9 +10,9 @@ import DocumentTypeIcon from '@/features/document/components/document-type-icon'
 import Tag from '@/shared/components/ui/tag'
 import { useRouter } from 'next/navigation'
 import MoveDocumentDrawer from '@/features/document/components/move-document-drawer'
-import { useDirectoryContext } from '../../contexts/directory-context'
 import DeleteDocumentDialog from '../delete-document-dialog'
 import usePreviousPath from '@/shared/hooks/use-previous-path'
+import { useDocumentContext } from '../../contexts/document-context'
 
 interface DocumentProps {
   id: number
@@ -37,7 +37,7 @@ const SwipeableDocumentCard = ({
   className,
   reviewCount,
 }: DocumentProps) => {
-  const { isSelectMode, checkDoc } = useDirectoryContext()
+  const { isSelectMode, checkDoc } = useDocumentContext()
   const [isSwiped, setIsSwiped] = useState(false)
   const [isDragging, setIsDragging] = useState(false)
   const x = useMotionValue(0)

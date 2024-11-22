@@ -2,12 +2,12 @@
 
 import { PropsWithChildren, useEffect } from 'react'
 import Icon from '@/shared/components/custom/icon'
-import { useDirectoryContext } from '../contexts/directory-context'
 import usePreviousPath from '@/shared/hooks/use-previous-path'
+import { useDocumentContext } from '../contexts/document-context'
 
 const DocumentList = ({ children }: PropsWithChildren) => {
   const { getPreviousPath } = usePreviousPath()
-  const { isSelectMode, setIsExpandedBtns } = useDirectoryContext()
+  const { isSelectMode, setIsExpandedBtns } = useDocumentContext()
 
   // 메인 페이지에서 '첫 노트 추가하기' 클릭 시 활성화된 상태로 노출
   useEffect(() => {

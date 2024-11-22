@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react'
 import DirectoryMenuDots from '.'
-import { DirectoryProvider } from '../../contexts/directory-context'
+import { DirectoryProvider } from '../../../document/contexts/document-context'
 
 const meta = {
   title: 'document/DirectoryMenuDots',
