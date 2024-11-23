@@ -167,9 +167,9 @@ interface SearchDocumentsResponse {
 }
 
 declare namespace Document {
-  type Item = DocumentDetailItem
+  type DetailItem = DocumentDetailItem
+  type ItemInList = DocumentListItem
   type List = DocumentListItem[]
-  type ListItem = DocumentListItem
   type Status = DocumentStatus
   type Sort = SortOption
 

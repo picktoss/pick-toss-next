@@ -20,7 +20,7 @@ import stripMarkdown from 'strip-markdown'
 
 interface DocumentProps {
   id: number
-  createType: Document.ListItem['documentType']
+  createType: Document.ItemInList['documentType']
   title: string
   content: string
   quizCount: number
