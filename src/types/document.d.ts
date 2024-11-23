@@ -51,8 +51,6 @@ type DocumentListItem = DocumentBase & {
   reviewNeededQuizCount: number
 }
 
-type DocumentItem = DocumentDetailItem | DocumentListItem
-
 type SearchedDocument = {
   documentId: number
   documentName: string
