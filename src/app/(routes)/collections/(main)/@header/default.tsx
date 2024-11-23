@@ -33,7 +33,9 @@ const Header = () => {
         </div>
         <div className="flex items-center gap-[16px]">
           <Icon name="search" className="size-[24px]" />
-          <Icon name="write-document" className="size-[24px]" />
+          <Link href="/collections/create">
+            <Icon name="write-document" className="size-[24px]" />
+          </Link>
         </div>
       </div>
     </header>
