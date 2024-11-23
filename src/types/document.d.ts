@@ -27,21 +27,31 @@ type Quiz = {
   quizType: QuizType
 }
 
-type DocumentItem = {
+type DocumentBase = {
   id: number
   documentType: CreateType
-  name: string
-  documentName?: string
   status: DocumentStatus
-  previewContent?: string
-  content: string
-  characterCount: number
   totalQuizCount: number
-  updatedAt: string
+  characterCount: number
   directory: Directory
+  updatedAt: string
+}
+
+type DocumentDetailItem = DocumentBase & {
+  documentName: string
+  content: string
   quizzes: Quiz[]
+}
+
+type DocumentListItem = DocumentBase & {
+  name: string
+  documentType: CreateType
+  previewContent: string
+  createdAt: string
   reviewNeededQuizCount: number
 }
+
+type DocumentItem = DocumentDetailItem | DocumentListItem
 
 type SearchedDocument = {
   documentId: number
@@ -159,8 +169,9 @@ interface SearchDocumentsResponse {
 }
 
 declare namespace Document {
-  type Item = DocumentItem
-  type List = DocumentItem[]
+  type Item = DocumentDetailItem
+  type List = DocumentListItem[]
+  type ListItem = DocumentListItem
   type Status = DocumentStatus
   type Sort = SortOption
 

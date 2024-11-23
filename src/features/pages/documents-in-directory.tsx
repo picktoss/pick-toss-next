@@ -62,7 +62,7 @@ const DocumentsInDirectory = () => {
               quizCount={document.totalQuizCount}
               characterCount={document.characterCount}
               directory={document.directory.name}
-              className={cn(idx === 9 && 'mb-[30px]')}
+              className={cn(idx === data.documents.length - 1 && 'mb-[30px]')}
               reviewCount={document.reviewNeededQuizCount}
             />
           ))}

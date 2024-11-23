@@ -22,7 +22,7 @@ const ModifyDocument = () => {
 
   return (
     <>
-      <TitleInput prevTitle={data?.name} />
+      <TitleInput prevTitle={data?.documentName} />
 
       <div className="sticky top-[54px] z-10 flex items-center justify-between bg-background-base-02 px-[16px] py-[11px]">
         <div className="flex items-center">
