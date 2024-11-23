@@ -1,7 +1,7 @@
 'use client'
 
 import { useDirectories } from '@/requests/directory/hooks'
-import { PropsWithChildren, createContext, useContext, useEffect, useMemo, useState } from 'react'
+import { PropsWithChildren, createContext, useContext, useMemo, useState } from 'react'
 
 interface DirectoryContextValues {
   directories: Directory.List
@@ -16,11 +16,6 @@ const DirectoryContext = createContext<DirectoryContextValues | null>(null)
 export function DirectoryProvider({ children }: PropsWithChildren) {
   const { data } = useDirectories()
   const [selectedDirectoryId, selectDirectoryId] = useState<number | null>(null)
-
-  useEffect(() => {
-    if (!data) return
-    selectDirectoryId(data.directories[0].id)
-  }, [data])
 
   const values = useMemo(
     () => ({

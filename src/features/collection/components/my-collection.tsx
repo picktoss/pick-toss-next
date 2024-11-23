@@ -44,7 +44,7 @@ const MyCollection = () => {
       <CollectionList>
         {activeTab === 'create-collection' && (
           <Link
-            href="#"
+            href="/collections/create"
             className="flex flex-col items-center gap-[12px] rounded-[16px] border-[3px] border-dashed border-border-default pt-[70px]"
           >
             <Icon name="plus-circle" className="size-[24px]" />
