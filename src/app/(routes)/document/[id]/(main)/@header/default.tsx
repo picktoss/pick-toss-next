@@ -24,7 +24,7 @@ const Header = () => {
   const router = useRouter()
   const { id } = useParams()
   const { getPreviousPath } = usePreviousPath({ getCustomPath: true })
-  const { data } = useQuery(queries.document.item(Number(id[0])))
+  const { data } = useQuery(queries.document.item(Number(id)))
 
   const handleClickCancel = () => {
     const previousPath = getPreviousPath()
@@ -58,7 +58,7 @@ const Header = () => {
                 130
               </Text>
 
-              <Link href={`${id[0]}/modify`} className="ml-[14px]">
+              <Link href={String(id) + '/modify'} className="ml-[14px]">
                 <Icon name="write-line" className="size-[24px]" />
               </Link>
               {/* 노션일 경우 아래 아이콘 렌더링 */}
@@ -149,7 +149,7 @@ const Header = () => {
 
         {/* data: 노트 제목, 문제 수, 글자 수, 마지막 수정 날짜 */}
         <div className=" px-[16px] pb-[18px] pt-[66px]">
-          <h2 className="mb-[8px] text-title2">{data?.name}</h2>
+          <h2 className="mb-[8px] text-title2">{data?.documentName}</h2>
           <div className="flex items-center text-text1-medium text-text-sub">
             <Text as="span">{data?.totalQuizCount}문제</Text>
             <Icon name="middle-dot" className="mx-[8px]" />

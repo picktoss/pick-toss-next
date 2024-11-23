@@ -13,7 +13,7 @@ import { queries } from '@/shared/lib/tanstack-query/query-keys'
 
 const ModifyDocument = () => {
   const { id } = useParams()
-  const { data, isPending } = useQuery(queries.document.item(Number(id[0])))
+  const { data, isPending } = useQuery(queries.document.item(Number(id)))
   const { editorMarkdownContent: content } = useEditDocumentContext()
 
   if (isPending) {

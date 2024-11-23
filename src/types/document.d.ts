@@ -31,7 +31,9 @@ type DocumentItem = {
   id: number
   documentType: CreateType
   name: string
+  documentName?: string
   status: DocumentStatus
+  previewContent?: string
   content: string
   characterCount: number
   totalQuizCount: number
