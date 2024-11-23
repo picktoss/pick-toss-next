@@ -22,11 +22,11 @@ const Header = () => {
     const file = new File([blob], `${title}.md`, { type: 'text/markdown' })
 
     updateDocumentMutate(
-      { documentId: Number(id[0]), request: { name: title, file } },
+      { documentId: Number(id), request: { name: title, file } },
       {
         onSuccess: () => {
           toast({ description: '노트가 수정되었어요' })
-          router.push(`/document/${id[0]}`)
+          router.push('/document/' + String(id))
         },
       }
     )

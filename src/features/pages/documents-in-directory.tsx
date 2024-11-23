@@ -58,7 +58,7 @@ const DocumentsInDirectory = () => {
               id={document.id}
               createType={document.documentType}
               title={document.name}
-              content={document.content.slice(0, 40)}
+              content={document.previewContent ?? ''}
               quizCount={document.totalQuizCount}
               characterCount={document.characterCount}
               directory={document.directory.name}
