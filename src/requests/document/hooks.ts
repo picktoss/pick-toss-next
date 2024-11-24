@@ -18,7 +18,7 @@ export const useUpdateDocument = () => {
   const { data: session } = useSession()
 
   return useMutation({
-    mutationFn: (params: { documentId: number; request: Document.Request.UpdateContent }) =>
-      updateDocument(params.documentId, params.request, session?.user.accessToken || ''),
+    mutationFn: (params: { documentId: number; requestBody: Document.Request.UpdateContent }) =>
+      updateDocument(params.documentId, params.requestBody, session?.user.accessToken || ''),
   })
 }

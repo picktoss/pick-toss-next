@@ -132,7 +132,7 @@ const Header = () => {
                     title="노트를 삭제할까요?"
                     content={
                       <Text typography="text1-medium">
-                        {data?.name} 노트와{' '}
+                        {data?.documentName} 노트와{' '}
                         <span className="text-text-wrong">{data?.totalQuizCount}개의 문제</span>가{' '}
                         <br />
                         모두 삭제됩니다.

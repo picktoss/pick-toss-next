@@ -40,11 +40,14 @@ export const fetchDocumentDetail = async (documentId: number) => {
   try {
     const session = await auth()
 
-    const { data } = await http.get<Document.Item>(API_ENDPOINTS.DOCUMENT.GET.BY_ID(documentId), {
-      headers: {
-        Authorization: `Bearer ${session?.user.accessToken}`,
-      },
-    })
+    const { data } = await http.get<Document.DetailItem>(
+      API_ENDPOINTS.DOCUMENT.GET.BY_ID(documentId),
+      {
+        headers: {
+          Authorization: `Bearer ${session?.user.accessToken}`,
+        },
+      }
+    )
     return data
   } catch (error: unknown) {
     console.error(error)
@@ -54,18 +57,27 @@ export const fetchDocumentDetail = async (documentId: number) => {
 
 export const updateDocument = async (
   documentId: number,
-  request: Document.Request.UpdateContent,
+  requestBody: Document.Request.UpdateContent,
   accessToken: string
 ) => {
-  const params = { request }
-
   try {
-    await http.patch(API_ENDPOINTS.DOCUMENT.PATCH.UPDATE_CONTENT(documentId), null, {
-      params,
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    })
+    const formData = new FormData()
+    formData.append('name', requestBody.name)
+    formData.append('file', requestBody.file)
+
+    const response = await http.patch(
+      API_ENDPOINTS.DOCUMENT.PATCH.UPDATE_CONTENT(documentId),
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    )
+
+    // eslint-disable-next-line no-console
+    console.log(response) // 디버깅용
   } catch (error: unknown) {
     console.error(error)
     throw error

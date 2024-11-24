@@ -15,14 +15,20 @@ const Header = () => {
   const { documentTitle: title, editorMarkdownContent: content } = useEditDocumentContext()
   const { selectedDirectory } = useDirectoryContext()
 
-  const handleClickSave = () => {
-    if (title.trim().length === 0 || content.trim().length === 0) return
+  const handleClickSave = (id: number, title: string, content: string) => {
+    // eslint-disable-next-line no-console
+    console.log(title, content)
+
+    if (title.trim().length === 0 || content.trim().length === 0) {
+      alert('제목과 내용을 입력해주세요')
+      return
+    }
 
     const blob = new Blob([content], { type: 'text/markdown' })
     const file = new File([blob], `${title}.md`, { type: 'text/markdown' })
 
     updateDocumentMutate(
-      { documentId: Number(id), request: { name: title, file } },
+      { documentId: id, requestBody: { name: title, file } },
       {
         onSuccess: () => {
           toast({ description: '노트가 수정되었어요' })
@@ -46,7 +52,10 @@ const Header = () => {
             {selectedDirectory?.emoji} {selectedDirectory?.name}
           </div>
 
-          <button onClick={handleClickSave} className="text-button2 text-button-text-primary">
+          <button
+            onClick={() => handleClickSave(Number(id), title, content)}
+            className="text-button2 text-button-text-primary"
+          >
             저장
           </button>
         </div>
