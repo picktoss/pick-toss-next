@@ -20,8 +20,7 @@ export const useMessaging = () => {
 
       void requestFCMToken()
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(error)
+      console.error(error)
     }
   }, [])
 }

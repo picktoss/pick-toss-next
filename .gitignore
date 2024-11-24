@@ -40,3 +40,6 @@ next-env.d.ts
 
 # Storybook
 storybook-static
+
+# firebase config
+firebase-config.json
