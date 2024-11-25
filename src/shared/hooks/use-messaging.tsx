@@ -5,7 +5,7 @@ import { useServiceWorker } from '@/firebase/messaging/use-service-worker'
 import { useEffect } from 'react'
 
 export const useMessaging = () => {
-  useServiceWorker() // 서비스 워커 등록
+  useServiceWorker()
 
   useEffect(() => {
     try {
@@ -14,7 +14,7 @@ export const useMessaging = () => {
         if (token) {
           // eslint-disable-next-line no-console
           console.log('FCM 토큰:', token) // 디버깅용
-          // FCM 토큰을 서버로 전송 (예: API 호출)
+          // FCM 토큰을 서버로 전송
         }
       }
 
