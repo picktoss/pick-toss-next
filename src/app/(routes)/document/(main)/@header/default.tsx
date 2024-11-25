@@ -18,7 +18,7 @@ import { useDirectoryContext } from '@/features/directory/contexts/directory-con
 const Header = () => {
   const { data } = useDirectories()
   const { selectedDirectory } = useDirectoryContext()
-  const { isSelectMode, setIsSelectMode } = useDocumentContext()
+  const { isSelectMode, setIsSelectMode, checkDoc } = useDocumentContext()
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
   return (
@@ -37,9 +37,12 @@ const Header = () => {
               <Text as="span" typography="subtitle2-medium" className="ml-[35px]">
                 {selectedDirectory?.name}
               </Text>
-              <Text as="span" typography="button4" className="text-button-text-primary">
-                전체 선택
-              </Text>
+
+              <button onClick={() => checkDoc.checkAll()}>
+                <Text as="span" typography="button4" className="text-button-text-primary">
+                  전체 선택
+                </Text>
+              </button>
             </>
           ) : (
             <>

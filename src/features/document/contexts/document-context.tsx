@@ -3,7 +3,7 @@
 import { useCheckList, UseCheckListReturn } from '@/shared/hooks/use-check-list'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import { useQuery } from '@tanstack/react-query'
-import { PropsWithChildren, createContext, useContext, useMemo, useState } from 'react'
+import { PropsWithChildren, createContext, useContext, useEffect, useMemo, useState } from 'react'
 
 interface DocumentContextValues {
   buttonHidden: boolean
@@ -37,6 +37,10 @@ export function DocumentProvider({
     data?.documents.map((document) => ({ id: document.id, checked: false })) ?? []
 
   const checkDoc = useCheckList(documentCheckList)
+
+  useEffect(() => {
+    if (!isSelectMode) checkDoc.unCheckAll()
+  }, [isSelectMode])
 
   const values = useMemo(
     () => ({

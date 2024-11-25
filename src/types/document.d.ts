@@ -131,7 +131,7 @@ interface UpdateTodayQuizSettingsPayload {
 /** PATCH /api/v2/documents/move */
 interface MoveDocumentPayload {
   documentIds: number[]
-  directoryId: number
+  directoryId: number | null
 }
 
 /** POST /api/v2/integrated-search */
