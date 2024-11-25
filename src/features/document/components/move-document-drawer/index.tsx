@@ -24,18 +24,18 @@ interface Props {
 
 // MoveDocumentDrawer 컴포넌트
 const MoveDocumentDrawer = ({ triggerComponent, documentId }: Props) => {
-  const [isOpen, setIsOpen] = useState(false)
-  const [selectedDirectoryId, setSelectedDirectoryId] = useState<number | 'global'>('global')
-  const { directories } = useDirectoryContext()
+  const { directories, globalDirectoryId } = useDirectoryContext()
   const { checkDoc, setIsSelectMode } = useDocumentContext()
+  const [selectedDirectoryId, setSelectedDirectoryId] = useState<number | null>(globalDirectoryId)
+  const [isOpen, setIsOpen] = useState(false)
 
   const handleClickMove = async () => {
     const documentIds = documentId ? [documentId] : checkDoc.getCheckedIds().map((id) => Number(id))
 
     if (documentIds.length > 0 && selectedDirectoryId) {
       const requestBody = {
-        documentIds: documentIds,
-        directoryId: selectedDirectoryId === 'global' ? null : selectedDirectoryId,
+        documentIds,
+        directoryId: selectedDirectoryId,
       }
 
       await moveDocument(requestBody)
@@ -66,20 +66,6 @@ const MoveDocumentDrawer = ({ triggerComponent, documentId }: Props) => {
             defaultValue={String(selectedDirectoryId)}
             onValueChange={(value) => setSelectedDirectoryId(Number(value))}
           >
-            <div className="flex items-center py-[10px]">
-              <RadioGroupItem
-                value={'global'}
-                id={'global'}
-                className={cn(
-                  'mr-[12px]',
-                  selectedDirectoryId === 'global' && 'bg-fill-primary-orange border-none'
-                )}
-              />
-              <Label htmlFor={'global'} className="cursor-pointer text-subtitle2-medium">
-                전체 노트
-              </Label>
-            </div>
-
             {/* 폴더 개수만큼 렌더링 */}
             {directories.map((directory) => (
               <div key={directory.id} className="flex items-center py-[10px]">
@@ -95,7 +81,7 @@ const MoveDocumentDrawer = ({ triggerComponent, documentId }: Props) => {
                   htmlFor={String(directory.id)}
                   className="cursor-pointer text-subtitle2-medium"
                 >
-                  {directory.emoji ?? '📁'} {directory.name}
+                  {directory.emoji} {directory.name}
                 </Label>
               </div>
             ))}

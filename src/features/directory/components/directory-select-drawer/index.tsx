@@ -17,7 +17,7 @@ import { useState } from 'react'
 
 const DirectorySelectDrawer = () => {
   const [open, setOpen] = useState(false)
-  const { directories, selectDirectoryId, selectedDirectoryId, selectedDirectory } =
+  const { directories, selectDirectoryId, selectedDirectoryId, selectedDirectory, totalDocsCount } =
     useDirectoryContext()
 
   const handleDirectorySelect = (id: number) => {
@@ -25,13 +25,11 @@ const DirectorySelectDrawer = () => {
     setOpen(false)
   }
 
-  const totalNotes = directories.reduce((acc, directory) => acc + directory.documentCount, 0)
-
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
         <button className="rounded-full bg-background-base-02 px-[16px] py-[5px]">
-          {`${selectedDirectory?.emoji ?? '📁'} ${selectedDirectory?.name ?? '기본 폴더'}`}
+          {`${selectedDirectory?.emoji ?? ''} ${selectedDirectory?.name ?? '전체 노트'}`}
         </button>
       </DrawerTrigger>
 
@@ -50,15 +48,7 @@ const DirectorySelectDrawer = () => {
 
         <div className="flex h-[calc(100%-52px)] w-full flex-col bg-background-base-01">
           <div className="flex max-h-[calc(100%-58px)] flex-col border-b border-border-divider">
-            <DrawerTitle className="mt-[24px] flex items-center justify-between px-[18px]">
-              <Text as="span" typography="subtitle2-medium">
-                전체 노트
-              </Text>
-              <Text as="span" typography="text1-medium" className="text-text-caption">
-                노트 {totalNotes}개
-              </Text>
-            </DrawerTitle>
-            <div className="mb-[11px] mt-[9px] flex grow flex-col overflow-y-auto px-[18px]">
+            <div className="mb-[11px] mt-[24px] flex grow flex-col overflow-y-auto px-[18px]">
               {directories.map((directory) => (
                 <button
                   key={directory.id}
@@ -72,10 +62,11 @@ const DirectorySelectDrawer = () => {
                       directory.id === selectedDirectoryId && 'text-text-accent font-bold'
                     )}
                   >
-                    {directory.name}
+                    {directory.emoji ?? ''}{' '}
+                    {directory.tag === 'DEFAULT' ? '전체 노트' : directory.name}
                   </Text>
                   <Text as="span" typography="text1-medium" className="text-text-caption">
-                    노트 {directory.documentCount}개
+                    노트 {directory.tag === 'DEFAULT' ? totalDocsCount : directory.documentCount}개
                   </Text>
                 </button>
               ))}
