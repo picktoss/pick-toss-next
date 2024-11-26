@@ -15,7 +15,7 @@ import { cn } from '@/shared/lib/utils'
 import { useState } from 'react'
 import { useDirectoryContext } from '@/features/directory/contexts/directory-context'
 import { useDocumentContext } from '../../contexts/document-context'
-import { moveDocument } from '@/requests/document'
+import { useMoveDocument } from '@/requests/document/hooks'
 
 interface Props {
   triggerComponent: React.ReactNode
@@ -24,26 +24,34 @@ interface Props {
 
 // MoveDocumentDrawer 컴포넌트
 const MoveDocumentDrawer = ({ triggerComponent, documentId }: Props) => {
-  const { directories, globalDirectoryId } = useDirectoryContext()
-  const { checkDoc, setIsSelectMode } = useDocumentContext()
+  const {
+    directories,
+    globalDirectoryId,
+    selectedDirectoryId: presentDirectoryId,
+  } = useDirectoryContext()
+  const { checkDoc, setIsSelectMode, sortOption } = useDocumentContext()
   const [selectedDirectoryId, setSelectedDirectoryId] = useState<number | null>(globalDirectoryId)
   const [isOpen, setIsOpen] = useState(false)
 
-  const handleClickMove = async () => {
+  const { mutate: moveDocumentMutation } = useMoveDocument({
+    directoryId: String(presentDirectoryId),
+    sortOption,
+  })
+
+  const handleClickMove = () => {
     const documentIds = documentId ? [documentId] : checkDoc.getCheckedIds().map((id) => Number(id))
 
-    if (documentIds.length > 0 && selectedDirectoryId) {
-      const requestBody = {
-        documentIds,
-        directoryId: selectedDirectoryId,
-      }
+    if (documentIds.length === 0 || !selectedDirectoryId) return
 
-      await moveDocument(requestBody)
-      setIsOpen(false)
-      setIsSelectMode(false)
+    const requestBody = {
+      documentIds,
+      directoryId: selectedDirectoryId,
     }
 
-    window.location.reload()
+    moveDocumentMutation(requestBody)
+
+    setIsOpen(false)
+    setIsSelectMode(false)
   }
 
   return (
@@ -81,7 +89,8 @@ const MoveDocumentDrawer = ({ triggerComponent, documentId }: Props) => {
                   htmlFor={String(directory.id)}
                   className="cursor-pointer text-subtitle2-medium"
                 >
-                  {directory.emoji} {directory.name}
+                  {directory.emoji ?? ''}{' '}
+                  {directory.tag === 'DEFAULT' ? '전체 노트' : directory.name}
                 </Label>
               </div>
             ))}

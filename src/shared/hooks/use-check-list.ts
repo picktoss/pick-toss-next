@@ -15,17 +15,17 @@ export function useCheckList<T extends Item>(initialItems: T[]) {
 
   const findItem = useCallback(
     (id: IdType) => listRef.current.find(({ id: _id }) => _id === id),
-    []
+    [listRef]
   )
 
   const findIndex = useCallback(
     (id: IdType) => listRef.current.findIndex(({ id: _id }) => _id === id),
-    []
+    [listRef]
   )
 
   const isChecked = useCallback((id: IdType) => findItem(id)?.checked, [findItem])
 
-  const isAllChecked = useCallback(() => listRef.current.every(({ checked }) => checked), [])
+  const isAllChecked = useCallback(() => listRef.current.every(({ checked }) => checked), [listRef])
 
   const set = useCallback(
     (items: T[]) => {
@@ -97,7 +97,7 @@ export function useCheckList<T extends Item>(initialItems: T[]) {
 
   const getCheckedList = useCallback(() => {
     return listRef.current.filter((item) => item.checked)
-  }, [])
+  }, [listRef])
 
   const getCheckedIds = useCallback(() => {
     return getCheckedList().map(({ id }) => id)

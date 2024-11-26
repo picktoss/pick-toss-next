@@ -57,7 +57,7 @@ const CreateDirectoryDialog = () => {
         className="flex min-h-[190px] w-[280px] flex-col items-center justify-between rounded-[16px] bg-background-base-01"
         displayCloseButton={false}
       >
-        <DialogTitle className="mb-[32px] w-full text-subtitle2-bold">폴더 만들가</DialogTitle>
+        <DialogTitle className="mb-[32px] w-full text-subtitle2-bold">폴더 만들기</DialogTitle>
 
         <div className="flex h-[40px] w-full">
           <DropdownMenu>

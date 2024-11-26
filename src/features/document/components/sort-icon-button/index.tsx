@@ -1,3 +1,5 @@
+'use client'
+
 import Icon from '@/shared/components/custom/icon'
 import {
   DropdownMenu,
@@ -7,11 +9,14 @@ import {
 } from '@/shared/components/ui/dropdown-menu'
 import Text from '@/shared/components/ui/text'
 import { cn } from '@/shared/lib/utils'
+import { useDocumentContext } from '../../contexts/document-context'
 
 const SortIconBtn = () => {
+  const { setSortOption } = useDocumentContext()
+
   const sortItems = [
-    { key: 'upload', label: '업로드한 날짜' },
-    { key: 'open', label: '마지막으로 열어본 시간' },
+    { key: 'CREATED_AT' as Document.Sort, label: '업로드한 날짜' },
+    { key: 'UPDATED_AT' as Document.Sort, label: '마지막으로 수정한 날짜' },
   ]
 
   return (
@@ -28,7 +33,7 @@ const SortIconBtn = () => {
               'border-t border-border-divider w-[240px] px-[20px] py-[16px]',
               index === 0 && 'border-none'
             )}
-            onClick={() => alert('clicked ' + menuItem.label)}
+            onClick={() => setSortOption(menuItem.key)}
           >
             <Text
               key={menuItem.key}

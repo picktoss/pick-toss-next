@@ -10,7 +10,7 @@ import DocumentTypeIcon from '@/features/document/components/document-type-icon'
 import Tag from '@/shared/components/ui/tag'
 import { useRouter } from 'next/navigation'
 import MoveDocumentDrawer from '@/features/document/components/move-document-drawer'
-import DeleteDocumentDialog from '../delete-document-dialog'
+import DeleteDocumentSwipeButton from '../delete-document-swipe-button'
 import usePreviousPath from '@/shared/hooks/use-previous-path'
 import { useDocumentContext } from '../../contexts/document-context'
 import { unified } from 'unified'
@@ -167,7 +167,7 @@ const SwipeableDocumentCard = ({
             }
             documentId={id}
           />
-          <DeleteDocumentDialog />
+          <DeleteDocumentSwipeButton documentId={id} quizCount={quizCount} />
         </div>
       </motion.div>
     </div>

@@ -105,7 +105,9 @@ export const API_ENDPOINTS = {
       SEARCH: '/documents/search',
     },
     DELETE: {
-      /** DELETE /documents/delete-documents - 문서 삭제 */
+      /** DELETE /documents/delete-documents - 문서 삭제
+       * //참고사항 : body로 documentIds를 리스트 형태로 보내야합니다 (swagger참고)
+       */
       DOCUMENTS: '/documents/delete-documents',
     },
   },

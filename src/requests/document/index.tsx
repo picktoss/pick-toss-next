@@ -57,10 +57,11 @@ export const fetchDocumentDetail = async (documentId: number) => {
 
 export const updateDocument = async (
   documentId: number,
-  requestBody: Document.Request.UpdateContent,
-  accessToken: string
+  requestBody: Document.Request.UpdateContent
 ) => {
   try {
+    const session = await auth()
+
     const formData = new FormData()
     formData.append('name', requestBody.name)
     formData.append('file', requestBody.file)
@@ -70,7 +71,7 @@ export const updateDocument = async (
       formData,
       {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${session?.user.accessToken}`,
           'Content-Type': 'multipart/form-data',
         },
       }
@@ -97,6 +98,26 @@ export const moveDocument = async (requestBody: Document.Request.MoveDocument) =
     // eslint-disable-next-line no-console
     console.log(response) // 디버깅용
   } catch (error: unknown) {
+    console.error(error)
+    throw error
+  }
+}
+
+export const deleteDocument = async (requestBody: Document.Request.DeleteDocuments) => {
+  try {
+    const session = await auth()
+
+    // delete 메서드로 body를 받는 api입니다 (여러 문서 id를 리스트로 보냄)
+    const response = await http.delete(API_ENDPOINTS.DOCUMENT.DELETE.DOCUMENTS, {
+      data: requestBody,
+      headers: {
+        Authorization: `Bearer ${session?.user.accessToken}`,
+      },
+    })
+
+    // eslint-disable-next-line no-console
+    console.log(response) // 디버깅용
+  } catch (error) {
     console.error(error)
     throw error
   }
