@@ -60,7 +60,8 @@ const SelectableQuizCard = ({ quiz, onSelect, order, selected }: Props) => {
           typography="text1-medium"
           className={cn('text-text-secondary', selected && 'text-text-accent')}
         >
-          {quiz.answer}
+          {quiz.quizType === 'MIX_UP' && (quiz.answer === 'correct' ? 'O' : 'X')}
+          {quiz.quizType === 'MULTIPLE_CHOICE' && quiz.answer}
         </Text>
       </div>
     </div>

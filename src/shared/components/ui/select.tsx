@@ -5,6 +5,7 @@ import * as SelectPrimitive from '@radix-ui/react-select'
 import { Check, ChevronUp } from 'lucide-react'
 
 import { cn } from '@/shared/lib/utils'
+import Icon from '../custom/icon'
 
 const Select = SelectPrimitive.Root
 
@@ -27,7 +28,7 @@ const SelectTrigger = React.forwardRef<
     {children}
     <SelectPrimitive.Icon asChild>
       <div className="flex size-[16px] items-center justify-center">
-        <ChevronDown />
+        <Icon name="chevron-down" className="size-[16px] text-icon-tertiary" />
       </div>
     </SelectPrimitive.Icon>
   </SelectPrimitive.Trigger>
@@ -57,7 +58,7 @@ const SelectScrollDownButton = React.forwardRef<
     className={cn('flex cursor-default items-center justify-center py-1', className)}
     {...props}
   >
-    <ChevronDown />
+    <Icon name="chevron-down" className="size-[16px] text-icon-tertiary" />
   </SelectPrimitive.ScrollDownButton>
 ))
 SelectScrollDownButton.displayName = SelectPrimitive.ScrollDownButton.displayName
@@ -152,18 +153,4 @@ export {
   SelectSeparator,
   SelectScrollUpButton,
   SelectScrollDownButton,
-}
-
-function ChevronDown() {
-  return (
-    <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path
-        d="M1 1L5 5L9 1"
-        stroke="#A2A6AB"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  )
 }

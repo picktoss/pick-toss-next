@@ -11,7 +11,7 @@ const Layout: FunctionComponent<LayoutProps> = ({ header, children }) => {
   return (
     <main>
       {header}
-      {children}
+      <div className="pt-[54px]">{children}</div>
     </main>
   )
 }

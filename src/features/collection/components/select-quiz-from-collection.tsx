@@ -5,21 +5,27 @@ import DirectorySelect from '../../directory/components/directory-select'
 import FixedBottom from '@/shared/components/custom/fixed-bottom'
 import { Button } from '@/shared/components/ui/button'
 import Text from '@/shared/components/ui/text'
-import { quizzes } from '@/features/quiz/config'
 import SelectableQuizCard from './selectable-quiz-card'
 import { Checkbox } from '@/shared/components/ui/checkbox'
 import Label from '@/shared/components/ui/label'
+import { useDirectories } from '@/requests/directory/hooks'
+import { useDirectoryQuizzes } from '@/requests/quiz/hooks'
 
 const SelectQuizFromCollection = () => {
-  // TODO: 전체 or 디렉토리 배열의 첫 번째 요소 | null이면 전체
-  const [selectedDirectoryId, setSelectedDirectoryId] = useState<string | null>(null)
+  const { data: directoriesData } = useDirectories()
+
+  const [selectedDirectoryId, setSelectedDirectoryId] = useState<number | null>(null)
   const [selectedQuizIds, setSelectedQuizIds] = useState<number[]>([])
   const [allChecked, setAllChecked] = useState(false)
 
+  const { data: directoryQuizzesData } = useDirectoryQuizzes(selectedDirectoryId)
+
   const handleSelectAllClick = (check: boolean) => {
+    if (!directoryQuizzesData) return
+
     setAllChecked(check)
     if (check) {
-      const quizIds = quizzes.map((quiz) => quiz.id)
+      const quizIds = directoryQuizzesData.quizzes.map((quiz) => quiz.id)
       const unSelectedQuizIds = quizIds.filter((quizId) => !selectedQuizIds.includes(quizId))
       setSelectedQuizIds([...selectedQuizIds, ...unSelectedQuizIds])
       return
@@ -36,8 +42,16 @@ const SelectQuizFromCollection = () => {
   }
 
   useEffect(() => {
-    selectedQuizIds.length === quizzes.length ? setAllChecked(true) : setAllChecked(false)
-  }, [selectedQuizIds])
+    if (!directoriesData) return
+    setSelectedDirectoryId(directoriesData.directories[0].id)
+  }, [directoriesData])
+
+  useEffect(() => {
+    if (!directoryQuizzesData) return
+    selectedQuizIds.length === directoryQuizzesData.quizzes.length
+      ? setAllChecked(true)
+      : setAllChecked(false)
+  }, [selectedQuizIds.length, directoryQuizzesData])
 
   const selectedQuizCount = selectedQuizIds.length
 
@@ -45,8 +59,9 @@ const SelectQuizFromCollection = () => {
     <div className="mt-[24px] pb-[120px]">
       <div className="sticky top-[54px] z-20 flex h-[44px] items-center justify-between bg-white">
         <DirectorySelect
+          directories={directoriesData?.directories ?? []}
           selectedDirectoryId={selectedDirectoryId}
-          selectDirectoryId={(directoryId?: string) => setSelectedDirectoryId(directoryId ?? null)}
+          selectDirectoryId={(directoryId: number) => setSelectedDirectoryId(directoryId)}
         />
         <Text typography="text2-bold" className="text-text-accent">
           {selectedQuizCount}개 선택됨
@@ -61,7 +76,7 @@ const SelectQuizFromCollection = () => {
       </div>
 
       <ul className="mt-[23px] flex flex-col gap-[8px]">
-        {quizzes.map((quiz) => (
+        {directoryQuizzesData?.quizzes.map((quiz) => (
           <SelectableQuizCard
             key={quiz.id}
             quiz={quiz}
