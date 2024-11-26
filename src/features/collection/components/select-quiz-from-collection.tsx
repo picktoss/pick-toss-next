@@ -9,10 +9,17 @@ import { quizzes } from '@/features/quiz/config'
 import SelectableQuizCard from './selectable-quiz-card'
 import { Checkbox } from '@/shared/components/ui/checkbox'
 import Label from '@/shared/components/ui/label'
+import { useDirectories } from '@/requests/directory/hooks'
 
 const SelectQuizFromCollection = () => {
-  // TODO: 전체 or 디렉토리 배열의 첫 번째 요소 | null이면 전체
-  const [selectedDirectoryId, setSelectedDirectoryId] = useState<string | null>(null)
+  const { data: directoriesData } = useDirectories()
+
+  useEffect(() => {
+    if (!directoriesData) return
+    setSelectedDirectoryId(directoriesData.directories[0].id)
+  }, [directoriesData])
+
+  const [selectedDirectoryId, setSelectedDirectoryId] = useState<number | null>(null)
   const [selectedQuizIds, setSelectedQuizIds] = useState<number[]>([])
   const [allChecked, setAllChecked] = useState(false)
 
@@ -45,8 +52,9 @@ const SelectQuizFromCollection = () => {
     <div className="mt-[24px] pb-[120px]">
       <div className="sticky top-[54px] z-20 flex h-[44px] items-center justify-between bg-white">
         <DirectorySelect
+          directories={directoriesData?.directories ?? []}
           selectedDirectoryId={selectedDirectoryId}
-          selectDirectoryId={(directoryId?: string) => setSelectedDirectoryId(directoryId ?? null)}
+          selectDirectoryId={(directoryId: number) => setSelectedDirectoryId(directoryId)}
         />
         <Text typography="text2-bold" className="text-text-accent">
           {selectedQuizCount}개 선택됨
