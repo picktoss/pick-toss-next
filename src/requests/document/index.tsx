@@ -55,36 +55,6 @@ export const fetchDocumentDetail = async (documentId: number) => {
   }
 }
 
-export const updateDocument = async (
-  documentId: number,
-  requestBody: Document.Request.UpdateContent
-) => {
-  try {
-    const session = await auth()
-
-    const formData = new FormData()
-    formData.append('name', requestBody.name)
-    formData.append('file', requestBody.file)
-
-    const response = await http.patch(
-      API_ENDPOINTS.DOCUMENT.PATCH.UPDATE_CONTENT(documentId),
-      formData,
-      {
-        headers: {
-          Authorization: `Bearer ${session?.user.accessToken}`,
-          'Content-Type': 'multipart/form-data',
-        },
-      }
-    )
-
-    // eslint-disable-next-line no-console
-    console.log(response) // 디버깅용
-  } catch (error: unknown) {
-    console.error(error)
-    throw error
-  }
-}
-
 export const moveDocument = async (requestBody: Document.Request.MoveDocument) => {
   try {
     const session = await auth()

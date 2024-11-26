@@ -4,16 +4,23 @@ import { useDirectoryContext } from '@/features/directory/contexts/directory-con
 import EditCancelDialog from '@/features/modify/components/edit-cancel-dialog'
 import { useEditDocumentContext } from '@/features/modify/context/edit-document-context'
 import { useUpdateDocument } from '@/requests/document/hooks'
-import { toast } from '@/shared/hooks/use-toast'
+import { useToast } from '@/shared/hooks/use-toast'
+import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import { cn } from '@/shared/lib/utils'
+import { useQuery } from '@tanstack/react-query'
 import { useParams, useRouter } from 'next/navigation'
 
 const Header = () => {
   const { id } = useParams()
   const router = useRouter()
+
+  const { toast } = useToast()
+
+  const { data } = useQuery(queries.document.item(Number(id)))
   const { mutate: updateDocumentMutate } = useUpdateDocument(Number(id))
+
   const { documentTitle: title, editorMarkdownContent: content } = useEditDocumentContext()
-  const { selectedDirectory } = useDirectoryContext()
+  const { globalDirectoryId } = useDirectoryContext()
 
   const handleClickSave = (id: number, title: string, content: string) => {
     if (title.trim().length === 0 || content.trim().length === 0) {
@@ -24,15 +31,14 @@ const Header = () => {
     const blob = new Blob([content], { type: 'text/markdown' })
     const file = new File([blob], `${title}.md`, { type: 'text/markdown' })
 
-    updateDocumentMutate(
-      { documentId: id, requestBody: { name: title, file } },
-      {
-        onSuccess: () => {
-          toast({ description: '노트가 수정되었어요' })
-          router.push('/document/' + String(id))
-        },
-      }
-    )
+    const updatePayload = { documentId: id, requestBody: { name: title, file } }
+
+    updateDocumentMutate(updatePayload, {
+      onSuccess: () => {
+        router.push('/document/' + String(id))
+        toast({ description: '노트가 수정되었어요' })
+      },
+    })
   }
 
   return (
@@ -46,7 +52,7 @@ const Header = () => {
           <EditCancelDialog />
 
           <div className="rounded-full bg-background-base-02 px-[16px] py-[5px] text-text1-medium">
-            {selectedDirectory?.emoji ?? ''} {selectedDirectory?.name ?? '전체 노트'}
+            {data?.directory.id === globalDirectoryId ? '전체 노트' : data?.directory.name}
           </div>
 
           <button
