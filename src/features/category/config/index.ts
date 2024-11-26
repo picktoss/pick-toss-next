@@ -1,4 +1,9 @@
-export const CATEGORIES = [
+type Category = {
+  code: Collection.Field
+  name: string
+}
+
+export const CATEGORIES: Category[] = [
   {
     code: 'IT',
     name: 'IT·프로그래밍',

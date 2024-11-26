@@ -28,6 +28,7 @@ import {
   DrawerTrigger,
 } from '@/shared/components/ui/drawer'
 import { CATEGORIES } from '@/features/category/config'
+import { useCreateCollection } from '@/requests/collection/hooks'
 
 interface SearchParams {
   step: 'select-document' | 'create-form'
@@ -53,6 +54,8 @@ const CreateCollectionForm = () => {
 
   const { data: directoryQuizzesData } = useDirectoryQuizzes(selectedDirectoryId)
 
+  const { mutate: createCollectionMutate } = useCreateCollection()
+
   const handleSelectAllClick = (check: boolean) => {
     if (!directoryQuizzesData) return
 
@@ -72,6 +75,23 @@ const CreateCollectionForm = () => {
       return
     }
     setSelectedQuizIds([...selectedQuizIds, quizId])
+  }
+
+  const handleCreateCollection = () => {
+    createCollectionMutate(
+      {
+        name: title,
+        description,
+        collectionField: categoryCode,
+        emoji,
+        quizzes: selectedQuizIds,
+      },
+      {
+        onSuccess: (data) => {
+          router.push(`/collections/${data.id}`)
+        },
+      }
+    )
   }
 
   useEffect(() => {
@@ -232,7 +252,7 @@ const CreateCollectionForm = () => {
         </div>
       </div>
       <FixedBottom className="flex gap-[6px]">
-        <Button variant={'largeRound'} className="w-full">
+        <Button variant={'largeRound'} className="w-full" onClick={() => handleCreateCollection()}>
           만들기
         </Button>
       </FixedBottom>
