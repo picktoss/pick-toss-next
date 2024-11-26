@@ -46,7 +46,7 @@ const PickDrawer = () => {
               {quizzes.map((quiz) => (
                 <QuizCard
                   key={quiz.id}
-                  showAnswer
+                  answerMode
                   header={
                     <div className="flex items-center justify-between text-icon-tertiary">
                       {/* 태그에는 pick 사유가 들어갈 예정 (오답 / 20초 이상 소요) */}

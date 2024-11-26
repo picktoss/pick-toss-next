@@ -12,7 +12,7 @@ type MultipleChoiceQuiz = {
 
 type OXQuiz = {
   quizType: 'MIX_UP'
-  answer: 'correct' | 'wrong'
+  answer: 'correct' | 'incorrect'
 } & BaseQuiz
 
 type CombineQuiz = MultipleChoiceQuiz | OXQuiz

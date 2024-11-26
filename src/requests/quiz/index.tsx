@@ -57,3 +57,30 @@ export const fetchDirectoryQuizzes = async ({ directoryId }: { directoryId: numb
     throw error
   }
 }
+
+export const fetchDocumentQuizzes = async ({
+  documentId,
+  quizType,
+}: {
+  documentId: number
+  quizType?: Quiz.Type
+}) => {
+  const session = await auth()
+
+  const params = quizType ? { 'quiz-type': quizType } : null
+
+  try {
+    const { data } = await http.get<Quiz.Response.GetDirectoryQuizzes>(
+      API_ENDPOINTS.QUIZ.GET.BY_DOCUMENT(documentId),
+      {
+        params,
+        headers: {
+          Authorization: `Bearer ${session?.user.accessToken}`,
+        },
+      }
+    )
+    return data
+  } catch (error: unknown) {
+    throw error
+  }
+}

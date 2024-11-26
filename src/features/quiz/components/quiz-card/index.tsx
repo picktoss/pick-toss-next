@@ -3,31 +3,36 @@
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
 import { cn } from '@/shared/lib/utils'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 interface Props {
   quiz: Quiz.Item
   header: React.ReactNode
-  showAnswer?: boolean
+  answerMode?: boolean
   showExplanation?: boolean
   // userAnswer를 받으면 정답과 오답을 표시함
   userAnswer?: string
 }
 
-const QuizCard = ({
-  quiz,
-  header,
-  showAnswer = false,
-  showExplanation = false,
-  userAnswer,
-}: Props) => {
+const QuizCard = ({ quiz, header, answerMode, showExplanation = false, userAnswer }: Props) => {
+  const [showAnswer, setShowAnswer] = useState(answerMode ?? false)
   const [openExplanation, setOpenExplanation] = useState(showExplanation)
 
-  const shouldShowAnswer = showAnswer ?? openExplanation
+  useEffect(() => {
+    if (answerMode) {
+      setShowAnswer(true)
+    }
+
+    if (openExplanation) {
+      setShowAnswer(true)
+    } else {
+      !answerMode && setShowAnswer(false)
+    }
+  }, [answerMode, openExplanation])
 
   const renderOptions = () => {
     if (quiz.quizType === 'MULTIPLE_CHOICE' && quiz.options) {
-      const chosenAlphabet = userAnswer
+      const chosenOption = userAnswer
         ? String.fromCharCode(65 + quiz.options.findIndex((option) => option === userAnswer))
         : undefined
 
@@ -38,9 +43,9 @@ const QuizCard = ({
               key={option}
               option={option}
               // chosenAlphabet을 넘기면 정답과 오답을 표시함
-              chosenAlphabet={chosenAlphabet}
+              chosenOption={chosenOption}
               optionAlphabet={String.fromCharCode(65 + index)}
-              showAnswer={shouldShowAnswer}
+              showAnswer={showAnswer}
               isAnswer={quiz.answer === option}
             />
           ))}
@@ -50,14 +55,14 @@ const QuizCard = ({
 
     return (
       <div className="flex-center mt-[16px] gap-[6px]">
-        {(['correct', 'wrong'] as const).map((value) => (
+        {(['correct', 'incorrect'] as const).map((value) => (
           <OXChoice
             key={value}
             value={value}
             // chosenAnswer을 넘기면 정답과 오답을 표시함
             chosenAnswer={userAnswer}
             isAnswer={quiz.answer === value}
-            showAnswer={shouldShowAnswer}
+            showAnswer={showAnswer}
           />
         ))}
       </div>
@@ -103,7 +108,7 @@ interface MultipleChoiceOptionProps {
   optionAlphabet: string
   showAnswer: boolean
   isAnswer: boolean
-  chosenAlphabet?: string
+  chosenOption?: string
 }
 
 const MultipleChoiceOption = ({
@@ -111,7 +116,7 @@ const MultipleChoiceOption = ({
   showAnswer,
   optionAlphabet,
   isAnswer,
-  chosenAlphabet,
+  chosenOption,
 }: MultipleChoiceOptionProps) => {
   return (
     <Text
@@ -120,8 +125,8 @@ const MultipleChoiceOption = ({
         'flex text-text-secondary',
         showAnswer && isAnswer && 'text-text-accent',
         showAnswer && !isAnswer && 'text-text-caption',
-        chosenAlphabet && isAnswer && 'text-text-success',
-        chosenAlphabet === optionAlphabet && !isAnswer && 'text-text-wrong'
+        chosenOption && isAnswer && 'text-text-success',
+        chosenOption === optionAlphabet && !isAnswer && 'text-text-wrong'
       )}
     >
       <span className="mr-[2px]">{optionAlphabet}.</span>
@@ -136,7 +141,7 @@ const OXChoice = ({
   showAnswer,
   chosenAnswer,
 }: {
-  value: 'correct' | 'wrong'
+  value: 'correct' | 'incorrect'
   isAnswer: boolean
   showAnswer: boolean
   chosenAnswer?: string
@@ -153,7 +158,7 @@ const OXChoice = ({
       )}
     >
       {value === 'correct' && 'O'}
-      {value === 'wrong' && 'X'}
+      {value === 'incorrect' && 'X'}
     </Text>
   )
 }

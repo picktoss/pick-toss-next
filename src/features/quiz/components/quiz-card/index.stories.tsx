@@ -94,14 +94,14 @@ export const WithBreadcrumb: Story = {
 export const MultipleShowAnswer: Story = {
   args: {
     ...Template.args,
-    showAnswer: true,
+    answerMode: true,
   },
 }
 
 export const MultipleCorrectUserAnswer: Story = {
   args: {
     ...Template.args,
-    showAnswer: true,
+    answerMode: true,
     userAnswer: '기존의 배양육이 기존방식에서 생산되는 육류보다 토양이 비축된다',
   },
 }
@@ -109,7 +109,7 @@ export const MultipleCorrectUserAnswer: Story = {
 export const MultipleWrongUserAnswer: Story = {
   args: {
     ...Template.args,
-    showAnswer: true,
+    answerMode: true,
     userAnswer: '배양육이 기존방식에서 생산되는 육류보다 토양이 비축된다',
   },
 }
@@ -118,7 +118,7 @@ export const OXCorrectUserAnswer: Story = {
   args: {
     ...Template.args,
     quiz: oxQuiz,
-    showAnswer: true,
+    answerMode: true,
     userAnswer: 'correct',
   },
 }
@@ -127,8 +127,8 @@ export const OXWrongUserAnswer: Story = {
   args: {
     ...Template.args,
     quiz: oxQuiz,
-    showAnswer: true,
-    userAnswer: 'wrong',
+    answerMode: true,
+    userAnswer: 'incorrect',
   },
 }
 

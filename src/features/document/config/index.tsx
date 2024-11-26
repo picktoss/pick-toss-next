@@ -24,6 +24,6 @@ export const addDocumentButtons = [
 
 export const quizTypeFilters = [
   { key: 'ALL', label: '전체' },
-  { key: 'MULTIPLE', label: '객관식' },
-  { key: 'OX', label: 'O/X' },
+  { key: 'MULTIPLE_CHOICE', label: '객관식' },
+  { key: 'MIX_UP', label: 'O/X' },
 ] as const
