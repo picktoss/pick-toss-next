@@ -165,6 +165,7 @@ const SwipeableDocumentCard = ({
                 이동
               </button>
             }
+            documentId={id}
           />
           <DeleteDocumentDialog />
         </div>

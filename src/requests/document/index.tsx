@@ -83,3 +83,21 @@ export const updateDocument = async (
     throw error
   }
 }
+
+export const moveDocument = async (requestBody: Document.Request.MoveDocument) => {
+  try {
+    const session = await auth()
+
+    const response = await http.patch(API_ENDPOINTS.DOCUMENT.PATCH.MOVE, requestBody, {
+      headers: {
+        Authorization: `Bearer ${session?.user.accessToken}`,
+      },
+    })
+
+    // eslint-disable-next-line no-console
+    console.log(response) // 디버깅용
+  } catch (error: unknown) {
+    console.error(error)
+    throw error
+  }
+}

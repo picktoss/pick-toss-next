@@ -109,6 +109,7 @@ const Header = () => {
                         </Text>
                       </DropdownMenuItem>
                     }
+                    documentId={Number(id)}
                   />
 
                   {/* 노트 삭제 */}

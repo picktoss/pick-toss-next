@@ -49,7 +49,7 @@ const Header = () => {
           <EditCancelDialog />
 
           <div className="rounded-full bg-background-base-02 px-[16px] py-[5px] text-text1-medium">
-            {selectedDirectory?.emoji} {selectedDirectory?.name}
+            {selectedDirectory?.emoji ?? ''} {selectedDirectory?.name ?? '전체 노트'}
           </div>
 
           <button

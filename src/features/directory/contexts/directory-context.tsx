@@ -9,6 +9,9 @@ interface DirectoryContextValues {
 
   selectedDirectoryId: number | null
   selectDirectoryId: (id: number | null) => void
+
+  globalDirectoryId: number | null
+  totalDocsCount: number | undefined
 }
 
 const DirectoryContext = createContext<DirectoryContextValues | null>(null)
@@ -24,6 +27,13 @@ export function DirectoryProvider({ children }: PropsWithChildren) {
         data?.directories.find((directory) => directory.id === selectedDirectoryId) || null,
       selectedDirectoryId,
       selectDirectoryId,
+      globalDirectoryId:
+        data?.directories.find((directory) => directory.tag === 'DEFAULT')?.id ??
+        selectedDirectoryId,
+      totalDocsCount: data?.directories.reduce(
+        (acc, directory) => acc + directory.documentCount,
+        0
+      ),
     }),
     [data, selectedDirectoryId, selectDirectoryId]
   )
