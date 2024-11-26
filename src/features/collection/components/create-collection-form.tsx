@@ -18,6 +18,16 @@ import {
   DropdownMenuTrigger,
 } from '@/shared/components/ui/dropdown-menu'
 import { Textarea } from '@/shared/components/ui/textarea'
+import CategoryTag from '@/shared/components/custom/category-tag'
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from '@/shared/components/ui/drawer'
+import { CATEGORIES } from '@/features/category/config'
 
 interface SearchParams {
   step: 'select-document' | 'create-form'
@@ -39,6 +49,7 @@ const CreateCollectionForm = () => {
   const [emoji, setEmoji] = useState('🥹')
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
+  const [categoryCode, setCategoryCode] = useState(CATEGORIES[0].code)
 
   const { data: directoryQuizzesData } = useDirectoryQuizzes(selectedDirectoryId)
 
@@ -175,11 +186,34 @@ const CreateCollectionForm = () => {
         </div>
 
         {/* 분야 선택 */}
-        <div className="mt-[25px]">
+        <div className="mt-[25px] flex items-center gap-[5px]">
           <Text typography="text1-medium" color="secondary">
             분야<span className="text-text-accent">*</span>
           </Text>
-          <div className="px-[14px] py-[5px]"></div>
+          <Drawer>
+            <DrawerTrigger>
+              <div className="rounded-full bg-background-base-02 px-[14px] py-[5px]">
+                <CategoryTag
+                  title={CATEGORIES.find((category) => category.code === categoryCode)?.name ?? ''}
+                />
+              </div>
+            </DrawerTrigger>
+            <DrawerContent>
+              <DrawerHeader>
+                <DrawerTitle>카테고리를 선택해주세요.</DrawerTitle>
+              </DrawerHeader>
+              <div className="flex flex-col gap-2 p-4">
+                {CATEGORIES.map((category) => (
+                  <DrawerClose key={category.code}>
+                    <CategoryTag
+                      title={category.name}
+                      onClick={() => setCategoryCode(category.code)}
+                    />
+                  </DrawerClose>
+                ))}
+              </div>
+            </DrawerContent>
+          </Drawer>
         </div>
 
         {/* 컬렉션 설명 */}
@@ -198,7 +232,7 @@ const CreateCollectionForm = () => {
         </div>
       </div>
       <FixedBottom className="flex gap-[6px]">
-        <Button variant={'largeRound'} disabled className="w-full">
+        <Button variant={'largeRound'} className="w-full">
           만들기
         </Button>
       </FixedBottom>
