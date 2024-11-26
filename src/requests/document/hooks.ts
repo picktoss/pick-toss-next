@@ -3,9 +3,10 @@
 import { useMutation } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 import { createDocument } from './create-document'
-import { deleteDocument, moveDocument, updateDocument } from '.'
+import { deleteDocument, moveDocument } from '.'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import { getQueryClient } from '@/shared/lib/tanstack-query/client'
+import { updateDocument } from './update-document'
 
 /**
  * 문서 생성 Hook
@@ -23,13 +24,15 @@ export const useCreateDocument = () => {
  * 문서 수정 Hook
  */
 export const useUpdateDocument = (documentId: number) => {
+  const { data: session } = useSession()
   const queryClient = getQueryClient()
 
   return useMutation({
     mutationFn: (payload: { documentId: number; requestBody: Document.Request.UpdateContent }) =>
-      updateDocument(payload.documentId, payload.requestBody),
+      updateDocument(payload.documentId, payload.requestBody, session?.user.accessToken || ''),
     onSuccess: async () => {
       // 문서 정보 갱신
+      await queryClient.invalidateQueries(queries.document.list())
       await queryClient.invalidateQueries(queries.document.item(documentId))
     },
   })
