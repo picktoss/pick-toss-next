@@ -11,14 +11,11 @@ import { useParams, useRouter } from 'next/navigation'
 const Header = () => {
   const { id } = useParams()
   const router = useRouter()
-  const { mutate: updateDocumentMutate } = useUpdateDocument()
+  const { mutate: updateDocumentMutate } = useUpdateDocument(Number(id))
   const { documentTitle: title, editorMarkdownContent: content } = useEditDocumentContext()
   const { selectedDirectory } = useDirectoryContext()
 
   const handleClickSave = (id: number, title: string, content: string) => {
-    // eslint-disable-next-line no-console
-    console.log(title, content)
-
     if (title.trim().length === 0 || content.trim().length === 0) {
       alert('제목과 내용을 입력해주세요')
       return

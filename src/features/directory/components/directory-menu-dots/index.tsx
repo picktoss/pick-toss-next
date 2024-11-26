@@ -22,8 +22,7 @@ const DirectoryMenuDots = () => {
   const handleClickDelete = () => {
     if (!selectedDirectoryId) return
 
-    deleteDirectoryMutation(selectedDirectoryId)
-    window.location.reload()
+    deleteDirectoryMutation(selectedDirectoryId, { onSuccess: () => window.location.reload() })
   }
 
   return (

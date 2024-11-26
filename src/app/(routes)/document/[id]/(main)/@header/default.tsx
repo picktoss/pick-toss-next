@@ -17,8 +17,8 @@ import GoBackButton from '@/shared/components/custom/go-back-button'
 import { getRelativeTime } from '@/shared/utils/date'
 import { useQuery } from '@tanstack/react-query'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
-import { deleteDocument } from '@/requests/document'
 import ConfirmDialogWidget from '@/widget/confirm-dialog'
+import { useDeleteDocument } from '@/requests/document/hooks'
 
 // Header 컴포넌트
 const Header = () => {
@@ -26,6 +26,7 @@ const Header = () => {
   const { id } = useParams()
   const { getPreviousPath } = usePreviousPath({ getCustomPath: true })
   const { data } = useQuery(queries.document.item(Number(id)))
+  const { mutate: deleteDocumentMutation } = useDeleteDocument()
 
   const handleClickCancel = () => {
     const previousPath = getPreviousPath()
@@ -38,10 +39,10 @@ const Header = () => {
     }
   }
 
-  const handleClickDelete = async () => {
-    await deleteDocument({ documentIds: [Number(id)] })
-
-    router.push('/document')
+  const handleClickDelete = () => {
+    deleteDocumentMutation([Number(id)], {
+      onSuccess: () => router.push('/document'),
+    })
   }
 
   return (
