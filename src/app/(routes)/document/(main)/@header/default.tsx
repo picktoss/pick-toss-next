@@ -139,6 +139,9 @@ const DirectorySelectDrawer = ({ isDrawerOpen, setIsDrawerOpen, directories }: P
                       as="span"
                       typography="subtitle2-medium"
                       className={cn(
+                        directory.tag === 'DEFAULT' &&
+                          !selectedDirectoryId &&
+                          'text-text-accent font-bold',
                         directory.id === selectedDirectoryId && 'text-text-accent font-bold'
                       )}
                     >

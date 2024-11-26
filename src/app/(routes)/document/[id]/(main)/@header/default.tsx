@@ -1,7 +1,6 @@
 'use client'
 
 import MoveDocumentDrawer from '@/features/document/components/move-document-drawer'
-import DirectoryDialog from '@/features/quiz/components/directory-dialog'
 import Icon from '@/shared/components/custom/icon'
 import {
   DropdownMenu,
@@ -18,6 +17,8 @@ import GoBackButton from '@/shared/components/custom/go-back-button'
 import { getRelativeTime } from '@/shared/utils/date'
 import { useQuery } from '@tanstack/react-query'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
+import { deleteDocument } from '@/requests/document'
+import ConfirmDialogWidget from '@/widget/confirm-dialog'
 
 // Header 컴포넌트
 const Header = () => {
@@ -35,6 +36,12 @@ const Header = () => {
     if (menuItemKey === 'download') {
       alert('clicked ' + menuItemKey)
     }
+  }
+
+  const handleClickDelete = async () => {
+    await deleteDocument({ documentIds: [Number(id)] })
+
+    router.push('/document')
   }
 
   return (
@@ -113,7 +120,7 @@ const Header = () => {
                   />
 
                   {/* 노트 삭제 */}
-                  <DirectoryDialog
+                  <ConfirmDialogWidget
                     triggerComponent={
                       <DropdownMenuItem
                         className={cn(
@@ -133,14 +140,17 @@ const Header = () => {
                     title="노트를 삭제할까요?"
                     content={
                       <Text typography="text1-medium">
-                        {data?.documentName} 노트와{' '}
+                        선택한 노트와{' '}
                         <span className="text-text-wrong">{data?.totalQuizCount}개의 문제</span>가{' '}
                         <br />
                         모두 삭제됩니다.
                       </Text>
                     }
-                    onConfirm={() => {}}
-                    confirmText="삭제하기"
+                    confirmButton={
+                      <button onClick={handleClickDelete} className="ml-[21px] p-[4px]">
+                        <Text color="critical">삭제하기</Text>
+                      </button>
+                    }
                   />
                 </DropdownMenuContent>
               </DropdownMenu>

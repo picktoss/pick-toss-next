@@ -134,6 +134,13 @@ interface MoveDocumentPayload {
   directoryId: number | null
 }
 
+/** DELETE /api/v2/documents/delete-documents
+ * 여러 문서 id를 리스트 형태로 delete의 body로 보내고 있습니다
+ */
+interface DeleteDocumentPayload {
+  documentIds: number[]
+}
+
 /** POST /api/v2/integrated-search */
 interface IntegratedSearchPayload {
   keyword: string
@@ -227,7 +234,7 @@ declare namespace Document {
     /** DELETE /api/v2/documents/delete-documents
      * 문서 삭제
      */
-    type DeleteDocuments = void
+    type DeleteDocuments = DeleteDocumentPayload
   }
 
   declare namespace Response {
@@ -282,7 +289,7 @@ declare namespace Document {
     type SearchDocuments = SearchDocumentsResponse
 
     /** DELETE /api/v2/documents/delete-documents
-     * 문서 삭제
+     * 문서 삭제 (여러 문서 id를 리스트 형태로 delete의 body로 보내고 있습니다)
      */
     type DeleteDocuments = void
   }

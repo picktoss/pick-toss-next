@@ -1,5 +1,7 @@
 import { FunctionComponent, PropsWithChildren } from 'react'
 import type { Metadata } from 'next'
+import { DirectoryProvider } from '@/features/directory/contexts/directory-context'
+import { DocumentProvider } from '@/features/document/contexts/document-context'
 
 export const metadata: Metadata = {}
 
@@ -9,10 +11,12 @@ interface LayoutProps extends PropsWithChildren {
 
 const Layout: FunctionComponent<LayoutProps> = ({ header, children }) => {
   return (
-    <>
-      {header}
-      {children}
-    </>
+    <DirectoryProvider>
+      <DocumentProvider>
+        {header}
+        {children}
+      </DocumentProvider>
+    </DirectoryProvider>
   )
 }
 
