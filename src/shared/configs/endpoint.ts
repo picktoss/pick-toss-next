@@ -155,6 +155,8 @@ export const API_ENDPOINTS = {
       REVIEW_PICK: (documentId: number) => `/documents/${documentId}/review-pick`,
       /** GET /documents/{document_id}/quizzes - document_id에 해당하는 모든 퀴즈 가져오기 */
       BY_DOCUMENT: (documentId: number) => `/documents/${documentId}/quizzes`,
+      /** GET /directories/{directory_id}/quizzes - 디렉토리에 생성된 모든 퀴즈 랜덤하게 가져오기 */
+      BY_DIRECTORY: (directoryId: number) => `/directories/${directoryId}/quizzes`,
       /** GET /documents/{document_id}/download-quiz - 퀴즈 다운로드 */
       DOWNLOAD: (documentId: number) => `/documents/${documentId}/download-quiz`,
     },

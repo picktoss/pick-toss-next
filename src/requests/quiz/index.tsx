@@ -18,7 +18,6 @@ export const fetchTodayQuizSetId = async () => {
     )
     return data
   } catch (error: unknown) {
-    console.error(error)
     throw error
   }
 }
@@ -37,7 +36,24 @@ export const fetchQuizSet = async ({ quizSetId }: { quizSetId: string }) => {
     )
     return data
   } catch (error: unknown) {
-    console.error(error)
+    throw error
+  }
+}
+
+export const fetchDirectoryQuizzes = async ({ directoryId }: { directoryId: number }) => {
+  const session = await auth()
+
+  try {
+    const { data } = await http.get<Quiz.Response.GetDirectoryQuizzes>(
+      API_ENDPOINTS.QUIZ.GET.BY_DIRECTORY(directoryId),
+      {
+        headers: {
+          Authorization: `Bearer ${session?.user.accessToken}`,
+        },
+      }
+    )
+    return data
+  } catch (error: unknown) {
     throw error
   }
 }

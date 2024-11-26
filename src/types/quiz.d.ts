@@ -146,6 +146,10 @@ interface CreateQuizzesPayload {
   quizCount: number
 }
 
+interface GetDirectoryQuizzesResponse {
+  quizzes: QuizWithMetadata[]
+}
+
 declare namespace Quiz {
   type Item = CombineQuiz
   type List = CombineQuiz[]
@@ -211,6 +215,11 @@ declare namespace Quiz {
      * document_id에 해당하는 모든 퀴즈 가져오기
      */
     type GetDocumentQuizzes = DocumentQuizzesResponse
+
+    /** GET /api/v2/directories/{directory_id}/quizzes
+     * 디렉토리에 생성된 모든 퀴즈 랜덤하게 가져오기
+     */
+    type GetDirectoryQuizzes = GetDirectoryQuizzesResponse
 
     /** GET /api/v2/documents/{document_id}/download-quiz
      * 퀴즈 다운로드

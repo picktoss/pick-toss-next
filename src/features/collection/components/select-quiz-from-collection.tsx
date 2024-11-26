@@ -5,28 +5,27 @@ import DirectorySelect from '../../directory/components/directory-select'
 import FixedBottom from '@/shared/components/custom/fixed-bottom'
 import { Button } from '@/shared/components/ui/button'
 import Text from '@/shared/components/ui/text'
-import { quizzes } from '@/features/quiz/config'
 import SelectableQuizCard from './selectable-quiz-card'
 import { Checkbox } from '@/shared/components/ui/checkbox'
 import Label from '@/shared/components/ui/label'
 import { useDirectories } from '@/requests/directory/hooks'
+import { useDirectoryQuizzes } from '@/requests/quiz/hooks'
 
 const SelectQuizFromCollection = () => {
   const { data: directoriesData } = useDirectories()
-
-  useEffect(() => {
-    if (!directoriesData) return
-    setSelectedDirectoryId(directoriesData.directories[0].id)
-  }, [directoriesData])
 
   const [selectedDirectoryId, setSelectedDirectoryId] = useState<number | null>(null)
   const [selectedQuizIds, setSelectedQuizIds] = useState<number[]>([])
   const [allChecked, setAllChecked] = useState(false)
 
+  const { data: directoryQuizzesData } = useDirectoryQuizzes(selectedDirectoryId)
+
   const handleSelectAllClick = (check: boolean) => {
+    if (!directoryQuizzesData) return
+
     setAllChecked(check)
     if (check) {
-      const quizIds = quizzes.map((quiz) => quiz.id)
+      const quizIds = directoryQuizzesData.quizzes.map((quiz) => quiz.id)
       const unSelectedQuizIds = quizIds.filter((quizId) => !selectedQuizIds.includes(quizId))
       setSelectedQuizIds([...selectedQuizIds, ...unSelectedQuizIds])
       return
@@ -43,8 +42,16 @@ const SelectQuizFromCollection = () => {
   }
 
   useEffect(() => {
-    selectedQuizIds.length === quizzes.length ? setAllChecked(true) : setAllChecked(false)
-  }, [selectedQuizIds])
+    if (!directoriesData) return
+    setSelectedDirectoryId(directoriesData.directories[0].id)
+  }, [directoriesData])
+
+  useEffect(() => {
+    if (!directoryQuizzesData) return
+    selectedQuizIds.length === directoryQuizzesData.quizzes.length
+      ? setAllChecked(true)
+      : setAllChecked(false)
+  }, [selectedQuizIds.length, directoryQuizzesData])
 
   const selectedQuizCount = selectedQuizIds.length
 
@@ -69,7 +76,7 @@ const SelectQuizFromCollection = () => {
       </div>
 
       <ul className="mt-[23px] flex flex-col gap-[8px]">
-        {quizzes.map((quiz) => (
+        {directoryQuizzesData?.quizzes.map((quiz) => (
           <SelectableQuizCard
             key={quiz.id}
             quiz={quiz}
