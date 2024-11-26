@@ -8,11 +8,11 @@ import {
   DropdownMenuTrigger,
 } from '@/shared/components/ui/dropdown-menu'
 import Text from '@/shared/components/ui/text'
-import SetDirectoryNameDialog from '../set-directory-name-dialog'
 import { useDocumentContext } from '../../../document/contexts/document-context'
 import ConfirmDialogWidget from '@/widget/confirm-dialog'
 import { useDirectoryContext } from '../../contexts/directory-context'
 import { useDeleteDirectory } from '@/requests/directory/hooks'
+import UpdateDirectoryDialog from '../update-directory-dialog'
 
 const DirectoryMenuDots = () => {
   const { selectedDirectory, selectedDirectoryId } = useDirectoryContext()
@@ -49,25 +49,10 @@ const DirectoryMenuDots = () => {
             (selectedDirectory.tag !== 'DEFAULT' && (
               <>
                 {/* 폴더 이름 바꾸기 */}
-                <SetDirectoryNameDialog
-                  triggerComponent={
-                    <DropdownMenuItem
-                      className="w-[240px] cursor-pointer border-t border-border-divider px-[20px] py-[16px]"
-                      onSelect={(e) => e.preventDefault()}
-                    >
-                      <Text
-                        typography="subtitle2-medium"
-                        className="flex w-full items-center justify-between"
-                      >
-                        폴더 이름 바꾸기
-                        <Icon name="write-line" className="size-[20px]" />
-                      </Text>
-                    </DropdownMenuItem>
-                  }
-                  title="폴더 이름 바꾸기"
-                  onConfirm={() => {}}
-                  confirmText="저장"
-                  prev={{ name: selectedDirectory.name, emoji: selectedDirectory.emoji }}
+                <UpdateDirectoryDialog
+                  directoryId={selectedDirectoryId}
+                  prevName={selectedDirectory.name}
+                  prevEmoji={selectedDirectory.emoji}
                 />
 
                 {/* 폴더 삭제 */}
