@@ -136,6 +136,12 @@ export const API_ENDPOINTS = {
     },
   },
 
+  FCM: {
+    POST: {
+      TOKEN: '/api/v2/tokens',
+    },
+  },
+
   QUIZ: {
     BASE: '/quizzes',
     GET: {
