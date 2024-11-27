@@ -7,9 +7,10 @@ export const useServiceWorker = () => {
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker
         .register('/firebase-messaging-sw.js')
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         .then((registration) => {
           // eslint-disable-next-line no-console
-          console.log('Service Worker 등록 성공:', registration)
+          // console.log('Service Worker 등록 성공:', registration) // 디버깅용
         })
         .catch((error) => {
           console.error('Service Worker 등록 실패:', error)
