@@ -10,7 +10,7 @@ export const useServiceWorker = () => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         .then((registration) => {
           // eslint-disable-next-line no-console
-          console.log('Service Worker 등록 성공') // 디버깅용
+          console.log('Service Worker 등록 성공: ', registration) // 디버깅용
         })
         .catch((error) => {
           console.error('Service Worker 등록 실패:', error)

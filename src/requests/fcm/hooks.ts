@@ -5,7 +5,7 @@ import { postFcmToken } from '.'
 
 export const usePostFcmToken = () => {
   return useMutation({
-    mutationFn: async (fcmToken: string) => postFcmToken({ fcmToken }),
+    mutationFn: async (fcmToken: string) => await postFcmToken({ fcmToken }),
     // eslint-disable-next-line no-console
     onSuccess: () => console.log('토큰 전송 성공'),
   })
