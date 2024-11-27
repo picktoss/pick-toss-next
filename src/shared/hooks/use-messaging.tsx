@@ -16,7 +16,7 @@ export const useMessaging = () => {
 
         if (token) {
           // eslint-disable-next-line no-console
-          // console.log('FCM 토큰:', token) // 디버깅용
+          console.log('FCM 토큰:', token) // 디버깅용
 
           // FCM 토큰을 서버로 전송
           postFcmTokenMutate(token)
