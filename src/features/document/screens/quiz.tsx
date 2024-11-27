@@ -1,10 +1,9 @@
 'use client'
 
 import { Button } from '@/shared/components/ui/button'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Switch } from '@/shared/components/ui/switch'
 import Text from '@/shared/components/ui/text'
-import { useQuizListContext } from '../contexts/quiz-list-context'
 import QuizList from '@/features/quiz/components/quiz-list'
 import QuizCard from '@/features/quiz/components/quiz-card'
 import { quizTypeFilters } from '../config'
