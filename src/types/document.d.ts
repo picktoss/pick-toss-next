@@ -1,7 +1,4 @@
-type Directory = {
-  id: number
-  name: string
-}
+type DirectoryInDocument = Pick<Directory.Item, 'id' | 'name'> & { emoji?: string }
 
 type SortOption = 'CREATED_AT' | 'UPDATED_AT'
 
@@ -33,7 +30,7 @@ type DocumentBase = {
   status: DocumentStatus
   totalQuizCount: number
   characterCount: number
-  directory: Directory
+  directory: DirectoryInDocument
   updatedAt: string
 }
 
@@ -55,7 +52,7 @@ type SearchedDocument = {
   documentId: number
   documentName: string
   content: string
-  directory: Directory
+  directory: DirectoryInDocument
 }
 
 type SearchedQuiz = {
@@ -99,7 +96,7 @@ interface ReviewNeedDocumentsResponse {
     id: number
     name: string
     reviewNeededQuizCount: number
-    directory: Directory
+    directory: DirectoryInDocument
   }[]
 }
 
