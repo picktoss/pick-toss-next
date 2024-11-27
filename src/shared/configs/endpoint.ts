@@ -138,7 +138,7 @@ export const API_ENDPOINTS = {
 
   FCM: {
     POST: {
-      TOKEN: '/api/v2/tokens',
+      TOKEN: '/tokens',
     },
   },
 
