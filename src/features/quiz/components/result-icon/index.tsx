@@ -6,10 +6,10 @@ import { useEffect, useState } from 'react'
 import { UNTIL_EXPLANATION_DRAWER_OPEN } from '../../config'
 
 interface Props {
-  isCorrect: boolean
+  isRight: boolean
 }
 
-const ResultIcon = ({ isCorrect }: Props) => {
+const ResultIcon = ({ isRight }: Props) => {
   const [show, setShow] = useState(true)
 
   useEffect(() => {
@@ -47,9 +47,9 @@ const ResultIcon = ({ isCorrect }: Props) => {
   return (
     <div className="center z-50">
       <AnimatePresence mode="wait">
-        {isCorrect && (
+        {isRight && (
           <motion.div
-            key="correct"
+            key="RIGHT"
             variants={iconVariants}
             initial="initial"
             animate="animate"
@@ -58,9 +58,9 @@ const ResultIcon = ({ isCorrect }: Props) => {
             <Icon name="correct-check-round" className="size-[80px]" />
           </motion.div>
         )}
-        {!isCorrect && (
+        {!isRight && (
           <motion.div
-            key="wrong"
+            key="WRONG"
             variants={iconVariants}
             initial="initial"
             animate="animate"

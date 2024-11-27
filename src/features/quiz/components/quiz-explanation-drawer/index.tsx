@@ -6,18 +6,18 @@ import { Button } from '@/shared/components/ui/button'
 import Text from '@/shared/components/ui/text'
 
 interface QuizExplanationDrawerProps {
-  isCorrect: boolean
+  isRight: boolean
   explanation: string
   onClickNext: () => void
-  correctAnswer: string
+  rightAnswer: string
 }
 
 const MIN_HEIGHT = '125px'
 const MAX_HEIGHT = '80vh'
 
 const QuizExplanationDrawer = ({
-  isCorrect,
-  correctAnswer,
+  isRight,
+  rightAnswer,
   explanation,
   onClickNext,
 }: QuizExplanationDrawerProps) => {
@@ -29,7 +29,7 @@ const QuizExplanationDrawer = ({
   const backgroundColor = useTransform(
     y,
     [-200, 0],
-    ['#ffffff', open ? (isCorrect ? '#e6f7e3' : '#ebeff3') : '#ffffff']
+    ['#ffffff', open ? (isRight ? '#e6f7e3' : '#ebeff3') : '#ffffff']
   )
 
   const handleOpen = useCallback(async () => {
@@ -82,12 +82,12 @@ const QuizExplanationDrawer = ({
           transition={{ duration: 0.3 }}
         >
           <div className="flex items-center gap-[16px]">
-            {isCorrect ? (
+            {isRight ? (
               <Icon name="correct-check-round" className="size-[48px]" />
             ) : (
               <Icon name="wrong-x-round" className="size-[48px]" />
             )}
-            {isCorrect ? (
+            {isRight ? (
               <Text typography="title1" color="right">
                 정답!
               </Text>
@@ -98,9 +98,9 @@ const QuizExplanationDrawer = ({
             )}
           </div>
 
-          {!isCorrect && (
+          {!isRight && (
             <Text typography="subtitle2-bold" color="secondary" className="mt-[28px]">
-              정답: {correctAnswer}
+              정답: {rightAnswer}
             </Text>
           )}
 
@@ -108,7 +108,7 @@ const QuizExplanationDrawer = ({
             <Text
               as="p"
               typography="text1-medium"
-              className={cn(isCorrect ? 'mt-[28px]' : 'mt-[12px]')}
+              className={cn(isRight ? 'mt-[28px]' : 'mt-[12px]')}
             >
               {explanation}
             </Text>

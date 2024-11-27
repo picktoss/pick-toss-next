@@ -128,7 +128,7 @@ export const OXWrongUserAnswer: Story = {
     ...Template.args,
     quiz: oxQuiz,
     showAnswer: true,
-    userAnswer: 'wrong',
+    userAnswer: 'incorrect',
   },
 }
 

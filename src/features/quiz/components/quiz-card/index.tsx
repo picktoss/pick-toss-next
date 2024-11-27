@@ -50,7 +50,7 @@ const QuizCard = ({
 
     return (
       <div className="flex-center mt-[16px] gap-[6px]">
-        {(['correct', 'wrong'] as const).map((value) => (
+        {(['correct', 'incorrect'] as const).map((value) => (
           <OXChoice
             key={value}
             value={value}
@@ -136,7 +136,7 @@ const OXChoice = ({
   showAnswer,
   chosenAnswer,
 }: {
-  value: 'correct' | 'wrong'
+  value: OXQuizAnswer
   isAnswer: boolean
   showAnswer: boolean
   chosenAnswer?: string
@@ -153,7 +153,7 @@ const OXChoice = ({
       )}
     >
       {value === 'correct' && 'O'}
-      {value === 'wrong' && 'X'}
+      {value === 'incorrect' && 'X'}
     </Text>
   )
 }

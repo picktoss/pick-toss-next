@@ -50,18 +50,18 @@ const QuizView = ({ quizzes }: Props) => {
 
   const onAnswer = ({
     id,
-    isCorrect,
+    isRight,
     choseAnswer,
   }: {
     id: number
-    isCorrect: 'correct' | 'wrong'
+    isRight: boolean
     choseAnswer: string
   }) => {
     setQuizResults((prev) => {
       const newResults = [...prev]
       newResults[currentIndex] = {
         id,
-        answer: isCorrect,
+        answer: isRight,
         choseAnswer,
         elapsedTime: calculateElapsedTime(),
       }
@@ -90,8 +90,8 @@ const QuizView = ({ quizzes }: Props) => {
 
       {showExplanation && isQuizSolved(currentResult) && (
         <QuizExplanationDrawer
-          isCorrect={currentResult.answer === 'correct'}
-          correctAnswer={
+          isRight={currentResult.answer}
+          rightAnswer={
             currentQuiz.quizType === 'MULTIPLE_CHOICE'
               ? currentQuiz.options.find((option) => option === currentQuiz.answer)!
               : currentQuiz.answer === 'correct'
@@ -104,7 +104,7 @@ const QuizView = ({ quizzes }: Props) => {
       )}
 
       {isQuizSolved(quizResults[currentIndex]) && (
-        <ResultIcon isCorrect={quizResults[currentIndex]?.answer === 'correct'} />
+        <ResultIcon isRight={quizResults[currentIndex]?.answer} />
       )}
 
       <ExitDialog index={currentIndex} open={exitDialogOpen} onOpenChange={setExitDialogOpen} />

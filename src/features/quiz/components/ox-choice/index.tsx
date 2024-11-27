@@ -3,32 +3,32 @@
 import { SVGProps } from 'react'
 
 interface OXChoiceProps {
-  condition: 'idle' | 'correct' | 'wrong'
-  userAnswer?: 'correct' | 'wrong'
-  onSelect: (userAnswer: 'correct' | 'wrong') => void
+  condition: Exclude<QuizCondition, 'DISABLED'>
+  userAnswer?: OXQuizAnswer
+  onSelect: (userAnswer: OXQuizAnswer) => void
 }
 
 const OXChoice = ({ condition, userAnswer, onSelect }: OXChoiceProps) => {
-  const disabled = condition === 'correct' || condition === 'wrong'
+  const disabled = condition === 'RIGHT' || condition === 'WRONG'
 
-  const getIconColors = (type: 'correct' | 'wrong') => {
+  const getIconColors = (type: OXQuizAnswer) => {
     const defaultColors = {
       bg: type === 'correct' ? '#4D7BF9' : '#FB8320', // 기본 배경색
       fill: 'white', // 기본 채우기색
     }
 
-    if (condition === 'idle') {
+    if (condition === 'IDLE') {
       return defaultColors
     }
 
-    if (condition === 'correct') {
+    if (condition === 'RIGHT') {
       return {
         bg: type === userAnswer ? '#e6f7e3' : '#ebeff3',
         fill: type === userAnswer ? '#3acc83' : 'white',
       }
     }
 
-    if (condition === 'wrong') {
+    if (condition === 'WRONG') {
       return {
         bg: type !== userAnswer ? '#e6f7e3' : '#ebeff3',
         fill: type !== userAnswer ? '#3acc83' : '#f4502c',
@@ -53,10 +53,10 @@ const OXChoice = ({ condition, userAnswer, onSelect }: OXChoiceProps) => {
         className="flex-1"
         disabled={disabled}
         onClick={() => {
-          onSelect('wrong')
+          onSelect('incorrect')
         }}
       >
-        <WrongOptionIcon className="size-full" {...getIconColors('wrong')} />
+        <WrongOptionIcon className="size-full" {...getIconColors('incorrect')} />
       </button>
     </div>
   )

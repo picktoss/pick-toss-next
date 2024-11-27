@@ -5,14 +5,14 @@ import { ButtonHTMLAttributes } from 'react'
 
 interface MultipleOptionProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   option: string
-  condition: 'idle' | 'disabled' | 'correct' | 'wrong'
+  condition: QuizCondition
   index: number
 }
 
 const MultipleOption = ({
   option,
   index,
-  condition = 'idle',
+  condition = 'IDLE',
   onClick,
   disabled,
 }: MultipleOptionProps) => {
@@ -22,31 +22,31 @@ const MultipleOption = ({
       disabled={disabled}
       className={cn(
         'flex w-full gap-[16px] px-[15px] py-[12px] rounded-[16px] items-center border transition-all',
-        condition === 'idle' && 'bg-background-base-01 border-border-default',
-        condition === 'disabled' && 'bg-background-disabled',
-        condition === 'wrong' && 'bg-background-disabled',
-        condition === 'correct' && 'bg-green-200 border-border-right'
+        condition === 'IDLE' && 'bg-background-base-01 border-border-default',
+        condition === 'DISABLED' && 'bg-background-disabled',
+        condition === 'WRONG' && 'bg-background-disabled',
+        condition === 'RIGHT' && 'bg-green-200 border-border-right'
       )}
     >
       <div
         className={cn(
           'size-[32px] shrink-0 rounded-full flex-center',
-          condition === 'idle' && 'bg-background-base-03 text-gray-500',
-          condition === 'disabled' && 'bg-background-container-01 text-gray-300'
+          condition === 'IDLE' && 'bg-background-base-03 text-gray-500',
+          condition === 'DISABLED' && 'bg-background-container-01 text-gray-300'
         )}
       >
-        {(condition === 'idle' || condition === 'disabled') && ORDER_ICONS[index]}
-        {condition === 'correct' && <Icon name="correct-check-round" />}
-        {condition === 'wrong' && <Icon name="wrong-x-round" />}
+        {(condition === 'IDLE' || condition === 'DISABLED') && ORDER_ICONS[index]}
+        {condition === 'RIGHT' && <Icon name="correct-check-round" />}
+        {condition === 'WRONG' && <Icon name="wrong-x-round" />}
       </div>
       <Text
         typography="text1-medium"
         className={cn(
           'text-start',
-          condition === 'idle' && 'text-text-secondary',
-          condition === 'disabled' && 'text-text-disabled',
-          condition === 'wrong' && 'text-text-disabled',
-          condition === 'correct' && 'text-border-right !text-text1-bold'
+          condition === 'IDLE' && 'text-text-secondary',
+          condition === 'DISABLED' && 'text-text-disabled',
+          condition === 'WRONG' && 'text-text-disabled',
+          condition === 'RIGHT' && 'text-border-right !text-text1-bold'
         )}
       >
         {option}
