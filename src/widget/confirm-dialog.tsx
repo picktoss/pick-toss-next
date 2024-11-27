@@ -1,5 +1,3 @@
-'use client'
-
 import {
   Dialog,
   DialogClose,
@@ -7,18 +5,22 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/shared/components/ui/dialog'
-import { cn } from '@/shared/lib/utils'
 
 interface Props {
   triggerComponent: React.ReactNode
   title: string
   content: React.ReactNode
-  onConfirm: () => void
-  confirmText: string
+  cancelText?: string
+  confirmButton: React.ReactNode
 }
 
-// DirectoryDialog 컴포넌트
-const DirectoryDialog = ({ triggerComponent, title, content, onConfirm, confirmText }: Props) => {
+const ConfirmDialogWidget = ({
+  triggerComponent,
+  title,
+  content,
+  cancelText = '취소',
+  confirmButton,
+}: Props) => {
   return (
     <Dialog>
       <DialogTrigger asChild>{triggerComponent}</DialogTrigger>
@@ -33,23 +35,13 @@ const DirectoryDialog = ({ triggerComponent, title, content, onConfirm, confirmT
 
         <div className="mt-[40px] flex w-full justify-end text-button2">
           <DialogClose asChild>
-            <button className="p-[4px] text-button-text-tertiary">취소</button>
+            <button className="p-[4px] text-button-text-tertiary">{cancelText}</button>
           </DialogClose>
-          <DialogClose asChild>
-            <button
-              onClick={onConfirm}
-              className={cn(
-                'ml-[21px] p-[4px] text-button-text-primary',
-                confirmText.includes('삭제') && 'text-button-text-critical'
-              )}
-            >
-              {confirmText}
-            </button>
-          </DialogClose>
+          <DialogClose asChild>{confirmButton}</DialogClose>
         </div>
       </DialogContent>
     </Dialog>
   )
 }
 
-export default DirectoryDialog
+export default ConfirmDialogWidget

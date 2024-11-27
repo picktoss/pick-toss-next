@@ -1,4 +1,4 @@
-import { useCreateDirectory } from '@/requests/directory/hooks'
+import { useUpdateDirectoryInfo } from '@/requests/directory/hooks'
 import Icon from '@/shared/components/custom/icon'
 import {
   Dialog,
@@ -10,26 +10,35 @@ import {
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/shared/components/ui/dropdown-menu'
+import Text from '@/shared/components/ui/text'
 import { cn } from '@/shared/lib/utils'
 import EmojiPicker from 'emoji-picker-react'
 import { useState } from 'react'
 
-const CreateDirectoryDialog = () => {
+interface Props {
+  directoryId: number | null
+  prevName: string
+  prevEmoji: string
+}
+
+const UpdateDirectoryDialog = ({ directoryId, prevName, prevEmoji }: Props) => {
   const [open, setOpen] = useState(false)
 
-  const [name, setName] = useState('')
-  const [emoji, setEmoji] = useState('📁')
+  const [name, setName] = useState(prevName ?? '')
+  const [emoji, setEmoji] = useState(prevEmoji ?? '📁')
 
-  const { mutate: createDirectoryMutate } = useCreateDirectory()
+  const { mutate: updateDirectoryMutate } = useUpdateDirectoryInfo()
 
-  const handleCreateDirectory = () => {
-    if (name.trim() === '') {
+  const handleUpdateDirectory = () => {
+    if (name.trim() === '' || !directoryId) {
       return
     }
 
-    createDirectoryMutate({
+    updateDirectoryMutate({
+      directoryId,
       name,
       emoji,
     })
@@ -38,26 +47,24 @@ const CreateDirectoryDialog = () => {
   }
 
   return (
-    <Dialog
-      open={open}
-      onOpenChange={(value) => {
-        setEmoji('📁')
-        setName('')
-        setOpen(value)
-      }}
-    >
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <button className="my-[7px] flex items-center px-[20px] py-[10px]">
-          <Icon name="plus-circle" className="mr-[16px]" />
-          폴더 추가
-        </button>
+        <DropdownMenuItem
+          className="w-[240px] cursor-pointer border-t border-border-divider px-[20px] py-[16px]"
+          onSelect={(e) => e.preventDefault()}
+        >
+          <Text typography="subtitle2-medium" className="flex w-full items-center justify-between">
+            폴더 이름 바꾸기
+            <Icon name="write-line" className="size-[20px]" />
+          </Text>
+        </DropdownMenuItem>
       </DialogTrigger>
 
       <DialogContent
         className="flex min-h-[190px] w-[280px] flex-col items-center justify-between rounded-[16px] bg-background-base-01"
         displayCloseButton={false}
       >
-        <DialogTitle className="mb-[32px] w-full text-subtitle2-bold">폴더 만들기</DialogTitle>
+        <DialogTitle className="mb-[32px] w-full text-subtitle2-bold">폴더 이름 바꾸기</DialogTitle>
 
         <div className="flex h-[40px] w-full">
           <DropdownMenu>
@@ -92,10 +99,10 @@ const CreateDirectoryDialog = () => {
             <button className="p-[4px] text-button-text-tertiary">취소</button>
           </DialogClose>
           <button
-            onClick={handleCreateDirectory}
+            onClick={handleUpdateDirectory}
             className={cn('ml-[21px] p-[4px] text-button-text-primary')}
           >
-            만들기
+            저장
           </button>
         </div>
       </DialogContent>
@@ -103,4 +110,4 @@ const CreateDirectoryDialog = () => {
   )
 }
 
-export default CreateDirectoryDialog
+export default UpdateDirectoryDialog

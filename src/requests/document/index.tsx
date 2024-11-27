@@ -40,11 +40,14 @@ export const fetchDocumentDetail = async (documentId: number) => {
   try {
     const session = await auth()
 
-    const { data } = await http.get<Document.Item>(API_ENDPOINTS.DOCUMENT.GET.BY_ID(documentId), {
-      headers: {
-        Authorization: `Bearer ${session?.user.accessToken}`,
-      },
-    })
+    const { data } = await http.get<Document.DetailItem>(
+      API_ENDPOINTS.DOCUMENT.GET.BY_ID(documentId),
+      {
+        headers: {
+          Authorization: `Bearer ${session?.user.accessToken}`,
+        },
+      }
+    )
     return data
   } catch (error: unknown) {
     console.error(error)
@@ -52,21 +55,39 @@ export const fetchDocumentDetail = async (documentId: number) => {
   }
 }
 
-export const updateDocument = async (
-  documentId: number,
-  request: Document.Request.UpdateContent,
-  accessToken: string
-) => {
-  const params = { request }
-
+export const moveDocument = async (requestBody: Document.Request.MoveDocument) => {
   try {
-    await http.patch(API_ENDPOINTS.DOCUMENT.PATCH.UPDATE_CONTENT(documentId), null, {
-      params,
+    const session = await auth()
+
+    const response = await http.patch(API_ENDPOINTS.DOCUMENT.PATCH.MOVE, requestBody, {
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${session?.user.accessToken}`,
       },
     })
+
+    // eslint-disable-next-line no-console
+    console.log(response) // 디버깅용
   } catch (error: unknown) {
+    console.error(error)
+    throw error
+  }
+}
+
+export const deleteDocument = async (requestBody: Document.Request.DeleteDocuments) => {
+  try {
+    const session = await auth()
+
+    // delete 메서드로 body를 받는 api입니다 (여러 문서 id를 리스트로 보냄)
+    const response = await http.delete(API_ENDPOINTS.DOCUMENT.DELETE.DOCUMENTS, {
+      data: requestBody,
+      headers: {
+        Authorization: `Bearer ${session?.user.accessToken}`,
+      },
+    })
+
+    // eslint-disable-next-line no-console
+    console.log(response) // 디버깅용
+  } catch (error) {
     console.error(error)
     throw error
   }

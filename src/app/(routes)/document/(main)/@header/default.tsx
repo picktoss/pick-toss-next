@@ -5,7 +5,7 @@ import Text from '@/shared/components/ui/text'
 import { useEffect, useState } from 'react'
 import { cn } from '@/shared/lib/utils'
 import Link from 'next/link'
-import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from '@/shared/components/ui/drawer'
+import { Drawer, DrawerContent, DrawerTrigger } from '@/shared/components/ui/drawer'
 import SortIconBtn from '@/features/document/components/sort-icon-button'
 import DirectoryMenuDots from '@/features/directory/components/directory-menu-dots'
 import GoBackButton from '@/shared/components/custom/go-back-button'
@@ -18,7 +18,7 @@ import { useDirectoryContext } from '@/features/directory/contexts/directory-con
 const Header = () => {
   const { data } = useDirectories()
   const { selectedDirectory } = useDirectoryContext()
-  const { isSelectMode, setIsSelectMode } = useDocumentContext()
+  const { isSelectMode, setIsSelectMode, checkDoc } = useDocumentContext()
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
   return (
@@ -37,9 +37,12 @@ const Header = () => {
               <Text as="span" typography="subtitle2-medium" className="ml-[35px]">
                 {selectedDirectory?.name}
               </Text>
-              <Text as="span" typography="button4" className="text-button-text-primary">
-                전체 선택
-              </Text>
+
+              <button onClick={() => checkDoc.checkAll()}>
+                <Text as="span" typography="button4" className="text-button-text-primary">
+                  전체 선택
+                </Text>
+              </button>
             </>
           ) : (
             <>
@@ -77,7 +80,13 @@ interface Props {
 }
 
 const DirectorySelectDrawer = ({ isDrawerOpen, setIsDrawerOpen, directories }: Props) => {
-  const { selectedDirectory, selectedDirectoryId, selectDirectoryId } = useDirectoryContext()
+  const {
+    selectedDirectory,
+    selectedDirectoryId,
+    selectDirectoryId,
+    globalDirectoryId,
+    totalDocsCount,
+  } = useDirectoryContext()
   const { setButtonHidden } = useDocumentContext()
 
   useEffect(() => {
@@ -89,7 +98,9 @@ const DirectorySelectDrawer = ({ isDrawerOpen, setIsDrawerOpen, directories }: P
   }, [isDrawerOpen, setButtonHidden])
 
   const handleDirectorySelect = (id: number | null) => {
-    selectDirectoryId(id)
+    const directoryId = id === globalDirectoryId ? null : id
+
+    selectDirectoryId(directoryId)
     setIsDrawerOpen(false)
   }
 
@@ -100,7 +111,9 @@ const DirectorySelectDrawer = ({ isDrawerOpen, setIsDrawerOpen, directories }: P
           <button className="flex size-fit items-center">
             <h2 className="mr-[8px] text-title2">
               {selectedDirectory
-                ? `${selectedDirectory.emoji ?? '📁'} ${selectedDirectory.name}`
+                ? `${selectedDirectory.emoji ?? ''} ${
+                    selectedDirectory.tag === 'DEFAULT' ? '전체 노트' : selectedDirectory.name
+                  }`
                 : '전체 노트'}
             </h2>
             <Icon name="chevron-down" className="size-[20px]"></Icon>
@@ -114,18 +127,7 @@ const DirectorySelectDrawer = ({ isDrawerOpen, setIsDrawerOpen, directories }: P
         >
           <div className="flex h-fit flex-col bg-background-base-01">
             <div className="border-b border-border-divider">
-              <button className="w-full" onClick={() => handleDirectorySelect(null)}>
-                <DrawerTitle className="mt-[24px] flex items-center justify-between px-[18px]">
-                  <Text as="span" typography="subtitle2-medium">
-                    전체 노트
-                  </Text>
-                  <Text as="span" typography="text1-medium" className="text-text-caption">
-                    노트 {selectedDirectory?.documentCount}개
-                  </Text>
-                </DrawerTitle>
-              </button>
-
-              <div className="mb-[11px] mt-[9px] flex max-h-[220px] flex-col overflow-y-auto px-[18px]">
+              <div className="mb-[11px] mt-[24px] flex max-h-[220px] flex-col overflow-y-auto px-[18px]">
                 {/* 폴더 개수만큼 렌더링 */}
                 {directories.map((directory) => (
                   <button
@@ -137,13 +139,19 @@ const DirectorySelectDrawer = ({ isDrawerOpen, setIsDrawerOpen, directories }: P
                       as="span"
                       typography="subtitle2-medium"
                       className={cn(
+                        directory.tag === 'DEFAULT' &&
+                          !selectedDirectoryId &&
+                          'text-text-accent font-bold',
                         directory.id === selectedDirectoryId && 'text-text-accent font-bold'
                       )}
                     >
-                      {`${directory.emoji ?? '📁'} ${directory.name}`}
+                      {`${directory.emoji ?? ''} ${
+                        directory.tag === 'DEFAULT' ? '전체 노트' : directory.name
+                      }`}
                     </Text>
                     <Text as="span" typography="text1-medium" className="text-text-caption">
-                      노트 {directory.documentCount}개
+                      노트 {directory.tag === 'DEFAULT' ? totalDocsCount : directory.documentCount}
+                      개
                     </Text>
                   </button>
                 ))}

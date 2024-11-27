@@ -10,13 +10,17 @@ import DocumentTypeIcon from '@/features/document/components/document-type-icon'
 import Tag from '@/shared/components/ui/tag'
 import { useRouter } from 'next/navigation'
 import MoveDocumentDrawer from '@/features/document/components/move-document-drawer'
-import DeleteDocumentDialog from '../delete-document-dialog'
+import DeleteDocumentSwipeButton from '../delete-document-swipe-button'
 import usePreviousPath from '@/shared/hooks/use-previous-path'
 import { useDocumentContext } from '../../contexts/document-context'
+import { unified } from 'unified'
+import remarkParse from 'remark-parse'
+import remarkStringify from 'remark-stringify'
+import stripMarkdown from 'strip-markdown'
 
 interface DocumentProps {
   id: number
-  createType: Document.Item['documentType']
+  createType: Document.ItemInList['documentType']
   title: string
   content: string
   quizCount: number
@@ -62,6 +66,16 @@ const SwipeableDocumentCard = ({
       void controls.start({ x: 0 }) // 원래 위치로 이동
     }
     setIsDragging(false)
+  }
+
+  const getTextRemoveMarkdownSyntax = (markdown: string): string => {
+    const result = unified()
+      .use(remarkParse) // 마크다운 파싱
+      .use(stripMarkdown) // 문법 제거
+      .use(remarkStringify)
+      .processSync(markdown) // 동기 처리
+
+    return String(result) // 결과 반환
   }
 
   return (
@@ -122,8 +136,9 @@ const SwipeableDocumentCard = ({
             typography="text1-regular"
             className="w-[calc(100%-55px)] truncate text-nowrap break-all text-text-sub"
           >
-            {content}
+            {getTextRemoveMarkdownSyntax(content)}
           </Text>
+
           <Text typography="text2-medium" className="flex w-fit items-center text-text-sub">
             <span>{quizCount}문제</span>
             <Icon name="middle-dot" className="mx-[8px]" />
@@ -150,8 +165,9 @@ const SwipeableDocumentCard = ({
                 이동
               </button>
             }
+            documentId={id}
           />
-          <DeleteDocumentDialog />
+          <DeleteDocumentSwipeButton documentId={id} quizCount={quizCount} />
         </div>
       </motion.div>
     </div>

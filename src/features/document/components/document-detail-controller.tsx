@@ -22,7 +22,7 @@ const DocumentDetailController = () => {
         {tabs.map((tab) => (
           <Link
             key={tab.key}
-            href={`/document/${id[0]}?tab=${tab.key}`}
+            href={`/document/${String(id)}?tab=${tab.key}`}
             className={cn(
               'grow px-[16px] pb-[12px] mt-[12px] border-b border-border-divider flex-center',
               activeTab === tab.key && 'border-b-2 border-button-fill-selected'

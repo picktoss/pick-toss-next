@@ -146,65 +146,19 @@ interface CreateQuizzesPayload {
   quizCount: number
 }
 
+interface GetDirectoryQuizzesResponse {
+  quizzes: QuizWithMetadata[]
+}
+
 declare namespace Quiz {
   type Item = CombineQuiz
   type List = CombineQuiz[]
   type ItemWithMetadata = QuizWithMetadata
-  type QuizType = QuizType
+  type Type = QuizType
   type Record = QuizRecord
   type Result = UpdateQuizResultPayload['quizzes'][number]
 
   declare namespace Request {
-    /** GET /api/v2/today-quiz-info
-     * 오늘의 퀴즈 현황
-     */
-    type GetTodayInfo = void
-
-    /** GET /api/v2/quizzes
-     * 생성된 모든 퀴즈 가져오기(전체 문서)
-     */
-    type GetAllQuizzes = void
-
-    /** GET /api/v2/quizzes/{quiz_set_id}/quiz-record
-     * 퀴즈 세트에 대한 상세 기록
-     */
-    type GetQuizSetRecord = void
-
-    /** GET /api/v2/quizzes/quiz-records
-     * 전체 퀴즈 기록
-     */
-    type GetQuizRecords = void
-
-    /** GET /api/v2/quiz-sets/{quiz_set_id}
-     * quizSet_id로 퀴즈 가져오기
-     */
-    type GetQuizSet = void
-
-    /** GET /api/v2/quiz-sets/today
-     * 오늘의 퀴즈 세트 정보 가져오기
-     */
-    type GetTodayQuizSet = void
-
-    /** GET /api/v2/quiz-analysis
-     * 퀴즈 분석
-     */
-    type GetQuizAnalysis = void
-
-    /** GET /api/v2/documents/{document_id}/review-pick
-     * document_id로 복습 pick 가져오기
-     */
-    type GetReviewPick = void
-
-    /** GET /api/v2/documents/{document_id}/quizzes
-     * document_id에 해당하는 모든 퀴즈 가져오기
-     */
-    type GetDocumentQuizzes = void
-
-    /** GET /api/v2/documents/{document_id}/download-quiz
-     * 퀴즈 다운로드
-     */
-    type DownloadQuiz = void
-
     /** PATCH /api/v2/quiz/result
      * 퀴즈 결과 업데이트
      */
@@ -214,16 +168,6 @@ declare namespace Quiz {
      * 사용자가 생성한 문서에서 직접 퀴즈 생성(랜덤, OX, 객관식)
      */
     type CreateQuizzes = CreateQuizzesPayload
-
-    /** DELETE /api/v2/quizzes/{quiz_id}/delete-quiz
-     * 퀴즈 삭제
-     */
-    type DeleteQuiz = void
-
-    /** DELETE /api/v2/quizzes/{quiz_id}/delete-invalid-quiz
-     * 잘못된 퀴즈 삭제
-     */
-    type DeleteInvalidQuiz = void
   }
 
   declare namespace Response {
@@ -272,6 +216,11 @@ declare namespace Quiz {
      */
     type GetDocumentQuizzes = DocumentQuizzesResponse
 
+    /** GET /api/v2/directories/{directory_id}/quizzes
+     * 디렉토리에 생성된 모든 퀴즈 랜덤하게 가져오기
+     */
+    type GetDirectoryQuizzes = GetDirectoryQuizzesResponse
+
     /** GET /api/v2/documents/{document_id}/download-quiz
      * 퀴즈 다운로드
      */
@@ -281,20 +230,5 @@ declare namespace Quiz {
      * 퀴즈 결과 업데이트
      */
     type UpdateQuizResult = UpdateQuizResultResponse
-
-    /** POST /api/v2/quizzes/documents/{document_id}/create-quizzes
-     * 사용자가 생성한 문서에서 직접 퀴즈 생성(랜덤, OX, 객관식)
-     */
-    type CreateQuizzes = void
-
-    /** DELETE /api/v2/quizzes/{quiz_id}/delete-quiz
-     * 퀴즈 삭제
-     */
-    type DeleteQuiz = void
-
-    /** DELETE /api/v2/quizzes/{quiz_id}/delete-invalid-quiz
-     * 잘못된 퀴즈 삭제
-     */
-    type DeleteInvalidQuiz = void
   }
 }

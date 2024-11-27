@@ -1,7 +1,7 @@
 'use client'
 
 import { useDirectories } from '@/requests/directory/hooks'
-import { PropsWithChildren, createContext, useContext, useEffect, useMemo, useState } from 'react'
+import { PropsWithChildren, createContext, useContext, useMemo, useState } from 'react'
 
 interface DirectoryContextValues {
   directories: Directory.List
@@ -9,6 +9,9 @@ interface DirectoryContextValues {
 
   selectedDirectoryId: number | null
   selectDirectoryId: (id: number | null) => void
+
+  globalDirectoryId: number | null
+  totalDocsCount: number | undefined
 }
 
 const DirectoryContext = createContext<DirectoryContextValues | null>(null)
@@ -17,11 +20,6 @@ export function DirectoryProvider({ children }: PropsWithChildren) {
   const { data } = useDirectories()
   const [selectedDirectoryId, selectDirectoryId] = useState<number | null>(null)
 
-  useEffect(() => {
-    if (!data) return
-    selectDirectoryId(data.directories[0].id)
-  }, [data])
-
   const values = useMemo(
     () => ({
       directories: data?.directories || [],
@@ -29,6 +27,13 @@ export function DirectoryProvider({ children }: PropsWithChildren) {
         data?.directories.find((directory) => directory.id === selectedDirectoryId) || null,
       selectedDirectoryId,
       selectDirectoryId,
+      globalDirectoryId:
+        data?.directories.find((directory) => directory.tag === 'DEFAULT')?.id ??
+        selectedDirectoryId,
+      totalDocsCount: data?.directories.reduce(
+        (acc, directory) => acc + directory.documentCount,
+        0
+      ),
     }),
     [data, selectedDirectoryId, selectDirectoryId]
   )

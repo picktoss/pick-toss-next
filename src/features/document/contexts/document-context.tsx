@@ -3,7 +3,7 @@
 import { useCheckList, UseCheckListReturn } from '@/shared/hooks/use-check-list'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import { useQuery } from '@tanstack/react-query'
-import { PropsWithChildren, createContext, useContext, useMemo, useState } from 'react'
+import { PropsWithChildren, createContext, useContext, useEffect, useMemo, useState } from 'react'
 
 interface DocumentContextValues {
   buttonHidden: boolean
@@ -12,7 +12,10 @@ interface DocumentContextValues {
   setIsSelectMode: (value: boolean) => void
   isExpandedBtns: boolean
   setIsExpandedBtns: (value: boolean) => void
-  checkDoc: UseCheckListReturn<{ id: number; checked: boolean }>
+  sortOption: Document.Sort
+  setSortOption: (sortOption: Document.Sort) => void
+  checkDoc: UseCheckListReturn<Document.ItemInList & { checked: boolean }>
+  checkedDocsQuizCount: number
 }
 
 const DocumentContext = createContext<DocumentContextValues | null>(null)
@@ -30,13 +33,20 @@ export function DocumentProvider({
   const [isSelectMode, setIsSelectMode] = useState(initialValues?.isSelectMode ?? false)
   const [buttonHidden, setButtonHidden] = useState(initialValues?.buttonHidden ?? false)
   const [isExpandedBtns, setIsExpandedBtns] = useState(initialValues?.isExpandedBtns ?? false)
+  const [sortOption, setSortOption] = useState<Document.Sort>('CREATED_AT')
 
   const { data } = useQuery(queries.document.list())
 
-  const documentCheckList =
-    data?.documents.map((document) => ({ id: document.id, checked: false })) ?? []
+  const documentCheckList = useMemo(
+    () => data?.documents.map((document) => ({ ...document, checked: false })) ?? [],
+    [data]
+  )
 
   const checkDoc = useCheckList(documentCheckList)
+
+  useEffect(() => {
+    if (!isSelectMode) checkDoc.unCheckAll()
+  }, [isSelectMode])
 
   const values = useMemo(
     () => ({
@@ -46,7 +56,12 @@ export function DocumentProvider({
       setButtonHidden,
       isExpandedBtns,
       setIsExpandedBtns,
+      sortOption,
+      setSortOption,
       checkDoc,
+      checkedDocsQuizCount: checkDoc
+        .getCheckedList()
+        .reduce((acc, document) => acc + document.totalQuizCount, 0),
     }),
     [
       isSelectMode,
@@ -55,6 +70,8 @@ export function DocumentProvider({
       setButtonHidden,
       isExpandedBtns,
       setIsExpandedBtns,
+      sortOption,
+      setSortOption,
       checkDoc,
     ]
   )

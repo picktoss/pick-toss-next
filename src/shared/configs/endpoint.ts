@@ -105,7 +105,9 @@ export const API_ENDPOINTS = {
       SEARCH: '/documents/search',
     },
     DELETE: {
-      /** DELETE /documents/delete-documents - 문서 삭제 */
+      /** DELETE /documents/delete-documents - 문서 삭제
+       * //참고사항 : body로 documentIds를 리스트 형태로 보내야합니다 (swagger참고)
+       */
       DOCUMENTS: '/documents/delete-documents',
     },
   },
@@ -161,6 +163,8 @@ export const API_ENDPOINTS = {
       REVIEW_PICK: (documentId: number) => `/documents/${documentId}/review-pick`,
       /** GET /documents/{document_id}/quizzes - document_id에 해당하는 모든 퀴즈 가져오기 */
       BY_DOCUMENT: (documentId: number) => `/documents/${documentId}/quizzes`,
+      /** GET /directories/{directory_id}/quizzes - 디렉토리에 생성된 모든 퀴즈 랜덤하게 가져오기 */
+      BY_DIRECTORY: (directoryId: number) => `/directories/${directoryId}/quizzes`,
       /** GET /documents/{document_id}/download-quiz - 퀴즈 다운로드 */
       DOWNLOAD: (documentId: number) => `/documents/${documentId}/download-quiz`,
     },

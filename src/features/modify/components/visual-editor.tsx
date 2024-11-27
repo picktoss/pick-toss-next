@@ -39,7 +39,7 @@ export default function VisualEditor({ prevContent }: VisualEditorProps) {
           css`
             &.ProseMirror {
               padding: 16px 20px;
-              margin-bottom: 100px;
+              padding-bottom: 100px;
               width: 100%;
               /* min-width: 100vw; */
               max-width: 430px;

@@ -27,17 +27,27 @@ type Quiz = {
   quizType: QuizType
 }
 
-type DocumentItem = {
+type DocumentBase = {
   id: number
   documentType: CreateType
-  name: string
   status: DocumentStatus
-  content: string
-  characterCount: number
   totalQuizCount: number
-  updatedAt: string
+  characterCount: number
   directory: Directory
+  updatedAt: string
+}
+
+type DocumentDetailItem = DocumentBase & {
+  documentName: string
+  content: string
   quizzes: Quiz[]
+}
+
+type DocumentListItem = DocumentBase & {
+  name: string
+  documentType: CreateType
+  previewContent: string
+  createdAt: string
   reviewNeededQuizCount: number
 }
 
@@ -121,7 +131,14 @@ interface UpdateTodayQuizSettingsPayload {
 /** PATCH /api/v2/documents/move */
 interface MoveDocumentPayload {
   documentIds: number[]
-  directoryId: number
+  directoryId: number | null
+}
+
+/** DELETE /api/v2/documents/delete-documents
+ * 여러 문서 id를 리스트 형태로 delete의 body로 보내고 있습니다
+ */
+interface DeleteDocumentPayload {
+  documentIds: number[]
 }
 
 /** POST /api/v2/integrated-search */
@@ -157,8 +174,9 @@ interface SearchDocumentsResponse {
 }
 
 declare namespace Document {
-  type Item = DocumentItem
-  type List = DocumentItem[]
+  type DetailItem = DocumentDetailItem
+  type ItemInList = DocumentListItem
+  type List = DocumentListItem[]
   type Status = DocumentStatus
   type Sort = SortOption
 
@@ -216,7 +234,7 @@ declare namespace Document {
     /** DELETE /api/v2/documents/delete-documents
      * 문서 삭제
      */
-    type DeleteDocuments = void
+    type DeleteDocuments = DeleteDocumentPayload
   }
 
   declare namespace Response {
@@ -271,7 +289,7 @@ declare namespace Document {
     type SearchDocuments = SearchDocumentsResponse
 
     /** DELETE /api/v2/documents/delete-documents
-     * 문서 삭제
+     * 문서 삭제 (여러 문서 id를 리스트 형태로 delete의 body로 보내고 있습니다)
      */
     type DeleteDocuments = void
   }

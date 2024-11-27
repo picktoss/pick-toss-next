@@ -16,16 +16,18 @@ import { useEffect } from 'react'
 
 const DocumentsInDirectory = () => {
   const { selectedDirectoryId } = useDirectoryContext()
-  const { checkDoc } = useDocumentContext()
+  const { checkDoc, sortOption } = useDocumentContext()
 
   const params =
-    selectedDirectoryId !== null ? { directoryId: String(selectedDirectoryId) } : undefined
+    selectedDirectoryId !== null
+      ? { directoryId: String(selectedDirectoryId), sortOption }
+      : { sortOption }
   const { data, isPending } = useQuery(queries.document.list(params))
 
   useEffect(() => {
     if (data) {
       const documentCheckList =
-        data.documents.map((document) => ({ id: document.id, checked: false })) ?? []
+        data.documents.map((document) => ({ ...document, id: document.id, checked: false })) ?? []
 
       checkDoc.set(documentCheckList)
     }
@@ -58,11 +60,11 @@ const DocumentsInDirectory = () => {
               id={document.id}
               createType={document.documentType}
               title={document.name}
-              content={document.content.slice(0, 40)}
+              content={document.previewContent ?? ''}
               quizCount={document.totalQuizCount}
               characterCount={document.characterCount}
               directory={document.directory.name}
-              className={cn(idx === 9 && 'mb-[30px]')}
+              className={cn(idx === data.documents.length - 1 && 'mb-[30px]')}
               reviewCount={document.reviewNeededQuizCount}
             />
           ))}

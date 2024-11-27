@@ -4,8 +4,8 @@ import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
 import { MouseEvent, useState } from 'react'
 import NoCollectionDialog from '../../collection/components/no-collection-dialog'
-import DirectoryDialog from './directory-dialog'
 import AddCollectionDrawer from '@/features/collection/components/add-collection-drawer'
+import ConfirmDialogWidget from '@/widget/confirm-dialog'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const QuizCardMenu = ({ quizId }: { quizId: number }) => {
@@ -35,7 +35,7 @@ const QuizCardMenu = ({ quizId }: { quizId: number }) => {
       <NoCollectionDialog isOpen={isOpenNoCollection} onOpenChange={setIsOpenNoCollection} />
       <AddCollectionDrawer isOpen={isAddCollectionOpen} onOpenChange={setIsAddCollectionOpen} />
 
-      <DirectoryDialog
+      <ConfirmDialogWidget
         triggerComponent={
           <button>
             <Icon name="bin" className="size-[20px]" />
@@ -48,8 +48,11 @@ const QuizCardMenu = ({ quizId }: { quizId: number }) => {
             해당 문제가 컬렉션에 포함되어 있을 경우, <br /> 컬렉션에서도 제거됩니다.
           </Text>
         }
-        onConfirm={() => {}}
-        confirmText="문제 삭제"
+        confirmButton={
+          <button onClick={() => {}} className="ml-[21px] p-[4px]">
+            <Text color="critical">문제 삭제</Text>
+          </button>
+        }
       />
     </div>
   )

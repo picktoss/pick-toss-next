@@ -2,7 +2,7 @@ import Icon from '@/shared/components/custom/icon'
 import { cn } from '@/shared/lib/utils'
 
 interface Props {
-  type: Document.Item['documentType']
+  type: Document.ItemInList['documentType']
   containerClassName: HTMLElement['className']
   iconClassName: HTMLElement['className']
 }

@@ -9,6 +9,7 @@ import {
   updateDirectoryInfo,
 } from '.'
 import { getQueryClient } from '@/shared/lib/tanstack-query/client'
+import { queries } from '@/shared/lib/tanstack-query/query-keys'
 
 /**
  * 모든 디렉토리 조회 Hook
@@ -85,7 +86,7 @@ export const useDeleteDirectory = () => {
     mutationFn: async (directoryId: Directory.Item['id']) => deleteDirectory(directoryId),
     onSuccess: async () => {
       // 디렉토리 목록 갱신
-      await queryClient.invalidateQueries({ queryKey: ['directories'] })
+      await queryClient.invalidateQueries(queries.directory.list())
     },
   })
 }

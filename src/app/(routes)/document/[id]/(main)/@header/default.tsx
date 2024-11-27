@@ -1,7 +1,6 @@
 'use client'
 
 import MoveDocumentDrawer from '@/features/document/components/move-document-drawer'
-import DirectoryDialog from '@/features/quiz/components/directory-dialog'
 import Icon from '@/shared/components/custom/icon'
 import {
   DropdownMenu,
@@ -18,13 +17,16 @@ import GoBackButton from '@/shared/components/custom/go-back-button'
 import { getRelativeTime } from '@/shared/utils/date'
 import { useQuery } from '@tanstack/react-query'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
+import ConfirmDialogWidget from '@/widget/confirm-dialog'
+import { useDeleteDocument } from '@/requests/document/hooks'
 
 // Header 컴포넌트
 const Header = () => {
   const router = useRouter()
   const { id } = useParams()
   const { getPreviousPath } = usePreviousPath({ getCustomPath: true })
-  const { data } = useQuery(queries.document.item(Number(id[0])))
+  const { data } = useQuery(queries.document.item(Number(id)))
+  const { mutate: deleteDocumentMutation } = useDeleteDocument()
 
   const handleClickCancel = () => {
     const previousPath = getPreviousPath()
@@ -35,6 +37,12 @@ const Header = () => {
     if (menuItemKey === 'download') {
       alert('clicked ' + menuItemKey)
     }
+  }
+
+  const handleClickDelete = () => {
+    deleteDocumentMutation([Number(id)], {
+      onSuccess: () => router.push('/document'),
+    })
   }
 
   return (
@@ -58,7 +66,7 @@ const Header = () => {
                 130
               </Text>
 
-              <Link href={`${id[0]}/modify`} className="ml-[14px]">
+              <Link href={String(id) + '/modify'} className="ml-[14px]">
                 <Icon name="write-line" className="size-[24px]" />
               </Link>
               {/* 노션일 경우 아래 아이콘 렌더링 */}
@@ -109,10 +117,11 @@ const Header = () => {
                         </Text>
                       </DropdownMenuItem>
                     }
+                    documentId={Number(id)}
                   />
 
                   {/* 노트 삭제 */}
-                  <DirectoryDialog
+                  <ConfirmDialogWidget
                     triggerComponent={
                       <DropdownMenuItem
                         className={cn(
@@ -132,14 +141,17 @@ const Header = () => {
                     title="노트를 삭제할까요?"
                     content={
                       <Text typography="text1-medium">
-                        {data?.name} 노트와{' '}
+                        선택한 노트와{' '}
                         <span className="text-text-wrong">{data?.totalQuizCount}개의 문제</span>가{' '}
                         <br />
                         모두 삭제됩니다.
                       </Text>
                     }
-                    onConfirm={() => {}}
-                    confirmText="삭제하기"
+                    confirmButton={
+                      <button onClick={handleClickDelete} className="ml-[21px] p-[4px]">
+                        <Text color="critical">삭제하기</Text>
+                      </button>
+                    }
                   />
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -149,7 +161,7 @@ const Header = () => {
 
         {/* data: 노트 제목, 문제 수, 글자 수, 마지막 수정 날짜 */}
         <div className=" px-[16px] pb-[18px] pt-[66px]">
-          <h2 className="mb-[8px] text-title2">{data?.name}</h2>
+          <h2 className="mb-[8px] text-title2">{data?.documentName}</h2>
           <div className="flex items-center text-text1-medium text-text-sub">
             <Text as="span">{data?.totalQuizCount}문제</Text>
             <Icon name="middle-dot" className="mx-[8px]" />
