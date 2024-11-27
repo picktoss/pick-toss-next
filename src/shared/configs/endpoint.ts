@@ -138,6 +138,7 @@ export const API_ENDPOINTS = {
 
   FCM: {
     POST: {
+      /** POST /tokens - FCM토큰 서버로 전송 */
       TOKEN: '/tokens',
     },
   },
