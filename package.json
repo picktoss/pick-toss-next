@@ -72,6 +72,7 @@
     "remark-gfm": "^4.0.0",
     "remirror": "^2.0.39",
     "strip-markdown": "^6.0.0",
+    "swiper": "^11.1.15",
     "tailwind-merge": "^2.2.2",
     "tailwind-scrollbar-hide": "^1.1.7",
     "tailwindcss-animate": "^1.0.7",
