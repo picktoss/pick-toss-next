@@ -13,7 +13,7 @@ interface QuizExplanationDrawerProps {
 }
 
 const MIN_HEIGHT = '125px'
-const MAX_HEIGHT = '80vh'
+const MAX_HEIGHT = '86vh'
 
 const QuizExplanationDrawer = ({
   isRight,
@@ -71,7 +71,7 @@ const QuizExplanationDrawer = ({
       }}
       animate={controls}
       initial={{ height: MIN_HEIGHT }}
-      className="fixed bottom-0 w-full max-w-mobile select-none overflow-hidden rounded-t-[20px] px-4 shadow-[0_-3px_16px_0px_rgba(0,0,0,0.1)] transition-colors"
+      className="fixed bottom-0 w-full max-w-mobile select-none overflow-hidden rounded-t-[20px] px-4 shadow-[0_-4px_20px_0px_rgba(0,0,0,0.15)] transition-colors"
     >
       <div className="relative size-full">
         <div className="mx-auto mt-[8px] h-[4px] w-[48px] cursor-grab rounded-full bg-icon-tertiary active:cursor-grabbing" />

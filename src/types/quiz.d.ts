@@ -29,11 +29,6 @@ type Document = {
   name: string
 }
 
-type Directory = {
-  id: number
-  name: string
-}
-
 type Category = {
   id: number
   name: string
@@ -45,7 +40,7 @@ type ConsecutiveDays = {
 }
 
 type QuizWithMetadata = {
-  document: Document
+  document: Pick<Document, 'id' | 'name'>
   category: Category
 } & CombineQuiz
 
