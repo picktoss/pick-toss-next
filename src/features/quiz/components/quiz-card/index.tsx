@@ -3,7 +3,7 @@
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
 import { cn } from '@/shared/lib/utils'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 interface Props {
   quiz: Quiz.Item
@@ -14,21 +14,16 @@ interface Props {
   userAnswer?: string
 }
 
-const QuizCard = ({ quiz, header, answerMode, showExplanation = false, userAnswer }: Props) => {
-  const [showAnswer, setShowAnswer] = useState(answerMode ?? false)
+const QuizCard = ({
+  quiz,
+  header,
+  answerMode = false,
+  showExplanation = false,
+  userAnswer,
+}: Props) => {
   const [openExplanation, setOpenExplanation] = useState(showExplanation)
 
-  useEffect(() => {
-    if (answerMode) {
-      setShowAnswer(true)
-    }
-
-    if (openExplanation) {
-      setShowAnswer(true)
-    } else {
-      !answerMode && setShowAnswer(false)
-    }
-  }, [answerMode, openExplanation])
+  const showAnswer = answerMode || openExplanation
 
   const renderOptions = () => {
     if (quiz.quizType === 'MULTIPLE_CHOICE' && quiz.options) {
