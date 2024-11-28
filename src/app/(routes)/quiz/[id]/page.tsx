@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { quizzes } from '@/features/quiz/config'
 import BombQuizView from '@/features/quiz/screen/bomb-quiz-view'
 import QuizView from '@/features/quiz/screen/quiz-view'
 import RandomQuizView from '@/features/quiz/screen/random-quiz-view'
@@ -13,21 +15,39 @@ interface Props {
   }
 }
 
-const QuizDetailPage = async ({ params, searchParams }: Props) => {
+const QuizDetailPage = ({ params, searchParams }: Props) => {
   const quizType = searchParams.quizType
-  const quizSet = await fetchQuizSet({ quizSetId: params.id })
+  // const quizSet = await fetchQuizSet({ quizSetId: params.id })
 
-  if (!quizSet) {
-    notFound()
-  }
+  // if (!quizSet) {
+  //   notFound()
+  // }
 
   return (
     <>
-      {quizType === 'today' && <QuizView quizzes={quizSet.quizzes} />}
+      {quizType === 'today' && <QuizView quizzes={quizzes} />}
+      {/* {quizType === 'today' && <QuizView quizzes={quizSet.quizzes} />} */}
       {quizType === 'random' && <RandomQuizView />}
       {quizType === 'bomb' && <BombQuizView />}
     </>
   )
 }
+// const QuizDetailPage = async ({ params, searchParams }: Props) => {
+//   const quizType = searchParams.quizType
+//   const quizSet = await fetchQuizSet({ quizSetId: params.id })
+
+//   if (!quizSet) {
+//     notFound()
+//   }
+
+//   return (
+//     <>
+//       {quizType === 'today' && <QuizView quizzes={quizzes} />}
+//       {/* {quizType === 'today' && <QuizView quizzes={quizSet.quizzes} />} */}
+//       {quizType === 'random' && <RandomQuizView />}
+// {quizType === 'bomb' && <BombQuizView />}
+//     </>
+//   )
+// }
 
 export default QuizDetailPage

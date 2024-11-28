@@ -1,14 +1,17 @@
-import { fetchTodayQuizSetId } from '@/requests/quiz'
 import { Button } from '@/shared/components/ui/button'
 import Link from 'next/link'
 
-const QuizPage = async () => {
-  const { quizSetId, type } = await fetchTodayQuizSetId()
+const QuizPage = () => {
+  // const { quizSetId, type } = await fetchTodayQuizSetId()
 
   return (
-    <Link href={type === 'READY' ? `/quiz/${quizSetId}?quizType=today` : '#'}>
+    <Link href={`/quiz/1?quizType=today`}>
       <Button>오늘의 퀴즈 풀러가기</Button>
     </Link>
+
+    // <Link href={type === 'READY' ? `/quiz/${quizSetId}?quizType=today` : '#'}>
+    //   <Button>오늘의 퀴즈 풀러가기</Button>
+    // </Link>
   )
 }
 
