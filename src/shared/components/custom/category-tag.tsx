@@ -6,9 +6,9 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
   title: string
 }
 
-const CategoryTag = ({ title, className }: Props) => {
+const CategoryTag = ({ title, className, ...props }: Props) => {
   return (
-    <div className={cn(className)}>
+    <div className={cn(className)} {...props}>
       <Text
         as="span"
         typography="text2-medium"

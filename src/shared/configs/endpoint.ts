@@ -37,6 +37,10 @@ export const API_ENDPOINTS = {
       /** GET /collections-analysis - 컬렉션 분석 */
       ANALYSIS: '/collections-analysis',
     },
+    POST: {
+      /** POST /collections - 컬렉션 생성 */
+      CREATE_COLLECTION: `/collections`,
+    },
     PATCH: {
       /** PATCH /collections/{collection_id}/update-quizzes - 컬렉션 문제 편집 */
       UPDATE_QUIZZES: (collectionId: number) => `/collections/${collectionId}/update-quizzes`,
