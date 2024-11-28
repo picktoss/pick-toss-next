@@ -166,6 +166,7 @@ const SwipeableDocumentCard = ({
               </button>
             }
             documentId={id}
+            usedSwipeRef={true}
           />
           <DeleteDocumentSwipeButton documentId={id} quizCount={quizCount} />
         </div>

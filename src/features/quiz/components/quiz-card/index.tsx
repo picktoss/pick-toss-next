@@ -8,7 +8,7 @@ import React, { useState } from 'react'
 interface Props {
   quiz: Quiz.Item
   header: React.ReactNode
-  showAnswer?: boolean
+  answerMode?: boolean
   showExplanation?: boolean
   // userAnswer를 받으면 정답과 오답을 표시함
   userAnswer?: string
@@ -17,17 +17,17 @@ interface Props {
 const QuizCard = ({
   quiz,
   header,
-  showAnswer = false,
+  answerMode = false,
   showExplanation = false,
   userAnswer,
 }: Props) => {
   const [openExplanation, setOpenExplanation] = useState(showExplanation)
 
-  const shouldShowAnswer = showAnswer ?? openExplanation
+  const showAnswer = answerMode || openExplanation
 
   const renderOptions = () => {
     if (quiz.quizType === 'MULTIPLE_CHOICE' && quiz.options) {
-      const chosenAlphabet = userAnswer
+      const chosenOption = userAnswer
         ? String.fromCharCode(65 + quiz.options.findIndex((option) => option === userAnswer))
         : undefined
 
@@ -38,9 +38,9 @@ const QuizCard = ({
               key={option}
               option={option}
               // chosenAlphabet을 넘기면 정답과 오답을 표시함
-              chosenAlphabet={chosenAlphabet}
+              chosenOption={chosenOption}
               optionAlphabet={String.fromCharCode(65 + index)}
-              showAnswer={shouldShowAnswer}
+              showAnswer={showAnswer}
               isAnswer={quiz.answer === option}
             />
           ))}
@@ -57,7 +57,7 @@ const QuizCard = ({
             // chosenAnswer을 넘기면 정답과 오답을 표시함
             chosenAnswer={userAnswer}
             isAnswer={quiz.answer === value}
-            showAnswer={shouldShowAnswer}
+            showAnswer={showAnswer}
           />
         ))}
       </div>
@@ -103,7 +103,7 @@ interface MultipleChoiceOptionProps {
   optionAlphabet: string
   showAnswer: boolean
   isAnswer: boolean
-  chosenAlphabet?: string
+  chosenOption?: string
 }
 
 const MultipleChoiceOption = ({
@@ -111,7 +111,7 @@ const MultipleChoiceOption = ({
   showAnswer,
   optionAlphabet,
   isAnswer,
-  chosenAlphabet,
+  chosenOption,
 }: MultipleChoiceOptionProps) => {
   return (
     <Text
@@ -120,8 +120,8 @@ const MultipleChoiceOption = ({
         'flex text-text-secondary',
         showAnswer && isAnswer && 'text-text-accent',
         showAnswer && !isAnswer && 'text-text-caption',
-        chosenAlphabet && isAnswer && 'text-text-success',
-        chosenAlphabet === optionAlphabet && !isAnswer && 'text-text-wrong'
+        chosenOption && isAnswer && 'text-text-success',
+        chosenOption === optionAlphabet && !isAnswer && 'text-text-wrong'
       )}
     >
       <span className="mr-[2px]">{optionAlphabet}.</span>

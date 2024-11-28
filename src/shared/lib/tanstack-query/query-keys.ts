@@ -23,4 +23,12 @@ export const queries = createQueryKeyStore({
       queryFn: () => REQUEST.document.fetchDocumentDetail(documentId),
     }),
   },
+
+  quiz: {
+    listByDocument: (params: { documentId: number; quizType?: Quiz.Type }) => ({
+      queryKey: [params],
+      queryFn: () => REQUEST.quiz.fetchDocumentQuizzes(params),
+      enabled: !!params.documentId,
+    }),
+  },
 })
