@@ -1,5 +1,6 @@
 'use client'
 
+import MoreStarDialog from '@/features/payment/components/more-star-dialog'
 import Icon from '@/shared/components/custom/icon'
 import { Button } from '@/shared/components/ui/button'
 import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from '@/shared/components/ui/drawer'
@@ -13,121 +14,134 @@ interface Props {
 }
 
 const CreateQuizDrawer = ({ handleCreateDocument }: Props) => {
-  const totalQuizCount = 40
   const [selectedQuizCount, setSelectedQuizCount] = useState(10)
   const [selectedQuizType, setSelectedQuizType] = useState<Quiz.Type>('MULTIPLE_CHOICE')
+  const [isOpenMoreStar, setIsOpenMoreStar] = useState(false)
 
-  const handleSliderChange = (value: number[]) => {
-    const newCount = Math.round((value[0] / 100) * totalQuizCount)
-    setSelectedQuizCount(newCount)
-  }
+  // 임시 (문서 글자 수에 따라 생성할 수 있는 최대 문제 개수 필요)
+  const DOCUMENT_MIN_QUIZ_COUNT = 1
+  const DOCUMENT_MAX_QUIZ_COUNT = 40
 
   const handleClickQuizType = (quizType: Quiz.Type) => {
     setSelectedQuizType(quizType)
   }
 
+  const handleClickStart = () => {
+    // TODO: 이용자의 별 체크
+    const notEnoughStars = false // 임시
+    if (notEnoughStars) {
+      setIsOpenMoreStar(true)
+      return
+    }
+
+    handleCreateDocument({ quizType: selectedQuizType, star: selectedQuizCount })
+  }
+
   return (
-    <Drawer>
-      <DrawerTrigger asChild>
-        <Button variant={'largeRound'} colors={'primary'} className="flex-center h-[52px] w-full">
-          퀴즈 만들기
-        </Button>
-      </DrawerTrigger>
-
-      <DrawerContent className="mx-auto flex h-full max-h-[90dvh] max-w-mobile flex-col pb-[136px] *:px-4">
-        <DrawerTitle>
-          <Text typography="title3" className="pt-5">
-            원하는 유형과 문제 수를 선택해주세요
-          </Text>
-        </DrawerTitle>
-
-        <div className="flex items-center gap-2 pt-[38px]">
-          <button
-            className={cn(
-              'border-default relative flex h-[136px] flex-1 flex-col justify-end rounded-[16px] border p-4',
-              selectedQuizType === 'MULTIPLE_CHOICE' &&
-                'border-border-focused bg-background-base-03'
-            )}
-            onClick={() => handleClickQuizType('MULTIPLE_CHOICE')}
-          >
-            <Icon name="multiple-quiz-icon" className="absolute top-[11px] h-[57px] w-[89.5px]" />
-            <Text typography="subtitle2-bold">객관식</Text>
-            <Text typography="text2-medium" color="sub">
-              4개 선택지 중 정답 고르기
-            </Text>
-          </button>
-          <button
-            className={cn(
-              'border-default relative flex h-[136px] flex-1 flex-col justify-end rounded-[16px] border p-4',
-              selectedQuizType === 'MIX_UP' && 'border-border-focused bg-background-base-03'
-            )}
-            onClick={() => handleClickQuizType('MIX_UP')}
-          >
-            <Icon
-              name="o-x-quiz-icon"
-              className="absolute left-[10px] top-[18px] h-[57px] w-[89.5px]"
-            />
-            <Text typography="subtitle2-bold">O/X</Text>
-            <Text typography="text2-medium" color="sub">
-              참과 거짓 판단하기
-            </Text>
-          </button>
-        </div>
-
-        <div className="my-7 h-px w-full bg-border-divider" />
-
-        <div className="flex-1 text-center">
-          <Text typography="text1-medium" color="sub">
-            만들 문제
-          </Text>
-          <Text typography="title1" color="accent" className="mt-2">
-            {selectedQuizCount} 문제
-          </Text>
-          <Slider
-            defaultValue={[25]}
-            value={[(selectedQuizCount / totalQuizCount) * 100]}
-            onValueChange={handleSliderChange}
-            className="mt-4"
-          />
-          <div className="mt-2.5 flex justify-between">
-            <Text typography="text2-medium" color="sub">
-              {selectedQuizCount} 문제
-            </Text>
-            <Text typography="text2-medium" color="sub">
-              {totalQuizCount} 문제
-            </Text>
-          </div>
-        </div>
-
-        <div className="absolute bottom-0 h-[100px] w-full pt-3">
-          <Text
-            typography="text2-medium"
-            color="sub"
-            className="absolute right-1/2 top-[-8px] translate-x-1/2 text-center"
-          >
-            현재 나의 별: <span className="text-text-secondary">16개</span>
-          </Text>
-          <Button
-            variant={'largeRound'}
-            colors={'special'}
-            className="flex w-full gap-1 text-white"
-            onClick={() =>
-              handleCreateDocument({ quizType: selectedQuizType, star: selectedQuizCount })
-            }
-          >
-            <div>퀴즈 생성하기</div>
-            <div className="flex items-center gap-1 rounded-full bg-[#D3DCE4]/20 px-2 py-px">
-              <span>
-                <Icon name="star" />
-              </span>
-              <Text typography="text1-medium" color="primary-inverse">
-                {selectedQuizCount}
-              </Text>
-            </div>
+    <>
+      <Drawer>
+        <DrawerTrigger asChild>
+          <Button variant={'largeRound'} colors={'primary'} className="flex-center h-[52px] w-full">
+            퀴즈 만들기
           </Button>
-        </div>
-      </DrawerContent>
-    </Drawer>
+        </DrawerTrigger>
+
+        <DrawerContent
+          overlayProps={{ className: 'max-w-mobile mx-auto' }}
+          className="mx-auto h-[80vh] max-w-mobile rounded-t-[20px]"
+        >
+          <div className="mt-[24px] flex h-full flex-col items-center justify-between overflow-y-auto overflow-x-hidden px-[16px]">
+            <DrawerTitle className="mb-[38px] w-full font-suit text-title3">
+              원하는 유형과 문제 수를 선택해주세요
+            </DrawerTitle>
+
+            {/* 문제 유형 선택 */}
+            <div className="mb-[28px] flex gap-[8px]">
+              <button
+                onClick={() => handleClickQuizType('MULTIPLE_CHOICE')}
+                className={cn(
+                  'flex h-[136px] w-[168px] flex-col justify-end rounded-[16px] border px-[7px] pb-[15px] pt-[20px] focus:border-border-focused focus:bg-background-container-03 focus-visible:outline-none',
+                  selectedQuizType === 'MULTIPLE_CHOICE' &&
+                    'bg-background-container-03 border-border-focused'
+                )}
+              >
+                <Icon name="multiple-quiz-icon" className="mb-[7.05px] w-[70px]" />
+                <Text typography="subtitle2-bold" className="mb-[4px] pl-[9px]">
+                  객관식
+                </Text>
+                <Text typography="text2-medium" className="pl-[9px] text-text-sub">
+                  4개 선택지 중 정답 고르기
+                </Text>
+              </button>
+
+              <button
+                onClick={() => handleClickQuizType('MIX_UP')}
+                className={cn(
+                  'flex h-[136px] w-[168px] flex-col justify-end rounded-[16px] border pb-[15px] pt-[18px] focus:border-border-focused focus:bg-background-container-03 focus-visible:outline-none',
+                  selectedQuizType === 'MIX_UP' &&
+                    'bg-background-container-03 border-border-focused'
+                )}
+              >
+                <Icon name="o-x-quiz-icon" className="mb-[10px] w-[81px] pl-[14px]" />
+                <Text typography="subtitle2-bold" className="mb-[4px] pl-[20px]">
+                  O/X
+                </Text>
+                <Text typography="text2-medium" className="pl-[20px] text-text-sub">
+                  참과 거짓 판단하기
+                </Text>
+              </button>
+            </div>
+
+            <div className="flex-center h-fit w-full flex-col border-t pb-[66px] pt-[26px] text-text-sub">
+              <Text typography="text1-medium">만들 문제 수</Text>
+              <Text typography="title1" className="mb-[28px] mt-[8px] text-text-accent">
+                {selectedQuizCount} 문제
+              </Text>
+
+              {/* 문제 개수 슬라이더 */}
+              <Slider
+                min={DOCUMENT_MIN_QUIZ_COUNT}
+                max={DOCUMENT_MAX_QUIZ_COUNT}
+                step={1}
+                defaultValue={[10]}
+                value={[selectedQuizCount]}
+                onValueChange={(value) => setSelectedQuizCount(value[0])}
+              />
+
+              <div className="mt-[10px] flex w-full items-center justify-between text-text2-medium text-text-sub">
+                <Text>{DOCUMENT_MIN_QUIZ_COUNT} 문제</Text>
+                <Text>{DOCUMENT_MAX_QUIZ_COUNT} 문제</Text>
+              </div>
+            </div>
+
+            <div className="flex-center w-full flex-col pb-[40px] pt-[21px]">
+              <Text typography="text2-medium" color="sub">
+                현재 나의 별:{' '}
+                <Text as={'span'} color="secondary">
+                  16개
+                </Text>
+              </Text>
+
+              <Button
+                variant={'largeRound'}
+                colors={'special'}
+                className="mt-[5px] w-full text-button1 text-text-primary-inverse"
+                onClick={handleClickStart}
+              >
+                퀴즈 시작하기
+                <div className="flex-center size-[fit] rounded-full bg-[#D3DCE4]/[0.2] px-[8px]">
+                  <Icon name="star" className="mr-[4px] size-[16px]" />
+                  <Text typography="text1-medium">10</Text>
+                </div>
+              </Button>
+            </div>
+          </div>
+        </DrawerContent>
+      </Drawer>
+
+      {/* 이용자에게 별이 부족할 경우 아래 렌더링 */}
+      <MoreStarDialog isOpen={isOpenMoreStar} setIsOpen={setIsOpenMoreStar} />
+    </>
   )
 }
 

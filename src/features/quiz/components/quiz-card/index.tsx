@@ -136,7 +136,7 @@ const OXChoice = ({
   showAnswer,
   chosenAnswer,
 }: {
-  value: 'correct' | 'incorrect'
+  value: OXQuizAnswer
   isAnswer: boolean
   showAnswer: boolean
   chosenAnswer?: string

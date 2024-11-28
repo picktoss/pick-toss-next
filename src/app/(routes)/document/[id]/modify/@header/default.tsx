@@ -52,6 +52,7 @@ const Header = () => {
           <EditCancelDialog />
 
           <div className="rounded-full bg-background-base-02 px-[16px] py-[5px] text-text1-medium">
+            {data?.directory.emoji ?? data?.directory.emoji}{' '}
             {data?.directory.id === globalDirectoryId ? '전체 노트' : data?.directory.name}
           </div>
 

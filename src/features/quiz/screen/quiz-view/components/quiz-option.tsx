@@ -7,7 +7,7 @@ import { QUIZ_ANIMATION_DURATION } from '@/features/quiz/config'
 interface QuizOptionsProps {
   quiz: Quiz.ItemWithMetadata
   currentResult: Quiz.Result | null
-  onAnswer: (params: { id: number; isCorrect: 'correct' | 'wrong'; choseAnswer: string }) => void
+  onAnswer: (params: { id: number; isRight: boolean; choseAnswer: string }) => void
 }
 
 const QuizOptions = ({ quiz, currentResult, onAnswer }: QuizOptionsProps) => {
@@ -48,7 +48,7 @@ const QuizOptions = ({ quiz, currentResult, onAnswer }: QuizOptionsProps) => {
               onClick={() => {
                 onAnswer({
                   id: quiz.id,
-                  isCorrect: quiz.answer === option ? 'correct' : 'wrong',
+                  isRight: quiz.answer === option ? true : false,
                   choseAnswer: option,
                 })
               }}
@@ -70,11 +70,11 @@ const QuizOptions = ({ quiz, currentResult, onAnswer }: QuizOptionsProps) => {
       >
         <OXChoice
           condition={getOXCondition(currentResult)}
-          userAnswer={currentResult?.choseAnswer as 'correct' | 'wrong'}
-          onSelect={(userAnswer: 'correct' | 'wrong') => {
+          userAnswer={currentResult?.choseAnswer as OXQuizAnswer}
+          onSelect={(userAnswer: OXQuizAnswer) => {
             onAnswer({
               id: quiz.id,
-              isCorrect: quiz.answer === userAnswer ? 'correct' : 'wrong',
+              isRight: quiz.answer === userAnswer ? true : false,
               choseAnswer: userAnswer,
             })
           }}

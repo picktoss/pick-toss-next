@@ -9,7 +9,7 @@ const meta = {
     layout: 'centered',
   },
   argTypes: {
-    isCorrect: {
+    isRight: {
       control: 'boolean',
       description: '정답 여부',
       defaultValue: true,
@@ -18,10 +18,10 @@ const meta = {
       control: 'text',
       description: '설명 텍스트',
     },
-    correctAnswer: {
+    rightAnswer: {
       control: 'text',
       description: '정답 텍스트 (오답일 경우 표시)',
-      if: { arg: 'isCorrect', eq: false },
+      if: { arg: 'isRight', eq: false },
     },
   },
   decorators: [
@@ -47,18 +47,18 @@ const SAMPLE_EXPLANATION = `윌리엄 홀만 교수가 제시한 신식품 명�
 
 export const Correct: Story = {
   args: {
-    isCorrect: true,
+    isRight: true,
     explanation: SAMPLE_EXPLANATION,
     onClickNext: () => {},
-    correctAnswer: '',
+    rightAnswer: '',
   },
 }
 
 export const Wrong: Story = {
   args: {
-    isCorrect: false,
+    isRight: false,
     explanation: SAMPLE_EXPLANATION,
     onClickNext: () => {},
-    correctAnswer: 'A',
+    rightAnswer: 'A',
   },
 }

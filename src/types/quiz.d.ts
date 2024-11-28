@@ -10,21 +10,21 @@ type MultipleChoiceQuiz = {
   options: string[]
 } & BaseQuiz
 
+/** correct와 incorrect는 O/X를 의미. 정답을 맞혔다는 의미로는 right 사용 */
+type OXQuizAnswer = 'correct' | 'incorrect'
+
 type OXQuiz = {
   quizType: 'MIX_UP'
-  answer: 'correct' | 'incorrect'
+  answer: OXQuizAnswer
 } & BaseQuiz
 
 type CombineQuiz = MultipleChoiceQuiz | OXQuiz
 
 type QuizType = 'MIX_UP' | 'MULTIPLE_CHOICE'
 
-type Document = {
-  id: number
-  name: string
-}
+type QuizCondition = 'IDLE' | 'DISABLED' | 'RIGHT' | 'WRONG'
 
-type Directory = {
+type Document = {
   id: number
   name: string
 }
@@ -40,7 +40,7 @@ type ConsecutiveDays = {
 }
 
 type QuizWithMetadata = {
-  document: Document
+  document: Pick<Document, 'id' | 'name'>
   category: Category
 } & CombineQuiz
 
@@ -130,7 +130,7 @@ interface UpdateQuizResultPayload {
   quizSetId: string
   quizzes: {
     id: number
-    answer: 'correct' | 'wrong'
+    answer: boolean
     choseAnswer: string
     elapsedTime: number
   }[]

@@ -30,7 +30,7 @@ type Story = StoryObj<typeof MultipleOption>
 
 export const Default: Story = {
   args: {
-    condition: 'idle',
+    condition: 'IDLE',
     index: 0,
     option: quiz.options[0],
   },
@@ -38,7 +38,7 @@ export const Default: Story = {
 
 export const Disabled: Story = {
   args: {
-    condition: 'disabled',
+    condition: 'DISABLED',
     index: 1,
     option: quiz.options[1],
   },
@@ -46,7 +46,7 @@ export const Disabled: Story = {
 
 export const Wrong: Story = {
   args: {
-    condition: 'wrong',
+    condition: 'WRONG',
     index: 2,
     option: quiz.options[2],
   },
@@ -54,7 +54,7 @@ export const Wrong: Story = {
 
 export const Correct: Story = {
   args: {
-    condition: 'correct',
+    condition: 'RIGHT',
     index: 3,
     option: quiz.options[3],
   },

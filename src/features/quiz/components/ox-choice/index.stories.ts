@@ -20,14 +20,14 @@ type Story = StoryObj<typeof OXChoice>
 // 초기 상태 (선택하지 않은 상태)
 export const Idle: Story = {
   args: {
-    condition: 'idle',
+    condition: 'IDLE',
   },
 }
 
 // 정답이 O이고 O를 선택한 경우 (정답)
 export const CorrectO: Story = {
   args: {
-    condition: 'correct',
+    condition: 'RIGHT',
     userAnswer: 'correct',
   },
 }
@@ -35,23 +35,23 @@ export const CorrectO: Story = {
 // 정답이 X이고 X를 선택한 경우 (정답)
 export const CorrectX: Story = {
   args: {
-    condition: 'correct',
-    userAnswer: 'wrong',
+    condition: 'RIGHT',
+    userAnswer: 'incorrect',
   },
 }
 
 // 정답이 O인데 X를 선택한 경우 (오답)
 export const WrongSelectedX: Story = {
   args: {
-    condition: 'wrong',
-    userAnswer: 'wrong', // X를 선택했지만 O가 정답
+    condition: 'WRONG',
+    userAnswer: 'incorrect', // X를 선택했지만 O가 정답
   },
 }
 
 // 정답이 X인데 O를 선택한 경우 (오답)
 export const WrongSelectedO: Story = {
   args: {
-    condition: 'wrong',
+    condition: 'WRONG',
     userAnswer: 'correct', // O를 선택했지만 X가 정답
   },
 }

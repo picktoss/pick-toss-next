@@ -134,6 +134,7 @@ declare namespace Collection {
   type List = Collection[]
   type QuizResult = CollectionQuizResult
   type AnsweredQuiz = AnsweredQuiz
+  type Field = CollectionField
 
   declare namespace Request {
     /** GET /api/v2/collections

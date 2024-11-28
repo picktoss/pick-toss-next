@@ -37,6 +37,10 @@ export const API_ENDPOINTS = {
       /** GET /collections-analysis - 컬렉션 분석 */
       ANALYSIS: '/collections-analysis',
     },
+    POST: {
+      /** POST /collections - 컬렉션 생성 */
+      CREATE_COLLECTION: `/collections`,
+    },
     PATCH: {
       /** PATCH /collections/{collection_id}/update-quizzes - 컬렉션 문제 편집 */
       UPDATE_QUIZZES: (collectionId: number) => `/collections/${collectionId}/update-quizzes`,
@@ -133,6 +137,13 @@ export const API_ENDPOINTS = {
       UPDATE_NAME: '/members/update-name',
       /** PATCH /members/update-collection-fields - 관심분야 태그 설정 */
       UPDATE_COLLECTION_FIELDS: '/members/update-collection-fields',
+    },
+  },
+
+  FCM: {
+    POST: {
+      /** POST /tokens - FCM토큰 서버로 전송 */
+      TOKEN: '/tokens',
     },
   },
 
