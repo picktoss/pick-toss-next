@@ -368,10 +368,15 @@ const config = {
           from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: '0' },
         },
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        fadeIn: 'fadeIn 1.5s ease-in-out',
       },
       backgroundImage: {
         'orange-gradient': 'linear-gradient(to bottom, #FFFFFF 0%, #FFF7EA 40%, #FFFFFF 60%)',

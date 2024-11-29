@@ -3,14 +3,16 @@ import MultipleOption from '@/features/quiz/components/multiple-option'
 import OXChoice from '@/features/quiz/components/ox-choice'
 import { getOXCondition, getOptionCondition } from '@/features/quiz/utils'
 import { QUIZ_ANIMATION_DURATION } from '@/features/quiz/config'
+import { cn } from '@/shared/lib/utils'
 
 interface QuizOptionsProps {
   quiz: Quiz.ItemWithMetadata
   currentResult: Quiz.Result | null
   onAnswer: (params: { id: number; isRight: boolean; choseAnswer: string }) => void
+  className?: HTMLElement['className']
 }
 
-const QuizOptions = ({ quiz, currentResult, onAnswer }: QuizOptionsProps) => {
+const QuizOptions = ({ quiz, currentResult, onAnswer, className }: QuizOptionsProps) => {
   const container = {
     hidden: { opacity: 0 },
     show: {
@@ -29,7 +31,7 @@ const QuizOptions = ({ quiz, currentResult, onAnswer }: QuizOptionsProps) => {
   if (quiz.quizType === 'MULTIPLE_CHOICE') {
     return (
       <motion.div
-        className="mt-[40px] flex flex-col gap-[12px]"
+        className={cn('flex flex-col gap-[12px]', className)}
         variants={container}
         initial="hidden"
         animate="show"

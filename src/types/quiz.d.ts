@@ -34,6 +34,8 @@ type Category = {
   name: string
 }
 
+type DirectoryInQuiz = Pick<Directory.Item, 'id' | 'name'>
+
 type ConsecutiveDays = {
   currentConsecutiveDays: number
   maxConsecutiveDays: number
@@ -42,6 +44,7 @@ type ConsecutiveDays = {
 type QuizWithMetadata = {
   document: Pick<Document, 'id' | 'name'>
   category: Category
+  directory?: DirectoryInQuiz
 } & CombineQuiz
 
 type QuizRecord = {

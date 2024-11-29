@@ -34,6 +34,7 @@ export const useQuizState = ({ quizCount, currentIndex }: UseQuizStateProps) => 
   }, [currentIndex, quizResults, runTimer, stopTimer])
 
   return {
+    leftQuizCount: quizCount - currentIndex,
     quizResults,
     setQuizResults,
     showExplanation,

@@ -84,3 +84,5 @@ export const fetchDocumentQuizzes = async ({
     throw error
   }
 }
+
+export const updateQuizResults = async () => {}
