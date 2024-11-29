@@ -29,6 +29,27 @@ const BombQuizView = () => {
   const currentQuizInfo = bombQuizList[currentIndex]
   const currentAnswerState = quizResults[currentIndex]?.answer
 
+  const onAnswer = ({
+    id,
+    isRight,
+    choseAnswer,
+  }: {
+    id: number
+    isRight: boolean
+    choseAnswer: string
+  }) => {
+    setQuizResults((prev) => {
+      const newResults = [...prev]
+      newResults[currentIndex] = {
+        id,
+        answer: isRight,
+        choseAnswer,
+        elapsedTime: 1, // 임시
+      }
+      return newResults
+    })
+  }
+
   const onNext = () => {
     if (openExplanation) {
       setOpenExplanation(false)
@@ -44,6 +65,12 @@ const BombQuizView = () => {
       // setProcessingResults(false)
       // query - 오답 터뜨리기 data 갱신
     }
+  }
+
+  const handleExit = () => {
+    // TODO:
+    // 현재까지 퀴즈 결과 서버에 전송
+    // onSuccess: 메인 화면으로 이동
   }
 
   if (processingResults) return <Loading center />
@@ -75,9 +102,10 @@ const BombQuizView = () => {
           <BombQuiz
             quizzes={bombQuizList}
             currentIndex={currentIndex}
+            onAnswer={onAnswer}
             quizResults={quizResults}
-            setQuizResults={setQuizResults}
             leftQuizCount={leftQuizCount}
+            handleExit={handleExit}
           />
         </div>
 

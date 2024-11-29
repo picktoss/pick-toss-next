@@ -12,38 +12,32 @@ interface Props {
 
 const BombAnimationSuccess = ({ leftQuizCount, onNext }: Props) => {
   const bombPositions = [
-    { x: '-210px', y: '50%' },
-    { x: '-145px', y: '50%' },
-    { x: '-80px', y: '50%' },
-    { x: '120px', y: '50%' },
-    { x: '200px', y: '50%' },
-    { x: '280px', y: '50%' },
+    { x: '-210px' },
+    { x: '-145px' },
+    { x: '-80px' },
+    { x: '120px', targetX: '50%', condition: leftQuizCount >= 2 },
+    { x: '200px', targetX: '120px', condition: leftQuizCount >= 3 },
+    { x: '280px', targetX: '200px', condition: leftQuizCount > 3 },
   ]
 
   return (
     <div className="relative size-full overflow-x-hidden overflow-y-visible">
       {bombPositions.slice(0, 3).map((pos, index) => (
-        <Bomb key={index} x={pos.x} y={pos.y} />
+        <Bomb key={index} x={pos.x} />
       ))}
 
       {/* 점화 -> 폭탄 제거 */}
       <FlameBomb leftQuizCount={leftQuizCount} onNext={onNext} />
 
       {bombPositions.slice(3).map((pos, index) => {
-        const prevIndex = index + 2
         const actualIndex = index + 3
-        const shouldRender =
-          (actualIndex === 3 && leftQuizCount >= 2) ||
-          (actualIndex === 4 && leftQuizCount >= 3) ||
-          (actualIndex === 5 && leftQuizCount > 3)
 
         return (
-          shouldRender && (
+          pos.condition && (
             <MovingBomb
               key={actualIndex}
               initialX={pos.x}
-              targetX={index === 0 ? '50%' : bombPositions[prevIndex].x}
-              y={pos.y}
+              targetX={pos.targetX}
               delay={1}
               onNext={index === 0 ? onNext : undefined}
             />
@@ -57,8 +51,8 @@ const BombAnimationSuccess = ({ leftQuizCount, onNext }: Props) => {
 export default BombAnimationSuccess
 
 /** 이전에 쌓여있는 폭탄 컴포넌트 */
-const Bomb = ({ x, y }: { x: string; y: string }) => (
-  <motion.div className="center" initial={{ x, y, rotate: -90, opacity: 0.5 }}>
+const Bomb = ({ x }: { x: string }) => (
+  <motion.div className="center" initial={{ x, y: '50%', rotate: -90, opacity: 0.5 }}>
     <Image src={'/images/bomb-not-fire.png'} alt="" width={55} height={67.65} />
   </motion.div>
 )
@@ -100,20 +94,18 @@ const FlameBomb = ({ leftQuizCount, onNext }: { leftQuizCount: number; onNext: (
 const MovingBomb = ({
   initialX,
   targetX,
-  y,
   delay,
   onNext,
 }: {
   initialX: string
   targetX: string
-  y: string
   delay: number
   onNext?: () => void
 }) => (
   <motion.div
     className="center"
-    initial={{ x: initialX, y }}
-    animate={{ x: targetX, y }}
+    initial={{ x: initialX, y: '50%' }}
+    animate={{ x: targetX, y: '50%' }}
     transition={{
       duration: 0.5,
       delay,
