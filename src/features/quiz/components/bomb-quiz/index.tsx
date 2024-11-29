@@ -40,18 +40,18 @@ const BombQuiz = ({ quizzes, currentIndex, quizResults, setQuizResults, leftQuiz
 
   return (
     <div className="flex h-[70dvh] min-h-fit w-full flex-col items-center justify-between">
-      <div className="flex flex-col items-center">
-        <header className="h-[54px] w-full py-[16px]">
-          <GoBackButton
-            icon="cancel"
-            onClick={() => {
-              // TODO:
-              // 현재까지 퀴즈 결과 서버에 전송
-              // onSuccess: 메인 화면으로 이동
-            }}
-          />
-        </header>
+      <header className="h-[54px] w-full py-[16px]">
+        <GoBackButton
+          icon="cancel"
+          onClick={() => {
+            // TODO:
+            // 현재까지 퀴즈 결과 서버에 전송
+            // onSuccess: 메인 화면으로 이동
+          }}
+        />
+      </header>
 
+      <div className="flex flex-col items-center">
         <Tag colors={'secondary'} className="px-[8px] py-[4px]">
           <Text typography="text2-bold">{currentQuiz.document.name as string}</Text>
         </Tag>
