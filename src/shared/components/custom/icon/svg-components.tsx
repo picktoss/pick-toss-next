@@ -2066,11 +2066,18 @@ export const ExitDoor = ({ ...props }) => {
 }
 
 // 알림 아이콘
-export const NotiTodayQuiz = () => {
+export const NotiTodayQuiz = ({ ...props }) => {
   const paintId = useId()
 
   return (
-    <svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width="32"
+      height="33"
+      viewBox="0 0 32 33"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
       <circle cx="16" cy="16.5" r="16" fill="#FFECD0" />
       <path
         d="M25.7966 7.5106C25.7966 7.5106 25.7725 7.51447 25.7616 7.51915C20.7714 8.78549 15.457 10.5491 11.5268 14.0365C9.85703 15.521 8.5289 17.4548 8.39099 19.7504C8.17527 23.3411 10.8991 26.4266 14.4744 26.6414C15.9462 26.7298 17.4224 26.3044 18.625 25.4445C19.7806 24.6163 20.568 23.3851 21.2094 22.1106C22.2006 20.1352 24.9561 14.7474 24.9561 14.7474C25.052 14.564 24.8709 14.3561 24.678 14.4324C23.7648 14.6252 21.7168 15.2533 20.9334 15.7123C20.8262 15.7751 20.6972 15.6715 20.7335 15.5538C21.0812 14.4001 21.8754 13.2759 22.5012 12.3066C23.5453 10.6861 24.7215 9.20657 26.0488 7.81606C26.0911 7.77333 26.134 7.72263 26.1376 7.66159C26.1464 7.51563 25.9465 7.48764 25.7965 7.51325L25.7966 7.5106Z"
@@ -2108,9 +2115,16 @@ export const NotiTodayQuiz = () => {
   )
 }
 
-export const NotiAnalysis = () => {
+export const NotiAnalysis = ({ ...props }) => {
   return (
-    <svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width="32"
+      height="33"
+      viewBox="0 0 32 33"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
       <circle cx="16" cy="16.5" r="16" fill="#F0F4FF" />
       <path
         d="M13.2256 9.86942C13.2256 9.31216 13.6773 8.86041 14.2346 8.86041H17.7661C18.3234 8.86041 18.7751 9.31216 18.7751 9.86942V23.491H13.2256V9.86942Z"
@@ -2136,9 +2150,16 @@ export const NotiAnalysis = () => {
   )
 }
 
-export const NotiSystem = () => {
+export const NotiSystem = ({ ...props }) => {
   return (
-    <svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width="32"
+      height="33"
+      viewBox="0 0 32 33"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
       <circle cx="16" cy="16.5" r="16" fill="#FFECD0" />
       <rect x="8.6665" y="17.8334" width="2.66667" height="7.33333" rx="0.823045" fill="#FFD180" />
       <circle cx="22.9998" cy="15.5" r="2.33333" fill="#FB7E20" />
@@ -2154,12 +2175,19 @@ export const NotiSystem = () => {
   )
 }
 
-export const NotiReward = () => {
+export const NotiReward = ({ ...props }) => {
   const clipId = useId()
   const paintId = useId()
 
   return (
-    <svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width="32"
+      height="33"
+      viewBox="0 0 32 33"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
       <circle cx="16" cy="16.5" r="16" fill="#7095F8" />
       <g clipPath={`url(#${clipId})`}>
         <path
@@ -2186,6 +2214,94 @@ export const NotiReward = () => {
         <clipPath id={clipId}>
           <rect width="20" height="19.1111" fill="white" transform="translate(6 6.50002)" />
         </clipPath>
+      </defs>
+    </svg>
+  )
+}
+
+export const FocusBox = ({ ...props }) => {
+  const { fill, ...rest } = props
+
+  const color = fill ? (fill as string) : '#EFC364'
+
+  return (
+    <svg
+      width="106"
+      height="106"
+      viewBox="0 0 106 106"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...rest}
+    >
+      <path
+        d="M3 24V13C3 7.47715 7.47715 3 13 3L24 3"
+        stroke="url(#paint0_linear_11607_9257)"
+        strokeWidth="6"
+        strokeLinecap="round"
+      />
+      <path
+        d="M103 82L103 93C103 98.5228 98.5228 103 93 103L82 103"
+        stroke="url(#paint1_linear_11607_9257)"
+        strokeWidth="6"
+        strokeLinecap="round"
+      />
+      <path
+        d="M103 24L103 13C103 7.47715 98.5228 3 93 3L82 3"
+        stroke="url(#paint2_linear_11607_9257)"
+        strokeWidth="6"
+        strokeLinecap="round"
+      />
+      <path
+        d="M3.00001 82L3 93C3 98.5228 7.47716 103 13 103L24 103"
+        stroke="url(#paint3_linear_11607_9257)"
+        strokeWidth="6"
+        strokeLinecap="round"
+      />
+      <defs>
+        <linearGradient
+          id="paint0_linear_11607_9257"
+          x1="58.8511"
+          y1="27.7333"
+          x2="57.389"
+          y2="-8.66178"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor={color} />
+          <stop offset="0.951624" stopColor={color} />
+        </linearGradient>
+        <linearGradient
+          id="paint1_linear_11607_9257"
+          x1="47.1489"
+          y1="79.15"
+          x2="48.5085"
+          y2="114.249"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor={color} />
+          <stop offset="0.951624" stopColor={color} />
+        </linearGradient>
+        <linearGradient
+          id="paint2_linear_11607_9257"
+          x1="47.1489"
+          y1="27.7333"
+          x2="48.611"
+          y2="-8.66178"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor={color} />
+          <stop offset="0.951624" stopColor={color} />
+        </linearGradient>
+        <linearGradient
+          id="paint3_linear_11607_9257"
+          x1="58.8511"
+          y1="79.15"
+          x2="57.4914"
+          y2="114.249"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor={color} />
+          <stop offset="0.951624" stopColor={color} />
+        </linearGradient>
       </defs>
     </svg>
   )

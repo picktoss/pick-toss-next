@@ -81,7 +81,12 @@ const QuizView = ({ quizzes }: Props) => {
         <QuizProgressBar totalQuizCount={quizzes.length} currentIndex={currentIndex} />
         <QuizQuestion index={currentIndex} question={currentQuiz.question} />
 
-        <QuizOptions quiz={currentQuiz} currentResult={currentResult} onAnswer={onAnswer} />
+        <QuizOptions
+          quiz={currentQuiz}
+          currentResult={currentResult}
+          onAnswer={onAnswer}
+          className="mt-[40px]"
+        />
       </div>
 
       <div className="mt-[40px] px-[16px]">

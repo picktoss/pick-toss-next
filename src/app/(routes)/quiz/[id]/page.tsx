@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { quizzes } from '@/features/quiz/config'
-import BombQuizView from '@/features/quiz/screen/bomb-quiz-view'
 import QuizView from '@/features/quiz/screen/quiz-view'
 import RandomQuizView from '@/features/quiz/screen/random-quiz-view'
 import { fetchQuizSet } from '@/requests/quiz'
@@ -28,7 +27,6 @@ const QuizDetailPage = ({ params, searchParams }: Props) => {
       {quizType === 'today' && <QuizView quizzes={quizzes} />}
       {/* {quizType === 'today' && <QuizView quizzes={quizSet.quizzes} />} */}
       {quizType === 'random' && <RandomQuizView />}
-      {quizType === 'bomb' && <BombQuizView />}
     </>
   )
 }
