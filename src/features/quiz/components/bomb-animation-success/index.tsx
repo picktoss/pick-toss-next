@@ -44,7 +44,7 @@ const BombAnimationSuccess = ({ leftQuizCount, onNext }: Props) => {
               initialX={pos.x}
               targetX={index === 0 ? '50%' : bombPositions[prevIndex].x}
               y={pos.y}
-              delay={2}
+              delay={1}
               onNext={index === 0 ? onNext : undefined}
             />
           )
@@ -84,7 +84,7 @@ const FlameBomb = ({ leftQuizCount, onNext }: { leftQuizCount: number; onNext: (
           opacity: [1, 0, 1, 0, 0],
         }}
         transition={{
-          duration: 1.5,
+          duration: 0.5,
           delay: 0.5,
         }}
         onAnimationComplete={() => leftQuizCount === 1 && onNext()}

@@ -11,6 +11,7 @@ import { useState } from 'react'
 import Loading from '@/shared/components/custom/loading'
 import BombWrongAnswerDialog from '../components/bomb-wrong-answer-dialog'
 import { getAnswerText } from '../utils'
+import { cn } from '@/shared/lib/utils'
 
 const BombQuizView = () => {
   const bombQuizList = [...quizzes] // 임시
@@ -85,7 +86,10 @@ const BombQuizView = () => {
           <div className="flex-center relative mb-[10px] size-full">
             <Icon
               name="focus-box"
-              className="center z-40 size-[100px]"
+              className={cn(
+                'center z-40 size-[100px] transition-transform',
+                currentAnswerState === false && 'scale-[0.82]'
+              )}
               fill={currentAnswerState === false ? '#f4502c' : '#EFC364'}
             />
 
