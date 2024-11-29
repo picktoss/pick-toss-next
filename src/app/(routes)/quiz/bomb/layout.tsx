@@ -1,5 +1,6 @@
 import { FunctionComponent, PropsWithChildren, Suspense } from 'react'
 import type { Metadata } from 'next'
+import Loading from '@/shared/components/custom/loading'
 
 export const metadata: Metadata = {}
 
@@ -8,8 +9,7 @@ interface LayoutProps extends PropsWithChildren {}
 const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
   return (
     <main>
-      {/* TODO: 오답 터뜨리기 loading view를 fallback으로 표시 */}
-      <Suspense>{children}</Suspense>
+      <Suspense fallback={<Loading center />}>{children}</Suspense>
     </main>
   )
 }
