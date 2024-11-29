@@ -20,11 +20,14 @@ const BombAnimation = ({
   setOpenExplanation,
 }: Props) => {
   const currentResult = quizResults[currentIndex]
+  const isSolvingQuiz = !currentResult
 
-  if (!currentResult) {
+  // 문제 푸는 중
+  if (isSolvingQuiz) {
     return <BombDefaultState leftQuizCount={leftQuizCount} />
   }
 
+  // 결과 처리
   return (
     <>
       {currentResult.answer ? (

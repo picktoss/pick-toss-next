@@ -38,8 +38,8 @@ const BombQuizView = () => {
       navigateToNext(currentIndex)
     } else {
       setProcessingResults(true)
-      // TODO: 퀴즈 종료 처리 로직 추가
-      // 완료되면,
+      // TODO: 퀴즈 종료 처리 로직 추가 (퀴즈 결과 서버에 전송)
+      // onSuccess:
       // setProcessingResults(false)
       // query - 오답 터뜨리기 data 갱신
     }
