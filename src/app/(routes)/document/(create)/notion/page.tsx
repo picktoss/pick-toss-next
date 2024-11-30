@@ -1,8 +1,7 @@
 import { EditDocumentProvider } from '@/features/modify/context/edit-document-context'
-import NewQuizDrawer from '@/features/quiz/components/new-quiz-drawer'
+import CreateQuizDrawer from '@/features/write/components/create-quiz-drawer'
 import FixedBottom from '@/shared/components/custom/fixed-bottom'
 import Icon from '@/shared/components/custom/icon'
-import { Button } from '@/shared/components/ui/button'
 import Text from '@/shared/components/ui/text'
 
 const CreateWithNotionPage = () => {
@@ -39,17 +38,8 @@ const CreateWithNotionPage = () => {
       </EditDocumentProvider>
 
       <FixedBottom className="px-[20px]">
-        <NewQuizDrawer
-          triggerComponent={
-            <Button
-              variant={'largeRound'}
-              colors={'primary'}
-              className="flex-center h-[52px] w-full"
-            >
-              퀴즈 만들기
-            </Button>
-          }
-        />
+        {/* TODO: notion 문서 생성하는 로직 필요 */}
+        <CreateQuizDrawer handleCreateDocument={() => {}} />
       </FixedBottom>
     </>
   )
