@@ -26,7 +26,7 @@ const QuizDetailPage = ({ params, searchParams }: Props) => {
     <>
       {quizType === 'today' && <QuizView quizzes={quizzes} />}
       {/* {quizType === 'today' && <QuizView quizzes={quizSet.quizzes} />} */}
-      {quizType === 'random' && <RandomQuizView />}
+      {/* {quizType === 'random' && <RandomQuizView />} */}
     </>
   )
 }
