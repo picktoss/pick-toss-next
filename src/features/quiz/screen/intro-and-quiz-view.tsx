@@ -6,13 +6,19 @@ import QuizIntro from './intro'
 
 interface Props {
   quizType: 'today' | 'document' | 'collection'
-  quizSetId: string
   quizzes: QuizWithMetadata[]
-  documentId?: number
-  collectionId?: number
+  createdAt: string
+  documentInfo?: { name: string; directoryEmoji: string }
+  collectionInfo?: { name: string; emoji: string }
 }
 
-const IntroAndQuizView = ({ quizType, quizSetId, quizzes, documentId, collectionId }: Props) => {
+const IntroAndQuizView = ({
+  quizType,
+  quizzes,
+  createdAt,
+  documentInfo,
+  collectionInfo,
+}: Props) => {
   const [finishedIntro, setFinishedIntro] = useState(false)
 
   const handleAnimationComplete = () => {
@@ -23,9 +29,9 @@ const IntroAndQuizView = ({ quizType, quizSetId, quizzes, documentId, collection
     return (
       <QuizIntro
         quizType={quizType}
-        quizSetId={quizSetId}
-        documentId={documentId ? Number(documentId) : undefined}
-        collectionId={collectionId ? Number(collectionId) : undefined}
+        createdAt={createdAt}
+        documentInfo={documentInfo}
+        collectionInfo={collectionInfo}
         onAnimationComplete={handleAnimationComplete}
       />
     )

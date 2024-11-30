@@ -4,74 +4,44 @@ import { SwitchCase } from '@/shared/components/custom/react/switch-case'
 import TodayQuizIntro from './components/today-quiz-intro'
 import DocumentQuizIntro from './components/document-quiz-intro'
 import CollectionQuizIntro from './components/collection-quiz-intro'
-import { useQuery } from '@tanstack/react-query'
-import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import { formatDateKorean } from '@/shared/utils/date'
-import Loading from '@/shared/components/custom/loading'
-import { useState } from 'react'
 
 interface Props {
   quizType: 'today' | 'document' | 'collection'
-  quizSetId: string
-  documentId?: number
-  collectionId?: number
+  createdAt: string
+  documentInfo?: { name: string; directoryEmoji: string }
+  collectionInfo?: { name: string; emoji: string }
   onAnimationComplete: () => void
 }
 
 const QuizIntro = ({
   quizType,
-  quizSetId,
-  documentId,
-  collectionId,
+  createdAt,
+  documentInfo,
+  collectionInfo,
   onAnimationComplete,
 }: Props) => {
-  const { data: quizSetInfo, isPending: isTodayQuizPending } = useQuery(
-    queries.quiz.setRecord(quizSetId)
-  )
-  const { data: documentInfo, isPending: isDocumentQuizPending } = useQuery(
-    queries.document.item(documentId)
-  )
-  const { data: collectionInfo, isPending: isCollectionQuizPending } = useQuery(
-    queries.collection.info(collectionId)
-  )
-
-  const createdAtText = quizSetInfo
-    ? formatDateKorean(quizSetInfo.createdAt, {
-        month: true,
-        day: true,
-        dayOfWeek: true,
-      })
-    : ''
-
-  const isLoading =
-    quizType === 'today'
-      ? isTodayQuizPending
-      : quizType === 'document'
-      ? isDocumentQuizPending || isTodayQuizPending
-      : isCollectionQuizPending || isTodayQuizPending
-
-  if (isLoading) return <Loading center />
+  const createDateText = formatDateKorean(createdAt, { month: true, day: true, dayOfWeek: true })
 
   return (
     <SwitchCase
       value={quizType}
       caseBy={{
-        today: quizSetInfo && (
-          <TodayQuizIntro createdAt={createdAtText} onAnimationComplete={onAnimationComplete} />
+        today: (
+          <TodayQuizIntro createdAt={createDateText} onAnimationComplete={onAnimationComplete} />
         ),
 
-        document: quizSetInfo && documentInfo && (
+        document: (
           <DocumentQuizIntro
-            createdAt={createdAtText}
-            documentName={documentInfo?.documentName ?? ''}
-            directoryEmoji={documentInfo?.directory.emoji ?? ''}
+            createdAt={createDateText}
+            documentName={documentInfo?.name ?? ''}
+            directoryEmoji={documentInfo?.directoryEmoji ?? ''}
             onAnimationComplete={onAnimationComplete}
           />
         ),
-
-        collection: quizSetInfo && collectionInfo && (
+        collection: (
           <CollectionQuizIntro
-            createdAt={createdAtText}
+            createdAt={createDateText}
             collectionName={collectionInfo?.name ?? ''}
             collectionEmoji={collectionInfo?.emoji ?? ''}
             onAnimationComplete={onAnimationComplete}

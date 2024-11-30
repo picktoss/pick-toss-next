@@ -2,11 +2,16 @@
 
 import { Button } from '@/shared/components/ui/button'
 import Text from '@/shared/components/ui/text'
-import { getCurrentDate } from '@/shared/utils/date'
+import { formatDateKorean, getCurrentDate } from '@/shared/utils/date'
 import QuizArrivedAnimation from '../quiz-arrived-animation'
 import Link from 'next/link'
 
-const TodayQuizArrived = ({ quizSetId }: { quizSetId: string }) => {
+interface Props {
+  quizSetId: string
+  createdAt: string
+}
+
+const TodayQuizArrived = ({ quizSetId, createdAt }: Props) => {
   const MonthDateDay = getCurrentDate().split('년 ')[1]
 
   return (
@@ -25,7 +30,7 @@ const TodayQuizArrived = ({ quizSetId }: { quizSetId: string }) => {
         </Text>
       </div>
 
-      <Link href={'/quiz/' + quizSetId + '?quizType=today'}>
+      <Link href={'/quiz/' + quizSetId + '?quizType=today' + '&' + `createdAt=${createdAt}`}>
         <Button variant={'largeRound'} className="w-full">
           퀴즈 시작하기
         </Button>

@@ -2,17 +2,23 @@ import AiCreatingQuiz from '@/features/quiz/screen/ai-creating-quiz'
 
 interface Props {
   searchParams: {
-    documentId?: string
+    documentId: string
+    documentName: string
+    directoryEmoji: string
   }
 }
 
-// id 없이 /quiz로만 오면 document에서 퀴즈를 생성하는 것으로
+// quiz-set-id 없이 /quiz로만 오면 document에서 퀴즈를 생성하는 것으로 판단
 const QuizPage = ({ searchParams }: Props) => {
-  const { documentId } = searchParams
+  const { documentId, documentName, directoryEmoji } = searchParams
 
   return (
     <>
-      <AiCreatingQuiz documentId={Number(documentId)} />
+      <AiCreatingQuiz
+        documentId={Number(documentId)}
+        documentName={documentName}
+        directoryEmoji={directoryEmoji}
+      />
     </>
   )
 }

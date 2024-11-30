@@ -94,6 +94,7 @@ interface QuizSetResponse {
 /** GET /api/v2/quiz-sets/today */
 interface TodayQuizSetResponse {
   quizSetId: string
+  createdAt?: string
   type: 'READY' | 'NOT_READY' | 'DONE'
 }
 
@@ -157,6 +158,7 @@ interface GetDirectoryQuizzesResponse {
 /** POST /api/v2/quizzes/documents/{document_id}/check-quiz-set */
 interface CreateCheckQuizSetResponse {
   quizSetId: string
+  createdAt: string
 }
 
 declare namespace Quiz {

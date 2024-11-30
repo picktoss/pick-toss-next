@@ -4,17 +4,13 @@ import { SwitchCase } from '@/shared/components/custom/react/switch-case'
 import CountdownToMidnight from '../countdown-to-midnight'
 import TodayQuizArrived from '../today-quiz-arrived'
 
-// 오늘의 퀴즈 영역
-// default(노트가 있고, 오늘의 퀴즈 도착 상태가 아닐 경우): 오늘 푼 퀴즈 + 다음 카운트다운
-// caseA(노트가 없을 경우): 첫 노트 추가하기
-// caseB(노트가 있고, 오늘의 퀴즈 도착 상태일 경우): 오늘의 퀴즈 도착
-
 interface Props {
   state: 'EMPTY' | 'NOT_ARRIVED' | 'ARRIVED'
   quizSetId: string
+  createdAt: string
 }
 
-const MainTodayQuizArea = ({ state, quizSetId }: Props) => {
+const MainTodayQuizArea = ({ state, quizSetId, createdAt }: Props) => {
   return (
     <SwitchCase
       value={state}
@@ -28,7 +24,7 @@ const MainTodayQuizArea = ({ state, quizSetId }: Props) => {
           </div>
         ),
 
-        ARRIVED: <TodayQuizArrived quizSetId={quizSetId} />,
+        ARRIVED: <TodayQuizArrived quizSetId={quizSetId} createdAt={createdAt} />,
       }}
     />
   )

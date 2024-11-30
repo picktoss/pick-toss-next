@@ -11,9 +11,11 @@ import { useEffect, useState } from 'react'
 
 interface Props {
   documentId: number
+  documentName: string
+  directoryEmoji: string
 }
 
-const AiCreatingQuiz = ({ documentId }: Props) => {
+const AiCreatingQuiz = ({ documentId, documentName, directoryEmoji }: Props) => {
   const router = useRouter()
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0)
   const [quizIsReady, setQuizIsReady] = useState(false)
@@ -61,7 +63,17 @@ const AiCreatingQuiz = ({ documentId }: Props) => {
   const handleClickStart = () => {
     createCheckQuizSetMutate(undefined, {
       onSuccess: (data) => {
-        router.push('/quiz/' + data.quizSetId + '?quizType=document')
+        router.push(
+          '/quiz/' +
+            data.quizSetId +
+            '?quizType=document' +
+            '&' +
+            `createdAt=${data.createdAt}` +
+            '&' +
+            `documentName=${documentName}` +
+            '&' +
+            `directoryEmoji=${directoryEmoji}`
+        )
       },
     })
   }

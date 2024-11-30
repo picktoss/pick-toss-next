@@ -13,7 +13,7 @@ import { fetchTodayQuizSetId } from '@/requests/quiz'
 import { fetchDocuments } from '@/requests/document'
 
 const Home = async () => {
-  const { quizSetId, type } = await fetchTodayQuizSetId()
+  const { quizSetId, createdAt, type } = await fetchTodayQuizSetId()
   const { documents } = await fetchDocuments()
   const isEmpty = !documents || documents.length === 0
   const todayQuizState = isEmpty
@@ -26,7 +26,11 @@ const Home = async () => {
     <main className="flex h-[calc(100dvh-54px-88px)] w-full flex-col gap-[64px] overflow-y-auto overflow-x-hidden bg-background-base-02 px-[16px] scrollbar-hide">
       <div className="w-full">
         {/* 오늘의 퀴즈 영역 */}
-        <MainTodayQuizArea state={todayQuizState} quizSetId={quizSetId} />
+        <MainTodayQuizArea
+          state={todayQuizState}
+          quizSetId={quizSetId}
+          createdAt={createdAt ?? ''}
+        />
 
         {/* 오답 / 랜덤 퀴즈 */}
         <div className="mt-[16px] flex gap-[9px]">

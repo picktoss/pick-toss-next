@@ -8,14 +8,28 @@ interface Props {
   }
   searchParams: {
     quizType: 'today' | 'document' | 'collection'
-    documentId?: string
-    collectionId?: string
+    createdAt: string
+    documentName?: string
+    directoryEmoji?: string
+    collectionName?: string
+    collectionEmoji?: string
   }
 }
 
 const QuizDetailPage = async ({ params, searchParams }: Props) => {
-  const { quizType, documentId, collectionId } = searchParams
+  const { quizType, createdAt, documentName, directoryEmoji, collectionName, collectionEmoji } =
+    searchParams
   const quizSet = await fetchQuizSet({ quizSetId: params.id })
+
+  const hasDocumentInfo = documentName !== undefined && directoryEmoji !== undefined
+  const hasCollectionInfo = collectionName !== undefined && collectionEmoji !== undefined
+
+  const documentInfo = hasDocumentInfo
+    ? { name: documentName, directoryEmoji: directoryEmoji }
+    : undefined
+  const collectionInfo = hasCollectionInfo
+    ? { name: collectionName, emoji: collectionEmoji }
+    : undefined
 
   if (!quizSet) {
     notFound()
@@ -24,10 +38,10 @@ const QuizDetailPage = async ({ params, searchParams }: Props) => {
   return (
     <IntroAndQuizView
       quizType={quizType}
-      quizSetId={params.id}
+      createdAt={createdAt}
       quizzes={quizSet.quizzes}
-      documentId={documentId ? Number(documentId) : undefined}
-      collectionId={collectionId ? Number(collectionId) : undefined}
+      documentInfo={documentInfo}
+      collectionInfo={collectionInfo}
     />
   )
 }
