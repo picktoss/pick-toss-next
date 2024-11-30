@@ -1,10 +1,7 @@
 'use client'
 
 import { FunctionComponent, PropsWithChildren, Suspense, useRef } from 'react'
-import type { Metadata } from 'next'
 import QuizIntro from '@/features/quiz/screen/intro'
-
-export const metadata: Metadata = {}
 
 interface LayoutProps extends PropsWithChildren {
   params: {
