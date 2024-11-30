@@ -1,40 +1,14 @@
-'use client'
+import { FunctionComponent, PropsWithChildren, Suspense } from 'react'
+import { Metadata } from 'next'
 
-import { FunctionComponent, PropsWithChildren, Suspense, useRef } from 'react'
-import QuizIntro from '@/features/quiz/screen/intro'
+export const metadata: Metadata = {}
 
-interface LayoutProps extends PropsWithChildren {
-  params: {
-    id: string
-  }
-  searchParams: {
-    quizType: 'today' | 'document' | 'collection'
-    documentId?: string
-    collectionId?: string
-  }
-}
+interface LayoutProps extends PropsWithChildren {}
 
-const Layout: FunctionComponent<LayoutProps> = ({ children, params, searchParams }) => {
-  const { quizType, documentId, collectionId } = searchParams
-  const hasAnimationCompleted = useRef(false)
-
-  const handleAnimationComplete = () => {
-    hasAnimationCompleted.current = true
-  }
-
+const Layout: FunctionComponent<LayoutProps> = ({ children }) => {
   return (
     <main>
-      {!hasAnimationCompleted.current ? (
-        <QuizIntro
-          quizType={quizType}
-          quizSetId={Number(params.id)}
-          documentId={documentId ? Number(documentId) : undefined}
-          collectionId={collectionId ? Number(collectionId) : undefined}
-          onAnimationComplete={handleAnimationComplete}
-        />
-      ) : (
-        <Suspense>{children}</Suspense>
-      )}
+      <Suspense>{children}</Suspense>
     </main>
   )
 }

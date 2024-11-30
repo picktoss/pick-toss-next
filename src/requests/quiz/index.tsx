@@ -85,7 +85,7 @@ export const fetchDocumentQuizzes = async ({
   }
 }
 
-export const fetchQuizSetRecord = async ({ quizSetId }: { quizSetId: number }) => {
+export const fetchQuizSetRecord = async ({ quizSetId }: { quizSetId: string }) => {
   const session = await auth()
 
   try {

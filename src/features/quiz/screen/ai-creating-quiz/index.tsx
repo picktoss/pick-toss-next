@@ -16,7 +16,7 @@ interface Props {
 const AiCreatingQuiz = ({ documentId }: Props) => {
   const router = useRouter()
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0)
-  const [quizIsReady, setQuizIsReady] = useState(true)
+  const [quizIsReady, setQuizIsReady] = useState(false)
   const { mutate: documentDetailMutate } = useGetDocumentDetail()
   const { mutate: createCheckQuizSetMutate } = useCreateCheckQuizSet(documentId)
 
@@ -28,10 +28,10 @@ const AiCreatingQuiz = ({ documentId }: Props) => {
 
   useEffect(() => {
     if (currentMessageIndex === 0) {
-      const timer = setTimeout(() => setCurrentMessageIndex(1), 8000)
+      const timer = setTimeout(() => setCurrentMessageIndex(1), 3000)
       return () => clearTimeout(timer)
     } else if (currentMessageIndex === 1) {
-      const timer = setTimeout(() => setCurrentMessageIndex(2), 8000)
+      const timer = setTimeout(() => setCurrentMessageIndex(2), 5000)
       return () => clearTimeout(timer)
     }
   }, [currentMessageIndex])
@@ -78,8 +78,6 @@ const AiCreatingQuiz = ({ documentId }: Props) => {
             퀴즈 준비 완료!
           </Text>
 
-          {/* 버튼 클릭 -> 퀴즈 세트 생성 요청 + 인트로 애니메이션 재생 */}
-          {/* 애니메이션 complete && 퀴즈 세트 data 존재 -> 퀴즈 시작 */}
           <Button className="mt-[35px] w-[200px]" onClick={handleClickStart}>
             시작하기
           </Button>

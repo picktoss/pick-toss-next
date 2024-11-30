@@ -155,7 +155,7 @@ export const API_ENDPOINTS = {
       /** GET /quizzes - 생성된 모든 퀴즈 가져오기(전체 문서) */
       ALL: '/quizzes',
       /** GET /quizzes/{quiz_set_id}/quiz-record - 퀴즈 세트에 대한 상세 기록 */
-      RECORD: (quizSetId: number) => `/quizzes/${quizSetId}/quiz-record`,
+      RECORD: (quizSetId: string) => `/quizzes/${quizSetId}/quiz-record`,
       /** GET /quizzes/quiz-records - 전체 퀴즈 기록 */
       ALL_RECORDS: '/quizzes/quiz-records',
       /** GET /quiz-sets/{quiz_set_id} - quizSet_id로 퀴즈 가져오기 */
