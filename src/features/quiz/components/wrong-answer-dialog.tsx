@@ -19,7 +19,7 @@ interface Props {
   onNext: () => void
 }
 
-const BombWrongAnswerDialog = ({
+const WrongAnswerDialog = ({
   isOpen,
   setIsOpen,
   answer,
@@ -68,4 +68,4 @@ const BombWrongAnswerDialog = ({
   )
 }
 
-export default BombWrongAnswerDialog
+export default WrongAnswerDialog

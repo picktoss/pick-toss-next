@@ -9,7 +9,7 @@ import BombQuiz from '../components/bomb-quiz'
 import BombAnimation from '../components/bomb-animation'
 import { useState } from 'react'
 import Loading from '@/shared/components/custom/loading'
-import BombWrongAnswerDialog from '../components/bomb-wrong-answer-dialog'
+import WrongAnswerDialog from '../components/wrong-answer-dialog'
 import { getAnswerText } from '../utils'
 import { cn } from '@/shared/lib/utils'
 
@@ -132,7 +132,7 @@ const BombQuizView = () => {
         </div>
       </div>
 
-      <BombWrongAnswerDialog
+      <WrongAnswerDialog
         isOpen={openExplanation}
         setIsOpen={setOpenExplanation}
         answer={getAnswerText(currentQuizInfo.answer)}
