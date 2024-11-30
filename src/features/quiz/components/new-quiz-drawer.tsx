@@ -9,11 +9,21 @@ import Icon from '@/shared/components/custom/icon'
 import { cn } from '@/shared/lib/utils'
 import MoreStarDialog from '../../payment/components/more-star-dialog'
 
+interface Props {
+  triggerComponent: React.ReactNode
+  documentId: number
+}
+
 // NewQuizDrawer 컴포넌트
-const NewQuizDrawer = ({ triggerComponent }: { triggerComponent: React.ReactNode }) => {
+const NewQuizDrawer = ({ triggerComponent, documentId }: Props) => {
   const [quizType, setQuizType] = useState('MULTIPLE_CHOICE')
   const [quizCount, setQuizCount] = useState(10) // 초기값 10
   const [isOpenMoreStar, setIsOpenMoreStar] = useState(false)
+
+  const handleClickStart = () => {
+    // 기존 문서에서 새로운 퀴즈 생성하는 api 호출
+    // /quiz?documentId={documentId}로 이동
+  }
 
   return (
     <>

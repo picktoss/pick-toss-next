@@ -67,6 +67,7 @@ interface CollectionRecordResponse {
 interface CollectionInfoResponse {
   id: number
   name: string
+  emoji: string
   description: string
   solvedCount: number
   bookmarkCount: number

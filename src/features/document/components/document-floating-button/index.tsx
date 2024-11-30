@@ -3,7 +3,7 @@ import ReplayQuizDrawer from '@/features/quiz/components/replay-quiz-drawer'
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
 
-const DocumentFloatingButton = () => {
+const DocumentFloatingButton = ({ documentId }: { documentId: string }) => {
   return (
     <div className="flex-center fixed bottom-[43px] right-1/2 w-[60dvw] min-w-[266px] max-w-[270px] translate-x-1/2 rounded-full border border-border-default bg-background-toast px-[28px] py-[10px] text-button2 text-button-label-primary shadow-custom-shadow">
       <ReplayQuizDrawer
@@ -13,6 +13,7 @@ const DocumentFloatingButton = () => {
             <Text className="text-button-label-primary">다시풀기</Text>
           </button>
         }
+        documentId={Number(documentId)}
       />
 
       <NewQuizDrawer
@@ -24,6 +25,7 @@ const DocumentFloatingButton = () => {
             </Text>
           </button>
         }
+        documentId={Number(documentId)}
       />
     </div>
   )

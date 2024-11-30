@@ -42,7 +42,7 @@ const WriteDocumentPage = () => {
       },
       {
         onSuccess: ({ id }) => {
-          router.push(`/document/${id}`)
+          router.push('/quiz' + '?documentId=' + id)
         },
       }
     )

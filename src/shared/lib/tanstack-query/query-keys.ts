@@ -10,6 +10,7 @@ export const queries = createQueryKeyStore({
     item: (directoryId: number) => ({
       queryKey: [directoryId],
       queryFn: () => REQUEST.directory.fetchDirectory(directoryId),
+      enabled: !!directoryId,
     }),
   },
 
@@ -18,9 +19,10 @@ export const queries = createQueryKeyStore({
       queryKey: [params],
       queryFn: () => REQUEST.document.fetchDocuments(params),
     }),
-    item: (documentId: number) => ({
+    item: (documentId?: number) => ({
       queryKey: [documentId],
       queryFn: () => REQUEST.document.fetchDocumentDetail(documentId),
+      enabled: !!documentId,
     }),
   },
 
@@ -29,6 +31,19 @@ export const queries = createQueryKeyStore({
       queryKey: [params],
       queryFn: () => REQUEST.quiz.fetchDocumentQuizzes(params),
       enabled: !!params.documentId,
+    }),
+    setRecord: (quizSetId: number) => ({
+      queryKey: [quizSetId],
+      queryFn: () => REQUEST.quiz.fetchQuizSetRecord({ quizSetId }),
+      enabled: !!quizSetId,
+    }),
+  },
+
+  collection: {
+    info: (collectionId?: number) => ({
+      queryKey: [collectionId],
+      queryFn: () => REQUEST.collection.fetchCollectionInfo({ collectionId }),
+      enabled: !!collectionId,
     }),
   },
 })

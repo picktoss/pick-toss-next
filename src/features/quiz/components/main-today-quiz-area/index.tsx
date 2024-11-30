@@ -9,25 +9,28 @@ import TodayQuizArrived from '../today-quiz-arrived'
 // caseA(노트가 없을 경우): 첫 노트 추가하기
 // caseB(노트가 있고, 오늘의 퀴즈 도착 상태일 경우): 오늘의 퀴즈 도착
 
-const MainTodayQuizArea = ({ state }: { state: 'EMPTY' | 'NOT_ARRIVED' | 'ARRIVED' }) => {
+interface Props {
+  state: 'EMPTY' | 'NOT_ARRIVED' | 'ARRIVED'
+  quizSetId: string
+}
+
+const MainTodayQuizArea = ({ state, quizSetId }: Props) => {
   return (
-    <>
-      <SwitchCase
-        value={state}
-        caseBy={{
-          EMPTY: <AddFirstDocument userName={'픽토스'} />,
+    <SwitchCase
+      value={state}
+      caseBy={{
+        EMPTY: <AddFirstDocument userName={'픽토스'} />,
 
-          NOT_ARRIVED: (
-            <div className="flex flex-col pt-[25px]">
-              <QuizSolvedToday quizCount={15} />
-              <CountdownToMidnight />
-            </div>
-          ),
+        NOT_ARRIVED: (
+          <div className="flex flex-col pt-[25px]">
+            <QuizSolvedToday quizCount={15} />
+            <CountdownToMidnight />
+          </div>
+        ),
 
-          ARRIVED: <TodayQuizArrived />,
-        }}
-      />
-    </>
+        ARRIVED: <TodayQuizArrived quizSetId={quizSetId} />,
+      }}
+    />
   )
 }
 

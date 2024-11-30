@@ -85,4 +85,39 @@ export const fetchDocumentQuizzes = async ({
   }
 }
 
-export const updateQuizResults = async () => {}
+export const fetchQuizSetRecord = async ({ quizSetId }: { quizSetId: number }) => {
+  const session = await auth()
+
+  try {
+    const { data } = await http.get<Quiz.Response.GetQuizSetRecord>(
+      API_ENDPOINTS.QUIZ.GET.RECORD(quizSetId),
+      {
+        headers: {
+          Authorization: `Bearer ${session?.user.accessToken}`,
+        },
+      }
+    )
+    return data
+  } catch (error: unknown) {
+    throw error
+  }
+}
+
+export const createQuizSetForCheck = async ({ documentId }: { documentId: number }) => {
+  const session = await auth()
+
+  try {
+    const { data } = await http.post<Quiz.Response.CreateCheckQuizSet>(
+      API_ENDPOINTS.QUIZ.POST.CHECK_QUIZ_SET(documentId),
+      null,
+      {
+        headers: {
+          Authorization: `Bearer ${session?.user.accessToken}`,
+        },
+      }
+    )
+    return data
+  } catch (error: unknown) {
+    throw error
+  }
+}

@@ -1,9 +1,12 @@
+'use client'
+
 import { Button } from '@/shared/components/ui/button'
 import Text from '@/shared/components/ui/text'
 import { getCurrentDate } from '@/shared/utils/date'
 import QuizArrivedAnimation from '../quiz-arrived-animation'
+import Link from 'next/link'
 
-const TodayQuizArrived = () => {
+const TodayQuizArrived = ({ quizSetId }: { quizSetId: string }) => {
   const MonthDateDay = getCurrentDate().split('년 ')[1]
 
   return (
@@ -22,9 +25,11 @@ const TodayQuizArrived = () => {
         </Text>
       </div>
 
-      <Button variant={'largeRound'} className="w-full">
-        퀴즈 시작하기
-      </Button>
+      <Link href={'/quiz/' + quizSetId + '?quizType=today'}>
+        <Button variant={'largeRound'} className="w-full">
+          퀴즈 시작하기
+        </Button>
+      </Link>
     </div>
   )
 }

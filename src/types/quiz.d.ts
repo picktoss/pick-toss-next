@@ -149,8 +149,14 @@ interface CreateQuizzesPayload {
   quizCount: number
 }
 
+/** GET /api/v2/directories/{directory_id}/quizzes */
 interface GetDirectoryQuizzesResponse {
   quizzes: QuizWithMetadata[]
+}
+
+/** POST /api/v2/quizzes/documents/{document_id}/check-quiz-set */
+interface CreateCheckQuizSetResponse {
+  quizSetId: string
 }
 
 declare namespace Quiz {
@@ -233,5 +239,10 @@ declare namespace Quiz {
      * 퀴즈 결과 업데이트
      */
     type UpdateQuizResult = UpdateQuizResultResponse
+
+    /** POST /api/v2/quizzes/documents/{document_id}/check-quiz-set
+     * 퀴즈 생성 후 퀴즈 오류 확인을 위한 퀴즈 세트 생성
+     */
+    type CreateCheckQuizSet = CreateCheckQuizSetResponse
   }
 }

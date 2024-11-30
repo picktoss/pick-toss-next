@@ -186,6 +186,8 @@ export const API_ENDPOINTS = {
     POST: {
       /** POST /quizzes/documents/{document_id}/create-quizzes - 사용자가 생성한 문서에서 직접 퀴즈 생성 */
       CREATE: (documentId: number) => `/quizzes/documents/${documentId}/create-quizzes`,
+      /** POST /quizzes/documents/{document_id}/check-quiz-set - 퀴즈 생성 후, 퀴즈 오류 확인을 위한 퀴즈세트 생성 */
+      CHECK_QUIZ_SET: (documentId: number) => `/quizzes/documents/${documentId}/check-quiz-set`,
     },
   },
 } as const

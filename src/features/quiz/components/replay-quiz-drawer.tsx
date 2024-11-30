@@ -7,17 +7,28 @@ import Text from '@/shared/components/ui/text'
 import { useEffect, useState } from 'react'
 import Icon from '@/shared/components/custom/icon'
 import { cn } from '@/shared/lib/utils'
+import { fetchDocumentQuizzes } from '@/requests/quiz'
 
-const SAVED_QUIZ_COUNT = 34
+const SAVED_QUIZ_COUNT = 34 // 임시
+
+interface Props {
+  triggerComponent: React.ReactNode
+  documentId: number
+}
 
 // ReplayQuizDrawer 컴포넌트
-const ReplayQuizDrawer = ({ triggerComponent }: { triggerComponent: React.ReactNode }) => {
+const ReplayQuizDrawer = ({ triggerComponent, documentId }: Props) => {
   const [quizType, setQuizType] = useState('random')
   const [quizCount, setQuizCount] = useState(10)
 
   useEffect(() => {
     setQuizCount(SAVED_QUIZ_COUNT) // default : 저장된 문제 수
   }, [])
+
+  const handleClickStart = () => {
+    // 퀴즈 다시 풀기 세트 생성하는 api 호출해 quiz set id 얻어
+    // /quiz/id?quizType=document로 이동
+  }
 
   return (
     <Drawer>

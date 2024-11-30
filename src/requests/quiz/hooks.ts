@@ -1,7 +1,7 @@
 'use client'
 
-import { useQuery } from '@tanstack/react-query'
-import { fetchDirectoryQuizzes, fetchTodayQuizSetId } from '.'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { createQuizSetForCheck, fetchDirectoryQuizzes, fetchTodayQuizSetId } from '.'
 
 export const useTodayQuizSetId = () => {
   return useQuery({
@@ -15,5 +15,11 @@ export const useDirectoryQuizzes = (directoryId: number | null) => {
     queryKey: ['directoryQuizzes', directoryId],
     queryFn: async () => fetchDirectoryQuizzes({ directoryId: directoryId! }),
     enabled: !!directoryId,
+  })
+}
+
+export const useCreateCheckQuizSet = (documentId: number) => {
+  return useMutation({
+    mutationFn: async () => createQuizSetForCheck({ documentId }),
   })
 }
