@@ -1,4 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+'use client'
+
 import { FunctionComponent, PropsWithChildren, Suspense, useRef } from 'react'
 import type { Metadata } from 'next'
 import QuizIntro from '@/features/quiz/screen/intro'
