@@ -20,7 +20,7 @@ const Home = () => {
         {/* 오답 / 랜덤 퀴즈 */}
         <div className="mt-[16px] flex gap-[9px]">
           <Link
-            href={''}
+            href={'/quiz/bomb'}
             className="flex w-1/2 flex-col rounded-[20px] bg-background-base-01 px-[20px] pb-[7px] pt-[16px]"
           >
             <Text typography="subtitle1-bold" className="mb-[2px]">

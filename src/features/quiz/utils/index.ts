@@ -20,3 +20,15 @@ export const getOXCondition = (result: Quiz.Result | null) => {
 export const isQuizSolved = (result: Quiz.Result | null): result is Quiz.Result => {
   return result !== null
 }
+
+export const getAnswerText = (answer: string) => {
+  const OXType = ['correct', 'incorrect'] as OXQuizAnswer[]
+  const isOXType = OXType.find((oxType) => oxType === answer)
+
+  if (isOXType) {
+    if (answer === 'correct') return 'O'
+    if (answer === 'incorrect') return 'X'
+  }
+
+  return answer
+}
