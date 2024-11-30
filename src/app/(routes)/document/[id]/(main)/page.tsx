@@ -5,12 +5,16 @@ import DocumentContent from '@/features/document/screens/document-content'
 import Quiz from '@/features/document/screens/quiz'
 
 interface Props {
+  params: {
+    id: string
+  }
   searchParams: {
     tab?: 'document-content' | 'quiz'
   }
 }
 
-const DocumentDetailPage = ({ searchParams }: Props) => {
+const DocumentDetailPage = ({ params, searchParams }: Props) => {
+  const id = params.id
   const tab = searchParams.tab ?? 'document-content'
   const activeTab = ['document-content', 'quiz'].includes(tab) ? tab : 'document-content'
 
@@ -23,7 +27,7 @@ const DocumentDetailPage = ({ searchParams }: Props) => {
         {activeTab === 'quiz' && <Quiz />}
       </QuizListProvider>
 
-      <DocumentFloatingButton />
+      <DocumentFloatingButton documentId={id} />
     </main>
   )
 }
