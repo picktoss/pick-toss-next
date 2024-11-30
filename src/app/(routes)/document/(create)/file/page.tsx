@@ -3,8 +3,7 @@ import Text from '@/shared/components/ui/text'
 import { EditDocumentProvider } from '@/features/modify/context/edit-document-context'
 import TitleInput from '@/features/modify/components/title-input'
 import FixedBottom from '@/shared/components/custom/fixed-bottom'
-import NewQuizDrawer from '@/features/quiz/components/new-quiz-drawer'
-import { Button } from '@/shared/components/ui/button'
+import CreateQuizDrawer from '@/features/write/components/create-quiz-drawer'
 
 const CreateWithFilePage = () => {
   return (
@@ -55,17 +54,8 @@ const CreateWithFilePage = () => {
         </div> */}
 
       <FixedBottom className="px-[20px]">
-        <NewQuizDrawer
-          triggerComponent={
-            <Button
-              variant={'largeRound'}
-              colors={'primary'}
-              className="flex-center h-[52px] w-full"
-            >
-              퀴즈 만들기
-            </Button>
-          }
-        />
+        {/* TODO: file로 문서 생성하는 로직 필요 */}
+        <CreateQuizDrawer handleCreateDocument={() => {}} />
       </FixedBottom>
     </EditDocumentProvider>
   )
