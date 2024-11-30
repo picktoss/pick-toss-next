@@ -9,13 +9,28 @@ import './style.css'
 import { quizzes } from '../../config'
 import Text from '@/shared/components/ui/text'
 import { Tabs, TabsList, TabsTrigger } from '@/shared/components/ui/tabs'
+import WrongAnswerDialog from '../../components/wrong-answer-dialog'
+import { useQuizNavigation } from '../quiz-view/hooks/use-quiz-navigation'
+import { useQuizState } from '../quiz-view/hooks/use-quiz-state'
+import { getAnswerText } from '../../utils'
+import GoBackButton from '@/shared/components/custom/go-back-button'
+import Tag from '@/shared/components/ui/tag'
+import QuizOptions from '../quiz-view/components/quiz-option'
 
 const RandomQuizView = () => {
   const randomQuizList = [...quizzes] // 임시
 
-  const [repository, setRepository] = useState<'directory' | 'collection'>('collection')
+  const [repository, setRepository] = useState<'directory' | 'collection'>('directory')
   const [activeDirectoryIndex, setActiveDirectoryIndex] = useState(0)
   const [activeCollectionIndex, setActiveCollectionIndex] = useState(0)
+
+  const [openExplanation, setOpenExplanation] = useState(false)
+
+  const { currentIndex, navigateToNext } = useQuizNavigation()
+  const { handleNext, quizResults, setQuizResults } = useQuizState({
+    quizCount: randomQuizList.length,
+    currentIndex,
+  })
 
   const handleSlideChange = (index: number) => {
     if (repository === 'directory') {
@@ -25,7 +40,50 @@ const RandomQuizView = () => {
     }
   }
 
+  const onNext = () => {
+    if (openExplanation) {
+      setOpenExplanation(false)
+    }
+
+    const hasNextQuiz = handleNext(currentIndex, randomQuizList.length)
+    if (hasNextQuiz) {
+      navigateToNext(currentIndex)
+    } else {
+      // TODO: 종료 로직 추가
+    }
+  }
+
+  const onAnswer = ({
+    id,
+    isRight,
+    choseAnswer,
+  }: {
+    id: number
+    isRight: boolean
+    choseAnswer: string
+  }) => {
+    setQuizResults((prev) => {
+      const newResults = [...prev]
+      newResults[currentIndex] = {
+        id,
+        answer: isRight,
+        choseAnswer,
+        elapsedTime: 1, // 임시
+      }
+      return newResults
+    })
+
+    if (isRight) {
+      setTimeout(() => onNext(), 1000)
+    } else {
+      setTimeout(() => setOpenExplanation(true), 1000)
+    }
+  }
+
   const mockData = repository === 'directory' ? mockDirectories : mockCategories
+
+  const currentQuiz = randomQuizList[currentIndex]
+  const currentResult = quizResults[currentIndex]
 
   return (
     <div>
@@ -38,15 +96,35 @@ const RandomQuizView = () => {
       />
 
       <div className="fixed z-10 flex w-screen max-w-mobile flex-col">
-        {/* 문제 영역 */}
         <div className="relative h-[70dvh] min-h-fit w-full rounded-b-[24px] bg-white px-[16px]">
-          {/* <RandomQuiz
-            quizzes={bombQuizList}
-            currentIndex={currentIndex}
-            quizResults={quizResults}
-            setQuizResults={setQuizResults}
-            leftQuizCount={leftQuizCount}
-          /> */}
+          {/* 헤더 영역 */}
+          <div className="flex h-[54px] w-full items-center">
+            <GoBackButton icon="cancel" onClick={() => {}} />
+          </div>
+
+          {/* 문제 영역 */}
+          <div className="flex flex-col items-center">
+            <Tag colors={'secondary'} className="px-[8px] py-[4px]">
+              <Text typography="text2-bold">{currentQuiz.document.name as string}</Text>
+            </Tag>
+
+            <Text
+              key={currentIndex}
+              typography="question"
+              className="mt-[12px] animate-fadeIn px-[30px] text-center"
+            >
+              {currentQuiz.question}
+            </Text>
+
+            <QuizOptions
+              quiz={currentQuiz}
+              currentResult={currentResult}
+              onAnswer={onAnswer}
+              className="my-[16px] mt-[4dvh]"
+            />
+          </div>
+
+          {/* 탭 영역 */}
           <Tabs
             defaultValue="directory"
             className="absolute bottom-4 right-1/2 h-[36px] w-[210px] translate-x-1/2 rounded-[12px] bg-background-base-02 p-[3px]"
@@ -99,15 +177,15 @@ const RandomQuizView = () => {
         </div>
       </div>
 
-      {/* <BombWrongAnswerDialog
+      <WrongAnswerDialog
         isOpen={openExplanation}
         setIsOpen={setOpenExplanation}
-        answer={getAnswerText(currentQuizInfo.answer)}
-        explanation={currentQuizInfo.explanation}
-        directoryName={currentQuizInfo.directory?.name ?? ''}
-        documentName={currentQuizInfo.document.name as string}
+        answer={getAnswerText(currentQuiz.answer)}
+        explanation={currentQuiz.explanation}
+        directoryName={currentQuiz.directory?.name ?? ''}
+        documentName={currentQuiz.document.name as string}
         onNext={onNext}
-      /> */}
+      />
     </div>
   )
 }
