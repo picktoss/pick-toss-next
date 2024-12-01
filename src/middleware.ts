@@ -14,7 +14,14 @@ const publicOnlyUrls: Routes = {
   '/sign-in': true,
 }
 
+const PUBLIC_FILE = /\.(.*)$/
+
 export async function middleware(request: NextRequest) {
+  const isPublicFiles = PUBLIC_FILE.test(request.nextUrl.pathname)
+  if (isPublicFiles) {
+    return
+  }
+
   const session = await auth()
   const publicExists = publicUrls[request.nextUrl.pathname]
   const exists = publicOnlyUrls[request.nextUrl.pathname]
