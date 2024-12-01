@@ -5,6 +5,7 @@ import { dmSans, suit } from '@/shared/lib/fonts'
 import { Metadatas } from '@/features/common/metadata'
 import { Providers } from '@/providers'
 import { Toaster } from '@/shared/components/ui/toaster'
+import Head from 'next/head'
 
 export const metadata: Metadata = Metadatas.root()
 
@@ -22,6 +23,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
+      <Head>
+        <link rel="manifest" href="/manifest.json" />
+      </Head>
       <body className={cn(suit.variable, dmSans.variable, 'bg-gray-01 font-dm-suit')}>
         <Providers>
           <div className="mx-auto min-h-screen max-w-mobile shadow-lg">{children}</div>
