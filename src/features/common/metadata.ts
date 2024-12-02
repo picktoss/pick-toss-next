@@ -5,6 +5,7 @@ export const Metadatas = {
     return {
       metadataBase: new URL(`https://www.picktoss.com`),
       title: '픽토스 | 나만의 AI 퀴즈',
+      manifest: '/manifest.json',
       description: 'AI로 생성하는 나만의 퀴즈',
       icons: {
         icon: '/images/picktoss-logo.png',
