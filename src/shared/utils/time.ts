@@ -21,3 +21,14 @@ export const getTimeUntilMidnight = () => {
 
   return midnight.getTime() - now.getTime()
 }
+
+export const msToFormatMinSec = (ms: number) => {
+  const totalSeconds = Math.floor(ms / 1000)
+  const minutes = Math.floor(totalSeconds / 60)
+  const seconds = totalSeconds % 60
+
+  const formattedMinutes = String(minutes).padStart(2, '0')
+  const formattedSeconds = String(seconds).padStart(2, '0')
+
+  return `${formattedMinutes}분 ${formattedSeconds}초`
+}
