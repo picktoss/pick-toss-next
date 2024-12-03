@@ -6,6 +6,9 @@ import FixedBottom from '@/shared/components/custom/fixed-bottom'
 import CreateQuizDrawer from '@/features/write/components/create-quiz-drawer'
 
 const CreateWithFilePage = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const handleCreateDocument = (params: { quizType: Quiz.Type; star: number }) => {}
+
   return (
     <EditDocumentProvider>
       <TitleInput />
@@ -55,7 +58,7 @@ const CreateWithFilePage = () => {
 
       <FixedBottom className="px-[20px]">
         {/* TODO: file로 문서 생성하는 로직 필요 */}
-        <CreateQuizDrawer handleCreateDocument={() => {}} />
+        <CreateQuizDrawer handleCreateDocument={handleCreateDocument} />
       </FixedBottom>
     </EditDocumentProvider>
   )

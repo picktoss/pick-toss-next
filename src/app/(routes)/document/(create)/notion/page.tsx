@@ -5,6 +5,9 @@ import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
 
 const CreateWithNotionPage = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const handleCreateDocument = (params: { quizType: Quiz.Type; star: number }) => {}
+
   return (
     <>
       <EditDocumentProvider>
@@ -39,7 +42,7 @@ const CreateWithNotionPage = () => {
 
       <FixedBottom className="px-[20px]">
         {/* TODO: notion 문서 생성하는 로직 필요 */}
-        <CreateQuizDrawer handleCreateDocument={() => {}} />
+        <CreateQuizDrawer handleCreateDocument={handleCreateDocument} />
       </FixedBottom>
     </>
   )
