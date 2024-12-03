@@ -30,5 +30,9 @@ export const queries = createQueryKeyStore({
       queryFn: () => REQUEST.quiz.fetchDocumentQuizzes(params),
       enabled: !!params.documentId,
     }),
+    bomb: () => ({
+      queryKey: [''],
+      queryFn: () => REQUEST.quiz.fetchWrongAnswerQuizzes(),
+    }),
   },
 })

@@ -128,6 +128,11 @@ interface DocumentQuizzesResponse {
 /** GET /api/v2/documents/{document_id}/download-quiz */
 type DownloadQuizResponse = string[]
 
+/** GET /api/v2/incorrect-quizzes */
+type WrongAnswerQuizzesResponse = {
+  quizzes: QuizWithMetadata[]
+}
+
 /** PATCH /api/v2/quiz/result */
 interface UpdateQuizResultPayload {
   quizSetId: string
@@ -228,6 +233,11 @@ declare namespace Quiz {
      * 퀴즈 다운로드
      */
     type DownloadQuiz = DownloadQuizResponse
+
+    /** GET /api/v2/incorrect-quizzes
+     * 오답 터뜨리기 퀴즈 가져오기
+     */
+    type GetWrongAnswerQuizzes = WrongAnswerQuizzesResponse
 
     /** PATCH /api/v2/quiz/result
      * 퀴즈 결과 업데이트

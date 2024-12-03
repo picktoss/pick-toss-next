@@ -170,6 +170,8 @@ export const API_ENDPOINTS = {
       BY_DIRECTORY: (directoryId: number) => `/directories/${directoryId}/quizzes`,
       /** GET /documents/{document_id}/download-quiz - 퀴즈 다운로드 */
       DOWNLOAD: (documentId: number) => `/documents/${documentId}/download-quiz`,
+      /** GET /incorrect-quizzes - 오답 터뜨리기 퀴즈 가져오기 */
+      WRONG_ANSWER: '/incorrect-quizzes',
     },
     PATCH: {
       /** PATCH /quiz/result - 퀴즈 결과 업데이트 */

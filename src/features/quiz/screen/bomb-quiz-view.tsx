@@ -2,7 +2,6 @@
 
 import Icon from '@/shared/components/custom/icon'
 import EmptyBombList from '../components/empty-bomb-list'
-import { quizzes } from '../config'
 import { useQuizNavigation } from './quiz-view/hooks/use-quiz-navigation'
 import { useQuizState } from './quiz-view/hooks/use-quiz-state'
 import BombQuiz from '../components/bomb-quiz'
@@ -12,10 +11,14 @@ import Loading from '@/shared/components/custom/loading'
 import WrongAnswerDialog from '../components/wrong-answer-dialog'
 import { getAnswerText } from '../utils'
 import { cn } from '@/shared/lib/utils'
+import { useQuery } from '@tanstack/react-query'
+import { queries } from '@/shared/lib/tanstack-query/query-keys'
+// import { quizzes } from '../config'
 
 const BombQuizView = () => {
-  const bombQuizList = [...quizzes] // 임시
-  // const bombQuizList = [] // 임시
+  const { data, isPending } = useQuery(queries.quiz.bomb())
+  const bombQuizList = data?.quizzes ?? []
+  // const bombQuizList = [...quizzes]
 
   const [openExplanation, setOpenExplanation] = useState(false)
   const [processingResults, setProcessingResults] = useState(false)
@@ -73,7 +76,8 @@ const BombQuizView = () => {
     // onSuccess: 메인 화면으로 이동
   }
 
-  if (processingResults) return <Loading center />
+  if (isPending || processingResults) return <Loading center />
+  // if (processingResults) return <Loading center />
 
   if (!bombQuizList || bombQuizList.length === 0) {
     return (

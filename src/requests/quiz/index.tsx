@@ -85,4 +85,22 @@ export const fetchDocumentQuizzes = async ({
   }
 }
 
+export const fetchWrongAnswerQuizzes = async () => {
+  const session = await auth()
+
+  try {
+    const { data } = await http.get<Quiz.Response.GetWrongAnswerQuizzes>(
+      API_ENDPOINTS.QUIZ.GET.WRONG_ANSWER,
+      {
+        headers: {
+          Authorization: `Bearer ${session?.user.accessToken}`,
+        },
+      }
+    )
+    return data
+  } catch (error: unknown) {
+    throw error
+  }
+}
+
 export const updateQuizResults = async () => {}
