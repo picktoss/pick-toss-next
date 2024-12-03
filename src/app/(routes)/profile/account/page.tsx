@@ -9,6 +9,8 @@ import { fetchUserInfo } from '@/requests/user'
 const AccountPage = async () => {
   const user = await fetchUserInfo()
 
+  const interestFields = user.interestField?.length ? user.interestField : ['관심 분야 없음']
+
   return (
     <main className="h-[calc(100dvh-54px-88px)] w-full overflow-y-auto px-[16px]">
       <div className="flex-center h-fit w-full pb-[44px] pt-[24px]">
@@ -28,7 +30,7 @@ const AccountPage = async () => {
       <div className="flex flex-col gap-[32px]">
         <SetNameDialog userName={user.name} />
 
-        <CategoryDrawer interestedCategory={user.interestField?.[0] ?? '관심 분야 없음'} />
+        <CategoryDrawer interestedCategories={interestFields} />
 
         <Link href={'verify-email'} className="flex w-full items-center justify-between">
           <div className="flex flex-col items-start gap-[4px]">
