@@ -9,6 +9,7 @@ const CollectionDetailPage = () => {
       <DetailInfoWithQuizzes />
       <FixedBottom>
         <Link href="#">
+          {/* 이동 /quiz/[id] - searchParams로 collectionId, createdAt, collectionName, collectionEmoji 넣어서 */}
           <Button className="w-full">퀴즈 시작하기</Button>
         </Link>
       </FixedBottom>

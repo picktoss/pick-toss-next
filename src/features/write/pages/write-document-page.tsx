@@ -46,7 +46,17 @@ const WriteDocumentPage = () => {
       },
       {
         onSuccess: ({ id }) => {
-          router.push('/quiz' + '?documentId=' + id)
+          router.push(
+            '/quiz' +
+              '?documentId=' +
+              id +
+              '&' +
+              'documentName=' +
+              title +
+              '&' +
+              'directoryEmoji=' +
+              selectedDirectory.emoji
+          )
         },
       }
     )

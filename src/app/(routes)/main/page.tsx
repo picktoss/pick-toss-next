@@ -16,11 +16,7 @@ const Home = async () => {
   const { quizSetId, createdAt, type } = await fetchTodayQuizSetId()
   const { documents } = await fetchDocuments()
   const isEmpty = !documents || documents.length === 0
-  const todayQuizState = isEmpty
-    ? 'EMPTY'
-    : type === 'DONE' || type === 'NOT_READY'
-    ? 'NOT_ARRIVED'
-    : 'ARRIVED'
+  const todayQuizState = isEmpty ? 'EMPTY' : type === 'READY' ? 'ARRIVED' : 'NOT_ARRIVED'
 
   return (
     <main className="flex h-[calc(100dvh-54px-88px)] w-full flex-col gap-[64px] overflow-y-auto overflow-x-hidden bg-background-base-02 px-[16px] scrollbar-hide">

@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import QuizView from './quiz-view'
 import QuizIntro from './intro'
 

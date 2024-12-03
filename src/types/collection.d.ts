@@ -98,6 +98,12 @@ interface CollectionAnalysisResponse {
   }
 }
 
+/** POST /api/v2/collections/{collection_id}/collection-quizzes */
+interface StartCollectionQuizResponse {
+  quizSetId: string
+  createdAt: string
+}
+
 /** PATCH /api/v2/collections/{collection_id}/update-quizzes */
 interface UpdateCollectionQuizzesPayload {
   quizzes: number[]
@@ -280,6 +286,11 @@ declare namespace Collection {
      * 컬렉션 생성
      */
     type CreateCollection = Collection
+
+    /** POST /api/v2/collections/{collection_id}/collection-quizzes
+     * 컬렉션 퀴즈 시작
+     */
+    type StartQuiz = StartCollectionQuizResponse
 
     /** DELETE /api/v2/collections/{collection_id}/delete-collection
      * 컬렉션 삭제

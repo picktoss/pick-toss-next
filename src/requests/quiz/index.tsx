@@ -22,12 +22,36 @@ export const fetchTodayQuizSetId = async () => {
   }
 }
 
-export const fetchQuizSet = async ({ quizSetId }: { quizSetId: string }) => {
+export const fetchDocumentQuizSet = async ({ quizSetId }: { quizSetId: string }) => {
   const session = await auth()
 
   try {
-    const { data } = await http.get<Quiz.Response.GetQuizSet>(
-      API_ENDPOINTS.QUIZ.GET.SET(quizSetId),
+    const { data } = await http.get<Quiz.Response.GetDocumentQuizSet>(
+      API_ENDPOINTS.QUIZ.GET.DOCUMENT(quizSetId),
+      {
+        headers: {
+          Authorization: `Bearer ${session?.user.accessToken}`,
+        },
+      }
+    )
+    return data
+  } catch (error: unknown) {
+    throw error
+  }
+}
+
+export const fetchCollectionQuizSet = async ({
+  collectionId,
+  quizSetId,
+}: {
+  collectionId: number
+  quizSetId: string
+}) => {
+  const session = await auth()
+
+  try {
+    const { data } = await http.get<Quiz.Response.GetCollectionQuizSet>(
+      API_ENDPOINTS.QUIZ.GET.COLLECTION(collectionId, quizSetId),
       {
         headers: {
           Authorization: `Bearer ${session?.user.accessToken}`,
@@ -70,7 +94,7 @@ export const fetchDocumentQuizzes = async ({
   const params = quizType ? { 'quiz-type': quizType } : null
 
   try {
-    const { data } = await http.get<Quiz.Response.GetDirectoryQuizzes>(
+    const { data } = await http.get<Quiz.Response.GetDocumentQuizzes>(
       API_ENDPOINTS.QUIZ.GET.BY_DOCUMENT(documentId),
       {
         params,
@@ -85,12 +109,18 @@ export const fetchDocumentQuizzes = async ({
   }
 }
 
-export const fetchQuizSetRecord = async ({ quizSetId }: { quizSetId: string }) => {
+export const fetchQuizSetRecord = async ({
+  quizSetId,
+  quizSetType,
+}: {
+  quizSetId: string
+  quizSetType: QuizSetType
+}) => {
   const session = await auth()
 
   try {
     const { data } = await http.get<Quiz.Response.GetQuizSetRecord>(
-      API_ENDPOINTS.QUIZ.GET.RECORD(quizSetId),
+      API_ENDPOINTS.QUIZ.GET.RECORD(quizSetId, quizSetType),
       {
         headers: {
           Authorization: `Bearer ${session?.user.accessToken}`,
