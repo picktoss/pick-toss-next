@@ -121,9 +121,7 @@ export const API_ENDPOINTS = {
     CREATE: '/feedback',
   },
 
-  MEMBER: {
-    /** GET /members/info - Get member info */
-    BASE: '/members',
+  USER: {
     GET: {
       /** GET /members/info - Get member info */
       INFO: '/members/info',
