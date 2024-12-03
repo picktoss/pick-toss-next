@@ -105,7 +105,7 @@ const RandomQuizView = () => {
           {/* 문제 영역 */}
           <div className="flex flex-col items-center">
             <Tag colors={'secondary'} className="px-[8px] py-[4px]">
-              <Text typography="text2-bold">{currentQuiz.document.name as string}</Text>
+              <Text typography="text2-bold">{currentQuiz.document.name}</Text>
             </Tag>
 
             <Text
@@ -183,7 +183,7 @@ const RandomQuizView = () => {
         answer={getAnswerText(currentQuiz.answer)}
         explanation={currentQuiz.explanation}
         directoryName={currentQuiz.directory?.name ?? ''}
-        documentName={currentQuiz.document.name as string}
+        documentName={currentQuiz.document.name}
         onNext={onNext}
       />
     </div>
