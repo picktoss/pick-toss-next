@@ -13,7 +13,7 @@ interface Props {
     documentName?: string
     directoryEmoji?: string
     // 콜렉션 퀴즈일 경우
-    collectionId?: string // 콜렉션 퀴즈 세트일 경우 넘겨주세요
+    collectionId?: string
     collectionName?: string
     collectionEmoji?: string
   }
