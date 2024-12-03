@@ -23,14 +23,16 @@ type OXQuiz = {
 type CombineQuiz = MultipleChoiceQuiz | OXQuiz
 
 type QuizType = 'MIX_UP' | 'MULTIPLE_CHOICE'
+type ReplayQuizType = 'RANDOM' | 'MIX_UP' | 'MULTIPLE_CHOICE'
 
 type QuizCondition = 'IDLE' | 'DISABLED' | 'RIGHT' | 'WRONG'
 
-type Document = {
+type Category = {
   id: number
   name: string
 }
 
+type DocumentInQuiz = Pick<Document.ItemInList, 'id' | 'name'>
 type DirectoryInQuiz = Pick<Directory.Item, 'id' | 'name'>
 
 type ConsecutiveDays = {
@@ -39,9 +41,13 @@ type ConsecutiveDays = {
 }
 
 type QuizWithMetadata = {
-  document: Pick<Document, 'id' | 'name'>
+  document: DocumentInQuiz
   directory: DirectoryInQuiz
 } & CombineQuiz
+
+type QuizWithCategory = {
+  category: Category
+} & QuizWithMetadata
 
 type QuizRecord = {
   question: string
@@ -64,11 +70,6 @@ type QuizSetRecord = {
 
 /** GET /api/v2/today-quiz-info */
 interface TodayQuizInfoResponse extends ConsecutiveDays {}
-
-/** GET /api/v2/quizzes */
-interface AllQuizzesResponse {
-  quizzes: QuizWithMetadata[]
-}
 
 /** GET /api/v2/quizzes/{quiz_set_id}/{quiz_set_type}/quiz-record */
 interface QuizSetRecordResponse {
@@ -146,9 +147,9 @@ interface UpdateQuizResultResponse {
   currentConsecutiveTodayQuizDate: number
 }
 
-/** POST /api/v2/quizzes/documents/{document_id}/create-quizzes */
-interface CreateQuizzesPayload {
-  quizType: QuizType
+/** POST /api/v2/quizzes/documents/{document_id}/custom-quiz-set */
+interface CreateReplayQuizSetPayload {
+  quizType: ReplayQuizType
   quizCount: number
 }
 
@@ -158,7 +159,7 @@ interface GetDirectoryQuizzesResponse {
 }
 
 /** POST /api/v2/quizzes/documents/{document_id}/check-quiz-set */
-interface CreateCheckQuizSetResponse {
+interface CreateQuizSetResponse {
   quizSetId: string
   createdAt: string
 }
@@ -167,6 +168,7 @@ declare namespace Quiz {
   type Item = CombineQuiz
   type List = CombineQuiz[]
   type ItemWithMetadata = QuizWithMetadata
+  type ItemWithCategory = QuizWithCategory
   type Type = QuizType
   type Record = QuizRecord
   type Result = UpdateQuizResultPayload['quizzes'][number]
@@ -177,10 +179,10 @@ declare namespace Quiz {
      */
     type UpdateQuizResult = UpdateQuizResultPayload
 
-    /** POST /api/v2/quizzes/documents/{document_id}/create-quizzes
-     * 사용자가 생성한 문서에서 직접 퀴즈 생성(랜덤, OX, 객관식)
+    /** POST /api/v2/quizzes/documents/{document_id}/custom-quiz-set
+     * 사용자가 생성한 기존 문서에서 직접 퀴즈 세트 생성(랜덤, OX, 객관식) - 다시풀기 세트 만들기
      */
-    type CreateQuizzes = CreateQuizzesPayload
+    type CreateReplayQuizSet = CreateReplayQuizSetPayload
   }
 
   declare namespace Response {
@@ -188,11 +190,6 @@ declare namespace Quiz {
      * 오늘의 퀴즈 현황
      */
     type GetTodayInfo = TodayQuizInfoResponse
-
-    /** GET /api/v2/quizzes
-     * 생성된 모든 퀴즈 가져오기(전체 문서)
-     */
-    type GetAllQuizzes = AllQuizzesResponse
 
     /** GET /api/v2/quizzes/{quiz_set_id}/{quiz_set_type}/quiz-record
      * 퀴즈 세트에 대한 상세 기록
@@ -252,6 +249,6 @@ declare namespace Quiz {
     /** POST /api/v2/quizzes/documents/{document_id}/check-quiz-set
      * 퀴즈 생성 후 퀴즈 오류 확인을 위한 퀴즈 세트 생성
      */
-    type CreateCheckQuizSet = CreateCheckQuizSetResponse
+    type CreateQuizSet = CreateQuizSetResponse
   }
 }

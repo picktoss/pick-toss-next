@@ -37,9 +37,9 @@ const SpringUpCardAnimation = ({
         onAnimationComplete={onAnimationComplete}
       ></motion.div>
 
-      <div className="center flex-center h-[420px] w-[320px] flex-col gap-[58px]">
+      <div className="center flex-center h-[420px] w-[320px] flex-col gap-[58px] px-[25px]">
         <motion.div
-          className="flex-center flex-col gap-[10px]"
+          className="flex-center flex-col gap-[10px] text-center"
           initial={{ y: '300px', opacity: 0 }}
           animate={{ y: '0%', opacity: 1 }}
           transition={{

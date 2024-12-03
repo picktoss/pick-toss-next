@@ -9,6 +9,8 @@ interface Props {
   searchParams: {
     quizType: 'today' | 'document' | 'collection'
     createdAt: string
+    // 문제 생성일 경우
+    isFirst?: boolean
     // 문서 퀴즈일 경우
     documentName?: string
     directoryEmoji?: string
@@ -23,6 +25,7 @@ const QuizDetailPage = async ({ params, searchParams }: Props) => {
   const {
     quizType,
     createdAt,
+    isFirst,
     documentName,
     directoryEmoji,
     collectionId,
@@ -30,19 +33,18 @@ const QuizDetailPage = async ({ params, searchParams }: Props) => {
     collectionEmoji,
   } = searchParams
 
-  const todayQuizSet = { quizzes: [] }
-  const documentQuizSet = await fetchDocumentQuizSet({ quizSetId: params.id })
-  const collectionQuizSet = await fetchCollectionQuizSet({
-    collectionId: Number(collectionId),
-    quizSetId: params.id,
-  })
+  const todayQuizSet = { quizzes: [] } // today quiz list 가져오기
+  const documentQuizSet =
+    quizType === 'document' ? await fetchDocumentQuizSet({ quizSetId: params.id }) : undefined
+  const collectionQuizSet =
+    quizType === 'collection'
+      ? await fetchCollectionQuizSet({
+          collectionId: Number(collectionId),
+          quizSetId: params.id,
+        })
+      : undefined
 
-  const quizSet =
-    quizType === 'document'
-      ? documentQuizSet
-      : quizType === 'collection'
-      ? collectionQuizSet
-      : todayQuizSet
+  const quizSet = documentQuizSet || collectionQuizSet || todayQuizSet
 
   const hasDocumentInfo = documentName !== undefined && directoryEmoji !== undefined
   const hasCollectionInfo =
@@ -63,6 +65,7 @@ const QuizDetailPage = async ({ params, searchParams }: Props) => {
     <IntroAndQuizView
       quizType={quizType}
       createdAt={createdAt}
+      isFirst={isFirst}
       quizzes={quizSet.quizzes}
       documentInfo={documentInfo}
       collectionInfo={collectionInfo}

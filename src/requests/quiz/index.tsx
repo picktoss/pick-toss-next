@@ -137,9 +137,34 @@ export const createQuizSetForCheck = async ({ documentId }: { documentId: number
   const session = await auth()
 
   try {
-    const { data } = await http.post<Quiz.Response.CreateCheckQuizSet>(
+    const { data } = await http.post<Quiz.Response.CreateQuizSet>(
       API_ENDPOINTS.QUIZ.POST.CHECK_QUIZ_SET(documentId),
       null,
+      {
+        headers: {
+          Authorization: `Bearer ${session?.user.accessToken}`,
+        },
+      }
+    )
+    return data
+  } catch (error: unknown) {
+    throw error
+  }
+}
+
+export const createReplayDocumentQuizSet = async ({
+  documentId,
+  requestBody,
+}: {
+  documentId: number
+  requestBody: Quiz.Request.CreateReplayQuizSet
+}) => {
+  const session = await auth()
+
+  try {
+    const { data } = await http.post<Quiz.Response.CreateQuizSet>(
+      API_ENDPOINTS.QUIZ.POST.REPLAY(documentId),
+      requestBody,
       {
         headers: {
           Authorization: `Bearer ${session?.user.accessToken}`,

@@ -187,8 +187,8 @@ export const API_ENDPOINTS = {
       INVALID_QUIZ: (quizId: number) => `/quizzes/${quizId}/delete-invalid-quiz`,
     },
     POST: {
-      /** POST /quizzes/documents/{document_id}/create-quizzes - 사용자가 생성한 문서에서 직접 퀴즈 생성 */
-      CREATE: (documentId: number) => `/quizzes/documents/${documentId}/create-quizzes`,
+      /** POST /quizzes/documents/{document_id}/custom-quiz-set - 사용자가 생성한 기존 문서에서 직접 퀴즈 세트 (다시)생성 */
+      REPLAY: (documentId: number) => `/quizzes/documents/${documentId}/custom-quiz-set`,
       /** POST /quizzes/documents/{document_id}/check-quiz-set - 퀴즈 생성 후, 퀴즈 오류 확인을 위한 퀴즈세트 생성 */
       CHECK_QUIZ_SET: (documentId: number) => `/quizzes/documents/${documentId}/check-quiz-set`,
       /** POST /collections/{collection_id}/collection-quizzes - 컬렉션 퀴즈 시작하기 */

@@ -8,6 +8,7 @@ interface Props {
   quizType: 'today' | 'document' | 'collection'
   quizzes: QuizWithMetadata[]
   createdAt: string
+  isFirst: boolean | undefined
   documentInfo?: { name: string; directoryEmoji: string }
   collectionInfo?: { name: string; emoji: string }
 }
@@ -16,13 +17,18 @@ const IntroAndQuizView = ({
   quizType,
   quizzes,
   createdAt,
+  isFirst,
   documentInfo,
   collectionInfo,
 }: Props) => {
   const [finishedIntro, setFinishedIntro] = useState(false)
 
   const handleAnimationComplete = () => {
-    setFinishedIntro(true)
+    const delayTimer = setTimeout(() => {
+      setFinishedIntro(true)
+    }, 1000)
+
+    return () => clearTimeout(delayTimer)
   }
 
   if (!finishedIntro) {
@@ -37,7 +43,7 @@ const IntroAndQuizView = ({
     )
   }
 
-  return <QuizView quizzes={quizzes} />
+  return <QuizView quizzes={quizzes} isFirst={isFirst} />
 }
 
 export default IntroAndQuizView

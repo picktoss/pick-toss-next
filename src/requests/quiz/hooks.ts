@@ -1,7 +1,12 @@
 'use client'
 
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { createQuizSetForCheck, fetchDirectoryQuizzes, fetchTodayQuizSetId } from '.'
+import {
+  createQuizSetForCheck,
+  createReplayDocumentQuizSet,
+  fetchDirectoryQuizzes,
+  fetchTodayQuizSetId,
+} from '.'
 
 export const useTodayQuizSetId = () => {
   return useQuery({
@@ -18,8 +23,17 @@ export const useDirectoryQuizzes = (directoryId: number | null) => {
   })
 }
 
-export const useCreateCheckQuizSet = (documentId: number) => {
+export const useCreateCheckQuizSet = () => {
   return useMutation({
-    mutationFn: async () => createQuizSetForCheck({ documentId }),
+    mutationFn: async (documentId: number) => createQuizSetForCheck({ documentId }),
+  })
+}
+
+export const useReplayDocumentQuiz = () => {
+  return useMutation({
+    mutationFn: async (payload: {
+      documentId: number
+      requestBody: Quiz.Request.CreateReplayQuizSet
+    }) => createReplayDocumentQuizSet(payload),
   })
 }

@@ -20,7 +20,7 @@ const AiCreatingQuiz = ({ documentId, documentName, directoryEmoji }: Props) => 
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0)
   const [quizIsReady, setQuizIsReady] = useState(false)
   const { mutate: documentDetailMutate } = useGetDocumentDetail()
-  const { mutate: createCheckQuizSetMutate } = useCreateCheckQuizSet(documentId)
+  const { mutate: createCheckQuizSetMutate } = useCreateCheckQuizSet()
 
   const messages = [
     'AI가 노트를 읽고 있어요',
@@ -61,12 +61,14 @@ const AiCreatingQuiz = ({ documentId, documentName, directoryEmoji }: Props) => 
   }, [documentDetailMutate, documentId])
 
   const handleClickStart = () => {
-    createCheckQuizSetMutate(undefined, {
+    createCheckQuizSetMutate(documentId, {
       onSuccess: (data) => {
         router.push(
           '/quiz/' +
             data.quizSetId +
             '?quizType=document' +
+            '&' +
+            'isFirst=true' +
             '&' +
             `createdAt=${data.createdAt}` +
             '&' +

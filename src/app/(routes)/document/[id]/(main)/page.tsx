@@ -3,6 +3,7 @@ import DocumentFloatingButton from '@/features/document/components/document-floa
 import { QuizListProvider } from '@/features/document/contexts/quiz-list-context'
 import DocumentContent from '@/features/document/screens/document-content'
 import Quiz from '@/features/document/screens/quiz'
+import { fetchDocumentDetail } from '@/requests/document'
 
 interface Props {
   params: {
@@ -13,10 +14,12 @@ interface Props {
   }
 }
 
-const DocumentDetailPage = ({ params, searchParams }: Props) => {
+const DocumentDetailPage = async ({ params, searchParams }: Props) => {
   const id = params.id
   const tab = searchParams.tab ?? 'document-content'
   const activeTab = ['document-content', 'quiz'].includes(tab) ? tab : 'document-content'
+
+  const data = await fetchDocumentDetail(Number(id))
 
   return (
     <main className="min-h-screen">
@@ -27,7 +30,12 @@ const DocumentDetailPage = ({ params, searchParams }: Props) => {
         {activeTab === 'quiz' && <Quiz />}
       </QuizListProvider>
 
-      <DocumentFloatingButton documentId={id} />
+      <DocumentFloatingButton
+        documentId={Number(id)}
+        documentName={data?.documentName ?? ''}
+        directoryEmoji={data?.directory.emoji ?? ''}
+        savedQuizCount={data?.totalQuizCount ?? 0}
+      />
     </main>
   )
 }

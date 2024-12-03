@@ -3,7 +3,19 @@ import ReplayQuizDrawer from '@/features/quiz/components/replay-quiz-drawer'
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
 
-const DocumentFloatingButton = ({ documentId }: { documentId: string }) => {
+interface Props {
+  documentId: number
+  documentName: string
+  directoryEmoji: string
+  savedQuizCount: number
+}
+
+const DocumentFloatingButton = ({
+  documentId,
+  documentName,
+  directoryEmoji,
+  savedQuizCount,
+}: Props) => {
   return (
     <div className="flex-center fixed bottom-[43px] right-1/2 w-[60dvw] min-w-[266px] max-w-[270px] translate-x-1/2 rounded-full border border-border-default bg-background-toast px-[28px] py-[10px] text-button2 text-button-label-primary shadow-custom-shadow">
       <ReplayQuizDrawer
@@ -14,6 +26,9 @@ const DocumentFloatingButton = ({ documentId }: { documentId: string }) => {
           </button>
         }
         documentId={Number(documentId)}
+        documentName={documentName}
+        directoryEmoji={directoryEmoji}
+        savedQuizCount={savedQuizCount}
       />
 
       <NewQuizDrawer

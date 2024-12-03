@@ -4,30 +4,63 @@ import { Button } from '@/shared/components/ui/button'
 import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from '@/shared/components/ui/drawer'
 import { Slider } from '@/shared/components/ui/slider'
 import Text from '@/shared/components/ui/text'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Icon from '@/shared/components/custom/icon'
 import { cn } from '@/shared/lib/utils'
-import { fetchDocumentQuizzes } from '@/requests/quiz'
-
-const SAVED_QUIZ_COUNT = 34 // 임시
+import { useReplayDocumentQuiz } from '@/requests/quiz/hooks'
+import { useRouter } from 'next/navigation'
 
 interface Props {
   triggerComponent: React.ReactNode
   documentId: number
+  documentName: string
+  directoryEmoji: string
+  savedQuizCount: number
 }
 
 // ReplayQuizDrawer 컴포넌트
-const ReplayQuizDrawer = ({ triggerComponent, documentId }: Props) => {
-  const [quizType, setQuizType] = useState('random')
-  const [quizCount, setQuizCount] = useState(10)
+const ReplayQuizDrawer = ({
+  triggerComponent,
+  documentId,
+  documentName,
+  directoryEmoji,
+  savedQuizCount,
+}: Props) => {
+  const router = useRouter()
 
-  useEffect(() => {
-    setQuizCount(SAVED_QUIZ_COUNT) // default : 저장된 문제 수
-  }, [])
+  const { mutate: replayDocumentQuizMutate } = useReplayDocumentQuiz()
+
+  const [quizType, setQuizType] = useState<ReplayQuizType>('RANDOM')
+  const [quizCount, setQuizCount] = useState(savedQuizCount)
+
+  const minQuizCount = savedQuizCount > 5 ? 5 : 1
 
   const handleClickStart = () => {
     // 퀴즈 다시 풀기 세트 생성하는 api 호출해 quiz set id 얻어
     // /quiz/id?quizType=document로 이동
+    replayDocumentQuizMutate(
+      {
+        documentId: documentId,
+        requestBody: { quizType, quizCount },
+      },
+      {
+        onSuccess: (data) =>
+          router.push(
+            '/quiz/' +
+              data.quizSetId +
+              '?quizType=document' +
+              '&' +
+              'createdAt=' +
+              data.createdAt +
+              '&' +
+              'documentName=' +
+              documentName +
+              '&' +
+              'directoryEmoji=' +
+              directoryEmoji
+          ),
+      }
+    )
   }
 
   return (
@@ -44,12 +77,13 @@ const ReplayQuizDrawer = ({ triggerComponent, documentId }: Props) => {
           </DrawerTitle>
 
           {/* 문제 유형 선택 */}
+          {/* TODO: 해당 문서에서 생성된 퀴즈들 중, 특정 유형이 없다면 그 유형은 disabled 처리해야함 */}
           <div className="mb-[28px] flex gap-[8px]">
             <button
-              onClick={() => setQuizType('random')}
+              onClick={() => setQuizType('RANDOM')}
               className={cn(
                 'flex h-[150px] w-[110px] flex-col justify-end rounded-[16px] border px-[20px] pb-[15px] pt-[20px] focus:border-border-focused focus:bg-background-container-03 focus-visible:outline-none disabled:pointer-events-none disabled:grayscale disabled:bg-background-disabled disabled:text-text-disabled',
-                quizType === 'random' && 'bg-background-container-03 border-border-focused'
+                quizType === 'RANDOM' && 'bg-background-container-03 border-border-focused'
               )}
             >
               <Icon name="random-quiz-icon" className="mb-[7.05px] w-[76px]" />
@@ -102,21 +136,22 @@ const ReplayQuizDrawer = ({ triggerComponent, documentId }: Props) => {
 
             {/* 문제 개수 슬라이더 */}
             <Slider
-              min={5}
-              max={SAVED_QUIZ_COUNT} // 저장된 문제 수
+              min={minQuizCount}
+              max={savedQuizCount} // 저장된 문제 수
               step={1}
-              defaultValue={[SAVED_QUIZ_COUNT]} // 저장된 문제 수
+              defaultValue={[savedQuizCount]} // 저장된 문제 수
               onValueChange={(value) => setQuizCount(value[0])}
             />
 
             <div className="mt-[10px] flex w-full items-center justify-between text-text2-medium text-text-sub">
-              <Text>5 문제</Text>
-              <Text>{SAVED_QUIZ_COUNT} 문제</Text>
+              <Text>{minQuizCount} 문제</Text>
+              <Text>{savedQuizCount} 문제</Text>
             </div>
           </div>
 
           <div className="flex-center w-full flex-col pb-[40px] pt-[21px]">
             <Button
+              onClick={() => handleClickStart()}
               variant={'largeRound'}
               colors={'primary'}
               className="mt-[5px] w-[335px] max-w-full text-button1 text-text-primary-inverse"
