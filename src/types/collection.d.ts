@@ -129,6 +129,10 @@ interface CreateCollectionPayload {
   quizzes: number[]
 }
 
+interface CreateBookmark {
+  collectionId: number
+}
+
 declare namespace Collection {
   type Item = Collection
   type List = Collection[]
@@ -137,46 +141,6 @@ declare namespace Collection {
   type Field = CollectionField
 
   declare namespace Request {
-    /** GET /api/v2/collections
-     * 모든 컬렉션 가져오기(탐색)
-     */
-    type GetAllCollections = void
-
-    /** GET /api/v2/collections/{keyword}
-     * 컬렉션 검색하기
-     */
-    type GetCollectionsByKeyword = void
-
-    /** GET /api/v2/collections/{collection_id}/record
-     * 퀴즈를 푼 컬렉션의 상세 기록
-     */
-    type GetCollectionRecord = void
-
-    /** GET /api/v2/collections/{collection_id}/collection_info
-     * 만든 컬렉션 상세 정보 가져오기
-     */
-    type GetCollectionInfo = void
-
-    /** GET /api/v2/collections/my-collections
-     * 직접 생성한 컬렉션 가져오기
-     */
-    type GetMyCollections = void
-
-    /** GET /api/v2/collections/interest-field-collection
-     * 사용자 관심 분야 컬렉션 가져오기
-     */
-    type GetInterestFieldCollections = void
-
-    /** GET /api/v2/collections/bookmarked-collections
-     * 북마크한 컬렉션 가져오기
-     */
-    type GetBookmarkedCollections = void
-
-    /** GET /api/v2/collections-analysis
-     * 컬렉션 분석
-     */
-    type GetCollectionsAnalysis = void
-
     /** PATCH /api/v2/collections/{collection_id}/update-quizzes
      * 컬렉션 문제 편집
      */
@@ -202,16 +166,10 @@ declare namespace Collection {
      */
     type CreateCollection = CreateCollectionPayload
 
-    // DELETE Requests
-    /** DELETE /api/v2/collections/{collection_id}/delete-collection
-     * 컬렉션 삭제
+    /** POST /api/v2/collections/{collection_id}/create-bookmark
+     * 컬렉션 북마크하기
      */
-    type DeleteCollection = void
-
-    /** DELETE /api/v2/collections/{collection_id}/delete-bookmark
-     * 컬렉션 북마크 취소하기
-     */
-    type DeleteBookmark = void
+    type Bookmark = CreateBookmark
   }
 
   declare namespace Response {
@@ -255,39 +213,9 @@ declare namespace Collection {
      */
     type GetCollectionsAnalysis = CollectionAnalysisResponse
 
-    /** PATCH /api/v2/collections/{collection_id}/update-quizzes
-     * 컬렉션 문제 편집
-     */
-    type UpdateQuizzes = void
-
-    /** PATCH /api/v2/collections/{collection_id}/update-info
-     * 컬렉션 정보 수정
-     */
-    type UpdateInfo = void
-
-    /** PATCH /api/v2/collections/{collection_id}/update-collection-result
-     * 컬렉션을 풀었을 때 결과 업데이트
-     */
-    type UpdateCollectionResult = void
-
-    /** PATCH /api/v2/collection/{collection_id}/add-quiz
-     * 컬렉션에 퀴즈 추가
-     */
-    type AddQuiz = void
-
     /** POST /api/v2/collections
      * 컬렉션 생성
      */
     type CreateCollection = Collection
-
-    /** DELETE /api/v2/collections/{collection_id}/delete-collection
-     * 컬렉션 삭제
-     */
-    type DeleteCollection = void
-
-    /** DELETE /api/v2/collections/{collection_id}/delete-bookmark
-     * 컬렉션 북마크 취소하기
-     */
-    type DeleteBookmark = void
   }
 }
