@@ -22,11 +22,17 @@ import { useDeleteDocument } from '@/requests/document/hooks'
 
 // Header 컴포넌트
 const Header = () => {
+  console.log('header 1')
   const router = useRouter()
+  console.log('header 2')
   const { id } = useParams()
+  console.log('header 3')
   const { getPreviousPath } = usePreviousPath({ getCustomPath: true })
+  console.log('header 4')
   const { data } = useQuery(queries.document.item(Number(id)))
+  console.log('header 5')
   const { mutate: deleteDocumentMutation } = useDeleteDocument()
+  console.log('header 6')
 
   const handleClickCancel = () => {
     const previousPath = getPreviousPath()
@@ -44,7 +50,7 @@ const Header = () => {
       onSuccess: () => router.push('/document'),
     })
   }
-
+  console.log('header 7')
   return (
     <>
       <header>

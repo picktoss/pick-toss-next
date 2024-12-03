@@ -3,6 +3,7 @@
 import { useEffect } from 'react'
 
 export const useServiceWorker = () => {
+  console.log('useServiceWorker 1')
   useEffect(() => {
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker
