@@ -6,7 +6,6 @@ import { useEffect } from 'react'
 import { usePostFcmToken } from '@/requests/fcm/hooks'
 
 export const useMessaging = () => {
-  console.log('useMessaging 1')
   useServiceWorker()
   const { mutate: postFcmTokenMutate } = usePostFcmToken()
 

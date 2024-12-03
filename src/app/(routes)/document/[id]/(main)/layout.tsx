@@ -10,7 +10,6 @@ interface LayoutProps extends PropsWithChildren {
 }
 
 const Layout: FunctionComponent<LayoutProps> = ({ header, children }) => {
-  console.log('Layout 1')
   return (
     <DirectoryProvider>
       <DocumentProvider>
