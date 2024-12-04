@@ -12,6 +12,8 @@ import { isQuizSolved } from '../../utils'
 import ResultIcon from '../../components/result-icon'
 import ExitDialog from './components/exit-dialog'
 import { useState } from 'react'
+import { useParams, useRouter } from 'next/navigation'
+import { useUpdateQuizResult } from '@/requests/quiz/hooks'
 
 interface Props {
   quizzes: Quiz.ItemWithMetadata[]
@@ -19,6 +21,9 @@ interface Props {
 }
 
 const QuizView = ({ quizzes, isFirst }: Props) => {
+  const router = useRouter()
+  const { id } = useParams()
+  const { mutate: updateQuizResultMutate } = useUpdateQuizResult()
   const { currentIndex, navigateToNext } = useQuizNavigation()
   const { quizResults, showExplanation, totalElapsedTime, setQuizResults, handleNext, isRunning } =
     useQuizState({
@@ -37,6 +42,17 @@ const QuizView = ({ quizzes, isFirst }: Props) => {
       navigateToNext(currentIndex)
     } else {
       // TODO: 퀴즈 종료 처리 로직 추가
+      const quizResultPayload = {
+        quizSetId: id,
+        quizzes: quizResults,
+      } as Quiz.Request.UpdateQuizResult
+
+      updateQuizResultMutate(quizResultPayload, {
+        onSuccess: () => {
+          // 퀴즈 결과 페이지로 이동
+          router.replace('/') // 임시
+        },
+      })
     }
   }
 

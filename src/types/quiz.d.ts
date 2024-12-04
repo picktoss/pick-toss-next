@@ -83,6 +83,12 @@ interface QuizRecordsResponse extends ConsecutiveDays {
   quizRecords: QuizSetRecord[]
 }
 
+/** GET /api/v2/quiz-sets/{quiz_set_id} */
+interface BaseQuizSetResponse {
+  quizzes: QuizWithMetadata[]
+  collectionName?: string
+}
+
 /** GET /api/v2/documents/quiz-sets/{quiz_set_id} */
 interface DocumentQuizSetResponse {
   quizzes: QuizWithMetadata[]
@@ -200,6 +206,11 @@ declare namespace Quiz {
      * 전체 퀴즈 기록
      */
     type GetQuizRecords = QuizRecordsResponse
+
+    /** GET /api/v2/quiz-sets/{quiz_set_id}
+     * quizSet-type과 quizSet_id로 퀴즈 세트 가져오기
+     */
+    type GetBaseQuizSet = BaseQuizSetResponse
 
     /** GET /api/v2/documents/quiz-sets/{quiz_set_id}
      * quizSet_id로 문서 퀴즈 세트 가져오기
