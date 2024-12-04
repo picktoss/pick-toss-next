@@ -67,6 +67,7 @@ interface CollectionRecordResponse {
 interface CollectionInfoResponse {
   id: number
   name: string
+  emoji: string
   description: string
   solvedCount: number
   bookmarkCount: number
@@ -95,6 +96,12 @@ interface CollectionAnalysisResponse {
     additionalProp2: number
     additionalProp3: number
   }
+}
+
+/** POST /api/v2/collections/{collection_id}/collection-quizzes */
+interface StartCollectionQuizResponse {
+  quizSetId: string
+  createdAt: string
 }
 
 /** PATCH /api/v2/collections/{collection_id}/update-quizzes */

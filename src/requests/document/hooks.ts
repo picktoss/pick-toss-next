@@ -3,10 +3,19 @@
 import { useMutation } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 import { createDocument } from './create-document'
-import { deleteDocument, moveDocument } from '.'
+import { deleteDocument, fetchDocumentDetail, moveDocument } from '.'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import { getQueryClient } from '@/shared/lib/tanstack-query/client'
 import { updateDocument } from './update-document'
+
+/**
+ * 문서 상세 조회 Hook
+ */
+export const useGetDocumentDetail = () => {
+  return useMutation({
+    mutationFn: async (documentId: number) => fetchDocumentDetail(documentId),
+  })
+}
 
 /**
  * 문서 생성 Hook

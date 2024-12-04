@@ -9,13 +9,24 @@ import Icon from '@/shared/components/custom/icon'
 import MainTodayQuizArea from '@/features/quiz/components/main-today-quiz-area'
 import ReviewTop5Container from '@/features/document/components/review-top5-container'
 import InterestedCategoryCollections from '@/features/collection/components/interested-category-collections'
+import { fetchTodayQuizSetId } from '@/requests/quiz'
+import { fetchDocuments } from '@/requests/document'
 
-const Home = () => {
+const Home = async () => {
+  const { quizSetId, createdAt, type } = await fetchTodayQuizSetId()
+  const { documents } = await fetchDocuments()
+  const isEmpty = !documents || documents.length === 0
+  const todayQuizState = isEmpty ? 'EMPTY' : type === 'READY' ? 'ARRIVED' : 'NOT_ARRIVED'
+
   return (
     <main className="flex h-[calc(100dvh-54px-88px)] w-full flex-col gap-[64px] overflow-y-auto overflow-x-hidden bg-background-base-02 px-[16px] scrollbar-hide">
       <div className="w-full">
         {/* 오늘의 퀴즈 영역 */}
-        <MainTodayQuizArea state={'NOT_ARRIVED'} />
+        <MainTodayQuizArea
+          state={todayQuizState}
+          quizSetId={quizSetId}
+          createdAt={createdAt ?? ''}
+        />
 
         {/* 오답 / 랜덤 퀴즈 */}
         <div className="mt-[16px] flex gap-[9px]">

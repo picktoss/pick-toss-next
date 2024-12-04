@@ -19,11 +19,15 @@ const Editor = dynamic(() => import('../components/editor'), {
 const WriteDocumentPage = () => {
   const router = useRouter()
 
-  const { selectedDirectory } = useDirectoryContext()
+  const { selectedDirectory, selectDirectoryId, globalDirectoryId } = useDirectoryContext()
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
 
   const { mutate: createDocumentMutate } = useCreateDocument()
+
+  if (!selectedDirectory) {
+    selectDirectoryId(globalDirectoryId)
+  }
 
   const handleCreateDocument = ({ quizType, star }: { quizType: Quiz.Type; star: number }) => {
     // TODO: validation
@@ -42,7 +46,17 @@ const WriteDocumentPage = () => {
       },
       {
         onSuccess: ({ id }) => {
-          router.push(`/document/${id}`)
+          router.push(
+            '/quiz' +
+              '?documentId=' +
+              id +
+              '&' +
+              'documentName=' +
+              title +
+              '&' +
+              'directoryEmoji=' +
+              selectedDirectory.emoji
+          )
         },
       }
     )

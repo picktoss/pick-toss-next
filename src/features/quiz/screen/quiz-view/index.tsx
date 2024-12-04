@@ -15,9 +15,10 @@ import { useState } from 'react'
 
 interface Props {
   quizzes: Quiz.ItemWithMetadata[]
+  isFirst: boolean | undefined
 }
 
-const QuizView = ({ quizzes }: Props) => {
+const QuizView = ({ quizzes, isFirst }: Props) => {
   const { currentIndex, navigateToNext } = useQuizNavigation()
   const { quizResults, showExplanation, totalElapsedTime, setQuizResults, handleNext, isRunning } =
     useQuizState({
@@ -89,9 +90,11 @@ const QuizView = ({ quizzes }: Props) => {
         />
       </div>
 
-      <div className="mt-[40px] px-[16px]">
-        <ReportQuizErrorDialog />
-      </div>
+      {isFirst && (
+        <div className="mt-[40px] px-[16px]">
+          <ReportQuizErrorDialog />
+        </div>
+      )}
 
       {showExplanation && isQuizSolved(currentResult) && (
         <QuizExplanationDrawer

@@ -36,7 +36,9 @@ export const fetchDocuments = async (params?: GetDocumentsParams) => {
   }
 }
 
-export const fetchDocumentDetail = async (documentId: number) => {
+export const fetchDocumentDetail = async (documentId?: number) => {
+  if (documentId === null || documentId === undefined) return
+
   try {
     const session = await auth()
 

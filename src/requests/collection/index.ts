@@ -108,3 +108,23 @@ export const deleteBookmark = async (collectionId: number) => {
     throw error
   }
 }
+
+export const fetchCollectionInfo = async ({ collectionId }: { collectionId?: number }) => {
+  if (collectionId === null || collectionId === undefined) return
+
+  try {
+    const session = await auth()
+
+    const { data } = await http.get<Collection.Response.GetCollectionInfo>(
+      API_ENDPOINTS.COLLECTION.GET.INFO(collectionId),
+      {
+        headers: {
+          Authorization: `Bearer ${session?.user.accessToken}`,
+        },
+      }
+    )
+    return data
+  } catch (error) {
+    throw error
+  }
+}
