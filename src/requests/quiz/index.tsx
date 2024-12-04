@@ -22,12 +22,36 @@ export const fetchTodayQuizSetId = async () => {
   }
 }
 
-export const fetchQuizSet = async ({ quizSetId }: { quizSetId: string }) => {
+export const fetchDocumentQuizSet = async ({ quizSetId }: { quizSetId: string }) => {
   const session = await auth()
 
   try {
-    const { data } = await http.get<Quiz.Response.GetQuizSet>(
-      API_ENDPOINTS.QUIZ.GET.SET(quizSetId),
+    const { data } = await http.get<Quiz.Response.GetDocumentQuizSet>(
+      API_ENDPOINTS.QUIZ.GET.DOCUMENT(quizSetId),
+      {
+        headers: {
+          Authorization: `Bearer ${session?.user.accessToken}`,
+        },
+      }
+    )
+    return data
+  } catch (error: unknown) {
+    throw error
+  }
+}
+
+export const fetchCollectionQuizSet = async ({
+  collectionId,
+  quizSetId,
+}: {
+  collectionId: number
+  quizSetId: string
+}) => {
+  const session = await auth()
+
+  try {
+    const { data } = await http.get<Quiz.Response.GetCollectionQuizSet>(
+      API_ENDPOINTS.QUIZ.GET.COLLECTION(collectionId, quizSetId),
       {
         headers: {
           Authorization: `Bearer ${session?.user.accessToken}`,
@@ -70,7 +94,7 @@ export const fetchDocumentQuizzes = async ({
   const params = quizType ? { 'quiz-type': quizType } : null
 
   try {
-    const { data } = await http.get<Quiz.Response.GetDirectoryQuizzes>(
+    const { data } = await http.get<Quiz.Response.GetDocumentQuizzes>(
       API_ENDPOINTS.QUIZ.GET.BY_DOCUMENT(documentId),
       {
         params,
@@ -85,4 +109,70 @@ export const fetchDocumentQuizzes = async ({
   }
 }
 
-export const updateQuizResults = async () => {}
+export const fetchQuizSetRecord = async ({
+  quizSetId,
+  quizSetType,
+}: {
+  quizSetId: string
+  quizSetType: QuizSetType
+}) => {
+  const session = await auth()
+
+  try {
+    const { data } = await http.get<Quiz.Response.GetQuizSetRecord>(
+      API_ENDPOINTS.QUIZ.GET.RECORD(quizSetId, quizSetType),
+      {
+        headers: {
+          Authorization: `Bearer ${session?.user.accessToken}`,
+        },
+      }
+    )
+    return data
+  } catch (error: unknown) {
+    throw error
+  }
+}
+
+export const createQuizSetForCheck = async ({ documentId }: { documentId: number }) => {
+  const session = await auth()
+
+  try {
+    const { data } = await http.post<Quiz.Response.CreateQuizSet>(
+      API_ENDPOINTS.QUIZ.POST.CHECK_QUIZ_SET(documentId),
+      null,
+      {
+        headers: {
+          Authorization: `Bearer ${session?.user.accessToken}`,
+        },
+      }
+    )
+    return data
+  } catch (error: unknown) {
+    throw error
+  }
+}
+
+export const createReplayDocumentQuizSet = async ({
+  documentId,
+  requestBody,
+}: {
+  documentId: number
+  requestBody: Quiz.Request.CreateReplayQuizSet
+}) => {
+  const session = await auth()
+
+  try {
+    const { data } = await http.post<Quiz.Response.CreateQuizSet>(
+      API_ENDPOINTS.QUIZ.POST.REPLAY(documentId),
+      requestBody,
+      {
+        headers: {
+          Authorization: `Bearer ${session?.user.accessToken}`,
+        },
+      }
+    )
+    return data
+  } catch (error: unknown) {
+    throw error
+  }
+}

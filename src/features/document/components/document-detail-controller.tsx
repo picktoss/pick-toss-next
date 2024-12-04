@@ -3,8 +3,7 @@
 import PickDrawer from '@/features/quiz/components/pick-drawer'
 import Text from '@/shared/components/ui/text'
 import { cn } from '@/shared/lib/utils'
-import Link from 'next/link'
-import { useParams, useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 const tabs = [
   { key: 'document-content', label: '노트' },
@@ -12,17 +11,23 @@ const tabs = [
 ] as const
 
 const DocumentDetailController = () => {
-  const { id } = useParams()
+  const router = useRouter()
   const tab = useSearchParams().get('tab') ?? ''
   const activeTab = ['document-content', 'quiz'].includes(tab) ? tab : 'document-content'
+
+  const handleTabChange = (newTab: 'document-content' | 'quiz') => {
+    if (newTab !== activeTab) {
+      router.replace(`?tab=${newTab}`)
+    }
+  }
 
   return (
     <div className="sticky top-[54px]">
       <div className="flex items-center justify-between bg-background-base-01 text-text-disabled">
         {tabs.map((tab) => (
-          <Link
+          <button
             key={tab.key}
-            href={`/document/${String(id)}?tab=${tab.key}`}
+            onClick={() => handleTabChange(tab.key)}
             className={cn(
               'grow px-[16px] pb-[12px] mt-[12px] border-b border-border-divider flex-center',
               activeTab === tab.key && 'border-b-2 border-button-fill-selected'
@@ -37,7 +42,7 @@ const DocumentDetailController = () => {
             >
               {tab.label}
             </Text>
-          </Link>
+          </button>
         ))}
       </div>
 

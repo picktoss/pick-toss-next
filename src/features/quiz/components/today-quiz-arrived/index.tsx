@@ -1,10 +1,18 @@
+'use client'
+
 import { Button } from '@/shared/components/ui/button'
 import Text from '@/shared/components/ui/text'
-import { getCurrentDate } from '@/shared/utils/date'
+import { formatDateKorean } from '@/shared/utils/date'
 import QuizArrivedAnimation from '../quiz-arrived-animation'
+import Link from 'next/link'
 
-const TodayQuizArrived = () => {
-  const MonthDateDay = getCurrentDate().split('년 ')[1]
+interface Props {
+  quizSetId: string
+  createdAt: string
+}
+
+const TodayQuizArrived = ({ quizSetId, createdAt }: Props) => {
+  const MonthDateDay = formatDateKorean(createdAt, { month: true, day: true, dayOfWeek: true })
 
   return (
     <div className="relative mt-[12px] flex h-fit w-full flex-col overflow-hidden rounded-[20px] bg-[var(--color-orange-200)] p-[16px] pt-[20px]">
@@ -22,9 +30,11 @@ const TodayQuizArrived = () => {
         </Text>
       </div>
 
-      <Button variant={'largeRound'} className="w-full">
-        퀴즈 시작하기
-      </Button>
+      <Link href={'/quiz/' + quizSetId + '?quizType=today' + '&' + `createdAt=${createdAt}`}>
+        <Button variant={'largeRound'} className="w-full">
+          퀴즈 시작하기
+        </Button>
+      </Link>
     </div>
   )
 }
