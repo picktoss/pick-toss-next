@@ -14,21 +14,16 @@ import { cn } from '@/shared/lib/utils'
 import { useQuery } from '@tanstack/react-query'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import { useUpdateWrongQuizResult } from '@/requests/quiz/hooks'
-import { getQueryClient } from '@/shared/lib/tanstack-query/client'
 import { useRouter } from 'next/navigation'
-// import { quizzes } from '../config'
 
 const BombQuizView = () => {
   const router = useRouter()
-  const queryClient = getQueryClient()
   const { data, isPending } = useQuery(queries.quiz.bomb())
   const { mutate: updateWrongQuizResultMutate } = useUpdateWrongQuizResult()
 
   const bombQuizList = data?.quizzes ?? []
-  // const bombQuizList = [...quizzes]
 
   const [openExplanation, setOpenExplanation] = useState(false)
-  const [processingResults, setProcessingResults] = useState(false)
 
   const { currentIndex, navigateToNext } = useQuizNavigation()
   const { handleNext, quizResults, setQuizResults, leftQuizCount } = useQuizState({
@@ -77,13 +72,7 @@ const BombQuizView = () => {
           onSuccess: () => navigateToNext(currentIndex),
         })
       } else {
-        setProcessingResults(true)
-        updateWrongQuizResultMutate(requestBody, {
-          onSuccess: async () => {
-            await queryClient.invalidateQueries(queries.quiz.bomb())
-            setProcessingResults(false)
-          },
-        })
+        updateWrongQuizResultMutate(requestBody)
       }
     }
   }
@@ -95,8 +84,7 @@ const BombQuizView = () => {
     // onSuccess: 메인 화면으로 이동
   }
 
-  if (isPending || processingResults) return <Loading center />
-  // if (processingResults) return <Loading center />
+  if (isPending) return <Loading center />
 
   if (!bombQuizList || bombQuizList.length === 0) {
     return (
