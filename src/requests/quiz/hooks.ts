@@ -6,6 +6,7 @@ import {
   createReplayDocumentQuizSet,
   fetchDirectoryQuizzes,
   fetchTodayQuizSetId,
+  updateQuizResult,
 } from '.'
 
 export const useTodayQuizSetId = () => {
@@ -35,5 +36,11 @@ export const useReplayDocumentQuiz = () => {
       documentId: number
       requestBody: Quiz.Request.CreateReplayQuizSet
     }) => createReplayDocumentQuizSet(payload),
+  })
+}
+
+export const useUpdateQuizResult = () => {
+  return useMutation({
+    mutationFn: async (requestBody: Quiz.Request.UpdateQuizResult) => updateQuizResult(requestBody),
   })
 }

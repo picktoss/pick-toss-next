@@ -1,5 +1,6 @@
 import IntroAndQuizView from '@/features/quiz/screen/intro-and-quiz-view'
-import { fetchCollectionQuizSet, fetchDocumentQuizSet } from '@/requests/quiz'
+import { getQuizSetTypeEnum } from '@/features/quiz/utils'
+import { fetchQuizSetById } from '@/requests/quiz'
 import { notFound } from 'next/navigation'
 
 interface Props {
@@ -33,18 +34,11 @@ const QuizDetailPage = async ({ params, searchParams }: Props) => {
     collectionEmoji,
   } = searchParams
 
-  const todayQuizSet = { quizzes: [] } // today quiz list 가져오기
-  const documentQuizSet =
-    quizType === 'document' ? await fetchDocumentQuizSet({ quizSetId: params.id }) : undefined
-  const collectionQuizSet =
-    quizType === 'collection'
-      ? await fetchCollectionQuizSet({
-          collectionId: Number(collectionId),
-          quizSetId: params.id,
-        })
-      : undefined
-
-  const quizSet = documentQuizSet || collectionQuizSet || todayQuizSet
+  const quizSet = await fetchQuizSetById({
+    quizSetId: params.id,
+    collectionId: quizType === 'collection' ? Number(collectionId) : undefined,
+    quizSetType: getQuizSetTypeEnum(quizType),
+  })
 
   const hasDocumentInfo = documentName !== undefined && directoryEmoji !== undefined
   const hasCollectionInfo =
