@@ -54,6 +54,9 @@ export const useUpdateWrongQuizResult = () => {
   return useMutation({
     mutationFn: async (requestBody: Quiz.Request.UpdateWrongQuizResult) =>
       updateWrongQuizResult(requestBody),
-    onSuccess: async () => await queryClient.invalidateQueries(queries.quiz.bomb()),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(queries.quiz.bomb())
+      window.location.reload()
+    },
   })
 }
