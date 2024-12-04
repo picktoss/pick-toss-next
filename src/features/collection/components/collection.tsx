@@ -1,3 +1,4 @@
+import { useBookmarkMutation } from '@/requests/collection/hooks'
 import CategoryTag from '@/shared/components/custom/category-tag'
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
@@ -5,6 +6,7 @@ import { cn } from '@/shared/lib/utils'
 import { HTMLAttributes } from 'react'
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
+  collectionId: number
   emoji: string
   title: string
   category: string
@@ -15,6 +17,7 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
 }
 
 const Collection = ({
+  collectionId,
   emoji,
   title,
   category,
@@ -24,11 +27,29 @@ const Collection = ({
   bookMarkCount,
   className,
 }: Props) => {
+  const { mutate: bookmarkMutate } = useBookmarkMutation()
+
   return (
     <div className={cn('min-w-[166px]', className)}>
       <div className="relative inline-block h-[200px] w-full rounded-[16px] bg-background-base-01 px-[20px] pt-[19px] text-start">
         <div className="absolute right-[16px] top-[20px] flex flex-col items-center gap-[4px]">
-          {isBookMarked ? <Icon name="book-mark-fill" /> : <Icon name="book-mark" />}
+          {isBookMarked ? (
+            <Icon
+              name="book-mark-fill"
+              onClick={(e) => {
+                e.stopPropagation()
+                bookmarkMutate({ collectionId, isBookMarked: true })
+              }}
+            />
+          ) : (
+            <Icon
+              name="book-mark"
+              onClick={(e) => {
+                e.stopPropagation()
+                bookmarkMutate({ collectionId, isBookMarked: false })
+              }}
+            />
+          )}
           <Text typography="text2-medium" className="text-text-caption">
             {bookMarkCount}
           </Text>

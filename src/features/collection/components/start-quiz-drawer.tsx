@@ -1,5 +1,6 @@
 'use client'
 
+import { useBookmarkMutation } from '@/requests/collection/hooks'
 import CategoryTag from '@/shared/components/custom/category-tag'
 import Icon from '@/shared/components/custom/icon'
 import { Button } from '@/shared/components/ui/button'
@@ -8,7 +9,7 @@ import Text from '@/shared/components/ui/text'
 import Link from 'next/link'
 
 interface StartQuizDrawerProps {
-  collectionId: string
+  collectionId: number
   trigger: React.ReactNode
   emoji: string
   title: string
@@ -32,6 +33,8 @@ const StartQuizDrawer = ({
   isBookMarked,
   bookMarkCount,
 }: StartQuizDrawerProps) => {
+  const { mutate: bookmarkMutate } = useBookmarkMutation()
+
   return (
     <Drawer>
       <DrawerTrigger>{trigger}</DrawerTrigger>
@@ -54,9 +57,17 @@ const StartQuizDrawer = ({
           <div className="relative p-[20px]">
             <div className="absolute right-[20px] flex flex-col items-center gap-[4px]">
               {isBookMarked ? (
-                <Icon name="book-mark-fill" className="size-[24px]" />
+                <Icon
+                  name="book-mark-fill"
+                  className="size-[24px]"
+                  onClick={() => bookmarkMutate({ collectionId, isBookMarked: true })}
+                />
               ) : (
-                <Icon name="book-mark" className="size-[24px]" />
+                <Icon
+                  name="book-mark"
+                  className="size-[24px]"
+                  onClick={() => bookmarkMutate({ collectionId, isBookMarked: false })}
+                />
               )}
               <Text typography="text2-medium" className="text-text-caption">
                 {bookMarkCount}

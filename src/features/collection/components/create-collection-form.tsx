@@ -29,6 +29,7 @@ import {
 } from '@/shared/components/ui/drawer'
 import { CATEGORIES } from '@/features/category/config'
 import { useCreateCollection } from '@/requests/collection/hooks'
+import Loading from '@/shared/components/custom/loading'
 
 interface SearchParams {
   step: 'select-document' | 'create-form'
@@ -41,7 +42,7 @@ const CreateCollectionForm = () => {
     ? stepValue
     : 'select-document'
 
-  const { data: directoriesData } = useDirectories()
+  const { data: directoriesData, isLoading: directoriesLoading } = useDirectories()
 
   const [selectedDirectoryId, setSelectedDirectoryId] = useState<number | null>(null)
   const [selectedQuizIds, setSelectedQuizIds] = useState<number[]>([])
@@ -52,9 +53,11 @@ const CreateCollectionForm = () => {
   const [description, setDescription] = useState('')
   const [categoryCode, setCategoryCode] = useState(CATEGORIES[0].code)
 
-  const { data: directoryQuizzesData } = useDirectoryQuizzes(selectedDirectoryId)
+  const { data: directoryQuizzesData, isLoading: directoryQuizzesLoading } =
+    useDirectoryQuizzes(selectedDirectoryId)
 
-  const { mutate: createCollectionMutate } = useCreateCollection()
+  const { mutate: createCollectionMutate, isPending: isCreateCollectionPending } =
+    useCreateCollection()
 
   const handleSelectAllClick = (check: boolean) => {
     if (!directoryQuizzesData) return
@@ -88,7 +91,7 @@ const CreateCollectionForm = () => {
       },
       {
         onSuccess: (data) => {
-          router.push(`/collections/${data.id}`)
+          router.replace(`/collections/${data.id}`)
         },
       }
     )
@@ -119,57 +122,65 @@ const CreateCollectionForm = () => {
             5문제 이상 선택해주세요.
           </Text>
         </div>
-        <div className="mt-[24px] pb-[120px]">
-          <div className="sticky top-[54px] z-20 flex h-[44px] items-center justify-between bg-white">
-            <DirectorySelect
-              directories={directoriesData?.directories ?? []}
-              selectedDirectoryId={selectedDirectoryId}
-              selectDirectoryId={(directoryId: number) => setSelectedDirectoryId(directoryId)}
-            />
-            <Text typography="text2-bold" className="text-text-accent">
-              {selectedQuizCount}개 선택됨
-            </Text>
-          </div>
-
-          <div className="mt-[16px] flex items-center gap-[12px]">
-            <Checkbox id="check-all" checked={allChecked} onCheckedChange={handleSelectAllClick} />
-            <Label htmlFor="check-all" className="!text-text1-medium text-text-secondary">
-              전체 선택
-            </Label>
-          </div>
-
-          <ul className="mt-[23px] flex flex-col gap-[8px]">
-            {directoryQuizzesData?.quizzes.map((quiz) => (
-              <SelectableQuizCard
-                key={quiz.id}
-                quiz={quiz}
-                onSelect={onSelectableQuizCardClick}
-                selected={selectedQuizIds.includes(quiz.id)}
-                order={selectedQuizIds.indexOf(quiz.id) + 1}
+        {directoriesLoading || directoryQuizzesLoading ? (
+          <Loading center />
+        ) : (
+          <div className="mt-[24px] pb-[120px]">
+            <div className="sticky top-[54px] z-20 flex h-[44px] items-center justify-between bg-white">
+              <DirectorySelect
+                directories={directoriesData?.directories ?? []}
+                selectedDirectoryId={selectedDirectoryId}
+                selectDirectoryId={(directoryId: number) => setSelectedDirectoryId(directoryId)}
               />
-            ))}
-          </ul>
+              <Text typography="text2-bold" className="text-text-accent">
+                {selectedQuizCount}개 선택됨
+              </Text>
+            </div>
 
-          <FixedBottom className="flex gap-[6px]">
-            <Button
-              variant={'largeRound'}
-              colors={'tertiary'}
-              className="w-[35%]"
-              onClick={() => setSelectedQuizIds([])}
-            >
-              초기화
-            </Button>
-            <Button
-              variant={'largeRound'}
-              colors={'primary'}
-              className="flex-1"
-              disabled={selectedQuizCount < 5}
-              onClick={() => router.push('/collections/create?step=create-form')}
-            >
-              다음
-            </Button>
-          </FixedBottom>
-        </div>
+            <div className="mt-[16px] flex items-center gap-[12px]">
+              <Checkbox
+                id="check-all"
+                checked={allChecked}
+                onCheckedChange={handleSelectAllClick}
+              />
+              <Label htmlFor="check-all" className="!text-text1-medium text-text-secondary">
+                전체 선택
+              </Label>
+            </div>
+
+            <ul className="mt-[23px] flex flex-col gap-[8px]">
+              {directoryQuizzesData?.quizzes.map((quiz) => (
+                <SelectableQuizCard
+                  key={quiz.id}
+                  quiz={quiz}
+                  onSelect={onSelectableQuizCardClick}
+                  selected={selectedQuizIds.includes(quiz.id)}
+                  order={selectedQuizIds.indexOf(quiz.id) + 1}
+                />
+              ))}
+            </ul>
+
+            <FixedBottom className="flex gap-[6px]">
+              <Button
+                variant={'largeRound'}
+                colors={'tertiary'}
+                className="w-[35%]"
+                onClick={() => setSelectedQuizIds([])}
+              >
+                초기화
+              </Button>
+              <Button
+                variant={'largeRound'}
+                colors={'primary'}
+                className="flex-1"
+                disabled={selectedQuizCount < 5}
+                onClick={() => router.push('/collections/create?step=create-form')}
+              >
+                다음
+              </Button>
+            </FixedBottom>
+          </div>
+        )}
       </>
     )
   }
@@ -252,7 +263,12 @@ const CreateCollectionForm = () => {
         </div>
       </div>
       <FixedBottom className="flex gap-[6px]">
-        <Button variant={'largeRound'} className="w-full" onClick={() => handleCreateCollection()}>
+        <Button
+          variant={'largeRound'}
+          className="w-full"
+          onClick={() => handleCreateCollection()}
+          disabled={isCreateCollectionPending}
+        >
           만들기
         </Button>
       </FixedBottom>
