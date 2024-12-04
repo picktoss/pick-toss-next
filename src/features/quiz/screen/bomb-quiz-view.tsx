@@ -14,13 +14,11 @@ import { cn } from '@/shared/lib/utils'
 import { useQuery } from '@tanstack/react-query'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import { useUpdateWrongQuizResult } from '@/requests/quiz/hooks'
-import { getQueryClient } from '@/shared/lib/tanstack-query/client'
 import { useRouter } from 'next/navigation'
 // import { quizzes } from '../config'
 
 const BombQuizView = () => {
   const router = useRouter()
-  const queryClient = getQueryClient()
   const { data, isPending } = useQuery(queries.quiz.bomb())
   const { mutate: updateWrongQuizResultMutate } = useUpdateWrongQuizResult()
 
@@ -79,10 +77,7 @@ const BombQuizView = () => {
       } else {
         setProcessingResults(true)
         updateWrongQuizResultMutate(requestBody, {
-          onSuccess: async () => {
-            await queryClient.invalidateQueries(queries.quiz.bomb())
-            setProcessingResults(false)
-          },
+          onSuccess: () => setProcessingResults(false),
         })
       }
     }

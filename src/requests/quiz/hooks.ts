@@ -9,6 +9,8 @@ import {
   updateQuizResult,
   updateWrongQuizResult,
 } from '.'
+import { getQueryClient } from '@/shared/lib/tanstack-query/client'
+import { queries } from '@/shared/lib/tanstack-query/query-keys'
 
 export const useTodayQuizSetId = () => {
   return useQuery({
@@ -47,8 +49,11 @@ export const useUpdateQuizResult = () => {
 }
 
 export const useUpdateWrongQuizResult = () => {
+  const queryClient = getQueryClient()
+
   return useMutation({
     mutationFn: async (requestBody: Quiz.Request.UpdateWrongQuizResult) =>
       updateWrongQuizResult(requestBody),
+    onSuccess: async () => await queryClient.invalidateQueries(queries.quiz.bomb()),
   })
 }
