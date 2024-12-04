@@ -25,11 +25,17 @@ const DirectorySelectDrawer = () => {
     setOpen(false)
   }
 
+  const directoryName = !selectedDirectory?.name
+    ? '전체 노트'
+    : selectedDirectory.tag === 'DEFAULT'
+    ? '전체 노트'
+    : selectedDirectory.name
+
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
         <button className="rounded-full bg-background-base-02 px-[16px] py-[5px]">
-          {`${selectedDirectory?.emoji ?? ''} ${selectedDirectory?.name ?? '전체 노트'}`}
+          {`${selectedDirectory?.emoji ?? ''} ${directoryName}`}
         </button>
       </DrawerTrigger>
 

@@ -142,7 +142,7 @@ const BombQuizView = () => {
         answer={getAnswerText(currentQuizInfo.answer)}
         explanation={currentQuizInfo.explanation}
         directoryName={currentQuizInfo.directory?.name ?? ''}
-        documentName={currentQuizInfo.document.name as string}
+        documentName={currentQuizInfo.document.name}
         onNext={onNext}
       />
     </div>

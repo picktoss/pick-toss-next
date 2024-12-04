@@ -1,19 +1,25 @@
-import { Button } from '@/shared/components/ui/button'
-import Link from 'next/link'
+import AiCreatingQuiz from '@/features/quiz/screen/ai-creating-quiz'
 
-const QuizPage = () => {
-  // const { quizSetId, type } = await fetchTodayQuizSetId()
+interface Props {
+  searchParams: {
+    documentId: string
+    documentName: string
+    directoryEmoji: string
+  }
+}
+
+// quiz-set-id 없이 /quiz로만 오면 document에서 퀴즈를 생성하는 것으로 판단
+const QuizPage = ({ searchParams }: Props) => {
+  const { documentId, documentName, directoryEmoji } = searchParams
 
   return (
     <>
-      <Link href={`/quiz/1?quizType=today`}>
-        <Button>오늘의 퀴즈 풀러가기</Button>
-      </Link>
+      <AiCreatingQuiz
+        documentId={Number(documentId)}
+        documentName={documentName}
+        directoryEmoji={directoryEmoji}
+      />
     </>
-
-    // <Link href={type === 'READY' ? `/quiz/${quizSetId}?quizType=today` : '#'}>
-    //   <Button>오늘의 퀴즈 풀러가기</Button>
-    // </Link>
   )
 }
 

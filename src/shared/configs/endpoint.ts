@@ -19,13 +19,11 @@ export const API_ENDPOINTS = {
   },
 
   COLLECTION: {
-    /** GET /collections - 모든 컬렉션 가져오기(탐색) */
-    BASE: '/collections',
     GET: {
+      /** GET /collections - 모든 컬렉션 가져오기(탐색) */
+      ALL: '/collections',
       /** GET /collections/{keyword} - 컬렉션 검색하기 */
       BY_KEYWORD: (keyword: string) => `/collections/${keyword}`,
-      /** GET /collections/{collection_id}/record - 퀴즈를 푼 컬렉션의 상세 기록 */
-      RECORD: (collectionId: number) => `/collections/${collectionId}/record`,
       /** GET /collections/{collection_id}/collection_info - 만든 컬렉션 상세 정보 가져오기 */
       INFO: (collectionId: number) => `/collections/${collectionId}/collection_info`,
       /** GET /collections/my-collections - 직접 생성한 컬렉션 가져오기 */
@@ -40,15 +38,16 @@ export const API_ENDPOINTS = {
     POST: {
       /** POST /collections - 컬렉션 생성 */
       CREATE_COLLECTION: `/collections`,
+      /** POST /collections - 컬렉션 북마크하기 */
+      CREATE_BOOKMARK: (collectionId: number) => `/collections/${collectionId}/create-bookmark`,
+      /** POST /collections/{collection_id}/collection-quizzes - 컬렉션 퀴즈 시작 */
+      START_QUIZ: (collectionId: number) => `/collections/${collectionId}/collection-quizzes`,
     },
     PATCH: {
       /** PATCH /collections/{collection_id}/update-quizzes - 컬렉션 문제 편집 */
       UPDATE_QUIZZES: (collectionId: number) => `/collections/${collectionId}/update-quizzes`,
       /** PATCH /collections/{collection_id}/update-info - 컬렉션 정보 수정 */
       UPDATE_INFO: (collectionId: number) => `/collections/${collectionId}/update-info`,
-      /** PATCH /collections/{collection_id}/update-collection-result - 컬렉션을 풀었을 때 결과 업데이트 */
-      UPDATE_RESULT: (collectionId: number) =>
-        `/collections/${collectionId}/update-collection-result`,
       /** PATCH /collection/{collection_id}/add-quiz - 컬렉션에 퀴즈 추가 */
       ADD_QUIZ: (collectionId: number) => `/collection/${collectionId}/add-quiz`,
     },
@@ -152,12 +151,12 @@ export const API_ENDPOINTS = {
       TODAY_INFO: '/today-quiz-info',
       /** GET /quizzes - 생성된 모든 퀴즈 가져오기(전체 문서) */
       ALL: '/quizzes',
-      /** GET /quizzes/{quiz_set_id}/quiz-record - 퀴즈 세트에 대한 상세 기록 */
-      RECORD: (quizSetId: number) => `/quizzes/${quizSetId}/quiz-record`,
+      /** GET /quizzes/{quiz_set_id}/{quiz_set_type}/quiz-record - 퀴즈 세트에 대한 상세 기록 */
+      RECORD: (quizSetId: string, quizSetType: QuizSetType) =>
+        `/quizzes/${quizSetId}/${quizSetType}/quiz-record`,
       /** GET /quizzes/quiz-records - 전체 퀴즈 기록 */
       ALL_RECORDS: '/quizzes/quiz-records',
-      /** GET /quiz-sets/{quiz_set_id} - quizSet_id로 퀴즈 가져오기 */
-      SET: (quizSetId: string) => `/quiz-sets/${quizSetId}`,
+      BY_SET_ID: (quizSetId: string) => `/quiz-sets/${quizSetId}`,
       /** GET /quiz-sets/today - 오늘의 퀴즈 세트 정보 가져오기 */
       TODAY_SET: '/quiz-sets/today',
       /** GET /quiz-analysis - 퀴즈 분석 */
@@ -176,6 +175,10 @@ export const API_ENDPOINTS = {
     PATCH: {
       /** PATCH /quiz/result - 퀴즈 결과 업데이트 */
       UPDATE_RESULT: '/quiz/result',
+      /** PATCH /quiz/result - 랜덤 퀴즈 결과 업데이트 */
+      UPDATE_RANDOM_RESULT: '/random-quiz/result',
+      /** PATCH /quiz/result - 퀴즈 결과 업데이트 */
+      UPDATE_WRONG_RESULT: '/wrong-quiz/result',
     },
     DELETE: {
       /** DELETE /quizzes/{quiz_id}/delete-quiz - 퀴즈 삭제 */
@@ -184,8 +187,12 @@ export const API_ENDPOINTS = {
       INVALID_QUIZ: (quizId: number) => `/quizzes/${quizId}/delete-invalid-quiz`,
     },
     POST: {
-      /** POST /quizzes/documents/{document_id}/create-quizzes - 사용자가 생성한 문서에서 직접 퀴즈 생성 */
-      CREATE: (documentId: number) => `/quizzes/documents/${documentId}/create-quizzes`,
+      /** POST /quizzes/documents/{document_id}/custom-quiz-set - 사용자가 생성한 기존 문서에서 직접 퀴즈 세트 (다시)생성 */
+      REPLAY: (documentId: number) => `/quizzes/documents/${documentId}/custom-quiz-set`,
+      /** POST /quizzes/documents/{document_id}/check-quiz-set - 퀴즈 생성 후, 퀴즈 오류 확인을 위한 퀴즈세트 생성 */
+      CHECK_QUIZ_SET: (documentId: number) => `/quizzes/documents/${documentId}/check-quiz-set`,
+      /** POST /collections/{collection_id}/collection-quizzes - 컬렉션 퀴즈 시작하기 */
+      COLLECTION: (collectionId: number) => `/collections/${collectionId}/collection-quizzes`,
     },
   },
 } as const

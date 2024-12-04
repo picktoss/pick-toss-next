@@ -1,6 +1,10 @@
-export const quizzes: Quiz.ItemWithMetadata[] = [
+export const quizzes: Quiz.ItemWithCategory[] = [
   {
     document: {
+      id: 1,
+      name: '최근 이슈',
+    },
+    directory: {
       id: 1,
       name: '전공 공부',
     },
@@ -23,6 +27,10 @@ export const quizzes: Quiz.ItemWithMetadata[] = [
   {
     document: {
       id: 1,
+      name: '최근 이슈',
+    },
+    directory: {
+      id: 1,
       name: '전공 공부',
     },
     category: {
@@ -38,6 +46,10 @@ export const quizzes: Quiz.ItemWithMetadata[] = [
   },
   {
     document: {
+      id: 1,
+      name: '최근 이슈',
+    },
+    directory: {
       id: 1,
       name: '전공 공부',
     },
@@ -60,6 +72,10 @@ export const quizzes: Quiz.ItemWithMetadata[] = [
   {
     document: {
       id: 1,
+      name: '최근 이슈',
+    },
+    directory: {
+      id: 1,
       name: '전공 공부',
     },
     category: {
@@ -74,6 +90,10 @@ export const quizzes: Quiz.ItemWithMetadata[] = [
   },
   {
     document: {
+      id: 1,
+      name: '최근 이슈',
+    },
+    directory: {
       id: 1,
       name: '전공 공부',
     },

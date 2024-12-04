@@ -22,7 +22,9 @@ const DeleteDocumentSwipeButton = ({ documentId, quizCount }: Props) => {
   })
 
   const handleClickDelete = () => {
-    deleteDocumentMutation([documentId])
+    deleteDocumentMutation([documentId], {
+      onSuccess: () => window.location.reload(),
+    })
   }
 
   return (

@@ -1,7 +1,13 @@
 'use client'
 
-import { useQuery } from '@tanstack/react-query'
-import { fetchDirectoryQuizzes, fetchTodayQuizSetId } from '.'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import {
+  createQuizSetForCheck,
+  createReplayDocumentQuizSet,
+  fetchDirectoryQuizzes,
+  fetchTodayQuizSetId,
+  updateQuizResult,
+} from '.'
 
 export const useTodayQuizSetId = () => {
   return useQuery({
@@ -15,5 +21,26 @@ export const useDirectoryQuizzes = (directoryId: number | null) => {
     queryKey: ['directoryQuizzes', directoryId],
     queryFn: async () => fetchDirectoryQuizzes({ directoryId: directoryId! }),
     enabled: !!directoryId,
+  })
+}
+
+export const useCreateCheckQuizSet = () => {
+  return useMutation({
+    mutationFn: async (documentId: number) => createQuizSetForCheck({ documentId }),
+  })
+}
+
+export const useReplayDocumentQuiz = () => {
+  return useMutation({
+    mutationFn: async (payload: {
+      documentId: number
+      requestBody: Quiz.Request.CreateReplayQuizSet
+    }) => createReplayDocumentQuizSet(payload),
+  })
+}
+
+export const useUpdateQuizResult = () => {
+  return useMutation({
+    mutationFn: async (requestBody: Quiz.Request.UpdateQuizResult) => updateQuizResult(requestBody),
   })
 }

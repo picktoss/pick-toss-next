@@ -1,7 +1,8 @@
-import { FunctionComponent, PropsWithChildren } from 'react'
+import { FunctionComponent, PropsWithChildren, Suspense } from 'react'
 import type { Metadata } from 'next'
 import { DirectoryProvider } from '@/features/directory/contexts/directory-context'
 import { DocumentProvider } from '@/features/document/contexts/document-context'
+import RootLoading from '@/app/loading'
 
 export const metadata: Metadata = {}
 
@@ -11,12 +12,14 @@ interface LayoutProps extends PropsWithChildren {
 
 const Layout: FunctionComponent<LayoutProps> = ({ header, children }) => {
   return (
-    <DirectoryProvider>
-      <DocumentProvider>
-        {header}
-        {children}
-      </DocumentProvider>
-    </DirectoryProvider>
+    <Suspense fallback={<RootLoading />}>
+      <DirectoryProvider>
+        <DocumentProvider>
+          {header}
+          {children}
+        </DocumentProvider>
+      </DirectoryProvider>
+    </Suspense>
   )
 }
 
