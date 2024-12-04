@@ -6,12 +6,20 @@ import {
   getAllCollections,
   deleteBookmark,
   createBookmark,
+  getMyCollections,
 } from '.'
 
 export const useCollections = () => {
   return useQuery({
     queryKey: ['collections'],
     queryFn: async () => getAllCollections(),
+  })
+}
+
+export const useMyCollections = () => {
+  return useQuery({
+    queryKey: ['myCollections'],
+    queryFn: async () => getMyCollections(),
   })
 }
 

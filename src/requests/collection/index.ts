@@ -22,6 +22,24 @@ export const getAllCollections = async () => {
   }
 }
 
+export const getMyCollections = async () => {
+  try {
+    const session = await auth()
+
+    const { data } = await http.get<Collection.Response.GetMyCollections>(
+      API_ENDPOINTS.COLLECTION.GET.MY_COLLECTIONS,
+      {
+        headers: {
+          Authorization: `Bearer ${session?.user.accessToken}`,
+        },
+      }
+    )
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
 export const getBookmarkedCollections = async () => {
   try {
     const session = await auth()

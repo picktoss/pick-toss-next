@@ -12,7 +12,7 @@ const controlButtons = ['분야', '퀴즈 유형', '문제 수']
 
 const Exploration = () => {
   const { data: collectionsData, isLoading } = useCollections()
-  const { data: bookmarkedCollections } = useBookmarkedCollections()
+  const { data: bookmarkedCollections, isLoading: isBookmarkedLoading } = useBookmarkedCollections()
 
   return (
     <>
@@ -34,7 +34,7 @@ const Exploration = () => {
       </div>
 
       <CollectionList>
-        {isLoading ? (
+        {isBookmarkedLoading || isLoading ? (
           <Loading center />
         ) : (
           collectionsData?.collections.map((collection) => {
