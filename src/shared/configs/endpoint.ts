@@ -19,9 +19,9 @@ export const API_ENDPOINTS = {
   },
 
   COLLECTION: {
-    /** GET /collections - 모든 컬렉션 가져오기(탐색) */
-    BASE: '/collections',
     GET: {
+      /** GET /collections - 모든 컬렉션 가져오기(탐색) */
+      ALL: '/collections',
       /** GET /collections/{keyword} - 컬렉션 검색하기 */
       BY_KEYWORD: (keyword: string) => `/collections/${keyword}`,
       /** GET /collections/{collection_id}/collection_info - 만든 컬렉션 상세 정보 가져오기 */
@@ -38,6 +38,8 @@ export const API_ENDPOINTS = {
     POST: {
       /** POST /collections - 컬렉션 생성 */
       CREATE_COLLECTION: `/collections`,
+      /** POST /collections - 컬렉션 북마크하기 */
+      CREATE_BOOKMARK: (collectionId: number) => `/collections/${collectionId}/create-bookmark`,
       /** POST /collections/{collection_id}/collection-quizzes - 컬렉션 퀴즈 시작 */
       START_QUIZ: (collectionId: number) => `/collections/${collectionId}/collection-quizzes`,
     },

@@ -44,7 +44,6 @@ const Header = () => {
       onSuccess: () => router.push('/document'),
     })
   }
-
   return (
     <>
       <header>

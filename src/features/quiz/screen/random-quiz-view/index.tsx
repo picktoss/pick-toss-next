@@ -17,7 +17,17 @@ import GoBackButton from '@/shared/components/custom/go-back-button'
 import Tag from '@/shared/components/ui/tag'
 import QuizOptions from '../quiz-view/components/quiz-option'
 
-const RandomQuizView = () => {
+interface Props {
+  bookmarkedCollections: Collection.Response.GetBookmarkedCollections
+}
+
+const RandomQuizView = ({ bookmarkedCollections }: Props) => {
+  // 북마크한 컬렉션 가져옴
+  // 그걸로 컬렉션 리스트 만듦\
+  console.log(bookmarkedCollections)
+
+  // 디렉토리에 생성된 모든 랜덤 퀴즈 가져옴
+
   const randomQuizList = [...quizzes] // 임시
 
   const [repository, setRepository] = useState<'directory' | 'collection'>('directory')

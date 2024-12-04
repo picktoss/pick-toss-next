@@ -6,7 +6,7 @@ const meta: Meta<typeof CategoryDrawer> = {
   component: CategoryDrawer,
   tags: ['autodocs'],
   argTypes: {
-    interestedCategory: { control: 'text', description: '관심분야 카테고리 텍스트' },
+    interestedCategories: { control: 'text', description: '관심분야 카테고리 텍스트' },
   },
   decorators: [
     (Story) => (
@@ -23,12 +23,12 @@ type Story = StoryObj<typeof CategoryDrawer>
 
 export const Default: Story = {
   args: {
-    interestedCategory: 'IT/프로그래밍',
+    interestedCategories: ['IT/프로그래밍'],
   },
 }
 
 export const NoCategory: Story = {
   args: {
-    interestedCategory: undefined,
+    interestedCategories: [],
   },
 }

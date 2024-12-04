@@ -1,12 +1,19 @@
+'use client'
+
 import Icon from '@/shared/components/custom/icon'
 import Collection from './collection'
 import CollectionList from './collection-list'
 import Text from '@/shared/components/ui/text'
 import StartQuizDrawer from './start-quiz-drawer'
+import { useBookmarkedCollections, useCollections } from '@/requests/collection/hooks'
+import Loading from '@/shared/components/custom/loading'
 
 const controlButtons = ['분야', '퀴즈 유형', '문제 수']
 
 const Exploration = () => {
+  const { data: collectionsData, isLoading } = useCollections()
+  const { data: bookmarkedCollections, isLoading: isBookmarkedLoading } = useBookmarkedCollections()
+
   return (
     <>
       <div className="flex h-[60px] items-center justify-between px-[16px]">
@@ -27,31 +34,43 @@ const Exploration = () => {
       </div>
 
       <CollectionList>
-        {Array.from({ length: 10 }).map((_, idx) => (
-          <StartQuizDrawer
-            key={idx}
-            collectionId={idx.toString()}
-            emoji="🔥"
-            multipleChoiceCount={30}
-            oxCount={5}
-            category="IT·프로그래밍"
-            title="파이썬기본문법과응용"
-            description="이 퀴즈는 제가 파이썬을 공부하며 생성한 퀴즈 중 자주 틀린 퀴즈만 모은 컬렉션입니다 공부에 도움이 되시길 바라며..."
-            isBookMarked={true}
-            bookMarkCount={123}
-            trigger={
-              <Collection
-                emoji="🔥"
-                title="파이썬 OX"
-                category="IT·프로그래밍"
-                problemCount={35}
-                lastUpdated="2일 전"
-                isBookMarked={true}
-                bookMarkCount={123}
+        {isBookmarkedLoading || isLoading ? (
+          <Loading center />
+        ) : (
+          collectionsData?.collections.map((collection) => {
+            const isBookmarked = Boolean(
+              bookmarkedCollections?.collections.some(
+                (bookmarkedCollection) => bookmarkedCollection.id === collection.id
+              )
+            )
+            return (
+              <StartQuizDrawer
+                key={collection.id}
+                collectionId={collection.id}
+                emoji={collection.emoji}
+                multipleChoiceCount={collection.quizCount}
+                oxCount={collection.quizCount}
+                category={collection.collectionField}
+                title={collection.name}
+                description={'asdasd'}
+                isBookMarked={isBookmarked}
+                bookMarkCount={collection.bookmarkCount}
+                trigger={
+                  <Collection
+                    collectionId={collection.id}
+                    emoji={collection.emoji}
+                    title={collection.name}
+                    category={collection.collectionField}
+                    problemCount={collection.quizCount}
+                    lastUpdated="2일 전"
+                    isBookMarked={isBookmarked}
+                    bookMarkCount={collection.bookmarkCount}
+                  />
+                }
               />
-            }
-          />
-        ))}
+            )
+          })
+        )}
       </CollectionList>
     </>
   )

@@ -16,7 +16,7 @@ const NotificationTab = () => {
         const eventTarget = e.target as HTMLElement
         if (!eventTarget.id) return
 
-        router.push(`notification?tab=${eventTarget.id}`)
+        router.replace(`notification?tab=${eventTarget.id}`)
       }}
       className="flex items-center gap-[8px] px-[16px] py-[8px]"
     >
