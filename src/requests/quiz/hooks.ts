@@ -7,6 +7,7 @@ import {
   fetchDirectoryQuizzes,
   fetchTodayQuizSetId,
   updateQuizResult,
+  updateWrongQuizResult,
 } from '.'
 
 export const useTodayQuizSetId = () => {
@@ -42,5 +43,12 @@ export const useReplayDocumentQuiz = () => {
 export const useUpdateQuizResult = () => {
   return useMutation({
     mutationFn: async (requestBody: Quiz.Request.UpdateQuizResult) => updateQuizResult(requestBody),
+  })
+}
+
+export const useUpdateWrongQuizResult = () => {
+  return useMutation({
+    mutationFn: async (requestBody: Quiz.Request.UpdateWrongQuizResult) =>
+      updateWrongQuizResult(requestBody),
   })
 }

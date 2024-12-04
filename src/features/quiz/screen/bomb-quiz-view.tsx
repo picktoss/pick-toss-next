@@ -13,10 +13,17 @@ import { getAnswerText } from '../utils'
 import { cn } from '@/shared/lib/utils'
 import { useQuery } from '@tanstack/react-query'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
+import { useUpdateWrongQuizResult } from '@/requests/quiz/hooks'
+import { getQueryClient } from '@/shared/lib/tanstack-query/client'
+import { useRouter } from 'next/navigation'
 // import { quizzes } from '../config'
 
 const BombQuizView = () => {
+  const router = useRouter()
+  const queryClient = getQueryClient()
   const { data, isPending } = useQuery(queries.quiz.bomb())
+  const { mutate: updateWrongQuizResultMutate } = useUpdateWrongQuizResult()
+
   const bombQuizList = data?.quizzes ?? []
   // const bombQuizList = [...quizzes]
 
@@ -29,7 +36,7 @@ const BombQuizView = () => {
     currentIndex: currentIndex,
   })
 
-  const currentQuizInfo = bombQuizList[currentIndex]
+  const currentQuizInfo = bombQuizList && bombQuizList[currentIndex]
   const currentAnswerState = quizResults[currentIndex]?.answer
 
   const onAnswer = ({
@@ -47,7 +54,7 @@ const BombQuizView = () => {
         id,
         answer: isRight,
         choseAnswer,
-        elapsedTime: 1, // 임시
+        elapsedTime: 1,
       }
       return newResults
     })
@@ -58,20 +65,32 @@ const BombQuizView = () => {
       setOpenExplanation(false)
     }
 
-    const hasNextQuiz = handleNext(currentIndex, bombQuizList.length)
-    if (hasNextQuiz) {
-      navigateToNext(currentIndex)
-    } else {
-      setProcessingResults(true)
-      // TODO: 퀴즈 종료 처리 로직 추가 (퀴즈 결과 서버에 전송)
-      // onSuccess:
-      // setProcessingResults(false)
-      // query - 오답 터뜨리기 data 갱신
+    if (quizResults[currentIndex]) {
+      const currentResult = {
+        id: quizResults[currentIndex].id,
+        answer: quizResults[currentIndex].answer,
+      }
+      const requestBody = { quizzes: [currentResult] }
+      const hasNextQuiz = handleNext(currentIndex, bombQuizList.length)
+      if (hasNextQuiz) {
+        updateWrongQuizResultMutate(requestBody, {
+          onSuccess: () => navigateToNext(currentIndex),
+        })
+      } else {
+        setProcessingResults(true)
+        updateWrongQuizResultMutate(requestBody, {
+          onSuccess: async () => {
+            await queryClient.invalidateQueries(queries.quiz.bomb())
+            setProcessingResults(false)
+          },
+        })
+      }
     }
   }
 
   const handleExit = () => {
-    // TODO:
+    router.replace('/')
+    // 추후 결과 업데이트를 list로 확장 시:
     // 현재까지 퀴즈 결과 서버에 전송
     // onSuccess: 메인 화면으로 이동
   }

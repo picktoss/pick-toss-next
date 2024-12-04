@@ -147,6 +147,14 @@ interface UpdateQuizResultResponse {
   currentConsecutiveTodayQuizDate: number
 }
 
+/** PATCH /api/v2/wrong-quiz/result */
+interface UpdateWrongQuizResultPayload {
+  quizzes: {
+    id: number
+    answer: boolean
+  }[]
+}
+
 /** POST /api/v2/quizzes/documents/{document_id}/custom-quiz-set */
 interface CreateReplayQuizSetPayload {
   quizType: ReplayQuizType
@@ -183,6 +191,11 @@ declare namespace Quiz {
      * 사용자가 생성한 기존 문서에서 직접 퀴즈 세트 생성(랜덤, OX, 객관식) - 다시풀기 세트 만들기
      */
     type CreateReplayQuizSet = CreateReplayQuizSetPayload
+
+    /** PATCH /api/v2/wrong-quiz/result
+     * 오답 터뜨리기 결과 업데이트
+     */
+    type UpdateWrongQuizResult = UpdateWrongQuizResultPayload
   }
 
   declare namespace Response {

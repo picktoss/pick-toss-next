@@ -24,6 +24,7 @@ interface Props {
 const RandomQuizView = ({ bookmarkedCollections }: Props) => {
   // 북마크한 컬렉션 가져옴
   // 그걸로 컬렉션 리스트 만듦\
+  // eslint-disable-next-line no-console
   console.log(bookmarkedCollections)
 
   // 디렉토리에 생성된 모든 랜덤 퀴즈 가져옴

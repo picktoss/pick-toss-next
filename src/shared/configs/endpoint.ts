@@ -177,7 +177,7 @@ export const API_ENDPOINTS = {
       UPDATE_RESULT: '/quiz/result',
       /** PATCH /quiz/result - 랜덤 퀴즈 결과 업데이트 */
       UPDATE_RANDOM_RESULT: '/random-quiz/result',
-      /** PATCH /quiz/result - 퀴즈 결과 업데이트 */
+      /** PATCH /quiz/result - 오답 터뜨리기 결과 업데이트 */
       UPDATE_WRONG_RESULT: '/wrong-quiz/result',
     },
     DELETE: {
