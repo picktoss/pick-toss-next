@@ -98,6 +98,24 @@ export const fetchDocumentQuizzes = async ({
   }
 }
 
+export const fetchWrongAnswerQuizzes = async () => {
+  const session = await auth()
+
+  try {
+    const { data } = await http.get<Quiz.Response.GetWrongAnswerQuizzes>(
+      API_ENDPOINTS.QUIZ.GET.WRONG_ANSWER,
+      {
+        headers: {
+          Authorization: `Bearer ${session?.user.accessToken}`,
+        },
+      }
+    )
+    return data
+  } catch (error: unknown) {
+    throw error
+  }
+}
+
 export const fetchQuizSetRecord = async ({
   quizSetId,
   quizSetType,
@@ -180,6 +198,22 @@ export const updateQuizResult = async (requestBody: Quiz.Request.UpdateQuizResul
       }
     )
     return data
+  } catch (error: unknown) {
+    throw error
+  }
+}
+
+export const updateWrongQuizResult = async (requestBody: Quiz.Request.UpdateWrongQuizResult) => {
+  const session = await auth()
+
+  try {
+    const response = await http.patch(API_ENDPOINTS.QUIZ.PATCH.UPDATE_WRONG_RESULT, requestBody, {
+      headers: {
+        Authorization: `Bearer ${session?.user.accessToken}`,
+      },
+    })
+    // eslint-disable-next-line no-console
+    console.log(response) // 디버깅용
   } catch (error: unknown) {
     throw error
   }

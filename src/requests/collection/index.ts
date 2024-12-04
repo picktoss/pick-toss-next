@@ -109,9 +109,7 @@ export const deleteBookmark = async (collectionId: number) => {
   }
 }
 
-export const fetchCollectionInfo = async ({ collectionId }: { collectionId?: number }) => {
-  if (collectionId === null || collectionId === undefined) return
-
+export const fetchCollectionInfo = async ({ collectionId }: { collectionId: number }) => {
   try {
     const session = await auth()
 
