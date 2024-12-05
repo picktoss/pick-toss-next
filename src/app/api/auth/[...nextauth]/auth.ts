@@ -12,6 +12,7 @@ declare module 'next-auth' {
       accessToken: string
       account: Account
       dto: UserDTO
+      isNewUser: boolean // 첫 로그인 여부 추가
     } & DefaultSession['user']
   }
 }
@@ -27,13 +28,14 @@ export const {
     jwt: async ({ token, account, trigger }) => {
       if (account) {
         try {
-          const { accessToken, accessTokenExpiration } = await signInAPI({
+          const { accessToken, accessTokenExpiration, signUp } = await signInAPI({
             socialPlatform: account.provider.toUpperCase() as 'GOOGLE' | 'KAKAO',
             accessToken: account.access_token as string,
           })
           token.account = account
           token.accessToken = accessToken
           token.accessTokenExpiration = accessTokenExpiration
+          token.isNewUser = signUp
         } catch (error) {
           throw new Error('Failed to get backend access token')
         }
@@ -70,6 +72,7 @@ export const {
       session.user.accessToken = token.accessToken as string
       session.user.dto = token.userDTO as UserDTO
       session.user.account = token.account as Account
+      session.user.isNewUser = (token.isNewUser as boolean) ?? false
 
       return session
     },

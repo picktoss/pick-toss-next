@@ -17,7 +17,7 @@ const InviteSignUpPage = ({ searchParams }: Props) => {
         3초만에 픽토스 시작하기
       </Text>
 
-      <SocialLogin />
+      <SocialLogin className="my-[64px]" />
     </main>
   )
 }

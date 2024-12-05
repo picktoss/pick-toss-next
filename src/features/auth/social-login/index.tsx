@@ -3,13 +3,14 @@
 import Icon from '@/shared/components/custom/icon'
 import { Button } from '@/shared/components/ui/button'
 import Text from '@/shared/components/ui/text'
+import { cn } from '@/shared/lib/utils'
 import { signIn } from 'next-auth/react'
 
-const SocialLogin = () => {
+const SocialLogin = ({ className }: { className?: HTMLElement['className'] }) => {
   return (
-    <div className="my-[64px] flex w-full flex-col items-center">
+    <div className={cn('flex w-full flex-col items-center', className)}>
       <Button
-        className="w-full gap-[12px] rounded-full bg-white py-[13.5px] hover:bg-white"
+        className="w-full gap-[12px] rounded-full border border-[var(--color-gray-100)] bg-white py-[13.5px] hover:bg-white"
         onClick={() => signIn('google')}
       >
         <Icon name="google" />
