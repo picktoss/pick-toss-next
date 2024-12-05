@@ -1,23 +1,27 @@
 'use client'
 
+import Text from '@/shared/components/ui/text'
 import { useRouter } from 'next/navigation'
 
 export default function NotFound() {
   const router = useRouter()
 
   return (
-    <div className="center flex w-full flex-col items-center">
-      <NotFoundIcon className="h-[128px] w-[204px] lg:h-[215px] lg:w-[341px]" />
+    <div className="flex-center h-dvh w-dvw max-w-mobile flex-col bg-background-base-02">
+      <NotFoundIcon className="h-[128px] w-[204px]" />
       <div className="mt-[22.4px] flex flex-col items-center gap-[10px] lg:mt-[15.7px] lg:gap-[16px] lg:py-0">
-        <div className="text-h4-bold text-gray-08 lg:text-h2-bold">페이지를 찾을 수 없습니다.</div>
-        <div className="text-text-medium text-gray-07 lg:text-body1-medium px-[45px] text-center">
-          존재하지 않는 주소를 입력했거나, 요청하신 페이지의 주소가 변경, 삭제되어 찾을 수 없습니다.
-        </div>
+        <Text typography="title3">페이지를 찾을 수 없습니다.</Text>
+        <Text typography="text1-medium" color="sub" className="px-[45px] text-center">
+          존재하지 않는 주소를 입력했거나, 요청하신 페이지의 <br /> 주소가 변경, 삭제되어 찾을 수
+          없습니다.
+        </Text>
       </div>
       <div className="mt-[54px] flex w-full max-w-[480px] flex-col gap-[16px] px-[20px]">
         <div className="flex items-center justify-center gap-[8px]">
-          <div className="text-h2-bold text-orange-06">Q</div>
-          <div className="text-h4-bold text-gray-09">다음 중 이동을 원하는 페이지는?</div>
+          <Text typography="question" color="accent">
+            Q.
+          </Text>
+          <Text typography="question">다음 중 이동을 원하는 페이지는?</Text>
         </div>
         <div className="flex flex-col gap-[8px]">
           <RedirectOption
@@ -44,12 +48,15 @@ function RedirectOption({
   return (
     <button
       onClick={onClick}
-      className="border-gray-02 text-text-medium text-gray-08 flex w-full items-center gap-[16px] rounded-[12px] border bg-white px-[11px] py-[9px] text-start"
+      className="flex w-full items-center gap-[16px] rounded-[12px] bg-white px-[11px] py-[9px] text-start text-subtitle2-medium text-gray-800"
     >
-      <div className="bg-gray-02 text-body1-bold-eng flex size-[36px] items-center justify-center rounded-full">
+      <Text
+        typography="subtitle2-bold"
+        className="flex size-[36px] items-center justify-center rounded-full bg-gray-100 text-gray-500"
+      >
         {order}
-      </div>
-      <div>{label}</div>
+      </Text>
+      <Text>{label}</Text>
     </button>
   )
 }
