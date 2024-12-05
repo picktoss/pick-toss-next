@@ -7,7 +7,7 @@ export default function NotFound() {
   const router = useRouter()
 
   return (
-    <div className="flex-center h-dvh w-dvw max-w-mobile flex-col bg-background-base-02">
+    <div className="center flex-center h-dvh w-dvw max-w-mobile flex-col bg-background-base-02">
       <NotFoundIcon className="h-[128px] w-[204px]" />
       <div className="mt-[22.4px] flex flex-col items-center gap-[10px] lg:mt-[15.7px] lg:gap-[16px] lg:py-0">
         <Text typography="title3">페이지를 찾을 수 없습니다.</Text>
