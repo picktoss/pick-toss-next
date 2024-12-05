@@ -9,7 +9,7 @@ import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
 import { DialogTriggerProps } from '@radix-ui/react-dialog'
 import PaymentPage from '@/app/(routes)/payment/page'
 import NIGHT_SKY_IMG from '@/../../public/images/pro-star-background.png'
-import GoBackButton from '@/shared/components/custom/go-back-button'
+import Icon from './custom/icon'
 
 interface Props extends DialogTriggerProps, React.RefAttributes<HTMLButtonElement> {
   open?: boolean
@@ -46,8 +46,8 @@ export default function ProDialogTriggerWrapper({ open, onOpenChange, children, 
           }}
         >
           <header className="relative z-10 flex h-[54px] w-full items-center px-[16px] text-text-primary-inverse">
-            <DialogClose>
-              <GoBackButton icon="cancel" />
+            <DialogClose className="justify-self-start">
+              <Icon name={'cancel'} className="size-[24px]" />
             </DialogClose>
           </header>
 
