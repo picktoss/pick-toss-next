@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import TitleInput from '../components/title-input'
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
@@ -10,6 +10,7 @@ import { useCreateDocument } from '@/requests/document/hooks'
 import { MAX_CHARACTERS, MIN_CHARACTERS } from '@/features/document/config'
 import { useDirectoryContext } from '@/features/directory/contexts/directory-context'
 import CreateQuizDrawer from '../components/create-quiz-drawer'
+import AiCreatingQuiz from '@/features/quiz/screen/ai-creating-quiz'
 import { useRouter } from 'next/navigation'
 
 const Editor = dynamic(() => import('../components/editor'), {
@@ -22,6 +23,8 @@ const WriteDocumentPage = () => {
   const { selectedDirectory, selectDirectoryId, globalDirectoryId } = useDirectoryContext()
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
+  const [documentId, setDocumentId] = useState<number | null>(null)
+  const [showCreatePopup, setShowCreatePopup] = useState(false)
 
   const { mutate: createDocumentMutate } = useCreateDocument()
 
@@ -46,19 +49,49 @@ const WriteDocumentPage = () => {
       },
       {
         onSuccess: ({ id }) => {
-          router.push(
-            '/quiz' +
-              '?documentId=' +
-              id +
-              '&' +
-              'documentName=' +
-              title +
-              '&' +
-              'directoryEmoji=' +
-              selectedDirectory.emoji
-          )
+          setDocumentId(id)
+          setShowCreatePopup(true)
         },
       }
+    )
+  }
+
+  useEffect(() => {
+    const handlePopState = (event: PopStateEvent) => {
+      // ai 퀴즈 생성 팝업이 열려 있는 상태에서는 뒤로 가기 이벤트를 확인
+      if (showCreatePopup) {
+        event.preventDefault()
+        window.history.pushState(null, '', window.location.href)
+        const userConfirm = window.confirm(
+          '현재 화면에서 나가시겠습니까? 지금 나가더라도 AI 퀴즈 생성이 중단되지는 않습니다.'
+        )
+        if (userConfirm && documentId) {
+          router.push(`/document/${documentId}`)
+        }
+      }
+    }
+
+    if (showCreatePopup) {
+      window.history.pushState(null, '', window.location.href)
+      window.addEventListener('popstate', handlePopState)
+    }
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState)
+    }
+  }, [showCreatePopup, router, documentId])
+
+  if (documentId !== null && showCreatePopup) {
+    return (
+      <div className="h-dvh w-full max-w-mobile">
+        <div className="fixed right-1/2 z-[9999] h-dvh w-dvw max-w-mobile translate-x-1/2 bg-background-base-01">
+          <AiCreatingQuiz
+            documentId={documentId}
+            documentName={title}
+            directoryEmoji={selectedDirectory?.emoji ?? ''}
+          />
+        </div>
+      </div>
     )
   }
 
