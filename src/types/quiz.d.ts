@@ -83,15 +83,10 @@ interface QuizRecordsResponse extends ConsecutiveDays {
   quizRecords: QuizSetRecord[]
 }
 
-/** GET /api/v2/documents/quiz-sets/{quiz_set_id} */
-interface DocumentQuizSetResponse {
+/** GET /api/v2/quiz-sets/{quiz_set_id} */
+interface BaseQuizSetResponse {
   quizzes: QuizWithMetadata[]
-}
-
-/** GET /api/v2/collections/{collection_id}/quiz-sets/{quiz_set_id} */
-interface CollectionQuizSetResponse {
-  collectionName: string
-  quizzes: QuizWithMetadata[]
+  collectionName?: string
 }
 
 /** GET /api/v2/quiz-sets/today */
@@ -132,6 +127,11 @@ interface DocumentQuizzesResponse {
 /** GET /api/v2/documents/{document_id}/download-quiz */
 type DownloadQuizResponse = string[]
 
+/** GET /api/v2/incorrect-quizzes */
+type WrongAnswerQuizzesResponse = {
+  quizzes: QuizWithMetadata[]
+}
+
 /** PATCH /api/v2/quiz/result */
 interface UpdateQuizResultPayload {
   quizSetId: string
@@ -145,6 +145,14 @@ interface UpdateQuizResultPayload {
 interface UpdateQuizResultResponse {
   reward: number
   currentConsecutiveTodayQuizDate: number
+}
+
+/** PATCH /api/v2/wrong-quiz/result */
+interface UpdateWrongQuizResultPayload {
+  quizzes: {
+    id: number
+    answer: boolean
+  }[]
 }
 
 /** POST /api/v2/quizzes/documents/{document_id}/custom-quiz-set */
@@ -183,6 +191,11 @@ declare namespace Quiz {
      * 사용자가 생성한 기존 문서에서 직접 퀴즈 세트 생성(랜덤, OX, 객관식) - 다시풀기 세트 만들기
      */
     type CreateReplayQuizSet = CreateReplayQuizSetPayload
+
+    /** PATCH /api/v2/wrong-quiz/result
+     * 오답 터뜨리기 결과 업데이트
+     */
+    type UpdateWrongQuizResult = UpdateWrongQuizResultPayload
   }
 
   declare namespace Response {
@@ -201,15 +214,10 @@ declare namespace Quiz {
      */
     type GetQuizRecords = QuizRecordsResponse
 
-    /** GET /api/v2/documents/quiz-sets/{quiz_set_id}
-     * quizSet_id로 문서 퀴즈 세트 가져오기
+    /** GET /api/v2/quiz-sets/{quiz_set_id}
+     * quizSet-type과 quizSet_id로 퀴즈 세트 가져오기
      */
-    type GetDocumentQuizSet = DocumentQuizSetResponse
-
-    /** GET /api/v2/collections/{collection_id}/quiz-sets/{quiz_set_id}
-     * quizSet_id와 collection_id로 콜렉션 퀴즈 세트 가져오기
-     */
-    type GetCollectionQuizSet = CollectionQuizSetResponse
+    type GetBaseQuizSet = BaseQuizSetResponse
 
     /** GET /api/v2/quiz-sets/today
      * 오늘의 퀴즈 세트 정보 가져오기
@@ -240,6 +248,11 @@ declare namespace Quiz {
      * 퀴즈 다운로드
      */
     type DownloadQuiz = DownloadQuizResponse
+
+    /** GET /api/v2/incorrect-quizzes
+     * 오답 터뜨리기 퀴즈 가져오기
+     */
+    type GetWrongAnswerQuizzes = WrongAnswerQuizzesResponse
 
     /** PATCH /api/v2/quiz/result
      * 퀴즈 결과 업데이트

@@ -6,7 +6,11 @@ import {
   createReplayDocumentQuizSet,
   fetchDirectoryQuizzes,
   fetchTodayQuizSetId,
+  updateQuizResult,
+  updateWrongQuizResult,
 } from '.'
+import { getQueryClient } from '@/shared/lib/tanstack-query/client'
+import { queries } from '@/shared/lib/tanstack-query/query-keys'
 
 export const useTodayQuizSetId = () => {
   return useQuery({
@@ -35,5 +39,24 @@ export const useReplayDocumentQuiz = () => {
       documentId: number
       requestBody: Quiz.Request.CreateReplayQuizSet
     }) => createReplayDocumentQuizSet(payload),
+  })
+}
+
+export const useUpdateQuizResult = () => {
+  return useMutation({
+    mutationFn: async (requestBody: Quiz.Request.UpdateQuizResult) => updateQuizResult(requestBody),
+  })
+}
+
+export const useUpdateWrongQuizResult = () => {
+  const queryClient = getQueryClient()
+
+  return useMutation({
+    mutationFn: async (requestBody: Quiz.Request.UpdateWrongQuizResult) =>
+      updateWrongQuizResult(requestBody),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(queries.quiz.bomb())
+      window.location.reload()
+    },
   })
 }

@@ -31,7 +31,7 @@ const BombQuiz = ({
   handleExit,
 }: Props) => {
   const currentQuiz = quizzes[currentIndex]
-  const currentResult = quizResults[currentIndex]
+  const currentResult = quizResults[currentIndex] ?? null
 
   return (
     <div className="flex h-[70dvh] min-h-fit w-full flex-col items-center justify-between">

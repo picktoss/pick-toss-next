@@ -156,11 +156,7 @@ export const API_ENDPOINTS = {
         `/quizzes/${quizSetId}/${quizSetType}/quiz-record`,
       /** GET /quizzes/quiz-records - 전체 퀴즈 기록 */
       ALL_RECORDS: '/quizzes/quiz-records',
-      /** GET /documents/quiz-sets/{quiz_set_id} - 문서 퀴즈 세트 */
-      DOCUMENT: (quizSetId: string) => `/documents/quiz-sets/${quizSetId}`,
-      /** GET /collections/{collection_id}/quiz-sets/{quiz_set_id} - 컬렉션 퀴즈 세트 */
-      COLLECTION: (collectionId: number, quizSetId: string) =>
-        `/collections/${collectionId}/quiz-sets/${quizSetId}`,
+      BY_SET_ID: (quizSetId: string) => `/quiz-sets/${quizSetId}`,
       /** GET /quiz-sets/today - 오늘의 퀴즈 세트 정보 가져오기 */
       TODAY_SET: '/quiz-sets/today',
       /** GET /quiz-analysis - 퀴즈 분석 */
@@ -173,13 +169,15 @@ export const API_ENDPOINTS = {
       BY_DIRECTORY: (directoryId: number) => `/directories/${directoryId}/quizzes`,
       /** GET /documents/{document_id}/download-quiz - 퀴즈 다운로드 */
       DOWNLOAD: (documentId: number) => `/documents/${documentId}/download-quiz`,
+      /** GET /incorrect-quizzes - 오답 터뜨리기 퀴즈 가져오기 */
+      WRONG_ANSWER: '/incorrect-quizzes',
     },
     PATCH: {
       /** PATCH /quiz/result - 퀴즈 결과 업데이트 */
       UPDATE_RESULT: '/quiz/result',
       /** PATCH /quiz/result - 랜덤 퀴즈 결과 업데이트 */
       UPDATE_RANDOM_RESULT: '/random-quiz/result',
-      /** PATCH /quiz/result - 퀴즈 결과 업데이트 */
+      /** PATCH /quiz/result - 오답 터뜨리기 결과 업데이트 */
       UPDATE_WRONG_RESULT: '/wrong-quiz/result',
     },
     DELETE: {

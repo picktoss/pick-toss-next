@@ -37,10 +37,14 @@ export const queries = createQueryKeyStore({
       queryFn: () => REQUEST.quiz.fetchQuizSetRecord(params),
       enabled: !!params.quizSetId,
     }),
+    bomb: () => ({
+      queryKey: [''],
+      queryFn: () => REQUEST.quiz.fetchWrongAnswerQuizzes(),
+    }),
   },
 
   collection: {
-    info: (collectionId?: number) => ({
+    info: (collectionId: number) => ({
       queryKey: [collectionId],
       queryFn: () => REQUEST.collection.fetchCollectionInfo({ collectionId }),
       enabled: !!collectionId,
