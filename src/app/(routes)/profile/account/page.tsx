@@ -60,7 +60,7 @@ const AccountPage = async () => {
               <Text typography="subtitle2-medium">카카오 로그인</Text>
 
               {/* 구글 로그인 */}
-              {/* <Icon name="google" className="size-[20px]" />
+              {/* <Icon name="google-with-background" className="size-[20px]" />
                 <Text typography="subtitle2-medium">구글 로그인</Text>
                 <Text typography="text2-medium" className="font-suit text-text-caption">
                   picktoss@gmail.com

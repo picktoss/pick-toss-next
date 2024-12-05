@@ -92,7 +92,7 @@ const TextColorStyles: Record<TextColor, string> = {
   disabled: 'text-text-disabled',
   right: 'text-text-right',
   wrong: 'text-text-wrong',
-  special: 'bg-gradient-to-r from-blue-400 to-orange-500 bg-clip-text text-transparent',
+  special: 'bg-gradient-to-r from-orange-500 to-blue-400 bg-clip-text text-transparent',
 }
 
 const Text = forwardRef(
