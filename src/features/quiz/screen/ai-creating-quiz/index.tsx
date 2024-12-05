@@ -66,9 +66,7 @@ const AiCreatingQuiz = ({ documentId, documentName, directoryEmoji }: Props) => 
         router.push(
           '/quiz/' +
             data.quizSetId +
-            '?quizType=document' +
-            '&' +
-            'isFirst=true' +
+            '?quizType=create' +
             '&' +
             `createdAt=${data.createdAt}` +
             '&' +
@@ -82,10 +80,10 @@ const AiCreatingQuiz = ({ documentId, documentName, directoryEmoji }: Props) => 
 
   return (
     <>
-      <div className="fixed top-0 h-dvh w-dvw max-w-mobile bg-black opacity-60"></div>
+      <div className="absolute h-dvh w-dvw max-w-mobile bg-black opacity-60"></div>
 
       {quizIsReady ? (
-        <div className="flex-center fixed top-0 z-10 h-dvh w-dvw max-w-mobile flex-col">
+        <div className="flex-center absolute z-10 h-dvh w-dvw max-w-mobile flex-col">
           <Image src={'/images/question-quiz-card.png'} alt="" width={87} height={106} />
 
           <Text typography="title2" color="primary-inverse" className="mt-[31px]">
