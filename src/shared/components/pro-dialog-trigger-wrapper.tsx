@@ -33,9 +33,12 @@ export default function ProDialogTriggerWrapper({ open, onOpenChange, children, 
       >
         {children}
       </DialogTrigger>
-      <DialogContent className="h-dvh w-dvw max-w-mobile p-0" displayCloseButton={false}>
+      <DialogContent
+        className="flex-center h-[90dvh] w-[90dvw] max-w-mobile overflow-hidden p-0"
+        displayCloseButton={false}
+      >
         <div
-          className="fixed size-full min-h-screen max-w-mobile"
+          className="fixed size-full max-w-mobile"
           style={{
             backgroundImage: `url(${NIGHT_SKY_IMG.src})`,
             backgroundSize: '100% 100%',
