@@ -5,6 +5,7 @@ import INFINITE_STAR_IMG from '@/../../public/images/infinite-star.png'
 import InviteReward from '@/features/payment/components/invite-reward'
 import { Button } from '@/shared/components/ui/v3/button'
 
+// v3의 payment page입니다
 const PaymentPage = () => {
   // 임시
   const isProUser = false
