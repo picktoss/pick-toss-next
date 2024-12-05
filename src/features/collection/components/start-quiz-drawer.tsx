@@ -17,7 +17,8 @@ interface StartQuizDrawerProps {
   multipleChoiceCount: number
   oxCount: number
   description: string
-  isBookMarked: boolean
+  isBookMarked?: boolean
+  isOwner?: boolean
   bookMarkCount: number
 }
 
@@ -30,7 +31,8 @@ const StartQuizDrawer = ({
   multipleChoiceCount,
   oxCount,
   description,
-  isBookMarked,
+  isBookMarked = false,
+  isOwner = false,
   bookMarkCount,
 }: StartQuizDrawerProps) => {
   const { mutate: bookmarkMutate } = useBookmarkMutation()
@@ -56,19 +58,21 @@ const StartQuizDrawer = ({
 
           <div className="relative p-[20px]">
             <div className="absolute right-[20px] flex flex-col items-center gap-[4px]">
-              {isBookMarked ? (
-                <Icon
-                  name="book-mark-fill"
-                  className="size-[24px]"
-                  onClick={() => bookmarkMutate({ collectionId, isBookMarked: true })}
-                />
-              ) : (
-                <Icon
-                  name="book-mark"
-                  className="size-[24px]"
-                  onClick={() => bookmarkMutate({ collectionId, isBookMarked: false })}
-                />
-              )}
+              {isOwner && <Icon name="book-mark-fill" className="size-[24px] text-icon-disabled" />}
+              {!isOwner &&
+                (isBookMarked ? (
+                  <Icon
+                    name="book-mark-fill"
+                    className="size-[24px] cursor-pointer"
+                    onClick={() => bookmarkMutate({ collectionId, isBookMarked: true })}
+                  />
+                ) : (
+                  <Icon
+                    name="book-mark"
+                    className="size-[24px] cursor-pointer"
+                    onClick={() => bookmarkMutate({ collectionId, isBookMarked: false })}
+                  />
+                ))}
               <Text typography="text2-medium" className="text-text-caption">
                 {bookMarkCount}
               </Text>
