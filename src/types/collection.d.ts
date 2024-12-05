@@ -28,11 +28,23 @@ type QuizWithType = BaseQuiz & {
 type Collection = {
   id: number
   name: string
+  description: string
   emoji: string
   bookmarkCount: number
   collectionField: CollectionField
-  memberName: string
-  quizCount: number
+  solvedMemberCount: number
+  member: {
+    creatorId: number
+    creatorName: string
+  }
+  quizzes: {
+    id: number
+    question: string
+    answer: string
+    explanation: string
+    options: string[]
+    quizType: QuizType
+  }[]
 }
 
 type CollectionQuizResult = {
@@ -64,15 +76,7 @@ interface CollectionRecordResponse {
 }
 
 /** GET /api/v2/collections/{collection_id}/collection_info */
-interface CollectionInfoResponse {
-  id: number
-  name: string
-  emoji: string
-  description: string
-  solvedCount: number
-  bookmarkCount: number
-  quizzes: QuizWithType[]
-}
+type CollectionInfoResponse = Collection
 
 /** GET /api/v2/collections/my-collections */
 interface MyCollectionsResponse {

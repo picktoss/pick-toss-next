@@ -25,6 +25,7 @@ const MyCollection = () => {
   const { data: myCollectionsData, isLoading: isMyCollectionLoading } = useMyCollections()
   const { data: bookmarkedCollectionsData, isLoading: isBookmarkedCollectionLoading } =
     useBookmarkedCollections()
+  const { data: bookmarkedCollections, isLoading: isBookmarkedLoading } = useBookmarkedCollections()
 
   return (
     <>
@@ -62,64 +63,86 @@ const MyCollection = () => {
                 <Icon name="plus-circle" className="size-[24px]" />
                 <Text typography="subtitle2-bold">만들기</Text>
               </Link>
-              {myCollectionsData?.collections.map((collection) => (
-                <StartQuizDrawer
-                  key={collection.id}
-                  collectionId={collection.id}
-                  emoji={collection.emoji}
-                  multipleChoiceCount={collection.quizCount}
-                  oxCount={collection.quizCount}
-                  category={collection.collectionField}
-                  title={collection.name}
-                  description={'asdasd'}
-                  isBookMarked={true}
-                  bookMarkCount={collection.bookmarkCount}
-                  trigger={
-                    <Collection
-                      collectionId={collection.id}
-                      emoji={collection.emoji}
-                      title={collection.name}
-                      category={collection.collectionField}
-                      problemCount={collection.quizCount}
-                      lastUpdated="2일 전"
-                      isBookMarked={true}
-                      bookMarkCount={collection.bookmarkCount}
-                    />
-                  }
-                />
-              ))}
+              {myCollectionsData?.collections.map((collection) => {
+                const multipleChoiceCount =
+                  collection.quizzes?.filter((quiz) => quiz.quizType === 'MULTIPLE_CHOICE')
+                    .length ?? 0
+                const oxCount =
+                  collection.quizzes?.filter((quiz) => quiz.quizType === 'MIX_UP').length ?? 0
+
+                return (
+                  <StartQuizDrawer
+                    key={collection.id}
+                    collectionId={collection.id}
+                    emoji={collection.emoji}
+                    multipleChoiceCount={multipleChoiceCount}
+                    oxCount={oxCount}
+                    category={collection.collectionField}
+                    title={collection.name}
+                    description={collection.description}
+                    isOwner={true}
+                    bookMarkCount={collection.bookmarkCount}
+                    trigger={
+                      <Collection
+                        collectionId={collection.id}
+                        emoji={collection.emoji}
+                        title={collection.name}
+                        category={collection.collectionField}
+                        problemCount={multipleChoiceCount + oxCount}
+                        lastUpdated="2일 전"
+                        isOwner={true}
+                        bookMarkCount={collection.bookmarkCount}
+                      />
+                    }
+                  />
+                )
+              })}
             </CollectionList>
           ),
           'save-collection': isBookmarkedCollectionLoading ? (
             <Loading center />
           ) : (
             <CollectionList>
-              {bookmarkedCollectionsData?.collections.map((collection) => (
-                <StartQuizDrawer
-                  key={collection.id}
-                  collectionId={collection.id}
-                  emoji={collection.emoji}
-                  multipleChoiceCount={collection.quizCount}
-                  oxCount={collection.quizCount}
-                  category={collection.collectionField}
-                  title={collection.name}
-                  description={'asdasd'}
-                  isBookMarked={true}
-                  bookMarkCount={collection.bookmarkCount}
-                  trigger={
-                    <Collection
+              {!isBookmarkedLoading &&
+                bookmarkedCollectionsData?.collections.map((collection) => {
+                  const isBookmarked = Boolean(
+                    bookmarkedCollections?.collections.some(
+                      (bookmarkedCollection) => bookmarkedCollection.id === collection.id
+                    )
+                  )
+                  const multipleChoiceCount =
+                    collection.quizzes?.filter((quiz) => quiz.quizType === 'MULTIPLE_CHOICE')
+                      .length ?? 0
+                  const oxCount =
+                    collection.quizzes?.filter((quiz) => quiz.quizType === 'MIX_UP').length ?? 0
+
+                  return (
+                    <StartQuizDrawer
+                      key={collection.id}
                       collectionId={collection.id}
                       emoji={collection.emoji}
-                      title={collection.name}
+                      multipleChoiceCount={multipleChoiceCount}
+                      oxCount={oxCount}
                       category={collection.collectionField}
-                      problemCount={collection.quizCount}
-                      lastUpdated="2일 전"
-                      isBookMarked={true}
+                      title={collection.name}
+                      description={collection.description}
+                      isBookMarked={isBookmarked}
                       bookMarkCount={collection.bookmarkCount}
+                      trigger={
+                        <Collection
+                          collectionId={collection.id}
+                          emoji={collection.emoji}
+                          title={collection.name}
+                          category={collection.collectionField}
+                          problemCount={multipleChoiceCount + oxCount}
+                          lastUpdated="2일 전"
+                          isBookMarked={isBookmarked}
+                          bookMarkCount={collection.bookmarkCount}
+                        />
+                      }
                     />
-                  }
-                />
-              ))}
+                  )
+                })}
             </CollectionList>
           ),
         }}
