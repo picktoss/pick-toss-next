@@ -1,8 +1,20 @@
 {
   "version": "8.3.2",
   "language": "en",
-  "ignorePaths": ["node_modules", ".next", "*.js", "*.json", "*.html", "*.css", "*.md", "*.svg"],
-  "files": ["src/**/*.tsx", "src/**/*.ts"],
+  "ignorePaths": [
+    "node_modules",
+    ".next",
+    "*.js",
+    "*.json",
+    "*.html",
+    "*.css",
+    "*.md",
+    "*.svg"
+  ],
+  "files": [
+    "src/**/*.tsx",
+    "src/**/*.ts"
+  ],
   "words": [
     "classname",
     "kakao",
@@ -12,6 +24,7 @@
     "lukemorales",
     "metadatas",
     "nextauth",
+    "Noti",
     "picktoss",
     "remirror",
     "svgs",
