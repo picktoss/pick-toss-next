@@ -12,7 +12,8 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
   category: string
   problemCount: number
   lastUpdated: string
-  isBookMarked: boolean
+  isBookMarked?: boolean
+  isOwner?: boolean
   bookMarkCount: number
 }
 
@@ -23,7 +24,8 @@ const Collection = ({
   category,
   problemCount,
   lastUpdated,
-  isBookMarked,
+  isBookMarked = false,
+  isOwner = false,
   bookMarkCount,
   className,
 }: Props) => {
@@ -33,23 +35,35 @@ const Collection = ({
     <div className={cn('min-w-[166px]', className)}>
       <div className="relative inline-block h-[200px] w-full rounded-[16px] bg-background-base-01 px-[20px] pt-[19px] text-start">
         <div className="absolute right-[16px] top-[20px] flex flex-col items-center gap-[4px]">
-          {isBookMarked ? (
+          {isOwner && (
             <Icon
               name="book-mark-fill"
+              className="size-[24px] text-icon-disabled"
               onClick={(e) => {
                 e.stopPropagation()
-                bookmarkMutate({ collectionId, isBookMarked: true })
-              }}
-            />
-          ) : (
-            <Icon
-              name="book-mark"
-              onClick={(e) => {
-                e.stopPropagation()
-                bookmarkMutate({ collectionId, isBookMarked: false })
               }}
             />
           )}
+          {!isOwner &&
+            (isBookMarked ? (
+              <Icon
+                name="book-mark-fill"
+                className="size-[24px] cursor-pointer"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  bookmarkMutate({ collectionId, isBookMarked: true })
+                }}
+              />
+            ) : (
+              <Icon
+                name="book-mark"
+                className="size-[24px] cursor-pointer"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  bookmarkMutate({ collectionId, isBookMarked: false })
+                }}
+              />
+            ))}
           <Text typography="text2-medium" className="text-text-caption">
             {bookMarkCount}
           </Text>

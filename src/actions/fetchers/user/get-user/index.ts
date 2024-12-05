@@ -4,6 +4,7 @@ import { apiClient } from '@/actions/api-client'
 import { API_ENDPOINT } from '@/actions/endpoints'
 
 export interface GetUserResponse {
+  id: number
   name: string
   email: string
   role: 'ROLE_USER' | 'ROLE_ADMIN'

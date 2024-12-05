@@ -7,7 +7,7 @@ import CollectionQuizIntro from './components/collection-quiz-intro'
 import { formatDateKorean } from '@/shared/utils/date'
 
 interface Props {
-  quizType: 'today' | 'document' | 'collection'
+  quizType: 'today' | 'document' | 'collection' | 'create'
   createdAt: string
   documentInfo?: { name: string; directoryEmoji: string }
   collectionInfo?: { name: string; emoji: string }
