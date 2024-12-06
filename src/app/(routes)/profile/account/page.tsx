@@ -30,7 +30,9 @@ const AccountPage = async () => {
       <div className="flex flex-col gap-[32px]">
         <SetNameDialog userName={user.name} />
 
-        <CategoryDrawer interestedCategories={interestFields} />
+        <CategoryDrawer
+          interestedCategories={interestFields as (interestedCategory | '관심 분야 없음')[]}
+        />
 
         <Link href={'verify-email'} className="flex w-full items-center justify-between">
           <div className="flex flex-col items-start gap-[4px]">
@@ -60,7 +62,7 @@ const AccountPage = async () => {
               <Text typography="subtitle2-medium">카카오 로그인</Text>
 
               {/* 구글 로그인 */}
-              {/* <Icon name="google" className="size-[20px]" />
+              {/* <Icon name="google-with-background" className="size-[20px]" />
                 <Text typography="subtitle2-medium">구글 로그인</Text>
                 <Text typography="text2-medium" className="font-suit text-text-caption">
                   picktoss@gmail.com

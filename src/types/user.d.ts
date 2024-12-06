@@ -1,10 +1,22 @@
+type interestedCategory =
+  | 'IT'
+  | 'LAW'
+  | 'ART'
+  | 'ECONOMY'
+  | 'HISTORY'
+  | 'LANGUAGE'
+  | 'SOCIETY'
+  | 'MEDICINE'
+  | 'SCIENCE'
+  | 'ETC'
+
 interface UserInfo {
   id: number
   name: string
   email: string
   socialPlatform: 'KAKAO' | 'GOOGLE'
   role: 'ROLE_USER' | 'ROLE_ADMIN'
-  interestField: string[]
+  interestField: interestedCategory[]
   documentUsage: {
     possessDocumentCount: number
     maxPossessDocumentCount: number
@@ -26,17 +38,7 @@ interface UpdateNamePayload {
 }
 
 interface UpdateCollectionFieldsPayload {
-  interestCollectionFields: Array<
-    'IT',
-    ' ECONOMY',
-    ' HISTORY',
-    ' LANGUAGE',
-    ' MATH',
-    ' ETC',
-    ' ART',
-    ' MEDICINE',
-    ' SCIENCE'
-  >
+  interestCollectionFields: interestedCategory[]
 }
 
 declare namespace User {

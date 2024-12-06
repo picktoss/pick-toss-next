@@ -126,7 +126,9 @@ const SwipeableDocumentCard = ({
 
         <div className="ml-[16px] flex w-full flex-col">
           <div className="mb-[2px] flex items-center gap-[8px]">
-            <h4 className="w-fit text-subtitle2-bold">{title}</h4>
+            <h4 className="w-fit max-w-[calc(100%-100px)] overflow-x-hidden truncate text-subtitle2-bold">
+              {title}
+            </h4>
 
             {reviewCount && <Tag colors={'secondary'}>복습 필요 {reviewCount}</Tag>}
           </div>

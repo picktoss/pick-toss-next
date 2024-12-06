@@ -11,6 +11,7 @@ interface SignInParams {
 interface SignInResponse {
   accessToken: string
   accessTokenExpiration: string
+  signUp: boolean
 }
 
 export const signIn = async (params: SignInParams) => {

@@ -8,10 +8,8 @@ interface Props {
     id: string
   }
   searchParams: {
-    quizType: 'today' | 'document' | 'collection'
+    quizType: 'today' | 'document' | 'collection' | 'create'
     createdAt: string
-    // 문제 생성일 경우
-    isFirst?: boolean
     // 문서 퀴즈일 경우
     documentName?: string
     directoryEmoji?: string
@@ -26,7 +24,6 @@ const QuizDetailPage = async ({ params, searchParams }: Props) => {
   const {
     quizType,
     createdAt,
-    isFirst,
     documentName,
     directoryEmoji,
     collectionId,
@@ -59,7 +56,6 @@ const QuizDetailPage = async ({ params, searchParams }: Props) => {
     <IntroAndQuizView
       quizType={quizType}
       createdAt={createdAt}
-      isFirst={isFirst}
       quizzes={quizSet.quizzes}
       documentInfo={documentInfo}
       collectionInfo={collectionInfo}

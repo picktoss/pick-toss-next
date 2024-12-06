@@ -12,43 +12,43 @@ export const LOCAL_KEY = {
 
 export const CATEGORY_OPTION = [
   {
-    key: 'it',
+    key: 'IT',
     label: 'IT·프로그래밍',
   },
   {
-    key: 'law',
+    key: 'LAW',
     label: '법학',
   },
   {
-    key: 'business',
+    key: 'ECONOMY',
     label: '경영·경제',
   },
   {
-    key: 'social',
+    key: 'SOCIETY',
     label: '사회·정치',
   },
   {
-    key: 'language',
+    key: 'LANGUAGE',
     label: '언어',
   },
   {
-    key: 'medicine',
+    key: 'MEDICINE',
     label: '의학·약학',
   },
   {
-    key: 'art',
+    key: 'ART',
     label: '예술',
   },
   {
-    key: 'science',
+    key: 'SCIENCE',
     label: '과학·공학',
   },
   {
-    key: 'history',
+    key: 'HISTORY',
     label: '역사·철학',
   },
   {
-    key: 'etc',
+    key: 'ETC',
     label: '기타',
   },
 ]
