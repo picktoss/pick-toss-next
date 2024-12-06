@@ -78,7 +78,7 @@ const FlameBomb = ({ leftQuizCount, onNext }: { leftQuizCount: number; onNext: (
           opacity: [1, 0, 1, 0, 0],
         }}
         transition={{
-          duration: 0.5,
+          duration: 0.7,
           delay: 0.5,
         }}
         onAnimationComplete={() => leftQuizCount === 1 && onNext()}

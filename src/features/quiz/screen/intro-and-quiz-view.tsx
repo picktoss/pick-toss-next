@@ -24,7 +24,7 @@ const IntroAndQuizView = ({
   const handleAnimationComplete = () => {
     const delayTimer = setTimeout(() => {
       setFinishedIntro(true)
-    }, 1000)
+    }, 2000)
 
     return () => clearTimeout(delayTimer)
   }
