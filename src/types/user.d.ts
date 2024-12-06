@@ -2,13 +2,13 @@ type interestedCategory =
   | 'IT'
   | 'LAW'
   | 'ART'
-  | 'ECONOMY'
-  | 'HISTORY'
+  | 'BUSINESS_ECONOMY'
+  | 'HISTORY_PHILOSOPHY'
   | 'LANGUAGE'
-  | 'SOCIETY'
-  | 'MEDICINE'
-  | 'SCIENCE'
-  | 'ETC'
+  | 'SOCIETY_POLITICS'
+  | 'MEDICINE_PHARMACY'
+  | 'SCIENCE_ENGINEERING'
+  | 'OTHER'
 
 interface UserInfo {
   id: number
