@@ -17,7 +17,7 @@ const buttonVariants = cva(
         mediumIcon: 'size-[52px] rounded-full !text-icon-system',
       },
       colors: {
-        special: 'bg-gradient-to-r from-blue-400 from-0% via-[#FFA25F] to-orange-500 to-70%',
+        special: 'bg-gradient-to-r from-orange-500 to-blue-400',
         primary:
           'bg-button-fill-primary text-button-label-primary hover:bg-button-fill-primary-hover',
         'primary-loading': 'bg-button-fill-primary-loading text-button-label-primary',
