@@ -23,7 +23,7 @@ type Story = StoryObj<typeof CategoryDrawer>
 
 export const Default: Story = {
   args: {
-    interestedCategories: ['IT/프로그래밍'],
+    interestedCategories: ['IT'],
   },
 }
 

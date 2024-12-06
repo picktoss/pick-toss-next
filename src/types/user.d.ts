@@ -2,12 +2,12 @@ type interestedCategory =
   | 'IT'
   | 'LAW'
   | 'ART'
-  | 'BUSINESS_ECONOMY'
-  | 'HISTORY_PHILOSOPHY'
+  | 'ECONOMY'
+  | 'HISTORY'
   | 'LANGUAGE'
-  | 'SOCIETY_POLITICS'
-  | 'MEDICINE_PHARMACY'
-  | 'SCIENCE_ENGINEERING'
+  | 'SOCIETY'
+  | 'MEDICINE'
+  | 'SCIENCE'
   | 'ETC'
 
 interface UserInfo {
@@ -16,7 +16,7 @@ interface UserInfo {
   email: string
   socialPlatform: 'KAKAO' | 'GOOGLE'
   role: 'ROLE_USER' | 'ROLE_ADMIN'
-  interestField: string[]
+  interestField: interestedCategory[]
   documentUsage: {
     possessDocumentCount: number
     maxPossessDocumentCount: number

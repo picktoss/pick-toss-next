@@ -82,7 +82,7 @@ const CategorySelectArea = () => {
             <Button
               id={'BUSINESS_ECONOMY'}
               variant={'smallSquare'}
-              colors={isChecked('BUSINESS_ECONOMY') ? 'selected' : 'outlined'}
+              colors={isChecked('ECONOMY') ? 'selected' : 'outlined'}
             >
               💰 경영·경제
             </Button>
@@ -92,7 +92,7 @@ const CategorySelectArea = () => {
             <Button
               id={'SCIENCE_ENGINEERING'}
               variant={'smallSquare'}
-              colors={isChecked('SCIENCE_ENGINEERING') ? 'selected' : 'outlined'}
+              colors={isChecked('SCIENCE') ? 'selected' : 'outlined'}
             >
               🔬 과학·공학
             </Button>
@@ -109,14 +109,14 @@ const CategorySelectArea = () => {
             <Button
               id={'SOCIETY_POLITICS'}
               variant={'smallSquare'}
-              colors={isChecked('SOCIETY_POLITICS') ? 'selected' : 'outlined'}
+              colors={isChecked('SOCIETY') ? 'selected' : 'outlined'}
             >
               ⚖️ 사회·정치
             </Button>
             <Button
               id={'HISTORY_PHILOSOPHY'}
               variant={'smallSquare'}
-              colors={isChecked('HISTORY_PHILOSOPHY') ? 'selected' : 'outlined'}
+              colors={isChecked('HISTORY') ? 'selected' : 'outlined'}
             >
               📜 역사·철학
             </Button>
@@ -140,7 +140,7 @@ const CategorySelectArea = () => {
             <Button
               id={'MEDICINE_PHARMACY'}
               variant={'smallSquare'}
-              colors={isChecked('MEDICINE_PHARMACY') ? 'selected' : 'outlined'}
+              colors={isChecked('MEDICINE') ? 'selected' : 'outlined'}
             >
               🩺 의학·약학
             </Button>

@@ -31,7 +31,11 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>
 
-const CategoryDrawer = ({ interestedCategories }: { interestedCategories?: string[] }) => {
+const CategoryDrawer = ({
+  interestedCategories,
+}: {
+  interestedCategories?: (interestedCategory | '관심 분야 없음')[]
+}) => {
   const router = useRouter()
 
   const [open, setOpen] = useState(false)
@@ -47,7 +51,7 @@ const CategoryDrawer = ({ interestedCategories }: { interestedCategories?: strin
 
   const onSubmit = (values: FormValues) => {
     mutate(
-      { interestCollectionFields: values.categories },
+      { interestCollectionFields: values.categories as interestedCategory[] },
       {
         onSuccess: () => {
           setCompleteOpen(true)
