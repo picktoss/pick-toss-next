@@ -1,6 +1,4 @@
 import Text from '@/shared/components/ui/text'
-import BOMB from '@/../../public/images/bomb.png'
-import RANDOM_QUIZ from '@/../../public/images/random-quiz.png'
 import Image from 'next/image'
 import { DocumentProvider } from '@/features/document/contexts/document-context'
 import AddDocumentMenu from '@/features/document/components/add-document-menu'
@@ -11,6 +9,8 @@ import ReviewTop5Container from '@/features/document/components/review-top5-cont
 import InterestedCategoryCollections from '@/features/collection/components/interested-category-collections'
 import { fetchTodayQuizSetId } from '@/requests/quiz'
 import { fetchDocuments } from '@/requests/document'
+import RandomQuizLottie from '@/features/quiz/components/random-quiz-lottie'
+import BombQuizLottie from '@/features/quiz/components/bomb-quiz-lottie'
 
 const Home = async () => {
   const { quizSetId, createdAt, type } = await fetchTodayQuizSetId()
@@ -40,7 +40,8 @@ const Home = async () => {
             <Text typography="text2-medium" color="sub" className="mb-[27px]">
               틀린 문제 정복하기
             </Text>
-            <Image src={BOMB} alt="" className="h-[83px] w-auto self-end" />
+
+            <BombQuizLottie className="self-end" />
           </Link>
 
           <Link
@@ -53,7 +54,8 @@ const Home = async () => {
             <Text typography="text2-medium" color="sub" className="mb-[27px]">
               한 문제씩 빠르게 풀기
             </Text>
-            <Image src={RANDOM_QUIZ} alt="" className="h-[83px] w-auto self-end" />
+
+            <RandomQuizLottie className="self-end" />
           </Link>
         </div>
 
