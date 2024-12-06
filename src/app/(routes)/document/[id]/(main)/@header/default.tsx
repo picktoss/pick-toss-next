@@ -19,14 +19,41 @@ import { useQuery } from '@tanstack/react-query'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import ConfirmDialogWidget from '@/widget/confirm-dialog'
 import { useDeleteDocument } from '@/requests/document/hooks'
+import { useEffect, useRef, useState } from 'react'
 
 // Header 컴포넌트
 const Header = () => {
   const router = useRouter()
   const { id } = useParams()
+
+  const [isTitleHidden, setIsTitleHidden] = useState(false)
+  const titleRef = useRef<HTMLHeadingElement | null>(null)
+
   const { getPreviousPath } = usePreviousPath({ getCustomPath: true })
   const { data } = useQuery(queries.document.item(Number(id)))
   const { mutate: deleteDocumentMutation } = useDeleteDocument()
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsTitleHidden(!entry.isIntersecting)
+      },
+      {
+        root: null,
+        threshold: 0,
+      }
+    )
+
+    if (titleRef.current) {
+      observer.observe(titleRef.current)
+    }
+
+    return () => {
+      if (titleRef.current) {
+        observer.unobserve(titleRef.current)
+      }
+    }
+  }, [])
 
   const handleClickCancel = () => {
     const previousPath = getPreviousPath()
@@ -55,8 +82,11 @@ const Header = () => {
           <div className="flex size-full items-center justify-between">
             <div className="flex items-center">
               <GoBackButton icon="cancel" onClick={handleClickCancel} />
-              {/* 스크롤을 내려 제목이 뷰포트에서 사라지면 생길 텍스트 */}
-              {/* <h2 className="ml-[16px] text-text1-medium">최근 이슈</h2> */}
+              {isTitleHidden && (
+                <Text as="h2" typography="text1-medium" className="ml-[16px]">
+                  {data?.documentName}
+                </Text>
+              )}
             </div>
 
             <div className="flex">
@@ -159,8 +189,10 @@ const Header = () => {
         </div>
 
         {/* data: 노트 제목, 문제 수, 글자 수, 마지막 수정 날짜 */}
-        <div className=" px-[16px] pb-[18px] pt-[66px]">
-          <h2 className="mb-[8px] text-title2">{data?.documentName}</h2>
+        <div ref={titleRef} className=" px-[16px] pb-[18px] pt-[66px]">
+          <Text as="h2" typography="title2" className="mb-[8px]">
+            {data?.documentName}
+          </Text>
           <div className="flex items-center text-text1-medium text-text-sub">
             <Text as="span">{data?.totalQuizCount}문제</Text>
             <Icon name="middle-dot" className="mx-[8px]" />
