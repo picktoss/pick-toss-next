@@ -16,6 +16,7 @@ const Header = () => {
   useMessaging()
 
   useEffect(() => {
+    // 첫 로그인 회원일 경우 온보딩 화면(관심분야선택)으로 보냅니다
     if (status === 'authenticated' && session?.user.isNewUser) {
       router.push('/on-boarding')
     }

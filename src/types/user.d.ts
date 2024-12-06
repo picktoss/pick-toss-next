@@ -1,3 +1,15 @@
+type interestedCategory =
+  | 'IT'
+  | 'LAW'
+  | 'ART'
+  | 'BUSINESS_ECONOMY'
+  | 'HISTORY_PHILOSOPHY'
+  | 'LANGUAGE'
+  | 'SOCIETY_POLITICS'
+  | 'MEDICINE_PHARMACY'
+  | 'SCIENCE_ENGINEERING'
+  | 'ETC'
+
 interface UserInfo {
   id: number
   name: string
@@ -26,17 +38,7 @@ interface UpdateNamePayload {
 }
 
 interface UpdateCollectionFieldsPayload {
-  interestCollectionFields: Array<
-    'IT',
-    ' ECONOMY',
-    ' HISTORY',
-    ' LANGUAGE',
-    ' MATH',
-    ' ETC',
-    ' ART',
-    ' MEDICINE',
-    ' SCIENCE'
-  >
+  interestCollectionFields: interestedCategory[]
 }
 
 declare namespace User {
