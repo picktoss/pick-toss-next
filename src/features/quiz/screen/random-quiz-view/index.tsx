@@ -2,7 +2,7 @@
 
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { cn } from '@/shared/lib/utils'
 
 import './style.css'
@@ -16,16 +16,24 @@ import { getAnswerText } from '../../utils'
 import GoBackButton from '@/shared/components/custom/go-back-button'
 import Tag from '@/shared/components/ui/tag'
 import QuizOptions from '../quiz-view/components/quiz-option'
+import { CATEGORIES } from '@/features/category/config'
 
 interface Props {
-  bookmarkedCollections: Collection.Response.GetBookmarkedCollections
+  collections: Collection.Response.GetBookmarkedCollections['collections']
+  directories: Directory.Response.GetDirectories['directories']
 }
 
-const RandomQuizView = ({ bookmarkedCollections }: Props) => {
-  // 북마크한 컬렉션 가져옴
-  // 그걸로 컬렉션 리스트 만듦\
-  // eslint-disable-next-line no-console
-  console.log(bookmarkedCollections)
+type CategoryWithQuizzesAndCollectionName = {
+  category: (typeof CATEGORIES)[number]
+  quizzes: (Quiz.Item & { tag: string })[]
+}
+
+const RandomQuizView = ({ collections, directories }: Props) => {
+  const [categoriesWithQuizzes, setCategoriesWithQuizzes] = useState(() =>
+    groupQuizzesByCategory(collections)
+  )
+  const [] = useState()
+  console.log(categoriesWithQuizzes)
 
   // 디렉토리에 생성된 모든 랜덤 퀴즈 가져옴
 
@@ -33,7 +41,16 @@ const RandomQuizView = ({ bookmarkedCollections }: Props) => {
 
   const [repository, setRepository] = useState<'directory' | 'collection'>('directory')
   const [activeDirectoryIndex, setActiveDirectoryIndex] = useState(0)
-  const [activeCollectionIndex, setActiveCollectionIndex] = useState(0)
+  const [activeCategoryIndex, setActiveCategoryIndex] = useState(0)
+
+  const activeDirectoryId = useMemo(
+    () => mockDirectories[activeDirectoryIndex].id,
+    [activeDirectoryIndex]
+  )
+  const activeCategoryCode = useMemo(
+    () => categoriesWithQuizzes[activeCategoryIndex].category.code,
+    [activeCategoryIndex, categoriesWithQuizzes]
+  )
 
   const [openExplanation, setOpenExplanation] = useState(false)
 
@@ -47,7 +64,7 @@ const RandomQuizView = ({ bookmarkedCollections }: Props) => {
     if (repository === 'directory') {
       setActiveDirectoryIndex(index)
     } else {
-      setActiveCollectionIndex(index)
+      setActiveCategoryIndex(index)
     }
   }
 
@@ -91,7 +108,7 @@ const RandomQuizView = ({ bookmarkedCollections }: Props) => {
     }
   }
 
-  const mockData = repository === 'directory' ? mockDirectories : mockCategories
+  const data = repository === 'directory' ? mockDirectories : categoriesWithQuizzes
 
   const currentQuiz = randomQuizList[currentIndex]
   const currentResult = quizResults[currentIndex]
@@ -162,16 +179,14 @@ const RandomQuizView = ({ bookmarkedCollections }: Props) => {
               pagination={{
                 clickable: true,
               }}
-              initialSlide={
-                repository === 'directory' ? activeDirectoryIndex : activeCollectionIndex
-              }
+              initialSlide={repository === 'directory' ? activeDirectoryIndex : activeCategoryIndex}
               onSlideChange={(data) => handleSlideChange(data.activeIndex)}
             >
               {mockData.map((item, index) => {
                 const isActive =
                   repository === 'directory'
                     ? index === activeDirectoryIndex
-                    : index === activeCollectionIndex
+                    : index === activeCategoryIndex
 
                 return (
                   <SwiperSlide key={index} className="!flex items-center justify-center">
@@ -300,55 +315,33 @@ const mockDirectories = [
   },
 ]
 
-const mockCategories = [
-  {
-    id: 1,
-    name: '역사·철학',
-    emoji: '📦',
-  },
-  {
-    id: 2,
-    name: '과학·공학',
-    emoji: '🔬',
-  },
-  {
-    id: 3,
-    name: '언어',
-    emoji: '💬',
-  },
-  {
-    id: 4,
-    name: '기타',
-    emoji: '∞',
-  },
-  {
-    id: 5,
-    name: '사회·정치',
-    emoji: '⚖️',
-  },
-  {
-    id: 6,
-    name: '예술',
-    emoji: '🎨',
-  },
-  {
-    id: 7,
-    name: 'IT·프로그래밍',
-    emoji: '🌐',
-  },
-  {
-    id: 8,
-    name: '경영·경제',
-    emoji: '💰',
-  },
-  {
-    id: 9,
-    name: '법학',
-    emoji: '📖',
-  },
-  {
-    id: 10,
-    name: '의학·약학',
-    emoji: '⚕️',
-  },
-]
+const groupQuizzesByCategory = (
+  collections: Collection.Response.GetBookmarkedCollections['collections']
+): CategoryWithQuizzesAndCollectionName[] => {
+  return collections.reduce<CategoryWithQuizzesAndCollectionName[]>((acc, collection) => {
+    const category = CATEGORIES.find((category) => category.code === collection.collectionField)
+
+    if (!category) return acc
+
+    const existingCategory = acc.find((item) => item.category.code === category.code)
+
+    if (existingCategory) {
+      existingCategory.quizzes.push(
+        ...collection.quizzes.map((quiz) => ({
+          ...quiz,
+          tag: collection.name,
+        }))
+      )
+    } else {
+      acc.push({
+        category,
+        quizzes: collection.quizzes.map((quiz) => ({
+          ...quiz,
+          tag: collection.name,
+        })),
+      })
+    }
+
+    return acc
+  }, [])
+}

@@ -40,6 +40,7 @@ const Collection = ({
               name="book-mark-fill"
               className="size-[24px] text-icon-disabled"
               onClick={(e) => {
+                e.preventDefault()
                 e.stopPropagation()
               }}
             />
@@ -50,6 +51,7 @@ const Collection = ({
                 name="book-mark-fill"
                 className="size-[24px] cursor-pointer"
                 onClick={(e) => {
+                  e.preventDefault()
                   e.stopPropagation()
                   bookmarkMutate({ collectionId, isBookMarked: true })
                 }}
