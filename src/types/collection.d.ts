@@ -15,14 +15,11 @@ type QuizType = 'MIX_UP' | 'MULTIPLE_CHOICE'
 
 type BaseQuiz = {
   id: number
+  quizType: QuizType
   question: string
   answer: string
   explanation: string
   options?: string[]
-}
-
-type QuizWithType = BaseQuiz & {
-  quizType: QuizType
 }
 
 type Collection = {
@@ -31,20 +28,17 @@ type Collection = {
   description: string
   emoji: string
   bookmarkCount: number
-  collectionField: CollectionField
+  collectionCategory: string
   solvedMemberCount: number
+  bookmarked: boolean
   member: {
     creatorId: number
     creatorName: string
   }
-  quizzes: {
-    id: number
-    question: string
-    answer: string
-    explanation: string
-    options: string[]
-    quizType: QuizType
-  }[]
+}
+
+type CollectionWithQuizzes = Collection & {
+  quizzes: BaseQuiz[]
 }
 
 type CollectionQuizResult = {

@@ -7,7 +7,6 @@ import Collection from './collection'
 import CollectionList from './collection-list'
 import Link from 'next/link'
 import Icon from '@/shared/components/custom/icon'
-import StartQuizDrawer from './start-quiz-drawer'
 import { useBookmarkedCollections, useMyCollections } from '@/requests/collection/hooks'
 import Loading from '@/shared/components/custom/loading'
 import { SwitchCase } from '@/shared/components/custom/react/switch-case'
@@ -25,7 +24,6 @@ const MyCollection = () => {
   const { data: myCollectionsData, isLoading: isMyCollectionLoading } = useMyCollections()
   const { data: bookmarkedCollectionsData, isLoading: isBookmarkedCollectionLoading } =
     useBookmarkedCollections()
-  const { data: bookmarkedCollections, isLoading: isBookmarkedLoading } = useBookmarkedCollections()
 
   return (
     <>
@@ -63,86 +61,40 @@ const MyCollection = () => {
                 <Icon name="plus-circle" className="size-[24px]" />
                 <Text typography="subtitle2-bold">만들기</Text>
               </Link>
-              {myCollectionsData?.collections.map((collection) => {
-                const multipleChoiceCount =
-                  collection.quizzes?.filter((quiz) => quiz.quizType === 'MULTIPLE_CHOICE')
-                    .length ?? 0
-                const oxCount =
-                  collection.quizzes?.filter((quiz) => quiz.quizType === 'MIX_UP').length ?? 0
-
-                return (
-                  <StartQuizDrawer
-                    key={collection.id}
+              {myCollectionsData?.collections.map((collection) => (
+                <Link key={collection.id} href={`/collections/${collection.id}`}>
+                  <Collection
                     collectionId={collection.id}
                     emoji={collection.emoji}
-                    multipleChoiceCount={multipleChoiceCount}
-                    oxCount={oxCount}
-                    category={collection.collectionField}
                     title={collection.name}
-                    description={collection.description}
+                    category={collection.collectionCategory}
+                    problemCount={0}
+                    lastUpdated="2일 전"
                     isOwner={true}
                     bookMarkCount={collection.bookmarkCount}
-                    trigger={
-                      <Collection
-                        collectionId={collection.id}
-                        emoji={collection.emoji}
-                        title={collection.name}
-                        category={collection.collectionField}
-                        problemCount={multipleChoiceCount + oxCount}
-                        lastUpdated="2일 전"
-                        isOwner={true}
-                        bookMarkCount={collection.bookmarkCount}
-                      />
-                    }
                   />
-                )
-              })}
+                </Link>
+              ))}
             </CollectionList>
           ),
           'save-collection': isBookmarkedCollectionLoading ? (
             <Loading center />
           ) : (
             <CollectionList>
-              {!isBookmarkedLoading &&
-                bookmarkedCollectionsData?.collections.map((collection) => {
-                  const isBookmarked = Boolean(
-                    bookmarkedCollections?.collections.some(
-                      (bookmarkedCollection) => bookmarkedCollection.id === collection.id
-                    )
-                  )
-                  const multipleChoiceCount =
-                    collection.quizzes?.filter((quiz) => quiz.quizType === 'MULTIPLE_CHOICE')
-                      .length ?? 0
-                  const oxCount =
-                    collection.quizzes?.filter((quiz) => quiz.quizType === 'MIX_UP').length ?? 0
-
-                  return (
-                    <StartQuizDrawer
-                      key={collection.id}
-                      collectionId={collection.id}
-                      emoji={collection.emoji}
-                      multipleChoiceCount={multipleChoiceCount}
-                      oxCount={oxCount}
-                      category={collection.collectionField}
-                      title={collection.name}
-                      description={collection.description}
-                      isBookMarked={isBookmarked}
-                      bookMarkCount={collection.bookmarkCount}
-                      trigger={
-                        <Collection
-                          collectionId={collection.id}
-                          emoji={collection.emoji}
-                          title={collection.name}
-                          category={collection.collectionField}
-                          problemCount={multipleChoiceCount + oxCount}
-                          lastUpdated="2일 전"
-                          isBookMarked={isBookmarked}
-                          bookMarkCount={collection.bookmarkCount}
-                        />
-                      }
-                    />
-                  )
-                })}
+              {bookmarkedCollectionsData?.collections.map((collection) => (
+                <Link key={collection.id} href={`/collections/${collection.id}`}>
+                  <Collection
+                    collectionId={collection.id}
+                    emoji={collection.emoji}
+                    title={collection.name}
+                    category={collection.collectionCategory}
+                    problemCount={0}
+                    lastUpdated="2일 전"
+                    isBookMarked={collection.bookmarked}
+                    bookMarkCount={collection.bookmarkCount}
+                  />
+                </Link>
+              ))}
             </CollectionList>
           ),
         }}

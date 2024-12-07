@@ -81,6 +81,7 @@ export const useBookmarkMutation = () => {
             if (collection.id === collectionId) {
               return {
                 ...collection,
+                isBookmarked: !collection.bookmarked,
                 bookmarkCount: isBookMarked
                   ? collection.bookmarkCount - 1
                   : collection.bookmarkCount + 1,
