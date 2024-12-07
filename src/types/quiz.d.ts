@@ -1,3 +1,6 @@
+import { DeepRequired } from 'react-hook-form'
+import { paths } from './schema'
+
 type QuizSetType = 'DOCUMENT_QUIZ_SET' | 'TODAY_QUIZ_SET' | 'COLLECTION_QUIZ_SET' | 'FIRST_QUIZ_SET'
 
 type QuizItem = {
@@ -56,110 +59,6 @@ type QuizSetRecord = {
   solvedDate: string
 }
 
-/** GET /api/v2/today-quiz-info */
-interface TodayQuizInfoResponse extends ConsecutiveDays {}
-
-/** GET /api/v2/quizzes/{quiz_set_id}/{quiz_set_type}/quiz-record */
-interface QuizSetRecordResponse {
-  createdAt: string
-  totalElapsedTimeMs: number
-  quizzes: QuizRecord[]
-}
-
-/** GET /api/v2/quizzes/quiz-records */
-interface QuizRecordsResponse extends ConsecutiveDays {
-  quizRecords: QuizSetRecord[]
-}
-
-/** GET /api/v2/quiz-sets/{quiz_set_id} */
-interface BaseQuizSetResponse {
-  quizzes: QuizWithMetadata[]
-  collectionName?: string
-}
-
-/** GET /api/v2/quiz-sets/today */
-interface TodayQuizSetResponse {
-  quizSetId: string
-  createdAt?: string
-  type: 'READY' | 'NOT_READY' | 'DONE'
-}
-
-/** GET /api/v2/quiz-analysis */
-interface QuizAnalysisResponse {
-  totalElapsedTime: number
-  quizzes: {
-    date: string
-    quizCount: number
-    incorrectAnswerCount: number
-  }[]
-}
-
-/** GET /api/v2/documents/{document_id}/review-pick */
-interface ReviewPickResponse {
-  quizzes: {
-    id: number
-    question: string
-    answer: string
-    explanation: string
-    options: string[]
-    quizType: QuizType
-    description: string
-  }[]
-}
-
-/** GET /api/v2/documents/{document_id}/quizzes */
-interface DocumentQuizzesResponse {
-  quizzes: QuizWithMetadata[]
-}
-
-/** GET /api/v2/documents/{document_id}/download-quiz */
-type DownloadQuizResponse = string[]
-
-/** GET /api/v2/incorrect-quizzes */
-type WrongAnswerQuizzesResponse = {
-  quizzes: QuizWithMetadata[]
-}
-
-/** PATCH /api/v2/quiz/result */
-interface UpdateQuizResultPayload {
-  quizSetId: string
-  quizzes: {
-    id: number
-    answer: boolean
-    choseAnswer: string
-    elapsedTime: number
-  }[]
-}
-interface UpdateQuizResultResponse {
-  reward: number
-  currentConsecutiveTodayQuizDate: number
-}
-
-/** PATCH /api/v2/wrong-quiz/result */
-interface UpdateWrongQuizResultPayload {
-  quizzes: {
-    id: number
-    answer: boolean
-  }[]
-}
-
-/** POST /api/v2/quizzes/documents/{document_id}/custom-quiz-set */
-interface CreateReplayQuizSetPayload {
-  quizType: ReplayQuizType
-  quizCount: number
-}
-
-/** GET /api/v2/directories/{directory_id}/quizzes */
-interface GetDirectoryQuizzesResponse {
-  quizzes: QuizWithMetadata[]
-}
-
-/** POST /api/v2/quizzes/documents/{document_id}/check-quiz-set */
-interface CreateQuizSetResponse {
-  quizSetId: string
-  createdAt: string
-}
-
 declare namespace Quiz {
   type Item = QuizItem
   type List = QuizItem[]
@@ -173,83 +72,115 @@ declare namespace Quiz {
     /** PATCH /api/v2/quiz/result
      * 퀴즈 결과 업데이트
      */
-    type UpdateQuizResult = UpdateQuizResultPayload
+    type UpdateQuizResult = DeepRequired<
+      paths['/api/v2/quiz/result']['patch']['requestBody']['content']['application/json;charset=UTF-8']
+    >
 
     /** POST /api/v2/quizzes/documents/{document_id}/custom-quiz-set
      * 사용자가 생성한 기존 문서에서 직접 퀴즈 세트 생성(랜덤, OX, 객관식) - 다시풀기 세트 만들기
      */
-    type CreateReplayQuizSet = CreateReplayQuizSetPayload
+    type CreateReplayQuizSet = DeepRequired<
+      paths['/api/v2/quizzes/documents/{document_id}/custom-quiz-set']['post']['requestBody']['content']['application/json;charset=UTF-8']
+    >
 
     /** PATCH /api/v2/wrong-quiz/result
      * 오답 터뜨리기 결과 업데이트
      */
-    type UpdateWrongQuizResult = UpdateWrongQuizResultPayload
+    type UpdateWrongQuizResult = DeepRequired<
+      paths['/api/v2/wrong-quiz/result']['patch']['requestBody']['content']['application/json;charset=UTF-8']
+    >
   }
 
   declare namespace Response {
     /** GET /api/v2/today-quiz-info
      * 오늘의 퀴즈 현황
      */
-    type GetTodayInfo = TodayQuizInfoResponse
+    type GetTodayInfo = DeepRequired<
+      paths['/api/v2/today-quiz-info']['get']['responses']['200']['content']['application/json;charset=UTF-8']
+    >
 
     /** GET /api/v2/quizzes/{quiz_set_id}/{quiz_set_type}/quiz-record
      * 퀴즈 세트에 대한 상세 기록
      */
-    type GetQuizSetRecord = QuizSetRecordResponse
+    type GetQuizSetRecord = DeepRequired<
+      paths['/api/v2/quizzes/{quiz_set_id}/{quiz_set_type}/quiz-record']['get']['responses']['200']['content']['application/json;charset=UTF-8']
+    >
 
     /** GET /api/v2/quizzes/quiz-records
      * 전체 퀴즈 기록
      */
-    type GetQuizRecords = QuizRecordsResponse
+    type GetQuizRecords = DeepRequired<
+      paths['/api/v2/quizzes/quiz-records']['get']['responses']['200']['content']['application/json;charset=UTF-8']
+    >
 
     /** GET /api/v2/quiz-sets/{quiz_set_id}
      * quizSet-type과 quizSet_id로 퀴즈 세트 가져오기
      */
-    type GetBaseQuizSet = BaseQuizSetResponse
+    type GetBaseQuizSet = DeepRequired<
+      paths['/api/v2/quiz-sets/{quiz_set_id}']['get']['responses']['200']['content']['application/json;charset=UTF-8']
+    >
 
     /** GET /api/v2/quiz-sets/today
      * 오늘의 퀴즈 세트 정보 가져오기
      */
-    type GetTodayQuizSet = TodayQuizSetResponse
+    type GetTodayQuizSet = DeepRequired<
+      paths['/api/v2/quiz-sets/today']['get']['responses']['200']['content']['application/json;charset=UTF-8']
+    >
 
     /** GET /api/v2/quiz-analysis
      * 퀴즈 분석
      */
-    type GetQuizAnalysis = QuizAnalysisResponse
+    type GetQuizAnalysis = DeepRequired<
+      paths['/api/v2/quiz-analysis']['get']['responses']['200']['content']['application/json;charset=UTF-8']
+    >
 
     /** GET /api/v2/documents/{document_id}/review-pick
      * document_id로 복습 pick 가져오기
      */
-    type GetReviewPick = ReviewPickResponse
+    type GetReviewPick = DeepRequired<
+      paths['/api/v2/documents/{document_id}/review-pick']['get']['responses']['200']['content']['application/json;charset=UTF-8']
+    >
 
     /** GET /api/v2/documents/{document_id}/quizzes
      * document_id에 해당하는 모든 퀴즈 가져오기
      */
-    type GetDocumentQuizzes = DocumentQuizzesResponse
+    type GetDocumentQuizzes = DeepRequired<
+      paths['/api/v2/documents/{document_id}/quizzes']['get']['responses']['200']['content']['application/json;charset=UTF-8']
+    >
 
     /** GET /api/v2/directories/{directory_id}/quizzes
      * 디렉토리에 생성된 모든 퀴즈 랜덤하게 가져오기
      */
-    type GetDirectoryQuizzes = GetDirectoryQuizzesResponse
+    type GetDirectoryQuizzes = DeepRequired<
+      paths['/api/v2/directories/{directory_id}/quizzes']['get']['responses']['200']['content']['application/json;charset=UTF-8']
+    >
 
     /** GET /api/v2/documents/{document_id}/download-quiz
      * 퀴즈 다운로드
      */
-    type DownloadQuiz = DownloadQuizResponse
+    type DownloadQuiz = DeepRequired<
+      paths['/api/v2/documents/{document_id}/download-quiz']['get']['responses']['200']['content']['application/json;charset=UTF-8']
+    >
 
     /** GET /api/v2/incorrect-quizzes
      * 오답 터뜨리기 퀴즈 가져오기
      */
-    type GetWrongAnswerQuizzes = WrongAnswerQuizzesResponse
+    type GetWrongAnswerQuizzes = DeepRequired<
+      paths['/api/v2/incorrect-quizzes']['get']['responses']['200']['content']['application/json;charset=UTF-8']
+    >
 
     /** PATCH /api/v2/quiz/result
      * 퀴즈 결과 업데이트
      */
-    type UpdateQuizResult = UpdateQuizResultResponse
+    type UpdateQuizResult = DeepRequired<
+      paths['/api/v2/quiz/result']['patch']['responses']['200']['content']['application/json;charset=UTF-8']
+    >
 
     /** POST /api/v2/quizzes/documents/{document_id}/check-quiz-set
      * 퀴즈 생성 후 퀴즈 오류 확인을 위한 퀴즈 세트 생성
      */
-    type CreateQuizSet = CreateQuizSetResponse
+    type CreateQuizSet = DeepRequired<
+      paths['/api/v2/quizzes/documents/{document_id}/check-quiz-set']['post']['responses']['201']['content']['application/json;charset=UTF-8']
+    >
   }
 }

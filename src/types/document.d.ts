@@ -1,3 +1,6 @@
+import { DeepRequired } from 'react-hook-form'
+import { components, paths } from './schema'
+
 type DirectoryInDocument = Pick<Directory.Item, 'id' | 'name'> & { emoji?: string }
 
 type SortOption = 'CREATED_AT' | 'UPDATED_AT'
@@ -85,91 +88,6 @@ type SearchedCollection = {
   quizCount: number
 }
 
-/** GET /api/v2/documents/{document_id} */
-interface DocumentResponse {
-  document: DocumentItem
-}
-
-/** GET /api/v2/documents/review-need-documents */
-interface ReviewNeedDocumentsResponse {
-  documents: {
-    id: number
-    name: string
-    reviewNeededQuizCount: number
-    directory: DirectoryInDocument
-  }[]
-}
-
-/** GET /api/v2/directories/documents */
-interface AllDocumentsResponse {
-  documents: DocumentItem[]
-}
-
-/** PATCH /api/v2/documents/{document_id}/update-name */
-interface UpdateDocumentNamePayload {
-  name: string
-}
-
-/** PATCH /api/v2/documents/{document_id}/update-content */
-interface UpdateDocumentContentPayload {
-  name: string
-  file: File
-}
-
-/** PATCH /api/v2/documents/today-quiz-settings */
-interface UpdateTodayQuizSettingsPayload {
-  documentIdTodayQuizMap: {
-    additionalProp1: boolean
-    additionalProp2: boolean
-    additionalProp3: boolean
-  }
-}
-
-/** PATCH /api/v2/documents/move */
-interface MoveDocumentPayload {
-  documentIds: number[]
-  directoryId: number | null
-}
-
-/** DELETE /api/v2/documents/delete-documents
- * 여러 문서 id를 리스트 형태로 delete의 body로 보내고 있습니다
- */
-interface DeleteDocumentPayload {
-  documentIds: number[]
-}
-
-/** POST /api/v2/integrated-search */
-interface IntegratedSearchPayload {
-  keyword: string
-}
-interface IntegratedSearchResponse {
-  documents: SearchedDocument[]
-  quizzes: SearchedQuiz[]
-  collections: SearchedCollection[]
-}
-
-/** POST /api/v2/documents */
-interface CreateDocumentPayload {
-  file: string
-  documentType: CreateType
-  directoryId: number
-  documentName: string
-  star: number
-  quizType: QuizType
-}
-interface CreateDocumentResponse {
-  id: number
-}
-
-/** POST /api/v2/documents/search */
-interface SearchDocumentsPayload {
-  keyword: string
-}
-interface SearchDocumentsResponse {
-  documents: SearchedDocument[]
-  quizzes: SearchedQuiz[]
-}
-
 declare namespace Document {
   type DetailItem = DocumentDetailItem
   type ItemInList = DocumentListItem
@@ -178,116 +96,98 @@ declare namespace Document {
   type Sort = SortOption
 
   declare namespace Request {
-    /** GET /api/v2/documents/{document_id}
-     * document_id로 문서 가져오기
-     */
-    type GetDocument = void
-
-    /** GET /api/v2/documents/review-need-documents
-     * 복습 필수 노트 top 5
-     */
-    type GetReviewNeedDocuments = void
-
-    /** GET /api/v2/directories/documents
-     * 모든 문서 가져오기
-     */
-    type GetAllDocuments = void
-
     /** PATCH /api/v2/documents/{document_id}/update-name
      * 문서 이름 변경
      */
-    type UpdateName = UpdateDocumentNamePayload
+    type UpdateName = DeepRequired<
+      paths['/api/v2/documents/{document_id}/update-name']['patch']['requestBody']['content']['application/json;charset=UTF-8']
+    >
 
     /** PATCH /api/v2/documents/{document_id}/update-content
      * 문서 내용 업데이트
      */
-    type UpdateContent = UpdateDocumentContentPayload
+    type UpdateContent = DeepRequired<components['schemas']['UpdateDocumentContentRequest']>
 
     /** PATCH /api/v2/documents/today-quiz-settings
      * 오늘의 퀴즈 관리(문제를 가져올 노트 선택)
      */
-    type UpdateTodayQuizSettings = UpdateTodayQuizSettingsPayload
+    type UpdateTodayQuizSettings = DeepRequired<
+      paths['/api/v2/documents/today-quiz-settings']['patch']['requestBody']['content']['application/json;charset=UTF-8']
+    >
 
     /** PATCH /api/v2/documents/move
      * 문서 다른 폴더로 옮기기
      */
-    type MoveDocument = MoveDocumentPayload
+    type MoveDocument = DeepRequired<
+      paths['/api/v2/documents/move']['patch']['requestBody']['content']['application/json;charset=UTF-8']
+    >
 
     /** POST /api/v2/integrated-search
      * 통합(문서, 컬렉션, 퀴즈) 검색
      */
-    type IntegratedSearch = IntegratedSearchPayload
+    type IntegratedSearch = DeepRequired<
+      paths['/api/v2/integrated-search']['post']['requestBody']['content']['application/json;charset=UTF-8']
+    >
 
     /** POST /api/v2/documents
      * 문서 생성
      */
-    type CreateDocument = CreateDocumentPayload
+    type CreateDocument = DeepRequired<components['schemas']['CreateDocumentRequest']>
 
     /** POST /api/v2/documents/search
      * 문서 검색
      */
-    type SearchDocuments = SearchDocumentsPayload
+    type SearchDocuments = DeepRequired<
+      paths['/api/v2/documents/search']['post']['requestBody']['content']['application/json;charset=UTF-8']
+    >
 
     /** DELETE /api/v2/documents/delete-documents
      * 문서 삭제
      */
-    type DeleteDocuments = DeleteDocumentPayload
+    type DeleteDocuments = DeepRequired<
+      paths['/api/v2/documents/delete-documents']['delete']['requestBody']['content']['application/json;charset=UTF-8']
+    >
   }
 
   declare namespace Response {
     /** GET /api/v2/documents/{document_id}
      * document_id로 문서 가져오기
      */
-    type GetDocument = DocumentResponse
+    type GetDocument = DeepRequired<
+      paths['/api/v2/documents/{document_id}']['get']['responses']['200']['content']['application/json;charset=UTF-8']
+    >
 
     /** GET /api/v2/documents/review-need-documents
      * 복습 필수 노트 top 5
      */
-    type GetReviewNeedDocuments = ReviewNeedDocumentsResponse
+    type GetReviewNeedDocuments = DeepRequired<
+      paths['/api/v2/documents/review-need-documents']['get']['responses']['200']['content']['application/json;charset=UTF-8']
+    >
 
     /** GET /api/v2/directories/documents
      * 모든 문서 가져오기
      */
-    type GetAllDocuments = AllDocumentsResponse
-
-    /** PATCH /api/v2/documents/{document_id}/update-name
-     * 문서 이름 변경
-     */
-    type UpdateName = void
-
-    /** PATCH /api/v2/documents/{document_id}/update-content
-     * 문서 내용 업데이트
-     */
-    type UpdateContent = void
-
-    /** PATCH /api/v2/documents/today-quiz-settings
-     * 오늘의 퀴즈 관리(문제를 가져올 노트 선택)
-     */
-    type UpdateTodayQuizSettings = void
-
-    /** PATCH /api/v2/documents/move
-     * 문서 다른 폴더로 옮기기
-     */
-    type MoveDocument = void
+    type GetAllDocuments = DeepRequired<
+      paths['/api/v2/directories/documents']['get']['responses']['200']['content']['application/json;charset=UTF-8']
+    >
 
     /** POST /api/v2/integrated-search
      * 통합(문서, 컬렉션, 퀴즈) 검색
      */
-    type IntegratedSearch = IntegratedSearchResponse
+    type IntegratedSearch = DeepRequired<
+      paths['/api/v2/integrated-search']['post']['responses']['200']['content']['application/json;charset=UTF-8']
+    >
 
     /** POST /api/v2/documents
      * 문서 생성
      */
-    type CreateDocument = CreateDocumentResponse
+    type CreateDocument = DeepRequired<components['schemas']['CreateDocumentRequest']>
 
     /** POST /api/v2/documents/search
      * 문서 검색
      */
-    type SearchDocuments = SearchDocumentsResponse
-
-    /** DELETE /api/v2/documents/delete-documents
-     * 문서 삭제 (여러 문서 id를 리스트 형태로 delete의 body로 보내고 있습니다)
-     */
-    type DeleteDocuments = void
+    type SearchDocuments = DeepRequired<
+      paths['/api/v2/documents/search']['post']['responses']['200']['content']['application/json;charset=UTF-8']
+    >
   }
 }
