@@ -7,12 +7,20 @@ import {
   deleteBookmark,
   createBookmark,
   getMyCollections,
+  getCollectionInfo,
 } from '.'
 
 export const useCollections = () => {
   return useQuery({
     queryKey: ['collections'],
     queryFn: async () => getAllCollections(),
+  })
+}
+
+export const useCollectionInfo = (collectionId: number) => {
+  return useQuery({
+    queryKey: ['collectionInfo', collectionId],
+    queryFn: async () => getCollectionInfo({ collectionId }),
   })
 }
 

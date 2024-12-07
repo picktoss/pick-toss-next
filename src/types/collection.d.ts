@@ -70,7 +70,7 @@ interface CollectionRecordResponse {
 }
 
 /** GET /api/v2/collections/{collection_id}/collection_info */
-type CollectionInfoResponse = Collection
+type CollectionInfoResponse = CollectionWithQuizzes
 
 /** GET /api/v2/collections/my-collections */
 interface MyCollectionsResponse {

@@ -1,26 +1,14 @@
 type QuizSetType = 'DOCUMENT_QUIZ_SET' | 'TODAY_QUIZ_SET' | 'COLLECTION_QUIZ_SET' | 'FIRST_QUIZ_SET'
 
-type BaseQuiz = {
+type QuizItem = {
   id: number
   question: string
   answer: string
   explanation: string
+  quizType: 'MIX_UP' | 'MULTIPLE_CHOICE'
+  options?: string[]
+  answer?: 'correct' | 'incorrect'
 }
-
-type MultipleChoiceQuiz = {
-  quizType: 'MULTIPLE_CHOICE'
-  options: string[]
-} & BaseQuiz
-
-/** correct와 incorrect는 O/X를 의미. 정답을 맞혔다는 의미로는 right 사용 */
-type OXQuizAnswer = 'correct' | 'incorrect'
-
-type OXQuiz = {
-  quizType: 'MIX_UP'
-  answer: OXQuizAnswer
-} & BaseQuiz
-
-type CombineQuiz = MultipleChoiceQuiz | OXQuiz
 
 type QuizType = 'MIX_UP' | 'MULTIPLE_CHOICE'
 type ReplayQuizType = 'RANDOM' | 'MIX_UP' | 'MULTIPLE_CHOICE'
@@ -43,7 +31,7 @@ type ConsecutiveDays = {
 type QuizWithMetadata = {
   document: DocumentInQuiz
   directory: DirectoryInQuiz
-} & CombineQuiz
+} & QuizItem
 
 type QuizWithCategory = {
   category: Category
@@ -173,8 +161,8 @@ interface CreateQuizSetResponse {
 }
 
 declare namespace Quiz {
-  type Item = CombineQuiz
-  type List = CombineQuiz[]
+  type Item = QuizItem
+  type List = QuizItem[]
   type ItemWithMetadata = QuizWithMetadata
   type ItemWithCategory = QuizWithCategory
   type Type = QuizType

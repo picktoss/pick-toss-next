@@ -25,7 +25,7 @@ export const API_ENDPOINTS = {
       /** GET /collections/{keyword} - 컬렉션 검색하기 */
       BY_KEYWORD: (keyword: string) => `/collections/${keyword}`,
       /** GET /collections/{collection_id}/collection_info - 만든 컬렉션 상세 정보 가져오기 */
-      INFO: (collectionId: number) => `/collections/${collectionId}/collection_info`,
+      INFO: (collectionId: number) => `/collections/${collectionId}/info`,
       /** GET /collections/my-collections - 직접 생성한 컬렉션 가져오기 */
       MY_COLLECTIONS: '/collections/my-collections',
       /** GET /collections/interest-field-collection - 사용자 관심 분야 컬렉션 가져오기 */

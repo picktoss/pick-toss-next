@@ -8,12 +8,15 @@ import { useCollections } from '@/requests/collection/hooks'
 import Loading from '@/shared/components/custom/loading'
 import { useUser } from '@/shared/hooks/use-user'
 import Link from 'next/link'
+import { useScrollPosition } from '@/shared/hooks/use-scroll-position'
 
 const controlButtons = ['분야', '퀴즈 유형', '문제 수']
 
 const Exploration = () => {
   const { data: collectionsData, isLoading } = useCollections()
   const { user } = useUser()
+
+  const scrollContainerRef = useScrollPosition({ pageKey: 'exploration' })
 
   return (
     <>
@@ -34,7 +37,7 @@ const Exploration = () => {
         <Icon name="sort" className="size-[16px]" />
       </div>
 
-      <CollectionList>
+      <CollectionList ref={scrollContainerRef}>
         {isLoading ? (
           <Loading center />
         ) : (

@@ -2,7 +2,6 @@
 
 import Text from '@/shared/components/ui/text'
 import { cn } from '@/shared/lib/utils'
-import { useState } from 'react'
 import Collection from './collection'
 import CollectionList from './collection-list'
 import Link from 'next/link'
@@ -10,32 +9,44 @@ import Icon from '@/shared/components/custom/icon'
 import { useBookmarkedCollections, useMyCollections } from '@/requests/collection/hooks'
 import Loading from '@/shared/components/custom/loading'
 import { SwitchCase } from '@/shared/components/custom/react/switch-case'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { useScrollPosition } from '@/shared/hooks/use-scroll-position'
 
-const tabs = [
+const sort = [
   { key: 'create-collection', label: '만든 컬렉션' },
   { key: 'save-collection', label: '보관한 컬렉션' },
 ] as const
 
+type TabType = (typeof sort)[number]['key']
+
 const MyCollection = () => {
-  const [activeTab, setActiveTab] = useState<'create-collection' | 'save-collection'>(
-    'create-collection'
-  )
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const activeTab = (searchParams.get('sort') as TabType) || 'create-collection'
+
+  const scrollContainerRef = useScrollPosition({ pageKey: 'my-collection' })
 
   const { data: myCollectionsData, isLoading: isMyCollectionLoading } = useMyCollections()
   const { data: bookmarkedCollectionsData, isLoading: isBookmarkedCollectionLoading } =
     useBookmarkedCollections()
 
+  const handleTabChange = (tab: TabType) => {
+    const params = new URLSearchParams(searchParams)
+    params.set('sort', tab)
+    router.replace(`?${params.toString()}`)
+  }
+
   return (
     <>
       <div className="flex h-[60px] border-b border-border-divider text-text-sub transition-all">
-        {tabs.map((tab) => (
+        {sort.map((tab) => (
           <button
             key={tab.key}
             className={cn(
               'flex-1',
               activeTab === tab.key && 'border-b-[2px] border-button-fill-selected'
             )}
-            onClick={() => setActiveTab(tab.key)}
+            onClick={() => handleTabChange(tab.key)}
           >
             <Text
               typography="subtitle2-bold"
@@ -53,7 +64,7 @@ const MyCollection = () => {
           'create-collection': isMyCollectionLoading ? (
             <Loading center />
           ) : (
-            <CollectionList>
+            <CollectionList ref={scrollContainerRef}>
               <Link
                 href="/collections/create"
                 className="flex flex-col items-center gap-[12px] rounded-[16px] border-[3px] border-dashed border-border-default pt-[70px]"
@@ -80,7 +91,7 @@ const MyCollection = () => {
           'save-collection': isBookmarkedCollectionLoading ? (
             <Loading center />
           ) : (
-            <CollectionList>
+            <CollectionList ref={scrollContainerRef}>
               {bookmarkedCollectionsData?.collections.map((collection) => (
                 <Link key={collection.id} href={`/collections/${collection.id}`}>
                   <Collection
