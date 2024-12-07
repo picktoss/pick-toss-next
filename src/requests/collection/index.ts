@@ -109,7 +109,7 @@ export const deleteBookmark = async (collectionId: number) => {
   }
 }
 
-export const fetchCollectionInfo = async ({ collectionId }: { collectionId: number }) => {
+export const getCollectionInfo = async ({ collectionId }: { collectionId: number }) => {
   try {
     const session = await auth()
 

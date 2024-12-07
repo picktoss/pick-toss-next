@@ -1,38 +1,73 @@
 'use client'
 
+import { useUpdateCollectionFields } from '@/requests/user/hooks'
+import Loading from '@/shared/components/custom/loading'
 import { Button } from '@/shared/components/ui/button'
+import { Form, FormField, FormItem } from '@/shared/components/ui/form'
 import Text from '@/shared/components/ui/text'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { ControllerRenderProps, useForm } from 'react-hook-form'
+import * as z from 'zod'
+
+const formSchema = z.object({
+  categories: z
+    .array(z.string())
+    .min(1, '최소 1개의 관심분야를 선택해주세요')
+    .max(2, '최대 2개까지 선택 가능합니다'),
+})
+type FormValues = z.infer<typeof formSchema>
+const MAX_CATEGORY = 2
 
 const CategorySelectArea = () => {
-  const MAX_CATEGORY = 2
-  const [categoryCheckList, setCheckList] = useState<interestedCategory[]>([])
+  const router = useRouter()
+  const { mutate, isPending } = useUpdateCollectionFields()
 
-  const isChecked = (category: interestedCategory) => {
-    return categoryCheckList.find((value) => value === category) ? true : false
-  }
+  const form = useForm<FormValues>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      categories: [] as interestedCategory[],
+    },
+  })
+  const { watch } = form
+  const currentCategories = watch('categories')
 
-  const handleCheck = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleCheck = (
+    e: React.MouseEvent<HTMLDivElement>,
+    field: ControllerRenderProps<
+      {
+        categories: string[]
+      },
+      'categories'
+    >
+  ) => {
     const target = e.target as HTMLElement
     const category = target.id as interestedCategory
 
-    if (!category) return
+    if (!category) return // 버튼이 아닌 다른 영역 클릭 시 무시
 
-    if (categoryCheckList.find((value) => value === category)) {
-      const newCheckList = categoryCheckList.filter((value) => value !== category)
-      setCheckList([...newCheckList])
-      return
+    const currentCategories = (field.value || []) as interestedCategory[]
+    if (currentCategories.includes(category)) {
+      // 이미 선택된 경우 제거
+      const updatedCategories = currentCategories.filter((item) => item !== category)
+      field.onChange(updatedCategories)
+    } else if (currentCategories.length < MAX_CATEGORY) {
+      // 선택 추가
+      const updatedCategories = [...currentCategories, category]
+      field.onChange(updatedCategories)
     }
-
-    if (categoryCheckList.length === MAX_CATEGORY) return
-
-    setCheckList((prev) => [...prev, category])
   }
 
-  const handleSubmit = () => {
-    // 완료 클릭 시 서버로 전송
-    // onSuccess: /main으로 이동
+  const onSubmit = (values: FormValues) => {
+    mutate(
+      { interestCollectionFields: values.categories as interestedCategory[] },
+      {
+        onSuccess: () => {
+          router.replace('/main')
+        },
+      }
+    )
   }
 
   const containerVariant = {
@@ -58,100 +93,121 @@ const CategorySelectArea = () => {
     },
   }
 
+  if (isPending) return <Loading center />
+
   return (
-    <>
-      <motion.div
-        variants={containerVariant}
-        initial="hidden"
-        animate="show"
-        className="mb-[70px] mt-[40px] flex flex-col"
-      >
-        <Text typography="text2-medium" color="accent" className="mb-[20px]">
-          *최대 2개 선택 가능
-        </Text>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <motion.div
+          variants={containerVariant}
+          initial="hidden"
+          animate="show"
+          className="mb-[70px] mt-[40px] flex flex-col"
+        >
+          <Text typography="text2-medium" color="accent" className="mb-[20px]">
+            *최대 2개 선택 가능
+          </Text>
 
-        <div onClick={(e) => handleCheck(e)} className="flex flex-col gap-[20px]">
-          <motion.div variants={itemVariant} className="flex items-center gap-[8px]">
-            <Button
-              id={'IT'}
-              variant={'smallSquare'}
-              colors={isChecked('IT') ? 'selected' : 'outlined'}
-            >
-              🤖 IT·프로그래밍
-            </Button>
-            <Button
-              id={'BUSINESS_ECONOMY'}
-              variant={'smallSquare'}
-              colors={isChecked('ECONOMY') ? 'selected' : 'outlined'}
-            >
-              💰 경영·경제
-            </Button>
-          </motion.div>
+          <FormField
+            control={form.control}
+            name="categories"
+            render={({ field }) => (
+              <div className="flex flex-col gap-[20px]" onClick={(e) => handleCheck(e, field)}>
+                <FormItem>
+                  <motion.div variants={itemVariant} className="flex items-center gap-[8px]">
+                    <Button
+                      type="button"
+                      id={'IT'}
+                      variant={'smallSquare'}
+                      colors={field.value.includes('IT') ? 'selected' : 'outlined'}
+                    >
+                      🤖 IT·프로그래밍
+                    </Button>
+                    <Button
+                      type="button"
+                      id={'BUSINESS_ECONOMY'}
+                      variant={'smallSquare'}
+                      colors={field.value.includes('BUSINESS_ECONOMY') ? 'selected' : 'outlined'}
+                    >
+                      💰 경영·경제
+                    </Button>
+                  </motion.div>
 
-          <motion.div variants={itemVariant} className="flex items-center gap-[8px]">
-            <Button
-              id={'SCIENCE_ENGINEERING'}
-              variant={'smallSquare'}
-              colors={isChecked('SCIENCE') ? 'selected' : 'outlined'}
-            >
-              🔬 과학·공학
-            </Button>
-            <Button
-              id={'LAW'}
-              variant={'smallSquare'}
-              colors={isChecked('LAW') ? 'selected' : 'outlined'}
-            >
-              📖 법학
-            </Button>
-          </motion.div>
+                  <motion.div variants={itemVariant} className="flex items-center gap-[8px]">
+                    <Button
+                      type="button"
+                      id={'SCIENCE_ENGINEERING'}
+                      variant={'smallSquare'}
+                      colors={field.value.includes('SCIENCE_ENGINEERING') ? 'selected' : 'outlined'}
+                    >
+                      🔬 과학·공학
+                    </Button>
+                    <Button
+                      type="button"
+                      id={'LAW'}
+                      variant={'smallSquare'}
+                      colors={field.value.includes('LAW') ? 'selected' : 'outlined'}
+                    >
+                      📖 법학
+                    </Button>
+                  </motion.div>
 
-          <motion.div variants={itemVariant} className="flex items-center gap-[8px]">
-            <Button
-              id={'SOCIETY_POLITICS'}
-              variant={'smallSquare'}
-              colors={isChecked('SOCIETY') ? 'selected' : 'outlined'}
-            >
-              ⚖️ 사회·정치
-            </Button>
-            <Button
-              id={'HISTORY_PHILOSOPHY'}
-              variant={'smallSquare'}
-              colors={isChecked('HISTORY') ? 'selected' : 'outlined'}
-            >
-              📜 역사·철학
-            </Button>
-            <Button
-              id={'ART'}
-              variant={'smallSquare'}
-              colors={isChecked('ART') ? 'selected' : 'outlined'}
-            >
-              🎨 예술
-            </Button>
-          </motion.div>
+                  <motion.div variants={itemVariant} className="flex items-center gap-[8px]">
+                    <Button
+                      type="button"
+                      id={'SOCIETY_POLITICS'}
+                      variant={'smallSquare'}
+                      colors={field.value.includes('SOCIETY_POLITICS') ? 'selected' : 'outlined'}
+                    >
+                      ⚖️ 사회·정치
+                    </Button>
+                    <Button
+                      type="button"
+                      id={'HISTORY_PHILOSOPHY'}
+                      variant={'smallSquare'}
+                      colors={field.value.includes('HISTORY_PHILOSOPHY') ? 'selected' : 'outlined'}
+                    >
+                      📜 역사·철학
+                    </Button>
+                    <Button
+                      type="button"
+                      id={'ART'}
+                      variant={'smallSquare'}
+                      colors={field.value.includes('ART') ? 'selected' : 'outlined'}
+                    >
+                      🎨 예술
+                    </Button>
+                  </motion.div>
 
-          <motion.div variants={itemVariant} className="flex items-center gap-[8px]">
-            <Button
-              id={'LANGUAGE'}
-              variant={'smallSquare'}
-              colors={isChecked('LANGUAGE') ? 'selected' : 'outlined'}
-            >
-              💬 언어
-            </Button>
-            <Button
-              id={'MEDICINE_PHARMACY'}
-              variant={'smallSquare'}
-              colors={isChecked('MEDICINE') ? 'selected' : 'outlined'}
-            >
-              🩺 의학·약학
-            </Button>
-          </motion.div>
-        </div>
-      </motion.div>
+                  <motion.div variants={itemVariant} className="flex items-center gap-[8px]">
+                    <Button
+                      type="button"
+                      id={'LANGUAGE'}
+                      variant={'smallSquare'}
+                      colors={field.value.includes('LANGUAGE') ? 'selected' : 'outlined'}
+                    >
+                      💬 언어
+                    </Button>
+                    <Button
+                      type="button"
+                      id={'MEDICINE_PHARMACY'}
+                      variant={'smallSquare'}
+                      colors={field.value.includes('MEDICINE_PHARMACY') ? 'selected' : 'outlined'}
+                    >
+                      🩺 의학·약학
+                    </Button>
+                  </motion.div>
+                </FormItem>
+              </div>
+            )}
+          ></FormField>
+        </motion.div>
 
-      <Button onClick={handleSubmit} className="w-full" disabled={categoryCheckList.length === 0}>
-        완료
-      </Button>
-    </>
+        <Button className="w-full" disabled={currentCategories.length === 0}>
+          완료
+        </Button>
+      </form>
+    </Form>
   )
 }
 

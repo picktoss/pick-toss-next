@@ -1,20 +1,13 @@
-import DetailInfoWithQuizzes from '@/features/collection/components/detail-info-with-quizzes'
-import FixedBottom from '@/shared/components/custom/fixed-bottom'
-import { Button } from '@/shared/components/ui/button'
-import Link from 'next/link'
+import DetailInfo from '@/features/collection/components/detail-info'
 
-const CollectionDetailPage = () => {
-  return (
-    <>
-      <DetailInfoWithQuizzes />
-      <FixedBottom>
-        <Link href="#">
-          {/* 이동 /quiz/[id] - searchParams로 collectionId, createdAt, collectionName, collectionEmoji 넣어서 */}
-          <Button className="w-full">퀴즈 시작하기</Button>
-        </Link>
-      </FixedBottom>
-    </>
-  )
+interface Props {
+  params: {
+    id: string
+  }
+}
+
+const CollectionDetailPage = ({ params }: Props) => {
+  return <DetailInfo id={Number(params.id)} />
 }
 
 export default CollectionDetailPage

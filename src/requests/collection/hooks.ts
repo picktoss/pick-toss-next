@@ -7,12 +7,20 @@ import {
   deleteBookmark,
   createBookmark,
   getMyCollections,
+  getCollectionInfo,
 } from '.'
 
 export const useCollections = () => {
   return useQuery({
     queryKey: ['collections'],
     queryFn: async () => getAllCollections(),
+  })
+}
+
+export const useCollectionInfo = (collectionId: number) => {
+  return useQuery({
+    queryKey: ['collectionInfo', collectionId],
+    queryFn: async () => getCollectionInfo({ collectionId }),
   })
 }
 
@@ -81,6 +89,7 @@ export const useBookmarkMutation = () => {
             if (collection.id === collectionId) {
               return {
                 ...collection,
+                isBookmarked: !collection.bookmarked,
                 bookmarkCount: isBookMarked
                   ? collection.bookmarkCount - 1
                   : collection.bookmarkCount + 1,

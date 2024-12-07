@@ -20,11 +20,11 @@ export const CATEGORY_OPTION = [
     label: '법학',
   },
   {
-    key: 'ECONOMY',
+    key: 'BUSINESS_ECONOMY',
     label: '경영·경제',
   },
   {
-    key: 'SOCIETY',
+    key: 'SOCIETY_POLITICS',
     label: '사회·정치',
   },
   {
@@ -32,7 +32,7 @@ export const CATEGORY_OPTION = [
     label: '언어',
   },
   {
-    key: 'MEDICINE',
+    key: 'MEDICINE_PHARMACY',
     label: '의학·약학',
   },
   {
@@ -40,15 +40,15 @@ export const CATEGORY_OPTION = [
     label: '예술',
   },
   {
-    key: 'SCIENCE',
+    key: 'SCIENCE_ENGINEERING',
     label: '과학·공학',
   },
   {
-    key: 'HISTORY',
+    key: 'HISTORY_PHILOSOPHY',
     label: '역사·철학',
   },
   {
-    key: 'ETC',
+    key: 'OTHER',
     label: '기타',
   },
 ]

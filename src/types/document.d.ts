@@ -15,12 +15,12 @@ type DocumentStatus =
 
 type QuizType = 'MIX_UP' | 'MULTIPLE_CHOICE'
 
-type Quiz = {
+type QuizItem = {
   id: number
   question: string
   answer: string
   explanation: string
-  options: string[]
+  options?: string[]
   quizType: QuizType
 }
 
@@ -37,7 +37,7 @@ type DocumentBase = {
 type DocumentDetailItem = DocumentBase & {
   documentName: string
   content: string
-  quizzes: Quiz[]
+  quizzes: QuizItem[]
 }
 
 type DocumentListItem = DocumentBase & {

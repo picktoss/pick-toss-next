@@ -22,6 +22,7 @@ interface StartQuizDrawerProps {
   bookMarkCount: number
 }
 
+/** @deprecated */
 const StartQuizDrawer = ({
   collectionId,
   trigger,
@@ -64,13 +65,19 @@ const StartQuizDrawer = ({
                   <Icon
                     name="book-mark-fill"
                     className="size-[24px] cursor-pointer"
-                    onClick={() => bookmarkMutate({ collectionId, isBookMarked: true })}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      bookmarkMutate({ collectionId, isBookMarked: true })
+                    }}
                   />
                 ) : (
                   <Icon
                     name="book-mark"
                     className="size-[24px] cursor-pointer"
-                    onClick={() => bookmarkMutate({ collectionId, isBookMarked: false })}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      bookmarkMutate({ collectionId, isBookMarked: false })
+                    }}
                   />
                 ))}
               <Text typography="text2-medium" className="text-text-caption">
