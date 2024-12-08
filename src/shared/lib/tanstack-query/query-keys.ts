@@ -24,6 +24,12 @@ export const queries = createQueryKeyStore({
       queryFn: () => REQUEST.document.fetchDocumentDetail(documentId),
       enabled: !!documentId,
     }),
+    search: (requestBody: Document.Request.SearchDocuments) => ({
+      queryKey: [requestBody],
+      queryFn: () => REQUEST.document.searchDocument(requestBody),
+      enabled: requestBody.keyword.trim() !== '',
+      initialData: { documents: [], quizzes: [] },
+    }),
   },
 
   quiz: {

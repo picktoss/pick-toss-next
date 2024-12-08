@@ -1,34 +1,58 @@
+'use client'
+
 import Icon from '@/shared/components/custom/icon'
 import { Input } from '@/shared/components/ui/input'
 import { useRouter } from 'next/navigation'
-import { RefObject, useState } from 'react'
+import { RefObject } from 'react'
+import { ControllerRenderProps, useFormContext } from 'react-hook-form'
 
 interface Props {
-  searchHeaderRef: RefObject<HTMLDivElement>
+  field: ControllerRenderProps<
+    {
+      keyword: string
+    },
+    'keyword'
+  >
+  searchInputRef: RefObject<HTMLInputElement>
   isSearchFocused: boolean
   setIsSearchFocused: (value: boolean) => void
+  onDeleteKeyword: () => void
 }
 
-const HeaderInDocument = ({ searchHeaderRef, isSearchFocused, setIsSearchFocused }: Props) => {
+const HeaderInDocument = ({
+  field,
+  searchInputRef,
+  isSearchFocused,
+  setIsSearchFocused,
+  onDeleteKeyword,
+}: Props) => {
   const router = useRouter()
-  const [keyword, setKeyword] = useState('')
+  const { register } = useFormContext()
+
+  const handleCancel = () => {
+    if (isSearchFocused) {
+      setIsSearchFocused(false)
+      return
+    } else {
+      router.push('/document')
+    }
+  }
 
   return (
-    <header
-      ref={searchHeaderRef}
-      className="flex-center relative right-1/2 z-20 h-[56px] w-full max-w-mobile grow translate-x-1/2  bg-background-base-01 px-[16px] text-subtitle2-medium"
-    >
+    <header className="flex-center relative right-1/2 z-20 h-[56px] w-full max-w-mobile grow translate-x-1/2  bg-background-base-01 px-[16px] text-subtitle2-medium">
       <div tabIndex={-1} className="relative grow">
         <Input
-          value={keyword}
-          onChange={(e) => setKeyword(e.target.value)}
+          {...register}
+          ref={searchInputRef}
           onFocus={() => setIsSearchFocused(true)}
+          value={field.value}
+          onChange={field.onChange}
           placeholder="노트명, 노트, 퀴즈 검색"
           className="h-[40px] placeholder:text-text-placeholder-01"
           variant={'round'}
           left={<Icon name="search-bar" className="size-[20px] text-icon-secondary" />}
           right={
-            <button>
+            <button type="button" onClick={onDeleteKeyword}>
               <Icon
                 name="cancel-circle"
                 className="size-[24px]"
@@ -39,14 +63,8 @@ const HeaderInDocument = ({ searchHeaderRef, isSearchFocused, setIsSearchFocused
           }
         />
       </div>
-      <button
-        onClick={() => {
-          if (isSearchFocused) {
-            setIsSearchFocused(false)
-          } else router.back()
-        }}
-        className="ml-[17px] w-fit text-text-secondary"
-      >
+
+      <button type="button" onClick={handleCancel} className="ml-[17px] w-fit text-text-secondary">
         취소
       </button>
     </header>

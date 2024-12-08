@@ -3,7 +3,7 @@
 import { useMutation } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 import { createDocument } from './create-document'
-import { deleteDocument, fetchDocumentDetail, moveDocument } from '.'
+import { deleteDocument, fetchDocumentDetail, moveDocument, searchDocument } from '.'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import { getQueryClient } from '@/shared/lib/tanstack-query/client'
 import { updateDocument } from './update-document'
@@ -80,5 +80,15 @@ export const useDeleteDocument = (listOption?: {
       // 문서 목록 갱신
       listOption && (await queryClient.invalidateQueries(queries.document.list(listOption)))
     },
+  })
+}
+
+/**
+ * 문서 검색 Hook
+ */
+export const useSearchDocument = () => {
+  return useMutation({
+    mutationFn: async (requestBody: Document.Request.SearchDocuments) =>
+      searchDocument(requestBody),
   })
 }

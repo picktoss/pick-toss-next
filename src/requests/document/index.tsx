@@ -94,3 +94,26 @@ export const deleteDocument = async (requestBody: Document.Request.DeleteDocumen
     throw error
   }
 }
+
+export const searchDocument = async (requestBody: Document.Request.SearchDocuments) => {
+  if (!requestBody.keyword || requestBody.keyword === '') return null
+
+  try {
+    const session = await auth()
+
+    const { data } = await http.post<Document.Response.SearchDocuments>(
+      API_ENDPOINTS.DOCUMENT.POST.SEARCH,
+      requestBody,
+      {
+        headers: {
+          Authorization: `Bearer ${session?.user.accessToken}`,
+        },
+      }
+    )
+
+    return data
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
