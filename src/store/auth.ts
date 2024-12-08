@@ -1,6 +1,8 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
+// 추가로 auth관련 데이터를 저장할 수 있음
+
 interface AuthStore {
   accessToken: string | null
   setAccessToken: (token: string | null) => void
