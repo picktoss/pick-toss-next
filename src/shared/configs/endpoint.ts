@@ -133,7 +133,7 @@ export const API_ENDPOINTS = {
       /** PATCH /members/update-name - Update member name */
       UPDATE_NAME: '/members/update-name',
       /** PATCH /members/update-collection-fields - 관심분야 태그 설정 */
-      UPDATE_COLLECTION_FIELDS: '/members/update-collection-fields',
+      UPDATE_COLLECTION_CATEGORIES: '/members/update-collection-categories',
     },
   },
 
@@ -152,7 +152,7 @@ export const API_ENDPOINTS = {
       /** GET /quizzes - 생성된 모든 퀴즈 가져오기(전체 문서) */
       ALL: '/quizzes',
       /** GET /quizzes/{quiz_set_id}/{quiz_set_type}/quiz-record - 퀴즈 세트에 대한 상세 기록 */
-      RECORD: (quizSetId: string, quizSetType: QuizSetType) =>
+      RECORD: (quizSetId: string, quizSetType: Quiz.SetType) =>
         `/quizzes/${quizSetId}/${quizSetType}/quiz-record`,
       /** GET /quizzes/quiz-records - 전체 퀴즈 기록 */
       ALL_RECORDS: '/quizzes/quiz-records',

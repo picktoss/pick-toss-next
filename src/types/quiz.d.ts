@@ -1,6 +1,7 @@
 import { DeepRequired } from 'react-hook-form'
 import { paths } from './schema'
 
+/** Quiz.SetType으로 이동 */
 type QuizSetType = 'DOCUMENT_QUIZ_SET' | 'TODAY_QUIZ_SET' | 'COLLECTION_QUIZ_SET' | 'FIRST_QUIZ_SET'
 
 type QuizItem = {
@@ -68,6 +69,8 @@ declare global {
     type Type = QuizType
     type Record = QuizRecord
     type Result = UpdateQuizResultPayload['quizzes'][number]
+
+    type SetType = QuizSetType
 
     declare namespace Request {
       /** PATCH /api/v2/quiz/result

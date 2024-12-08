@@ -31,6 +31,7 @@ interface UserInfo {
 declare global {
   declare namespace User {
     type Info = UserInfo
+    type InterestedCategory = interestedCategory
 
     declare namespace Request {
       /** PATCH /api/v2/members/update-today-quiz-count
@@ -57,7 +58,7 @@ declare global {
       /** PATCH /api/v2/members/update-collection-fields
        * 관심분야 태그 설정
        */
-      type UpdateCollectionFields = DeepRequired<
+      type UpdateCollectionCategories = DeepRequired<
         paths['/api/v2/members/update-collection-categories']['patch']['requestBody']['content']['application/json;charset=UTF-8']
       >
     }

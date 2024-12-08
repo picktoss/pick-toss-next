@@ -1,19 +1,21 @@
-'use client'
-
 import { ServerEnv } from '@/actions/api-client/server-env'
+import { auth } from '@/app/api/auth/[...nextauth]/auth'
 import axios, { isAxiosError } from 'axios'
-import { getSession } from 'next-auth/react'
 
-export const http = axios.create({
+export const httpServer = axios.create({
   baseURL: ServerEnv.apiUrl(),
   headers: {
     'Content-Type': 'application/json',
   },
 })
 
-http.interceptors.request.use(
+httpServer.interceptors.request.use(
   async (config) => {
-    const session = await getSession()
+    if (typeof window !== 'undefined') {
+      throw new Error('httpServer should only be used in server-side code.')
+    }
+
+    const session = await auth()
     const token = session?.user?.accessToken
 
     if (token) {
@@ -26,7 +28,7 @@ http.interceptors.request.use(
   }
 )
 
-http.interceptors.response.use(
+httpServer.interceptors.response.use(
   (response) => {
     return response
   },

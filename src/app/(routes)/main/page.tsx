@@ -7,14 +7,14 @@ import Icon from '@/shared/components/custom/icon'
 import MainTodayQuizArea from '@/features/quiz/components/main-today-quiz-area'
 import ReviewTop5Container from '@/features/document/components/review-top5-container'
 import InterestedCategoryCollections from '@/features/collection/components/interested-category-collections'
-import { fetchTodayQuizSetId } from '@/requests/quiz'
-import { fetchDocuments } from '@/requests/document'
 import RandomQuizLottie from '@/features/quiz/components/random-quiz-lottie'
 import BombQuizLottie from '@/features/quiz/components/bomb-quiz-lottie'
+import { fetchTodayQuizSetId } from '@/requests/quiz/server'
+import { fetchDocumentsServer } from '@/requests/document/server'
 
 const Home = async () => {
   const { quizSetId, createdAt, type } = await fetchTodayQuizSetId()
-  const { documents } = await fetchDocuments()
+  const { documents } = await fetchDocumentsServer()
   const isEmpty = !documents || documents.length === 0
   const todayQuizState = isEmpty ? 'EMPTY' : type === 'READY' ? 'ARRIVED' : 'NOT_ARRIVED'
 
