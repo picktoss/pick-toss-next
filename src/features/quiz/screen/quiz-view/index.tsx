@@ -33,8 +33,8 @@ const QuizView = ({ quizzes, isFirst }: Props) => {
 
   const [exitDialogOpen, setExitDialogOpen] = useState(false)
 
-  const currentQuiz = quizzes[currentIndex]
-  const currentResult = quizResults[currentIndex]
+  const currentQuiz = quizzes[currentIndex] ?? ({} as Quiz.ItemWithMetadata)
+  const currentResult = quizResults[currentIndex] ?? null
 
   const onNext = () => {
     const hasNextQuiz = handleNext(currentIndex, quizzes.length)
@@ -127,9 +127,7 @@ const QuizView = ({ quizzes, isFirst }: Props) => {
         />
       )}
 
-      {isQuizSolved(quizResults[currentIndex]) && (
-        <ResultIcon isRight={quizResults[currentIndex]?.answer} />
-      )}
+      {isQuizSolved(currentResult) && <ResultIcon isRight={currentResult?.answer} />}
 
       <ExitDialog index={currentIndex} open={exitDialogOpen} onOpenChange={setExitDialogOpen} />
     </div>

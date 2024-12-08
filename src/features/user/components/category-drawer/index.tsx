@@ -16,7 +16,7 @@ import { Button } from '@/shared/components/ui/button'
 import SetCategoryCompleteDialog from '@/features/category/components/set-category-complete-dialog'
 import { useState } from 'react'
 import * as z from 'zod'
-import { useUpdateCollectionFields } from '@/requests/user/hooks'
+import { useUpdateCollectionCategories } from '@/requests/user/hooks'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
@@ -34,13 +34,13 @@ type FormValues = z.infer<typeof formSchema>
 const CategoryDrawer = ({
   interestedCategories,
 }: {
-  interestedCategories?: (interestedCategory | '관심 분야 없음')[]
+  interestedCategories?: (User.InterestedCategory | '관심 분야 없음')[]
 }) => {
   const router = useRouter()
 
   const [open, setOpen] = useState(false)
   const [completeOpen, setCompleteOpen] = useState(false)
-  const { mutate, isPending } = useUpdateCollectionFields()
+  const { mutate, isPending } = useUpdateCollectionCategories()
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -51,7 +51,7 @@ const CategoryDrawer = ({
 
   const onSubmit = (values: FormValues) => {
     mutate(
-      { interestCollectionFields: values.categories as interestedCategory[] },
+      { interestCollectionCategories: values.categories as NonNullable<User.InterestedCategory>[] },
       {
         onSuccess: () => {
           setCompleteOpen(true)
@@ -79,7 +79,7 @@ const CategoryDrawer = ({
                 관심분야
               </Text>
 
-              {interestedCategories ? (
+              {interestedCategories && interestedCategories[0] ? (
                 <CategoryTag title={interestedCategories[0]} className="text-text-secondary" />
               ) : (
                 <Text typography="subtitle2-medium" className="text-text-caption">

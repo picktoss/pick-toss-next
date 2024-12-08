@@ -3,7 +3,7 @@
 import { useMutation } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 import { createDocument } from './create-document'
-import { deleteDocument, fetchDocumentDetail, moveDocument } from '.'
+import { deleteDocument, fetchDocumentDetail, moveDocument } from './client'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import { getQueryClient } from '@/shared/lib/tanstack-query/client'
 import { updateDocument } from './update-document'

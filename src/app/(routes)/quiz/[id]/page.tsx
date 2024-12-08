@@ -1,6 +1,6 @@
 import IntroAndQuizView from '@/features/quiz/screen/intro-and-quiz-view'
 import { getQuizSetTypeEnum } from '@/features/quiz/utils'
-import { fetchQuizSetById } from '@/requests/quiz'
+import { fetchQuizSetById } from '@/requests/quiz/client'
 import { notFound } from 'next/navigation'
 
 interface Props {

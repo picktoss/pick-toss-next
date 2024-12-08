@@ -2,13 +2,13 @@
 
 import { auth } from '@/app/api/auth/[...nextauth]/auth'
 import { API_ENDPOINTS } from '@/shared/configs/endpoint'
-import { http } from '@/shared/lib/axios/http'
+import { httpServer } from '@/shared/lib/axios/http-server'
 
 export const postFcmToken = async (requestBody: { fcmToken: string }) => {
   try {
     const session = await auth()
 
-    const response = await http.post(API_ENDPOINTS.FCM.POST.TOKEN, requestBody, {
+    const response = await httpServer.post(API_ENDPOINTS.FCM.POST.TOKEN, requestBody, {
       headers: {
         Authorization: `Bearer ${session?.user.accessToken}`,
       },

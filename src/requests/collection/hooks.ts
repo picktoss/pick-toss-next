@@ -8,7 +8,7 @@ import {
   createBookmark,
   getMyCollections,
   getCollectionInfo,
-} from '.'
+} from './client'
 
 export const useCollections = () => {
   return useQuery({

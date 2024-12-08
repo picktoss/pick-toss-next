@@ -32,7 +32,7 @@ export const queries = createQueryKeyStore({
       queryFn: () => REQUEST.quiz.fetchDocumentQuizzes(params),
       enabled: !!params.documentId,
     }),
-    setRecord: (params: { quizSetId: string; quizSetType: QuizSetType }) => ({
+    setRecord: (params: { quizSetId: string; quizSetType: Quiz.SetType }) => ({
       queryKey: [params],
       queryFn: () => REQUEST.quiz.fetchQuizSetRecord(params),
       enabled: !!params.quizSetId,
@@ -46,7 +46,7 @@ export const queries = createQueryKeyStore({
   collection: {
     info: (collectionId: number) => ({
       queryKey: [collectionId],
-      queryFn: () => REQUEST.collection.fetchCollectionInfo({ collectionId }),
+      queryFn: () => REQUEST.collection.getCollectionInfo({ collectionId }),
       enabled: !!collectionId,
     }),
   },

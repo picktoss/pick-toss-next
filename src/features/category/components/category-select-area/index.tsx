@@ -1,6 +1,6 @@
 'use client'
 
-import { useUpdateCollectionFields } from '@/requests/user/hooks'
+import { useUpdateCollectionCategories } from '@/requests/user/hooks'
 import Loading from '@/shared/components/custom/loading'
 import { Button } from '@/shared/components/ui/button'
 import { Form, FormField, FormItem } from '@/shared/components/ui/form'
@@ -22,12 +22,12 @@ const MAX_CATEGORY = 2
 
 const CategorySelectArea = () => {
   const router = useRouter()
-  const { mutate, isPending } = useUpdateCollectionFields()
+  const { mutate, isPending } = useUpdateCollectionCategories()
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      categories: [] as interestedCategory[],
+      categories: [] as User.InterestedCategory[],
     },
   })
   const { watch } = form
@@ -43,11 +43,11 @@ const CategorySelectArea = () => {
     >
   ) => {
     const target = e.target as HTMLElement
-    const category = target.id as interestedCategory
+    const category = target.id as User.InterestedCategory
 
     if (!category) return // 버튼이 아닌 다른 영역 클릭 시 무시
 
-    const currentCategories = (field.value || []) as interestedCategory[]
+    const currentCategories = (field.value || []) as User.InterestedCategory[]
     if (currentCategories.includes(category)) {
       // 이미 선택된 경우 제거
       const updatedCategories = currentCategories.filter((item) => item !== category)
@@ -61,7 +61,7 @@ const CategorySelectArea = () => {
 
   const onSubmit = (values: FormValues) => {
     mutate(
-      { interestCollectionFields: values.categories as interestedCategory[] },
+      { interestCollectionCategories: values.categories as NonNullable<User.InterestedCategory>[] },
       {
         onSuccess: () => {
           router.replace('/main')

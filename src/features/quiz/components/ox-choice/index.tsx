@@ -3,15 +3,15 @@
 import { SVGProps } from 'react'
 
 interface OXChoiceProps {
-  condition: Exclude<QuizCondition, 'DISABLED'>
-  userAnswer?: OXQuizAnswer
-  onSelect: (userAnswer: OXQuizAnswer) => void
+  condition: Exclude<Quiz.Condition, 'DISABLED'>
+  userAnswer?: Quiz.OXAnswer
+  onSelect: (userAnswer: Quiz.OXAnswer) => void
 }
 
 const OXChoice = ({ condition, userAnswer, onSelect }: OXChoiceProps) => {
   const disabled = condition === 'RIGHT' || condition === 'WRONG'
 
-  const getIconColors = (type: OXQuizAnswer) => {
+  const getIconColors = (type: Quiz.OXAnswer) => {
     const defaultColors = {
       bg: type === 'correct' ? '#4D7BF9' : '#FB8320', // 기본 배경색
       fill: 'white', // 기본 채우기색

@@ -22,7 +22,7 @@ export const isQuizSolved = (result: Quiz.Result | null): result is Quiz.Result 
 }
 
 export const getAnswerText = (answer: string) => {
-  const OXType = ['correct', 'incorrect'] as OXQuizAnswer[]
+  const OXType = ['correct', 'incorrect'] as Quiz.OXAnswer[]
   const isOXType = OXType.find((oxType) => oxType === answer)
 
   if (isOXType) {
@@ -34,7 +34,7 @@ export const getAnswerText = (answer: string) => {
 }
 
 export const getQuizSetTypeEnum = (quizSetType: 'today' | 'document' | 'collection' | 'create') => {
-  let enumQuizType: QuizSetType
+  let enumQuizType: Quiz.SetType
 
   switch (quizSetType) {
     case 'today':

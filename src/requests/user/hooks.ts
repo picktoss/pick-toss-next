@@ -1,20 +1,20 @@
 'use client'
 
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import {
-  fetchUserInfo,
   updateTodayQuizCount,
   updateQuizNotification,
   updateUserName,
-  updateCollectionFields,
-} from '.'
+  updateCollectionCategories,
+} from './client'
 
-export const useUserInfo = () => {
-  return useQuery({
-    queryKey: ['userInfo'],
-    queryFn: async () => fetchUserInfo(),
-  })
-}
+// 아직 사용처 없음 - 검토 필요
+// export const useUserInfo = () => {
+//   return useQuery({
+//     queryKey: ['userInfo'],
+//     queryFn: async () => fetchUserInfo(),
+//   })
+// }
 
 export const useUpdateTodayQuizCount = () => {
   const queryClient = useQueryClient()
@@ -44,12 +44,12 @@ export const useUpdateUserName = () => {
   })
 }
 
-export const useUpdateCollectionFields = () => {
+export const useUpdateCollectionCategories = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: async (payload: User.Request.UpdateCollectionFields) =>
-      updateCollectionFields(payload),
+    mutationFn: async (payload: User.Request.UpdateCollectionCategories) =>
+      updateCollectionCategories(payload),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['userInfo'] }),
   })
 }
