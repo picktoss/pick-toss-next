@@ -1,59 +1,47 @@
-interface DirectoryItem {
-  id: number
-  name: string
-  tag: string
-  emoji: string
-  documentCount: number
-}
+import { DeepRequired } from 'react-hook-form'
+import { components, paths } from './schema'
 
-interface CreateDirectoryPayload {
-  name: string
-  emoji: string
-}
+declare global {
+  declare namespace Directory {
+    type Item = DeepRequired<components['schemas']['GetAllDirectoriesDirectoryDto']>
 
-interface UpdateDirectoryInfoPayload {
-  name: string
-  emoji: string
-}
+    declare namespace Request {
+      /** POST /api/v2/directories
+       * 디렉토리 생성
+       */
+      type CreateDirectory = DeepRequired<
+        paths['/api/v2/directories']['post']['requestBody']['content']['application/json;charset=UTF-8']
+      >
 
-interface GetDirectoriesResponse {
-  directories: DirectoryItem[]
-}
+      /** PATCH /api/v2/directories/{directory_id}/update-info
+       * 디렉토리 정보 변경
+       */
+      type UpdateDirectoryInfo = DeepRequired<
+        paths['/api/v2/directories/{directory_id}/update-info']['patch']['requestBody']['content']['application/json;charset=UTF-8']
+      >
+    }
 
-interface GetDirectoryResponse {
-  directories: DirectoryItem
-}
+    declare namespace Response {
+      /** GET /api/v2/directories
+       * 모든 디렉토리 가져오기
+       */
+      type GetDirectories = DeepRequired<
+        paths['/api/v2/directories']['get']['responses']['200']['content']['application/json;charset=UTF-8']
+      >
 
-declare namespace Directory {
-  type Item = DirectoryItem
-  type List = DirectoryItem[]
+      /** GET /api/v2/directories/{directory_id}
+       * directory_id로 디렉토리 가져오기
+       */
+      type GetDirectory = DeepRequired<
+        paths['/api/v2/directories/{directory_id}']['get']['responses']['200']['content']['application/json;charset=UTF-8']
+      >
 
-  declare namespace Request {
-    /** POST /api/v2/directories
-     * 디렉토리 생성
-     */
-    type CreateDirectory = CreateDirectoryPayload
-
-    /** PATCH /api/v2/directories/{directory_id}/update-info
-     * 디렉토리 정보 변경
-     */
-    type UpdateDirectoryInfo = UpdateDirectoryInfoPayload
-  }
-
-  declare namespace Response {
-    /** GET /api/v2/directories
-     * 모든 디렉토리 가져오기
-     */
-    type GetDirectories = GetDirectoriesResponse
-
-    /** GET /api/v2/directories/{directory_id}
-     * directory_id로 디렉토리 가져오기
-     */
-    type GetDirectory = GetDirectoryResponse
-
-    /** POST /api/v2/directories
-     * 디렉토리 생성
-     */
-    type CreateDirectory = DirectoryItem['id']
+      /** POST /api/v2/directories
+       * 디렉토리 생성
+       */
+      type CreateDirectory = DeepRequired<
+        paths['/api/v2/directories']['post']['responses']['201']['content']['application/json;charset=UTF-8']
+      >
+    }
   }
 }

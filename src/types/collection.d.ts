@@ -1,3 +1,6 @@
+import { DeepRequired } from 'react-hook-form'
+import { components, paths } from './schema'
+
 // Common Types
 type CollectionField =
   | 'IT'
@@ -11,216 +14,97 @@ type CollectionField =
   | 'HISTORY_PHILOSOPHY'
   | 'OTHER'
 
-type QuizType = 'MIX_UP' | 'MULTIPLE_CHOICE'
+declare global {
+  declare namespace Collection {
+    type Item = DeepRequired<components['schemas']['CollectionDto']>
+    type Field = CollectionField
 
-type BaseQuiz = {
-  id: number
-  quizType: QuizType
-  question: string
-  answer: string
-  explanation: string
-  options?: string[]
-}
+    declare namespace Request {
+      /** PATCH /api/v2/collections/{collection_id}/update-quizzes
+       * 컬렉션 문제 편집
+       */
+      type UpdateQuizzes = DeepRequired<
+        paths['/api/v2/collections/{collection_id}/update-quizzes']['patch']['requestBody']['content']['application/json;charset=UTF-8']
+      >
 
-type Collection = {
-  id: number
-  name: string
-  description: string
-  emoji: string
-  bookmarkCount: number
-  collectionCategory: string
-  solvedMemberCount: number
-  bookmarked: boolean
-  member: {
-    creatorId: number
-    creatorName: string
-  }
-}
+      /** PATCH /api/v2/collections/{collection_id}/update-info
+       * 컬렉션 정보 수정
+       */
+      type UpdateInfo = DeepRequired<
+        paths['/api/v2/collections/{collection_id}/update-info']['patch']['requestBody']['content']['application/json;charset=UTF-8']
+      >
 
-type CollectionWithQuizzes = Collection & {
-  quizzes: BaseQuiz[]
-}
+      /** PATCH /api/v2/collection/{collection_id}/add-quiz
+       * 컬렉션에 퀴즈 추가
+       */
+      type AddQuiz = DeepRequired<
+        paths['/api/v2/collection/{collection_id}/add-quiz']['patch']['requestBody']['content']['application/json;charset=UTF-8']
+      >
 
-type CollectionQuizResult = {
-  quizId: number
-  elapsedTimeMs: number
-  isAnswer: boolean
-  choseAnswer: string
-}
+      /** POST /api/v2/collections
+       * 컬렉션 생성
+       */
+      type CreateCollection = DeepRequired<
+        paths['/api/v2/collections']['post']['requestBody']['content']['application/json;charset=UTF-8']
+      >
+    }
 
-type AnsweredQuiz = BaseQuiz & {
-  choseAnswer: string
-}
+    declare namespace Response {
+      /** GET /api/v2/collections
+       * 모든 컬렉션 가져오기(탐색)
+       */
+      type GetAllCollections = DeepRequired<
+        paths['/api/v2/collections']['get']['responses']['200']['content']['application/json;charset=UTF-8']
+      >
 
-/** GET /api/v2/collections */
-interface AllCollectionsResponse {
-  collections: Collection[]
-}
+      /** GET /api/v2/collections/{keyword}
+       * 컬렉션 검색하기
+       */
+      type GetCollectionsByKeyword = DeepRequired<
+        paths['/api/v2/collections/{keyword}']['get']['responses']['200']['content']['application/json;charset=UTF-8']
+      >
 
-/** GET /api/v2/collections/{keyword} */
-interface KeywordCollectionsResponse {
-  collections: Collection[]
-}
+      /** GET /api/v2/collections/{collection_id}/info
+       * 만든 컬렉션 상세 정보 가져오기
+       */
+      type GetCollectionInfo = DeepRequired<
+        paths['/api/v2/collections/{collection_id}/info']['get']['responses']['200']['content']['application/json;charset=UTF-8']
+      >
 
-/** GET /api/v2/collections/{collection_id}/record */
-interface CollectionRecordResponse {
-  createdAt: string
-  elapsedTime: number
-  quizzes: AnsweredQuiz[]
-}
+      /** GET /api/v2/collections/my-collections
+       * 직접 생성한 컬렉션 가져오기
+       */
+      type GetMyCollections = DeepRequired<
+        paths['/api/v2/collections/my-collections']['get']['responses']['200']['content']['application/json;charset=UTF-8']
+      >
 
-/** GET /api/v2/collections/{collection_id}/collection_info */
-type CollectionInfoResponse = CollectionWithQuizzes
+      /** GET /api/v2/collections/interest-category-collection
+       * 사용자 관심 분야 컬렉션 가져오기
+       */
+      type GetInterestFieldCollections = DeepRequired<
+        paths['/api/v2/collections/interest-category-collection']['get']['responses']['200']['content']['application/json;charset=UTF-8']
+      >
 
-/** GET /api/v2/collections/my-collections */
-interface MyCollectionsResponse {
-  collections: Collection[]
-}
+      /** GET /api/v2/collections/bookmarked-collections
+       * 북마크한 컬렉션 가져오기
+       */
+      type GetBookmarkedCollections = DeepRequired<
+        paths['/api/v2/collections/bookmarked-collections']['get']['responses']['200']['content']['application/json;charset=UTF-8']
+      >
 
-/** GET /api/v2/collections/interest-field-collection */
-interface InterestFieldCollectionsResponse {
-  collections: Collection[]
-}
+      /** GET /api/v2/collections-analysis
+       * 컬렉션 분석
+       */
+      type GetCollectionsAnalysis = DeepRequired<
+        paths['/api/v2/collections-analysis']['get']['responses']['200']['content']['application/json;charset=UTF-8']
+      >
 
-/** GET /api/v2/collections/bookmarked-collections */
-interface BookmarkedCollectionsResponse {
-  collections: Collection[]
-}
-
-/** GET /api/v2/collections-analysis */
-interface CollectionAnalysisResponse {
-  collectionsAnalysis: {
-    additionalProp1: number
-    additionalProp2: number
-    additionalProp3: number
-  }
-}
-
-/** POST /api/v2/collections/{collection_id}/collection-quizzes */
-interface StartCollectionQuizResponse {
-  quizSetId: string
-  createdAt: string
-}
-
-/** PATCH /api/v2/collections/{collection_id}/update-quizzes */
-interface UpdateCollectionQuizzesPayload {
-  quizzes: number[]
-}
-
-/** PATCH /api/v2/collections/{collection_id}/update-info */
-interface UpdateCollectionInfoPayload {
-  name: string
-  emoji: string
-  description: string
-  collectionField: CollectionField
-}
-
-/** PATCH /api/v2/collections/{collection_id}/update-collection-result */
-interface UpdateCollectionResultPayload {
-  collectionQuizzes: CollectionQuizResult[]
-}
-
-/** PATCH /api/v2/collection/{collection_id}/add-quiz */
-interface AddQuizPayload {
-  quizId: number
-}
-
-/** POST /api/v2/collections */
-interface CreateCollectionPayload {
-  name: string
-  emoji: string
-  description: string
-  collectionField: CollectionField
-  quizzes: number[]
-}
-
-interface CreateBookmark {
-  collectionId: number
-}
-
-declare namespace Collection {
-  type Item = Collection
-  type List = Collection[]
-  type QuizResult = CollectionQuizResult
-  type AnsweredQuiz = AnsweredQuiz
-  type Field = CollectionField
-
-  declare namespace Request {
-    /** PATCH /api/v2/collections/{collection_id}/update-quizzes
-     * 컬렉션 문제 편집
-     */
-    type UpdateQuizzes = UpdateCollectionQuizzesPayload
-
-    /** PATCH /api/v2/collections/{collection_id}/update-info
-     * 컬렉션 정보 수정
-     */
-    type UpdateInfo = UpdateCollectionInfoPayload
-
-    /** PATCH /api/v2/collections/{collection_id}/update-collection-result
-     * 컬렉션을 풀었을 때 결과 업데이트
-     */
-    type UpdateCollectionResult = UpdateCollectionResultPayload
-
-    /** PATCH /api/v2/collection/{collection_id}/add-quiz
-     * 컬렉션에 퀴즈 추가
-     */
-    type AddQuiz = AddQuizPayload
-
-    /** POST /api/v2/collections
-     * 컬렉션 생성
-     */
-    type CreateCollection = CreateCollectionPayload
-
-    /** POST /api/v2/collections/{collection_id}/create-bookmark
-     * 컬렉션 북마크하기
-     */
-    type Bookmark = CreateBookmark
-  }
-
-  declare namespace Response {
-    /** GET /api/v2/collections
-     * 모든 컬렉션 가져오기(탐색)
-     */
-    type GetAllCollections = AllCollectionsResponse
-
-    /** GET /api/v2/collections/{keyword}
-     * 컬렉션 검색하기
-     */
-    type GetCollectionsByKeyword = KeywordCollectionsResponse
-
-    /** GET /api/v2/collections/{collection_id}/record
-     * 퀴즈를 푼 컬렉션의 상세 기록
-     */
-    type GetCollectionRecord = CollectionRecordResponse
-
-    /** GET /api/v2/collections/{collection_id}/collection_info
-     * 만든 컬렉션 상세 정보 가져오기
-     */
-    type GetCollectionInfo = CollectionInfoResponse
-
-    /** GET /api/v2/collections/my-collections
-     * 직접 생성한 컬렉션 가져오기
-     */
-    type GetMyCollections = MyCollectionsResponse
-
-    /** GET /api/v2/collections/interest-field-collection
-     * 사용자 관심 분야 컬렉션 가져오기
-     */
-    type GetInterestFieldCollections = InterestFieldCollectionsResponse
-
-    /** GET /api/v2/collections/bookmarked-collections
-     * 북마크한 컬렉션 가져오기
-     */
-    type GetBookmarkedCollections = BookmarkedCollectionsResponse
-
-    /** GET /api/v2/collections-analysis
-     * 컬렉션 분석
-     */
-    type GetCollectionsAnalysis = CollectionAnalysisResponse
-
-    /** POST /api/v2/collections
-     * 컬렉션 생성
-     */
-    type CreateCollection = Collection
+      /** POST /api/v2/collections
+       * 컬렉션 생성
+       */
+      type CreateCollection = DeepRequired<
+        paths['/api/v2/collections']['post']['responses']['201']['content']['application/json;charset=UTF-8']
+      >
+    }
   }
 }
