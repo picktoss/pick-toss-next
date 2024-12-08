@@ -1,37 +1,12 @@
 import { DeepRequired } from 'react-hook-form'
-import { paths } from './schema'
-
-type interestedCategory =
-  | 'IT'
-  | 'LAW'
-  | 'ART'
-  | 'BUSINESS_ECONOMY'
-  | 'HISTORY_PHILOSOPHY'
-  | 'LANGUAGE'
-  | 'SOCIETY_POLITICS'
-  | 'MEDICINE_PHARMACY'
-  | 'SCIENCE_ENGINEERING'
-  | 'OTHER'
-
-interface UserInfo {
-  id: number
-  name: string
-  email: string
-  socialPlatform: 'KAKAO' | 'GOOGLE'
-  role: 'ROLE_USER' | 'ROLE_ADMIN'
-  interestField: interestedCategory[]
-  documentUsage: {
-    possessDocumentCount: number
-    maxPossessDocumentCount: number
-  }
-  star: number
-  quizNotificationEnabled: boolean
-}
+import { components, paths } from './schema'
 
 declare global {
   declare namespace User {
-    type Info = UserInfo
-    type InterestedCategory = interestedCategory
+    type Info = DeepRequired<components['schemas']['GetMemberInfoResponse']>
+    type InterestedCategory = DeepRequired<
+      components['schemas']['GetCollectionCategoriesDto']['collectionCategory']
+    >
 
     declare namespace Request {
       /** PATCH /api/v2/members/update-today-quiz-count

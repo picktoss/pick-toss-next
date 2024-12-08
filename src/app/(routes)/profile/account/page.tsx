@@ -9,7 +9,9 @@ import { fetchUserInfo } from '@/requests/user/server'
 const AccountPage = async () => {
   const user = await fetchUserInfo()
 
-  const interestCategories = user.interestField?.length ? user.interestField : ['관심 분야 없음']
+  const interestCategories = user.interestCategories?.length
+    ? user.interestCategories
+    : ['관심 분야 없음']
 
   return (
     <main className="h-[calc(100dvh-54px-88px)] w-full overflow-y-auto px-[16px]">

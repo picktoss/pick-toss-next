@@ -61,7 +61,7 @@ const CategorySelectArea = () => {
 
   const onSubmit = (values: FormValues) => {
     mutate(
-      { interestCollectionCategories: values.categories as User.InterestedCategory[] },
+      { interestCollectionCategories: values.categories as NonNullable<User.InterestedCategory>[] },
       {
         onSuccess: () => {
           router.replace('/main')

@@ -72,8 +72,8 @@ const QuizOptions = ({ quiz, currentResult, onAnswer, className }: QuizOptionsPr
       >
         <OXChoice
           condition={getOXCondition(currentResult)}
-          userAnswer={currentResult?.choseAnswer as OXQuizAnswer}
-          onSelect={(userAnswer: OXQuizAnswer) => {
+          userAnswer={currentResult?.choseAnswer as Quiz.OXQuizAnswer}
+          onSelect={(userAnswer: Quiz.OXQuizAnswer) => {
             onAnswer({
               id: quiz.id,
               isRight: quiz.answer === userAnswer ? true : false,
