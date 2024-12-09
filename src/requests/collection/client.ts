@@ -25,7 +25,6 @@ export const getMyCollections = async () => {
   }
 }
 
-// random quiz page 컴포넌트에서 사용되는 중 논의 필요
 export const getBookmarkedCollections = async () => {
   try {
     const { data } = await http.get<Collection.Response.GetBookmarkedCollections>(

@@ -1,8 +1,8 @@
 'use client'
 
 import { ServerEnv } from '@/actions/api-client/server-env'
+import { useAuthStore } from '@/store/auth'
 import axios, { isAxiosError } from 'axios'
-import { getSession } from 'next-auth/react'
 
 export const http = axios.create({
   baseURL: ServerEnv.apiUrl(),
@@ -12,12 +12,10 @@ export const http = axios.create({
 })
 
 http.interceptors.request.use(
-  async (config) => {
-    const session = await getSession()
-    const token = session?.user?.accessToken
-
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`
+  (config) => {
+    const accessToken = useAuthStore.getState().accessToken
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`
     }
     return config
   },
