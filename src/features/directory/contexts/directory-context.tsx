@@ -4,7 +4,7 @@ import { useDirectories } from '@/requests/directory/hooks'
 import { PropsWithChildren, createContext, useContext, useMemo, useState } from 'react'
 
 interface DirectoryContextValues {
-  directories: Directory.List
+  directories: Directory.Item[]
   selectedDirectory: Directory.Item | null
 
   selectedDirectoryId: number | null

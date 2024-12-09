@@ -1,3 +1,6 @@
+import { DeepRequired } from 'react-hook-form'
+import { paths } from './schema'
+
 type interestedCategory =
   | 'IT'
   | 'LAW'
@@ -25,44 +28,38 @@ interface UserInfo {
   quizNotificationEnabled: boolean
 }
 
-interface UpdateTodayQuizCountPayload {
-  todayQuizCount: number
-}
+declare global {
+  declare namespace User {
+    type Info = UserInfo
 
-interface UpdateQuizNotificationPayload {
-  quizNotificationEnabled: boolean
-}
+    declare namespace Request {
+      /** PATCH /api/v2/members/update-today-quiz-count
+       * 오늘의 퀴즈 관리(오늘의 퀴즈 개수 설정)
+       */
+      type UpdateTodayQuizCount = DeepRequired<
+        paths['/api/v2/members/update-today-quiz-count']['patch']['requestBody']['content']['application/json;charset=UTF-8']
+      >
 
-interface UpdateNamePayload {
-  name: string
-}
+      /** PATCH /api/v2/members/update-quiz-notification
+       * 사용자 퀴즈 알림 ON/OFF
+       */
+      type UpdateQuizNotification = DeepRequired<
+        paths['/api/v2/members/update-quiz-notification']['patch']['requestBody']['content']['application/json;charset=UTF-8']
+      >
 
-interface UpdateCollectionFieldsPayload {
-  interestCollectionFields: interestedCategory[]
-}
+      /** PATCH /api/v2/members/update-name
+       * 사용자 이름 수정
+       */
+      type UpdateName = DeepRequired<
+        paths['/api/v2/members/update-name']['patch']['requestBody']['content']['application/json;charset=UTF-8']
+      >
 
-declare namespace User {
-  type Info = UserInfo
-
-  declare namespace Request {
-    /** PATCH /api/v2/members/update-today-quiz-count
-     * 오늘의 퀴즈 관리(오늘의 퀴즈 개수 설정)
-     */
-    type UpdateTodayQuizCount = UpdateTodayQuizCountPayload
-
-    /** PATCH /api/v2/members/update-quiz-notification
-     * 사용자 퀴즈 알림 ON/OFF
-     */
-    type UpdateQuizNotification = UpdateQuizNotificationPayload
-
-    /** PATCH /api/v2/members/update-name
-     * 사용자 이름 수정
-     */
-    type UpdateName = UpdateNamePayload
-
-    /** PATCH /api/v2/members/update-collection-fields
-     * 관심분야 태그 설정
-     */
-    type UpdateCollectionFields = UpdateCollectionFieldsPayload
+      /** PATCH /api/v2/members/update-collection-fields
+       * 관심분야 태그 설정
+       */
+      type UpdateCollectionFields = DeepRequired<
+        paths['/api/v2/members/update-collection-categories']['patch']['requestBody']['content']['application/json;charset=UTF-8']
+      >
+    }
   }
 }
