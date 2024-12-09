@@ -4,12 +4,14 @@ import { cn } from '@/shared/lib/utils'
 import CategoryDrawer from '@/features/user/components/category-drawer'
 import SetNameDialog from '@/features/user/components/set-name-dialog'
 import Link from 'next/link'
-import { fetchUserInfo } from '@/requests/user'
+import { fetchUserInfo } from '@/requests/user/server'
 
 const AccountPage = async () => {
   const user = await fetchUserInfo()
 
-  const interestFields = user.interestField?.length ? user.interestField : ['관심 분야 없음']
+  const interestCategories = user.interestCategories?.length
+    ? user.interestCategories
+    : ['관심 분야 없음']
 
   return (
     <main className="h-[calc(100dvh-54px-88px)] w-full overflow-y-auto px-[16px]">
@@ -31,7 +33,9 @@ const AccountPage = async () => {
         <SetNameDialog userName={user.name} />
 
         <CategoryDrawer
-          interestedCategories={interestFields as (interestedCategory | '관심 분야 없음')[]}
+          interestedCategories={
+            interestCategories as (User.InterestedCategory | '관심 분야 없음')[]
+          }
         />
 
         <Link href={'verify-email'} className="flex w-full items-center justify-between">

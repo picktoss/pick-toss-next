@@ -1,10 +1,9 @@
-'use server'
+'use client'
 
-import { auth } from '@/app/api/auth/[...nextauth]/auth'
 import { API_ENDPOINTS } from '@/shared/configs/endpoint'
 import { http } from '@/shared/lib/axios/http'
 
-interface GetDocumentsParams {
+type GetDocumentsParams = {
   directoryId?: string
   sortOption?: Document.Sort
 }
@@ -21,12 +20,7 @@ export const fetchDocuments = async (params?: GetDocumentsParams) => {
         }
 
   try {
-    const session = await auth()
-
     const { data } = await http.get<{ documents: Document.List }>(API_ENDPOINTS.DOCUMENT.GET.ALL, {
-      headers: {
-        Authorization: `Bearer ${session?.user.accessToken}`,
-      },
       params: DocsParams,
     })
     return data
@@ -36,19 +30,13 @@ export const fetchDocuments = async (params?: GetDocumentsParams) => {
   }
 }
 
+// document id page 컴포넌트에서도 사용됨 수정 필요
 export const fetchDocumentDetail = async (documentId?: number) => {
   if (documentId === null || documentId === undefined) return
 
   try {
-    const session = await auth()
-
     const { data } = await http.get<Document.DetailItem>(
-      API_ENDPOINTS.DOCUMENT.GET.BY_ID(documentId),
-      {
-        headers: {
-          Authorization: `Bearer ${session?.user.accessToken}`,
-        },
-      }
+      API_ENDPOINTS.DOCUMENT.GET.BY_ID(documentId)
     )
     return data
   } catch (error: unknown) {
@@ -59,13 +47,7 @@ export const fetchDocumentDetail = async (documentId?: number) => {
 
 export const moveDocument = async (requestBody: Document.Request.MoveDocument) => {
   try {
-    const session = await auth()
-
-    const response = await http.patch(API_ENDPOINTS.DOCUMENT.PATCH.MOVE, requestBody, {
-      headers: {
-        Authorization: `Bearer ${session?.user.accessToken}`,
-      },
-    })
+    const response = await http.patch(API_ENDPOINTS.DOCUMENT.PATCH.MOVE, requestBody)
 
     // eslint-disable-next-line no-console
     console.log(response) // 디버깅용
@@ -75,16 +57,11 @@ export const moveDocument = async (requestBody: Document.Request.MoveDocument) =
   }
 }
 
+/** delete 메서드로 body를 받는 api입니다 (여러 문서 id를 리스트로 보냄) */
 export const deleteDocument = async (requestBody: Document.Request.DeleteDocuments) => {
   try {
-    const session = await auth()
-
-    // delete 메서드로 body를 받는 api입니다 (여러 문서 id를 리스트로 보냄)
     const response = await http.delete(API_ENDPOINTS.DOCUMENT.DELETE.DOCUMENTS, {
       data: requestBody,
-      headers: {
-        Authorization: `Bearer ${session?.user.accessToken}`,
-      },
     })
 
     // eslint-disable-next-line no-console

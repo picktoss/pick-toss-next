@@ -7,7 +7,7 @@ import {
   fetchDirectories,
   fetchDirectory,
   updateDirectoryInfo,
-} from '.'
+} from './client'
 import { getQueryClient } from '@/shared/lib/tanstack-query/client'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
 
