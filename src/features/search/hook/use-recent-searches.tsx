@@ -14,8 +14,8 @@ export const useRecentSearches = () => {
     try {
       const storageSearches = localStorage.getItem(RECENT_SEARCHES)
       if (storageSearches) {
-        const parsedSearches = JSON.parse(storageSearches) as { recentSearches: string[] }
-        return parsedSearches.recentSearches || []
+        const parsedSearches = JSON.parse(storageSearches) as string[]
+        return parsedSearches || []
       }
     } catch (error) {
       console.error('Failed to parse recent searches:', error)
@@ -37,9 +37,8 @@ export const useRecentSearches = () => {
         newSearchList = newSearchList.slice(0, 5)
       }
 
-      const newSearches = { recentSearches: [...newSearchList] }
-      localStorage.setItem(RECENT_SEARCHES, JSON.stringify(newSearches))
-      setSearches(newSearchList) // 상태 업데이트
+      localStorage.setItem(RECENT_SEARCHES, JSON.stringify(newSearchList))
+      setSearches(newSearchList)
     },
     [getRecentSearches]
   )
@@ -49,8 +48,8 @@ export const useRecentSearches = () => {
     (keyword: string) => {
       const prevSearches = getRecentSearches()
       const newSearchList = prevSearches.filter((search) => search !== keyword)
-      localStorage.setItem(RECENT_SEARCHES, JSON.stringify({ recentSearches: newSearchList }))
-      setSearches(newSearchList) // 상태 업데이트
+      localStorage.setItem(RECENT_SEARCHES, JSON.stringify(newSearchList))
+      setSearches(newSearchList)
     },
     [getRecentSearches]
   )
