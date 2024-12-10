@@ -8,36 +8,35 @@ import HeaderInDocument from '../components/header-in-document'
 import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import {
-  extractPlainText,
-  getRecentSearches,
-  highlightAndTrimText,
-  saveRecentSearches,
-} from '../utils'
+import { extractPlainText, highlightAndTrimText } from '../utils'
 import Text from '@/shared/components/ui/text'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useQuery } from '@tanstack/react-query'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import Loading from '@/shared/components/custom/loading'
 import { Form, FormField } from '@/shared/components/ui/form'
+import { useRecentSearches } from '../hook/use-recent-searches'
 
 const searchSchema = z.object({
   keyword: z.string().trim().nonempty('검색어를 입력해주세요.'),
 })
 type SearchFormValues = z.infer<typeof searchSchema>
 
+// 퀴즈노트 탭 내 검색창 화면
 const SearchInDocument = () => {
   const router = useRouter()
   const keyword = useSearchParams().get('keyword') ?? ''
 
   const [isSearchFocused, setIsSearchFocused] = useState(false)
+  const { searches, saveRecentSearches, deleteRecentSearch, clearRecentSearches } =
+    useRecentSearches()
 
   const searchInputRef = useRef<HTMLInputElement>(null)
   const searchContainerRef = useRef<HTMLDivElement>(null)
 
   const { data, isPending } = useQuery(queries.document.search({ keyword }))
   const searchResults = [...(data?.documents ?? []), ...(data?.quizzes ?? [])] as Partial<
-    SearchedDocument & SearchedQuiz
+    Document.SearchedDocument & Document.SearchedQuiz
   >[]
 
   const form = useForm<SearchFormValues>({
@@ -63,11 +62,13 @@ const SearchInDocument = () => {
     }
   }, [])
 
+  /** 최근 검색어 리스트에서 특정 검색어 클릭 시 검색창에 키워드가 반영되도록하는 함수 */
   const handleUpdateKeyword = (keyword: string) => {
     form.setValue('keyword', keyword)
     searchInputRef.current?.focus()
   }
 
+  /** 검색창에 입력되어있는 키워드를 삭제하는 함수 */
   const handleDeleteKeyword = () => {
     form.setValue('keyword', '')
     router.push('/document/search')
@@ -76,8 +77,7 @@ const SearchInDocument = () => {
   const onSubmit = (data: SearchFormValues) => {
     const keyword = data.keyword
 
-    const prevSearches = getRecentSearches()
-    saveRecentSearches(prevSearches, keyword)
+    saveRecentSearches(keyword)
 
     searchInputRef.current?.blur()
     setIsSearchFocused(false)
@@ -103,29 +103,27 @@ const SearchInDocument = () => {
         />
 
         <main>
-          <FormField
-            control={form.control}
-            name="keyword"
-            render={() => (
-              <>
-                {/* input 클릭 시 나타날 최근 검색어 */}
-                {isSearchFocused && (
-                  <RecentSearches
-                    // recentSearches={recentSearches}
-                    // handleDelete={handleDeleteSearches}
-                    // handleClearAll={handleClearAllSearches}
-                    containerRef={searchContainerRef}
-                    onUpdateKeyword={handleUpdateKeyword}
-                  />
-                )}
-              </>
-            )}
-          />
+          {/* input 클릭 시 나타날 최근 검색어 */}
+          {isSearchFocused && (
+            <FormField
+              control={form.control}
+              name="keyword"
+              render={() => (
+                <RecentSearches
+                  searches={searches}
+                  onClearSearches={clearRecentSearches}
+                  onDeleteSearchItem={deleteRecentSearch}
+                  containerRef={searchContainerRef}
+                  onUpdateKeyword={handleUpdateKeyword}
+                />
+              )}
+            />
+          )}
 
           {isPending && <Loading center />}
 
-          {/* 검색 결과 O : 검색 결과 리스트 */}
           {!isSearchFocused &&
+            // 검색 결과 X
             (!data || searchResults.length === 0 ? (
               <div className="flex-center h-[calc(100dvh-88px-56px)] flex-col">
                 <Text typography="subtitle1-bold">검색결과가 없습니다</Text>
@@ -134,6 +132,7 @@ const SearchInDocument = () => {
                 </Text>
               </div>
             ) : (
+              // 검색 결과 O : 검색 결과 리스트
               data &&
               searchResults.length > 0 && (
                 <SearchList length={searchResults.length}>

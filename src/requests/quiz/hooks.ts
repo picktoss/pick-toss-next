@@ -5,19 +5,19 @@ import {
   createQuizSetForCheck,
   createReplayDocumentQuizSet,
   fetchDirectoryQuizzes,
-  fetchTodayQuizSetId,
   updateQuizResult,
   updateWrongQuizResult,
-} from '.'
+} from './client'
 import { getQueryClient } from '@/shared/lib/tanstack-query/client'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
 
-export const useTodayQuizSetId = () => {
-  return useQuery({
-    queryKey: ['todayQuizSetId'],
-    queryFn: async () => fetchTodayQuizSetId(),
-  })
-}
+// 사용되는 곳 없음 (검토 후 삭제)
+// export const useTodayQuizSetId = () => {
+//   return useQuery({
+//     queryKey: ['todayQuizSetId'],
+//     queryFn: async () => fetchTodayQuizSetId(),
+//   })
+// }
 
 export const useDirectoryQuizzes = (directoryId: number | null) => {
   return useQuery({

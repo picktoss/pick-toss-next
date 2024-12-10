@@ -76,7 +76,7 @@ export default Header
 interface Props {
   isDrawerOpen: boolean
   setIsDrawerOpen: (value: boolean) => void
-  directories: Directory.List
+  directories: Directory.Item[]
 }
 
 const DirectorySelectDrawer = ({ isDrawerOpen, setIsDrawerOpen, directories }: Props) => {

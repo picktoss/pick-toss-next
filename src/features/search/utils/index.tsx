@@ -3,53 +3,6 @@
 import Text from '@/shared/components/ui/text'
 import React from 'react'
 import { marked } from 'marked'
-import { RECENT_SEARCHES } from '../config'
-
-/** 최근 검색어 저장
- * (5개까지만 저장가능하게 만든 함수입니다) */
-export const saveRecentSearches = (prevSearches: string[], keyword: string) => {
-  // eslint-disable-next-line no-console
-  console.log(prevSearches, keyword)
-
-  if (!keyword || keyword.trim() === '') return
-
-  let newSearchList = prevSearches.filter((search) => search !== keyword)
-  // eslint-disable-next-line no-console
-  console.log(newSearchList)
-
-  newSearchList.unshift(keyword)
-
-  if (newSearchList.length > 5) {
-    newSearchList = newSearchList.slice(0, 5)
-  }
-
-  // eslint-disable-next-line no-console
-  console.log(newSearchList)
-
-  const newSearches = { recentSearches: [...newSearchList] }
-  localStorage.setItem(RECENT_SEARCHES, JSON.stringify(newSearches))
-
-  // eslint-disable-next-line no-console
-  console.log(
-    'Saved searches after save:',
-    JSON.parse(localStorage.getItem(RECENT_SEARCHES) ?? '저장된 값 없음')
-  )
-}
-
-/** 최근 검색어 가져오기 */
-export const getRecentSearches = () => {
-  const storageSearches = localStorage.getItem(RECENT_SEARCHES)
-  // eslint-disable-next-line no-console
-  console.log('Saved searches:', storageSearches)
-
-  if (storageSearches) {
-    const parsedSearches = JSON.parse(storageSearches) as { recentSearches: string[] }
-    const searchList = parsedSearches.recentSearches
-    return searchList
-  } else {
-    return []
-  }
-}
 
 /**
  * 텍스트에서 키워드를 강조하는 함수

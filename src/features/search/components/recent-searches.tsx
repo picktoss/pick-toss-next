@@ -2,48 +2,23 @@
 
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
-import { getRecentSearches } from '../utils'
-import { RefObject, useEffect, useState } from 'react'
-import { RECENT_SEARCHES } from '../config'
+import { RefObject } from 'react'
 
 interface Props {
   containerRef: RefObject<HTMLDivElement>
   onUpdateKeyword: (keyword: string) => void
-  // recentSearches: string[]
-  // handleDelete: (keyword: string) => void
-  // handleClearAll: () => void
+  searches: string[]
+  onClearSearches: () => void
+  onDeleteSearchItem: (keyword: string) => void
 }
 
 const RecentSearches = ({
   containerRef,
   onUpdateKeyword,
-}: // recentSearches,
-// handleDelete,
-// handleClearAll,
-Props) => {
-  const [recentSearches, setRecentSearches] = useState<string[]>([])
-
-  useEffect(() => {
-    const storageSearches = getRecentSearches()
-    setRecentSearches(storageSearches)
-  }, [])
-
-  useEffect(() => {
-    // eslint-disable-next-line no-console
-    console.log('recentSearches changed: ', recentSearches)
-  }, [recentSearches])
-
-  const handleDelete = (keyword: string) => {
-    const updatedSearches = recentSearches.filter((search) => search !== keyword)
-    setRecentSearches(updatedSearches)
-    localStorage.setItem(RECENT_SEARCHES, JSON.stringify(updatedSearches))
-  }
-
-  const handleClearAll = () => {
-    setRecentSearches([])
-    localStorage.removeItem(RECENT_SEARCHES)
-  }
-
+  searches,
+  onClearSearches,
+  onDeleteSearchItem,
+}: Props) => {
   return (
     <div
       ref={containerRef}
@@ -53,13 +28,13 @@ Props) => {
         <Text typography="text1-bold" className="text-text-secondary">
           최근 검색어
         </Text>
-        <button className="text-text-caption" onClick={handleClearAll}>
+        <button className="text-text-caption" onClick={onClearSearches}>
           전체삭제
         </button>
       </div>
 
       <div className="flex flex-col">
-        {recentSearches.map((keyword) => (
+        {searches.map((keyword) => (
           <div
             key={keyword}
             onClick={() => onUpdateKeyword(keyword)}
@@ -69,7 +44,7 @@ Props) => {
             <button
               onClick={(e) => {
                 e.stopPropagation()
-                handleDelete(keyword)
+                onDeleteSearchItem(keyword)
               }}
               className="text-icon-tertiary"
             >
