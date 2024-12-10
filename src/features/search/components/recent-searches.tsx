@@ -2,23 +2,38 @@
 
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
-import { RefObject } from 'react'
+import { getLocalStorage, removeLocalStorage, setLocalStorage } from '@/shared/utils/storage'
+import { RefObject, useEffect, useState } from 'react'
+import { RECENT_SEARCHES } from '../config'
 
 interface Props {
   containerRef: RefObject<HTMLDivElement>
   onUpdateKeyword: (keyword: string) => void
-  searches: string[]
-  onClearSearches: () => void
-  onDeleteSearchItem: (keyword: string) => void
 }
 
-const RecentSearches = ({
-  containerRef,
-  onUpdateKeyword,
-  searches,
-  onClearSearches,
-  onDeleteSearchItem,
-}: Props) => {
+const RecentSearches = ({ containerRef, onUpdateKeyword }: Props) => {
+  const [recentSearches, setRecentSearches] = useState<string[]>([])
+
+  useEffect(() => {
+    const storageSearches = getLocalStorage<string[]>(RECENT_SEARCHES) ?? []
+    // eslint-disable-next-line no-console
+    console.log(storageSearches)
+    setRecentSearches(storageSearches)
+  }, [])
+
+  /** 로컬스토리지에서 특정 검색어 삭제 */
+  const deleteRecentSearch = (keyword: string) => {
+    const newRecentSearches = recentSearches.filter((search) => search !== keyword)
+    setLocalStorage(RECENT_SEARCHES, newRecentSearches)
+    setRecentSearches(newRecentSearches)
+  }
+
+  /** 전체 검색어 삭제 */
+  const deleteAllRecentSearches = () => {
+    removeLocalStorage(RECENT_SEARCHES)
+    setRecentSearches([])
+  }
+
   return (
     <div
       ref={containerRef}
@@ -28,13 +43,13 @@ const RecentSearches = ({
         <Text typography="text1-bold" className="text-text-secondary">
           최근 검색어
         </Text>
-        <button className="text-text-caption" onClick={onClearSearches}>
+        <button className="text-text-caption" onClick={deleteAllRecentSearches}>
           전체삭제
         </button>
       </div>
 
       <div className="flex flex-col">
-        {searches.map((keyword) => (
+        {recentSearches.map((keyword) => (
           <div
             key={keyword}
             onClick={() => onUpdateKeyword(keyword)}
@@ -44,7 +59,7 @@ const RecentSearches = ({
             <button
               onClick={(e) => {
                 e.stopPropagation()
-                onDeleteSearchItem(keyword)
+                deleteRecentSearch(keyword)
               }}
               className="text-icon-tertiary"
             >

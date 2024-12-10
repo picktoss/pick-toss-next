@@ -3,31 +3,28 @@
 import Icon from '@/shared/components/custom/icon'
 import { Input } from '@/shared/components/ui/input'
 import { useRouter } from 'next/navigation'
-import { RefObject } from 'react'
-import { ControllerRenderProps, useFormContext } from 'react-hook-form'
+import { ChangeEventHandler, RefObject } from 'react'
 
 interface Props {
-  field: ControllerRenderProps<
-    {
-      keyword: string
-    },
-    'keyword'
-  >
+  inputValue: string
+  onChangeInputValue: ChangeEventHandler<HTMLInputElement>
   searchInputRef: RefObject<HTMLInputElement>
   isSearchFocused: boolean
   setIsSearchFocused: (value: boolean) => void
   onDeleteKeyword: () => void
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
 }
 
 const HeaderInDocument = ({
-  field,
+  inputValue,
+  onChangeInputValue,
   searchInputRef,
   isSearchFocused,
   setIsSearchFocused,
   onDeleteKeyword,
+  onSubmit,
 }: Props) => {
   const router = useRouter()
-  const { register } = useFormContext()
 
   const handleCancel = () => {
     if (isSearchFocused) {
@@ -40,13 +37,12 @@ const HeaderInDocument = ({
 
   return (
     <header className="flex-center relative right-1/2 z-20 h-[56px] w-full max-w-mobile grow translate-x-1/2  bg-background-base-01 px-[16px] text-subtitle2-medium">
-      <div tabIndex={-1} className="relative grow">
+      <form onSubmit={onSubmit} tabIndex={-1} className="relative grow">
         <Input
-          {...register}
           ref={searchInputRef}
           onFocus={() => setIsSearchFocused(true)}
-          value={field.value}
-          onChange={field.onChange}
+          value={inputValue}
+          onChange={onChangeInputValue}
           placeholder="노트명, 노트, 퀴즈 검색"
           className="h-[40px] placeholder:text-text-placeholder-01"
           variant={'round'}
@@ -62,7 +58,7 @@ const HeaderInDocument = ({
             </button>
           }
         />
-      </div>
+      </form>
 
       <button type="button" onClick={handleCancel} className="ml-[17px] w-fit text-text-secondary">
         취소
