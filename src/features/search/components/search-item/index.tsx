@@ -7,7 +7,7 @@ import DocumentTypeIcon from '@/features/document/components/document-type-icon'
 interface Props {
   createType: Document.ItemInList['documentType']
   documentTitle: string
-  matchingSentence: string
+  matchingSentence: React.ReactNode
   resultType: 'document' | 'quiz'
   relativeDirectory: string
   lastItem?: boolean
@@ -37,7 +37,6 @@ const SearchItem = ({
         <Text typography="subtitle2-bold">{documentTitle}</Text>
       </div>
 
-      {/* todo: 키워드와 일치하는 부분 색상 accent표시 하는 로직 필요 */}
       <Text>{matchingSentence}</Text>
 
       <div className="mt-[8px] flex items-center">

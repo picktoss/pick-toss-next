@@ -96,6 +96,9 @@ declare global {
     type Status = DocumentStatus
     type Sort = SortOption
 
+    type SearchedDocument = Document.Response.SearchDocuments['documents'][number]
+    type SearchedQuiz = Document.Response.SearchDocuments['quizzes'][number]
+
     declare namespace Request {
       /** PATCH /api/v2/documents/{document_id}/update-name
        * 문서 이름 변경

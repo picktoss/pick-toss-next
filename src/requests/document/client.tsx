@@ -71,3 +71,19 @@ export const deleteDocument = async (requestBody: Document.Request.DeleteDocumen
     throw error
   }
 }
+
+export const searchDocument = async (requestBody: Document.Request.SearchDocuments) => {
+  if (!requestBody.keyword || requestBody.keyword === '') return null
+
+  try {
+    const { data } = await http.post<Document.Response.SearchDocuments>(
+      API_ENDPOINTS.DOCUMENT.POST.SEARCH,
+      requestBody
+    )
+
+    return data
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
