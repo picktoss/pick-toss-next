@@ -3,6 +3,17 @@
 import { API_ENDPOINTS } from '@/shared/configs/endpoint'
 import { httpServer } from '@/shared/lib/axios/http-server'
 
+export const getCollectionInfo = async (id: number) => {
+  try {
+    const { data } = await httpServer.get<Collection.ItemWithQuizzes>(
+      API_ENDPOINTS.COLLECTION.GET.INFO(id)
+    )
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
 /** server에서만 사용 */
 export const getBookmarkedCollections = async () => {
   try {

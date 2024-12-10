@@ -3,7 +3,7 @@
 import { API_ENDPOINTS } from '@/shared/configs/endpoint'
 import { httpServer } from '@/shared/lib/axios/http-server'
 
-export const fetchTodayQuizSetId = async () => {
+export const getTodayQuizSetId = async () => {
   try {
     const { data } = await httpServer.get<Quiz.Response.GetTodayQuizSet>(
       API_ENDPOINTS.QUIZ.GET.TODAY_SET
@@ -14,7 +14,7 @@ export const fetchTodayQuizSetId = async () => {
   }
 }
 
-export const fetchQuizSetById = async ({
+export const getQuizSetById = async ({
   quizSetId,
   collectionId,
   quizSetType,

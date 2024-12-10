@@ -30,7 +30,7 @@ const ReplayQuizDrawer = ({
 
   const { mutate: replayDocumentQuizMutate } = useReplayDocumentQuiz()
 
-  const [quizType, setQuizType] = useState<ReplayQuizType>('RANDOM')
+  const [quizType, setQuizType] = useState<Quiz.ReplayType>('RANDOM')
   const [quizCount, setQuizCount] = useState(savedQuizCount)
 
   const minQuizCount = savedQuizCount > 5 ? 5 : 1

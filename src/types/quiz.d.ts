@@ -22,7 +22,8 @@ declare global {
   declare namespace Quiz {
     type Item = QuizItem
     type List = QuizItem[]
-    type ItemWithMetadata = QuizItem & Metadata
+    type ItemWithMetadata = QuizWithMetadata
+    type ReplayType = ReplayQuizType
 
     type Type = QuizType
     type ReplayType = QuizType | 'RANDOM'

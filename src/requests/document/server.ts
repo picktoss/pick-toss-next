@@ -8,8 +8,7 @@ type GetDocumentsParams = {
   sortOption?: Document.Sort
 }
 
-/** server에서만 사용 */
-export const fetchDocuments = async (params?: GetDocumentsParams) => {
+export const getDocuments = async (params?: GetDocumentsParams) => {
   const defaultSortOption = 'CREATED_AT'
 
   const DocsParams =
@@ -34,9 +33,8 @@ export const fetchDocuments = async (params?: GetDocumentsParams) => {
   }
 }
 
-/** server에서만 사용 */
-export const fetchDocumentDetail = async (documentId?: number) => {
-  if (documentId === null || documentId === undefined) return
+export const getDocumentDetail = async (documentId?: number) => {
+  if (documentId == null) return
 
   try {
     const { data } = await httpServer.get<Document.DetailItem>(
