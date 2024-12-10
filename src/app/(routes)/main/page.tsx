@@ -10,11 +10,11 @@ import InterestedCategoryCollections from '@/features/collection/components/inte
 import RandomQuizLottie from '@/features/quiz/components/random-quiz-lottie'
 import BombQuizLottie from '@/features/quiz/components/bomb-quiz-lottie'
 import { fetchTodayQuizSetId } from '@/requests/quiz/server'
-import { fetchDocumentsServer } from '@/requests/document/server'
+import { fetchDocuments } from '@/requests/document/server'
 
 const Home = async () => {
   const { quizSetId, createdAt, type } = await fetchTodayQuizSetId()
-  const { documents } = await fetchDocumentsServer()
+  const { documents } = await fetchDocuments()
   const isEmpty = !documents || documents.length === 0
   const todayQuizState = isEmpty ? 'EMPTY' : type === 'READY' ? 'ARRIVED' : 'NOT_ARRIVED'
 

@@ -11,7 +11,7 @@ import {
 import { getQueryClient } from '@/shared/lib/tanstack-query/client'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
 
-// 사용되는 곳 없음 (검토 후 삭제)
+// 아직 사용처 없음 - 검토 필요
 // export const useTodayQuizSetId = () => {
 //   return useQuery({
 //     queryKey: ['todayQuizSetId'],

@@ -1,51 +1,48 @@
 import { DeepRequired } from 'react-hook-form'
 import { components, paths } from './schema'
 
-type ReplayQuizType = 'RANDOM' | 'MIX_UP' | 'MULTIPLE_CHOICE'
+/** 객체에서 특정 키를 옵셔널 처리해주는 타입 */
+type MakeOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>
 
-type QuizItem = {
-  id: number
-  question: string
-  answer: string
-  explanation: string
-  quizType: 'MIX_UP' | 'MULTIPLE_CHOICE'
-  options?: string[]
-  answer?: 'correct' | 'incorrect'
-}
+type BaseQuizItem = DeepRequired<components['schemas']['QuizDto']>
+type QuizItem = MakeOptional<BaseQuizItem, 'options'>
 
-type DocumentInQuiz = DeepRequired<components['schemas']['DocumentDto']>
-type DirectoryInQuiz = DeepRequired<components['schemas']['DirectoryDto']>
+type QuizType = Exclude<DeepRequired<components['schemas']['QuizDto']['quizType']>, undefined>
 
-type QuizWithMetadata = {
-  document: DocumentInQuiz
-  directory: DirectoryInQuiz
-} & QuizItem
-
-// 처리 필요
-type ConsecutiveDays = {
-  currentConsecutiveDays: number
-  maxConsecutiveDays: number
+type Metadata = {
+  document: DeepRequired<components['schemas']['DocumentDto']>
+  directory: DeepRequired<components['schemas']['DirectoryDto']>
 }
 
 declare global {
+  /** <참고>
+   * OX : correct/incorrect
+   * 정답/오답 : right/wrong
+   */
   declare namespace Quiz {
     type Item = QuizItem
     type List = QuizItem[]
-    type ItemWithMetadata = QuizWithMetadata
+    type ItemWithMetadata = QuizItem & Metadata
 
-    type Type = Exclude<DeepRequired<components['schemas']['QuizDto']['quizType']>, undefined>
+    type Type = QuizType
+    type ReplayType = QuizType | 'RANDOM'
     type OXAnswer = 'correct' | 'incorrect'
 
-    type SetRecord = DeepRequired<components['schemas']['GetSingleQuizSetRecordDto']>
-    type Record = DeepRequired<components['schemas']['GetQuizRecordDto']>
+    type Condition = 'IDLE' | 'DISABLED' | 'RIGHT' | 'WRONG'
     type Result = Quiz.Request.UpdateQuizResult['quizzes'][number]
 
-    type SetType = Exclude<
-      DeepRequired<components['schemas']['GetQuizRecordDto']['quizSetType']>,
-      undefined
-    >
+    type Record = DeepRequired<components['schemas']['GetQuizRecordDto']>
 
-    type Condition = 'IDLE' | 'DISABLED' | 'RIGHT' | 'WRONG'
+    type SearchedQuiz = DeepRequired<components['schemas']['IntegratedSearchQuizDto']>
+
+    declare namespace Set {
+      type Type = Exclude<
+        DeepRequired<components['schemas']['GetQuizRecordDto']['quizSetType']>,
+        undefined
+      >
+
+      type Record = DeepRequired<components['schemas']['GetSingleQuizSetRecordDto']>
+    }
 
     declare namespace Request {
       /** PATCH /api/v2/quiz/result

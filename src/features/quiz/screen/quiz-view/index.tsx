@@ -116,7 +116,7 @@ const QuizView = ({ quizzes, isFirst }: Props) => {
         <QuizExplanationDrawer
           isRight={currentResult.answer}
           rightAnswer={
-            currentQuiz.quizType === 'MULTIPLE_CHOICE'
+            currentQuiz.quizType === 'MULTIPLE_CHOICE' && currentQuiz.options
               ? currentQuiz.options.find((option) => option === currentQuiz.answer)!
               : currentQuiz.answer === 'correct'
               ? 'O'

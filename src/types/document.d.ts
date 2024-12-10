@@ -1,100 +1,20 @@
 import { DeepRequired } from 'react-hook-form'
 import { components, paths } from './schema'
 
-type DirectoryInDocument = Pick<Directory.Item, 'id' | 'name'> & { emoji?: string }
-
-type SortOption = 'CREATED_AT' | 'UPDATED_AT'
-
-type CreateType = 'TEXT' | 'FILE' | 'NOTION'
-
-type DocumentStatus =
-  | 'UNPROCESSED'
-  | 'PROCESSED'
-  | 'PROCESSING'
-  | 'COMPLETELY_FAILED'
-  | 'PARTIAL_SUCCESS'
-  | 'KEYPOINT_UPDATE_POSSIBLE'
-  | 'DEFAULT_DOCUMENT'
-
-type QuizType = 'MIX_UP' | 'MULTIPLE_CHOICE'
-
-type QuizItem = {
-  id: number
-  question: string
-  answer: string
-  explanation: string
-  options?: string[]
-  quizType: QuizType
-}
-
-type DocumentBase = {
-  id: number
-  documentType: CreateType
-  status: DocumentStatus
-  totalQuizCount: number
-  characterCount: number
-  directory: DirectoryInDocument
-  updatedAt: string
-}
-
-type DocumentDetailItem = DocumentBase & {
-  documentName: string
-  content: string
-  quizzes: QuizItem[]
-}
-
-type DocumentListItem = DocumentBase & {
-  name: string
-  documentType: CreateType
-  previewContent: string
-  createdAt: string
-  reviewNeededQuizCount: number
-}
-
-type SearchedDocument = {
-  documentId: number
-  documentName: string
-  content: string
-  directory: DirectoryInDocument
-}
-
-type SearchedQuiz = {
-  id: number
-  question: string
-  answer: string
-  documentName: string
-  directoryName: string
-}
-
-type CollectionField =
-  | 'IT'
-  | 'LAW'
-  | 'BUSINESS_ECONOMY'
-  | 'SOCIETY_POLITICS'
-  | 'LANGUAGE'
-  | 'MEDICINE_PHARMACY'
-  | 'ART'
-  | 'SCIENCE_ENGINEERING'
-  | 'HISTORY_PHILOSOPHY'
-  | 'OTHER'
-
-type SearchedCollection = {
-  id: number
-  name: string
-  emoji: string
-  bookmarkCount: number
-  collectionField: CollectionField
-  memberName: string
-  quizCount: number
-}
+type DocumentDetailItem = DeepRequired<components['schemas']['GetSingleDocumentResponse']>
+type DocumentItemInList = DeepRequired<components['schemas']['GetAllDocumentsDocumentDto']>
 
 declare global {
   declare namespace Document {
     type DetailItem = DocumentDetailItem
-    type ItemInList = DocumentListItem
-    type List = DocumentListItem[]
-    type Status = DocumentStatus
-    type Sort = SortOption
+    type ItemInList = DocumentItemInList
+    type List = DocumentItemInList[]
+    type Sort = 'CREATED_AT' | 'UPDATED_AT'
+
+    type Status = DeepRequired<components['schemas']['GetAllDocumentsDocumentDto']['status']>
+    type Type = DeepRequired<components['schemas']['GetAllDocumentsDocumentDto']['documentType']>
+
+    type SearchedDocument = DeepRequired<components['schemas']['IntegratedSearchDocumentDto']>
 
     type SearchedDocument = Document.Response.SearchDocuments['documents'][number]
     type SearchedQuiz = Document.Response.SearchDocuments['quizzes'][number]

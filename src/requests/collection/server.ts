@@ -3,6 +3,7 @@
 import { API_ENDPOINTS } from '@/shared/configs/endpoint'
 import { httpServer } from '@/shared/lib/axios/http-server'
 
+/** server에서만 사용 */
 export const getBookmarkedCollections = async () => {
   try {
     const { data } = await httpServer.get<Collection.Response.GetBookmarkedCollections>(
