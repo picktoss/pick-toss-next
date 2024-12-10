@@ -34,7 +34,7 @@ export const getAnswerText = (answer: string) => {
 }
 
 export const getQuizSetTypeEnum = (quizSetType: 'today' | 'document' | 'collection' | 'create') => {
-  let enumQuizType: Quiz.SetType
+  let enumQuizType: Quiz.Set.Type
 
   switch (quizSetType) {
     case 'today':

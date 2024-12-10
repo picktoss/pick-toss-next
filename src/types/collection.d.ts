@@ -19,6 +19,8 @@ declare global {
     type Item = DeepRequired<components['schemas']['CollectionDto']>
     type Field = CollectionField
 
+    type SearchedCollection = DeepRequired<components['schemas']['IntegratedSearchCollectionDto']>
+
     declare namespace Request {
       /** PATCH /api/v2/collections/{collection_id}/update-quizzes
        * 컬렉션 문제 편집
