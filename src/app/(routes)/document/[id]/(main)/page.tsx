@@ -3,7 +3,7 @@ import DocumentFloatingButton from '@/features/document/components/document-floa
 import { QuizListProvider } from '@/features/document/contexts/quiz-list-context'
 import DocumentContent from '@/features/document/screens/document-content'
 import Quiz from '@/features/document/screens/quiz'
-import { fetchDocumentDetail } from '@/requests/document'
+import { fetchDocumentDetail } from '@/requests/document/client'
 
 interface Props {
   params: {
