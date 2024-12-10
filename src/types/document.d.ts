@@ -1,11 +1,14 @@
 import { DeepRequired } from 'react-hook-form'
 import { components, paths } from './schema'
 
+type DocumentDetailItem = DeepRequired<components['schemas']['GetSingleDocumentResponse']>
+type DocumentItemInList = DeepRequired<components['schemas']['GetAllDocumentsDocumentDto']>
+
 declare global {
   declare namespace Document {
-    type DetailItem = DeepRequired<components['schemas']['GetSingleDocumentResponse']>
-    type ItemInList = DeepRequired<components['schemas']['GetAllDocumentsDocumentDto']>
-    type List = Document.ItemInList[]
+    type DetailItem = DocumentDetailItem
+    type ItemInList = DocumentItemInList
+    type List = DocumentItemInList[]
     type Sort = 'CREATED_AT' | 'UPDATED_AT'
 
     type Status = DeepRequired<components['schemas']['GetAllDocumentsDocumentDto']['status']>
