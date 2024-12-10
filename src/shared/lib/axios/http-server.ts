@@ -11,6 +11,10 @@ export const httpServer = axios.create({
 
 httpServer.interceptors.request.use(
   async (config) => {
+    if (config.url === '/login') {
+      return config
+    }
+
     if (typeof window !== 'undefined') {
       throw new Error('httpServer should only be used in server-side code.')
     }

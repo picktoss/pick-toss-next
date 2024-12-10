@@ -4,10 +4,10 @@ import { cn } from '@/shared/lib/utils'
 import CategoryDrawer from '@/features/user/components/category-drawer'
 import SetNameDialog from '@/features/user/components/set-name-dialog'
 import Link from 'next/link'
-import { fetchUserInfo } from '@/requests/user/server'
+import { getUserInfo } from '@/requests/user/server'
 
 const AccountPage = async () => {
-  const user = await fetchUserInfo()
+  const user = await getUserInfo()
 
   const interestCategories = user.interestCategories?.length
     ? user.interestCategories
