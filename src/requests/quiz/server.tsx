@@ -21,7 +21,7 @@ export const getQuizSetById = async ({
 }: {
   quizSetId: string
   collectionId?: number
-  quizSetType: Quiz.SetType
+  quizSetType: Quiz.Set.Type
 }) => {
   const params = collectionId
     ? { 'collection-id': collectionId, 'quiz-set-type': quizSetType }

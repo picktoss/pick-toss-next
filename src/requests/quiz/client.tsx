@@ -55,7 +55,7 @@ export const fetchQuizSetRecord = async ({
   quizSetType,
 }: {
   quizSetId: string
-  quizSetType: Quiz.SetType
+  quizSetType: Quiz.Set.Type
 }) => {
   try {
     const { data } = await http.get<Quiz.Response.GetQuizSetRecord>(

@@ -14,6 +14,7 @@ export const getCollectionInfo = async (id: number) => {
   }
 }
 
+/** server에서만 사용 */
 export const getBookmarkedCollections = async () => {
   try {
     const { data } = await httpServer.get<Collection.Response.GetBookmarkedCollections>(
