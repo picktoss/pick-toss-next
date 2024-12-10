@@ -17,11 +17,11 @@ export const queries = createQueryKeyStore({
   document: {
     list: (params?: { directoryId?: string; sortOption?: Document.Sort }) => ({
       queryKey: [params],
-      queryFn: () => REQUEST.document.fetchDocuments(params),
+      queryFn: () => REQUEST.document.getDocuments(params),
     }),
     item: (documentId?: number) => ({
       queryKey: [documentId],
-      queryFn: () => REQUEST.document.fetchDocumentDetail(documentId),
+      queryFn: () => REQUEST.document.getDocumentDetail(documentId),
       enabled: !!documentId,
     }),
   },

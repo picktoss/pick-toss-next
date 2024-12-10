@@ -32,6 +32,7 @@ declare global {
     type Item = QuizItem
     type List = QuizItem[]
     type ItemWithMetadata = QuizWithMetadata
+    type ReplayType = ReplayQuizType
 
     type Type = Exclude<DeepRequired<components['schemas']['QuizDto']['quizType']>, undefined>
     type OXAnswer = 'correct' | 'incorrect'

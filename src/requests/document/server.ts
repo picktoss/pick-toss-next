@@ -8,7 +8,7 @@ type GetDocumentsParams = {
   sortOption?: Document.Sort
 }
 
-export const fetchDocumentsServer = async (params?: GetDocumentsParams) => {
+export const getDocuments = async (params?: GetDocumentsParams) => {
   const defaultSortOption = 'CREATED_AT'
 
   const DocsParams =
@@ -25,6 +25,20 @@ export const fetchDocumentsServer = async (params?: GetDocumentsParams) => {
       {
         params: DocsParams,
       }
+    )
+    return data
+  } catch (error: unknown) {
+    console.error(error)
+    throw error
+  }
+}
+
+export const getDocumentDetail = async (documentId?: number) => {
+  if (documentId == null) return
+
+  try {
+    const { data } = await httpServer.get<Document.DetailItem>(
+      API_ENDPOINTS.DOCUMENT.GET.BY_ID(documentId)
     )
     return data
   } catch (error: unknown) {

@@ -18,6 +18,7 @@ declare global {
   declare namespace Collection {
     type Item = DeepRequired<components['schemas']['CollectionDto']>
     type Field = CollectionField
+    type ItemWithQuizzes = DeepRequired<components['schemas']['GetSingleCollectionResponse']>
 
     declare namespace Request {
       /** PATCH /api/v2/collections/{collection_id}/update-quizzes
