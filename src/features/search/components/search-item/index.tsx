@@ -6,7 +6,7 @@ import DocumentTypeIcon from '@/features/document/components/document-type-icon'
 
 interface Props {
   createType: Document.ItemInList['documentType']
-  documentTitle: string
+  documentTitle: React.ReactNode
   matchingSentence: React.ReactNode
   resultType: 'document' | 'quiz'
   relativeDirectory: string

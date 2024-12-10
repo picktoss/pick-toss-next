@@ -5,7 +5,7 @@ import SearchList from '../components/search-list'
 import SearchItem from '../components/search-item'
 import RecentSearches from '../components/recent-searches'
 import HeaderInDocument from '../components/header-in-document'
-import { extractPlainText, highlightAndTrimText } from '../utils'
+import { highlightAndTrimText, MarkdownProcessor } from '../utils'
 import Text from '@/shared/components/ui/text'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useQuery } from '@tanstack/react-query'
@@ -123,7 +123,10 @@ const SearchInDocument = () => {
                   <SearchItem
                     key={idx}
                     createType={idx % 2 === 0 ? 'FILE' : 'TEXT'} // type 들어가야함
-                    documentTitle={searchItem.documentName ?? ''}
+                    documentTitle={highlightAndTrimText(
+                      searchItem.documentName ?? '',
+                      initialKeyword ?? ''
+                    )}
                     matchingSentence={
                       searchItem.content ? (
                         <MarkdownProcessor
@@ -155,19 +158,3 @@ const SearchInDocument = () => {
 }
 
 export default SearchInDocument
-
-/** 마크다운 텍스트를 받아
- * 문법을 제거하고 키워드에 강조를 해서 반환하는 함수
- */
-const MarkdownProcessor = ({
-  markdownText,
-  keyword,
-}: {
-  markdownText: string
-  keyword: string
-}) => {
-  const plainText = extractPlainText(markdownText)
-  const highlightedText = highlightAndTrimText(plainText, keyword)
-
-  return <div>{highlightedText}</div>
-}

@@ -65,3 +65,19 @@ export function extractPlainText(markdownText: string): string {
   div.innerHTML = html
   return div.textContent || ''
 }
+
+/** 마크다운 텍스트를 받아
+ * 문법을 제거하고 키워드에 강조를 해서 반환하는 함수
+ */
+export const MarkdownProcessor = ({
+  markdownText,
+  keyword,
+}: {
+  markdownText: string
+  keyword: string
+}) => {
+  const plainText = extractPlainText(markdownText)
+  const highlightedText = highlightAndTrimText(plainText, keyword)
+
+  return <div>{highlightedText}</div>
+}
