@@ -3,17 +3,20 @@ import Tag from '@/shared/components/ui/tag'
 import Text from '@/shared/components/ui/text'
 import { cn } from '@/shared/lib/utils'
 import DocumentTypeIcon from '@/features/document/components/document-type-icon'
+import Link from 'next/link'
 
 interface Props {
+  documentId: number | undefined // api 수정되면 undefined 제거
   createType: Document.ItemInList['documentType']
-  documentTitle: string
-  matchingSentence: string
+  documentTitle: React.ReactNode
+  matchingSentence: React.ReactNode
   resultType: 'document' | 'quiz'
   relativeDirectory: string
   lastItem?: boolean
 }
 
 const SearchItem = ({
+  documentId,
   createType,
   documentTitle,
   matchingSentence,
@@ -22,7 +25,8 @@ const SearchItem = ({
   lastItem,
 }: Props) => {
   return (
-    <div
+    <Link
+      href={documentId ? '/document/' + documentId : '#'}
       className={cn(
         'border-b border-border-divider py-[24px] flex flex-col',
         lastItem && 'border-none'
@@ -37,7 +41,6 @@ const SearchItem = ({
         <Text typography="subtitle2-bold">{documentTitle}</Text>
       </div>
 
-      {/* todo: 키워드와 일치하는 부분 색상 accent표시 하는 로직 필요 */}
       <Text>{matchingSentence}</Text>
 
       <div className="mt-[8px] flex items-center">
@@ -50,7 +53,7 @@ const SearchItem = ({
           <Text>{relativeDirectory}</Text>
         </div>
       </div>
-    </div>
+    </Link>
   )
 }
 
