@@ -171,6 +171,9 @@ export const API_ENDPOINTS = {
       DOWNLOAD: (documentId: number) => `/documents/${documentId}/download-quiz`,
       /** GET /incorrect-quizzes - 오답 터뜨리기 퀴즈 가져오기 */
       WRONG_ANSWER: '/incorrect-quizzes',
+      /** POST /api/v2/collections/{collection_id}/collection-quizzes - 컬렉션 퀴즈 시작하기 응답 */
+      COLLECTION_QUIZZES: (collectionId: number) =>
+        `/collections/${collectionId}/collection-quizzes`,
     },
     PATCH: {
       /** PATCH /quiz/result - 퀴즈 결과 업데이트 */

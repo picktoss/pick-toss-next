@@ -1440,7 +1440,11 @@ export interface components {
             id?: number;
             question?: string;
             answer?: string;
+            /** Format: int64 */
+            documentId?: number;
             documentName?: string;
+            /** @enum {string} */
+            documentType?: "FILE" | "TEXT" | "NOTION";
             directoryName?: string;
         };
         IntegratedSearchResponse: {
@@ -1496,7 +1500,11 @@ export interface components {
             id?: number;
             question?: string;
             answer?: string;
+            /** Format: int64 */
+            documentId?: number;
             documentName?: string;
+            /** @enum {string} */
+            documentType?: "FILE" | "TEXT" | "NOTION";
             directoryName?: string;
         };
         SearchDocumentResponse: {
@@ -1723,10 +1731,10 @@ export interface components {
             parent?: components["schemas"]["ApplicationContext"];
             id?: string;
             displayName?: string;
-            autowireCapableBeanFactory?: components["schemas"]["AutowireCapableBeanFactory"];
             applicationName?: string;
             /** Format: int64 */
             startupDate?: number;
+            autowireCapableBeanFactory?: components["schemas"]["AutowireCapableBeanFactory"];
             environment?: components["schemas"]["Environment"];
             /** Format: int32 */
             beanDefinitionCount?: number;
@@ -1851,8 +1859,8 @@ export interface components {
             is3xxRedirection?: boolean;
         };
         JspConfigDescriptor: {
-            taglibs?: components["schemas"]["TaglibDescriptor"][];
             jspPropertyGroups?: components["schemas"]["JspPropertyGroupDescriptor"][];
+            taglibs?: components["schemas"]["TaglibDescriptor"][];
         };
         JspPropertyGroupDescriptor: {
             defaultContentType?: string;
@@ -1861,11 +1869,11 @@ export interface components {
             errorOnELNotFound?: string;
             pageEncoding?: string;
             scriptingInvalid?: string;
-            isXml?: string;
             includePreludes?: string[];
             includeCodas?: string[];
             trimDirectiveWhitespaces?: string;
             errorOnUndeclaredNamespace?: string;
+            isXml?: string;
             buffer?: string;
             urlPatterns?: string[];
         };
@@ -1892,13 +1900,13 @@ export interface components {
             hosts?: string[];
             redirectView?: boolean;
             propagateQueryProperties?: boolean;
-            attributesCSV?: string;
             attributesMap?: {
                 [key: string]: Record<string, never>;
             };
             attributes?: {
                 [key: string]: string;
             };
+            attributesCSV?: string;
         };
         ServletContext: {
             sessionCookieConfig?: components["schemas"]["SessionCookieConfig"];
@@ -1933,6 +1941,7 @@ export interface components {
             servletRegistrations?: {
                 [key: string]: components["schemas"]["ServletRegistration"];
             };
+            defaultSessionTrackingModes?: ("COOKIE" | "URL" | "SSL")[];
             /** Format: int32 */
             effectiveMajorVersion?: number;
             /** Format: int32 */
@@ -1942,7 +1951,6 @@ export interface components {
             filterRegistrations?: {
                 [key: string]: components["schemas"]["FilterRegistration"];
             };
-            defaultSessionTrackingModes?: ("COOKIE" | "URL" | "SSL")[];
             effectiveSessionTrackingModes?: ("COOKIE" | "URL" | "SSL")[];
             jspConfigDescriptor?: components["schemas"]["JspConfigDescriptor"];
             requestCharacterEncoding?: string;
