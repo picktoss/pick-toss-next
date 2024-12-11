@@ -102,8 +102,6 @@ export const API_ENDPOINTS = {
     POST: {
       /** POST /documents - 문서 생성 */
       CREATE: '/documents',
-      /** POST /integrated-search - 통합(문서, 컬렉션, 퀴즈) 검색 */
-      SEARCH_ALL: '/integrated-search',
       /** POST /documents/search - 문서 검색 */
       SEARCH: '/documents/search',
     },
@@ -112,6 +110,13 @@ export const API_ENDPOINTS = {
        * //참고사항 : body로 documentIds를 리스트 형태로 보내야합니다 (swagger참고)
        */
       DOCUMENTS: '/documents/delete-documents',
+    },
+  },
+
+  SEARCH: {
+    POST: {
+      /** POST /integrated-search - 통합(문서, 컬렉션, 퀴즈) 검색 */
+      SEARCH_ALL: '/integrated-search',
     },
   },
 

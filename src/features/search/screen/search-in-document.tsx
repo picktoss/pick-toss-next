@@ -2,10 +2,8 @@
 
 import { ChangeEvent, useEffect, useRef, useState } from 'react'
 import SearchList from '../components/search-list'
-import SearchItem from '../components/search-item'
 import RecentSearches from '../components/recent-searches'
 import HeaderInDocument from '../components/header-in-document'
-import { highlightAndTrimText, MarkdownProcessor } from '../utils'
 import Text from '@/shared/components/ui/text'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useQuery } from '@tanstack/react-query'
@@ -121,39 +119,13 @@ const SearchInDocument = () => {
             // 검색 결과 O : 검색 결과 리스트
             data &&
             searchResults.length > 0 && (
-              <SearchList length={searchResults.length}>
-                {searchResults.map((searchItem, idx) => (
-                  <SearchItem
-                    key={idx}
-                    documentId={searchItem.documentId}
-                    createType={searchItem.documentType as Document.Type}
-                    documentTitle={highlightAndTrimText(
-                      searchItem.documentName ?? '',
-                      initialKeyword ?? ''
-                    )}
-                    matchingSentence={
-                      searchItem.content ? (
-                        <MarkdownProcessor
-                          markdownText={searchItem.content}
-                          keyword={initialKeyword ?? ''}
-                        />
-                      ) : (
-                        highlightAndTrimText(
-                          searchItem.question ?? 'Q...' + searchItem.answer ?? 'A...',
-                          initialKeyword ?? ''
-                        )
-                      )
-                    }
-                    resultType={searchItem.question ? 'quiz' : 'document'}
-                    relativeDirectory={
-                      searchItem.directory
-                        ? searchItem.directory.name
-                        : searchItem.directoryName ?? ''
-                    }
-                    lastItem={idx === searchResults.length - 1}
-                  />
-                ))}
-              </SearchList>
+              <div className="h-[calc(100dvh-56px-50px)] overflow-y-auto p-[16px] text-text1-medium">
+                <SearchList
+                  length={searchResults.length}
+                  searchResults={searchResults}
+                  keyword={initialKeyword}
+                />
+              </div>
             )
           ))}
       </main>

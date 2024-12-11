@@ -56,4 +56,13 @@ export const queries = createQueryKeyStore({
       enabled: !!collectionId,
     }),
   },
+
+  search: {
+    integrated: (requestBody: { keyword: string }) => ({
+      queryKey: [requestBody],
+      queryFn: () => REQUEST.search.getIntegratedSearches(requestBody),
+      enabled: requestBody.keyword.trim() !== '',
+      initialData: { documents: [], quizzes: [], collections: [] },
+    }),
+  },
 })
