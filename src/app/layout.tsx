@@ -5,6 +5,7 @@ import { dmSans, suit } from '@/shared/lib/fonts'
 import { Metadatas } from '@/features/common/metadata'
 import { Providers } from '@/providers'
 import { Toaster } from '@/shared/components/ui/toaster'
+import ClientSetUp from '@/shared/components/custom/client-set-up'
 
 export const metadata: Metadata = Metadatas.root()
 
@@ -25,6 +26,7 @@ export default function RootLayout({
     <html lang="ko">
       <body className={cn(suit.variable, dmSans.variable, 'bg-gray-01 font-dm-suit')}>
         <Providers>
+          <ClientSetUp />
           <div className="mx-auto min-h-screen max-w-mobile shadow-lg">{children}</div>
         </Providers>
         <Toaster />
