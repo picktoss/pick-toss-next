@@ -99,6 +99,7 @@ const DetailInfo = ({ id }: Props) => {
 
       <FixedBottom>
         <Link
+          // 바로 이동하지 않고, collection quiz_set_id를 가져오는 api를 실행함
           href={`/quiz/${collectionData.id}?quizType=collection&collectionName=${collectionData.name}&collectionEmoji=${collectionData.emoji}`}
         >
           {/* 이동 /quiz/[id] - searchParams로 collectionId, createdAt, collectionName, collectionEmoji 넣어서 */}

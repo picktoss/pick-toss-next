@@ -1,9 +1,9 @@
 import NextAuth, { Account, DefaultSession, NextAuthResult } from 'next-auth'
-import { signIn as signInAPI } from '@/actions/fetchers/auth/sign-in'
 import Kakao from 'next-auth/providers/kakao'
 import Google from 'next-auth/providers/google'
 import { getUser } from '@/actions/fetchers/user/get-user'
 import { UserDTO } from '@/actions/types/dto/user.dto'
+import { signIn as signInApi } from '@/requests/auth/server'
 
 declare module 'next-auth' {
   interface Session {
@@ -28,7 +28,7 @@ export const {
     jwt: async ({ token, account, trigger }) => {
       if (account) {
         try {
-          const { accessToken, accessTokenExpiration, signUp } = await signInAPI({
+          const { accessToken, accessTokenExpiration, signUp } = await signInApi({
             socialPlatform: account.provider.toUpperCase() as 'GOOGLE' | 'KAKAO',
             accessToken: account.access_token as string,
           })
@@ -41,9 +41,25 @@ export const {
         }
         // 회원가입 했을 때만 첫 사용자인지 알 수 있다
         try {
-          const user = await getUser(token.accessToken as string)
-          token.userDTO = user
+          // httpServer를 사용할 수 없음. 그 안에서 auth 를 통해 session을 호출하는데, 현 시점에서는 session이 없음
+          const response = await fetch(process.env.NEXT_PUBLIC_DEV_API_URL + '/members/info', {
+            headers: {
+              Authorization: `Bearer ${token.accessToken as string}`,
+              'Content-Type': 'application/json',
+            },
+            cache: 'no-store',
+            next: { revalidate: 0 },
+          })
+
+          if (!response.ok) {
+            throw new Error(`Failed to fetch user info: ${response.status}`)
+          }
+
+          const data = (await response.json()) as UserDTO
+
+          token.userDTO = data
         } catch (error) {
+          console.error('Error fetching user info:', error)
           throw new Error('Failed to get user')
         }
       }

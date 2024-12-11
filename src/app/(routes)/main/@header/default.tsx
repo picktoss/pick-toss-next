@@ -2,25 +2,11 @@
 
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
-import { useMessaging } from '@/shared/hooks/use-messaging'
 import usePreviousPath from '@/shared/hooks/use-previous-path'
-// import { useSession } from 'next-auth/react'
 import Link from 'next/link'
-// import { useRouter } from 'next/navigation'
-// import { useEffect } from 'react'
 
 const Header = () => {
-  // const router = useRouter()
-  // const { data: session, status } = useSession()
   usePreviousPath()
-  useMessaging()
-
-  // useEffect(() => {
-  //   // 첫 로그인 회원일 경우 온보딩 화면(관심분야선택)으로 보냅니다
-  //   if (status === 'authenticated' && session?.user.isNewUser) {
-  //     router.push('/on-boarding')
-  //   }
-  // }, [session, status, router])
 
   return (
     <header className="flex h-[54px] w-full max-w-mobile items-center justify-between bg-background-base-02 px-[18px]">
