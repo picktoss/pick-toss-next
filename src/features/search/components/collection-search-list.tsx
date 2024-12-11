@@ -9,7 +9,7 @@ interface Props {
 
 const CollectionSearchList = ({ length, searchResults }: Props) => {
   return (
-    <>
+    <div className="flex flex-col p-[16px]">
       <Text>
         컬렉션 <span className="text-text-accent">{length}</span>
       </Text>
@@ -30,7 +30,7 @@ const CollectionSearchList = ({ length, searchResults }: Props) => {
           />
         ))}
       </div>
-    </>
+    </div>
   )
 }
 

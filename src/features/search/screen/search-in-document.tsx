@@ -114,7 +114,7 @@ const SearchInDocument = () => {
             // 검색 결과 O : 검색 결과 리스트
             data &&
             searchResults.length > 0 && (
-              <div className="h-[calc(100dvh-56px-50px)] overflow-y-auto p-[16px] text-text1-medium">
+              <div className="h-[calc(100dvh-56px)] overflow-y-auto text-text1-medium">
                 <SearchList
                   length={searchResults.length}
                   searchResults={searchResults}

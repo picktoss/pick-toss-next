@@ -20,7 +20,7 @@ const AllSearchResults = ({
   keyword,
 }: Props) => {
   return (
-    <div className="flex h-[calc(100dvh-56px-50px)] flex-col gap-[20px] overflow-y-auto p-[16px] text-text1-medium">
+    <div className="flex h-[calc(100dvh-56px-50px)] flex-col gap-[20px] overflow-y-auto text-text1-medium">
       {docsQuizLength > 0 && (
         <div className="flex flex-col">
           <SearchList
@@ -30,7 +30,7 @@ const AllSearchResults = ({
           />
 
           {/* 퀴즈 노트 전체보기 버튼 : 클릭 시 tab = quiz-note로 변경 */}
-          <Link href={`?tab=quiz-note&keyword=${keyword}`} replace>
+          <Link href={`?tab=quiz-note&keyword=${keyword}`} className="mx-[16px]" replace>
             <Button
               variant={'smallSquare'}
               colors={'tertiary'}
@@ -51,7 +51,7 @@ const AllSearchResults = ({
           />
 
           {/* 컬렉션 전체보기 버튼 : : 클릭 시 tab = collection으로 변경 */}
-          <Link href={`?tab=collection&keyword=${keyword}`} replace>
+          <Link href={`?tab=collection&keyword=${keyword}`} className="mx-[16px]" replace>
             <Button
               variant={'smallSquare'}
               colors={'tertiary'}

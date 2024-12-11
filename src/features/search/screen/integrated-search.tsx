@@ -149,7 +149,7 @@ const IntegratedSearch = () => {
 
                       'quiz-note':
                         DocsQuizResultsLength > 0 ? (
-                          <div className="h-[calc(100dvh-56px-50px)] overflow-y-auto p-[16px] text-text1-medium">
+                          <div className="h-[calc(100dvh-56px-50px)] overflow-y-auto text-text1-medium">
                             <SearchList
                               length={DocsQuizResultsLength}
                               searchResults={searchResultsInQuizNote}
@@ -162,7 +162,7 @@ const IntegratedSearch = () => {
 
                       collection:
                         CollectionResultsLength > 0 ? (
-                          <div className="h-[calc(100dvh-56px-50px)] overflow-y-auto p-[16px] text-text1-medium">
+                          <div className="h-[calc(100dvh-56px-50px)] overflow-y-auto text-text1-medium">
                             <CollectionSearchList
                               length={CollectionResultsLength}
                               searchResults={searchResultsInCollection}

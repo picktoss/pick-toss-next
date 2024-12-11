@@ -10,7 +10,7 @@ interface Props {
 
 const SearchList = ({ length, searchResults, keyword }: Props) => {
   return (
-    <>
+    <div className="flex flex-col p-[16px]">
       <Text>
         퀴즈 노트 <span className="text-text-accent">{length}</span>
       </Text>
@@ -40,7 +40,7 @@ const SearchList = ({ length, searchResults, keyword }: Props) => {
           />
         ))}
       </div>
-    </>
+    </div>
   )
 }
 
