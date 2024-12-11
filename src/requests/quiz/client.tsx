@@ -118,3 +118,14 @@ export const updateWrongQuizResult = async (requestBody: Quiz.Request.UpdateWron
     throw error
   }
 }
+
+export const collectionQuizzesInfo = async ({ collectionId }: { collectionId: number }) => {
+  try {
+    const { data } = await http.post<Quiz.Response.StartCollectionQuiz>(
+      API_ENDPOINTS.QUIZ.POST.COLLECTION(collectionId)
+    )
+    return data
+  } catch (error: unknown) {
+    throw error
+  }
+}

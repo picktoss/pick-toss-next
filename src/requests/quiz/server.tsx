@@ -16,22 +16,18 @@ export const getTodayQuizSetId = async () => {
 
 export const getQuizSetById = async ({
   quizSetId,
-  collectionId,
   quizSetType,
 }: {
   quizSetId: string
-  collectionId?: number
   quizSetType: Quiz.Set.Type
 }) => {
-  const params = collectionId
-    ? { 'collection-id': collectionId, 'quiz-set-type': quizSetType }
-    : { 'quiz-set-type': quizSetType }
-
   try {
     const { data } = await httpServer.get<Quiz.Response.GetBaseQuizSet>(
       API_ENDPOINTS.QUIZ.GET.BY_SET_ID(quizSetId),
       {
-        params,
+        params: {
+          'quiz-set-type': quizSetType,
+        },
       }
     )
     return data

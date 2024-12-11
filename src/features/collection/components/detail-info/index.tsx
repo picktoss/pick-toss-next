@@ -2,13 +2,14 @@
 
 import QuizCard from '@/features/quiz/components/quiz-card'
 import { useCollectionInfo } from '@/requests/collection/hooks'
+import { useCollectionQuizzesInfo } from '@/requests/quiz/hooks'
 import CategoryTag from '@/shared/components/custom/category-tag'
 import FixedBottom from '@/shared/components/custom/fixed-bottom'
 import Loading from '@/shared/components/custom/loading'
 import { Button } from '@/shared/components/ui/button'
 import Text from '@/shared/components/ui/text'
 import { useUser } from '@/shared/hooks/use-user'
-import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useMemo } from 'react'
 
 interface Props {
@@ -16,8 +17,11 @@ interface Props {
 }
 
 const DetailInfo = ({ id }: Props) => {
+  const router = useRouter()
+
   const { user } = useUser()
   const { data: collectionData } = useCollectionInfo(id)
+  const { mutate: createQuizSetMutate } = useCollectionQuizzesInfo()
 
   const quizCounts = useMemo(() => {
     if (!collectionData?.quizzes) return { multiple: 0, ox: 0 }
@@ -36,6 +40,22 @@ const DetailInfo = ({ id }: Props) => {
   }, [collectionData?.quizzes])
 
   const isMine = user?.id === collectionData?.member.creatorId
+
+  const handleQuizStart = () => {
+    if (!collectionData) {
+      return
+    }
+
+    createQuizSetMutate(
+      { collectionId: id },
+      {
+        onSuccess: ({ quizSetId, quizSetType }) =>
+          router.push(
+            `/quiz/${quizSetId}?quizSetType=${quizSetType}&collectionName=${collectionData.name}&collectionEmoji=${collectionData.emoji}`
+          ),
+      }
+    )
+  }
 
   /** TODO: Spinner로 대체 */
   if (!collectionData) return <Loading center size="xs" />
@@ -98,13 +118,14 @@ const DetailInfo = ({ id }: Props) => {
       )}
 
       <FixedBottom>
-        <Link
+        {/* <Link
           // 바로 이동하지 않고, collection quiz_set_id를 가져오는 api를 실행함
           href={`/quiz/${collectionData.id}?quizType=collection&collectionName=${collectionData.name}&collectionEmoji=${collectionData.emoji}`}
-        >
-          {/* 이동 /quiz/[id] - searchParams로 collectionId, createdAt, collectionName, collectionEmoji 넣어서 */}
-          <Button className="w-full">퀴즈 시작하기</Button>
-        </Link>
+        > */}
+        {/* 이동 /quiz/[id] - searchParams로 collectionId, createdAt, collectionName, collectionEmoji 넣어서 */}
+        <Button className="w-full" onClick={handleQuizStart}>
+          퀴즈 시작하기
+        </Button>
       </FixedBottom>
     </>
   )

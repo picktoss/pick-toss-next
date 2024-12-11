@@ -1440,7 +1440,11 @@ export interface components {
             id?: number;
             question?: string;
             answer?: string;
+            /** Format: int64 */
+            documentId?: number;
             documentName?: string;
+            /** @enum {string} */
+            documentType?: "FILE" | "TEXT" | "NOTION";
             directoryName?: string;
         };
         IntegratedSearchResponse: {
@@ -1496,7 +1500,11 @@ export interface components {
             id?: number;
             question?: string;
             answer?: string;
+            /** Format: int64 */
+            documentId?: number;
             documentName?: string;
+            /** @enum {string} */
+            documentType?: "FILE" | "TEXT" | "NOTION";
             directoryName?: string;
         };
         SearchDocumentResponse: {
@@ -1851,8 +1859,8 @@ export interface components {
             is3xxRedirection?: boolean;
         };
         JspConfigDescriptor: {
-            taglibs?: components["schemas"]["TaglibDescriptor"][];
             jspPropertyGroups?: components["schemas"]["JspPropertyGroupDescriptor"][];
+            taglibs?: components["schemas"]["TaglibDescriptor"][];
         };
         JspPropertyGroupDescriptor: {
             defaultContentType?: string;
@@ -1861,11 +1869,11 @@ export interface components {
             errorOnELNotFound?: string;
             pageEncoding?: string;
             scriptingInvalid?: string;
-            isXml?: string;
             includePreludes?: string[];
             includeCodas?: string[];
             trimDirectiveWhitespaces?: string;
             errorOnUndeclaredNamespace?: string;
+            isXml?: string;
             buffer?: string;
             urlPatterns?: string[];
         };

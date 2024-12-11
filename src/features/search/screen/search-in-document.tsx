@@ -1,7 +1,6 @@
 'use client'
 
 import { ChangeEvent, useEffect, useRef, useState } from 'react'
-import SearchList from '../components/search-list'
 import RecentSearches from '../components/recent-searches'
 import HeaderInDocument from '../components/header-in-document'
 import Text from '@/shared/components/ui/text'
@@ -12,6 +11,7 @@ import Loading from '@/shared/components/custom/loading'
 import { RECENT_SEARCHES } from '../config'
 import { getLocalStorage, setLocalStorage } from '@/shared/utils/storage'
 import usePreviousPath from '@/shared/hooks/use-previous-path'
+import SearchList from '../components/search-list'
 
 // 퀴즈노트 탭 내 검색창 화면
 const SearchInDocument = () => {

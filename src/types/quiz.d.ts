@@ -21,8 +21,6 @@ declare global {
    */
   declare namespace Quiz {
     type Item = QuizItem
-    type List = QuizItem[]
-    type ItemWithMetadata = QuizWithMetadata
     type ReplayType = ReplayQuizType
 
     type Type = QuizType
@@ -158,6 +156,13 @@ declare global {
        */
       type CreateQuizSet = DeepRequired<
         paths['/api/v2/quizzes/documents/{document_id}/check-quiz-set']['post']['responses']['201']['content']['application/json;charset=UTF-8']
+      >
+
+      /** POST /api/v2/collections/{collection_id}/collection-quizzes
+       * 컬렉션 퀴즈 시작하기 응답
+       */
+      type StartCollectionQuiz = DeepRequired<
+        paths['/api/v2/collections/{collection_id}/collection-quizzes']['post']['responses']['201']['content']['application/json;charset=UTF-8']
       >
     }
   }

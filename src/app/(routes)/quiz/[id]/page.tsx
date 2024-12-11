@@ -1,6 +1,6 @@
+'use server'
+
 import IntroAndQuizView from '@/features/quiz/screen/intro-and-quiz-view'
-import { getQuizSetTypeEnum } from '@/features/quiz/utils'
-import { getCollectionInfo } from '@/requests/collection/server'
 import { getQuizSetById } from '@/requests/quiz/server'
 import { notFound } from 'next/navigation'
 
@@ -9,12 +9,12 @@ interface Props {
     id: string
   }
   searchParams: {
-    quizType: 'today' | 'document' | 'collection' | 'create'
+    quizSetType: Quiz.Set.Type
     createdAt: string
     // 문서 퀴즈일 경우
     documentName?: string
     directoryEmoji?: string
-    // 콜렉션 퀴즈일 경우 (id는 params로 받음)
+    // 콜렉션 퀴즈일 경우
     collectionName?: string
     collectionEmoji?: string
   }
@@ -22,7 +22,7 @@ interface Props {
 
 const QuizDetailPage = async ({ params, searchParams }: Props) => {
   const {
-    quizType = 'today',
+    quizSetType = 'TODAY_QUIZ_SET',
     createdAt,
     documentName,
     directoryEmoji,
@@ -30,22 +30,13 @@ const QuizDetailPage = async ({ params, searchParams }: Props) => {
     collectionEmoji,
   } = searchParams
 
-  // const isTodayQuiz = quizType === 'today'
-  // const isDocumentQuiz = quizType === 'document'
-  // const isCollectionQuiz = quizType === 'collection'
-  const collectionId = Number(params.id)
-  // const collection = isCollectionQuiz ? await getCollectionInfo(collectionId) : null
-  // const isCreateQuiz = quizType === 'create'
-
   const quizSet = await getQuizSetById({
     quizSetId: params.id,
-    collectionId: quizType === 'collection' ? Number(collectionId) : undefined,
-    quizSetType: getQuizSetTypeEnum(quizType),
+    quizSetType,
   })
 
   const hasDocumentInfo = documentName !== undefined && directoryEmoji !== undefined
-  const hasCollectionInfo =
-    collectionId !== undefined && collectionName !== undefined && collectionEmoji !== undefined
+  const hasCollectionInfo = collectionName !== undefined && collectionEmoji !== undefined
 
   const documentInfo = hasDocumentInfo
     ? { name: documentName, directoryEmoji: directoryEmoji }
@@ -60,7 +51,7 @@ const QuizDetailPage = async ({ params, searchParams }: Props) => {
 
   return (
     <IntroAndQuizView
-      quizType={quizType}
+      quizSetType={quizSetType}
       createdAt={createdAt}
       quizzes={quizSet.quizzes}
       documentInfo={documentInfo}
