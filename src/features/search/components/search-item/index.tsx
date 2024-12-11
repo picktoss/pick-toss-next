@@ -26,7 +26,7 @@ const SearchItem = ({
 }: Props) => {
   return (
     <Link
-      href={documentId ? '/document/' + documentId : '#'}
+      href={documentId ? `/document/${documentId}` : '#'}
       className={cn(
         'border-b border-border-divider py-[24px] flex flex-col',
         lastItem && 'border-none'
