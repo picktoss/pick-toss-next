@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { ChangeEvent, useEffect, useRef, useState } from 'react'
 import SearchList from '../components/search-list'
 import SearchItem from '../components/search-item'
 import RecentSearches from '../components/recent-searches'
@@ -13,9 +13,12 @@ import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import Loading from '@/shared/components/custom/loading'
 import { RECENT_SEARCHES } from '../config'
 import { getLocalStorage, setLocalStorage } from '@/shared/utils/storage'
+import usePreviousPath from '@/shared/hooks/use-previous-path'
 
 // 퀴즈노트 탭 내 검색창 화면
 const SearchInDocument = () => {
+  usePreviousPath()
+
   const router = useRouter()
   const searchParams = useSearchParams()
   const initialKeyword = searchParams.get('keyword') || ''
@@ -89,7 +92,7 @@ const SearchInDocument = () => {
     <div>
       <HeaderInDocument
         inputValue={keyword}
-        onChangeInputValue={(e) => setKeyword(e.target.value)}
+        onChangeInputValue={(e: ChangeEvent<HTMLInputElement>) => setKeyword(e.target.value)}
         onDeleteKeyword={handleDeleteKeyword}
         onSubmit={handleSubmit}
         searchInputRef={searchInputRef}
@@ -108,7 +111,7 @@ const SearchInDocument = () => {
         {!isSearchFocused &&
           // 검색 결과 X
           (!data || searchResults.length === 0 ? (
-            <div className="flex-center h-[calc(100dvh-88px-56px)] flex-col">
+            <div className="flex-center h-[calc(100dvh-56px)] flex-col">
               <Text typography="subtitle1-bold">검색결과가 없습니다</Text>
               <Text typography="text1-medium" className="text-text-sub">
                 다른 키워드를 입력해보세요
@@ -122,7 +125,8 @@ const SearchInDocument = () => {
                 {searchResults.map((searchItem, idx) => (
                   <SearchItem
                     key={idx}
-                    createType={idx % 2 === 0 ? 'FILE' : 'TEXT'} // type 들어가야함
+                    documentId={searchItem.documentId}
+                    createType={searchItem.documentType as Document.Type}
                     documentTitle={highlightAndTrimText(
                       searchItem.documentName ?? '',
                       initialKeyword ?? ''

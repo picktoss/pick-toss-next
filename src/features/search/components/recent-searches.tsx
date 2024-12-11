@@ -16,8 +16,6 @@ const RecentSearches = ({ containerRef, onUpdateKeyword }: Props) => {
 
   useEffect(() => {
     const storageSearches = getLocalStorage<string[]>(RECENT_SEARCHES) ?? []
-    // eslint-disable-next-line no-console
-    console.log(storageSearches)
     setRecentSearches(storageSearches)
   }, [])
 

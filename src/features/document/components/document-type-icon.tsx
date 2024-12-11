@@ -47,6 +47,18 @@ const DocumentTypeIcon = ({ type, containerClassName, iconClassName }: Props) =>
       </div>
     )
   }
+
+  // default
+  return (
+    <div
+      className={cn(
+        'flex-center size-[36px] shrink-0 rounded-full bg-fill-secondary-orange text-text-primary-inverse',
+        containerClassName
+      )}
+    >
+      <Icon name="document" className={cn('size-[16px]', iconClassName)} />
+    </div>
+  )
 }
 
 export default DocumentTypeIcon

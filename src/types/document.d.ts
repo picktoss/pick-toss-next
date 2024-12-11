@@ -12,7 +12,10 @@ declare global {
     type Sort = 'CREATED_AT' | 'UPDATED_AT'
 
     type Status = DeepRequired<components['schemas']['GetAllDocumentsDocumentDto']['status']>
-    type Type = DeepRequired<components['schemas']['GetAllDocumentsDocumentDto']['documentType']>
+    type Type = Exclude<
+      DeepRequired<components['schemas']['GetAllDocumentsDocumentDto']['documentType']>,
+      undefined
+    >
 
     type SearchedDocument = DeepRequired<components['schemas']['IntegratedSearchDocumentDto']>
 
