@@ -3,7 +3,6 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react'
 import RecentSearches from '../components/recent-searches'
 import HeaderInDocument from '../components/header-in-document'
-import Text from '@/shared/components/ui/text'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useQuery } from '@tanstack/react-query'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
@@ -12,6 +11,7 @@ import { RECENT_SEARCHES } from '../config'
 import { getLocalStorage, setLocalStorage } from '@/shared/utils/storage'
 import usePreviousPath from '@/shared/hooks/use-previous-path'
 import SearchList from '../components/search-list'
+import NoResults from './no-results'
 
 // 퀴즈노트 탭 내 검색창 화면
 const SearchInDocument = () => {
@@ -109,12 +109,7 @@ const SearchInDocument = () => {
         {!isSearchFocused &&
           // 검색 결과 X
           (!data || searchResults.length === 0 ? (
-            <div className="flex-center h-[calc(100dvh-56px)] flex-col">
-              <Text typography="subtitle1-bold">검색결과가 없습니다</Text>
-              <Text typography="text1-medium" className="text-text-sub">
-                다른 키워드를 입력해보세요
-              </Text>
-            </div>
+            <NoResults className="h-[calc(100dvh-56px)]" />
           ) : (
             // 검색 결과 O : 검색 결과 리스트
             data &&
