@@ -258,6 +258,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v2/documents/{document_id}/add-quizzes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 문서에서 추가 퀴즈 생성 */
+        post: operations["createQuizzes"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v2/documents/search": {
         parameters: {
             query?: never;
@@ -716,7 +733,7 @@ export interface paths {
             cookie?: never;
         };
         /** quiz_set_id와 quiz-set-type으로 퀴즈 가져오기 */
-        get: operations["getQuizSetByCollection"];
+        get: operations["getQuizSet"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1334,8 +1351,7 @@ export interface components {
             createdAt?: string;
         };
         CreateQuizzesByDocumentRequest: {
-            /** @enum {string} */
-            quizType?: "MIX_UP" | "MULTIPLE_CHOICE";
+            quizType?: string;
             /** Format: int32 */
             quizCount?: number;
         };
@@ -1398,6 +1414,8 @@ export interface components {
             documentId?: number;
             documentName?: string;
             content?: string;
+            /** @enum {string} */
+            documentType?: "FILE" | "TEXT" | "NOTION";
             directory?: components["schemas"]["IntegratedSearchDirectoryDto"];
         };
         IntegratedSearchQuizDto: {
@@ -1436,6 +1454,12 @@ export interface components {
             /** Format: int64 */
             id?: number;
         };
+        CreateQuizzesRequest: {
+            /** Format: int32 */
+            star?: number;
+            /** @enum {string} */
+            quizType?: "MIX_UP" | "MULTIPLE_CHOICE";
+        };
         SearchDocumentDirectoryDto: {
             /** Format: int64 */
             id?: number;
@@ -1446,6 +1470,8 @@ export interface components {
             documentId?: number;
             documentName?: string;
             content?: string;
+            /** @enum {string} */
+            documentType?: "FILE" | "TEXT" | "NOTION";
             directory?: components["schemas"]["SearchDocumentDirectoryDto"];
         };
         SearchDocumentQuizDto: {
@@ -1653,7 +1679,6 @@ export interface components {
         };
         GetQuizSetResponse: {
             quizzes?: components["schemas"]["GetQuizSetQuizDto"][];
-            collectionName?: string;
         };
         GetQuizSetTodayResponse: {
             quizSetId?: string;
@@ -1681,10 +1706,10 @@ export interface components {
             parent?: components["schemas"]["ApplicationContext"];
             id?: string;
             displayName?: string;
-            applicationName?: string;
+            autowireCapableBeanFactory?: components["schemas"]["AutowireCapableBeanFactory"];
             /** Format: int64 */
             startupDate?: number;
-            autowireCapableBeanFactory?: components["schemas"]["AutowireCapableBeanFactory"];
+            applicationName?: string;
             environment?: components["schemas"]["Environment"];
             /** Format: int32 */
             beanDefinitionCount?: number;
@@ -2603,6 +2628,30 @@ export interface operations {
             };
         };
     };
+    createQuizzes: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                document_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["CreateQuizzesRequest"];
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
     searchDocumentByKeyword: {
         parameters: {
             query?: never;
@@ -3403,10 +3452,9 @@ export interface operations {
             };
         };
     };
-    getQuizSetByCollection: {
+    getQuizSet: {
         parameters: {
             query: {
-                "collection-id"?: number;
                 "quiz-set-type": "TODAY_QUIZ_SET" | "DOCUMENT_QUIZ_SET" | "COLLECTION_QUIZ_SET" | "FIRST_QUIZ_SET";
             };
             header?: never;

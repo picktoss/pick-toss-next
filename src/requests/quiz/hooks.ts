@@ -2,6 +2,7 @@
 
 import { useMutation, useQuery } from '@tanstack/react-query'
 import {
+  collectionQuizzesInfo,
   createQuizSetForCheck,
   createReplayDocumentQuizSet,
   fetchDirectoryQuizzes,
@@ -58,5 +59,11 @@ export const useUpdateWrongQuizResult = () => {
       await queryClient.invalidateQueries(queries.quiz.bomb())
       window.location.reload()
     },
+  })
+}
+
+export const useCollectionQuizzesInfo = () => {
+  return useMutation({
+    mutationFn: collectionQuizzesInfo,
   })
 }

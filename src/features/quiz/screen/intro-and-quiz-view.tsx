@@ -5,15 +5,15 @@ import QuizView from './quiz-view'
 import QuizIntro from './intro'
 
 interface Props {
-  quizType: 'today' | 'document' | 'collection' | 'create'
-  quizzes: QuizWithMetadata[]
+  quizSetType: Quiz.Set.Type
+  quizzes: Quiz.Item[]
   createdAt: string
   documentInfo?: { name: string; directoryEmoji: string }
   collectionInfo?: { name: string; emoji: string }
 }
 
 const IntroAndQuizView = ({
-  quizType,
+  quizSetType,
   quizzes,
   createdAt,
   documentInfo,
@@ -32,7 +32,7 @@ const IntroAndQuizView = ({
   if (!finishedIntro) {
     return (
       <QuizIntro
-        quizType={quizType === 'create' ? 'document' : quizType}
+        quizSetType={quizSetType === 'FIRST_QUIZ_SET' ? 'DOCUMENT_QUIZ_SET' : quizSetType}
         createdAt={createdAt}
         documentInfo={documentInfo}
         collectionInfo={collectionInfo}
@@ -41,7 +41,7 @@ const IntroAndQuizView = ({
     )
   }
 
-  return <QuizView quizzes={quizzes} isFirst={quizType === 'create'} />
+  return <QuizView quizzes={quizzes} isFirst={quizSetType === 'FIRST_QUIZ_SET'} />
 }
 
 export default IntroAndQuizView

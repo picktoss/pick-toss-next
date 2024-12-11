@@ -7,7 +7,7 @@ import CollectionQuizIntro from './components/collection-quiz-intro'
 import { formatDateKorean } from '@/shared/utils/date'
 
 interface Props {
-  quizType: 'today' | 'document' | 'collection' | 'create'
+  quizSetType: Quiz.Set.Type
   createdAt: string
   documentInfo?: { name: string; directoryEmoji: string }
   collectionInfo?: { name: string; emoji: string }
@@ -15,7 +15,7 @@ interface Props {
 }
 
 const QuizIntro = ({
-  quizType,
+  quizSetType,
   createdAt,
   documentInfo,
   collectionInfo,
@@ -25,13 +25,13 @@ const QuizIntro = ({
 
   return (
     <SwitchCase
-      value={quizType}
+      value={quizSetType}
       caseBy={{
-        today: (
+        TODAY_QUIZ_SET: (
           <TodayQuizIntro createdAt={createDateText} onAnimationComplete={onAnimationComplete} />
         ),
 
-        document: (
+        DOCUMENT_QUIZ_SET: (
           <DocumentQuizIntro
             createdAt={createDateText}
             documentName={documentInfo?.name ?? ''}
@@ -39,7 +39,7 @@ const QuizIntro = ({
             onAnimationComplete={onAnimationComplete}
           />
         ),
-        collection: (
+        COLLECTION_QUIZ_SET: (
           <CollectionQuizIntro
             createdAt={createDateText}
             collectionName={collectionInfo?.name ?? ''}
