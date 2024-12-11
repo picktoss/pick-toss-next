@@ -1,6 +1,6 @@
 import { Button } from '@/shared/components/ui/button'
 import CollectionSearchList from '../components/collection-search-list'
-import SearchList from '../components/search-list'
+import DocumentQuizSearchList from '../components/document-quiz-search-list'
 import Icon from '@/shared/components/custom/icon'
 import Link from 'next/link'
 
@@ -23,7 +23,7 @@ const AllSearchResults = ({
     <div className="flex h-[calc(100dvh-56px-50px)] flex-col gap-[20px] overflow-y-auto text-text1-medium">
       {docsQuizLength > 0 && (
         <div className="flex flex-col">
-          <SearchList
+          <DocumentQuizSearchList
             length={docsQuizLength}
             searchResults={previewDocsQuizResults}
             keyword={keyword}

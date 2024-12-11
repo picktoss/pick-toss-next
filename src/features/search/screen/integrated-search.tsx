@@ -1,7 +1,7 @@
 'use client'
 
 import { ChangeEvent, useEffect, useRef, useState } from 'react'
-import SearchList from '../components/search-list'
+import DocumentQuizSearchList from '../components/document-quiz-search-list'
 import RecentSearches from '../components/recent-searches'
 import HeaderInDocument from '../components/header-in-document'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -150,7 +150,7 @@ const IntegratedSearch = () => {
                       'quiz-note':
                         DocsQuizResultsLength > 0 ? (
                           <div className="h-[calc(100dvh-56px-50px)] overflow-y-auto text-text1-medium">
-                            <SearchList
+                            <DocumentQuizSearchList
                               length={DocsQuizResultsLength}
                               searchResults={searchResultsInQuizNote}
                               keyword={initialKeyword}

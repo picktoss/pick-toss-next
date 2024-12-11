@@ -8,7 +8,7 @@ interface Props {
   keyword: string
 }
 
-const SearchList = ({ length, searchResults, keyword }: Props) => {
+const DocumentQuizSearchList = ({ length, searchResults, keyword }: Props) => {
   return (
     <div className="flex flex-col p-[16px]">
       <Text>
@@ -44,4 +44,4 @@ const SearchList = ({ length, searchResults, keyword }: Props) => {
   )
 }
 
-export default SearchList
+export default DocumentQuizSearchList

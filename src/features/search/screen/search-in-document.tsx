@@ -10,7 +10,7 @@ import Loading from '@/shared/components/custom/loading'
 import { RECENT_SEARCHES } from '../config'
 import { getLocalStorage, setLocalStorage } from '@/shared/utils/storage'
 import usePreviousPath from '@/shared/hooks/use-previous-path'
-import SearchList from '../components/search-list'
+import DocumentQuizSearchList from '../components/document-quiz-search-list'
 import NoResults from './no-results'
 
 // 퀴즈노트 탭 내 검색창 화면
@@ -115,7 +115,7 @@ const SearchInDocument = () => {
             data &&
             searchResults.length > 0 && (
               <div className="h-[calc(100dvh-56px)] overflow-y-auto text-text1-medium">
-                <SearchList
+                <DocumentQuizSearchList
                   length={searchResults.length}
                   searchResults={searchResults}
                   keyword={initialKeyword}
