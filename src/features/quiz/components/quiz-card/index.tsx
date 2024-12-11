@@ -6,7 +6,7 @@ import { cn } from '@/shared/lib/utils'
 import React, { useState } from 'react'
 
 interface Props {
-  quiz: Quiz.Item
+  quiz: Quiz.Item | Omit<Quiz.Item, 'document' | 'directory'>
   header: React.ReactNode
   answerMode?: boolean
   showExplanation?: boolean
