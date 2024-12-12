@@ -6,7 +6,7 @@ import DocumentTypeIcon from '@/features/document/components/document-type-icon'
 import Link from 'next/link'
 
 interface Props {
-  documentId: number | undefined // api 수정되면 undefined 제거
+  documentId: number | null
   createType: Document.ItemInList['documentType']
   documentTitle: React.ReactNode
   matchingSentence: React.ReactNode
@@ -24,9 +24,16 @@ const SearchItem = ({
   relativeDirectory,
   lastItem,
 }: Props) => {
+  const hrefString =
+    documentId !== null
+      ? resultType === 'quiz'
+        ? `/document/${documentId}?tab=quiz`
+        : `/document/${documentId}`
+      : '#'
+
   return (
     <Link
-      href={documentId ? `/document/${documentId}` : '#'}
+      href={hrefString}
       className={cn(
         'border-b border-border-divider py-[24px] flex flex-col',
         lastItem && 'border-none'

@@ -15,7 +15,7 @@ interface Props {
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
 }
 
-const HeaderInDocument = ({
+const InputWithCancelButton = ({
   inputValue,
   onChangeInputValue,
   searchInputRef,
@@ -68,4 +68,4 @@ const HeaderInDocument = ({
   )
 }
 
-export default HeaderInDocument
+export default InputWithCancelButton

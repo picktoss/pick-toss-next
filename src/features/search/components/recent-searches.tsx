@@ -2,9 +2,8 @@
 
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
-import { getLocalStorage, removeLocalStorage, setLocalStorage } from '@/shared/utils/storage'
-import { RefObject, useEffect, useState } from 'react'
-import { RECENT_SEARCHES } from '../config'
+import { RefObject } from 'react'
+import { useRecentSearches } from '../hooks/use-recent-searches'
 
 interface Props {
   containerRef: RefObject<HTMLDivElement>
@@ -12,25 +11,7 @@ interface Props {
 }
 
 const RecentSearches = ({ containerRef, onUpdateKeyword }: Props) => {
-  const [recentSearches, setRecentSearches] = useState<string[]>([])
-
-  useEffect(() => {
-    const storageSearches = getLocalStorage<string[]>(RECENT_SEARCHES) ?? []
-    setRecentSearches(storageSearches)
-  }, [])
-
-  /** 로컬스토리지에서 특정 검색어 삭제 */
-  const deleteRecentSearch = (keyword: string) => {
-    const newRecentSearches = recentSearches.filter((search) => search !== keyword)
-    setLocalStorage(RECENT_SEARCHES, newRecentSearches)
-    setRecentSearches(newRecentSearches)
-  }
-
-  /** 전체 검색어 삭제 */
-  const deleteAllRecentSearches = () => {
-    removeLocalStorage(RECENT_SEARCHES)
-    setRecentSearches([])
-  }
+  const { recentSearches, deleteRecentSearch, deleteAllRecentSearches } = useRecentSearches()
 
   return (
     <div

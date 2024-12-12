@@ -1,5 +1,14 @@
 export const RECENT_SEARCHES = 'recentSearches'
 
+export const SEARCH_TABS = {
+  ALL: 'all',
+  QUIZ_NOTE: 'quiz-note',
+  COLLECTION: 'collection',
+} as const
+
+// 통합검색 탭 타입
+export type SearchTab = 'all' | 'quiz-note' | 'collection'
+
 export const mockCollectionList = [
   {
     id: 0,

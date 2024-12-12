@@ -19,15 +19,17 @@ const DocumentQuizSearchList = ({ length, searchResults, keyword }: Props) => {
         {searchResults.map((searchItem, idx) => (
           <SearchItem
             key={idx}
-            documentId={searchItem.documentId}
+            documentId={searchItem.documentId || null}
             createType={searchItem.documentType as Document.Type}
             documentTitle={highlightAndTrimText(searchItem.documentName ?? '', keyword ?? '')}
             matchingSentence={
               searchItem.content ? (
+                // 문서 결과
                 <MarkdownProcessor markdownText={searchItem.content} keyword={keyword ?? ''} />
               ) : (
+                // 퀴즈 결과
                 highlightAndTrimText(
-                  searchItem.question ?? 'Q...' + searchItem.answer ?? 'A...',
+                  `Q.${searchItem.question ?? '...'} A.${searchItem.answer ?? '...'}`,
                   keyword ?? ''
                 )
               )

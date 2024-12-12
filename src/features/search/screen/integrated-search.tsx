@@ -1,37 +1,39 @@
 'use client'
 
-import { ChangeEvent, useEffect, useRef, useState } from 'react'
+import { ChangeEvent } from 'react'
 import DocumentQuizSearchList from '../components/document-quiz-search-list'
-import RecentSearches from '../components/recent-searches'
-import HeaderInDocument from '../components/header-in-document'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import { useQuery } from '@tanstack/react-query'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import Loading from '@/shared/components/custom/loading'
-import { RECENT_SEARCHES } from '../config'
-import { getLocalStorage, setLocalStorage } from '@/shared/utils/storage'
 import usePreviousPath from '@/shared/hooks/use-previous-path'
 import SearchTabController from '../components/search-tab-controller'
-import { SwitchCase } from '@/shared/components/custom/react/switch-case'
 import NoResults from './no-results'
 import AllSearchResults from './all-search-results'
 import CollectionSearchList from '../components/collection-search-list'
+import { useSearch } from '../hooks/use-search'
+import SearchHeader from '../components/search-header'
+import { SEARCH_TABS } from '../config'
 
 export type SearchTab = 'all' | 'quiz-note' | 'collection'
 
 const IntegratedSearch = () => {
-  usePreviousPath()
-
-  const router = useRouter()
   const searchParams = useSearchParams()
-  const initialKeyword = searchParams.get('keyword') || ''
-  const tab = searchParams.get('tab') || ('all' as SearchTab)
+  const tab = (searchParams.get('tab') || 'all') as SearchTab
 
-  const [keyword, setKeyword] = useState(initialKeyword)
-  const [isSearchFocused, setIsSearchFocused] = useState(false)
-
-  const searchInputRef = useRef<HTMLInputElement>(null)
-  const searchContainerRef = useRef<HTMLDivElement>(null)
+  usePreviousPath()
+  const {
+    initialKeyword,
+    keyword,
+    setKeyword,
+    isSearchFocused,
+    setIsSearchFocused,
+    searchInputRef,
+    searchContainerRef,
+    handleDeleteKeyword,
+    handleSubmit,
+    handleUpdateKeyword,
+  } = useSearch()
 
   const { data, isPending } = useQuery(queries.search.integrated({ keyword: initialKeyword }))
   const searchResultsInQuizNote = [...(data?.documents ?? []), ...(data?.quizzes ?? [])] as Partial<
@@ -46,139 +48,85 @@ const IntegratedSearch = () => {
 
   const DocsQuizResultsLength = searchResultsInQuizNote.length
   const CollectionResultsLength = searchResultsInCollection.length
+  const isEmptyList = searchResultsInQuizNote.length === 0 && searchResultsInCollection.length === 0
 
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (
-        !searchInputRef.current?.contains(e.target as Node) &&
-        !searchContainerRef.current?.contains(e.target as Node)
-      ) {
-        setIsSearchFocused(false)
-      }
-    }
-
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [])
-
-  // 검색 후 반영
-  useEffect(() => {
-    if (!initialKeyword) return
-
-    const storageSearches = getLocalStorage<string[]>(RECENT_SEARCHES) ?? []
-    const newSearches = [
-      initialKeyword,
-      ...storageSearches.filter((search) => search !== initialKeyword),
-    ].slice(0, 5)
-    setLocalStorage(RECENT_SEARCHES, newSearches)
-  }, [initialKeyword])
-
-  /** 최근 검색어 리스트에서 특정 검색어 클릭 시 검색창에 키워드가 반영되도록하는 함수 */
-  const handleUpdateKeyword = (selectedKeyword: string) => {
-    setKeyword(selectedKeyword)
-    searchInputRef.current?.focus()
+  const onChangeKeyword = (e: ChangeEvent<HTMLInputElement>) => {
+    setKeyword(e.target.value)
   }
 
-  /** 검색창에 입력되어있는 키워드를 삭제하는 함수 */
-  const handleDeleteKeyword = () => {
-    setKeyword('')
-    router.replace('/search' + `?tab=${tab}`)
+  const onDeleteKeyword = () => {
+    handleDeleteKeyword('/search' + `?tab=${tab}`)
   }
 
-  // 검색
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    handleSubmit(e, `?tab=${tab}` + `&keyword=${keyword}`)
+  }
 
-    if (!keyword.trim()) {
-      alert('검색어를 입력해주세요.')
-      return
-    }
-
-    router.replace(`?tab=${tab}` + `&keyword=${keyword}`)
-    searchInputRef.current?.blur()
-    setIsSearchFocused(false)
+  const tabContentMap = {
+    [SEARCH_TABS.ALL]: () => (
+      <AllSearchResults
+        docsQuizLength={DocsQuizResultsLength}
+        collectionLength={CollectionResultsLength}
+        previewDocsQuizResults={searchResultsInQuizNote.slice(0, 3)}
+        previewCollectionResults={searchResultsInCollection.slice(0, 4)}
+        keyword={keyword}
+      />
+    ),
+    [SEARCH_TABS.QUIZ_NOTE]: () =>
+      DocsQuizResultsLength > 0 ? (
+        <div className="h-[calc(100dvh-56px-50px)] overflow-y-auto text-text1-medium">
+          <DocumentQuizSearchList
+            length={DocsQuizResultsLength}
+            searchResults={searchResultsInQuizNote}
+            keyword={keyword}
+          />
+        </div>
+      ) : (
+        <NoResults className="h-[calc(100dvh-56px-50px)]" />
+      ),
+    [SEARCH_TABS.COLLECTION]: () =>
+      CollectionResultsLength > 0 ? (
+        <div className="h-[calc(100dvh-56px-50px)] overflow-y-auto text-text1-medium">
+          <CollectionSearchList
+            length={CollectionResultsLength}
+            searchResults={searchResultsInCollection}
+          />
+        </div>
+      ) : (
+        <NoResults className="h-[calc(100dvh-56px-50px)]" />
+      ),
   }
 
   return (
     <div>
-      <HeaderInDocument
-        inputValue={keyword}
-        onChangeInputValue={(e: ChangeEvent<HTMLInputElement>) => setKeyword(e.target.value)}
-        onDeleteKeyword={handleDeleteKeyword}
-        onSubmit={handleSubmit}
+      <SearchHeader
+        keyword={keyword}
+        onChangeKeyword={onChangeKeyword}
+        handleDeleteKeyword={onDeleteKeyword}
+        handleSubmit={onSubmit}
+        handleUpdateKeyword={handleUpdateKeyword}
+        searchContainerRef={searchContainerRef}
         searchInputRef={searchInputRef}
         isSearchFocused={isSearchFocused}
         setIsSearchFocused={setIsSearchFocused}
       />
 
-      <main>
-        {/* input 클릭 시 나타날 최근 검색어 */}
-        {isSearchFocused && (
-          <RecentSearches containerRef={searchContainerRef} onUpdateKeyword={handleUpdateKeyword} />
-        )}
+      {isPending && <Loading center />}
 
-        {isPending && <Loading center />}
+      {!isSearchFocused && (
+        <>
+          <SearchTabController />
 
-        {!isSearchFocused && (
-          <>
-            <SearchTabController />
-
-            {
-              // 검색 결과 X
-              !data ||
-              (searchResultsInQuizNote.length === 0 && searchResultsInCollection.length === 0) ? (
-                <NoResults className="h-[calc(100dvh-56px-50px)]" />
-              ) : (
-                data && (
-                  // 검색 결과 O
-                  // tab에 따라 다른 view 렌더링
-                  <SwitchCase
-                    value={tab}
-                    caseBy={{
-                      all: (
-                        <AllSearchResults
-                          docsQuizLength={DocsQuizResultsLength}
-                          collectionLength={CollectionResultsLength}
-                          previewDocsQuizResults={searchResultsInQuizNote.slice(0, 3)}
-                          previewCollectionResults={searchResultsInCollection.slice(0, 4)}
-                          keyword={initialKeyword}
-                        />
-                      ),
-
-                      'quiz-note':
-                        DocsQuizResultsLength > 0 ? (
-                          <div className="h-[calc(100dvh-56px-50px)] overflow-y-auto text-text1-medium">
-                            <DocumentQuizSearchList
-                              length={DocsQuizResultsLength}
-                              searchResults={searchResultsInQuizNote}
-                              keyword={initialKeyword}
-                            />
-                          </div>
-                        ) : (
-                          <NoResults className="h-[calc(100dvh-56px-50px)]" />
-                        ),
-
-                      collection:
-                        CollectionResultsLength > 0 ? (
-                          <div className="h-[calc(100dvh-56px-50px)] overflow-y-auto text-text1-medium">
-                            <CollectionSearchList
-                              length={CollectionResultsLength}
-                              searchResults={searchResultsInCollection}
-                            />
-                          </div>
-                        ) : (
-                          <NoResults className="h-[calc(100dvh-56px-50px)]" />
-                        ),
-                    }}
-                  />
-                )
-              )
-            }
-          </>
-        )}
-      </main>
+          {!data || isEmptyList ? (
+            // 검색 결과 X
+            <NoResults className="h-[calc(100dvh-56px-50px)]" />
+          ) : (
+            // 검색 결과 O
+            // tab에 따라 다른 view 렌더링
+            data && tabContentMap[tab]()
+          )}
+        </>
+      )}
     </div>
   )
 }
