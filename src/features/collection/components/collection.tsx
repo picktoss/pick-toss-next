@@ -1,3 +1,4 @@
+import { CATEGORIES } from '@/features/category/config'
 import { useBookmarkMutation } from '@/requests/collection/hooks'
 import CategoryTag from '@/shared/components/custom/category-tag'
 import Icon from '@/shared/components/custom/icon'
@@ -15,6 +16,7 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
   isBookMarked?: boolean
   isOwner?: boolean
   bookMarkCount: number
+  creatorName: string
 }
 
 const Collection = ({
@@ -28,8 +30,12 @@ const Collection = ({
   isOwner = false,
   bookMarkCount,
   className,
+  creatorName,
 }: Props) => {
   const { mutate: bookmarkMutate } = useBookmarkMutation()
+
+  const categoryLabel =
+    CATEGORIES.find((categoryItem) => categoryItem.code === category)?.name ?? ''
 
   return (
     <div className={cn('min-w-[166px]', className)}>
@@ -77,15 +83,22 @@ const Collection = ({
           <Text typography="subtitle2-bold">{title}</Text>
         </div>
         <h3 className="mt-[8px]">
-          <CategoryTag title={category} />
+          <CategoryTag title={categoryLabel} />
         </h3>
         <div className="mt-[16px] flex items-center gap-[8px]">
           <Text typography="text2-medium" className="text-text-secondary">
             {problemCount} 문제
           </Text>
-          <Text typography="caption-medium" className="text-text-caption">
-            {lastUpdated} 업데이트
-          </Text>
+          {isOwner ? (
+            <Text typography="caption-medium" className="text-text-caption">
+              {lastUpdated} 업데이트
+            </Text>
+          ) : (
+            <Text typography="caption-medium" className="text-text-caption">
+              {'@'}
+              {creatorName}
+            </Text>
+          )}
         </div>
       </div>
     </div>

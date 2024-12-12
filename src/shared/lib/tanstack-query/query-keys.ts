@@ -24,6 +24,12 @@ export const queries = createQueryKeyStore({
       queryFn: () => REQUEST.document.getDocumentDetail(documentId),
       enabled: !!documentId,
     }),
+    search: (requestBody: Document.Request.SearchDocuments) => ({
+      queryKey: [requestBody],
+      queryFn: () => REQUEST.document.searchDocument(requestBody),
+      enabled: requestBody.keyword.trim() !== '',
+      initialData: { documents: [], quizzes: [] },
+    }),
   },
 
   quiz: {
@@ -48,6 +54,15 @@ export const queries = createQueryKeyStore({
       queryKey: [collectionId],
       queryFn: () => REQUEST.collection.getCollectionInfo({ collectionId }),
       enabled: !!collectionId,
+    }),
+  },
+
+  search: {
+    integrated: (requestBody: { keyword: string }) => ({
+      queryKey: [requestBody],
+      queryFn: () => REQUEST.search.getIntegratedSearches(requestBody),
+      enabled: requestBody.keyword.trim() !== '',
+      initialData: { documents: [], quizzes: [], collections: [] },
     }),
   },
 })

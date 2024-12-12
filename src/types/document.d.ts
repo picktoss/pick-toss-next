@@ -12,9 +12,15 @@ declare global {
     type Sort = 'CREATED_AT' | 'UPDATED_AT'
 
     type Status = DeepRequired<components['schemas']['GetAllDocumentsDocumentDto']['status']>
-    type Type = DeepRequired<components['schemas']['GetAllDocumentsDocumentDto']['documentType']>
+    type Type = Exclude<
+      DeepRequired<components['schemas']['GetAllDocumentsDocumentDto']['documentType']>,
+      undefined
+    >
 
     type SearchedDocument = DeepRequired<components['schemas']['IntegratedSearchDocumentDto']>
+
+    type SearchedDocument = Document.Response.SearchDocuments['documents'][number]
+    type SearchedQuiz = Document.Response.SearchDocuments['quizzes'][number]
 
     declare namespace Request {
       /** PATCH /api/v2/documents/{document_id}/update-name

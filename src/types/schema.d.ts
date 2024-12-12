@@ -893,6 +893,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v2/members/reward": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 초대 링크 보상 확인? */
+        get: operations["getInviteLinkMember"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v2/members/info": {
         parameters: {
             query?: never;
@@ -1423,7 +1440,11 @@ export interface components {
             id?: number;
             question?: string;
             answer?: string;
+            /** Format: int64 */
+            documentId?: number;
             documentName?: string;
+            /** @enum {string} */
+            documentType?: "FILE" | "TEXT" | "NOTION";
             directoryName?: string;
         };
         IntegratedSearchResponse: {
@@ -1479,7 +1500,11 @@ export interface components {
             id?: number;
             question?: string;
             answer?: string;
+            /** Format: int64 */
+            documentId?: number;
             documentName?: string;
+            /** @enum {string} */
+            documentType?: "FILE" | "TEXT" | "NOTION";
             directoryName?: string;
         };
         SearchDocumentResponse: {
@@ -1707,9 +1732,9 @@ export interface components {
             id?: string;
             displayName?: string;
             autowireCapableBeanFactory?: components["schemas"]["AutowireCapableBeanFactory"];
+            applicationName?: string;
             /** Format: int64 */
             startupDate?: number;
-            applicationName?: string;
             environment?: components["schemas"]["Environment"];
             /** Format: int32 */
             beanDefinitionCount?: number;
@@ -1834,8 +1859,8 @@ export interface components {
             is3xxRedirection?: boolean;
         };
         JspConfigDescriptor: {
-            taglibs?: components["schemas"]["TaglibDescriptor"][];
             jspPropertyGroups?: components["schemas"]["JspPropertyGroupDescriptor"][];
+            taglibs?: components["schemas"]["TaglibDescriptor"][];
         };
         JspPropertyGroupDescriptor: {
             defaultContentType?: string;
@@ -1844,11 +1869,11 @@ export interface components {
             errorOnELNotFound?: string;
             pageEncoding?: string;
             scriptingInvalid?: string;
-            isXml?: string;
             includePreludes?: string[];
             includeCodas?: string[];
             trimDirectiveWhitespaces?: string;
             errorOnUndeclaredNamespace?: string;
+            isXml?: string;
             buffer?: string;
             urlPatterns?: string[];
         };
@@ -1875,13 +1900,13 @@ export interface components {
             hosts?: string[];
             redirectView?: boolean;
             propagateQueryProperties?: boolean;
+            attributesCSV?: string;
             attributesMap?: {
                 [key: string]: Record<string, never>;
             };
             attributes?: {
                 [key: string]: string;
             };
-            attributesCSV?: string;
         };
         ServletContext: {
             sessionCookieConfig?: components["schemas"]["SessionCookieConfig"];
@@ -1916,7 +1941,6 @@ export interface components {
             servletRegistrations?: {
                 [key: string]: components["schemas"]["ServletRegistration"];
             };
-            defaultSessionTrackingModes?: ("COOKIE" | "URL" | "SSL")[];
             /** Format: int32 */
             effectiveMajorVersion?: number;
             /** Format: int32 */
@@ -1926,6 +1950,7 @@ export interface components {
             filterRegistrations?: {
                 [key: string]: components["schemas"]["FilterRegistration"];
             };
+            defaultSessionTrackingModes?: ("COOKIE" | "URL" | "SSL")[];
             effectiveSessionTrackingModes?: ("COOKIE" | "URL" | "SSL")[];
             jspConfigDescriptor?: components["schemas"]["JspConfigDescriptor"];
             requestCharacterEncoding?: string;
@@ -3659,6 +3684,24 @@ export interface operations {
                 content: {
                     "application/json;charset=UTF-8": string;
                 };
+            };
+        };
+    };
+    getInviteLinkMember: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };

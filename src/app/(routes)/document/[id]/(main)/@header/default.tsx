@@ -36,7 +36,7 @@ const Header = () => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIsTitleHidden(!entry.isIntersecting)
+        setIsTitleHidden(!entry?.isIntersecting)
       },
       {
         root: null,

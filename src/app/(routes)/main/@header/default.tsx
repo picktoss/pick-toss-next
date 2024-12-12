@@ -17,9 +17,9 @@ const Header = () => {
           <Icon name="star" className="mr-[4px] size-[20px]" />
           {'130'}
         </Text>
-        <button>
+        <Link href={'/search'}>
           <Icon name="search" className="size-[24px]" />
-        </button>
+        </Link>
         <Link href={'/notification'}>
           <Icon name="notification" className="size-[24px]" />
         </Link>

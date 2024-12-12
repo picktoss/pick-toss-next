@@ -29,9 +29,9 @@ const Header = () => {
     }
 
     const blob = new Blob([content], { type: 'text/markdown' })
-    const file = new File([blob], `${title}.md`, { type: 'text/markdown' })
+    const file = new File([blob], `${title}.md`, { type: 'text/markdown' }) as unknown as string
 
-    const updatePayload = { documentId: id, requestBody: { name: title, file } }
+    const updatePayload = { documentId: id, requestBody: { name: title, file: file } }
 
     updateDocumentMutate(updatePayload, {
       onSuccess: () => {
