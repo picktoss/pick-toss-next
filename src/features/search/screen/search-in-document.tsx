@@ -1,12 +1,8 @@
 'use client'
 
 import { ChangeEvent, useEffect, useRef, useState } from 'react'
-import SearchList from '../components/search-list'
-import SearchItem from '../components/search-item'
 import RecentSearches from '../components/recent-searches'
 import HeaderInDocument from '../components/header-in-document'
-import { highlightAndTrimText, MarkdownProcessor } from '../utils'
-import Text from '@/shared/components/ui/text'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useQuery } from '@tanstack/react-query'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
@@ -14,6 +10,8 @@ import Loading from '@/shared/components/custom/loading'
 import { RECENT_SEARCHES } from '../config'
 import { getLocalStorage, setLocalStorage } from '@/shared/utils/storage'
 import usePreviousPath from '@/shared/hooks/use-previous-path'
+import DocumentQuizSearchList from '../components/document-quiz-search-list'
+import NoResults from './no-results'
 
 // 퀴즈노트 탭 내 검색창 화면
 const SearchInDocument = () => {
@@ -111,49 +109,18 @@ const SearchInDocument = () => {
         {!isSearchFocused &&
           // 검색 결과 X
           (!data || searchResults.length === 0 ? (
-            <div className="flex-center h-[calc(100dvh-56px)] flex-col">
-              <Text typography="subtitle1-bold">검색결과가 없습니다</Text>
-              <Text typography="text1-medium" className="text-text-sub">
-                다른 키워드를 입력해보세요
-              </Text>
-            </div>
+            <NoResults className="h-[calc(100dvh-56px)]" />
           ) : (
             // 검색 결과 O : 검색 결과 리스트
             data &&
             searchResults.length > 0 && (
-              <SearchList length={searchResults.length}>
-                {searchResults.map((searchItem, idx) => (
-                  <SearchItem
-                    key={idx}
-                    documentId={searchItem.documentId}
-                    createType={searchItem.documentType as Document.Type}
-                    documentTitle={highlightAndTrimText(
-                      searchItem.documentName ?? '',
-                      initialKeyword ?? ''
-                    )}
-                    matchingSentence={
-                      searchItem.content ? (
-                        <MarkdownProcessor
-                          markdownText={searchItem.content}
-                          keyword={initialKeyword ?? ''}
-                        />
-                      ) : (
-                        highlightAndTrimText(
-                          searchItem.question ?? 'Q...' + searchItem.answer ?? 'A...',
-                          initialKeyword ?? ''
-                        )
-                      )
-                    }
-                    resultType={searchItem.question ? 'quiz' : 'document'}
-                    relativeDirectory={
-                      searchItem.directory
-                        ? searchItem.directory.name
-                        : searchItem.directoryName ?? ''
-                    }
-                    lastItem={idx === searchResults.length - 1}
-                  />
-                ))}
-              </SearchList>
+              <div className="h-[calc(100dvh-56px)] overflow-y-auto text-text1-medium">
+                <DocumentQuizSearchList
+                  length={searchResults.length}
+                  searchResults={searchResults}
+                  keyword={initialKeyword}
+                />
+              </div>
             )
           ))}
       </main>

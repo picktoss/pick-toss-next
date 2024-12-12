@@ -5,6 +5,7 @@ import * as quiz from './quiz/client'
 import * as quizServer from './quiz/server'
 import * as collection from './collection/client'
 import * as user from './user/client'
+import * as search from './search/client'
 
 export const REQUEST = {
   directory,
@@ -14,4 +15,5 @@ export const REQUEST = {
   quizServer,
   collection,
   user,
+  search,
 }

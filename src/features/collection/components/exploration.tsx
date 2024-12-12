@@ -53,6 +53,7 @@ const Exploration = () => {
                 isOwner={user?.id === collection.member.creatorId}
                 isBookMarked={collection.bookmarked}
                 bookMarkCount={collection.bookmarkCount}
+                creatorName={collection.member.creatorName}
               />
             </Link>
           ))
