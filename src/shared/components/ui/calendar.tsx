@@ -29,11 +29,11 @@ function Calendar({
       onMonthChange={setMonth}
       showOutsideDays={showOutsideDays}
       disabled={{
-        // 현재 월 이후의 월들만 선택 가능
         after: today,
       }}
       className={cn('p-3', className)}
       classNames={{
+        root: 'flex-center',
         months: 'flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0',
         month: 'space-y-4',
         caption: 'w-full flex-center pt-1 relative',
