@@ -29,7 +29,6 @@ const QuizDetailPage = async ({ params, searchParams }: Props) => {
     collectionName,
     collectionEmoji,
   } = searchParams
-
   const quizSet = await getQuizSetById({
     quizSetId: params.id,
     quizSetType,

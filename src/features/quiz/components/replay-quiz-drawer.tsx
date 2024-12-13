@@ -48,7 +48,7 @@ const ReplayQuizDrawer = ({
           router.push(
             '/quiz/' +
               data.quizSetId +
-              '?quizType=document' +
+              '?quizSetType=DOCUMENT_QUIZ_SET' +
               '&' +
               'createdAt=' +
               data.createdAt +
@@ -140,7 +140,7 @@ const ReplayQuizDrawer = ({
               max={savedQuizCount} // 저장된 문제 수
               step={1}
               defaultValue={[savedQuizCount]} // 저장된 문제 수
-              onValueChange={(value) => setQuizCount(value[0])}
+              onValueChange={(value) => setQuizCount(value[0] || 0)}
             />
 
             <div className="mt-[10px] flex w-full items-center justify-between text-text2-medium text-text-sub">
