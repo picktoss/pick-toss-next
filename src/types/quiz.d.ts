@@ -6,6 +6,9 @@ type MakeOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>
 
 type BaseQuizItem = DeepRequired<components['schemas']['QuizDto']>
 type QuizItem = MakeOptional<BaseQuizItem, 'options'>
+type ReplayQuizType =
+  | Exclude<DeepRequired<components['schemas']['QuizDto']['quizType']>, undefined>
+  | 'RANDOM'
 
 type QuizType = Exclude<DeepRequired<components['schemas']['QuizDto']['quizType']>, undefined>
 

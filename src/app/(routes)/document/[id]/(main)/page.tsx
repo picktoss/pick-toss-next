@@ -4,6 +4,7 @@ import { QuizListProvider } from '@/features/document/contexts/quiz-list-context
 import DocumentContent from '@/features/document/screens/document-content'
 import Quiz from '@/features/document/screens/quiz'
 import { getDocumentDetail } from '@/requests/document/server'
+import { notFound } from 'next/navigation'
 
 interface Props {
   params: {
@@ -21,6 +22,10 @@ const DocumentDetailPage = async ({ params, searchParams }: Props) => {
 
   const data = await getDocumentDetail(Number(id))
 
+  if (!data) {
+    return notFound()
+  }
+
   return (
     <main className="min-h-screen">
       <QuizListProvider>
@@ -32,9 +37,9 @@ const DocumentDetailPage = async ({ params, searchParams }: Props) => {
 
       <DocumentFloatingButton
         documentId={Number(id)}
-        documentName={data?.documentName ?? ''}
-        directoryEmoji={data?.directory.emoji ?? ''}
-        savedQuizCount={data?.totalQuizCount ?? 0}
+        documentName={data.documentName}
+        directoryEmoji={data.directory.emoji}
+        savedQuizCount={data.totalQuizCount}
       />
     </main>
   )
