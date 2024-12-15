@@ -9,10 +9,10 @@ interface LayoutProps extends PropsWithChildren {
 
 const Layout: FunctionComponent<LayoutProps> = ({ children, header }) => {
   return (
-    <main>
+    <>
       {header}
       {children}
-    </main>
+    </>
   )
 }
 
