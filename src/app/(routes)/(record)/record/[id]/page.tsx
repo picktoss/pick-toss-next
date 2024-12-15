@@ -1,3 +1,6 @@
+import QuizCard from '@/features/quiz/components/quiz-card'
+import { quizzes } from '@/features/record/config'
+// import { getQuizDetailRecord } from '@/requests/quiz/server'
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
 import { msToElapsedTimeKorean } from '@/shared/utils/time'
@@ -16,10 +19,13 @@ interface Props {
 
 const RecordDetailPage = ({ params, searchParams }: Props) => {
   const date = params.id.split('_')[0]
-  const quizSetType = searchParams.type
+  // const quizSetId = params.id.split('_').filter((value) => value !== date).join('_')
+  // const quizSetType = searchParams.type
   const quizSetName = searchParams.name
   const quizCount = searchParams.quizCount
   const correctRate = Math.round((searchParams.score / searchParams.quizCount) * 100)
+
+  // const { totalElapsedTimeMs, quizzes } = await getQuizDetailRecord({quizSetId, quizSetType})
 
   const ms = 135086 // 임시 데이터
 
@@ -58,12 +64,40 @@ const RecordDetailPage = ({ params, searchParams }: Props) => {
         </div>
       </div>
 
-      <div className="h-fit min-h-[calc(100dvh-292px)] bg-[var(--color-gray-50)] px-[16px] py-[20px]">
-        {date}
-        {quizSetType}
-        {quizSetName}
-        {quizCount}
-        {correctRate}
+      <div className="flex-center h-fit flex-col gap-[12px] bg-[var(--color-gray-50)] px-[16px] py-[20px]">
+        {quizzes.map((quiz, index) => (
+          <QuizCard
+            key={index}
+            answerMode
+            userAnswer={quiz.choseAnswer}
+            header={
+              <div className="flex items-center justify-between pr-[6px] text-icon-tertiary">
+                {quiz.answer === quiz.choseAnswer ? (
+                  <Text typography="text1-bold" color="right">
+                    정답
+                  </Text>
+                ) : (
+                  <Text typography="text1-bold" color="critical">
+                    오답
+                  </Text>
+                )}
+
+                {quiz.quizSetType === 'COLLECTION_QUIZ_SET' ? (
+                  <Text typography="text2-medium" color="caption">
+                    {quiz.collectionName}
+                  </Text>
+                ) : (
+                  <Text typography="text2-medium" color="caption">
+                    {quiz.directoryName}
+                    {'>'}
+                    {quiz.documentName}
+                  </Text>
+                )}
+              </div>
+            }
+            quiz={quiz}
+          />
+        ))}
       </div>
     </main>
   )

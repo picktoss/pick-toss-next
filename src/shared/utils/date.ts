@@ -124,3 +124,13 @@ export function getCurrentTime() {
 
   return `${hours}:${minutes}`
 }
+
+// YYYY-MM-DD 형식으로 반환
+export const getFormattedDate = (date: Date) => {
+  const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
+    2,
+    '0'
+  )}-${String(date.getDate()).padStart(2, '0')}`
+
+  return formattedDate
+}
