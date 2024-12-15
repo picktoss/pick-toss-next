@@ -25,7 +25,7 @@ export const useQuizState = ({ quizCount, currentIndex }: UseQuizStateProps) => 
   }
 
   useEffect(() => {
-    const currentResult = quizResults[currentIndex]
+    const currentResult = quizResults[currentIndex] as Quiz.Result
 
     if (isQuizSolved(currentResult)) {
       setTimeout(() => setShowExplanation(true), UNTIL_EXPLANATION_DRAWER_OPEN)
