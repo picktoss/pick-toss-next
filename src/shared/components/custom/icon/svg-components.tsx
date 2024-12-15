@@ -2435,3 +2435,73 @@ export const StartPicktoss = ({ ...props }) => {
     </svg>
   )
 }
+
+export const RecordQuizCount = ({ ...props }) => {
+  return (
+    <svg
+      width="40"
+      height="40"
+      viewBox="0 0 40 40"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M26.8017 7C33.5346 7 38.9928 12.4581 38.9928 19.1911C38.9928 25.9241 33.5346 31.3822 26.8017 31.3822H19.5857L12.6446 35.7993C12.49 35.8976 12.2877 35.7866 12.2877 35.6034L12.2877 31.0343C6.95649 29.7319 3 24.9235 3 19.1911C3 12.4581 8.45814 7 15.1911 7H26.8017Z"
+        fill="#7A9EFF"
+      />
+      <circle cx="12.7715" cy="19.094" r="1.64458" fill="#F5F7F9" />
+      <circle cx="20.7051" cy="19.094" r="1.64458" fill="#F5F7F9" />
+      <circle cx="28.6387" cy="19.094" r="1.64458" fill="#F5F7F9" />
+    </svg>
+  )
+}
+
+export const RecordElapsedTime = ({ ...props }) => {
+  return (
+    <svg
+      width="40"
+      height="40"
+      viewBox="0 0 40 40"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <rect x="18" y="5.00195" width="4" height="4" rx="0.833333" fill="#FFAB40" />
+      <circle cx="20" cy="22.916" r="15" fill="#FFECD0" />
+      <circle cx="20" cy="22.916" r="13.9583" stroke="#FF9100" strokeWidth="2.08333" />
+      <path
+        d="M32.4123 9.11441C31.6312 8.33336 30.3649 8.33336 29.5838 9.11441L27.7071 10.9911L31.3153 14.5993L33.192 12.7226C33.973 11.9415 33.973 10.6752 33.192 9.89414L32.4123 9.11441Z"
+        fill="#FF9100"
+      />
+      <path
+        d="M20 12.916C18.3555 12.916 16.7364 13.3216 15.286 14.0968C13.8357 14.872 12.5989 15.993 11.6853 17.3603C10.7717 18.7277 10.2093 20.2993 10.0482 21.9358C9.88696 23.5724 10.1319 25.2235 10.7612 26.7428C11.3905 28.2622 12.3848 29.6029 13.6561 30.6461C14.9273 31.6894 16.4362 32.403 18.0491 32.7239C19.662 33.0447 21.3291 32.9628 22.9028 32.4854C24.4765 32.008 25.9082 31.1499 27.0711 29.9871L20 22.916V12.916Z"
+        fill="#FFD180"
+      />
+      <rect x="15.832" y="2.08398" width="8.33333" height="4.16667" rx="0.833333" fill="#FF9100" />
+    </svg>
+  )
+}
+
+export const RecordScore = ({ ...props }) => {
+  return (
+    <svg
+      width="40"
+      height="40"
+      viewBox="0 0 40 40"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <circle cx="20" cy="20.625" r="16.875" fill="#3ACC83" />
+      <path
+        d="M14 20.4465L18.8671 25.3134L26.8571 16.875"
+        stroke="white"
+        strokeWidth="2.81244"
+        strokeLinecap="square"
+      />
+    </svg>
+  )
+}
