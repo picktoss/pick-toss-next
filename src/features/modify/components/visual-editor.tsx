@@ -32,8 +32,10 @@ export default function VisualEditor({ prevContent }: VisualEditorProps) {
         manager={manager}
         autoRender="end"
         initialContent={prevContent}
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        onChange={({ helpers, state }) => setEditorMarkdownContent(helpers.getMarkdown(state))}
+        onChange={({ helpers, state }) =>
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+          setEditorMarkdownContent(helpers.getMarkdown && helpers.getMarkdown(state))
+        }
         placeholder="본문을 작성해보세요!"
         classNames={[
           css`

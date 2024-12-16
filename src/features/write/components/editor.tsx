@@ -25,8 +25,10 @@ export default function Editor({ initialContent, handleContentChange }: EditorPr
         manager={manager}
         autoRender="end"
         initialContent={initialContent}
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        onChange={({ helpers, state }) => handleContentChange(helpers.getMarkdown(state))}
+        onChange={({ helpers, state }) =>
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+          handleContentChange(helpers.getMarkdown && helpers.getMarkdown(state))
+        }
         placeholder="본문을 작성해보세요!"
         classNames={[
           css`

@@ -56,9 +56,9 @@ export function useCheckListIgnoreIds<T extends Item>(
       if (idx > -1) {
         const item = listRef.current[idx]
 
-        if (item.checked !== checked) {
+        if (item?.checked !== checked) {
           const arr = [...listRef.current]
-          arr[idx] = { ...item, id, checked }
+          arr[idx] = { ...item, id, checked } as T
           set(arr)
         }
       }

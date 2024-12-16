@@ -17,6 +17,7 @@ import { useUpdateWrongQuizResult } from '@/requests/quiz/hooks'
 import { useRouter } from 'next/navigation'
 
 const BombQuizView = () => {
+  // TODO: 남은 퀴즈 수가 3개정도일 때, 미리 서버에서 오답 리스트 불러와서 현재 리스트에 추가하기
   const router = useRouter()
   const { data, isPending } = useQuery(queries.quiz.bomb())
   const { mutate: updateWrongQuizResultMutate } = useUpdateWrongQuizResult()
@@ -31,7 +32,7 @@ const BombQuizView = () => {
     currentIndex: currentIndex,
   })
 
-  const currentQuizInfo = bombQuizList && bombQuizList[currentIndex]
+  const currentQuizInfo = bombQuizList[currentIndex]
   const currentAnswerState = quizResults[currentIndex]?.answer
 
   const onAnswer = ({
@@ -146,10 +147,10 @@ const BombQuizView = () => {
       <WrongAnswerDialog
         isOpen={openExplanation}
         setIsOpen={setOpenExplanation}
-        answer={getAnswerText(currentQuizInfo.answer)}
-        explanation={currentQuizInfo.explanation}
-        directoryName={currentQuizInfo.directory?.name ?? ''}
-        documentName={currentQuizInfo.document.name}
+        answer={getAnswerText(currentQuizInfo?.answer ?? '')}
+        explanation={currentQuizInfo?.explanation ?? ''}
+        directoryName={currentQuizInfo?.directory?.name ?? ''}
+        documentName={currentQuizInfo?.document.name ?? ''}
         onNext={onNext}
       />
     </div>
