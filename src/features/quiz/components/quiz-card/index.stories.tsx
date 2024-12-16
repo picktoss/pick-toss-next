@@ -26,6 +26,14 @@ const multipleQuiz: Quiz.Item = {
   ],
   answer: '기존의 배양육이 기존방식에서 생산되는 육류보다 토양이 비축된다',
   explanation: '기존의 배양육이 기존방식에서 생산되는 육류보다 토양이 비축된다',
+  document: {
+    id: 1,
+    name: '최근 이슈',
+  },
+  directory: {
+    id: 1,
+    name: '전공 공부',
+  },
 }
 
 const oxQuiz: Quiz.Item = {
@@ -34,7 +42,7 @@ const oxQuiz: Quiz.Item = {
   question: '식물기반 단백질 시장에서 대기업의 참여가 늘어나는 이유는 무엇인가요?',
   answer: 'correct',
   explanation: '기존의 배양육이 기존방식에서 생산되는 육류보다 토양이 비축된다',
-} as OXQuiz
+} as Quiz.Item
 
 const Template: Story = {
   args: {

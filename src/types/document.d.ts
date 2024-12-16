@@ -108,7 +108,7 @@ declare global {
       /** POST /api/v2/documents
        * 문서 생성
        */
-      type CreateDocument = DeepRequired<components['schemas']['CreateDocumentRequest']>
+      type CreateDocument = DeepRequired<components['schemas']['CreateDocumentResponse']>
 
       /** POST /api/v2/documents/search
        * 문서 검색
