@@ -2,27 +2,25 @@
 
 import { Switch } from '@/shared/components/ui/switch'
 import Text from '@/shared/components/ui/text'
-import { cn } from '@/shared/lib/utils'
-import { useEffect, useState } from 'react'
-import SetEmailDialog from '../set-email-dialog'
 import { useNotification } from '../../contexts/notification-context'
+// import { useEffect } from 'react'
 
-const NotificationControlArea = ({ isKakaoUser }: { isKakaoUser: boolean }) => {
-  const [isOpen, setIsOpen] = useState(false)
+const NotificationControlArea = () => {
+  // const [isOpen, setIsOpen] = useState(false)
   const {
-    switchStates,
     allowNotification,
-    setOffEmail,
     handleAllowNotification,
-    handleSwitchChange,
+    // switchStates,
+    // setOffEmail,
+    // handleSwitchChange,
   } = useNotification()
 
-  useEffect(() => {
-    if (Object.values(switchStates.email).find((value) => value === true)) {
-      setIsOpen(true)
-      setOffEmail(false)
-    }
-  }, [switchStates.email])
+  // useEffect(() => {
+  //   if (Object.values(switchStates.email).find((value) => value === true)) {
+  //     setIsOpen(true)
+  //     setOffEmail(false)
+  //   }
+  // }, [switchStates.email])
 
   return (
     <main className="h-[calc(100dvh-54px-88px)] w-full overflow-y-auto px-[16px]">
@@ -31,7 +29,7 @@ const NotificationControlArea = ({ isKakaoUser }: { isKakaoUser: boolean }) => {
         <Switch size={'md'} checked={allowNotification} onCheckedChange={handleAllowNotification} />
       </div>
 
-      <div
+      {/* <div
         className={cn(
           'mb-[56px] flex flex-col gap-[20px]',
           !allowNotification && 'text-text-disabled'
@@ -97,13 +95,13 @@ const NotificationControlArea = ({ isKakaoUser }: { isKakaoUser: boolean }) => {
             onCheckedChange={(checked) => handleSwitchChange('email', 'announcements', checked)}
           />
         </div>
-      </div>
+      </div> */}
 
       {/* todo : 이메일 알림 관련 로직
       1. 카카오 가입자의 경우, 이메일 알림 토글 off상태
       2. 토글 on 시, 이메일 등록 팝업 노출
       3. '다음에 등록하기'터치 시, 토글 off */}
-      {isKakaoUser && <SetEmailDialog isOpen={isOpen} setIsOpen={setIsOpen} />}
+      {/* {isKakaoUser && <SetEmailDialog isOpen={isOpen} setIsOpen={setIsOpen} />} */}
     </main>
   )
 }

@@ -8,7 +8,7 @@ export const PROFILE_MENU_LIST = {
     {
       key: 'notification',
       label: '알림 설정',
-      href: 'profile/notification',
+      href: 'profile/notification-setting',
     },
     {
       key: 'todayQuizSetting',

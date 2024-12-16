@@ -2,11 +2,9 @@ import { NotificationProvider } from '@/features/notification/contexts/notificat
 import NotificationControlArea from '@/features/notification/components/notification-control-area'
 
 const NotificationSettingPage = () => {
-  const isKakaoUser = true
-
   return (
     <NotificationProvider>
-      <NotificationControlArea isKakaoUser={isKakaoUser} />
+      <NotificationControlArea />
     </NotificationProvider>
   )
 }
