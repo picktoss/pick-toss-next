@@ -33,7 +33,6 @@ const nextConfig = {
       },
     ]
   },
-  output: 'standalone',
   experimental: {
     optimizeCss: true,
     scrollRestoration: true,
