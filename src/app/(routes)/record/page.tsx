@@ -18,7 +18,8 @@ const RecordPage = async ({ searchParams }: Props) => {
   const selectedDate = searchParams.selectedDate ?? getFormattedDate(today)
   const { currentConsecutiveDays, maxConsecutiveDays, quizRecords } = await getQuizRecords()
 
-  // 데이터가 많아지면 클라이언트 컴포넌트로 분리해서 로딩 처리가 필요할 수도 있음
+  // 데이터가 많아지면 다른 방법으로 처리해보는 것을 고민
+  // 백엔드 측에 특정 solvedDate를 api 요청 시 보내면 일치하는 데이터를 보내주는 방법 제안해봐도 좋을 듯
   const dateRecord = quizRecords.find((quizInfo) => quizInfo.solvedDate === selectedDate)
 
   return (
