@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm run clean && next build",
     "start": "next start",
+    "clean": "rimraf .next",
     "lint:fix": "eslint ./src --fix",
     "format:write": "prettier --write .",
     "check:spell": "cspell '**' --gitignore --no-progress",
@@ -49,6 +50,7 @@
     "axios": "^1.7.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "critters": "^0.0.25",
     "date-fns": "^3.6.0",
     "emoji-picker-react": "^4.9.4",
     "firebase": "^11.0.2",
@@ -115,6 +117,7 @@
     "husky": "^9.0.11",
     "openapi-typescript": "^7.4.4",
     "postcss": "^8",
+    "rimraf": "^6.0.1",
     "storybook": "^8.3.6",
     "tailwindcss": "^3.3.0",
     "typescript": "^5"

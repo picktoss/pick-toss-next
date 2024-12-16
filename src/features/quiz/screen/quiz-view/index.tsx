@@ -101,6 +101,7 @@ const QuizView = ({ quizzes, isFirst }: Props) => {
   }
 
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     runTimer()
   }, [runTimer])
 
