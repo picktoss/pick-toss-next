@@ -51,7 +51,7 @@ const CreateCollectionForm = () => {
   const [emoji, setEmoji] = useState('🥹')
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
-  const [categoryCode, setCategoryCode] = useState(CATEGORIES[0].code)
+  const [categoryCode, setCategoryCode] = useState(CATEGORIES[0]?.code ?? 'IT')
 
   const { data: directoryQuizzesData, isLoading: directoryQuizzesLoading } =
     useDirectoryQuizzes(selectedDirectoryId)
@@ -85,13 +85,13 @@ const CreateCollectionForm = () => {
       {
         name: title,
         description,
-        collectionField: categoryCode,
+        collectionCategory: categoryCode,
         emoji,
         quizzes: selectedQuizIds,
       },
       {
         onSuccess: (data) => {
-          router.replace(`/collections/${data.id}`)
+          router.replace(`/collections/${data.collectionId}`)
         },
       }
     )
@@ -99,7 +99,7 @@ const CreateCollectionForm = () => {
 
   useEffect(() => {
     if (!directoriesData) return
-    setSelectedDirectoryId(directoriesData.directories[0].id)
+    setSelectedDirectoryId(directoriesData.directories[0]?.id || null)
   }, [directoriesData])
 
   useEffect(() => {
