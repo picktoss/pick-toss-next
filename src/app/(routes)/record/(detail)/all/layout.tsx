@@ -3,17 +3,10 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {}
 
-interface LayoutProps extends PropsWithChildren {
-  header: React.ReactNode
-}
+interface InnerLayoutProps extends PropsWithChildren {}
 
-const Layout: FunctionComponent<LayoutProps> = ({ children, header }) => {
-  return (
-    <>
-      {header}
-      {children}
-    </>
-  )
+const Layout: FunctionComponent<InnerLayoutProps> = ({ children }) => {
+  return <main>{children}</main>
 }
 
 export default Layout

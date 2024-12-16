@@ -19,9 +19,7 @@ const RecordPage = async ({ searchParams }: Props) => {
   const { currentConsecutiveDays, maxConsecutiveDays, quizRecords } = await getQuizRecords()
 
   // 데이터가 많아지면 클라이언트 컴포넌트로 분리해서 로딩 처리가 필요할 수도 있음
-  const dateRecords = quizRecords.filter(
-    (quizInfo) => quizInfo.solvedDate.split('T')[0] === selectedDate
-  )
+  const dateRecord = quizRecords.find((quizInfo) => quizInfo.solvedDate === selectedDate)
 
   return (
     <main className="h-[calc(100dvh-54px)] overflow-y-auto px-[16px]">
@@ -38,20 +36,20 @@ const RecordPage = async ({ searchParams }: Props) => {
         </Text>
       </div>
 
-      <CustomCalendar className="mt-[3px]" userQuizRecords={quizRecords} />
+      <CustomCalendar className="mt-[3px]" />
 
       <div className="flex flex-col">
         <Text typography="text2-medium" color="sub" className="my-[8px]">
           {formatDateKorean(selectedDate, { month: true, day: true })}
         </Text>
-        {dateRecords.map((record, index) => (
+        {dateRecord?.quizRecords.map((record, index) => (
           <RecordItem
             key={record.quizSetId + '-' + index}
             type={record.quizSetType}
             name={record.name}
             quizCount={record.quizCount}
             score={record.score}
-            date={record.solvedDate.split('T')[0] ?? ''}
+            date={dateRecord.solvedDate}
             quizSetId={record.quizSetId}
           />
         ))}

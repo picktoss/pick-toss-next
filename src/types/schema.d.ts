@@ -1643,9 +1643,13 @@ export interface components {
             maxConsecutiveDays?: number;
         };
         GetSingleQuizSetRecordDto: {
+            /** Format: int64 */
+            id?: number;
             question?: string;
             answer?: string;
             explanation?: string;
+            /** @enum {string} */
+            quizType?: "MIX_UP" | "MULTIPLE_CHOICE";
             options?: string[];
             choseAnswer?: string;
             documentName?: string;
@@ -1670,14 +1674,17 @@ export interface components {
             score?: number;
             /** @enum {string} */
             quizSetType?: "TODAY_QUIZ_SET" | "DOCUMENT_QUIZ_SET" | "COLLECTION_QUIZ_SET" | "FIRST_QUIZ_SET";
-            /** Format: date-time */
-            solvedDate?: string;
         };
         GetQuizRecordResponse: {
             /** Format: int32 */
             currentConsecutiveDays?: number;
             /** Format: int32 */
             maxConsecutiveDays?: number;
+            quizRecords?: components["schemas"]["GetQuizRecordSolvedDateDto"][];
+        };
+        GetQuizRecordSolvedDateDto: {
+            /** Format: date */
+            solvedDate?: string;
             quizRecords?: components["schemas"]["GetQuizRecordDto"][];
         };
         GetQuizSetDirectoryDto: {
@@ -1859,8 +1866,8 @@ export interface components {
             is3xxRedirection?: boolean;
         };
         JspConfigDescriptor: {
-            jspPropertyGroups?: components["schemas"]["JspPropertyGroupDescriptor"][];
             taglibs?: components["schemas"]["TaglibDescriptor"][];
+            jspPropertyGroups?: components["schemas"]["JspPropertyGroupDescriptor"][];
         };
         JspPropertyGroupDescriptor: {
             defaultContentType?: string;
@@ -1869,11 +1876,11 @@ export interface components {
             errorOnELNotFound?: string;
             pageEncoding?: string;
             scriptingInvalid?: string;
+            isXml?: string;
             includePreludes?: string[];
             includeCodas?: string[];
             trimDirectiveWhitespaces?: string;
             errorOnUndeclaredNamespace?: string;
-            isXml?: string;
             buffer?: string;
             urlPatterns?: string[];
         };
@@ -1900,13 +1907,13 @@ export interface components {
             hosts?: string[];
             redirectView?: boolean;
             propagateQueryProperties?: boolean;
-            attributesCSV?: string;
             attributesMap?: {
                 [key: string]: Record<string, never>;
             };
             attributes?: {
                 [key: string]: string;
             };
+            attributesCSV?: string;
         };
         ServletContext: {
             sessionCookieConfig?: components["schemas"]["SessionCookieConfig"];
@@ -1947,10 +1954,10 @@ export interface components {
             effectiveMinorVersion?: number;
             serverInfo?: string;
             servletContextName?: string;
+            defaultSessionTrackingModes?: ("COOKIE" | "URL" | "SSL")[];
             filterRegistrations?: {
                 [key: string]: components["schemas"]["FilterRegistration"];
             };
-            defaultSessionTrackingModes?: ("COOKIE" | "URL" | "SSL")[];
             effectiveSessionTrackingModes?: ("COOKIE" | "URL" | "SSL")[];
             jspConfigDescriptor?: components["schemas"]["JspConfigDescriptor"];
             requestCharacterEncoding?: string;

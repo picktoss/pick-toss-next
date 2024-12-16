@@ -10,6 +10,7 @@ interface QuizExplanationDrawerProps {
   explanation: string
   onClickNext: () => void
   rightAnswer: string
+  isPending?: boolean
 }
 
 const MIN_HEIGHT = '125px'
@@ -20,6 +21,7 @@ const QuizExplanationDrawer = ({
   rightAnswer,
   explanation,
   onClickNext,
+  isPending = false,
 }: QuizExplanationDrawerProps) => {
   const [open, setOpen] = useState(true)
   const controls = useAnimation()
@@ -126,7 +128,8 @@ const QuizExplanationDrawer = ({
           transition={{ duration: 0.3 }}
           className={cn('w-full', open ? 'mt-[40px]' : 'absolute')}
         >
-          <Button className="w-full" onClick={onClickNext}>
+          <Button className="w-full" onClick={onClickNext} disabled={isPending}>
+            {/* TODO: isPending일 때, spinner 표시 */}
             다음
           </Button>
         </motion.div>

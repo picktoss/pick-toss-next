@@ -3,24 +3,20 @@
 import { Calendar } from '@/shared/components/ui/calendar'
 import { cn } from '@/shared/lib/utils'
 import { getFormattedDate } from '@/shared/utils/date'
-import { useUserStore } from '@/store/user'
 import { format } from 'date-fns'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useEffect, useMemo } from 'react'
+import { useMemo } from 'react'
 
 interface Props {
   className?: HTMLElement['className']
-  userQuizRecords: Quiz.Response.GetQuizRecords['quizRecords']
 }
 
-const CustomCalendar = ({ className, userQuizRecords }: Props) => {
+const CustomCalendar = ({ className }: Props) => {
   const today = useMemo(() => new Date(), [])
 
   const router = useRouter()
   const searchParams = useSearchParams()
   const selectedDateString = searchParams.get('selectedDate')
-
-  const { setSolvedQuizDateList } = useUserStore()
 
   const selectedDate = useMemo(() => {
     if (selectedDateString) {
@@ -29,25 +25,6 @@ const CustomCalendar = ({ className, userQuizRecords }: Props) => {
     }
     return today
   }, [selectedDateString, today])
-
-  const userSolvedDateList = useMemo(() => {
-    const dateListSet = new Set<string>()
-
-    userQuizRecords.map((record) => {
-      const dateString = record.solvedDate.split('T')[0] ?? ''
-      dateListSet.add(dateString)
-    })
-
-    const sortedDateList = Array.from(dateListSet).sort((a, b) => {
-      return new Date(a).getTime() - new Date(b).getTime()
-    })
-
-    return sortedDateList
-  }, [userQuizRecords])
-
-  useEffect(() => {
-    setSolvedQuizDateList(userSolvedDateList)
-  }, [setSolvedQuizDateList, userSolvedDateList])
 
   const handleSelect = (selected?: Date) => {
     if (selected) {

@@ -13,15 +13,15 @@ const RecordQuizTypeIcon = ({ type, className }: Props) => {
       value={type}
       caseBy={{
         DOCUMENT_QUIZ_SET: (
-          <Icon name="document-record-icon" className={cn('size-[40px]', className)} />
+          <Icon name="document-type-round-icon" className={cn('size-[40px]', className)} />
         ),
 
         TODAY_QUIZ_SET: (
-          <Icon name="today-quiz-record-icon" className={cn('size-[40px]', className)} />
+          <Icon name="today-quiz-type-round-icon" className={cn('size-[40px]', className)} />
         ),
 
         COLLECTION_QUIZ_SET: (
-          <Icon name="collection-record-icon" className={cn('size-[40px]', className)} />
+          <Icon name="collection-type-round-icon" className={cn('size-[40px]', className)} />
         ),
       }}
     />
