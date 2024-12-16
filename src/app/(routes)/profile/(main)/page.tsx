@@ -117,7 +117,7 @@ const ProfilePage = () => {
         </div>
         <div className="flex flex-col">
           <Text typography="text2-medium" className="mb-[6px] text-text-caption">
-            별 내역
+            구독 관리
           </Text>
           {PROFILE_MENU_LIST.star.map((item) => (
             <Link

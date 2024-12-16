@@ -8,19 +8,19 @@ export const PROFILE_MENU_LIST = {
     {
       key: 'notification',
       label: '알림 설정',
-      href: 'profile/notification',
+      href: 'profile/notification-setting',
     },
-    {
-      key: 'todayQuizSetting',
-      label: '오늘의 퀴즈 관리',
-      href: 'profile/today-quiz-setting',
-    },
+    // {
+    //   key: 'todayQuizSetting',
+    //   label: '오늘의 퀴즈 관리',
+    //   href: 'profile/today-quiz-setting',
+    // },
   ],
   star: [
     {
-      key: 'starHistory',
-      label: '결제/사용/적립 내역',
-      href: 'profile/star-history',
+      key: 'subscribe',
+      label: '구독/결제 내역',
+      href: 'profile/subscribe',
     },
   ],
   service: [

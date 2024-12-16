@@ -24,6 +24,7 @@ export const {
   signOut,
 } = NextAuth({
   providers: [Kakao, Google],
+  // debug: true,
   callbacks: {
     jwt: async ({ token, account, trigger }) => {
       if (account) {
@@ -50,7 +51,8 @@ export const {
             cache: 'no-store',
             next: { revalidate: 0 },
           })
-          console.log(response)
+          // eslint-disable-next-line no-console
+          console.warn(response)
 
           if (!response.ok) {
             throw new Error(`Failed to fetch user info: ${response.status}`)

@@ -11,10 +11,19 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 }
 
-const firebaseApp = initializeApp(firebaseConfig)
+export const initializeFirebaseMessaging = async () => {
+  const firebaseApp = initializeApp(firebaseConfig)
 
-const messaging = isSupported()
-  .then(() => getMessaging(firebaseApp))
-  .catch(() => null)
-
-export { firebaseApp, messaging }
+  try {
+    const messagingSupported = await isSupported()
+    if (messagingSupported) {
+      return getMessaging(firebaseApp)
+    }
+    // eslint-disable-next-line no-console
+    console.warn('FCM Messaging is not supported')
+    return null
+  } catch (error) {
+    console.error('Error checking FCM support:', error)
+    return null
+  }
+}

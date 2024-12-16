@@ -18,29 +18,6 @@ const publicOnlyUrls: Routes = {
 const PUBLIC_FILE = /\.(.*)$/
 
 export async function middleware(request: NextRequest) {
-  // const session = await auth()
-  // const publicExists = publicUrls[request.nextUrl.pathname]
-  // const exists = publicOnlyUrls[request.nextUrl.pathname]
-
-  // const isPublicFiles = PUBLIC_FILE.test(request.nextUrl.pathname)
-  // if (isPublicFile) {
-  //   return
-  // }
-
-  // 로그인 되어 있지 않은 상태
-  // if (!session?.user?.id) {
-  //   if (!exists && !publicExists) {
-  //     return NextResponse.redirect(new URL('/', request.url))
-  //   }
-  //   // 로그인 상태
-  // } else {
-  //   if (exists) {
-  //     return NextResponse.redirect(new URL('/main', request.url))
-  //   }
-  // }
-
-  const cookies = request.cookies.getAll()
-  const pwaInstalled = cookies.find((cookie) => cookie.name === 'pwaInstalled')?.value === 'true'
   const session = await auth()
   const { pathname } = request.nextUrl
 
@@ -53,22 +30,10 @@ export async function middleware(request: NextRequest) {
     return
   }
 
-  // eslint-disable-next-line no-console
-  console.log('pwaInstalled: ', pwaInstalled)
-
   // 2. 로그인되지 않은 상태
   if (!session?.user?.id) {
-    // PWA 설치 상태에 따른 처리
-    if (pwaInstalled) {
-      // PWA 설치된 상태에서는 '/app-start'로 이동
-      if (pathname !== '/app-start') {
-        return NextResponse.redirect(new URL('/app-start', request.url))
-      }
-    } else {
-      // PWA 미설치 상태에서는 '/'로 이동 (필요시 수정 가능)
-      if (pathname !== '/' && !isPublicOnlyUrl && !isPublicUrl) {
-        return NextResponse.redirect(new URL('/', request.url))
-      }
+    if (pathname !== '/' && !isPublicOnlyUrl && !isPublicUrl) {
+      return NextResponse.redirect(new URL('/', request.url))
     }
   }
 
