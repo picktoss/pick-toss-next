@@ -5,7 +5,7 @@ import { ButtonHTMLAttributes } from 'react'
 
 interface MultipleOptionProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   option: string
-  condition: QuizCondition
+  condition: Quiz.Condition
   index: number
 }
 

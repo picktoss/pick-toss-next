@@ -31,7 +31,7 @@ const MyCollection = () => {
     useBookmarkedCollections()
 
   const handleTabChange = (tab: TabType) => {
-    const params = new URLSearchParams(searchParams)
+    const params = new URLSearchParams(searchParams as unknown as URLSearchParams)
     params.set('sort', tab)
     router.replace(`?${params.toString()}`)
   }
@@ -83,6 +83,7 @@ const MyCollection = () => {
                     lastUpdated="2일 전"
                     isOwner={true}
                     bookMarkCount={collection.bookmarkCount}
+                    creatorName={collection.member.creatorName}
                   />
                 </Link>
               ))}
@@ -103,6 +104,7 @@ const MyCollection = () => {
                     lastUpdated="2일 전"
                     isBookMarked={collection.bookmarked}
                     bookMarkCount={collection.bookmarkCount}
+                    creatorName={collection.member.creatorName}
                   />
                 </Link>
               ))}

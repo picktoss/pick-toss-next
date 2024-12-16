@@ -5,6 +5,10 @@ import Text from '@/shared/components/ui/text'
 import { useTodayQuizSetting } from '../../../context/today-quiz-setting-context'
 
 const SetQuizCount = () => {
+  const DEFAULT_QUIZ_COUNT = 10
+  const DOCUMENT_MIN_QUIZ_COUNT = 5
+  const DOCUMENT_MAX_QUIZ_COUNT = 20
+
   const { quizCount, setQuizCount } = useTodayQuizSetting()
 
   return (
@@ -17,17 +21,17 @@ const SetQuizCount = () => {
       </div>
 
       <Slider
-        min={5}
-        max={20}
+        min={DOCUMENT_MIN_QUIZ_COUNT}
+        max={DOCUMENT_MAX_QUIZ_COUNT}
         step={1}
         value={[quizCount]}
-        defaultValue={[10]}
-        onValueChange={(value) => setQuizCount(value[0])}
+        defaultValue={[DEFAULT_QUIZ_COUNT]}
+        onValueChange={(value) => setQuizCount(value[0] || DEFAULT_QUIZ_COUNT)}
       />
 
       <div className="mt-[10px] flex items-center justify-between text-text2-medium text-text-sub">
-        <Text>5 문제</Text>
-        <Text>20 문제</Text>
+        <Text>{DOCUMENT_MIN_QUIZ_COUNT} 문제</Text>
+        <Text>{DOCUMENT_MAX_QUIZ_COUNT} 문제</Text>
       </div>
     </div>
   )

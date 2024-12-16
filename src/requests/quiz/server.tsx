@@ -35,3 +35,31 @@ export const getQuizSetById = async ({
     throw error
   }
 }
+
+export const getQuizRecords = async () => {
+  try {
+    const { data } = await httpServer.get<Quiz.Response.GetQuizRecords>(
+      API_ENDPOINTS.QUIZ.GET.ALL_RECORDS
+    )
+    return data
+  } catch (error: unknown) {
+    throw error
+  }
+}
+
+export const getQuizDetailRecord = async ({
+  quizSetId,
+  quizSetType,
+}: {
+  quizSetId: string
+  quizSetType: Quiz.Set.Type
+}) => {
+  try {
+    const { data } = await httpServer.get<Quiz.Response.GetQuizSetRecord>(
+      API_ENDPOINTS.QUIZ.GET.RECORD(quizSetId, quizSetType)
+    )
+    return data
+  } catch (error: unknown) {
+    throw error
+  }
+}

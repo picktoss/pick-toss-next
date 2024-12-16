@@ -60,7 +60,10 @@ const Home = async () => {
         </div>
 
         {/* 연속으로 푸는 중 */}
-        <button className="mt-[16px] flex h-fit w-full items-center gap-[20px] rounded-[20px] bg-background-base-01 px-[24px] py-[19px]">
+        <Link
+          href={'/record'}
+          className="mt-[16px] flex h-fit w-full items-center gap-[20px] rounded-[20px] bg-background-base-01 px-[24px] py-[19px]"
+        >
           <Icon name="calendar" className="size-[40px] p-[4px]" />
           <div className="flex flex-col items-start gap-[4px]">
             <Text typography="title3">{25}일</Text>
@@ -68,7 +71,7 @@ const Home = async () => {
               연속으로 푸는 중
             </Text>
           </div>
-        </button>
+        </Link>
       </div>
 
       {/* 복습 필수 노트 TOP5 */}

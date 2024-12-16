@@ -50,7 +50,7 @@ export const useCreateDirectory = () => {
       const optimisticDirectory = {
         id: -1,
         ...newDirectory,
-        tag: '',
+        tag: 'NORMAL' as Directory.Item['tag'],
         documentCount: 0,
       }
 

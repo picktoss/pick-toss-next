@@ -41,9 +41,9 @@ export function useCheckList<T extends Item>(initialItems: T[]) {
       if (idx > -1) {
         const item = listRef.current[idx]
 
-        if (item.checked !== checked) {
+        if (item?.checked !== checked) {
           const arr = [...listRef.current]
-          arr[idx] = { ...item, checked }
+          arr[idx] = { ...item, checked } as T
           set(arr)
         }
       }

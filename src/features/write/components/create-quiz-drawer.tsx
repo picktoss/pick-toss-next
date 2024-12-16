@@ -14,7 +14,8 @@ interface Props {
 }
 
 const CreateQuizDrawer = ({ handleCreateDocument }: Props) => {
-  const [selectedQuizCount, setSelectedQuizCount] = useState(10)
+  const DEFAULT_QUIZ_COUNT = 10 // 초기값 10
+  const [selectedQuizCount, setSelectedQuizCount] = useState(DEFAULT_QUIZ_COUNT)
   const [selectedQuizType, setSelectedQuizType] = useState<Quiz.Type>('MULTIPLE_CHOICE')
   const [isOpenMoreStar, setIsOpenMoreStar] = useState(false)
 
@@ -105,7 +106,7 @@ const CreateQuizDrawer = ({ handleCreateDocument }: Props) => {
                 step={1}
                 defaultValue={[10]}
                 value={[selectedQuizCount]}
-                onValueChange={(value) => setSelectedQuizCount(value[0])}
+                onValueChange={(value) => setSelectedQuizCount(value[0] || DEFAULT_QUIZ_COUNT)}
               />
 
               <div className="mt-[10px] flex w-full items-center justify-between text-text2-medium text-text-sub">

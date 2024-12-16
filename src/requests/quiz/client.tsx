@@ -129,3 +129,14 @@ export const collectionQuizzesInfo = async ({ collectionId }: { collectionId: nu
     throw error
   }
 }
+
+export const getQuizRecords = async () => {
+  try {
+    const { data } = await http.get<Quiz.Response.GetQuizRecords>(
+      API_ENDPOINTS.QUIZ.GET.ALL_RECORDS
+    )
+    return data
+  } catch (error: unknown) {
+    throw error
+  }
+}

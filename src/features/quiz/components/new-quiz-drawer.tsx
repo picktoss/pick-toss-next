@@ -17,9 +17,14 @@ interface Props {
 
 // NewQuizDrawer 컴포넌트
 const NewQuizDrawer = ({ triggerComponent, documentId }: Props) => {
+  const DEFAULT_QUIZ_COUNT = 10 // 초기값 10
   const [quizType, setQuizType] = useState('MULTIPLE_CHOICE')
-  const [quizCount, setQuizCount] = useState(10) // 초기값 10
+  const [quizCount, setQuizCount] = useState(DEFAULT_QUIZ_COUNT)
   const [isOpenMoreStar, setIsOpenMoreStar] = useState(false)
+
+  // 임시 (문서 글자 수에 따라 생성할 수 있는 최대 문제 개수 필요)
+  const DOCUMENT_MIN_QUIZ_COUNT = 1
+  const DOCUMENT_MAX_QUIZ_COUNT = 40
 
   const handleClickStart = () => {
     // 기존 문서에서 새로운 퀴즈 생성하는 api 호출
@@ -84,11 +89,11 @@ const NewQuizDrawer = ({ triggerComponent, documentId }: Props) => {
 
               {/* 문제 개수 슬라이더 */}
               <Slider
-                min={5}
-                max={40}
+                min={DOCUMENT_MIN_QUIZ_COUNT}
+                max={DOCUMENT_MAX_QUIZ_COUNT}
                 step={1}
                 defaultValue={[10]}
-                onValueChange={(value) => setQuizCount(value[0])}
+                onValueChange={(value) => setQuizCount(value[0] || DEFAULT_QUIZ_COUNT)}
               />
 
               <div className="mt-[10px] flex w-full items-center justify-between text-text2-medium text-text-sub">
