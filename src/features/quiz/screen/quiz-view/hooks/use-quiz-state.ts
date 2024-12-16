@@ -40,6 +40,7 @@ export const useQuizState = ({ quizCount, currentIndex }: UseQuizStateProps) => 
     showExplanation,
     totalElapsedTime,
     handleNext,
+    runTimer,
     isRunning: !quizResults[currentIndex]?.choseAnswer,
   }
 }
