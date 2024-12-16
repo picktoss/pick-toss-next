@@ -50,6 +50,7 @@ export const {
             cache: 'no-store',
             next: { revalidate: 0 },
           })
+          console.log(response)
 
           if (!response.ok) {
             throw new Error(`Failed to fetch user info: ${response.status}`)
