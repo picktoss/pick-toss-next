@@ -6,15 +6,18 @@ import {
   updateQuizNotification,
   updateUserName,
   updateCollectionCategories,
+  getUserInfo,
 } from './client'
+import { useUserStore } from '@/store/user'
 
-// 아직 사용처 없음 - 검토 필요
-// export const useUserInfo = () => {
-//   return useQuery({
-//     queryKey: ['userInfo'],
-//     queryFn: async () => fetchUserInfo(),
-//   })
-// }
+export const useUserInfo = () => {
+  const { setUserInfo } = useUserStore()
+
+  return useMutation({
+    mutationFn: async () => getUserInfo(),
+    onSuccess: (userInfo) => setUserInfo(userInfo),
+  })
+}
 
 export const useUpdateTodayQuizCount = () => {
   const queryClient = useQueryClient()

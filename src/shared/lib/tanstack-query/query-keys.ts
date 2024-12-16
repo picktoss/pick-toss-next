@@ -69,4 +69,11 @@ export const queries = createQueryKeyStore({
       initialData: { documents: [], quizzes: [], collections: [] },
     }),
   },
+
+  user: {
+    info: () => ({
+      queryKey: [''],
+      queryFn: () => REQUEST.user.getUserInfo(),
+    }),
+  },
 })

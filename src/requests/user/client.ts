@@ -36,3 +36,12 @@ export const updateCollectionCategories = async (
     throw error
   }
 }
+
+export const getUserInfo = async () => {
+  try {
+    const { data } = await http.get<User.Info>(API_ENDPOINTS.USER.GET.INFO)
+    return data
+  } catch (error: unknown) {
+    throw error
+  }
+}

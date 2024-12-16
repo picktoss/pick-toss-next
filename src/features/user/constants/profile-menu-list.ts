@@ -6,7 +6,7 @@ export const PROFILE_MENU_LIST = {
       href: 'profile/account',
     },
     {
-      key: 'notification',
+      key: 'notification-setting',
       label: '알림 설정',
       href: 'profile/notification-setting',
     },

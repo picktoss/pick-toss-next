@@ -4,18 +4,23 @@ import CategoryTooltip from '@/features/user/category-tooltip'
 import Link from 'next/link'
 import { PROFILE_MENU_LIST } from '@/features/user/constants/profile-menu-list'
 import Footer from '@/features/user/components/footer'
+import Test from '@/features/test'
+import { getUserInfo } from '@/requests/user/server'
+import CategoryTag from '@/shared/components/custom/category-tag'
+import { CATEGORIES } from '@/features/category/config'
 
-const ProfilePage = () => {
+const ProfilePage = async () => {
   const extraDocumentCount = 28
+  const userInfo = await getUserInfo()
 
   return (
     <main className="h-[calc(100dvh-54px-88px)] w-full overflow-y-auto px-[16px] pb-[54px]">
+      <Test />
       <Link
         href={'profile/account'}
         className="relative mt-[8px] flex h-[96px] w-full items-center justify-between"
       >
-        {/* 관심분야 설정이 안되어 있을 경우 툴팁 노출 */}
-        <CategoryTooltip />
+        {userInfo.interestCategories.length === 0 && <CategoryTooltip />}
 
         <div className="flex-center gap-[16px]">
           <div className="flex-center size-[48px] rounded-full bg-background-base-03">
@@ -27,24 +32,32 @@ const ProfilePage = () => {
           </div>
           <div className="flex flex-col">
             <div className="flex-center gap-[12px]">
-              <Text typography="subtitle1-bold">픽토스</Text>
+              <Text typography="subtitle1-bold">{userInfo.name}</Text>
 
-              {/* 관심 분야 설정 x */}
-              <Text typography="text2-medium" className="text-text-caption">
-                관심분야 없음
-              </Text>
-
-              {/* 관심 분야 설정 o */}
-              {/* <CategoryTag title="IT·프로그래밍" className="flex-center"></CategoryTag> */}
+              {userInfo.interestCategories.length === 0 ? (
+                <Text typography="text2-medium" className="text-text-caption">
+                  관심분야 없음
+                </Text>
+              ) : (
+                userInfo.interestCategories.map((category) => (
+                  <CategoryTag
+                    key={category}
+                    title={CATEGORIES.find((value) => value.code === category)?.name ?? ''}
+                    className="flex-center"
+                  ></CategoryTag>
+                ))
+              )}
             </div>
+
             <Text typography="text1-regular" className="text-text-sub">
-              이메일을 등록해주세요
+              {userInfo.email ?? '이메일을 등록해주세요'}
             </Text>
           </div>
         </div>
         <Icon name="chevron-right" className="size-[16px] text-icon-tertiary" />
       </Link>
 
+      {/* TODO */}
       <div className="mt-[4px] flex flex-col gap-[8px] rounded-[12px] border border-border-default px-[19px] pb-[15px] pt-[18px]">
         <div className="flex items-center justify-between">
           <Text typography="text1-bold" className="text-text-secondary">
