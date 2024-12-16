@@ -6,7 +6,7 @@ import { QUIZ_ANIMATION_DURATION } from '@/features/quiz/config'
 import { cn } from '@/shared/lib/utils'
 
 interface QuizOptionsProps {
-  quiz: Quiz.ItemWithMetadata
+  quiz: Quiz.Item
   currentResult: Quiz.Result | null
   onAnswer: (params: { id: number; isRight: boolean; choseAnswer: string }) => void
   className?: HTMLElement['className']
@@ -37,7 +37,7 @@ const QuizOptions = ({ quiz, currentResult, onAnswer, className }: QuizOptionsPr
         animate="show"
         key={quiz.id}
       >
-        {quiz.options.map((option, index) => (
+        {quiz.options?.map((option, index) => (
           <motion.div
             key={option}
             variants={item}
@@ -72,8 +72,8 @@ const QuizOptions = ({ quiz, currentResult, onAnswer, className }: QuizOptionsPr
       >
         <OXChoice
           condition={getOXCondition(currentResult)}
-          userAnswer={currentResult?.choseAnswer as Quiz.OXQuizAnswer}
-          onSelect={(userAnswer: Quiz.OXQuizAnswer) => {
+          userAnswer={currentResult?.choseAnswer as Quiz.OXAnswer}
+          onSelect={(userAnswer: Quiz.OXAnswer) => {
             onAnswer({
               id: quiz.id,
               isRight: quiz.answer === userAnswer ? true : false,

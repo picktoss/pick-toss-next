@@ -40,11 +40,11 @@ const WriteDocumentPage = () => {
 
     createDocumentMutate(
       {
-        directoryId: selectedDirectory.id,
+        directoryId: String(selectedDirectory.id),
         documentName: title,
         file: content,
         quizType,
-        star,
+        star: String(star),
         documentType: 'TEXT',
       },
       {

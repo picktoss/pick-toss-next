@@ -6,7 +6,7 @@ import GoBackButton from '@/shared/components/custom/go-back-button'
 import Image from 'next/image'
 
 interface Props {
-  quizzes: Quiz.ItemWithMetadata[]
+  quizzes: Quiz.Item[]
   currentIndex: number
   onAnswer: ({
     id,
@@ -30,7 +30,8 @@ const BombQuiz = ({
   leftQuizCount,
   handleExit,
 }: Props) => {
-  const currentQuiz = quizzes[currentIndex]
+  // 자명한가?
+  const currentQuiz = quizzes[currentIndex]!
   const currentResult = quizResults[currentIndex] ?? null
 
   return (

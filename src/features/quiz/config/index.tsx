@@ -1,4 +1,4 @@
-export const quizzes: Quiz.ItemWithMetadata[] = [
+export const quizzes: Quiz.Item[] = [
   {
     document: {
       id: 1,

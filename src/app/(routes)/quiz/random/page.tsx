@@ -4,7 +4,7 @@ import { getBookmarkedCollections } from '@/requests/collection/server'
 const RandomQuiz = async () => {
   const bookmarkedCollections = await getBookmarkedCollections()
 
-  return <RandomQuizView bookmarkedCollections={bookmarkedCollections} />
+  return <RandomQuizView collections={bookmarkedCollections.collections} directories={[]} />
 }
 
 export default RandomQuiz

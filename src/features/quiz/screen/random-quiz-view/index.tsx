@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
 
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -17,6 +18,7 @@ import GoBackButton from '@/shared/components/custom/go-back-button'
 import Tag from '@/shared/components/ui/tag'
 import QuizOptions from '../quiz-view/components/quiz-option'
 import { CATEGORIES } from '@/features/category/config'
+import { notFound } from 'next/navigation'
 
 interface Props {
   collections: Collection.Response.GetBookmarkedCollections['collections']
@@ -29,11 +31,8 @@ type CategoryWithQuizzesAndCollectionName = {
 }
 
 const RandomQuizView = ({ collections, directories }: Props) => {
-  const [categoriesWithQuizzes, setCategoriesWithQuizzes] = useState(() =>
-    groupQuizzesByCategory(collections)
-  )
+  const [categoriesWithQuizzes, setCategoriesWithQuizzes] = useState([])
   const [] = useState()
-  console.log(categoriesWithQuizzes)
 
   // 디렉토리에 생성된 모든 랜덤 퀴즈 가져옴
 
@@ -44,13 +43,10 @@ const RandomQuizView = ({ collections, directories }: Props) => {
   const [activeCategoryIndex, setActiveCategoryIndex] = useState(0)
 
   const activeDirectoryId = useMemo(
-    () => mockDirectories[activeDirectoryIndex].id,
+    () => mockDirectories[activeDirectoryIndex]?.id,
     [activeDirectoryIndex]
   )
-  const activeCategoryCode = useMemo(
-    () => categoriesWithQuizzes[activeCategoryIndex].category.code,
-    [activeCategoryIndex, categoriesWithQuizzes]
-  )
+  const activeCategoryCode = 1
 
   const [openExplanation, setOpenExplanation] = useState(false)
 
@@ -108,10 +104,15 @@ const RandomQuizView = ({ collections, directories }: Props) => {
     }
   }
 
-  const data = repository === 'directory' ? mockDirectories : categoriesWithQuizzes
-
   const currentQuiz = randomQuizList[currentIndex]
-  const currentResult = quizResults[currentIndex]
+  const currentResult = quizResults[currentIndex] as Exclude<
+    (typeof quizResults)[number],
+    undefined
+  >
+
+  if (!currentQuiz) {
+    notFound()
+  }
 
   return (
     <div>
@@ -182,7 +183,7 @@ const RandomQuizView = ({ collections, directories }: Props) => {
               initialSlide={repository === 'directory' ? activeDirectoryIndex : activeCategoryIndex}
               onSlideChange={(data) => handleSlideChange(data.activeIndex)}
             >
-              {mockData.map((item, index) => {
+              {mockDirectories.map((item, index) => {
                 const isActive =
                   repository === 'directory'
                     ? index === activeDirectoryIndex
@@ -314,34 +315,3 @@ const mockDirectories = [
     emoji: '🌂',
   },
 ]
-
-const groupQuizzesByCategory = (
-  collections: Collection.Response.GetBookmarkedCollections['collections']
-): CategoryWithQuizzesAndCollectionName[] => {
-  return collections.reduce<CategoryWithQuizzesAndCollectionName[]>((acc, collection) => {
-    const category = CATEGORIES.find((category) => category.code === collection.collectionField)
-
-    if (!category) return acc
-
-    const existingCategory = acc.find((item) => item.category.code === category.code)
-
-    if (existingCategory) {
-      existingCategory.quizzes.push(
-        ...collection.quizzes.map((quiz) => ({
-          ...quiz,
-          tag: collection.name,
-        }))
-      )
-    } else {
-      acc.push({
-        category,
-        quizzes: collection.quizzes.map((quiz) => ({
-          ...quiz,
-          tag: collection.name,
-        })),
-      })
-    }
-
-    return acc
-  }, [])
-}

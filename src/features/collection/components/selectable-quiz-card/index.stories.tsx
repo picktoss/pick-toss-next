@@ -26,7 +26,7 @@ export const Default: Story = {
     onSelect: () => {},
     selected: false,
     order: 0,
-    quiz: quizzes[0],
+    quiz: quizzes[0]!,
   },
 }
 
@@ -35,6 +35,6 @@ export const Selected: Story = {
     onSelect: () => {},
     selected: true,
     order: 1,
-    quiz: quizzes[1],
+    quiz: quizzes[1]!,
   },
 }
