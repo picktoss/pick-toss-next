@@ -51,7 +51,7 @@ const DetailInfo = ({ id }: Props) => {
       { collectionId: id },
       {
         onSuccess: ({ quizSetId, quizSetType }) =>
-          router.push(
+          router.replace(
             `/quiz/${quizSetId}?quizSetType=${quizSetType}&collectionName=${collectionData.name}&collectionEmoji=${collectionData.emoji}&redirectUrl=${pathname}`
           ),
       }
