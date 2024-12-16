@@ -1,31 +1,39 @@
 'use client'
 
-import { getToken } from '@/firebase/messaging/get-token'
 import { useServiceWorker } from '@/firebase/messaging/use-service-worker'
 import { useEffect } from 'react'
-import { usePostFcmToken } from '@/requests/fcm/hooks'
+import { initializeFirebaseMessaging } from '../../../firebase'
 import { useSession } from 'next-auth/react'
+import { usePostFcmToken } from '@/requests/fcm/hooks'
+import { getFCMToken } from '@/firebase/messaging/get-token'
 
 export const useMessaging = () => {
   const { data: session } = useSession()
-  useServiceWorker()
   const { mutate: postFcmTokenMutate } = usePostFcmToken()
 
+  useServiceWorker()
+
   useEffect(() => {
-    try {
-      const requestFCMToken = async () => {
-        const token = await getToken()
+    const setupMessaging = async () => {
+      // 브라우저 환경에서만 실행, 세션이 있을 때만 실행
+      if (typeof window !== 'undefined' && session?.user.accessToken) {
+        try {
+          const messaging = await initializeFirebaseMessaging()
 
-        if (token) {
-          if (!session?.user.accessToken) return
+          if (messaging) {
+            // 토큰 가져오기
+            const token = await getFCMToken()
 
-          postFcmTokenMutate(token)
+            if (token) {
+              postFcmTokenMutate(token)
+            }
+          }
+        } catch (error) {
+          console.error('FCM setup error:', error)
         }
       }
-
-      void requestFCMToken()
-    } catch (error) {
-      console.error(error)
     }
-  }, [postFcmTokenMutate, session?.user.accessToken])
+
+    void setupMessaging()
+  }, [session?.user.accessToken, postFcmTokenMutate])
 }
