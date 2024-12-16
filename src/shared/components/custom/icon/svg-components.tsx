@@ -2490,7 +2490,7 @@ export function TimerColor({ ...props }) {
     >
       <rect x="13.5" y="3.00195" width="4" height="4" rx="0.833333" fill="#FFAB40" />
       <circle cx="15.5" cy="20.916" r="15" fill="#FFECD0" />
-      <circle cx="15.5" cy="20.916" r="13.9583" stroke="#FF9100" stroke-width="2.08333" />
+      <circle cx="15.5" cy="20.916" r="13.9583" stroke="#FF9100" strokeWidth="2.08333" />
       <path
         d="M27.9123 7.11441C27.1312 6.33336 25.8649 6.33336 25.0838 7.11441L23.2071 8.99113L26.8153 12.5993L28.692 10.7226C29.473 9.94151 29.473 8.67518 28.692 7.89414L27.9123 7.11441Z"
         fill="#FF9100"
