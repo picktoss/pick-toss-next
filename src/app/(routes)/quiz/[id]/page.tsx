@@ -17,6 +17,8 @@ interface Props {
     // 콜렉션 퀴즈일 경우
     collectionName?: string
     collectionEmoji?: string
+
+    redirectUrl?: string
   }
 }
 

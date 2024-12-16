@@ -11,8 +11,8 @@ import QuizOptions from './components/quiz-option'
 import { isQuizSolved } from '../../utils'
 import ResultIcon from '../../components/result-icon'
 import ExitDialog from './components/exit-dialog'
-import { useState } from 'react'
-import { useParams, useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import { useUpdateQuizResult } from '@/requests/quiz/hooks'
 import FixedBottom from '@/shared/components/custom/fixed-bottom'
 import { Button } from '@/shared/components/ui/button'
@@ -26,16 +26,25 @@ interface Props {
 }
 
 const QuizView = ({ quizzes, isFirst }: Props) => {
+  const router = useRouter()
   const { id } = useParams()
+  const redirectUrl = useSearchParams().get('redirectUrl')
   const { mutate: updateQuizResultMutate, isPending: isUpdatingQuizResult } = useUpdateQuizResult()
   const { currentIndex, navigateToNext } = useQuizNavigation()
-  const { quizResults, showExplanation, totalElapsedTime, setQuizResults, handleNext, isRunning } =
-    useQuizState({
-      quizCount: quizzes.length,
-      currentIndex,
-    })
+  const {
+    quizResults,
+    showExplanation,
+    totalElapsedTime,
+    setQuizResults,
+    handleNext,
+    runTimer,
+    isRunning,
+  } = useQuizState({
+    quizCount: quizzes.length,
+    currentIndex,
+  })
 
-  const [showResult, setShowResult] = useState(true)
+  const [showResult, setShowResult] = useState(false)
   const [showRecord, setShowRecord] = useState(false)
 
   const [exitDialogOpen, setExitDialogOpen] = useState(false)
@@ -48,7 +57,6 @@ const QuizView = ({ quizzes, isFirst }: Props) => {
     if (hasNextQuiz) {
       navigateToNext(currentIndex)
     } else {
-      // TODO: 퀴즈 종료 처리 로직 추가
       const quizResultPayload = {
         quizSetId: id,
         quizzes: quizResults,
@@ -92,16 +100,22 @@ const QuizView = ({ quizzes, isFirst }: Props) => {
     })
   }
 
+  useEffect(() => {
+    runTimer()
+  }, [runTimer])
+
+  const collectQuizCount = quizResults.reduce((acc, cur) => acc + (cur?.answer ? 1 : 0), 0)
+
   if (showResult) {
     return (
-      <div className="min-h-dvh bg-background-base-02 px-4">
-        <div className="translate-y-[15vh]">
+      <div className="min-h-dvh bg-background-base-02 px-4 pb-[100px]">
+        <div className="translate-y-[15vh] pb-[140px]">
           <div className="relative w-full rounded-[20px] bg-white">
             <Icon name="complete-quiz" className="absolute right-1/2 top-[-58px] translate-x-1/2" />
             <div className="pt-[98px] text-center">
               <Text typography="subtitle1-bold">퀴즈 완료!</Text>
               <Text typography="hero" className="mt-1">
-                <span className="text-text-info">8</span>/23
+                <span className="text-text-info">{collectQuizCount}</span>/{quizzes.length}
               </Text>
             </div>
 
@@ -149,9 +163,10 @@ const QuizView = ({ quizzes, isFirst }: Props) => {
           </div>
 
           {showRecord ? (
-            <div className="mt-[49px] pb-[100px]">
+            <div className="mt-[49px]">
               <Text typography="title3">
-                23문제 중 <span className="text-text-info">8문제</span> 맞았어요
+                {quizzes.length}문제 중{' '}
+                <span className="text-text-info">{collectQuizCount}문제</span> 맞았어요
               </Text>
               <div className="mt-5 flex flex-col gap-3">
                 {quizzes.map((quiz, index) => (
@@ -160,8 +175,12 @@ const QuizView = ({ quizzes, isFirst }: Props) => {
                     quiz={quiz}
                     header={
                       <div className="flex items-center justify-between">
-                        <Text typography="text1-bold" color="critical">
-                          {index + 1}번
+                        <Text typography="text1-bold">
+                          {quizResults[index]?.answer ? (
+                            <span className="text-text-success">정답</span>
+                          ) : (
+                            <span className="text-text-critical">오답</span>
+                          )}
                         </Text>
                         <Text typography="text2-medium" color="caption">
                           전공 공부 {'>'} 최근 이슈
@@ -169,6 +188,7 @@ const QuizView = ({ quizzes, isFirst }: Props) => {
                       </div>
                     }
                     userAnswer={quizResults[index]?.choseAnswer}
+                    answerMode={true}
                     showExplanation={true}
                   />
                 ))}
@@ -190,7 +210,12 @@ const QuizView = ({ quizzes, isFirst }: Props) => {
         </div>
 
         <FixedBottom>
-          <Button className="w-full">확인</Button>
+          <Button
+            className="w-full"
+            onClick={() => (redirectUrl ? router.replace(redirectUrl) : router.replace('/'))}
+          >
+            확인
+          </Button>
         </FixedBottom>
       </div>
     )

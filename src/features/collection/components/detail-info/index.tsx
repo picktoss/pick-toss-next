@@ -9,7 +9,7 @@ import Loading from '@/shared/components/custom/loading'
 import { Button } from '@/shared/components/ui/button'
 import Text from '@/shared/components/ui/text'
 import { useUser } from '@/shared/hooks/use-user'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useMemo } from 'react'
 
 interface Props {
@@ -18,6 +18,7 @@ interface Props {
 
 const DetailInfo = ({ id }: Props) => {
   const router = useRouter()
+  const pathname = usePathname()
 
   const { user } = useUser()
   const { data: collectionData } = useCollectionInfo(id)
@@ -51,7 +52,7 @@ const DetailInfo = ({ id }: Props) => {
       {
         onSuccess: ({ quizSetId, quizSetType }) =>
           router.push(
-            `/quiz/${quizSetId}?quizSetType=${quizSetType}&collectionName=${collectionData.name}&collectionEmoji=${collectionData.emoji}`
+            `/quiz/${quizSetId}?quizSetType=${quizSetType}&collectionName=${collectionData.name}&collectionEmoji=${collectionData.emoji}&redirectUrl=${pathname}`
           ),
       }
     )
@@ -118,11 +119,6 @@ const DetailInfo = ({ id }: Props) => {
       )}
 
       <FixedBottom>
-        {/* <Link
-          // 바로 이동하지 않고, collection quiz_set_id를 가져오는 api를 실행함
-          href={`/quiz/${collectionData.id}?quizType=collection&collectionName=${collectionData.name}&collectionEmoji=${collectionData.emoji}`}
-        > */}
-        {/* 이동 /quiz/[id] - searchParams로 collectionId, createdAt, collectionName, collectionEmoji 넣어서 */}
         <Button className="w-full" onClick={handleQuizStart}>
           퀴즈 시작하기
         </Button>
