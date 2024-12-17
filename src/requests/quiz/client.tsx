@@ -140,3 +140,15 @@ export const getQuizRecords = async () => {
     throw error
   }
 }
+
+/** GET /quizzes/{solved_date}/quiz-record - 날짜별 퀴즈 기록록 */
+export const getQuizRecordsByDate = async (date: string) => {
+  try {
+    const { data } = await http.get<Quiz.Response.GetQuizRecordsByDate>(
+      API_ENDPOINTS.QUIZ.GET.DATE_RECORDS(date)
+    )
+    return data
+  } catch (error: unknown) {
+    throw error
+  }
+}

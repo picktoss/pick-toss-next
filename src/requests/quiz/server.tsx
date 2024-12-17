@@ -50,6 +50,18 @@ export const getQuizRecords = async () => {
   }
 }
 
+/** GET /quizzes/{solved_date}/quiz-record - 날짜별 퀴즈 기록록 */
+export const getQuizRecordsByDate = async (date: string) => {
+  try {
+    const { data } = await httpServer.get<Quiz.Response.GetQuizRecordsByDate>(
+      API_ENDPOINTS.QUIZ.GET.DATE_RECORDS(date)
+    )
+    return data
+  } catch (error: unknown) {
+    throw error
+  }
+}
+
 /** GET /quizzes/{quiz_set_id}/{quiz_set_type}/quiz-record - 퀴즈 세트에 대한 상세 기록 */
 export const getQuizDetailRecord = async ({
   quizSetId,

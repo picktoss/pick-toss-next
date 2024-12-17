@@ -161,6 +161,9 @@ export const API_ENDPOINTS = {
         `/quizzes/${quizSetId}/${quizSetType}/quiz-record`,
       /** GET /quizzes/quiz-records - 전체 퀴즈 기록 */
       ALL_RECORDS: '/quizzes/quiz-records',
+      /** GET /quizzes/{solved_date}/quiz-record - 날짜별 퀴즈 기록 */
+      DATE_RECORDS: (solvedDate: string) => `/quizzes/${solvedDate}/quiz-record`,
+      /** GET /quiz-sets/{quiz_set_id} - quiz_set_id와 quiz-set-type으로 퀴즈 가져오기 */
       BY_SET_ID: (quizSetId: string) => `/quiz-sets/${quizSetId}`,
       /** GET /quiz-sets/today - 오늘의 퀴즈 세트 정보 가져오기 */
       TODAY_SET: '/quiz-sets/today',

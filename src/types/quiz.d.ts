@@ -39,7 +39,7 @@ declare global {
 
     declare namespace Set {
       type Type = Exclude<
-        DeepRequired<components['schemas']['GetQuizRecordDto']['quizSetType']>,
+        DeepRequired<components['schemas']['GetQuizRecordsDto']['quizSetType']>,
         undefined
       >
 
@@ -89,6 +89,13 @@ declare global {
        */
       type GetQuizRecords = DeepRequired<
         paths['/api/v2/quizzes/quiz-records']['get']['responses']['200']['content']['application/json;charset=UTF-8']
+      >
+
+      /** GET /api/v2/quizzes/{solved_date}/quiz-records
+       * 날짜별 퀴즈 기록
+       */
+      type GetQuizRecordsByDate = DeepRequired<
+        paths['/api/v2/quizzes/{solved_date}/quiz-record']['get']['responses']['200']['content']['application/json;charset=UTF-8']
       >
 
       /** GET /api/v2/quiz-sets/{quiz_set_id}

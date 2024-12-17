@@ -4,4510 +4,4451 @@
  */
 
 export interface paths {
-  '/api/v2/tokens': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** Fcm token 저장 */
-    post: operations['saveFcmToken']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/test/create-today-quiz': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** 오늘의 퀴즈 생성 API(테스트 혹은 예외처리를 위한 API로서 실제 사용 X) */
-    post: operations['createTodayQuizForTest']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/test/create-member': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    post: operations['createMemberForTest']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/quizzes/documents/{document_id}/custom-quiz-set': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** 사용자가 생성한 문서에서 직접 퀴즈 세트 생성(랜덤, OX, 객관식) */
-    post: operations['createMemberGeneratedQuizSet']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/quizzes/documents/{document_id}/check-quiz-set': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** 퀴즈 생성 후 퀴즈 오류 확인을 위한 퀴즈세트 생성(퀴즈 시작하기 후 모든 퀴즈 생성이 완료되면 요청) */
-    post: operations['createErrorCheckQuizSet']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/payments/verify-amount': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** 결제금액 확인 */
-    post: operations['verifyAmount']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/payments/temp-save': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** 주문과 결제금액 임시저장 */
-    post: operations['tempSaveAmount']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/payments/confirm': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** 결제 승인 요청 */
-    post: operations['confirmPayment']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/payments/cancel': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** 결제 취소 요청 */
-    post: operations['cancelPayment']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/message/send': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** 메시지 전송 2 */
-    post: operations['messageSendSend']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/message-send': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** 메시지 전송 1 */
-    post: operations['messageSend']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/login': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** login */
-    post: operations['login']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/integrated-search': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** 통합(문서, 컬렉션, 퀴즈) 검색 */
-    post: operations['integratedSearchByKeyword']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/feedback': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** Create Feedback */
-    post: operations['createFeedback']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/documents': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** 문서 생성 */
-    post: operations['createDocument']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/documents/{document_id}/add-quizzes': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** 문서에서 추가 퀴즈 생성 */
-    post: operations['createQuizzes']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/documents/search': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** 문서 검색 */
-    post: operations['searchDocumentByKeyword']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/directories': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** 모든 디렉토리 가져오기 */
-    get: operations['getDirectories']
-    put?: never
-    /** 디렉토리 생성 */
-    post: operations['createDirectory']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/collections': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** 모든 컬렉션 가져오기(탐색) */
-    get: operations['getAllCollections']
-    put?: never
-    /** 컬렉션 생성 */
-    post: operations['createCollection']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/collections/{collection_id}/create-bookmark': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** 컬렉션 북마크하기 */
-    post: operations['createCollectionBookmark']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/collections/{collection_id}/collection-quizzes': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** 컬렉션 퀴즈 시작하기 */
-    post: operations['createCollectionQuizSet']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/auth/verification': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** 이메일 인증 코드 생성 및 발송 */
-    post: operations['sendVerificationCode']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/auth/verification/check': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** 이메일 코드 인증 */
-    post: operations['verifyVerificationCode']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/auth/invite-code/verify': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    /** 초대 코드 인증 */
-    post: operations['verifyInviteCode']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/wrong-quiz/result': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    /** 오답 터뜨리기 결과 업데이트 */
-    patch: operations['updateWrongQuizResult']
-    trace?: never
-  }
-  '/api/v2/random-quiz/result': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    /** 랜덤 퀴즈 결과 업데이트 */
-    patch: operations['updateRandomQuizResult']
-    trace?: never
-  }
-  '/api/v2/quiz/result': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    /** 퀴즈 결과 업데이트 */
-    patch: operations['updateQuizResult']
-    trace?: never
-  }
-  '/api/v2/members/update-today-quiz-count': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    /** 오늘의 퀴즈 관리(오늘의 퀴즈 개수 설정) */
-    patch: operations['updateTodayQuizCount']
-    trace?: never
-  }
-  '/api/v2/members/update-quiz-notification': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    /** 사용자 퀴즈 알림 ON/OFF */
-    patch: operations['updateQuizNotification']
-    trace?: never
-  }
-  '/api/v2/members/update-name': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    /** 사용자 이름 수정 */
-    patch: operations['updateMemberName']
-    trace?: never
-  }
-  '/api/v2/members/update-collection-categories': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    /** 관심분야 태그 설정 */
-    patch: operations['updateInterestCollectionCategories']
-    trace?: never
-  }
-  '/api/v2/documents/{document_id}/update-name': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    /** 문서 이름 변경 */
-    patch: operations['updateDocumentName']
-    trace?: never
-  }
-  '/api/v2/documents/{document_id}/update-content': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    /** 문서 내용 업데이트 */
-    patch: operations['changeDocumentContent']
-    trace?: never
-  }
-  '/api/v2/documents/today-quiz-settings': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    /**
-     * 오늘의 퀴즈 관리(문제를 가져올 노트 선택)
-     * @description Request map에서 key값은 number, value값은 boolean입니다.
-     */
-    patch: operations['selectDocumentToNotGenerateByTodayQuiz']
-    trace?: never
-  }
-  '/api/v2/documents/move': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    /** 문서 다른 폴더로 옮기기 */
-    patch: operations['moveDocumentToDirectory']
-    trace?: never
-  }
-  '/api/v2/directories/{directory_id}/update-info': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    /** 디렉토리 정보 변경 */
-    patch: operations['updateDirectoryInfo']
-    trace?: never
-  }
-  '/api/v2/collections/{collection_id}/update-quizzes': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    /** 컬렉션 문제 편집 */
-    patch: operations['updateCollectionQuizzes']
-    trace?: never
-  }
-  '/api/v2/collections/{collection_id}/update-info': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    /** 컬렉션 정보 수정 */
-    patch: operations['updateCollectionInfo']
-    trace?: never
-  }
-  '/api/v2/collection/{collection_id}/add-quiz': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    /**
-     * 컬렉션에 퀴즈 추가
-     * @description 노트 상세에서 특정 퀴즈를 특정 컬렉션에 추가
-     */
-    patch: operations['addQuizToCollection']
-    trace?: never
-  }
-  '/api/v2/today-quiz-info': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** 오늘의 퀴즈 현황 */
-    get: operations['getCurrentTodayQuizInfo']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/quizzes/{quiz_set_id}/{quiz_set_type}/quiz-record': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** 퀴즈 세트에 대한 상세 기록 */
-    get: operations['getSingleQuizSetRecord']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/quizzes/quiz-records': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** 전체 퀴즈 기록 */
-    get: operations['getAllQuizzesAndCollectionRecords']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/quiz-sets/{quiz_set_id}': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** quiz_set_id와 quiz-set-type으로 퀴즈 가져오기 */
-    get: operations['getQuizSet']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/quiz-sets/today': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** 오늘의 퀴즈 세트 정보 가져오기 */
-    get: operations['getQuizSetToday']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/quiz-analysis': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** 퀴즈 분석 */
-    get: operations['getQuizAnswerRateAnalysis']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/payments/{payment_key}': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** paymentKey로 결제 조회 */
-    get: operations['getPaymentByPaymentKey']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/payments/orders/{order_id}': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** orderId로 결제 조회 */
-    get: operations['getPaymentByOrderId']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/oauth/url': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Oauth url api */
-    get: operations['oauthUrlApi']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/notion/pages': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Get notion pages */
-    get: operations['getNotionPages']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/notion/page/{page_id}': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Get notion page */
-    get: operations['getNotionPage']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/notion/oauth': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get: operations['verifyNotion']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/notion/callback': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get: operations['notionCallback']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/members/reward': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** 초대 링크 보상 확인? */
-    get: operations['getInviteLinkMember']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/members/info': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Get member info */
-    get: operations['getMemberInfo']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/incorrect-quizzes': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** 오답 터뜨리기 퀴즈 가져오기 */
-    get: operations['getIncorrectQuizzes']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/health-check': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Health check */
-    get: operations['healthCheck']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/documents/{document_id}': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** document_id로 문서 가져오기 */
-    get: operations['getSingleDocument']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/documents/{document_id}/review-pick': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** document_id로 복습 pick 가져오기 */
-    get: operations['getDocumentsNeedingReviewPick']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/documents/{document_id}/quizzes': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** document_id에 해당하는 모든 퀴즈 가져오기 */
-    get: operations['getGeneratedQuizzes']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/documents/{document_id}/download-quiz': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** 퀴즈 다운로드 */
-    get: operations['downloadQuizzes']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/documents/review-need-documents': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** 복습 필수 노트 top 5 */
-    get: operations['getDocumentsNeedingReview']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/directories/{directory_id}': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** directory_id로 디렉토리 가져오기 */
-    get: operations['getSingleDirectory']
-    put?: never
-    post?: never
-    /** 디렉토리 삭제 */
-    delete: operations['deleteDirectory']
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/directories/{directory_id}/quizzes': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** 디렉토리에 생성된 모든 퀴즈 랜덤하게 가져오기(랜덤 퀴즈) */
-    get: operations['getAllQuizzesByMemberId']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/directories/documents': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** 모든 문서 가져오기 */
-    get: operations['getAllDocuments']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/collections/{keyword}': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** 컬렉션 검색하기 */
-    get: operations['searchCollections']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/collections/{collection_id}/info': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** 컬렉션 상세 정보 가져오기 */
-    get: operations['getCollectionInfoByCollectionId']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/collections/{collection_category}/quizzes': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** 북마크하거나 소유한 컬렉션 분야별로 모든 퀴즈 랜덤하게 가져오기 */
-    get: operations['getQuizzesInCollectionByCollectionCategory']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/collections/my-collections': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** 직접 생성한 컬렉션 가져오기 */
-    get: operations['getAllByMemberId']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/collections/interest-category-collection': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** 사용자 관심 분야 컬렉션 가져오기 */
-    get: operations['getInterestCategoryCollections']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/collections/categories': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** 사용자가 북마크했거나 생성한 컬렉션 카테고리 가져오기 */
-    get: operations['getCollectionCategories']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/collections/bookmarked-collections': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** 북마크한 컬렉션 가져오기 */
-    get: operations['getAllByMemberIdAndBookmarked']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/collections-analysis': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** 컬렉션 분석 */
-    get: operations['getCollectionAnalysis']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/callback': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Oauth callback */
-    get: operations['googleLogin']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/auth/invite-link': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** 초대 링크 생성 */
-    get: operations['createInviteLink']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/quizzes/{quiz_id}/invalid': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    post?: never
-    /** 오류가 발생한 퀴즈 삭제 */
-    delete: operations['deleteInvalidQuiz']
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/quizzes/{quiz_id}/delete-quiz': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    post?: never
-    /** 퀴즈 삭제 */
-    delete: operations['deleteQuiz']
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/documents/delete-documents': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    post?: never
-    /** 문서 삭제 */
-    delete: operations['deleteDocument']
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/collections/{collection_id}/delete-collection': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    post?: never
-    /** 컬렉션 삭제 */
-    delete: operations['deleteCollection']
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/api/v2/collections/{collection_id}/delete-bookmark': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get?: never
-    put?: never
-    post?: never
-    /** 컬렉션 북마크 취소하기 */
-    delete: operations['deleteCollectionBookmark']
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
+    "/api/v2/tokens": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Fcm token 저장 */
+        post: operations["saveFcmToken"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/test/create-today-quiz": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 오늘의 퀴즈 생성 API(테스트 혹은 예외처리를 위한 API로서 실제 사용 X) */
+        post: operations["createTodayQuizForTest"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/test/create-member": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["createMemberForTest"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/quizzes/documents/{document_id}/custom-quiz-set": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 사용자가 생성한 문서에서 직접 퀴즈 세트 생성(랜덤, OX, 객관식) */
+        post: operations["createMemberGeneratedQuizSet"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/quizzes/documents/{document_id}/check-quiz-set": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 퀴즈 생성 후 퀴즈 오류 확인을 위한 퀴즈세트 생성(퀴즈 시작하기 후 모든 퀴즈 생성이 완료되면 요청) */
+        post: operations["createErrorCheckQuizSet"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/payments/verify-amount": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 결제금액 확인 */
+        post: operations["verifyAmount"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/payments/temp-save": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 주문과 결제금액 임시저장 */
+        post: operations["tempSaveAmount"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/payments/confirm": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 결제 승인 요청 */
+        post: operations["confirmPayment"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/payments/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 결제 취소 요청 */
+        post: operations["cancelPayment"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/message/send": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 메시지 전송 2 */
+        post: operations["messageSendSend"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/message-send": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 메시지 전송 1 */
+        post: operations["messageSend"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/login": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** login */
+        post: operations["login"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/integrated-search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 통합(문서, 컬렉션, 퀴즈) 검색 */
+        post: operations["integratedSearchByKeyword"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/feedback": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create Feedback */
+        post: operations["createFeedback"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/documents": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 문서 생성 */
+        post: operations["createDocument"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/documents/{document_id}/add-quizzes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 문서에서 추가 퀴즈 생성 */
+        post: operations["createQuizzes"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/documents/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 문서 검색 */
+        post: operations["searchDocumentByKeyword"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/directories": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 모든 디렉토리 가져오기 */
+        get: operations["getDirectories"];
+        put?: never;
+        /** 디렉토리 생성 */
+        post: operations["createDirectory"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/collections": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 모든 컬렉션 가져오기(탐색) */
+        get: operations["getAllCollections"];
+        put?: never;
+        /** 컬렉션 생성 */
+        post: operations["createCollection"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/collections/{collection_id}/create-bookmark": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 컬렉션 북마크하기 */
+        post: operations["createCollectionBookmark"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/collections/{collection_id}/collection-quizzes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 컬렉션 퀴즈 시작하기 */
+        post: operations["createCollectionQuizSet"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/auth/verification": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 이메일 인증 코드 생성 및 발송 */
+        post: operations["sendVerificationCode"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/auth/verification/check": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 이메일 코드 인증 */
+        post: operations["verifyVerificationCode"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/auth/invite-code/verify": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 초대 코드 인증 */
+        post: operations["verifyInviteCode"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/wrong-quiz/result": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** 오답 터뜨리기 결과 업데이트 */
+        patch: operations["updateWrongQuizResult"];
+        trace?: never;
+    };
+    "/api/v2/random-quiz/result": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** 랜덤 퀴즈 결과 업데이트 */
+        patch: operations["updateRandomQuizResult"];
+        trace?: never;
+    };
+    "/api/v2/quiz/result": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** 퀴즈 결과 업데이트 */
+        patch: operations["updateQuizResult"];
+        trace?: never;
+    };
+    "/api/v2/members/update-today-quiz-count": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** 오늘의 퀴즈 관리(오늘의 퀴즈 개수 설정) */
+        patch: operations["updateTodayQuizCount"];
+        trace?: never;
+    };
+    "/api/v2/members/update-quiz-notification": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** 사용자 퀴즈 알림 ON/OFF */
+        patch: operations["updateQuizNotification"];
+        trace?: never;
+    };
+    "/api/v2/members/update-name": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** 사용자 이름 수정 */
+        patch: operations["updateMemberName"];
+        trace?: never;
+    };
+    "/api/v2/members/update-collection-categories": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** 관심분야 태그 설정 */
+        patch: operations["updateInterestCollectionCategories"];
+        trace?: never;
+    };
+    "/api/v2/documents/{document_id}/update-name": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** 문서 이름 변경 */
+        patch: operations["updateDocumentName"];
+        trace?: never;
+    };
+    "/api/v2/documents/{document_id}/update-content": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** 문서 내용 업데이트 */
+        patch: operations["changeDocumentContent"];
+        trace?: never;
+    };
+    "/api/v2/documents/today-quiz-settings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * 오늘의 퀴즈 관리(문제를 가져올 노트 선택)
+         * @description Request map에서 key값은 number, value값은 boolean입니다.
+         */
+        patch: operations["selectDocumentToNotGenerateByTodayQuiz"];
+        trace?: never;
+    };
+    "/api/v2/documents/move": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** 문서 다른 폴더로 옮기기 */
+        patch: operations["moveDocumentToDirectory"];
+        trace?: never;
+    };
+    "/api/v2/directories/{directory_id}/update-info": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** 디렉토리 정보 변경 */
+        patch: operations["updateDirectoryInfo"];
+        trace?: never;
+    };
+    "/api/v2/collections/{collection_id}/update-quizzes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** 컬렉션 문제 편집 */
+        patch: operations["updateCollectionQuizzes"];
+        trace?: never;
+    };
+    "/api/v2/collections/{collection_id}/update-info": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** 컬렉션 정보 수정 */
+        patch: operations["updateCollectionInfo"];
+        trace?: never;
+    };
+    "/api/v2/collection/{collection_id}/add-quiz": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * 컬렉션에 퀴즈 추가
+         * @description 노트 상세에서 특정 퀴즈를 특정 컬렉션에 추가
+         */
+        patch: operations["addQuizToCollection"];
+        trace?: never;
+    };
+    "/api/v2/today-quiz-info": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 오늘의 퀴즈 현황 */
+        get: operations["getCurrentTodayQuizInfo"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/quizzes/{solved_date}/quiz-record": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 날짜별 퀴즈 기록 */
+        get: operations["getSingleQuizSetRecordByDate"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/quizzes/{quiz_set_id}/{quiz_set_type}/quiz-record": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 퀴즈 세트에 대한 상세 기록 */
+        get: operations["getSingleQuizSetRecord"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/quizzes/quiz-records": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 전체 퀴즈 기록 */
+        get: operations["getAllQuizzesAndCollectionRecords"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/quiz-sets/{quiz_set_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** quiz_set_id와 quiz-set-type으로 퀴즈 가져오기 */
+        get: operations["getQuizSet"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/quiz-sets/today": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 오늘의 퀴즈 세트 정보 가져오기 */
+        get: operations["getQuizSetToday"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/quiz-analysis": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 퀴즈 분석 */
+        get: operations["getQuizAnswerRateAnalysis"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/payments/{payment_key}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** paymentKey로 결제 조회 */
+        get: operations["getPaymentByPaymentKey"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/payments/orders/{order_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** orderId로 결제 조회 */
+        get: operations["getPaymentByOrderId"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/oauth/url": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Oauth url api */
+        get: operations["oauthUrlApi"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/notion/pages": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get notion pages */
+        get: operations["getNotionPages"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/notion/page/{page_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get notion page */
+        get: operations["getNotionPage"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/notion/oauth": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["verifyNotion"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/notion/callback": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["notionCallback"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/members/reward": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 초대 링크 보상 확인? */
+        get: operations["getInviteLinkMember"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/members/info": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get member info */
+        get: operations["getMemberInfo"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/incorrect-quizzes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 오답 터뜨리기 퀴즈 가져오기 */
+        get: operations["getIncorrectQuizzes"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/health-check": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Health check */
+        get: operations["healthCheck"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/documents/{document_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** document_id로 문서 가져오기 */
+        get: operations["getSingleDocument"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/documents/{document_id}/review-pick": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** document_id로 복습 pick 가져오기 */
+        get: operations["getDocumentsNeedingReviewPick"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/documents/{document_id}/quizzes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** document_id에 해당하는 모든 퀴즈 가져오기 */
+        get: operations["getGeneratedQuizzes"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/documents/{document_id}/download-quiz": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 퀴즈 다운로드 */
+        get: operations["downloadQuizzes"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/documents/review-need-documents": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 복습 필수 노트 top 5 */
+        get: operations["getDocumentsNeedingReview"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/directories/{directory_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** directory_id로 디렉토리 가져오기 */
+        get: operations["getSingleDirectory"];
+        put?: never;
+        post?: never;
+        /** 디렉토리 삭제 */
+        delete: operations["deleteDirectory"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/directories/{directory_id}/quizzes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 디렉토리에 생성된 모든 퀴즈 랜덤하게 가져오기(랜덤 퀴즈) */
+        get: operations["getAllQuizzesByMemberId"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/directories/documents": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 모든 문서 가져오기 */
+        get: operations["getAllDocuments"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/collections/{keyword}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 컬렉션 검색하기 */
+        get: operations["searchCollections"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/collections/{collection_id}/info": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 컬렉션 상세 정보 가져오기 */
+        get: operations["getCollectionInfoByCollectionId"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/collections/{collection_category}/quizzes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 북마크하거나 소유한 컬렉션 분야별로 모든 퀴즈 랜덤하게 가져오기 */
+        get: operations["getQuizzesInCollectionByCollectionCategory"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/collections/my-collections": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 직접 생성한 컬렉션 가져오기 */
+        get: operations["getAllByMemberId"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/collections/interest-category-collection": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 사용자 관심 분야 컬렉션 가져오기 */
+        get: operations["getInterestCategoryCollections"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/collections/categories": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 사용자가 북마크했거나 생성한 컬렉션 카테고리 가져오기 */
+        get: operations["getCollectionCategories"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/collections/bookmarked-collections": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 북마크한 컬렉션 가져오기 */
+        get: operations["getAllByMemberIdAndBookmarked"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/collections-analysis": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 컬렉션 분석 */
+        get: operations["getCollectionAnalysis"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/callback": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Oauth callback */
+        get: operations["googleLogin"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/auth/invite-link": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 초대 링크 생성 */
+        get: operations["createInviteLink"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/quizzes/{quiz_id}/invalid": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** 오류가 발생한 퀴즈 삭제 */
+        delete: operations["deleteInvalidQuiz"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/quizzes/{quiz_id}/delete-quiz": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** 퀴즈 삭제 */
+        delete: operations["deleteQuiz"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/documents/delete-documents": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** 문서 삭제 */
+        delete: operations["deleteDocument"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/collections/{collection_id}/delete-collection": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** 컬렉션 삭제 */
+        delete: operations["deleteCollection"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/collections/{collection_id}/delete-bookmark": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** 컬렉션 북마크 취소하기 */
+        delete: operations["deleteCollectionBookmark"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
-export type webhooks = Record<string, never>
+export type webhooks = Record<string, never>;
 export interface components {
-  schemas: {
-    SaveFcmTokenRequest: {
-      fcmToken?: string
-    }
-    CreateQuizzesResponse: {
-      quizSetId?: string
-      /** @enum {string} */
-      quizSetType?:
-        | 'TODAY_QUIZ_SET'
-        | 'DOCUMENT_QUIZ_SET'
-        | 'COLLECTION_QUIZ_SET'
-        | 'FIRST_QUIZ_SET'
-      /** Format: date-time */
-      createdAt?: string
-    }
-    CreateQuizzesByDocumentRequest: {
-      quizType?: string
-      /** Format: int32 */
-      quizCount?: number
-    }
-    SaveAmountRequest: {
-      orderId?: string
-      /** Format: int32 */
-      amount?: number
-    }
-    TossPaymentRequest: {
-      paymentKey?: string
-      orderId?: string
-      /** Format: int32 */
-      amount?: number
-    }
-    CancelPaymentRequest: {
-      paymentKey?: string
-    }
-    FcmMessageDto: {
-      content?: string
-    }
-    FcmNotificationRequestDto: {
-      title?: string
-      body?: string
-      content?: string
-    }
-    LoginRequest: {
-      accessToken?: string
-      /** @enum {string} */
-      socialPlatform?: 'KAKAO' | 'GOOGLE'
-    }
-    LoginResponse: {
-      accessToken?: string
-      /** Format: date-time */
-      accessTokenExpiration?: string
-      signUp?: boolean
-    }
-    SearchRequest: {
-      keyword?: string
-    }
-    IntegratedSearchCollectionDto: {
-      /** Format: int64 */
-      id?: number
-      name?: string
-      emoji?: string
-      /** Format: int32 */
-      bookmarkCount?: number
-      /** @enum {string} */
-      collectionCategory?:
-        | 'IT'
-        | 'LAW'
-        | 'BUSINESS_ECONOMY'
-        | 'SOCIETY_POLITICS'
-        | 'LANGUAGE'
-        | 'MEDICINE_PHARMACY'
-        | 'ART'
-        | 'SCIENCE_ENGINEERING'
-        | 'HISTORY_PHILOSOPHY'
-        | 'OTHER'
-      memberName?: string
-      /** Format: int32 */
-      quizCount?: number
-    }
-    IntegratedSearchDirectoryDto: {
-      /** Format: int64 */
-      id?: number
-      name?: string
-    }
-    IntegratedSearchDocumentDto: {
-      /** Format: int64 */
-      documentId?: number
-      documentName?: string
-      content?: string
-      /** @enum {string} */
-      documentType?: 'FILE' | 'TEXT' | 'NOTION'
-      directory?: components['schemas']['IntegratedSearchDirectoryDto']
-    }
-    IntegratedSearchQuizDto: {
-      /** Format: int64 */
-      id?: number
-      question?: string
-      answer?: string
-      /** Format: int64 */
-      documentId?: number
-      documentName?: string
-      /** @enum {string} */
-      documentType?: 'FILE' | 'TEXT' | 'NOTION'
-      directoryName?: string
-    }
-    IntegratedSearchResponse: {
-      documents?: components['schemas']['IntegratedSearchDocumentDto'][]
-      quizzes?: components['schemas']['IntegratedSearchQuizDto'][]
-      collections?: components['schemas']['IntegratedSearchCollectionDto'][]
-    }
-    CreateFeedbackRequest: {
-      files?: string[]
-      title?: string
-      content?: string
-      /** @enum {string} */
-      type?:
-        | 'ERROR'
-        | 'PAYMENT'
-        | 'PARTNERSHIP'
-        | 'EVENT'
-        | 'ACCOUNT_INFO'
-        | 'CANCELLATION'
-        | 'OTHER'
-      email?: string
-    }
-    CreateDocumentRequest: {
-      /** Format: binary */
-      file?: string
-      directoryId?: string
-      documentName?: string
-      star?: string
-      /** @enum {string} */
-      quizType?: 'MIX_UP' | 'MULTIPLE_CHOICE'
-      /** @enum {string} */
-      documentType?: 'FILE' | 'TEXT' | 'NOTION'
-    }
-    CreateDocumentResponse: {
-      /** Format: int64 */
-      id?: number
-    }
-    CreateQuizzesRequest: {
-      /** Format: int32 */
-      star?: number
-      /** @enum {string} */
-      quizType?: 'MIX_UP' | 'MULTIPLE_CHOICE'
-    }
-    SearchDocumentDirectoryDto: {
-      /** Format: int64 */
-      id?: number
-      name?: string
-    }
-    SearchDocumentDto: {
-      /** Format: int64 */
-      documentId?: number
-      documentName?: string
-      content?: string
-      /** @enum {string} */
-      documentType?: 'FILE' | 'TEXT' | 'NOTION'
-      directory?: components['schemas']['SearchDocumentDirectoryDto']
-    }
-    SearchDocumentQuizDto: {
-      /** Format: int64 */
-      id?: number
-      question?: string
-      answer?: string
-      /** Format: int64 */
-      documentId?: number
-      documentName?: string
-      /** @enum {string} */
-      documentType?: 'FILE' | 'TEXT' | 'NOTION'
-      directoryName?: string
-    }
-    SearchDocumentResponse: {
-      documents?: components['schemas']['SearchDocumentDto'][]
-      quizzes?: components['schemas']['SearchDocumentQuizDto'][]
-    }
-    CreateDirectoryRequest: {
-      name?: string
-      emoji?: string
-    }
-    CreateDirectoryResponse: {
-      /** Format: int64 */
-      id?: number
-    }
-    CreateCollectionRequest: {
-      /** @example 컬렉션 제목 */
-      name?: string
-      /** @example 📙 */
-      emoji?: string
-      /** @example 컬렉션 설명 */
-      description?: string
-      /**
-       * @example IT, LAW, BUSINESS_ECONOMY, SOCIETY_POLITICS, LANGUAGE, MEDICINE_PHARMACY, ART, SCIENCE_ENGINEERING, HISTORY_PHILOSOPHY, OTHER
-       * @enum {string}
-       */
-      collectionCategory?:
-        | 'IT'
-        | 'LAW'
-        | 'BUSINESS_ECONOMY'
-        | 'SOCIETY_POLITICS'
-        | 'LANGUAGE'
-        | 'MEDICINE_PHARMACY'
-        | 'ART'
-        | 'SCIENCE_ENGINEERING'
-        | 'HISTORY_PHILOSOPHY'
-        | 'OTHER'
-      quizzes?: number[]
-    }
-    CreateCollectionResponse: {
-      /** Format: int64 */
-      collectionId?: number
-    }
-    SendVerificationCodeRequest: {
-      email?: string
-    }
-    VerifyVerificationCodeRequest: {
-      email?: string
-      verificationCode?: string
-    }
-    VerifyInviteCode: {
-      inviteCode?: string
-    }
-    UpdateRandomQuizResultDto: {
-      /** Format: int64 */
-      id?: number
-      answer?: boolean
-    }
-    UpdateRandomQuizResultRequest: {
-      quizzes?: components['schemas']['UpdateRandomQuizResultDto'][]
-    }
-    UpdateQuizResultQuizDto: {
-      /** Format: int64 */
-      id?: number
-      answer?: boolean
-      choseAnswer?: string
-      /** Format: int32 */
-      elapsedTime?: number
-    }
-    UpdateQuizResultRequest: {
-      quizSetId?: string
-      quizzes?: components['schemas']['UpdateQuizResultQuizDto'][]
-    }
-    UpdateQuizResultResponse: {
-      /** Format: int32 */
-      reward?: number
-      /** Format: int32 */
-      currentConsecutiveTodayQuizDate?: number
-    }
-    UpdateTodayQuizCountRequest: {
-      /** Format: int32 */
-      todayQuizCount?: number
-    }
-    UpdateQuizNotificationRequest: {
-      quizNotificationEnabled?: boolean
-    }
-    UpdateMemberNameRequest: {
-      name?: string
-    }
-    UpdateInterestCollectionCategoriesRequest: {
-      interestCollectionCategories?: (
-        | 'IT'
-        | 'LAW'
-        | 'BUSINESS_ECONOMY'
-        | 'SOCIETY_POLITICS'
-        | 'LANGUAGE'
-        | 'MEDICINE_PHARMACY'
-        | 'ART'
-        | 'SCIENCE_ENGINEERING'
-        | 'HISTORY_PHILOSOPHY'
-        | 'OTHER'
-      )[]
-    }
-    UpdateDocumentNameRequest: {
-      name?: string
-    }
-    UpdateDocumentContentRequest: {
-      name?: string
-      /** Format: binary */
-      file?: string
-    }
-    UpdateTodayQuizSettingsRequest: {
-      /**
-       * @description 문서 ID와 퀴즈 설정 값 (true/false) 맵
-       * @example {
-       *       "1": true,
-       *       "2": false,
-       *       "3": true
-       *     }
-       */
-      documentIdTodayQuizMap?: {
-        [key: string]: boolean
-      }
-    }
-    MoveDocumentToDirectoryRequest: {
-      documentIds?: number[]
-      /** Format: int64 */
-      directoryId?: number
-    }
-    UpdateDirectoryInfoRequest: {
-      name?: string
-      emoji?: string
-    }
-    UpdateCollectionQuizzesRequest: {
-      quizzes?: number[]
-    }
-    UpdateCollectionInfoRequest: {
-      /** @example 컬렉션 제목 */
-      name?: string
-      /** @example 📙 */
-      emoji?: string
-      /** @example 컬렉션 설명 */
-      description?: string
-      /**
-       * @example IT, LAW, BUSINESS_ECONOMY, SOCIETY_POLITICS, LANGUAGE, MEDICINE_PHARMACY, ART, SCIENCE_ENGINEERING, HISTORY_PHILOSOPHY, OTHER
-       * @enum {string}
-       */
-      collectionCategory?:
-        | 'IT'
-        | 'LAW'
-        | 'BUSINESS_ECONOMY'
-        | 'SOCIETY_POLITICS'
-        | 'LANGUAGE'
-        | 'MEDICINE_PHARMACY'
-        | 'ART'
-        | 'SCIENCE_ENGINEERING'
-        | 'HISTORY_PHILOSOPHY'
-        | 'OTHER'
-    }
-    AddQuizToCollectionRequest: {
-      /** Format: int64 */
-      quizId?: number
-    }
-    GetCurrentTodayQuizInfo: {
-      /** Format: int32 */
-      currentConsecutiveDays?: number
-      /** Format: int32 */
-      maxConsecutiveDays?: number
-    }
-    GetSingleQuizSetRecordDto: {
-      /** Format: int64 */
-      id?: number
-      question?: string
-      answer?: string
-      explanation?: string
-      /** @enum {string} */
-      quizType?: 'MIX_UP' | 'MULTIPLE_CHOICE'
-      options?: string[]
-      choseAnswer?: string
-      documentName?: string
-      directoryName?: string
-      collectionName?: string
-      /** @enum {string} */
-      quizSetType?:
-        | 'TODAY_QUIZ_SET'
-        | 'DOCUMENT_QUIZ_SET'
-        | 'COLLECTION_QUIZ_SET'
-        | 'FIRST_QUIZ_SET'
-    }
-    GetSingleQuizSetRecordResponse: {
-      /** Format: int32 */
-      totalElapsedTimeMs?: number
-      quizzes?: components['schemas']['GetSingleQuizSetRecordDto'][]
-      /** Format: date-time */
-      createdAt?: string
-    }
-    GetQuizRecordDto: {
-      quizSetId?: string
-      name?: string
-      /** Format: int32 */
-      quizCount?: number
-      /** Format: int32 */
-      score?: number
-      /** @enum {string} */
-      quizSetType?:
-        | 'TODAY_QUIZ_SET'
-        | 'DOCUMENT_QUIZ_SET'
-        | 'COLLECTION_QUIZ_SET'
-        | 'FIRST_QUIZ_SET'
-    }
-    GetQuizRecordResponse: {
-      /** Format: int32 */
-      currentConsecutiveDays?: number
-      /** Format: int32 */
-      maxConsecutiveDays?: number
-      quizRecords?: components['schemas']['GetQuizRecordSolvedDateDto'][]
-    }
-    GetQuizRecordSolvedDateDto: {
-      /** Format: date */
-      solvedDate?: string
-      quizRecords?: components['schemas']['GetQuizRecordDto'][]
-    }
-    GetQuizSetDirectoryDto: {
-      /** Format: int64 */
-      id?: number
-      name?: string
-    }
-    GetQuizSetDocumentDto: {
-      /** Format: int64 */
-      id?: number
-      name?: string
-    }
-    GetQuizSetQuizDto: {
-      /** Format: int64 */
-      id?: number
-      question?: string
-      answer?: string
-      explanation?: string
-      options?: string[]
-      /** @enum {string} */
-      quizType?: 'MIX_UP' | 'MULTIPLE_CHOICE'
-      document?: components['schemas']['GetQuizSetDocumentDto']
-      directory?: components['schemas']['GetQuizSetDirectoryDto']
-    }
-    GetQuizSetResponse: {
-      quizzes?: components['schemas']['GetQuizSetQuizDto'][]
-    }
-    GetQuizSetTodayResponse: {
-      quizSetId?: string
-      /** @enum {string} */
-      quizSetType?:
-        | 'TODAY_QUIZ_SET'
-        | 'DOCUMENT_QUIZ_SET'
-        | 'COLLECTION_QUIZ_SET'
-        | 'FIRST_QUIZ_SET'
-      /** @enum {string} */
-      type?: 'READY' | 'NOT_READY' | 'DONE'
-      /** Format: date-time */
-      createdAt?: string
-    }
-    GetQuizAnswerRateAnalysisResponse: {
-      /** Format: int32 */
-      totalElapsedTime?: number
-      quizzes?: components['schemas']['QuizAnswerRateAnalysisDto'][]
-    }
-    QuizAnswerRateAnalysisDto: {
-      /** Format: date */
-      date?: string
-      /** Format: int32 */
-      quizCount?: number
-      /** Format: int32 */
-      incorrectAnswerCount?: number
-    }
-    ApplicationContext: {
-      parent?: components['schemas']['ApplicationContext']
-      id?: string
-      displayName?: string
-      autowireCapableBeanFactory?: components['schemas']['AutowireCapableBeanFactory']
-      applicationName?: string
-      /** Format: int64 */
-      startupDate?: number
-      environment?: components['schemas']['Environment']
-      /** Format: int32 */
-      beanDefinitionCount?: number
-      beanDefinitionNames?: string[]
-      parentBeanFactory?: components['schemas']['BeanFactory']
-      classLoader?: {
-        name?: string
-        registeredAsParallelCapable?: boolean
-        parent?: {
-          name?: string
-          registeredAsParallelCapable?: boolean
-          unnamedModule?: {
-            name?: string
+    schemas: {
+        SaveFcmTokenRequest: {
+            fcmToken?: string;
+        };
+        CreateQuizzesResponse: {
+            quizSetId?: string;
+            /** @enum {string} */
+            quizSetType?: "TODAY_QUIZ_SET" | "DOCUMENT_QUIZ_SET" | "COLLECTION_QUIZ_SET" | "FIRST_QUIZ_SET";
+            /** Format: date-time */
+            createdAt?: string;
+        };
+        CreateQuizzesByDocumentRequest: {
+            quizType?: string;
+            /** Format: int32 */
+            quizCount?: number;
+        };
+        SaveAmountRequest: {
+            orderId?: string;
+            /** Format: int32 */
+            amount?: number;
+        };
+        TossPaymentRequest: {
+            paymentKey?: string;
+            orderId?: string;
+            /** Format: int32 */
+            amount?: number;
+        };
+        CancelPaymentRequest: {
+            paymentKey?: string;
+        };
+        FcmMessageDto: {
+            content?: string;
+        };
+        FcmNotificationRequestDto: {
+            title?: string;
+            body?: string;
+            content?: string;
+        };
+        LoginRequest: {
+            accessToken?: string;
+            /** @enum {string} */
+            socialPlatform?: "KAKAO" | "GOOGLE";
+        };
+        LoginResponse: {
+            accessToken?: string;
+            /** Format: date-time */
+            accessTokenExpiration?: string;
+            signUp?: boolean;
+        };
+        SearchRequest: {
+            keyword?: string;
+        };
+        IntegratedSearchCollectionDto: {
+            /** Format: int64 */
+            id?: number;
+            name?: string;
+            emoji?: string;
+            /** Format: int32 */
+            bookmarkCount?: number;
+            /** @enum {string} */
+            collectionCategory?: "IT" | "LAW" | "BUSINESS_ECONOMY" | "SOCIETY_POLITICS" | "LANGUAGE" | "MEDICINE_PHARMACY" | "ART" | "SCIENCE_ENGINEERING" | "HISTORY_PHILOSOPHY" | "OTHER";
+            memberName?: string;
+            /** Format: int32 */
+            quizCount?: number;
+        };
+        IntegratedSearchDirectoryDto: {
+            /** Format: int64 */
+            id?: number;
+            name?: string;
+        };
+        IntegratedSearchDocumentDto: {
+            /** Format: int64 */
+            documentId?: number;
+            documentName?: string;
+            content?: string;
+            /** @enum {string} */
+            documentType?: "FILE" | "TEXT" | "NOTION";
+            directory?: components["schemas"]["IntegratedSearchDirectoryDto"];
+        };
+        IntegratedSearchQuizDto: {
+            /** Format: int64 */
+            id?: number;
+            question?: string;
+            answer?: string;
+            /** Format: int64 */
+            documentId?: number;
+            documentName?: string;
+            /** @enum {string} */
+            documentType?: "FILE" | "TEXT" | "NOTION";
+            directoryName?: string;
+        };
+        IntegratedSearchResponse: {
+            documents?: components["schemas"]["IntegratedSearchDocumentDto"][];
+            quizzes?: components["schemas"]["IntegratedSearchQuizDto"][];
+            collections?: components["schemas"]["IntegratedSearchCollectionDto"][];
+        };
+        CreateFeedbackRequest: {
+            files?: string[];
+            title?: string;
+            content?: string;
+            /** @enum {string} */
+            type?: "ERROR" | "PAYMENT" | "PARTNERSHIP" | "EVENT" | "ACCOUNT_INFO" | "CANCELLATION" | "OTHER";
+            email?: string;
+        };
+        CreateDocumentRequest: {
+            /** Format: binary */
+            file?: string;
+            directoryId?: string;
+            documentName?: string;
+            star?: string;
+            /** @enum {string} */
+            quizType?: "MIX_UP" | "MULTIPLE_CHOICE";
+            /** @enum {string} */
+            documentType?: "FILE" | "TEXT" | "NOTION";
+        };
+        CreateDocumentResponse: {
+            /** Format: int64 */
+            id?: number;
+        };
+        CreateQuizzesRequest: {
+            /** Format: int32 */
+            star?: number;
+            /** @enum {string} */
+            quizType?: "MIX_UP" | "MULTIPLE_CHOICE";
+        };
+        SearchDocumentDirectoryDto: {
+            /** Format: int64 */
+            id?: number;
+            name?: string;
+        };
+        SearchDocumentDto: {
+            /** Format: int64 */
+            documentId?: number;
+            documentName?: string;
+            content?: string;
+            /** @enum {string} */
+            documentType?: "FILE" | "TEXT" | "NOTION";
+            directory?: components["schemas"]["SearchDocumentDirectoryDto"];
+        };
+        SearchDocumentQuizDto: {
+            /** Format: int64 */
+            id?: number;
+            question?: string;
+            answer?: string;
+            /** Format: int64 */
+            documentId?: number;
+            documentName?: string;
+            /** @enum {string} */
+            documentType?: "FILE" | "TEXT" | "NOTION";
+            directoryName?: string;
+        };
+        SearchDocumentResponse: {
+            documents?: components["schemas"]["SearchDocumentDto"][];
+            quizzes?: components["schemas"]["SearchDocumentQuizDto"][];
+        };
+        CreateDirectoryRequest: {
+            name?: string;
+            emoji?: string;
+        };
+        CreateDirectoryResponse: {
+            /** Format: int64 */
+            id?: number;
+        };
+        CreateCollectionRequest: {
+            /** @example 컬렉션 제목 */
+            name?: string;
+            /** @example 📙 */
+            emoji?: string;
+            /** @example 컬렉션 설명 */
+            description?: string;
+            /**
+             * @example IT, LAW, BUSINESS_ECONOMY, SOCIETY_POLITICS, LANGUAGE, MEDICINE_PHARMACY, ART, SCIENCE_ENGINEERING, HISTORY_PHILOSOPHY, OTHER
+             * @enum {string}
+             */
+            collectionCategory?: "IT" | "LAW" | "BUSINESS_ECONOMY" | "SOCIETY_POLITICS" | "LANGUAGE" | "MEDICINE_PHARMACY" | "ART" | "SCIENCE_ENGINEERING" | "HISTORY_PHILOSOPHY" | "OTHER";
+            quizzes?: number[];
+        };
+        CreateCollectionResponse: {
+            /** Format: int64 */
+            collectionId?: number;
+        };
+        SendVerificationCodeRequest: {
+            email?: string;
+        };
+        VerifyVerificationCodeRequest: {
+            email?: string;
+            verificationCode?: string;
+        };
+        VerifyInviteCode: {
+            inviteCode?: string;
+        };
+        UpdateRandomQuizResultDto: {
+            /** Format: int64 */
+            id?: number;
+            answer?: boolean;
+        };
+        UpdateRandomQuizResultRequest: {
+            quizzes?: components["schemas"]["UpdateRandomQuizResultDto"][];
+        };
+        UpdateQuizResultQuizDto: {
+            /** Format: int64 */
+            id?: number;
+            answer?: boolean;
+            choseAnswer?: string;
+            /** Format: int32 */
+            elapsedTime?: number;
+        };
+        UpdateQuizResultRequest: {
+            quizSetId?: string;
+            quizzes?: components["schemas"]["UpdateQuizResultQuizDto"][];
+        };
+        UpdateQuizResultResponse: {
+            /** Format: int32 */
+            reward?: number;
+            /** Format: int32 */
+            currentConsecutiveTodayQuizDate?: number;
+        };
+        UpdateTodayQuizCountRequest: {
+            /** Format: int32 */
+            todayQuizCount?: number;
+        };
+        UpdateQuizNotificationRequest: {
+            quizNotificationEnabled?: boolean;
+        };
+        UpdateMemberNameRequest: {
+            name?: string;
+        };
+        UpdateInterestCollectionCategoriesRequest: {
+            interestCollectionCategories?: ("IT" | "LAW" | "BUSINESS_ECONOMY" | "SOCIETY_POLITICS" | "LANGUAGE" | "MEDICINE_PHARMACY" | "ART" | "SCIENCE_ENGINEERING" | "HISTORY_PHILOSOPHY" | "OTHER")[];
+        };
+        UpdateDocumentNameRequest: {
+            name?: string;
+        };
+        UpdateDocumentContentRequest: {
+            name?: string;
+            /** Format: binary */
+            file?: string;
+        };
+        UpdateTodayQuizSettingsRequest: {
+            /**
+             * @description 문서 ID와 퀴즈 설정 값 (true/false) 맵
+             * @example {
+             *       "1": true,
+             *       "2": false,
+             *       "3": true
+             *     }
+             */
+            documentIdTodayQuizMap?: {
+                [key: string]: boolean;
+            };
+        };
+        MoveDocumentToDirectoryRequest: {
+            documentIds?: number[];
+            /** Format: int64 */
+            directoryId?: number;
+        };
+        UpdateDirectoryInfoRequest: {
+            name?: string;
+            emoji?: string;
+        };
+        UpdateCollectionQuizzesRequest: {
+            quizzes?: number[];
+        };
+        UpdateCollectionInfoRequest: {
+            /** @example 컬렉션 제목 */
+            name?: string;
+            /** @example 📙 */
+            emoji?: string;
+            /** @example 컬렉션 설명 */
+            description?: string;
+            /**
+             * @example IT, LAW, BUSINESS_ECONOMY, SOCIETY_POLITICS, LANGUAGE, MEDICINE_PHARMACY, ART, SCIENCE_ENGINEERING, HISTORY_PHILOSOPHY, OTHER
+             * @enum {string}
+             */
+            collectionCategory?: "IT" | "LAW" | "BUSINESS_ECONOMY" | "SOCIETY_POLITICS" | "LANGUAGE" | "MEDICINE_PHARMACY" | "ART" | "SCIENCE_ENGINEERING" | "HISTORY_PHILOSOPHY" | "OTHER";
+        };
+        AddQuizToCollectionRequest: {
+            /** Format: int64 */
+            quizId?: number;
+        };
+        GetCurrentTodayQuizInfo: {
+            /** Format: int32 */
+            currentConsecutiveDays?: number;
+            /** Format: int32 */
+            maxConsecutiveDays?: number;
+        };
+        GetSingleQuizRecordByDateResponse: {
+            /** Format: int32 */
+            currentConsecutiveDays?: number;
+            /** Format: int32 */
+            maxConsecutiveDays?: number;
+            quizRecords?: components["schemas"]["GetSingleQuizRecordsDto"][];
+        };
+        GetSingleQuizRecordsDto: {
+            quizSetId?: string;
+            name?: string;
+            /** Format: int32 */
+            quizCount?: number;
+            /** Format: int32 */
+            score?: number;
+            /** @enum {string} */
+            quizSetType?: "TODAY_QUIZ_SET" | "DOCUMENT_QUIZ_SET" | "COLLECTION_QUIZ_SET" | "FIRST_QUIZ_SET";
+        };
+        GetSingleQuizSetRecordDto: {
+            /** Format: int64 */
+            id?: number;
+            question?: string;
+            answer?: string;
+            explanation?: string;
+            /** @enum {string} */
+            quizType?: "MIX_UP" | "MULTIPLE_CHOICE";
+            options?: string[];
+            choseAnswer?: string;
+            documentName?: string;
+            directoryName?: string;
+            collectionName?: string;
+            /** @enum {string} */
+            quizSetType?: "TODAY_QUIZ_SET" | "DOCUMENT_QUIZ_SET" | "COLLECTION_QUIZ_SET" | "FIRST_QUIZ_SET";
+        };
+        GetSingleQuizSetRecordResponse: {
+            /** Format: int32 */
+            totalElapsedTimeMs?: number;
+            quizzes?: components["schemas"]["GetSingleQuizSetRecordDto"][];
+            /** Format: date-time */
+            createdAt?: string;
+        };
+        GetQuizRecordsDto: {
+            quizSetId?: string;
+            name?: string;
+            /** Format: int32 */
+            quizCount?: number;
+            /** Format: int32 */
+            score?: number;
+            /** @enum {string} */
+            quizSetType?: "TODAY_QUIZ_SET" | "DOCUMENT_QUIZ_SET" | "COLLECTION_QUIZ_SET" | "FIRST_QUIZ_SET";
+        };
+        GetQuizRecordsResponse: {
+            /** Format: int32 */
+            currentConsecutiveDays?: number;
+            /** Format: int32 */
+            maxConsecutiveDays?: number;
+            quizRecords?: components["schemas"]["GetQuizRecordsSolvedDateDto"][];
+        };
+        GetQuizRecordsSolvedDateDto: {
+            /** Format: date */
+            solvedDate?: string;
+            quizRecords?: components["schemas"]["GetQuizRecordsDto"][];
+        };
+        GetQuizSetDirectoryDto: {
+            /** Format: int64 */
+            id?: number;
+            name?: string;
+        };
+        GetQuizSetDocumentDto: {
+            /** Format: int64 */
+            id?: number;
+            name?: string;
+        };
+        GetQuizSetQuizDto: {
+            /** Format: int64 */
+            id?: number;
+            question?: string;
+            answer?: string;
+            explanation?: string;
+            options?: string[];
+            /** @enum {string} */
+            quizType?: "MIX_UP" | "MULTIPLE_CHOICE";
+            document?: components["schemas"]["GetQuizSetDocumentDto"];
+            directory?: components["schemas"]["GetQuizSetDirectoryDto"];
+        };
+        GetQuizSetResponse: {
+            quizzes?: components["schemas"]["GetQuizSetQuizDto"][];
+        };
+        GetQuizSetTodayResponse: {
+            quizSetId?: string;
+            /** @enum {string} */
+            quizSetType?: "TODAY_QUIZ_SET" | "DOCUMENT_QUIZ_SET" | "COLLECTION_QUIZ_SET" | "FIRST_QUIZ_SET";
+            /** @enum {string} */
+            type?: "READY" | "NOT_READY" | "DONE";
+            /** Format: date-time */
+            createdAt?: string;
+        };
+        GetQuizAnswerRateAnalysisResponse: {
+            /** Format: int32 */
+            totalElapsedTime?: number;
+            quizzes?: components["schemas"]["QuizAnswerRateAnalysisDto"][];
+        };
+        QuizAnswerRateAnalysisDto: {
+            /** Format: date */
+            date?: string;
+            /** Format: int32 */
+            quizCount?: number;
+            /** Format: int32 */
+            incorrectAnswerCount?: number;
+        };
+        ApplicationContext: {
+            parent?: components["schemas"]["ApplicationContext"];
+            id?: string;
+            displayName?: string;
+            applicationName?: string;
+            /** Format: int64 */
+            startupDate?: number;
+            autowireCapableBeanFactory?: components["schemas"]["AutowireCapableBeanFactory"];
+            environment?: components["schemas"]["Environment"];
+            /** Format: int32 */
+            beanDefinitionCount?: number;
+            beanDefinitionNames?: string[];
+            parentBeanFactory?: components["schemas"]["BeanFactory"];
             classLoader?: {
-              name?: string
-              registeredAsParallelCapable?: boolean
-              definedPackages?: {
-                name?: string
-                annotations?: Record<string, never>[]
-                declaredAnnotations?: Record<string, never>[]
-                sealed?: boolean
-                specificationTitle?: string
-                specificationVersion?: string
-                specificationVendor?: string
-                implementationTitle?: string
-                implementationVersion?: string
-                implementationVendor?: string
-              }[]
-              defaultAssertionStatus?: boolean
-            }
-            descriptor?: {
-              open?: boolean
-              automatic?: boolean
-            }
-            named?: boolean
-            annotations?: Record<string, never>[]
-            declaredAnnotations?: Record<string, never>[]
-            packages?: string[]
-            nativeAccessEnabled?: boolean
-            layer?: Record<string, never>
-          }
-          definedPackages?: {
-            name?: string
-            annotations?: Record<string, never>[]
-            declaredAnnotations?: Record<string, never>[]
-            sealed?: boolean
-            specificationTitle?: string
-            specificationVersion?: string
-            specificationVendor?: string
-            implementationTitle?: string
-            implementationVersion?: string
-            implementationVendor?: string
-          }[]
-          defaultAssertionStatus?: boolean
-        }
-        unnamedModule?: {
-          name?: string
-          classLoader?: {
-            name?: string
-            registeredAsParallelCapable?: boolean
-            definedPackages?: {
-              name?: string
-              annotations?: Record<string, never>[]
-              declaredAnnotations?: Record<string, never>[]
-              sealed?: boolean
-              specificationTitle?: string
-              specificationVersion?: string
-              specificationVendor?: string
-              implementationTitle?: string
-              implementationVersion?: string
-              implementationVendor?: string
-            }[]
-            defaultAssertionStatus?: boolean
-          }
-          descriptor?: {
-            open?: boolean
-            automatic?: boolean
-          }
-          named?: boolean
-          annotations?: Record<string, never>[]
-          declaredAnnotations?: Record<string, never>[]
-          packages?: string[]
-          nativeAccessEnabled?: boolean
-          layer?: Record<string, never>
-        }
-        definedPackages?: {
-          name?: string
-          annotations?: Record<string, never>[]
-          declaredAnnotations?: Record<string, never>[]
-          sealed?: boolean
-          specificationTitle?: string
-          specificationVersion?: string
-          specificationVendor?: string
-          implementationTitle?: string
-          implementationVersion?: string
-          implementationVendor?: string
-        }[]
-        defaultAssertionStatus?: boolean
-      }
-    }
-    AutowireCapableBeanFactory: Record<string, never>
-    BeanFactory: Record<string, never>
-    Environment: {
-      activeProfiles?: string[]
-      defaultProfiles?: string[]
-    }
-    FilterRegistration: {
-      servletNameMappings?: string[]
-      urlPatternMappings?: string[]
-      name?: string
-      className?: string
-      initParameters?: {
-        [key: string]: string
-      }
-    }
-    HttpStatusCode: {
-      error?: boolean
-      is4xxClientError?: boolean
-      is5xxServerError?: boolean
-      is1xxInformational?: boolean
-      is2xxSuccessful?: boolean
-      is3xxRedirection?: boolean
-    }
-    JspConfigDescriptor: {
-      taglibs?: components['schemas']['TaglibDescriptor'][]
-      jspPropertyGroups?: components['schemas']['JspPropertyGroupDescriptor'][]
-    }
-    JspPropertyGroupDescriptor: {
-      defaultContentType?: string
-      deferredSyntaxAllowedAsLiteral?: string
-      elIgnored?: string
-      errorOnELNotFound?: string
-      pageEncoding?: string
-      scriptingInvalid?: string
-      isXml?: string
-      includePreludes?: string[]
-      includeCodas?: string[]
-      trimDirectiveWhitespaces?: string
-      errorOnUndeclaredNamespace?: string
-      buffer?: string
-      urlPatterns?: string[]
-    }
-    RedirectView: {
-      applicationContext?: components['schemas']['ApplicationContext']
-      servletContext?: components['schemas']['ServletContext']
-      contentType?: string
-      requestContextAttribute?: string
-      staticAttributes?: {
-        [key: string]: Record<string, never>
-      }
-      exposePathVariables?: boolean
-      exposeContextBeansAsAttributes?: boolean
-      exposedContextBeanNames?: string[]
-      beanName?: string
-      url?: string
-      contextRelative?: boolean
-      http10Compatible?: boolean
-      exposeModelAttributes?: boolean
-      encodingScheme?: string
-      statusCode?: components['schemas']['HttpStatusCode']
-      expandUriTemplateVariables?: boolean
-      propagateQueryParams?: boolean
-      hosts?: string[]
-      redirectView?: boolean
-      propagateQueryProperties?: boolean
-      attributesMap?: {
-        [key: string]: Record<string, never>
-      }
-      attributes?: {
-        [key: string]: string
-      }
-      attributesCSV?: string
-    }
-    ServletContext: {
-      sessionCookieConfig?: components['schemas']['SessionCookieConfig']
-      virtualServerName?: string
-      classLoader?: {
-        name?: string
-        registeredAsParallelCapable?: boolean
-        definedPackages?: {
-          name?: string
-          annotations?: Record<string, never>[]
-          declaredAnnotations?: Record<string, never>[]
-          sealed?: boolean
-          specificationTitle?: string
-          specificationVersion?: string
-          specificationVendor?: string
-          implementationTitle?: string
-          implementationVersion?: string
-          implementationVendor?: string
-        }[]
-        defaultAssertionStatus?: boolean
-      }
-      /** Format: int32 */
-      majorVersion?: number
-      /** Format: int32 */
-      minorVersion?: number
-      attributeNames?: Record<string, never>
-      contextPath?: string
-      initParameterNames?: Record<string, never>
-      sessionTrackingModes?: ('COOKIE' | 'URL' | 'SSL')[]
-      /** Format: int32 */
-      sessionTimeout?: number
-      servletRegistrations?: {
-        [key: string]: components['schemas']['ServletRegistration']
-      }
-      /** Format: int32 */
-      effectiveMajorVersion?: number
-      /** Format: int32 */
-      effectiveMinorVersion?: number
-      serverInfo?: string
-      servletContextName?: string
-      defaultSessionTrackingModes?: ('COOKIE' | 'URL' | 'SSL')[]
-      filterRegistrations?: {
-        [key: string]: components['schemas']['FilterRegistration']
-      }
-      effectiveSessionTrackingModes?: ('COOKIE' | 'URL' | 'SSL')[]
-      jspConfigDescriptor?: components['schemas']['JspConfigDescriptor']
-      requestCharacterEncoding?: string
-      responseCharacterEncoding?: string
-    }
-    ServletRegistration: {
-      mappings?: string[]
-      runAsRole?: string
-      name?: string
-      className?: string
-      initParameters?: {
-        [key: string]: string
-      }
-    }
-    SessionCookieConfig: {
-      /** Format: int32 */
-      maxAge?: number
-      domain?: string
-      httpOnly?: boolean
-      path?: string
-      secure?: boolean
-      name?: string
-      attributes?: {
-        [key: string]: string
-      }
-      /** @deprecated */
-      comment?: string
-    }
-    TaglibDescriptor: {
-      taglibURI?: string
-      taglibLocation?: string
-    }
-    GetMemberInfoDocumentDto: {
-      /** Format: int32 */
-      possessDocumentCount?: number
-      /** Format: int32 */
-      maxPossessDocumentCount?: number
-    }
-    GetMemberInfoResponse: {
-      /** Format: int64 */
-      id?: number
-      name?: string
-      email?: string
-      /** @enum {string} */
-      socialPlatform?: 'KAKAO' | 'GOOGLE'
-      /** @enum {string} */
-      role?: 'ROLE_USER' | 'ROLE_ADMIN'
-      interestCategories?: string[]
-      documentUsage?: components['schemas']['GetMemberInfoDocumentDto']
-      /** Format: int32 */
-      star?: number
-      quizNotificationEnabled?: boolean
-    }
-    DirectoryDto: {
-      /** Format: int64 */
-      id?: number
-      name?: string
-    }
-    DocumentDto: {
-      /** Format: int64 */
-      id?: number
-      name?: string
-    }
-    QuizDto: {
-      /** Format: int64 */
-      id?: number
-      question?: string
-      answer?: string
-      explanation?: string
-      options?: string[]
-      /** @enum {string} */
-      quizType?: 'MIX_UP' | 'MULTIPLE_CHOICE'
-      document?: components['schemas']['DocumentDto']
-      directory?: components['schemas']['DirectoryDto']
-    }
-    QuizResponseDto: {
-      quizzes?: components['schemas']['QuizDto'][]
-    }
-    GetSingleDocumentDirectoryDto: {
-      /** Format: int64 */
-      id?: number
-      name?: string
-      emoji?: string
-    }
-    GetSingleDocumentQuizDto: {
-      /** Format: int64 */
-      id?: number
-      question?: string
-      answer?: string
-      explanation?: string
-      options?: string[]
-      /** @enum {string} */
-      quizType?: 'MIX_UP' | 'MULTIPLE_CHOICE'
-    }
-    GetSingleDocumentResponse: {
-      /** Format: int64 */
-      id?: number
-      documentName?: string
-      /** @enum {string} */
-      status?:
-        | 'UNPROCESSED'
-        | 'PROCESSED'
-        | 'PROCESSING'
-        | 'COMPLETELY_FAILED'
-        | 'PARTIAL_SUCCESS'
-        | 'DEFAULT_DOCUMENT'
-      content?: string
-      /** Format: int32 */
-      characterCount?: number
-      /** Format: int32 */
-      totalQuizCount?: number
-      /** Format: date-time */
-      updatedAt?: string
-      directory?: components['schemas']['GetSingleDocumentDirectoryDto']
-      quizzes?: components['schemas']['GetSingleDocumentQuizDto'][]
-    }
-    GetDocumentsNeedingReviewPickResponse: {
-      quizzes?: components['schemas']['GetReviewQuizDto'][]
-    }
-    GetReviewQuizDto: {
-      /** Format: int64 */
-      id?: number
-      question?: string
-      answer?: string
-      explanation?: string
-      options?: string[]
-      /** @enum {string} */
-      quizType?: 'MIX_UP' | 'MULTIPLE_CHOICE'
-      description?: string
-    }
-    GetDocumentsNeedingReviewResponse: {
-      documents?: components['schemas']['GetReviewNeededDocumentsDto'][]
-    }
-    GetReviewNeededDocumentsDirectoryDto: {
-      /** Format: int64 */
-      id?: number
-      name?: string
-    }
-    GetReviewNeededDocumentsDto: {
-      /** Format: int64 */
-      id?: number
-      name?: string
-      /** Format: int32 */
-      reviewNeededQuizCount?: number
-      directory?: components['schemas']['GetReviewNeededDocumentsDirectoryDto']
-    }
-    GetAllDirectoriesDirectoryDto: {
-      /** Format: int64 */
-      id?: number
-      name?: string
-      /** @enum {string} */
-      tag?: 'DEFAULT' | 'NORMAL'
-      emoji?: string
-      /** Format: int32 */
-      documentCount?: number
-    }
-    GetAllDirectoriesResponse: {
-      directories?: components['schemas']['GetAllDirectoriesDirectoryDto'][]
-    }
-    GetSingleDirectoryResponse: {
-      /** Format: int64 */
-      id?: number
-      name?: string
-      emoji?: string
-      /** @enum {string} */
-      tag?: 'DEFAULT' | 'NORMAL'
-    }
-    GetAllDocumentsDirectoryDto: {
-      name?: string
-      /** @enum {string} */
-      tag?: 'DEFAULT' | 'NORMAL'
-    }
-    GetAllDocumentsDocumentDto: {
-      /** Format: int64 */
-      id?: number
-      name?: string
-      previewContent?: string
-      /** Format: int32 */
-      characterCount?: number
-      /** @enum {string} */
-      status?:
-        | 'UNPROCESSED'
-        | 'PROCESSED'
-        | 'PROCESSING'
-        | 'COMPLETELY_FAILED'
-        | 'PARTIAL_SUCCESS'
-        | 'DEFAULT_DOCUMENT'
-      /** Format: int32 */
-      totalQuizCount?: number
-      /** @enum {string} */
-      documentType?: 'FILE' | 'TEXT' | 'NOTION'
-      /** Format: date-time */
-      createdAt?: string
-      /** Format: date-time */
-      updatedAt?: string
-      /** Format: int32 */
-      reviewNeededQuizCount?: number
-      directory?: components['schemas']['GetAllDocumentsDirectoryDto']
-    }
-    GetAllDocumentsResponse: {
-      documents?: components['schemas']['GetAllDocumentsDocumentDto'][]
-    }
-    CollectionDto: {
-      /** Format: int64 */
-      id?: number
-      name?: string
-      description?: string
-      emoji?: string
-      /** Format: int32 */
-      bookmarkCount?: number
-      collectionCategory?: string
-      /** Format: int32 */
-      solvedMemberCount?: number
-      bookmarked?: boolean
-      /** Format: int32 */
-      totalQuizCount?: number
-      member?: components['schemas']['CollectionMemberDto']
-    }
-    CollectionMemberDto: {
-      /** Format: int64 */
-      creatorId?: number
-      creatorName?: string
-    }
-    CollectionResponseDto: {
-      collections?: components['schemas']['CollectionDto'][]
-    }
-    GetSingleCollectionMemberDto: {
-      /** Format: int64 */
-      creatorId?: number
-      creatorName?: string
-    }
-    GetSingleCollectionQuizDto: {
-      /** Format: int64 */
-      id?: number
-      question?: string
-      answer?: string
-      explanation?: string
-      options?: string[]
-      /** @enum {string} */
-      quizType?: 'MIX_UP' | 'MULTIPLE_CHOICE'
-    }
-    GetSingleCollectionResponse: {
-      /** Format: int64 */
-      id?: number
-      name?: string
-      description?: string
-      emoji?: string
-      /** Format: int32 */
-      bookmarkCount?: number
-      collectionCategory?: string
-      /** Format: int32 */
-      solvedMemberCount?: number
-      bookmarked?: boolean
-      member?: components['schemas']['GetSingleCollectionMemberDto']
-      quizzes?: components['schemas']['GetSingleCollectionQuizDto'][]
-    }
-    GetQuizzesInCollectionByCollectionCategory: {
-      quizzes?: components['schemas']['QuizInCollectionDto'][]
-    }
-    QuizInCollectionDto: {
-      /** Format: int64 */
-      id?: number
-      question?: string
-      answer?: string
-      explanation?: string
-      options?: string[]
-      /** @enum {string} */
-      quizType?: 'MIX_UP' | 'MULTIPLE_CHOICE'
-    }
-    GetCollectionCategoriesCollectionDto: {
-      /** Format: int64 */
-      id?: number
-      name?: string
-    }
-    GetCollectionCategoriesDto: {
-      /** @enum {string} */
-      collectionCategory?:
-        | 'IT'
-        | 'LAW'
-        | 'BUSINESS_ECONOMY'
-        | 'SOCIETY_POLITICS'
-        | 'LANGUAGE'
-        | 'MEDICINE_PHARMACY'
-        | 'ART'
-        | 'SCIENCE_ENGINEERING'
-        | 'HISTORY_PHILOSOPHY'
-        | 'OTHER'
-      categoryName?: string
-      emoji?: string
-      collections?: components['schemas']['GetCollectionCategoriesCollectionDto'][]
-    }
-    GetCollectionCategoriesResponse: {
-      collectionCategories?: components['schemas']['GetCollectionCategoriesDto'][]
-    }
-    GetCollectionSAnalysisResponse: {
-      /**
-       * @description 컬렉션 분야와 해당 컬렉션을 푼 횟수 map
-       * @example {
-       *       "IT": 1,
-       *       "RAW": 1
-       *     }
-       */
-      collectionsAnalysis?: {
-        [key: string]: number
-      }
-    }
-    CreateInviteLinkResponse: {
-      inviteLink?: string
-    }
-    DeleteInvalidQuizRequest: {
-      /**
-       * @example CHOICE_OR_QUESTION_MISSING, QUIZ_TYPE_MISMATCH, UNRELATED_QUIZ
-       * @enum {string}
-       */
-      quizErrorType?: 'CHOICE_OR_QUESTION_MISSING' | 'QUIZ_TYPE_MISMATCH' | 'UNRELATED_QUIZ'
-    }
-    DeleteDocumentRequest: {
-      documentIds?: number[]
-    }
-  }
-  responses: never
-  parameters: never
-  requestBodies: never
-  headers: never
-  pathItems: never
+                name?: string;
+                registeredAsParallelCapable?: boolean;
+                parent?: {
+                    name?: string;
+                    registeredAsParallelCapable?: boolean;
+                    unnamedModule?: {
+                        name?: string;
+                        classLoader?: {
+                            name?: string;
+                            registeredAsParallelCapable?: boolean;
+                            definedPackages?: {
+                                name?: string;
+                                annotations?: Record<string, never>[];
+                                declaredAnnotations?: Record<string, never>[];
+                                sealed?: boolean;
+                                specificationTitle?: string;
+                                specificationVersion?: string;
+                                specificationVendor?: string;
+                                implementationTitle?: string;
+                                implementationVersion?: string;
+                                implementationVendor?: string;
+                            }[];
+                            defaultAssertionStatus?: boolean;
+                        };
+                        descriptor?: {
+                            open?: boolean;
+                            automatic?: boolean;
+                        };
+                        named?: boolean;
+                        annotations?: Record<string, never>[];
+                        declaredAnnotations?: Record<string, never>[];
+                        packages?: string[];
+                        nativeAccessEnabled?: boolean;
+                        layer?: Record<string, never>;
+                    };
+                    definedPackages?: {
+                        name?: string;
+                        annotations?: Record<string, never>[];
+                        declaredAnnotations?: Record<string, never>[];
+                        sealed?: boolean;
+                        specificationTitle?: string;
+                        specificationVersion?: string;
+                        specificationVendor?: string;
+                        implementationTitle?: string;
+                        implementationVersion?: string;
+                        implementationVendor?: string;
+                    }[];
+                    defaultAssertionStatus?: boolean;
+                };
+                unnamedModule?: {
+                    name?: string;
+                    classLoader?: {
+                        name?: string;
+                        registeredAsParallelCapable?: boolean;
+                        definedPackages?: {
+                            name?: string;
+                            annotations?: Record<string, never>[];
+                            declaredAnnotations?: Record<string, never>[];
+                            sealed?: boolean;
+                            specificationTitle?: string;
+                            specificationVersion?: string;
+                            specificationVendor?: string;
+                            implementationTitle?: string;
+                            implementationVersion?: string;
+                            implementationVendor?: string;
+                        }[];
+                        defaultAssertionStatus?: boolean;
+                    };
+                    descriptor?: {
+                        open?: boolean;
+                        automatic?: boolean;
+                    };
+                    named?: boolean;
+                    annotations?: Record<string, never>[];
+                    declaredAnnotations?: Record<string, never>[];
+                    packages?: string[];
+                    nativeAccessEnabled?: boolean;
+                    layer?: Record<string, never>;
+                };
+                definedPackages?: {
+                    name?: string;
+                    annotations?: Record<string, never>[];
+                    declaredAnnotations?: Record<string, never>[];
+                    sealed?: boolean;
+                    specificationTitle?: string;
+                    specificationVersion?: string;
+                    specificationVendor?: string;
+                    implementationTitle?: string;
+                    implementationVersion?: string;
+                    implementationVendor?: string;
+                }[];
+                defaultAssertionStatus?: boolean;
+            };
+        };
+        AutowireCapableBeanFactory: Record<string, never>;
+        BeanFactory: Record<string, never>;
+        Environment: {
+            activeProfiles?: string[];
+            defaultProfiles?: string[];
+        };
+        FilterRegistration: {
+            servletNameMappings?: string[];
+            urlPatternMappings?: string[];
+            name?: string;
+            className?: string;
+            initParameters?: {
+                [key: string]: string;
+            };
+        };
+        HttpStatusCode: {
+            error?: boolean;
+            is4xxClientError?: boolean;
+            is5xxServerError?: boolean;
+            is1xxInformational?: boolean;
+            is2xxSuccessful?: boolean;
+            is3xxRedirection?: boolean;
+        };
+        JspConfigDescriptor: {
+            jspPropertyGroups?: components["schemas"]["JspPropertyGroupDescriptor"][];
+            taglibs?: components["schemas"]["TaglibDescriptor"][];
+        };
+        JspPropertyGroupDescriptor: {
+            deferredSyntaxAllowedAsLiteral?: string;
+            elIgnored?: string;
+            errorOnELNotFound?: string;
+            pageEncoding?: string;
+            scriptingInvalid?: string;
+            isXml?: string;
+            includePreludes?: string[];
+            includeCodas?: string[];
+            trimDirectiveWhitespaces?: string;
+            errorOnUndeclaredNamespace?: string;
+            defaultContentType?: string;
+            buffer?: string;
+            urlPatterns?: string[];
+        };
+        RedirectView: {
+            applicationContext?: components["schemas"]["ApplicationContext"];
+            servletContext?: components["schemas"]["ServletContext"];
+            contentType?: string;
+            requestContextAttribute?: string;
+            staticAttributes?: {
+                [key: string]: Record<string, never>;
+            };
+            exposePathVariables?: boolean;
+            exposeContextBeansAsAttributes?: boolean;
+            exposedContextBeanNames?: string[];
+            beanName?: string;
+            url?: string;
+            contextRelative?: boolean;
+            http10Compatible?: boolean;
+            exposeModelAttributes?: boolean;
+            encodingScheme?: string;
+            statusCode?: components["schemas"]["HttpStatusCode"];
+            expandUriTemplateVariables?: boolean;
+            propagateQueryParams?: boolean;
+            hosts?: string[];
+            redirectView?: boolean;
+            propagateQueryProperties?: boolean;
+            attributesMap?: {
+                [key: string]: Record<string, never>;
+            };
+            attributes?: {
+                [key: string]: string;
+            };
+            attributesCSV?: string;
+        };
+        ServletContext: {
+            sessionCookieConfig?: components["schemas"]["SessionCookieConfig"];
+            virtualServerName?: string;
+            classLoader?: {
+                name?: string;
+                registeredAsParallelCapable?: boolean;
+                definedPackages?: {
+                    name?: string;
+                    annotations?: Record<string, never>[];
+                    declaredAnnotations?: Record<string, never>[];
+                    sealed?: boolean;
+                    specificationTitle?: string;
+                    specificationVersion?: string;
+                    specificationVendor?: string;
+                    implementationTitle?: string;
+                    implementationVersion?: string;
+                    implementationVendor?: string;
+                }[];
+                defaultAssertionStatus?: boolean;
+            };
+            /** Format: int32 */
+            majorVersion?: number;
+            /** Format: int32 */
+            minorVersion?: number;
+            attributeNames?: Record<string, never>;
+            contextPath?: string;
+            initParameterNames?: Record<string, never>;
+            sessionTrackingModes?: ("COOKIE" | "URL" | "SSL")[];
+            /** Format: int32 */
+            sessionTimeout?: number;
+            servletRegistrations?: {
+                [key: string]: components["schemas"]["ServletRegistration"];
+            };
+            /** Format: int32 */
+            effectiveMajorVersion?: number;
+            /** Format: int32 */
+            effectiveMinorVersion?: number;
+            serverInfo?: string;
+            servletContextName?: string;
+            filterRegistrations?: {
+                [key: string]: components["schemas"]["FilterRegistration"];
+            };
+            defaultSessionTrackingModes?: ("COOKIE" | "URL" | "SSL")[];
+            effectiveSessionTrackingModes?: ("COOKIE" | "URL" | "SSL")[];
+            jspConfigDescriptor?: components["schemas"]["JspConfigDescriptor"];
+            requestCharacterEncoding?: string;
+            responseCharacterEncoding?: string;
+        };
+        ServletRegistration: {
+            mappings?: string[];
+            runAsRole?: string;
+            name?: string;
+            className?: string;
+            initParameters?: {
+                [key: string]: string;
+            };
+        };
+        SessionCookieConfig: {
+            /** Format: int32 */
+            maxAge?: number;
+            domain?: string;
+            httpOnly?: boolean;
+            path?: string;
+            secure?: boolean;
+            name?: string;
+            attributes?: {
+                [key: string]: string;
+            };
+            /** @deprecated */
+            comment?: string;
+        };
+        TaglibDescriptor: {
+            taglibURI?: string;
+            taglibLocation?: string;
+        };
+        GetMemberInfoDocumentDto: {
+            /** Format: int32 */
+            possessDocumentCount?: number;
+            /** Format: int32 */
+            maxPossessDocumentCount?: number;
+        };
+        GetMemberInfoResponse: {
+            /** Format: int64 */
+            id?: number;
+            name?: string;
+            email?: string;
+            /** @enum {string} */
+            socialPlatform?: "KAKAO" | "GOOGLE";
+            /** @enum {string} */
+            role?: "ROLE_USER" | "ROLE_ADMIN";
+            interestCategories?: string[];
+            documentUsage?: components["schemas"]["GetMemberInfoDocumentDto"];
+            /** Format: int32 */
+            star?: number;
+            quizNotificationEnabled?: boolean;
+        };
+        DirectoryDto: {
+            /** Format: int64 */
+            id?: number;
+            name?: string;
+        };
+        DocumentDto: {
+            /** Format: int64 */
+            id?: number;
+            name?: string;
+        };
+        QuizDto: {
+            /** Format: int64 */
+            id?: number;
+            question?: string;
+            answer?: string;
+            explanation?: string;
+            options?: string[];
+            /** @enum {string} */
+            quizType?: "MIX_UP" | "MULTIPLE_CHOICE";
+            document?: components["schemas"]["DocumentDto"];
+            directory?: components["schemas"]["DirectoryDto"];
+        };
+        QuizResponseDto: {
+            quizzes?: components["schemas"]["QuizDto"][];
+        };
+        GetSingleDocumentDirectoryDto: {
+            /** Format: int64 */
+            id?: number;
+            name?: string;
+            emoji?: string;
+        };
+        GetSingleDocumentQuizDto: {
+            /** Format: int64 */
+            id?: number;
+            question?: string;
+            answer?: string;
+            explanation?: string;
+            options?: string[];
+            /** @enum {string} */
+            quizType?: "MIX_UP" | "MULTIPLE_CHOICE";
+        };
+        GetSingleDocumentResponse: {
+            /** Format: int64 */
+            id?: number;
+            documentName?: string;
+            /** @enum {string} */
+            status?: "UNPROCESSED" | "PROCESSED" | "PROCESSING" | "COMPLETELY_FAILED" | "PARTIAL_SUCCESS" | "DEFAULT_DOCUMENT";
+            content?: string;
+            /** Format: int32 */
+            characterCount?: number;
+            /** Format: int32 */
+            totalQuizCount?: number;
+            /** Format: date-time */
+            updatedAt?: string;
+            directory?: components["schemas"]["GetSingleDocumentDirectoryDto"];
+            quizzes?: components["schemas"]["GetSingleDocumentQuizDto"][];
+        };
+        GetDocumentsNeedingReviewPickResponse: {
+            quizzes?: components["schemas"]["GetReviewQuizDto"][];
+        };
+        GetReviewQuizDto: {
+            /** Format: int64 */
+            id?: number;
+            question?: string;
+            answer?: string;
+            explanation?: string;
+            options?: string[];
+            /** @enum {string} */
+            quizType?: "MIX_UP" | "MULTIPLE_CHOICE";
+            description?: string;
+        };
+        GetDocumentsNeedingReviewResponse: {
+            documents?: components["schemas"]["GetReviewNeededDocumentsDto"][];
+        };
+        GetReviewNeededDocumentsDirectoryDto: {
+            /** Format: int64 */
+            id?: number;
+            name?: string;
+        };
+        GetReviewNeededDocumentsDto: {
+            /** Format: int64 */
+            id?: number;
+            name?: string;
+            /** Format: int32 */
+            reviewNeededQuizCount?: number;
+            directory?: components["schemas"]["GetReviewNeededDocumentsDirectoryDto"];
+        };
+        GetAllDirectoriesDirectoryDto: {
+            /** Format: int64 */
+            id?: number;
+            name?: string;
+            /** @enum {string} */
+            tag?: "DEFAULT" | "NORMAL";
+            emoji?: string;
+            /** Format: int32 */
+            documentCount?: number;
+        };
+        GetAllDirectoriesResponse: {
+            directories?: components["schemas"]["GetAllDirectoriesDirectoryDto"][];
+        };
+        GetSingleDirectoryResponse: {
+            /** Format: int64 */
+            id?: number;
+            name?: string;
+            emoji?: string;
+            /** @enum {string} */
+            tag?: "DEFAULT" | "NORMAL";
+        };
+        GetAllDocumentsDirectoryDto: {
+            name?: string;
+            /** @enum {string} */
+            tag?: "DEFAULT" | "NORMAL";
+        };
+        GetAllDocumentsDocumentDto: {
+            /** Format: int64 */
+            id?: number;
+            name?: string;
+            previewContent?: string;
+            /** Format: int32 */
+            characterCount?: number;
+            /** @enum {string} */
+            status?: "UNPROCESSED" | "PROCESSED" | "PROCESSING" | "COMPLETELY_FAILED" | "PARTIAL_SUCCESS" | "DEFAULT_DOCUMENT";
+            /** Format: int32 */
+            totalQuizCount?: number;
+            /** @enum {string} */
+            documentType?: "FILE" | "TEXT" | "NOTION";
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
+            /** Format: int32 */
+            reviewNeededQuizCount?: number;
+            directory?: components["schemas"]["GetAllDocumentsDirectoryDto"];
+        };
+        GetAllDocumentsResponse: {
+            documents?: components["schemas"]["GetAllDocumentsDocumentDto"][];
+        };
+        CollectionDto: {
+            /** Format: int64 */
+            id?: number;
+            name?: string;
+            description?: string;
+            emoji?: string;
+            /** Format: int32 */
+            bookmarkCount?: number;
+            collectionCategory?: string;
+            /** Format: int32 */
+            solvedMemberCount?: number;
+            bookmarked?: boolean;
+            /** Format: int32 */
+            totalQuizCount?: number;
+            member?: components["schemas"]["CollectionMemberDto"];
+        };
+        CollectionMemberDto: {
+            /** Format: int64 */
+            creatorId?: number;
+            creatorName?: string;
+        };
+        CollectionResponseDto: {
+            collections?: components["schemas"]["CollectionDto"][];
+        };
+        GetSingleCollectionMemberDto: {
+            /** Format: int64 */
+            creatorId?: number;
+            creatorName?: string;
+        };
+        GetSingleCollectionQuizDto: {
+            /** Format: int64 */
+            id?: number;
+            question?: string;
+            answer?: string;
+            explanation?: string;
+            options?: string[];
+            /** @enum {string} */
+            quizType?: "MIX_UP" | "MULTIPLE_CHOICE";
+        };
+        GetSingleCollectionResponse: {
+            /** Format: int64 */
+            id?: number;
+            name?: string;
+            description?: string;
+            emoji?: string;
+            /** Format: int32 */
+            bookmarkCount?: number;
+            collectionCategory?: string;
+            /** Format: int32 */
+            solvedMemberCount?: number;
+            bookmarked?: boolean;
+            member?: components["schemas"]["GetSingleCollectionMemberDto"];
+            quizzes?: components["schemas"]["GetSingleCollectionQuizDto"][];
+        };
+        GetQuizzesInCollectionByCollectionCategory: {
+            quizzes?: components["schemas"]["QuizInCollectionDto"][];
+        };
+        QuizInCollectionDto: {
+            /** Format: int64 */
+            id?: number;
+            question?: string;
+            answer?: string;
+            explanation?: string;
+            options?: string[];
+            /** @enum {string} */
+            quizType?: "MIX_UP" | "MULTIPLE_CHOICE";
+        };
+        GetCollectionCategoriesCollectionDto: {
+            /** Format: int64 */
+            id?: number;
+            name?: string;
+        };
+        GetCollectionCategoriesDto: {
+            /** @enum {string} */
+            collectionCategory?: "IT" | "LAW" | "BUSINESS_ECONOMY" | "SOCIETY_POLITICS" | "LANGUAGE" | "MEDICINE_PHARMACY" | "ART" | "SCIENCE_ENGINEERING" | "HISTORY_PHILOSOPHY" | "OTHER";
+            categoryName?: string;
+            emoji?: string;
+            collections?: components["schemas"]["GetCollectionCategoriesCollectionDto"][];
+        };
+        GetCollectionCategoriesResponse: {
+            collectionCategories?: components["schemas"]["GetCollectionCategoriesDto"][];
+        };
+        GetCollectionSAnalysisResponse: {
+            /**
+             * @description 컬렉션 분야와 해당 컬렉션을 푼 횟수 map
+             * @example {
+             *       "IT": 1,
+             *       "RAW": 1
+             *     }
+             */
+            collectionsAnalysis?: {
+                [key: string]: number;
+            };
+        };
+        CreateInviteLinkResponse: {
+            inviteLink?: string;
+        };
+        DeleteInvalidQuizRequest: {
+            /**
+             * @example CHOICE_OR_QUESTION_MISSING, QUIZ_TYPE_MISMATCH, UNRELATED_QUIZ
+             * @enum {string}
+             */
+            quizErrorType?: "CHOICE_OR_QUESTION_MISSING" | "QUIZ_TYPE_MISMATCH" | "UNRELATED_QUIZ";
+        };
+        DeleteDocumentRequest: {
+            documentIds?: number[];
+        };
+    };
+    responses: never;
+    parameters: never;
+    requestBodies: never;
+    headers: never;
+    pathItems: never;
 }
-export type $defs = Record<string, never>
+export type $defs = Record<string, never>;
 export interface operations {
-  saveFcmToken: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json;charset=UTF-8': components['schemas']['SaveFcmTokenRequest']
-      }
-    }
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-    }
-  }
-  createTodayQuizForTest: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description No Content */
-      204: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json;charset=UTF-8': components['schemas']['CreateQuizzesResponse']
-        }
-      }
-    }
-  }
-  createMemberForTest: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description No Content */
-      204: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-    }
-  }
-  createMemberGeneratedQuizSet: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        document_id: number
-      }
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json;charset=UTF-8': components['schemas']['CreateQuizzesByDocumentRequest']
-      }
-    }
-    responses: {
-      /** @description Created */
-      201: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json;charset=UTF-8': components['schemas']['CreateQuizzesResponse']
-        }
-      }
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-    }
-  }
-  createErrorCheckQuizSet: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        document_id: number
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Created */
-      201: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json;charset=UTF-8': components['schemas']['CreateQuizzesResponse']
-        }
-      }
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-    }
-  }
-  verifyAmount: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json;charset=UTF-8': components['schemas']['SaveAmountRequest']
-      }
-    }
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json;charset=UTF-8': Record<string, never>
-        }
-      }
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-    }
-  }
-  tempSaveAmount: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json;charset=UTF-8': components['schemas']['SaveAmountRequest']
-      }
-    }
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json;charset=UTF-8': Record<string, never>
-        }
-      }
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-    }
-  }
-  confirmPayment: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json;charset=UTF-8': components['schemas']['TossPaymentRequest']
-      }
-    }
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-    }
-  }
-  cancelPayment: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json;charset=UTF-8': components['schemas']['CancelPaymentRequest']
-      }
-    }
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-    }
-  }
-  messageSendSend: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json;charset=UTF-8': components['schemas']['FcmMessageDto']
-      }
-    }
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-    }
-  }
-  messageSend: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json;charset=UTF-8': components['schemas']['FcmNotificationRequestDto']
-      }
-    }
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-    }
-  }
-  login: {
-    parameters: {
-      query?: {
-        'invite-link'?: string
-      }
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json;charset=UTF-8': components['schemas']['LoginRequest']
-      }
-    }
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json;charset=UTF-8': components['schemas']['LoginResponse']
-        }
-      }
-    }
-  }
-  integratedSearchByKeyword: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json;charset=UTF-8': components['schemas']['SearchRequest']
-      }
-    }
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json;charset=UTF-8': components['schemas']['IntegratedSearchResponse']
-        }
-      }
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-    }
-  }
-  createFeedback: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: {
-      content: {
-        'multipart/form-data': components['schemas']['CreateFeedbackRequest']
-      }
-    }
-    responses: {
-      /** @description Created */
-      201: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-    }
-  }
-  createDocument: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: {
-      content: {
-        'multipart/form-data': components['schemas']['CreateDocumentRequest']
-      }
-    }
-    responses: {
-      /** @description Created */
-      201: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['CreateDocumentResponse']
-        }
-      }
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-    }
-  }
-  createQuizzes: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        document_id: number
-      }
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json;charset=UTF-8': components['schemas']['CreateQuizzesRequest']
-      }
-    }
-    responses: {
-      /** @description Created */
-      201: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-    }
-  }
-  searchDocumentByKeyword: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json;charset=UTF-8': components['schemas']['SearchRequest']
-      }
-    }
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json;charset=UTF-8': components['schemas']['SearchDocumentResponse']
-        }
-      }
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-    }
-  }
-  getDirectories: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json;charset=UTF-8': components['schemas']['GetAllDirectoriesResponse']
-        }
-      }
-    }
-  }
-  createDirectory: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json;charset=UTF-8': components['schemas']['CreateDirectoryRequest']
-      }
-    }
-    responses: {
-      /** @description Created */
-      201: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json;charset=UTF-8': components['schemas']['CreateDirectoryResponse']
-        }
-      }
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-    }
-  }
-  getAllCollections: {
-    parameters: {
-      query?: {
-        'collection-sort-option'?: 'POPULARITY' | 'UPDATED'
-        'collection-category'?: (
-          | 'IT'
-          | 'LAW'
-          | 'BUSINESS_ECONOMY'
-          | 'SOCIETY_POLITICS'
-          | 'LANGUAGE'
-          | 'MEDICINE_PHARMACY'
-          | 'ART'
-          | 'SCIENCE_ENGINEERING'
-          | 'HISTORY_PHILOSOPHY'
-          | 'OTHER'
-        )[]
-        'quiz-type'?: 'MIX_UP' | 'MULTIPLE_CHOICE'
-        'quiz-count'?: number
-      }
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json;charset=UTF-8': components['schemas']['CollectionResponseDto']
-        }
-      }
-    }
-  }
-  createCollection: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json;charset=UTF-8': components['schemas']['CreateCollectionRequest']
-      }
-    }
-    responses: {
-      /** @description Created */
-      201: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json;charset=UTF-8': components['schemas']['CreateCollectionResponse']
-        }
-      }
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-    }
-  }
-  createCollectionBookmark: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        collection_id: number
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description No Content */
-      204: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-    }
-  }
-  createCollectionQuizSet: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        collection_id: number
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Created */
-      201: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json;charset=UTF-8': components['schemas']['CreateQuizzesResponse']
-        }
-      }
-    }
-  }
-  sendVerificationCode: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json;charset=UTF-8': components['schemas']['SendVerificationCodeRequest']
-      }
-    }
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-    }
-  }
-  verifyVerificationCode: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json;charset=UTF-8': components['schemas']['VerifyVerificationCodeRequest']
-      }
-    }
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-    }
-  }
-  verifyInviteCode: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json;charset=UTF-8': components['schemas']['VerifyInviteCode']
-      }
-    }
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-    }
-  }
-  updateWrongQuizResult: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json;charset=UTF-8': components['schemas']['UpdateRandomQuizResultRequest']
-      }
-    }
-    responses: {
-      /** @description No Content */
-      204: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-    }
-  }
-  updateRandomQuizResult: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json;charset=UTF-8': components['schemas']['UpdateRandomQuizResultRequest']
-      }
-    }
-    responses: {
-      /** @description No Content */
-      204: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-    }
-  }
-  updateQuizResult: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json;charset=UTF-8': components['schemas']['UpdateQuizResultRequest']
-      }
-    }
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json;charset=UTF-8': components['schemas']['UpdateQuizResultResponse']
-        }
-      }
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-    }
-  }
-  updateTodayQuizCount: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json;charset=UTF-8': components['schemas']['UpdateTodayQuizCountRequest']
-      }
-    }
-    responses: {
-      /** @description No Content */
-      204: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-    }
-  }
-  updateQuizNotification: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json;charset=UTF-8': components['schemas']['UpdateQuizNotificationRequest']
-      }
-    }
-    responses: {
-      /** @description No Content */
-      204: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-    }
-  }
-  updateMemberName: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json;charset=UTF-8': components['schemas']['UpdateMemberNameRequest']
-      }
-    }
-    responses: {
-      /** @description No Content */
-      204: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-    }
-  }
-  updateInterestCollectionCategories: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json;charset=UTF-8': components['schemas']['UpdateInterestCollectionCategoriesRequest']
-      }
-    }
-    responses: {
-      /** @description No Content */
-      204: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-    }
-  }
-  updateDocumentName: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        document_id: number
-      }
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json;charset=UTF-8': components['schemas']['UpdateDocumentNameRequest']
-      }
-    }
-    responses: {
-      /** @description No Content */
-      204: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-    }
-  }
-  changeDocumentContent: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        document_id: number
-      }
-      cookie?: never
-    }
-    requestBody?: {
-      content: {
-        'multipart/form-data': components['schemas']['UpdateDocumentContentRequest']
-      }
-    }
-    responses: {
-      /** @description No Content */
-      204: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-    }
-  }
-  selectDocumentToNotGenerateByTodayQuiz: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json;charset=UTF-8': components['schemas']['UpdateTodayQuizSettingsRequest']
-      }
-    }
-    responses: {
-      /** @description No Content */
-      204: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-    }
-  }
-  moveDocumentToDirectory: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json;charset=UTF-8': components['schemas']['MoveDocumentToDirectoryRequest']
-      }
-    }
-    responses: {
-      /** @description No Content */
-      204: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-    }
-  }
-  updateDirectoryInfo: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        directory_id: number
-      }
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json;charset=UTF-8': components['schemas']['UpdateDirectoryInfoRequest']
-      }
-    }
-    responses: {
-      /** @description No Content */
-      204: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-      403: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-    }
-  }
-  updateCollectionQuizzes: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        collection_id: number
-      }
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json;charset=UTF-8': components['schemas']['UpdateCollectionQuizzesRequest']
-      }
-    }
-    responses: {
-      /** @description No Content */
-      204: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-    }
-  }
-  updateCollectionInfo: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        collection_id: number
-      }
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json;charset=UTF-8': components['schemas']['UpdateCollectionInfoRequest']
-      }
-    }
-    responses: {
-      /** @description No Content */
-      204: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-    }
-  }
-  addQuizToCollection: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        collection_id: number
-      }
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json;charset=UTF-8': components['schemas']['AddQuizToCollectionRequest']
-      }
-    }
-    responses: {
-      /** @description No Content */
-      204: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-    }
-  }
-  getCurrentTodayQuizInfo: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json;charset=UTF-8': components['schemas']['GetCurrentTodayQuizInfo']
-        }
-      }
-    }
-  }
-  getSingleQuizSetRecord: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        quiz_set_id: string
-        quiz_set_type:
-          | 'TODAY_QUIZ_SET'
-          | 'DOCUMENT_QUIZ_SET'
-          | 'COLLECTION_QUIZ_SET'
-          | 'FIRST_QUIZ_SET'
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json;charset=UTF-8': components['schemas']['GetSingleQuizSetRecordResponse']
-        }
-      }
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-    }
-  }
-  getAllQuizzesAndCollectionRecords: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json;charset=UTF-8': components['schemas']['GetQuizRecordResponse']
-        }
-      }
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-    }
-  }
-  getQuizSet: {
-    parameters: {
-      query: {
-        'quiz-set-type':
-          | 'TODAY_QUIZ_SET'
-          | 'DOCUMENT_QUIZ_SET'
-          | 'COLLECTION_QUIZ_SET'
-          | 'FIRST_QUIZ_SET'
-      }
-      header?: never
-      path: {
-        quiz_set_id: string
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json;charset=UTF-8': components['schemas']['GetQuizSetResponse']
-        }
-      }
-    }
-  }
-  getQuizSetToday: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json;charset=UTF-8': components['schemas']['GetQuizSetTodayResponse']
-        }
-      }
-    }
-  }
-  getQuizAnswerRateAnalysis: {
-    parameters: {
-      query?: {
-        'directory-id'?: number
-        week?: string
-        month?: string
-      }
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json;charset=UTF-8': components['schemas']['GetQuizAnswerRateAnalysisResponse']
-        }
-      }
-    }
-  }
-  getPaymentByPaymentKey: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        payment_key: string
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-    }
-  }
-  getPaymentByOrderId: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        order_id: string
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-    }
-  }
-  oauthUrlApi: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json;charset=UTF-8': components['schemas']['RedirectView']
-        }
-      }
-    }
-  }
-  getNotionPages: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json;charset=UTF-8': string
-        }
-      }
-    }
-  }
-  getNotionPage: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        page_id: string
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json;charset=UTF-8': string
-        }
-      }
-    }
-  }
-  verifyNotion: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-    }
-  }
-  notionCallback: {
-    parameters: {
-      query: {
-        code: string
-      }
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json;charset=UTF-8': string
-        }
-      }
-    }
-  }
-  getInviteLinkMember: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-    }
-  }
-  getMemberInfo: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json;charset=UTF-8': components['schemas']['GetMemberInfoResponse']
-        }
-      }
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-    }
-  }
-  getIncorrectQuizzes: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json;charset=UTF-8': components['schemas']['QuizResponseDto']
-        }
-      }
-    }
-  }
-  healthCheck: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json;charset=UTF-8': string
-        }
-      }
-    }
-  }
-  getSingleDocument: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        document_id: number
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json;charset=UTF-8': components['schemas']['GetSingleDocumentResponse']
-        }
-      }
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-    }
-  }
-  getDocumentsNeedingReviewPick: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        document_id: number
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json;charset=UTF-8': components['schemas']['GetDocumentsNeedingReviewPickResponse']
-        }
-      }
-    }
-  }
-  getGeneratedQuizzes: {
-    parameters: {
-      query?: {
-        'quiz-type'?: 'MIX_UP' | 'MULTIPLE_CHOICE'
-      }
-      header?: never
-      path: {
-        document_id: number
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json;charset=UTF-8': components['schemas']['QuizResponseDto']
-        }
-      }
-    }
-  }
-  downloadQuizzes: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        document_id: number
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json;charset=UTF-8': string[]
-        }
-      }
-    }
-  }
-  getDocumentsNeedingReview: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json;charset=UTF-8': components['schemas']['GetDocumentsNeedingReviewResponse']
-        }
-      }
-    }
-  }
-  getSingleDirectory: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        directory_id: number
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json;charset=UTF-8': components['schemas']['GetSingleDirectoryResponse']
-        }
-      }
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-    }
-  }
-  deleteDirectory: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        directory_id: number
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description No Content */
-      204: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-      403: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-    }
-  }
-  getAllQuizzesByMemberId: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        directory_id: number
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json;charset=UTF-8': components['schemas']['QuizResponseDto']
-        }
-      }
-    }
-  }
-  getAllDocuments: {
-    parameters: {
-      query?: {
-        'directory-id'?: number
-        'sort-option'?: 'CREATED_AT' | 'UPDATED_AT'
-      }
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json;charset=UTF-8': components['schemas']['GetAllDocumentsResponse']
-        }
-      }
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-    }
-  }
-  searchCollections: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        keyword: string
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json;charset=UTF-8': components['schemas']['CollectionResponseDto']
-        }
-      }
-    }
-  }
-  getCollectionInfoByCollectionId: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        collection_id: number
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json;charset=UTF-8': components['schemas']['GetSingleCollectionResponse']
-        }
-      }
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-    }
-  }
-  getQuizzesInCollectionByCollectionCategory: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        collection_category:
-          | 'IT'
-          | 'LAW'
-          | 'BUSINESS_ECONOMY'
-          | 'SOCIETY_POLITICS'
-          | 'LANGUAGE'
-          | 'MEDICINE_PHARMACY'
-          | 'ART'
-          | 'SCIENCE_ENGINEERING'
-          | 'HISTORY_PHILOSOPHY'
-          | 'OTHER'
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json;charset=UTF-8': components['schemas']['GetQuizzesInCollectionByCollectionCategory']
-        }
-      }
-    }
-  }
-  getAllByMemberId: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json;charset=UTF-8': components['schemas']['CollectionResponseDto']
-        }
-      }
-    }
-  }
-  getInterestCategoryCollections: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json;charset=UTF-8': components['schemas']['CollectionResponseDto']
-        }
-      }
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-    }
-  }
-  getCollectionCategories: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json;charset=UTF-8': components['schemas']['GetCollectionCategoriesResponse']
-        }
-      }
-    }
-  }
-  getAllByMemberIdAndBookmarked: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json;charset=UTF-8': components['schemas']['CollectionResponseDto']
-        }
-      }
-    }
-  }
-  getCollectionAnalysis: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json;charset=UTF-8': components['schemas']['GetCollectionSAnalysisResponse']
-        }
-      }
-    }
-  }
-  googleLogin: {
-    parameters: {
-      query: {
-        code: string
-      }
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json;charset=UTF-8': string
-        }
-      }
-    }
-  }
-  createInviteLink: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Created */
-      201: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json;charset=UTF-8': components['schemas']['CreateInviteLinkResponse']
-        }
-      }
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-    }
-  }
-  deleteInvalidQuiz: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        quiz_id: number
-      }
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json;charset=UTF-8': components['schemas']['DeleteInvalidQuizRequest']
-      }
-    }
-    responses: {
-      /** @description No Content */
-      204: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-    }
-  }
-  deleteQuiz: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        quiz_id: number
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description No Content */
-      204: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-    }
-  }
-  deleteDocument: {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    requestBody: {
-      content: {
-        'application/json;charset=UTF-8': components['schemas']['DeleteDocumentRequest']
-      }
-    }
-    responses: {
-      /** @description No Content */
-      204: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-    }
-  }
-  deleteCollection: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        collection_id: number
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description No Content */
-      204: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-    }
-  }
-  deleteCollectionBookmark: {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        collection_id: number
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description No Content */
-      204: {
-        headers: {
-          [name: string]: unknown
-        }
-        content?: never
-      }
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': unknown
-        }
-      }
-    }
-  }
+    saveFcmToken: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["SaveFcmTokenRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    createTodayQuizForTest: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["CreateQuizzesResponse"];
+                };
+            };
+        };
+    };
+    createMemberForTest: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    createMemberGeneratedQuizSet: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                document_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["CreateQuizzesByDocumentRequest"];
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["CreateQuizzesResponse"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    createErrorCheckQuizSet: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                document_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["CreateQuizzesResponse"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    verifyAmount: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["SaveAmountRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": Record<string, never>;
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    tempSaveAmount: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["SaveAmountRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": Record<string, never>;
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    confirmPayment: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["TossPaymentRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    cancelPayment: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["CancelPaymentRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    messageSendSend: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["FcmMessageDto"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    messageSend: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["FcmNotificationRequestDto"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    login: {
+        parameters: {
+            query?: {
+                "invite-link"?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["LoginRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["LoginResponse"];
+                };
+            };
+        };
+    };
+    integratedSearchByKeyword: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["SearchRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["IntegratedSearchResponse"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    createFeedback: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "multipart/form-data": components["schemas"]["CreateFeedbackRequest"];
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    createDocument: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "multipart/form-data": components["schemas"]["CreateDocumentRequest"];
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CreateDocumentResponse"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    createQuizzes: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                document_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["CreateQuizzesRequest"];
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    searchDocumentByKeyword: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["SearchRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["SearchDocumentResponse"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    getDirectories: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["GetAllDirectoriesResponse"];
+                };
+            };
+        };
+    };
+    createDirectory: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["CreateDirectoryRequest"];
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["CreateDirectoryResponse"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    getAllCollections: {
+        parameters: {
+            query?: {
+                "collection-sort-option"?: "POPULARITY" | "UPDATED";
+                "collection-category"?: ("IT" | "LAW" | "BUSINESS_ECONOMY" | "SOCIETY_POLITICS" | "LANGUAGE" | "MEDICINE_PHARMACY" | "ART" | "SCIENCE_ENGINEERING" | "HISTORY_PHILOSOPHY" | "OTHER")[];
+                "quiz-type"?: "MIX_UP" | "MULTIPLE_CHOICE";
+                "quiz-count"?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["CollectionResponseDto"];
+                };
+            };
+        };
+    };
+    createCollection: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["CreateCollectionRequest"];
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["CreateCollectionResponse"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    createCollectionBookmark: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                collection_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    createCollectionQuizSet: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                collection_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["CreateQuizzesResponse"];
+                };
+            };
+        };
+    };
+    sendVerificationCode: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["SendVerificationCodeRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    verifyVerificationCode: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["VerifyVerificationCodeRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    verifyInviteCode: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["VerifyInviteCode"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    updateWrongQuizResult: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["UpdateRandomQuizResultRequest"];
+            };
+        };
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    updateRandomQuizResult: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["UpdateRandomQuizResultRequest"];
+            };
+        };
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    updateQuizResult: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["UpdateQuizResultRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["UpdateQuizResultResponse"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    updateTodayQuizCount: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["UpdateTodayQuizCountRequest"];
+            };
+        };
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    updateQuizNotification: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["UpdateQuizNotificationRequest"];
+            };
+        };
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    updateMemberName: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["UpdateMemberNameRequest"];
+            };
+        };
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    updateInterestCollectionCategories: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["UpdateInterestCollectionCategoriesRequest"];
+            };
+        };
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    updateDocumentName: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                document_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["UpdateDocumentNameRequest"];
+            };
+        };
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    changeDocumentContent: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                document_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "multipart/form-data": components["schemas"]["UpdateDocumentContentRequest"];
+            };
+        };
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    selectDocumentToNotGenerateByTodayQuiz: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["UpdateTodayQuizSettingsRequest"];
+            };
+        };
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    moveDocumentToDirectory: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["MoveDocumentToDirectoryRequest"];
+            };
+        };
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    updateDirectoryInfo: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                directory_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["UpdateDirectoryInfoRequest"];
+            };
+        };
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    updateCollectionQuizzes: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                collection_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["UpdateCollectionQuizzesRequest"];
+            };
+        };
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    updateCollectionInfo: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                collection_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["UpdateCollectionInfoRequest"];
+            };
+        };
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    addQuizToCollection: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                collection_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["AddQuizToCollectionRequest"];
+            };
+        };
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    getCurrentTodayQuizInfo: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["GetCurrentTodayQuizInfo"];
+                };
+            };
+        };
+    };
+    getSingleQuizSetRecordByDate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                solved_date: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["GetSingleQuizRecordByDateResponse"];
+                };
+            };
+        };
+    };
+    getSingleQuizSetRecord: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                quiz_set_id: string;
+                quiz_set_type: "TODAY_QUIZ_SET" | "DOCUMENT_QUIZ_SET" | "COLLECTION_QUIZ_SET" | "FIRST_QUIZ_SET";
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["GetSingleQuizSetRecordResponse"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    getAllQuizzesAndCollectionRecords: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["GetQuizRecordsResponse"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    getQuizSet: {
+        parameters: {
+            query: {
+                "quiz-set-type": "TODAY_QUIZ_SET" | "DOCUMENT_QUIZ_SET" | "COLLECTION_QUIZ_SET" | "FIRST_QUIZ_SET";
+            };
+            header?: never;
+            path: {
+                quiz_set_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["GetQuizSetResponse"];
+                };
+            };
+        };
+    };
+    getQuizSetToday: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["GetQuizSetTodayResponse"];
+                };
+            };
+        };
+    };
+    getQuizAnswerRateAnalysis: {
+        parameters: {
+            query?: {
+                "directory-id"?: number;
+                week?: string;
+                month?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["GetQuizAnswerRateAnalysisResponse"];
+                };
+            };
+        };
+    };
+    getPaymentByPaymentKey: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                payment_key: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    getPaymentByOrderId: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                order_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    oauthUrlApi: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["RedirectView"];
+                };
+            };
+        };
+    };
+    getNotionPages: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": string;
+                };
+            };
+        };
+    };
+    getNotionPage: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                page_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": string;
+                };
+            };
+        };
+    };
+    verifyNotion: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    notionCallback: {
+        parameters: {
+            query: {
+                code: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": string;
+                };
+            };
+        };
+    };
+    getInviteLinkMember: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    getMemberInfo: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["GetMemberInfoResponse"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    getIncorrectQuizzes: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["QuizResponseDto"];
+                };
+            };
+        };
+    };
+    healthCheck: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": string;
+                };
+            };
+        };
+    };
+    getSingleDocument: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                document_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["GetSingleDocumentResponse"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    getDocumentsNeedingReviewPick: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                document_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["GetDocumentsNeedingReviewPickResponse"];
+                };
+            };
+        };
+    };
+    getGeneratedQuizzes: {
+        parameters: {
+            query?: {
+                "quiz-type"?: "MIX_UP" | "MULTIPLE_CHOICE";
+            };
+            header?: never;
+            path: {
+                document_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["QuizResponseDto"];
+                };
+            };
+        };
+    };
+    downloadQuizzes: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                document_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": string[];
+                };
+            };
+        };
+    };
+    getDocumentsNeedingReview: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["GetDocumentsNeedingReviewResponse"];
+                };
+            };
+        };
+    };
+    getSingleDirectory: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                directory_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["GetSingleDirectoryResponse"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    deleteDirectory: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                directory_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    getAllQuizzesByMemberId: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                directory_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["QuizResponseDto"];
+                };
+            };
+        };
+    };
+    getAllDocuments: {
+        parameters: {
+            query?: {
+                "directory-id"?: number;
+                "sort-option"?: "CREATED_AT" | "UPDATED_AT";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["GetAllDocumentsResponse"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    searchCollections: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                keyword: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["CollectionResponseDto"];
+                };
+            };
+        };
+    };
+    getCollectionInfoByCollectionId: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                collection_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["GetSingleCollectionResponse"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    getQuizzesInCollectionByCollectionCategory: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                collection_category: "IT" | "LAW" | "BUSINESS_ECONOMY" | "SOCIETY_POLITICS" | "LANGUAGE" | "MEDICINE_PHARMACY" | "ART" | "SCIENCE_ENGINEERING" | "HISTORY_PHILOSOPHY" | "OTHER";
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["GetQuizzesInCollectionByCollectionCategory"];
+                };
+            };
+        };
+    };
+    getAllByMemberId: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["CollectionResponseDto"];
+                };
+            };
+        };
+    };
+    getInterestCategoryCollections: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["CollectionResponseDto"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    getCollectionCategories: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["GetCollectionCategoriesResponse"];
+                };
+            };
+        };
+    };
+    getAllByMemberIdAndBookmarked: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["CollectionResponseDto"];
+                };
+            };
+        };
+    };
+    getCollectionAnalysis: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["GetCollectionSAnalysisResponse"];
+                };
+            };
+        };
+    };
+    googleLogin: {
+        parameters: {
+            query: {
+                code: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": string;
+                };
+            };
+        };
+    };
+    createInviteLink: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["CreateInviteLinkResponse"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    deleteInvalidQuiz: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                quiz_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["DeleteInvalidQuizRequest"];
+            };
+        };
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    deleteQuiz: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                quiz_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    deleteDocument: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["DeleteDocumentRequest"];
+            };
+        };
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    deleteCollection: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                collection_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    deleteCollectionBookmark: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                collection_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
 }

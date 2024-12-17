@@ -1,4 +1,4 @@
-import ModifyDocument from '@/features/pages/modify-document'
+import ModifyDocument from '@/features/document/screens/modify-document'
 
 const ModifyPage = () => {
   return <ModifyDocument />

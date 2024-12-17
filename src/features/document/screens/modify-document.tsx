@@ -2,14 +2,14 @@
 
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
-import { MAX_CHARACTERS, MIN_CHARACTERS } from '../document/config'
 import { useParams } from 'next/navigation'
 import Loading from '@/shared/components/custom/loading'
-import TitleInput from '../modify/components/title-input'
-import VisualEditor from '../modify/components/visual-editor'
-import { useEditDocumentContext } from '../modify/context/edit-document-context'
 import { useQuery } from '@tanstack/react-query'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
+import { MAX_CHARACTERS, MIN_CHARACTERS } from '../config'
+import TitleInput from '@/features/modify/components/title-input'
+import VisualEditor from '@/features/modify/components/visual-editor'
+import { useEditDocumentContext } from '@/features/modify/context/edit-document-context'
 
 const ModifyDocument = () => {
   const { id } = useParams()
