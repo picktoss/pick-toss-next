@@ -4,6 +4,21 @@ import SetEmailDialog from '.'
 import { useEffect, useState } from 'react'
 import { NotificationProvider } from '../../contexts/notification-context'
 
+const user = {
+  id: 1,
+  name: '픽토스',
+  email: 'picktoss@email.com',
+  socialPlatform: 'GOOGLE',
+  role: 'ROLE_USER',
+  interestCategories: ['IT'],
+  documentUsage: {
+    possessDocumentCount: 10,
+    maxPossessDocumentCount: 40,
+  },
+  star: 30,
+  quizNotificationEnabled: true,
+} as User.Info
+
 const meta: Meta<typeof SetEmailDialog> = {
   title: 'notification/SetEmailDialog',
   component: SetEmailDialog,
@@ -13,7 +28,7 @@ const meta: Meta<typeof SetEmailDialog> = {
   },
   decorators: [
     (Story) => (
-      <NotificationProvider>
+      <NotificationProvider user={user}>
         <Story />
       </NotificationProvider>
     ),

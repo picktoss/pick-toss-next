@@ -5,13 +5,13 @@ import Text from '@/shared/components/ui/text'
 import { Type, useInquiry } from '../../../contexts/inquiry-context'
 
 const inquiryTypes = [
-  { key: 'error', label: '오류문의' },
-  { key: 'payment', label: '결제문의' },
-  { key: 'coalition', label: '제휴문의' },
-  { key: 'event', label: '이벤트' },
-  { key: 'userInfo', label: '회원정보문의' },
-  { key: 'cancel', label: '취소요청' },
-  { key: 'etc', label: '기타' },
+  { key: 'ERROR', label: '오류문의' },
+  { key: 'PAYMENT', label: '결제문의' },
+  { key: 'PARTNERSHIP', label: '제휴문의' },
+  { key: 'EVENT', label: '이벤트' },
+  { key: 'ACCOUNT_INFO', label: '회원정보문의' },
+  { key: 'CANCELLATION', label: '취소요청' },
+  { key: 'OTHER', label: '기타' },
 ] as const
 
 const InquiryType = () => {

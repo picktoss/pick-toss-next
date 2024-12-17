@@ -11,8 +11,6 @@ import { Input } from '@/shared/components/ui/input'
 import Tag from '@/shared/components/ui/tag'
 import Text from '@/shared/components/ui/text'
 import { cn } from '@/shared/lib/utils'
-import Image from 'next/image'
-import INFINITE_IMG from '@/../../public/images/infinite-icon.png'
 import InviteRewardInfo from '../invite-reward-info'
 
 const InviteReward = ({ className }: { className?: HTMLElement['className'] }) => {
@@ -41,7 +39,9 @@ const InviteReward = ({ className }: { className?: HTMLElement['className'] }) =
       >
         <div className="my-[20px] flex h-[calc(80dvh-12px)] w-full flex-col gap-[63px] overflow-y-auto px-[45px]">
           <DrawerHeader className="flex h-fit w-full flex-col items-center gap-[24px] px-0">
-            <Image src={INFINITE_IMG} width={212} height={110} alt="" />
+            <div className="flex-center h-[110px] w-[212px]">
+              <Icon name="infinite-color-inverse" />
+            </div>
 
             <div className="flex flex-col items-center gap-[8px]">
               <div className="relative">

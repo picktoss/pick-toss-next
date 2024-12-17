@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
 interface UserStore {
-  userInfo: User.Info
+  userInfo: User.Info | undefined
   setUserInfo: (userInfo: User.Info) => void
 }
 

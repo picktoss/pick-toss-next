@@ -17,6 +17,7 @@ const AccountPage = async () => {
     <main className="h-[calc(100dvh-54px-88px)] w-full overflow-y-auto px-[16px]">
       <div className="flex-center h-fit w-full pb-[44px] pt-[24px]">
         <div className="flex-center relative size-[96px] rounded-full bg-background-base-03">
+          {/* 이용자의 프로필 이미지 유무에 따라 렌더링 */}
           <Icon name="person" className="size-[48px] text-icon-tertiary" />
 
           <input type="file" name="file" id="userImage" className="hidden" />

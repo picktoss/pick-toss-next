@@ -6,7 +6,6 @@ import SwipeableDocumentCard from '../document/components/swipeable-document-car
 import AddDocumentMenu from '../document/components/add-document-menu'
 import Image from 'next/image'
 import Text from '@/shared/components/ui/text'
-import note_img from '@/../../public/assets/note.png'
 import Loading from '@/shared/components/custom/loading'
 import { useDirectoryContext } from '../directory/contexts/directory-context'
 import { useQuery } from '@tanstack/react-query'
@@ -43,7 +42,13 @@ const DocumentsInDirectory = () => {
       {data?.documents.length === 0 || !data ? (
         <div className="flex-center grow overflow-y-auto">
           <div className="flex-center relative size-[202px] flex-col">
-            <Image src={note_img} alt="노트 작성" objectPosition="center" width={100} />
+            <Image
+              src={'/images/document.png'}
+              alt="노트 작성"
+              objectPosition="center"
+              width={100}
+              height={100}
+            />
             <div className="flex-center mx-[12px] grow flex-col">
               <h3 className="mb-[8px] text-title3">노트를 등록해보세요</h3>
               <Text as="p" typography="text1-medium" className="text-center text-text-sub">

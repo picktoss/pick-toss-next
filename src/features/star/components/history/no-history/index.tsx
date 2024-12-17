@@ -1,7 +1,6 @@
 import Text from '@/shared/components/ui/text'
 import Image from 'next/image'
 import Link from 'next/link'
-import NO_STAR_HISTORY_IMG from '@/../../public/assets/no-star-history.png'
 import { StarHistoryTab } from '../history-tab'
 
 interface Props {
@@ -11,7 +10,13 @@ interface Props {
 const NoHistory = ({ activeTab }: Props) => {
   return (
     <div className="flex-center size-full flex-col">
-      <Image src={NO_STAR_HISTORY_IMG} alt="" className="mb-[24px] size-[96px]" />
+      <Image
+        src={'/images/no-star-history.png'}
+        alt=""
+        width={96}
+        height={96}
+        className="mb-[24px]"
+      />
       <Text typography="subtitle1-bold" className="mb-[4px]">
         {activeTab === 'all' && ''}
         {activeTab === 'payment' && '결제 '}

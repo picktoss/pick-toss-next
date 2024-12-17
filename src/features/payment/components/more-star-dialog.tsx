@@ -27,7 +27,7 @@ const MoreStarDialog = ({ isOpen, setIsOpen }: Props) => {
         className="flex-center size-fit flex-col rounded-[20px] bg-background-base-01 px-[24px] py-[28px]"
       >
         <Image
-          src="/assets/need-more-star.png"
+          src="/images/need-more-star.png"
           width={97}
           height={97}
           alt=""

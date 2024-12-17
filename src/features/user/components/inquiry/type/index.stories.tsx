@@ -19,7 +19,15 @@ const meta: Meta<typeof InquiryType> = {
   argTypes: {
     type: {
       control: 'select',
-      options: ['error', 'payment', 'coalition', 'event', 'userInfo', 'cancel', 'etc'],
+      options: [
+        'ERROR',
+        'PAYMENT',
+        'PARTNERSHIP',
+        'EVENT',
+        'ACCOUNT_INFO',
+        'CANCELLATION',
+        'OTHER',
+      ],
       description: '현재 선택된 문의 유형',
     },
   },
@@ -30,7 +38,7 @@ type Story = StoryObj<typeof InquiryTypeWithArgs>
 
 export const Default: Story = {
   args: {
-    type: 'error',
+    type: 'ERROR',
   },
   render: (args: { type: Type }) => <InquiryTypeWithArgs {...args} />,
 }

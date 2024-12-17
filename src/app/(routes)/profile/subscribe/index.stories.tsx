@@ -1,11 +1,11 @@
 import { Meta, StoryObj } from '@storybook/react'
-import StarHistoryPage from './page'
 import Layout from './layout'
 import Header from './@header/default'
+import SubscribePage from './page'
 
-const meta: Meta<typeof StarHistoryPage> = {
+const meta: Meta<typeof SubscribePage> = {
   title: 'Page/StarHistory',
-  component: StarHistoryPage,
+  component: SubscribePage,
   parameters: {
     layout: 'fullscreen',
     nextjs: { appDirectory: true },
@@ -17,14 +17,14 @@ const meta: Meta<typeof StarHistoryPage> = {
       </div>
     ),
   ],
-} satisfies Meta<typeof StarHistoryPage>
+} satisfies Meta<typeof SubscribePage>
 
 export default meta
 
-export const Default: StoryObj<typeof StarHistoryPage> = {
+export const Default: StoryObj<typeof SubscribePage> = {
   render: () => (
     <Layout header={<Header />}>
-      <StarHistoryPage />
+      <SubscribePage />
     </Layout>
   ),
 }

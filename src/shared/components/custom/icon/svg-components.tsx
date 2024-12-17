@@ -2604,3 +2604,123 @@ export const CollectionTypeRoundIcon = ({ ...props }) => {
     </svg>
   )
 }
+
+export const InfiniteGray = ({ ...props }) => {
+  return (
+    <svg
+      width="164"
+      height="77"
+      viewBox="0 0 164 77"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M78.8353 38.6198C65.9396 51.9897 51.2527 67.0307 36.1182 67.0307C20.9838 67.0307 8.71484 54.3107 8.71484 38.6198C8.71484 22.929 20.9838 10.209 36.1182 10.209C51.2527 10.209 64.3276 23.5788 78.8353 38.6198Z"
+        stroke="#F5F7F9"
+        strokeWidth="17"
+      />
+      <path
+        d="M78.8357 38.6198C92.8431 52.5586 108.796 68.2397 125.235 68.2397C141.674 68.2397 155.001 54.9784 155.001 38.6198C155.001 22.2613 141.674 9 125.235 9C108.796 9 94.594 22.9387 78.8357 38.6198Z"
+        stroke="#F5F7F9"
+        strokeWidth="17"
+      />
+    </svg>
+  )
+}
+
+export const InfiniteColor = ({ ...props }) => {
+  return (
+    <svg
+      width="164"
+      height="77"
+      viewBox="0 0 164 77"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M78.8348 38.6198C65.9391 51.9897 51.2522 67.0307 36.1177 67.0307C20.9833 67.0307 8.71436 54.3107 8.71436 38.6198C8.71436 22.929 20.9833 10.209 36.1177 10.209C51.2522 10.209 64.3271 23.5788 78.8348 38.6198Z"
+        stroke="url(#paint0_linear_10944_12685)"
+        strokeWidth="17"
+      />
+      <path
+        d="M78.8347 38.6198C92.8421 52.5586 108.795 68.2397 125.234 68.2397C141.673 68.2397 155 54.9784 155 38.6198C155 22.2613 141.673 9 125.234 9C108.795 9 94.593 22.9387 78.8347 38.6198Z"
+        stroke="url(#paint1_linear_10944_12685)"
+        strokeWidth="17"
+      />
+      <defs>
+        <linearGradient
+          id="paint0_linear_10944_12685"
+          x1="63.809"
+          y1="38.6198"
+          x2="56.1979"
+          y2="-3.29525"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#FFF7ED" />
+          <stop offset="1" stopColor="#7A9EFF" />
+        </linearGradient>
+        <linearGradient
+          id="paint1_linear_10944_12685"
+          x1="99.6071"
+          y1="34.6326"
+          x2="138.39"
+          y2="83.4298"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#FFF7ED" />
+          <stop offset="1" stopColor="#FDA53A" />
+        </linearGradient>
+      </defs>
+    </svg>
+  )
+}
+
+export const InfiniteColorInverse = ({ ...props }) => {
+  return (
+    <svg
+      width="145"
+      height="68"
+      viewBox="0 0 145 68"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M69.8347 34.1198C58.4628 45.9098 45.5114 59.1735 32.1653 59.1735C18.8192 59.1735 8 47.9566 8 34.1198C8 20.283 18.8192 9.0661 32.1653 9.0661C45.5114 9.0661 57.0413 20.8561 69.8347 34.1198Z"
+        stroke="url(#paint0_linear_11071_14100)"
+        strokeWidth="14.5116"
+      />
+      <path
+        d="M69.8347 34.1198C82.1869 46.4115 96.2548 60.2397 110.751 60.2397C125.248 60.2397 137 48.5454 137 34.1198C137 19.6942 125.248 8 110.751 8C96.2548 8 83.731 20.2917 69.8347 34.1198Z"
+        stroke="url(#paint1_linear_11071_14100)"
+        strokeWidth="14.5116"
+      />
+      <defs>
+        <linearGradient
+          id="paint0_linear_11071_14100"
+          x1="56.5844"
+          y1="34.1198"
+          x2="49.8727"
+          y2="-2.84242"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#7A9EFF" />
+          <stop offset="1" stopColor="#FEC473" />
+        </linearGradient>
+        <linearGradient
+          id="paint1_linear_11071_14100"
+          x1="88.1525"
+          y1="30.6037"
+          x2="122.353"
+          y2="73.6349"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#7A9EFF" />
+          <stop offset="1" stopColor="#C4DBFF" />
+        </linearGradient>
+      </defs>
+    </svg>
+  )
+}

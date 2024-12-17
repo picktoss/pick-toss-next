@@ -2,6 +2,21 @@ import { Meta, StoryObj } from '@storybook/react'
 import NotificationControlArea from '.'
 import { NotificationProvider } from '../../contexts/notification-context'
 
+const user = {
+  id: 1,
+  name: '픽토스',
+  email: 'picktoss@email.com',
+  socialPlatform: 'GOOGLE',
+  role: 'ROLE_USER',
+  interestCategories: ['IT'],
+  documentUsage: {
+    possessDocumentCount: 10,
+    maxPossessDocumentCount: 40,
+  },
+  star: 30,
+  quizNotificationEnabled: true,
+} as User.Info
+
 const meta: Meta<typeof NotificationControlArea> = {
   title: 'notification/NotificationControlArea',
   component: NotificationControlArea,
@@ -12,24 +27,14 @@ const meta: Meta<typeof NotificationControlArea> = {
   decorators: [
     (Story) => (
       <div className="mx-auto max-w-mobile">
-        <NotificationProvider>
+        <NotificationProvider user={user}>
           <Story />
         </NotificationProvider>
       </div>
     ),
   ],
-  argTypes: {
-    isKakaoUser: {
-      control: 'boolean',
-      description: '카카오 유저 여부에 따라 이메일 등록 기능 사용',
-    },
-  },
 } satisfies Meta<typeof NotificationControlArea>
 
 export default meta
 
-export const Default: StoryObj<typeof NotificationControlArea> = {
-  args: {
-    isKakaoUser: true,
-  },
-}
+export const Default: StoryObj<typeof NotificationControlArea> = {}

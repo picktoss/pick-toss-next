@@ -10,15 +10,6 @@ import {
 } from '@/shared/components/ui/drawer'
 import Text from '@/shared/components/ui/text'
 
-const content = `
-코니티는 개인정보보호법 등 관련 법령상의 개인정보보호 규정을 준수하며, 다음과 같이 개인정보를 수집 이용합니다,
-- 수집 이용 항목: 이름(닉네임), 이메일주소, 신고내용
-- 수집 이용 목적: 법률 위반 사항 신고, 처리결과 회신
-- 보유 및 이용기간: 전자상거래등에서의 소비자보호에 관한 법률에 따라 3년
-위 개인정보 수집 이용에 동의하지 않으실 수 있으며, 동의하지 않는 경우 
-신고가 제한됩니다.
-`
-
 const TermsAndConditionsDrawer = ({
   setIsAgreeChecked,
 }: {
@@ -49,7 +40,18 @@ const TermsAndConditionsDrawer = ({
             typography="text2-medium"
             className="max-h-[calc(100%-75px)] overflow-y-auto text-text-secondary"
           >
-            {content}
+            픽토스는 개인정보보호법 등 관련 법령상의 개인정보보호 규정을 준수하며, 다음과 같이
+            개인정보를 수집 이용합니다.
+            <br />
+            <br />
+            · 수집 이용 항목: 이름(닉네임), 이메일주소, 신고내용
+            <br />
+            · 수집 이용 목적: 법률 위반 사항 신고, 처리결과 회신
+            <br />
+            · 보유 및 이용기간: 전자상거래등에서의 소비자보호에 관한 법률에 따라 3년
+            <br />
+            <br />위 개인정보 수집 이용에 동의하지 않으실 수 있으며, 동의하지 않는 경우 신고가
+            제한됩니다.
           </Text>
         </div>
 
