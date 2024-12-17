@@ -1,5 +1,6 @@
 'use client'
 
+import { useUpdateQuizNotification } from '@/requests/user/hooks'
 import {
   createContext,
   useContext,
@@ -11,11 +12,11 @@ import {
 } from 'react'
 
 interface NotificationContextType {
-  switchStates: SwitchStates
   allowNotification: boolean
   offEmail: boolean
   setOffEmail: (off: boolean) => void
   handleAllowNotification: (checked: boolean) => void
+  switchStates: SwitchStates
   handleSwitchChange: (type: 'push' | 'email', name: string, checked: boolean) => void
 }
 
@@ -34,9 +35,19 @@ interface SwitchStates {
 
 const NotificationContext = createContext<NotificationContextType | undefined>(undefined)
 
-export const NotificationProvider = ({ children }: { children: ReactNode }) => {
+export const NotificationProvider = ({
+  children,
+  user,
+}: {
+  children: ReactNode
+  user: User.Info
+}) => {
+  const { mutate: updateNotificationMutate } = useUpdateQuizNotification()
+
   const [offEmail, setOffEmail] = useState(true)
-  const [allowNotification, setAllowNotification] = useState(false)
+  const [allowNotification, setAllowNotification] = useState<boolean>(user.quizNotificationEnabled)
+
+  // 추후 고려
   const [switchStates, setSwitchStates] = useState<SwitchStates>({
     push: {
       todayQuiz: false,
@@ -50,11 +61,11 @@ export const NotificationProvider = ({ children }: { children: ReactNode }) => {
     },
   })
 
-  useEffect(() => {
-    const pushValues = Object.values(switchStates.push)
-    const emailValues = Object.values(switchStates.email)
-    setAllowNotification(pushValues.some(Boolean) || emailValues.some(Boolean))
-  }, [switchStates])
+  // useEffect(() => {
+  //   const pushValues = Object.values(switchStates.push)
+  //   const emailValues = Object.values(switchStates.email)
+  //   setAllowNotification(pushValues.some(Boolean) || emailValues.some(Boolean))
+  // }, [switchStates])
 
   useEffect(() => {
     if (offEmail) {
@@ -68,21 +79,33 @@ export const NotificationProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [offEmail])
 
-  const handleAllowNotification = useCallback((checked: boolean) => {
-    setAllowNotification(checked)
-    setSwitchStates({
-      push: {
-        todayQuiz: checked,
-        wrongAnswerStatus: checked,
-        inviteReward: checked,
-        announcements: checked,
-      },
-      email: {
-        todayQuiz: checked,
-        announcements: checked,
-      },
-    })
-  }, [])
+  const handleAllowNotification = useCallback(
+    (checked: boolean) => {
+      updateNotificationMutate(
+        {
+          quizNotificationEnabled: checked,
+        },
+        {
+          onSuccess: () => {
+            setAllowNotification(checked)
+            setSwitchStates({
+              push: {
+                todayQuiz: checked,
+                wrongAnswerStatus: checked,
+                inviteReward: checked,
+                announcements: checked,
+              },
+              email: {
+                todayQuiz: checked,
+                announcements: checked,
+              },
+            })
+          },
+        }
+      )
+    },
+    [updateNotificationMutate]
+  )
 
   const handleSwitchChange = useCallback(
     (type: 'push' | 'email', name: string, checked: boolean) => {
@@ -99,14 +122,14 @@ export const NotificationProvider = ({ children }: { children: ReactNode }) => {
 
   const values = useMemo(
     () => ({
-      switchStates,
       allowNotification,
       offEmail,
       setOffEmail,
       handleAllowNotification,
+      switchStates,
       handleSwitchChange,
     }),
-    [switchStates, allowNotification, offEmail, handleAllowNotification, handleSwitchChange]
+    [allowNotification, offEmail, handleAllowNotification, switchStates, handleSwitchChange]
   )
 
   return <NotificationContext.Provider value={values}>{children}</NotificationContext.Provider>

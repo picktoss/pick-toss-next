@@ -5,7 +5,7 @@ import Text from '@/shared/components/ui/text'
 import { useNotification } from '../../contexts/notification-context'
 // import { useEffect } from 'react'
 
-const NotificationControlArea = () => {
+const NotificationControlArea = ({ defaultState }: { defaultState: boolean }) => {
   // const [isOpen, setIsOpen] = useState(false)
   const {
     allowNotification,
@@ -26,7 +26,12 @@ const NotificationControlArea = () => {
     <main className="h-[calc(100dvh-54px-88px)] w-full overflow-y-auto px-[16px]">
       <div className="mb-[37px] mt-[10px] flex items-center gap-[20px]">
         <Text typography="subtitle2-bold">서비스 알림</Text>
-        <Switch size={'md'} checked={allowNotification} onCheckedChange={handleAllowNotification} />
+        <Switch
+          size={'md'}
+          defaultChecked={defaultState}
+          checked={allowNotification}
+          onCheckedChange={handleAllowNotification}
+        />
       </div>
 
       {/* <div

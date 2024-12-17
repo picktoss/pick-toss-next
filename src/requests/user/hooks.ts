@@ -10,6 +10,7 @@ import {
 } from './client'
 import { useUserStore } from '@/store/user'
 
+/** GET /members/info - Get member info */
 export const useUserInfo = () => {
   const { setUserInfo } = useUserStore()
 
@@ -19,6 +20,7 @@ export const useUserInfo = () => {
   })
 }
 
+/** PATCH /members/update-today-quiz-count - 오늘의 퀴즈 관리(오늘의 퀴즈 개수 설정) */
 export const useUpdateTodayQuizCount = () => {
   const queryClient = useQueryClient()
 
@@ -28,6 +30,7 @@ export const useUpdateTodayQuizCount = () => {
   })
 }
 
+/** PATCH /members/update-quiz-notification - 사용자 알림 ON/OFF */
 export const useUpdateQuizNotification = () => {
   const queryClient = useQueryClient()
 
@@ -38,6 +41,7 @@ export const useUpdateQuizNotification = () => {
   })
 }
 
+/** PATCH /members/update-name - 사용자 이름 수정 */
 export const useUpdateUserName = () => {
   const queryClient = useQueryClient()
 
@@ -47,6 +51,7 @@ export const useUpdateUserName = () => {
   })
 }
 
+/** PATCH /members/update-collection-fields - 관심분야 태그 설정 */
 export const useUpdateCollectionCategories = () => {
   const queryClient = useQueryClient()
 

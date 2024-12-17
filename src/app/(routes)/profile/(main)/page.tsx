@@ -11,6 +11,8 @@ import { CATEGORIES } from '@/features/category/config'
 const ProfilePage = async () => {
   const user = await getUserInfo()
 
+  const noInterests = !user.interestCategories.length
+
   const maxPossessDocumentCount = user.documentUsage.maxPossessDocumentCount
   const possessDocumentCount = user.documentUsage.possessDocumentCount
   const addableDocumentCount = maxPossessDocumentCount - possessDocumentCount
@@ -21,7 +23,7 @@ const ProfilePage = async () => {
         href={'profile/account'}
         className="relative mt-[8px] flex h-[96px] w-full items-center justify-between"
       >
-        {user.interestCategories.length === 0 && <CategoryTooltip />}
+        {noInterests && <CategoryTooltip />}
 
         <div className="flex-center gap-[16px]">
           <div className="flex-center size-[48px] rounded-full bg-background-base-03">
@@ -35,7 +37,7 @@ const ProfilePage = async () => {
             <div className="flex-center gap-[12px]">
               <Text typography="subtitle1-bold">{user.name}</Text>
 
-              {user.interestCategories.length === 0 ? (
+              {noInterests ? (
                 <Text typography="text2-medium" className="text-text-caption">
                   관심분야 없음
                 </Text>

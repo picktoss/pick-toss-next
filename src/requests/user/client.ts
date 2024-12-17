@@ -3,6 +3,7 @@
 import { API_ENDPOINTS } from '@/shared/configs/endpoint'
 import { http } from '@/shared/lib/axios/http'
 
+/** PATCH /members/update-today-quiz-count - 오늘의 퀴즈 관리(오늘의 퀴즈 개수 설정) */
 export const updateTodayQuizCount = async (payload: User.Request.UpdateTodayQuizCount) => {
   try {
     await http.patch(API_ENDPOINTS.USER.PATCH.UPDATE_QUIZ_COUNT, payload)
@@ -11,6 +12,7 @@ export const updateTodayQuizCount = async (payload: User.Request.UpdateTodayQuiz
   }
 }
 
+/** PATCH /members/update-quiz-notification - 사용자 알림 ON/OFF */
 export const updateQuizNotification = async (payload: User.Request.UpdateQuizNotification) => {
   try {
     await http.patch(API_ENDPOINTS.USER.PATCH.UPDATE_NOTIFICATION, payload)
@@ -19,6 +21,7 @@ export const updateQuizNotification = async (payload: User.Request.UpdateQuizNot
   }
 }
 
+/** PATCH /members/update-name - 사용자 이름 수정 */
 export const updateUserName = async (payload: User.Request.UpdateName) => {
   try {
     await http.patch(API_ENDPOINTS.USER.PATCH.UPDATE_NAME, payload)
@@ -27,6 +30,7 @@ export const updateUserName = async (payload: User.Request.UpdateName) => {
   }
 }
 
+/** PATCH /members/update-collection-fields - 관심분야 태그 설정 */
 export const updateCollectionCategories = async (
   payload: User.Request.UpdateCollectionCategories
 ) => {
@@ -37,6 +41,7 @@ export const updateCollectionCategories = async (
   }
 }
 
+/** GET /members/info - Get member info */
 export const getUserInfo = async () => {
   try {
     const { data } = await http.get<User.Info>(API_ENDPOINTS.USER.GET.INFO)
