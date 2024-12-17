@@ -5,10 +5,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/shared/components/ui/dialog'
+import { cn } from '@/shared/lib/utils'
 
 interface Props {
   triggerComponent: React.ReactNode
-  title: string
+  title?: string
   content: React.ReactNode
   cancelText?: string
   confirmButton: React.ReactNode
@@ -26,12 +27,17 @@ const ConfirmDialogWidget = ({
       <DialogTrigger asChild>{triggerComponent}</DialogTrigger>
 
       <DialogContent
-        className="flex min-h-[190px] w-[280px] flex-col items-center justify-between rounded-[16px] bg-background-base-01"
+        className={cn(
+          'flex min-h-[190px] w-[280px] flex-col items-center justify-between rounded-[16px] bg-background-base-01',
+          !title && 'min-h-fit justify-center'
+        )}
         displayCloseButton={false}
       >
-        <DialogTitle className="mb-[32px] w-full text-subtitle2-bold">{title}</DialogTitle>
+        {title && (
+          <DialogTitle className="mb-[32px] w-full text-subtitle2-bold">{title}</DialogTitle>
+        )}
 
-        <div className="flex h-[40px] w-full">{content}</div>
+        <div className={cn('flex min-h-[40px] w-full', !title && 'min-h-fit')}>{content}</div>
 
         <div className="mt-[40px] flex w-full justify-end text-button2">
           <DialogClose asChild>
