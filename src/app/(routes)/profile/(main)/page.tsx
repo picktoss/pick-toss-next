@@ -10,8 +10,11 @@ import CategoryTag from '@/shared/components/custom/category-tag'
 import { CATEGORIES } from '@/features/category/config'
 
 const ProfilePage = async () => {
-  const extraDocumentCount = 28
   const userInfo = await getUserInfo()
+
+  const maxPossessDocumentCount = userInfo.documentUsage.maxPossessDocumentCount
+  const possessDocumentCount = userInfo.documentUsage.possessDocumentCount
+  const addableDocumentCount = maxPossessDocumentCount - possessDocumentCount
 
   return (
     <main className="h-[calc(100dvh-54px-88px)] w-full overflow-y-auto px-[16px] pb-[54px]">
@@ -64,39 +67,41 @@ const ProfilePage = async () => {
             남은 퀴즈노트
           </Text>
           <Text typography="text1-bold" className="font-suit text-[var(--color-orange-400)]">
-            28 / 40
+            {possessDocumentCount} / {maxPossessDocumentCount}
           </Text>
         </div>
         <div className="relative h-[8px] w-full overflow-hidden rounded-[12px] bg-background-base-02">
           <div
-            style={{ width: (extraDocumentCount / 40) * 100 + '%' }}
+            style={{ width: (addableDocumentCount / maxPossessDocumentCount) * 100 + '%' }}
             className="absolute right-0 top-0 z-10 h-full bg-fill-secondary-orange"
           ></div>
         </div>
         <Text typography="text1-medium" className="self-end text-text-sub">
-          28개의 노트를 더 저장할 수 있습니다
+          {addableDocumentCount}개의 노트를 더 저장할 수 있습니다
         </Text>
       </div>
 
       <div className="flex-center mt-[28px] gap-[40px]">
-        <div className="flex-center flex-col">
+        <Link href={'/collections?tab=my-collection'} className="flex-center flex-col">
           <div className="rounded-[20px] bg-[#f8f8f8] p-[16px]">
             <Icon name="my-collection" className="size-[32px]" />
           </div>
           <Text typography="text2-medium">내 컬렉션</Text>
-        </div>
+        </Link>
+
         <div className="flex-center flex-col">
           <div className="rounded-[20px] bg-[#f8f8f8] p-[16px]">
             <Icon name="graph" className="w-[32px]" />
           </div>
           <Text typography="text2-medium">퀴즈 분석</Text>
         </div>
-        <div className="flex-center flex-col">
+
+        <Link href={'/record'} className="flex-center flex-col">
           <div className="rounded-[20px] bg-[#f8f8f8] p-[16px]">
             <Icon name="calendar" className="size-[32px]" />
           </div>
           <Text typography="text2-medium">퀴즈 기록</Text>
-        </div>
+        </Link>
       </div>
 
       <Link
