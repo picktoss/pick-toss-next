@@ -4,7 +4,6 @@ import CategoryTooltip from '@/features/user/category-tooltip'
 import Link from 'next/link'
 import { PROFILE_MENU_LIST } from '@/features/user/constants/profile-menu-list'
 import Footer from '@/features/user/components/footer'
-import Test from '@/features/test'
 import { getUserInfo } from '@/requests/user/server'
 import CategoryTag from '@/shared/components/custom/category-tag'
 import { CATEGORIES } from '@/features/category/config'
@@ -18,7 +17,6 @@ const ProfilePage = async () => {
 
   return (
     <main className="h-[calc(100dvh-54px-88px)] w-full overflow-y-auto px-[16px] pb-[54px]">
-      <Test />
       <Link
         href={'profile/account'}
         className="relative mt-[8px] flex h-[96px] w-full items-center justify-between"
