@@ -12,7 +12,7 @@ const AddDocumentMenu = () => {
   return (
     <div
       className={cn(
-        'absolute right-1/2 top-0 h-screen w-dvw max-w-mobile translate-x-1/2 pointer-events-none',
+        'absolute right-1/2 top-0 h-[100dvh] w-dvw max-w-mobile translate-x-1/2 pointer-events-none',
         isExpandedBtns && 'z-40'
       )}
     >

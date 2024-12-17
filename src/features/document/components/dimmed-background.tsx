@@ -9,7 +9,7 @@ const DimmedBackground = ({
   return (
     <div
       className={cn(
-        'fixed top-0 right-1/2 translate-x-1/2 h-screen w-dvw max-w-mobile pointer-events-none opacity-0 transition-all duration-400',
+        'fixed top-0 right-1/2 translate-x-1/2 h-[100dvh] w-dvw max-w-mobile pointer-events-none opacity-0 transition-all duration-400',
         isExpandedBtns && 'opacity-100 pointer-events-auto'
       )}
     >
