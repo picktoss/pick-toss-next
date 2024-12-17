@@ -40,7 +40,7 @@ const TermsAndConditionsDrawer = ({
             typography="text2-medium"
             className="max-h-[calc(100%-75px)] overflow-y-auto text-text-secondary"
           >
-            픽토스는 개인정보보호법 등 관련 법령상의 개인정보보호 규정을 준수하며, 다음과 같이
+            코니티는 개인정보보호법 등 관련 법령상의 개인정보보호 규정을 준수하며, 다음과 같이
             개인정보를 수집 이용합니다.
             <br />
             <br />
