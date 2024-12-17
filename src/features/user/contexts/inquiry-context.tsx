@@ -49,13 +49,6 @@ export const InquiryProvider = ({ children }: { children: ReactNode }) => {
   const files = watch('files')
   const isAgreeChecked = watch('isAgreeChecked')
 
-  // const [type, setType] = useState<Type>('error')
-  // const [title, setTitle] = useState('')
-  // const [content, setContent] = useState('')
-  // const [email, setEmail] = useState('')
-  // const [files, setFiles] = useState<File[]>([])
-  // const [isAgreeChecked, setIsAgreeChecked] = useState(false)
-
   const values = useMemo(
     () => ({
       form,
