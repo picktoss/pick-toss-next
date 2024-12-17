@@ -1,16 +1,16 @@
 'use client'
 
 import { cn } from '@/shared/lib/utils'
-import DocumentList from '../document/components/document-list'
-import SwipeableDocumentCard from '../document/components/swipeable-document-card'
-import AddDocumentMenu from '../document/components/add-document-menu'
+import DocumentList from '../components/document-list'
+import SwipeableDocumentCard from '../components/swipeable-document-card'
+import AddDocumentMenu from '../components/add-document-menu'
 import Image from 'next/image'
 import Text from '@/shared/components/ui/text'
 import Loading from '@/shared/components/custom/loading'
-import { useDirectoryContext } from '../directory/contexts/directory-context'
+import { useDirectoryContext } from '../../directory/contexts/directory-context'
 import { useQuery } from '@tanstack/react-query'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
-import { useDocumentContext } from '../document/contexts/document-context'
+import { useDocumentContext } from '../contexts/document-context'
 import { useEffect } from 'react'
 
 const DocumentsInDirectory = () => {
