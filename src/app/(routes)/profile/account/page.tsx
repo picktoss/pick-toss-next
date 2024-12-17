@@ -44,7 +44,6 @@ const AccountPage = async () => {
               이메일
             </Text>
 
-            {/* 이메일 등록 여부에 따라 다르게 보여야함 */}
             <Text
               typography="subtitle2-medium"
               className={cn('text-text-caption', user.email && 'text-text-primary')}
@@ -61,16 +60,23 @@ const AccountPage = async () => {
               로그인 정보
             </Text>
             <div className="flex items-center gap-[8px]">
-              {/* 카카오 로그인 */}
-              <Icon name="kakao-with-background" className="size-[20px]" />
-              <Text typography="subtitle2-medium">카카오 로그인</Text>
-
-              {/* 구글 로그인 */}
-              {/* <Icon name="google-with-background" className="size-[20px]" />
-                <Text typography="subtitle2-medium">구글 로그인</Text>
-                <Text typography="text2-medium" className="font-suit text-text-caption">
-                  picktoss@gmail.com
-                </Text> */}
+              {user.socialPlatform === 'KAKAO' ? (
+                <>
+                  <Icon name="kakao-with-background" className="size-[20px]" />
+                  <Text typography="subtitle2-medium">카카오 로그인</Text>
+                  <Text typography="text2-medium" className="font-suit text-text-caption">
+                    {user.email}
+                  </Text>
+                </>
+              ) : (
+                <>
+                  <Icon name="google-with-background" className="size-[20px]" />
+                  <Text typography="subtitle2-medium">구글 로그인</Text>
+                  <Text typography="text2-medium" className="font-suit text-text-caption">
+                    {user.email}
+                  </Text>
+                </>
+              )}
             </div>
           </div>
           <Icon name="chevron-right" className="size-[16px] text-icon-tertiary" />

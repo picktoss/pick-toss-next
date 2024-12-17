@@ -9,10 +9,10 @@ import CategoryTag from '@/shared/components/custom/category-tag'
 import { CATEGORIES } from '@/features/category/config'
 
 const ProfilePage = async () => {
-  const userInfo = await getUserInfo()
+  const user = await getUserInfo()
 
-  const maxPossessDocumentCount = userInfo.documentUsage.maxPossessDocumentCount
-  const possessDocumentCount = userInfo.documentUsage.possessDocumentCount
+  const maxPossessDocumentCount = user.documentUsage.maxPossessDocumentCount
+  const possessDocumentCount = user.documentUsage.possessDocumentCount
   const addableDocumentCount = maxPossessDocumentCount - possessDocumentCount
 
   return (
@@ -21,7 +21,7 @@ const ProfilePage = async () => {
         href={'profile/account'}
         className="relative mt-[8px] flex h-[96px] w-full items-center justify-between"
       >
-        {userInfo.interestCategories.length === 0 && <CategoryTooltip />}
+        {user.interestCategories.length === 0 && <CategoryTooltip />}
 
         <div className="flex-center gap-[16px]">
           <div className="flex-center size-[48px] rounded-full bg-background-base-03">
@@ -33,25 +33,27 @@ const ProfilePage = async () => {
           </div>
           <div className="flex flex-col">
             <div className="flex-center gap-[12px]">
-              <Text typography="subtitle1-bold">{userInfo.name}</Text>
+              <Text typography="subtitle1-bold">{user.name}</Text>
 
-              {userInfo.interestCategories.length === 0 ? (
+              {user.interestCategories.length === 0 ? (
                 <Text typography="text2-medium" className="text-text-caption">
                   관심분야 없음
                 </Text>
               ) : (
-                userInfo.interestCategories.map((category) => (
-                  <CategoryTag
-                    key={category}
-                    title={CATEGORIES.find((value) => value.code === category)?.name ?? ''}
-                    className="flex-center"
-                  ></CategoryTag>
-                ))
+                <div className="flex items-center gap-[3px]">
+                  {user.interestCategories.map((category) => (
+                    <CategoryTag
+                      key={category}
+                      title={CATEGORIES.find((value) => value.code === category)?.name ?? ''}
+                      className="flex-center"
+                    ></CategoryTag>
+                  ))}
+                </div>
               )}
             </div>
 
             <Text typography="text1-regular" className="text-text-sub">
-              {userInfo.email ?? '이메일을 등록해주세요'}
+              {user.email ?? '이메일을 등록해주세요'}
             </Text>
           </div>
         </div>

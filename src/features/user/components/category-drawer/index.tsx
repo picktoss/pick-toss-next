@@ -21,6 +21,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import { Form, FormControl, FormField, FormItem } from '@/shared/components/ui/form'
+import { CATEGORIES } from '@/features/category/config'
 
 const formSchema = z.object({
   categories: z
@@ -80,7 +81,15 @@ const CategoryDrawer = ({
               </Text>
 
               {interestedCategories && interestedCategories[0] ? (
-                <CategoryTag title={interestedCategories[0]} className="text-text-secondary" />
+                <div className="flex items-center gap-[3px]">
+                  {interestedCategories.map((category) => (
+                    <CategoryTag
+                      key={category}
+                      title={CATEGORIES.find((value) => value.code === category)?.name ?? ''}
+                      className="text-text-secondary"
+                    />
+                  ))}
+                </div>
               ) : (
                 <Text typography="subtitle2-medium" className="text-text-caption">
                   관심분야를 등록해주세요
