@@ -3,7 +3,7 @@
 
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
-import { useMemo, useState } from 'react'
+import { useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { cn } from '@/shared/lib/utils'
 
 import './style.css'
@@ -19,10 +19,12 @@ import Tag from '@/shared/components/ui/tag'
 import QuizOptions from '../quiz-view/components/quiz-option'
 import { CATEGORIES } from '@/features/category/config'
 import { notFound } from 'next/navigation'
+import { components } from '@/types/schema'
+import { DeepRequired } from 'react-hook-form'
 
 interface Props {
-  collections: Collection.Response.GetBookmarkedCollections['collections']
-  directories: Directory.Response.GetDirectories['directories']
+  collections: DeepRequired<components['schemas']['CollectionDto']>[]
+  directories: DeepRequired<components['schemas']['GetAllDirectoriesDirectoryDto']>[]
 }
 
 type CategoryWithQuizzesAndCollectionName = {
@@ -31,11 +33,6 @@ type CategoryWithQuizzesAndCollectionName = {
 }
 
 const RandomQuizView = ({ collections, directories }: Props) => {
-  const [categoriesWithQuizzes, setCategoriesWithQuizzes] = useState([])
-  const [] = useState()
-
-  // 디렉토리에 생성된 모든 랜덤 퀴즈 가져옴
-
   const randomQuizList = [...quizzes] // 임시
 
   const [repository, setRepository] = useState<'directory' | 'collection'>('directory')
@@ -43,10 +40,13 @@ const RandomQuizView = ({ collections, directories }: Props) => {
   const [activeCategoryIndex, setActiveCategoryIndex] = useState(0)
 
   const activeDirectoryId = useMemo(
-    () => mockDirectories[activeDirectoryIndex]?.id,
-    [activeDirectoryIndex]
+    () => directories[activeDirectoryIndex]?.id,
+    [activeDirectoryIndex, directories]
   )
-  const activeCategoryCode = 1
+  const activeCategoryCode = useMemo(
+    () => CATEGORIES[activeCategoryIndex]?.id,
+    [activeCategoryIndex]
+  )
 
   const [openExplanation, setOpenExplanation] = useState(false)
 
@@ -110,6 +110,23 @@ const RandomQuizView = ({ collections, directories }: Props) => {
     undefined
   >
 
+  const [SwiperContainerWidth, setSwiperContainerWidth] = useState<number>(0)
+  const swiperContainerRef = useRef<HTMLDivElement>(null)
+  useLayoutEffect(() => {
+    if (swiperContainerRef.current) {
+      setSwiperContainerWidth(swiperContainerRef.current.clientWidth)
+    }
+    const handleResize = () => {
+      if (swiperContainerRef.current) {
+        setSwiperContainerWidth(swiperContainerRef.current.clientWidth)
+      }
+    }
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  const slideItems = repository === 'directory' ? directories : CATEGORIES
+
   if (!currentQuiz) {
     notFound()
   }
@@ -171,10 +188,11 @@ const RandomQuizView = ({ collections, directories }: Props) => {
         </div>
 
         {/* Swiper 영역 */}
-        <div className="flex-center size-full grow">
+        <div ref={swiperContainerRef} className="flex-center size-full grow">
           <div className="flex-center mb-[10px] mt-[24px] size-full">
             <Swiper
               key={repository}
+              width={SwiperContainerWidth}
               slidesPerView={3}
               centeredSlides={true}
               pagination={{
@@ -183,7 +201,7 @@ const RandomQuizView = ({ collections, directories }: Props) => {
               initialSlide={repository === 'directory' ? activeDirectoryIndex : activeCategoryIndex}
               onSlideChange={(data) => handleSlideChange(data.activeIndex)}
             >
-              {mockDirectories.map((item, index) => {
+              {slideItems.map((item, index) => {
                 const isActive =
                   repository === 'directory'
                     ? index === activeDirectoryIndex
@@ -191,9 +209,13 @@ const RandomQuizView = ({ collections, directories }: Props) => {
 
                 return (
                   <SwiperSlide key={index} className="!flex items-center justify-center">
-                    <CategoryItem
+                    <SlideItem
                       isActive={isActive}
-                      data={item}
+                      data={{
+                        id: item.id,
+                        name: item.name,
+                        emoji: item.emoji,
+                      }}
                       variant={repository === 'directory' ? 'directory' : 'collection'}
                     />
                   </SwiperSlide>
@@ -219,17 +241,17 @@ const RandomQuizView = ({ collections, directories }: Props) => {
 
 export default RandomQuizView
 
-interface CategoryItemProps {
+interface SlideItemProps {
   isActive: boolean
   data: {
-    id: number
+    id: number | string
     name: string
     emoji: string
   }
   variant: 'directory' | 'collection'
 }
 
-const CategoryItem = ({ isActive, data, variant }: CategoryItemProps) => {
+const SlideItem = ({ isActive, data, variant }: SlideItemProps) => {
   const styles = {
     directory: {
       background: {
@@ -277,41 +299,3 @@ const CategoryItem = ({ isActive, data, variant }: CategoryItemProps) => {
     </div>
   )
 }
-
-const mockDirectories = [
-  {
-    id: 1,
-    name: '파이썬기본문법과응용',
-    emoji: '❄️',
-  },
-  {
-    id: 2,
-    name: '통계학이론',
-    emoji: '🌱',
-  },
-  {
-    id: 3,
-    name: '제테크상식',
-    emoji: '💵',
-  },
-  {
-    id: 4,
-    name: '전공 공부',
-    emoji: '🔥',
-  },
-  {
-    id: 5,
-    name: '세계사 1급',
-    emoji: '🌍',
-  },
-  {
-    id: 6,
-    name: '강의 복기',
-    emoji: '✏️',
-  },
-  {
-    id: 7,
-    name: '통계학이론',
-    emoji: '🌂',
-  },
-]

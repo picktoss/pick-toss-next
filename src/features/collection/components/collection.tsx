@@ -34,8 +34,7 @@ const Collection = ({
 }: Props) => {
   const { mutate: bookmarkMutate } = useBookmarkMutation()
 
-  const categoryLabel =
-    CATEGORIES.find((categoryItem) => categoryItem.code === category)?.name ?? ''
+  const categoryLabel = CATEGORIES.find((categoryItem) => categoryItem.id === category)?.name ?? ''
 
   return (
     <div className={cn('min-w-[166px]', className)}>
