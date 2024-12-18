@@ -2,7 +2,7 @@ import Text from '@/shared/components/ui/text'
 import { cn } from '@/shared/lib/utils'
 
 interface Props {
-  quiz: Quiz.Item
+  quiz: Omit<Quiz.Item, 'directory'>
   onSelect: (quizId: Quiz.Item['id']) => void
   selected: boolean
   order: number
