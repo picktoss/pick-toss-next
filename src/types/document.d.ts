@@ -11,7 +11,9 @@ declare global {
     type List = DocumentItemInList[]
     type Sort = 'CREATED_AT' | 'UPDATED_AT'
 
-    type Status = DeepRequired<components['schemas']['GetAllDocumentsDocumentDto']['status']>
+    type Status = DeepRequired<
+      components['schemas']['GetAllDocumentsDocumentDto']['quizGenerationStatus']
+    >
     type Type = Exclude<
       DeepRequired<components['schemas']['GetAllDocumentsDocumentDto']['documentType']>,
       undefined

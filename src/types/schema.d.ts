@@ -1285,6 +1285,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v2/auth/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 초대 코드로 회원가입했는지 체크 */
+        get: operations["checkInviteCodeBySignUp"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v2/quizzes/{quiz_id}/invalid": {
         parameters: {
             query?: never;
@@ -1900,10 +1917,11 @@ export interface components {
             is3xxRedirection?: boolean;
         };
         JspConfigDescriptor: {
-            jspPropertyGroups?: components["schemas"]["JspPropertyGroupDescriptor"][];
             taglibs?: components["schemas"]["TaglibDescriptor"][];
+            jspPropertyGroups?: components["schemas"]["JspPropertyGroupDescriptor"][];
         };
         JspPropertyGroupDescriptor: {
+            defaultContentType?: string;
             deferredSyntaxAllowedAsLiteral?: string;
             elIgnored?: string;
             errorOnELNotFound?: string;
@@ -1914,7 +1932,6 @@ export interface components {
             includeCodas?: string[];
             trimDirectiveWhitespaces?: string;
             errorOnUndeclaredNamespace?: string;
-            defaultContentType?: string;
             buffer?: string;
             urlPatterns?: string[];
         };
@@ -1982,6 +1999,7 @@ export interface components {
             servletRegistrations?: {
                 [key: string]: components["schemas"]["ServletRegistration"];
             };
+            defaultSessionTrackingModes?: ("COOKIE" | "URL" | "SSL")[];
             /** Format: int32 */
             effectiveMajorVersion?: number;
             /** Format: int32 */
@@ -1991,7 +2009,6 @@ export interface components {
             filterRegistrations?: {
                 [key: string]: components["schemas"]["FilterRegistration"];
             };
-            defaultSessionTrackingModes?: ("COOKIE" | "URL" | "SSL")[];
             effectiveSessionTrackingModes?: ("COOKIE" | "URL" | "SSL")[];
             jspConfigDescriptor?: components["schemas"]["JspConfigDescriptor"];
             requestCharacterEncoding?: string;
@@ -2091,7 +2108,7 @@ export interface components {
             id?: number;
             documentName?: string;
             /** @enum {string} */
-            status?: "UNPROCESSED" | "PROCESSED" | "PROCESSING" | "COMPLETELY_FAILED" | "PARTIAL_SUCCESS" | "DEFAULT_DOCUMENT";
+            quizGenerationStatus?: "UNPROCESSED" | "PROCESSED" | "PROCESSING" | "COMPLETELY_FAILED" | "PARTIAL_SUCCESS" | "DEFAULT_DOCUMENT" | "QUIZ_GENERATION_ERROR";
             content?: string;
             /** Format: int32 */
             characterCount?: number;
@@ -2153,6 +2170,20 @@ export interface components {
             /** @enum {string} */
             tag?: "DEFAULT" | "NORMAL";
         };
+        GetAllQuizzesByDirectoryIdResponse: {
+            quizzes?: components["schemas"]["GetAllQuizzesByDirectoryQuizDto"][];
+        };
+        GetAllQuizzesByDirectoryQuizDto: {
+            /** Format: int64 */
+            id?: number;
+            question?: string;
+            answer?: string;
+            explanation?: string;
+            options?: string[];
+            /** @enum {string} */
+            quizType?: "MIX_UP" | "MULTIPLE_CHOICE";
+            document?: components["schemas"]["DocumentDto"];
+        };
         GetAllDocumentsDirectoryDto: {
             name?: string;
             /** @enum {string} */
@@ -2166,7 +2197,7 @@ export interface components {
             /** Format: int32 */
             characterCount?: number;
             /** @enum {string} */
-            status?: "UNPROCESSED" | "PROCESSED" | "PROCESSING" | "COMPLETELY_FAILED" | "PARTIAL_SUCCESS" | "DEFAULT_DOCUMENT";
+            quizGenerationStatus?: "UNPROCESSED" | "PROCESSED" | "PROCESSING" | "COMPLETELY_FAILED" | "PARTIAL_SUCCESS" | "DEFAULT_DOCUMENT" | "QUIZ_GENERATION_ERROR";
             /** Format: int32 */
             totalQuizCount?: number;
             /** @enum {string} */
@@ -2239,6 +2270,11 @@ export interface components {
         GetQuizzesInCollectionByCollectionCategory: {
             quizzes?: components["schemas"]["QuizInCollectionDto"][];
         };
+        QuizInCollectionByCollectionDto: {
+            /** Format: int64 */
+            id?: number;
+            name?: string;
+        };
         QuizInCollectionDto: {
             /** Format: int64 */
             id?: number;
@@ -2248,6 +2284,7 @@ export interface components {
             options?: string[];
             /** @enum {string} */
             quizType?: "MIX_UP" | "MULTIPLE_CHOICE";
+            collection?: components["schemas"]["QuizInCollectionByCollectionDto"];
         };
         GetCollectionCategoriesCollectionDto: {
             /** Format: int64 */
@@ -4037,7 +4074,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json;charset=UTF-8": components["schemas"]["QuizResponseDto"];
+                    "application/json;charset=UTF-8": components["schemas"]["GetAllQuizzesByDirectoryIdResponse"];
                 };
             };
         };
@@ -4302,6 +4339,24 @@ export interface operations {
                 content: {
                     "application/json": unknown;
                 };
+            };
+        };
+    };
+    checkInviteCodeBySignUp: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };

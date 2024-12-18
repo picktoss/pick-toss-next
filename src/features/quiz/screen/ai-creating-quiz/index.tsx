@@ -46,7 +46,7 @@ const AiCreatingQuiz = ({ documentId, documentName, directoryEmoji }: Props) => 
       pollingInterval = setInterval(() => {
         documentDetailMutate(documentId, {
           onSuccess: (data) => {
-            if (data && data.status === 'PROCESSED') {
+            if (data && data.quizGenerationStatus === 'PROCESSED') {
               setQuizIsReady(true)
               clearInterval(pollingInterval) // 폴링 중단
             }

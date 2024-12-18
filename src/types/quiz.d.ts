@@ -33,7 +33,7 @@ declare global {
     type Condition = 'IDLE' | 'DISABLED' | 'RIGHT' | 'WRONG'
     type Result = Quiz.Request.UpdateQuizResult['quizzes'][number]
 
-    type Record = DeepRequired<components['schemas']['GetQuizRecordDto']>
+    type Record = DeepRequired<components['schemas']['GetQuizRecordsDto']>
 
     type SearchedQuiz = DeepRequired<components['schemas']['IntegratedSearchQuizDto']>
 
