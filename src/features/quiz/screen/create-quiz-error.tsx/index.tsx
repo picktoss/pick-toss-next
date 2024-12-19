@@ -6,6 +6,7 @@ interface Props {
   setCreateError: (error: string | null) => void
 }
 
+// 에러 테스트
 const CreateQuizError = ({ setCreateError }: Props) => {
   return (
     <div className="center flex-center z-30 h-dvh w-dvw max-w-mobile flex-col bg-background-base-01">
