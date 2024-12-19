@@ -30,7 +30,9 @@ const TodayQuizArrived = ({ quizSetId, createdAt }: Props) => {
         </Text>
       </div>
 
-      <Link href={'/quiz/' + quizSetId + '?quizType=today' + '&' + `createdAt=${createdAt}`}>
+      <Link
+        href={'/quiz/' + quizSetId + '?quizSetType=TODAY_QUIZ_SET' + '&' + `createdAt=${createdAt}`}
+      >
         <Button variant={'largeRound'} className="w-full">
           퀴즈 시작하기
         </Button>
