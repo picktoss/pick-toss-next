@@ -1,5 +1,5 @@
-import Image from 'next/image'
 import { motion } from 'framer-motion'
+import Icon from '@/shared/components/custom/icon'
 
 interface Props {
   leftQuizCount: number
@@ -88,7 +88,7 @@ const Bomb = ({
       ease: 'easeInOut',
     }}
   >
-    <Image src={'/images/bomb-not-fire.png'} alt="" width={55} height={67.65} />
+    <Icon name="bomb" />
   </motion.div>
 )
 
@@ -116,6 +116,6 @@ const AnimatedBomb = ({
     }}
     onAnimationComplete={onAnimationComplete}
   >
-    <Image src={'/images/bomb-not-fire.png'} alt="" width={55} height={67.65} />
+    <Icon name="bomb" />
   </motion.div>
 )

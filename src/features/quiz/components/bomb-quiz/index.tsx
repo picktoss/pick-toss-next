@@ -31,44 +31,48 @@ const BombQuiz = ({
   handleExit,
 }: Props) => {
   // 자명한가?
-  const currentQuiz = quizzes[currentIndex]!
+  const currentQuiz = quizzes[currentIndex] as Quiz.Item
   const currentResult = quizResults[currentIndex] ?? null
 
-  return (
-    <div className="flex h-[70dvh] min-h-fit w-full flex-col items-center justify-between">
-      <header className="h-[54px] w-full py-[16px]">
-        <GoBackButton icon="cancel" onClick={handleExit} />
-      </header>
+  if (currentQuiz) {
+    return (
+      <div className="flex h-[70dvh] min-h-fit w-full flex-col items-center justify-between">
+        <header className="h-[54px] w-full py-[16px]">
+          <GoBackButton icon="cancel" onClick={handleExit} />
+        </header>
 
-      <div className="flex flex-col items-center">
-        <Tag colors={'secondary'} className="px-[8px] py-[4px]">
-          <Text typography="text2-bold">{currentQuiz.document.name}</Text>
-        </Tag>
+        <div className="flex flex-col items-center">
+          <Tag colors={'secondary'} className="px-[8px] py-[4px]">
+            <Text typography="text2-bold">{currentQuiz.document.name}</Text>
+          </Tag>
 
-        <Text
-          key={currentIndex}
-          typography="question"
-          className="mt-[12px] animate-fadeIn px-[30px] text-center"
-        >
-          {currentQuiz.question}
-        </Text>
+          <Text
+            key={currentIndex}
+            typography="question"
+            className="mt-[12px] animate-fadeIn px-[30px] text-center"
+          >
+            {currentQuiz.question}
+          </Text>
 
-        <QuizOptions
-          quiz={currentQuiz}
-          currentResult={currentResult}
-          onAnswer={onAnswer}
-          className="my-[16px] mt-[4dvh]"
-        />
+          <QuizOptions
+            quiz={currentQuiz}
+            currentResult={currentResult}
+            onAnswer={onAnswer}
+            className="my-[16px] mt-[4dvh] w-full"
+          />
+        </div>
+
+        <div className="relative mb-[11px]">
+          <Text typography="subtitle1-bold" color="primary-inverse" className="center">
+            {leftQuizCount}
+          </Text>
+          <Image src={'/images/count-device.png'} alt="" width={79} height={38} />
+        </div>
       </div>
+    )
+  }
 
-      <div className="relative mb-[11px]">
-        <Text typography="subtitle1-bold" color="primary-inverse" className="center">
-          {leftQuizCount}
-        </Text>
-        <Image src={'/images/count-device.png'} alt="" width={79} height={38} />
-      </div>
-    </div>
-  )
+  return null
 }
 
 export default BombQuiz

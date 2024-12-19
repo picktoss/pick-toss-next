@@ -53,3 +53,20 @@ export const getQuizSetTypeEnum = (quizSetType: 'today' | 'document' | 'collecti
 
   return enumQuizType
 }
+
+/** 오답 터뜨리기 결과 변환 함수 */
+export const prepareQuizResults = (quizResults: (Quiz.Result | null)[]) => {
+  // id별로 가장 마지막 인덱스의 결과만 유지
+  const latestResults = new Map()
+
+  quizResults.forEach((result) => {
+    if (result !== null) {
+      latestResults.set(result.id, {
+        id: result.id,
+        answer: result.answer,
+      })
+    }
+  })
+
+  return Array.from(latestResults.values()) as { id: number; answer: boolean }[]
+}

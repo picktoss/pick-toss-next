@@ -1,8 +1,8 @@
-import Image from 'next/image'
 import { useQuizState } from '../../screen/quiz-view/hooks/use-quiz-state'
 import BombAnimationSuccess from '../bomb-animation-success'
 import BombAnimationFail from '../bomb-animation-fail'
 import { motion } from 'framer-motion'
+import Icon from '@/shared/components/custom/icon'
 
 interface Props {
   currentIndex: number
@@ -46,32 +46,26 @@ const BombDefaultState = ({ leftQuizCount }: { leftQuizCount: number }) => {
   return (
     <div className="relative h-[100px] w-full overflow-x-hidden overflow-y-visible">
       <motion.div className="center" initial={{ x: '-210px', y: '50%', rotate: -90, opacity: 0.5 }}>
-        <Image src={'/images/bomb-not-fire.png'} alt="" width={55} height={67.65} />
+        <Icon name="bomb" />
       </motion.div>
       <motion.div className="center" initial={{ x: '-145px', y: '50%', rotate: -90, opacity: 0.5 }}>
-        <Image src={'/images/bomb-not-fire.png'} alt="" width={55} height={67.65} />
+        <Icon name="bomb" />
       </motion.div>
       <motion.div className="center" initial={{ x: '-80px', y: '50%', rotate: -90, opacity: 0.5 }}>
-        <Image src={'/images/bomb-not-fire.png'} alt="" width={55} height={67.65} />
+        <Icon name="bomb" />
       </motion.div>
 
-      <Image
-        src={'/images/bomb-not-fire.png'}
-        alt=""
-        width={55}
-        height={67.65}
-        className="center"
-      />
+      <Icon name="bomb" className="center" />
 
       {leftQuizCount >= 2 && (
         <motion.div className="center" initial={{ x: '120px', y: '50%' }}>
-          <Image src={'/images/bomb-not-fire.png'} alt="" width={55} height={67.65} />
+          <Icon name="bomb" />
         </motion.div>
       )}
 
       {leftQuizCount >= 3 && (
         <motion.div className="center" initial={{ x: '200px', y: '50%' }}>
-          <Image src={'/images/bomb-not-fire.png'} alt="" width={55} height={67.65} />
+          <Icon name="bomb" />
         </motion.div>
       )}
     </div>

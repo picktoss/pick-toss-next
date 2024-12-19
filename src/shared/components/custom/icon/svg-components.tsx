@@ -2724,3 +2724,109 @@ export const InfiniteColorInverse = ({ ...props }) => {
     </svg>
   )
 }
+
+export const Bomb = ({ ...props }) => {
+  const paintId0 = useId()
+  const paintId1 = useId()
+
+  return (
+    <svg
+      width="55"
+      height="68"
+      viewBox="0 0 55 68"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M29.3546 -8.96797e-08C30.4877 -4.0151e-08 31.4062 0.918547 31.4062 2.05163L31.4062 8.20653C31.4062 9.33961 30.4877 10.2582 29.3546 10.2582L25.2514 10.2582C24.1183 10.2582 23.1997 9.33961 23.1997 8.20653L23.1997 2.05163C23.1997 0.918549 24.1183 -3.18568e-07 25.2514 -2.69039e-07L29.3546 -8.96797e-08Z"
+        fill={`url(#${paintId0})`}
+      />
+      <path
+        d="M19.0957 11.4522C19.0957 9.68814 20.5258 8.25806 22.2899 8.25806H31.8724C33.6365 8.25806 35.0666 9.68814 35.0666 11.4522C35.0666 13.2163 33.6365 14.6464 31.8724 14.6464H22.2899C20.5258 14.6464 19.0957 13.2163 19.0957 11.4522Z"
+        fill="#C5C7D4"
+      />
+      <path
+        d="M55 40.1465C55 55.3343 42.6878 67.6465 27.5 67.6465C12.3122 67.6465 -1.07636e-06 55.3343 -2.40413e-06 40.1465C-3.73189e-06 24.9587 12.3122 12.6465 27.5 12.6465C42.6878 12.6465 55 24.9587 55 40.1465Z"
+        fill={`url(#${paintId1})`}
+      />
+      <defs>
+        <linearGradient
+          id={paintId0}
+          x1="27.303"
+          y1="-1.79359e-07"
+          x2="27.303"
+          y2="10.2582"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#E3E3E3" />
+          <stop offset="1" stopColor="#919191" />
+        </linearGradient>
+        <linearGradient
+          id={paintId1}
+          x1="12.9658"
+          y1="63.5423"
+          x2="59.6621"
+          y2="5.55345"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#2A2A2A" />
+          <stop offset="1" stopColor="#23418E" />
+        </linearGradient>
+      </defs>
+    </svg>
+  )
+}
+
+export const BombRed = ({ ...props }) => {
+  const paintId0 = useId()
+  const paintId1 = useId()
+
+  return (
+    <svg
+      width="55"
+      height="68"
+      viewBox="0 0 55 68"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M29.3546 -8.96797e-08C30.4877 -4.0151e-08 31.4062 0.918547 31.4062 2.05163L31.4062 8.20653C31.4062 9.33961 30.4877 10.2582 29.3546 10.2582L25.2514 10.2582C24.1183 10.2582 23.1997 9.33961 23.1997 8.20653L23.1997 2.05163C23.1997 0.918549 24.1183 -3.18568e-07 25.2514 -2.69039e-07L29.3546 -8.96797e-08Z"
+        fill={`url(#${paintId0})`}
+      />
+      <path
+        d="M19.0957 11.4522C19.0957 9.68814 20.5258 8.25806 22.2899 8.25806H31.8724C33.6365 8.25806 35.0666 9.68814 35.0666 11.4522C35.0666 13.2163 33.6365 14.6464 31.8724 14.6464H22.2899C20.5258 14.6464 19.0957 13.2163 19.0957 11.4522Z"
+        fill="#C5C7D4"
+      />
+      <path
+        d="M55 40.1465C55 55.3343 42.6878 67.6465 27.5 67.6465C12.3122 67.6465 -1.07636e-06 55.3343 -2.40413e-06 40.1465C-3.73189e-06 24.9587 12.3122 12.6465 27.5 12.6465C42.6878 12.6465 55 24.9587 55 40.1465Z"
+        fill={`url(#${paintId1})`}
+      />
+      <defs>
+        <linearGradient
+          id={paintId0}
+          x1="27.303"
+          y1="-1.79359e-07"
+          x2="27.303"
+          y2="10.2582"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#E3E3E3" />
+          <stop offset="1" stopColor="#919191" />
+        </linearGradient>
+        <linearGradient
+          id={paintId1}
+          x1="12.9658"
+          y1="63.5423"
+          x2="59.6621"
+          y2="5.55345"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#2A2A2A" />
+          <stop offset="1" stopColor="#E1824E" />
+        </linearGradient>
+      </defs>
+    </svg>
+  )
+}

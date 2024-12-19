@@ -1,7 +1,6 @@
 'use client'
 
 import Icon from '@/shared/components/custom/icon'
-import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 
@@ -53,17 +52,17 @@ export default BombAnimationSuccess
 /** 이전에 쌓여있는 폭탄 컴포넌트 */
 const Bomb = ({ x }: { x: string }) => (
   <motion.div className="center" initial={{ x, y: '50%', rotate: -90, opacity: 0.5 }}>
-    <Image src={'/images/bomb-not-fire.png'} alt="" width={55} height={67.65} />
+    <Icon name="bomb" />
   </motion.div>
 )
 
 /** 점화 후 폭탄 제거 애니메이션 */
 const FlameBomb = ({ leftQuizCount, onNext }: { leftQuizCount: number; onNext: () => void }) => {
-  const [bombSrc, setBombSrc] = useState('/images/bomb-not-fire.png')
+  const [isOnFire, setIsOnFire] = useState(false)
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setBombSrc('/images/bomb-fire.png')
+      setIsOnFire(true)
     }, 350)
 
     return () => clearTimeout(timer)
@@ -84,7 +83,11 @@ const FlameBomb = ({ leftQuizCount, onNext }: { leftQuizCount: number; onNext: (
         onAnimationComplete={() => leftQuizCount === 1 && onNext()}
       >
         <AnimatedFlame />
-        <Image src={bombSrc} alt="" width={55} height={67.65} className="center" />
+        {isOnFire ? (
+          <Icon name="bomb-red" className="center" />
+        ) : (
+          <Icon name="bomb" className="center" />
+        )}
       </motion.div>
     </>
   )
@@ -113,7 +116,7 @@ const MovingBomb = ({
     }}
     onAnimationComplete={onNext}
   >
-    <Image src={'/images/bomb-not-fire.png'} alt="" width={55} height={67.65} />
+    <Icon name="bomb" />
   </motion.div>
 )
 

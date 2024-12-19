@@ -30,6 +30,10 @@ export const queries = createQueryKeyStore({
       enabled: requestBody.keyword.trim() !== '',
       initialData: { documents: [], quizzes: [] },
     }),
+    reviewNeeds: () => ({
+      queryKey: [''],
+      queryFn: () => REQUEST.document.getReviewNeedDocuments(),
+    }),
   },
 
   quiz: {
@@ -52,8 +56,8 @@ export const queries = createQueryKeyStore({
       queryFn: () => REQUEST.quiz.fetchQuizSetRecord(params),
       enabled: !!params.quizSetId,
     }),
-    bomb: () => ({
-      queryKey: [''],
+    bomb: (key?: Date) => ({
+      queryKey: [key],
       queryFn: () => REQUEST.quiz.fetchWrongAnswerQuizzes(),
     }),
   },
