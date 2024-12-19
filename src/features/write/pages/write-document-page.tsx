@@ -12,6 +12,7 @@ import { useDirectoryContext } from '@/features/directory/contexts/directory-con
 import CreateQuizDrawer from '../components/create-quiz-drawer'
 import AiCreatingQuiz from '@/features/quiz/screen/ai-creating-quiz'
 import { useRouter } from 'next/navigation'
+import CreateQuizError from '@/features/quiz/screen/create-quiz-error.tsx'
 
 const Editor = dynamic(() => import('../components/editor'), {
   ssr: false,
@@ -25,11 +26,17 @@ const WriteDocumentPage = () => {
   const [content, setContent] = useState('')
   const [documentId, setDocumentId] = useState<number | null>(null)
   const [showCreatePopup, setShowCreatePopup] = useState(false)
+  const [createError, setCreateError] = useState<string | null>(null)
 
   const { mutate: createDocumentMutate } = useCreateDocument()
 
   if (!selectedDirectory) {
     selectDirectoryId(globalDirectoryId)
+  }
+
+  const handleCreateError = (response: string) => {
+    setShowCreatePopup(false)
+    setCreateError(response)
   }
 
   const handleCreateDocument = ({ quizType, star }: { quizType: Quiz.Type; star: number }) => {
@@ -89,10 +96,15 @@ const WriteDocumentPage = () => {
             documentId={documentId}
             documentName={title}
             directoryEmoji={selectedDirectory?.emoji ?? ''}
+            onError={handleCreateError}
           />
         </div>
       </div>
     )
+  }
+
+  if (createError !== null) {
+    return <CreateQuizError setCreateError={setCreateError} />
   }
 
   return (

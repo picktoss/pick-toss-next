@@ -23,14 +23,9 @@ interface Props {
 }
 
 const QuizDetailPage = async ({ params, searchParams }: Props) => {
-  const {
-    quizSetType = 'TODAY_QUIZ_SET',
-    createdAt,
-    documentName,
-    directoryEmoji,
-    collectionName,
-    collectionEmoji,
-  } = searchParams
+  const { quizSetType, createdAt, documentName, directoryEmoji, collectionName, collectionEmoji } =
+    searchParams
+
   const quizSet = await getQuizSetById({
     quizSetId: params.id,
     quizSetType,

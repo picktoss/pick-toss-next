@@ -17,9 +17,10 @@ interface ExitDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   index: number
+  isFirst: boolean
 }
 
-const ExitDialog = ({ open, onOpenChange, index }: ExitDialogProps) => {
+const ExitDialog = ({ open, onOpenChange, index, isFirst }: ExitDialogProps) => {
   const router = useRouter()
 
   useEffect(() => {
@@ -51,15 +52,31 @@ const ExitDialog = ({ open, onOpenChange, index }: ExitDialogProps) => {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
+      <DialogContent displayCloseButton={false}>
         <DialogHeader className="mt-[8px] flex flex-col items-center">
           <Icon name="exit-door" />
           <DialogTitle className="!mt-[24px]">
-            <Text typography="title3">퀴즈에서 나가시겠어요?</Text>
+            <Text typography="title3" className="text-center">
+              {isFirst ? (
+                <>
+                  문제를 확인하지 않고 <br />
+                  퀴즈에서 나가시겠어요?
+                </>
+              ) : (
+                '퀴즈에서 나가시겠어요?'
+              )}
+            </Text>
           </DialogTitle>
           <DialogDescription className="!mt-[8px]">
-            <Text typography="text1-medium" color="sub">
-              현재까지 푼 퀴즈는 기록되지 않아요
+            <Text typography="text1-medium" color="sub" className="text-center">
+              {isFirst ? (
+                <>
+                  만든 문제는 퀴즈노트에 저장되지만 <br />
+                  퀴즈를 푼 기록은 남지 않아요
+                </>
+              ) : (
+                '현재까지 푼 퀴즈는 기록되지 않아요'
+              )}
             </Text>
           </DialogDescription>
         </DialogHeader>

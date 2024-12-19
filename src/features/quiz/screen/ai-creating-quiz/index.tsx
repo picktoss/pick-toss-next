@@ -13,9 +13,10 @@ interface Props {
   documentId: number
   documentName: string
   directoryEmoji: string
+  onError: (response: string) => void
 }
 
-const AiCreatingQuiz = ({ documentId, documentName, directoryEmoji }: Props) => {
+const AiCreatingQuiz = ({ documentId, documentName, directoryEmoji, onError }: Props) => {
   const router = useRouter()
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0)
   const [quizIsReady, setQuizIsReady] = useState(false)
@@ -46,9 +47,19 @@ const AiCreatingQuiz = ({ documentId, documentName, directoryEmoji }: Props) => 
       pollingInterval = setInterval(() => {
         documentDetailMutate(documentId, {
           onSuccess: (data) => {
-            if (data && data.quizGenerationStatus === 'PROCESSED') {
-              setQuizIsReady(true)
-              clearInterval(pollingInterval) // 폴링 중단
+            const status = data?.quizGenerationStatus
+
+            if (status) {
+              if (status === 'PROCESSED') {
+                setQuizIsReady(true)
+                clearInterval(pollingInterval) // 폴링 중단
+                return
+              } else if (status !== 'PROCESSING' && status !== 'UNPROCESSED') {
+                // 이 외의 status는 error 상황이라고 판단
+                onError(status)
+                clearInterval(pollingInterval) // 폴링 중단
+                return
+              }
             }
           },
         })
@@ -58,7 +69,7 @@ const AiCreatingQuiz = ({ documentId, documentName, directoryEmoji }: Props) => 
     startPolling()
 
     return () => clearInterval(pollingInterval) // 컴포넌트 언마운트 시 폴링 중단
-  }, [documentDetailMutate, documentId])
+  }, [documentDetailMutate, documentId, onError])
 
   const handleClickStart = () => {
     createCheckQuizSetMutate(documentId, {
@@ -66,7 +77,7 @@ const AiCreatingQuiz = ({ documentId, documentName, directoryEmoji }: Props) => 
         router.push(
           '/quiz/' +
             data.quizSetId +
-            '?quizType=create' +
+            '?quizSetType=FIRST_QUIZ_SET' +
             '&' +
             `createdAt=${data.createdAt}` +
             '&' +
@@ -80,13 +91,13 @@ const AiCreatingQuiz = ({ documentId, documentName, directoryEmoji }: Props) => 
 
   return (
     <>
-      <div className="absolute h-dvh w-dvw max-w-mobile bg-black opacity-60"></div>
+      <div className="absolute h-dvh w-dvw max-w-mobile bg-background-container-02 opacity-100"></div>
 
       {quizIsReady ? (
         <div className="flex-center absolute z-10 h-dvh w-dvw max-w-mobile flex-col">
           <Image src={'/images/question-quiz-card.png'} alt="" width={87} height={106} />
 
-          <Text typography="title2" color="primary-inverse" className="mt-[31px]">
+          <Text typography="title2" color="secondary" className="mt-[31px]">
             퀴즈 준비 완료!
           </Text>
 
@@ -98,7 +109,7 @@ const AiCreatingQuiz = ({ documentId, documentName, directoryEmoji }: Props) => 
         <div className="flex-center fixed top-0 z-10 h-dvh w-dvw max-w-mobile flex-col">
           <Loading />
 
-          <Text typography="subtitle2-medium" color="primary-inverse" className="mt-[21.5px]">
+          <Text typography="subtitle2-medium" color="secondary" className="mt-[21.5px]">
             {messages[currentMessageIndex]}
           </Text>
         </div>

@@ -1285,7 +1285,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v2/auth/": {
+    "/api/v2/auth/invite-code/check": {
         parameters: {
             query?: never;
             header?: never;
@@ -1789,10 +1789,10 @@ export interface components {
             parent?: components["schemas"]["ApplicationContext"];
             id?: string;
             displayName?: string;
+            autowireCapableBeanFactory?: components["schemas"]["AutowireCapableBeanFactory"];
             applicationName?: string;
             /** Format: int64 */
             startupDate?: number;
-            autowireCapableBeanFactory?: components["schemas"]["AutowireCapableBeanFactory"];
             environment?: components["schemas"]["Environment"];
             /** Format: int32 */
             beanDefinitionCount?: number;
@@ -1921,17 +1921,17 @@ export interface components {
             jspPropertyGroups?: components["schemas"]["JspPropertyGroupDescriptor"][];
         };
         JspPropertyGroupDescriptor: {
-            defaultContentType?: string;
+            isXml?: string;
             deferredSyntaxAllowedAsLiteral?: string;
             elIgnored?: string;
             errorOnELNotFound?: string;
             pageEncoding?: string;
             scriptingInvalid?: string;
-            isXml?: string;
             includePreludes?: string[];
             includeCodas?: string[];
             trimDirectiveWhitespaces?: string;
             errorOnUndeclaredNamespace?: string;
+            defaultContentType?: string;
             buffer?: string;
             urlPatterns?: string[];
         };

@@ -8,6 +8,7 @@ type GetDocumentsParams = {
   sortOption?: Document.Sort
 }
 
+/** GET /directories/documents - 모든 문서 가져오기 */
 export const getDocuments = async (params?: GetDocumentsParams) => {
   const defaultSortOption = 'CREATED_AT'
 
@@ -33,6 +34,7 @@ export const getDocuments = async (params?: GetDocumentsParams) => {
   }
 }
 
+/** GET /documents/{document_id} - document_id로 문서 가져오기 */
 export const getDocumentDetail = async (documentId?: number) => {
   if (documentId == null) return
 

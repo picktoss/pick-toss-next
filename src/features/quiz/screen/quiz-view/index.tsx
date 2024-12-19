@@ -19,6 +19,7 @@ import { Button } from '@/shared/components/ui/button'
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
 import QuizCard from '../../components/quiz-card'
+import { msToElapsedTimeKorean } from '@/shared/utils/time'
 
 interface Props {
   quizzes: Quiz.Item[]
@@ -38,6 +39,7 @@ const QuizView = ({ quizzes, isFirst }: Props) => {
     setQuizResults,
     handleNext,
     runTimer,
+    stopTimer,
     isRunning,
   } = useQuizState({
     quizCount: quizzes.length,
@@ -57,6 +59,8 @@ const QuizView = ({ quizzes, isFirst }: Props) => {
     if (hasNextQuiz) {
       navigateToNext(currentIndex)
     } else {
+      stopTimer()
+
       const quizResultPayload = {
         quizSetId: id,
         quizzes: quizResults,
@@ -129,7 +133,7 @@ const QuizView = ({ quizzes, isFirst }: Props) => {
                   문제 수
                 </Text>
                 <Text typography="subtitle2-bold" className="mt-0.5">
-                  23 문제
+                  {quizzes.length} 문제
                 </Text>
               </div>
 
@@ -143,7 +147,7 @@ const QuizView = ({ quizzes, isFirst }: Props) => {
                   소요시간
                 </Text>
                 <Text typography="subtitle2-bold" className="mt-0.5">
-                  2분 30초
+                  {msToElapsedTimeKorean(totalElapsedTime)}
                 </Text>
               </div>
 
@@ -157,7 +161,7 @@ const QuizView = ({ quizzes, isFirst }: Props) => {
                   정답률
                 </Text>
                 <Text typography="subtitle2-bold" className="mt-0.5">
-                  30%
+                  {Math.floor((collectQuizCount / quizzes.length) * 100)}%
                 </Text>
               </div>
             </div>
@@ -266,7 +270,12 @@ const QuizView = ({ quizzes, isFirst }: Props) => {
 
       {isQuizSolved(currentResult) && <ResultIcon isRight={currentResult?.answer} />}
 
-      <ExitDialog index={currentIndex} open={exitDialogOpen} onOpenChange={setExitDialogOpen} />
+      <ExitDialog
+        index={currentIndex}
+        open={exitDialogOpen}
+        onOpenChange={setExitDialogOpen}
+        isFirst={isFirst ?? false}
+      />
     </div>
   )
 }
