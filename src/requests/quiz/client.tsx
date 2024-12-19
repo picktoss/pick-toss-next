@@ -141,11 +141,23 @@ export const getQuizRecords = async () => {
   }
 }
 
-/** GET /quizzes/{solved_date}/quiz-record - 날짜별 퀴즈 기록록 */
+/** GET /quizzes/{solved_date}/quiz-record - 날짜별 퀴즈 기록 */
 export const getQuizRecordsByDate = async (date: string) => {
   try {
     const { data } = await http.get<Quiz.Response.GetQuizRecordsByDate>(
       API_ENDPOINTS.QUIZ.GET.DATE_RECORDS(date)
+    )
+    return data
+  } catch (error: unknown) {
+    throw error
+  }
+}
+
+/** GET /documents/{document_id}/review-pick - document_id로 복습 pick 가져오기 */
+export const getReviewPicks = async (documentId: number) => {
+  try {
+    const { data } = await http.get<Quiz.Response.GetReviewPick>(
+      API_ENDPOINTS.QUIZ.GET.REVIEW_PICK(documentId)
     )
     return data
   } catch (error: unknown) {

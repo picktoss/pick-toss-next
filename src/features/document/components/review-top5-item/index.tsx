@@ -1,17 +1,22 @@
 import Icon from '@/shared/components/custom/icon'
 import Tag from '@/shared/components/ui/tag'
 import Text from '@/shared/components/ui/text'
+import Link from 'next/link'
 
 interface Props {
   ranking: number
+  documentId: number
   documentTitle: string
   directory: string
   reviewCount?: number
 }
 
-const ReviewTop5Item = ({ ranking, documentTitle, directory, reviewCount }: Props) => {
+const ReviewTop5Item = ({ ranking, documentId, documentTitle, directory, reviewCount }: Props) => {
   return (
-    <button className="flex h-fit w-full items-center justify-between px-[20px] py-[16px]">
+    <Link
+      href={`/document/${documentId}`}
+      className="flex h-fit w-full items-center justify-between px-[20px] py-[16px]"
+    >
       <div className="flex items-center gap-[20px]">
         <Text typography="text1-bold" color="accent">
           {ranking}
@@ -28,7 +33,7 @@ const ReviewTop5Item = ({ ranking, documentTitle, directory, reviewCount }: Prop
         {reviewCount && <Tag colors={'secondary'}>복습 필요 {reviewCount}</Tag>}
         <Icon name="chevron-right" className="size-[12px] text-icon-tertiary" />
       </div>
-    </button>
+    </Link>
   )
 }
 

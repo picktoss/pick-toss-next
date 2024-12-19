@@ -10,7 +10,7 @@ const tabs = [
   { key: 'quiz', label: '퀴즈' },
 ] as const
 
-const DocumentDetailController = () => {
+const DocumentDetailController = ({ documentId }: { documentId: number }) => {
   const router = useRouter()
   const tab = useSearchParams().get('tab') ?? ''
   const activeTab = ['document-content', 'quiz'].includes(tab) ? tab : 'document-content'
@@ -46,7 +46,7 @@ const DocumentDetailController = () => {
         ))}
       </div>
 
-      <PickDrawer />
+      <PickDrawer documentId={documentId} />
     </div>
   )
 }

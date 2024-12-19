@@ -38,6 +38,7 @@ const ReviewTop5Container = ({ isEmpty }: Props) => {
             <ReviewTop5Item
               key={document.id}
               ranking={index + 1}
+              documentId={document.id}
               documentTitle={document.name}
               directory={document.directory.name}
               reviewCount={document.reviewNeededQuizCount}

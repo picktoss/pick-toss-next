@@ -29,7 +29,7 @@ const DocumentDetailPage = async ({ params, searchParams }: Props) => {
   return (
     <main className="min-h-screen">
       <QuizListProvider>
-        <DocumentDetailController />
+        <DocumentDetailController documentId={Number(id)} />
 
         {activeTab === 'document-content' && <DocumentContent />}
         {activeTab === 'quiz' && <Quiz />}

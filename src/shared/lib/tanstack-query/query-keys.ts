@@ -60,6 +60,10 @@ export const queries = createQueryKeyStore({
       queryKey: [key],
       queryFn: () => REQUEST.quiz.fetchWrongAnswerQuizzes(),
     }),
+    reviewPicks: (documentId: number) => ({
+      queryKey: [documentId],
+      queryFn: () => REQUEST.quiz.getReviewPicks(documentId),
+    }),
   },
 
   collection: {
