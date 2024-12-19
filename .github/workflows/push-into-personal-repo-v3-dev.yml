@@ -7,15 +7,15 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: pandoc/latex
+
     steps:
-      - name: Install Git in Container
-        run: apt-get update && apt-get install -y git
+      - name: Check Git version
+        run: git --version
     
       - uses: actions/checkout@v2
       
       - name: Install mustache (to update the date)
-        run: apk add ruby && gem install mustache
+        run: sudo apt-get update && sudo apt-get install -y ruby && gem install mustache
         
       - name: creates output
         run: sh ./build.sh
