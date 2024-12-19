@@ -44,12 +44,14 @@ jobs:
           git fetch origin actions:actions
           git checkout actions
 
+          mkdir -p ../output/.github/workflows
+
           cp -r .github/workflows ../output/.github/workflows
           
           git checkout develop
 
           mkdir -p .github/workflows
-          cp -r ../output/.github/workflows .github/workflows
+          cp -r ../output/.github/workflows/* .github/workflows/
           
           git add .github/workflows
           git commit -m "Sync workflows from actions to develop"
