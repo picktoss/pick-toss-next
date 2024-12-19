@@ -15,6 +15,7 @@ import { getDocuments } from '@/requests/document/server'
 const Home = async () => {
   const { quizSetId, createdAt, type } = await getTodayQuizSetId()
   const { documents } = await getDocuments()
+
   const isEmpty = !documents || documents.length === 0
   const todayQuizState = isEmpty ? 'EMPTY' : type === 'READY' ? 'ARRIVED' : 'NOT_ARRIVED'
 
@@ -75,7 +76,7 @@ const Home = async () => {
       </div>
 
       {/* 복습 필수 노트 TOP5 */}
-      <ReviewTop5Container isEmpty={false} />
+      <ReviewTop5Container />
 
       <div className="flex flex-col gap-[32px] pb-[95px]">
         {/* 픽토스님의 관심분야 컬렉션 */}

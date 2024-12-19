@@ -87,3 +87,16 @@ export const searchDocument = async (requestBody: Document.Request.SearchDocumen
     throw error
   }
 }
+
+/** GET /documents/review-need-documents - 복습 필수 노트 top 5 */
+export const getReviewNeedDocuments = async () => {
+  try {
+    const { data } = await http.get<Document.Response.GetReviewNeedDocuments>(
+      API_ENDPOINTS.DOCUMENT.GET.REVIEW_NEEDED
+    )
+    return data
+  } catch (error: unknown) {
+    console.error(error)
+    throw error
+  }
+}
