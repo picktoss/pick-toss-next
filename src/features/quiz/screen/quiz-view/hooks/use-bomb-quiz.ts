@@ -6,9 +6,11 @@ import { useQuizState } from './use-quiz-state'
 import { prepareQuizResults } from '@/features/quiz/utils'
 import { useUpdateWrongQuizResult } from '@/requests/quiz/hooks'
 import { useRouter } from 'next/navigation'
+import { useToast } from '@/shared/hooks/use-toast'
 
 export const useBombQuiz = (key: Date) => {
   const router = useRouter()
+  const { toast } = useToast()
   const [openExplanation, setOpenExplanation] = useState(false)
 
   const [shouldFetchInitial, setShouldFetchInitial] = useState(true)
@@ -51,6 +53,7 @@ export const useBombQuiz = (key: Date) => {
   useEffect(() => {
     const fetchMoreQuizzes = () => {
       if (leftQuizCount === 1 && !isLoadingMore) {
+        // 추후 확장성을 위해 저장된 배열을 이용하는 코드를 남겨두었습니다
         const results = prepareQuizResults(quizResults)
 
         updateWrongQuizResultMutate(
@@ -59,7 +62,11 @@ export const useBombQuiz = (key: Date) => {
             onSuccess: async () => {
               setIsLoadingMore(true)
               const result = await refetchAdditionalData()
+
               if (result.data?.quizzes) {
+                const currentQuizId = currentQuizInfo?.id
+                const addList = result.data.quizzes.filter((quiz) => quiz.id !== currentQuizId)
+
                 if (
                   result.data?.quizzes.length === 1 &&
                   result.data?.quizzes[0]?.id === currentQuizInfo?.id
@@ -68,11 +75,11 @@ export const useBombQuiz = (key: Date) => {
                   return
                 }
 
-                setBombQuizList((prevList) => [...prevList, ...result.data.quizzes])
+                setBombQuizList((prevList) => [...prevList, ...addList])
                 // quizResults 배열도 확장
                 setQuizResults((prev) => [
                   ...prev,
-                  ...(new Array(result.data.quizzes.length).fill(null) as null[]),
+                  ...(new Array(addList.length).fill(null) as null[]),
                 ])
               }
               setIsLoadingMore(false)
@@ -112,48 +119,27 @@ export const useBombQuiz = (key: Date) => {
     }
 
     const hasNextQuiz = handleNext(currentIndex, bombQuizList.length)
-    if (hasNextQuiz) {
-      navigateToNext(currentIndex)
-    } else {
-      // 마지막 문제였다면 모든 결과를 한번에 업데이트
-      const results = prepareQuizResults(quizResults)
-      if (results.length > 0) {
-        updateWrongQuizResultMutate(
-          { quizzes: results },
-          {
-            onSuccess: () => {
-              window.location.reload()
-            },
-            onError: () => {
-              alert('결과 업데이트에 실패했습니다')
-            },
+    const results = prepareQuizResults(quizResults)
+
+    updateWrongQuizResultMutate(
+      { quizzes: results },
+      {
+        onSuccess: () => {
+          if (hasNextQuiz) {
+            navigateToNext(currentIndex)
+          } else {
+            window.location.reload()
           }
-        )
+        },
+        onError: () => {
+          toast({ title: '결과 업데이트에 실패했습니다' })
+        },
       }
-    }
+    )
   }
 
   const handleExit = () => {
-    // 현재까지 퀴즈 결과 서버에 전송
-    // onSuccess: 메인 화면으로 이동
-    const results = prepareQuizResults(quizResults)
-
-    if (results.length > 0) {
-      updateWrongQuizResultMutate(
-        { quizzes: results },
-        {
-          onSuccess: () => {
-            router.replace('/main')
-          },
-          onError: () => {
-            alert('결과 업데이트에 실패했습니다')
-            router.replace('/main')
-          },
-        }
-      )
-    } else {
-      router.replace('/main')
-    }
+    router.replace('/main')
   }
 
   const isLoading = useMemo(() => {
