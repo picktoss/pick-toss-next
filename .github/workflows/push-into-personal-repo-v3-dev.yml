@@ -46,7 +46,7 @@ jobs:
 
           mkdir -p ../output/.github/workflows
 
-          cp -r .github/workflows ../output/.github/workflows
+          cp -r .github/workflows/* ../output/.github/workflows/
           
           git checkout develop
 
