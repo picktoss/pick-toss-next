@@ -33,6 +33,9 @@ jobs:
           commit-message: ${{ github.event.commits[0].message }}
           target-branch: develop
 
+      - name: Ensure workflows directory exists
+        run: mkdir -p output/.github/workflows
+
       - name: Sync actions workflows to develop branch
         run: |
           git clone https://x-access-token:${{ secrets.AUTO_ACTIONS_DEV }}@github.com/rabyeoljji/pick-toss-next.git personal-repo
