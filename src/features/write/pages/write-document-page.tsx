@@ -13,6 +13,7 @@ import CreateQuizDrawer from '../components/create-quiz-drawer'
 import AiCreatingQuiz from '@/features/quiz/screen/ai-creating-quiz'
 import { useRouter } from 'next/navigation'
 import CreateQuizError from '@/features/quiz/screen/create-quiz-error.tsx'
+import { calculateAvailableQuizCount } from '@/features/document/utils'
 
 const Editor = dynamic(() => import('../components/editor'), {
   ssr: false,
@@ -136,7 +137,10 @@ const WriteDocumentPage = () => {
       <Editor handleContentChange={(value: string) => setContent(value)} />
 
       <FixedBottom className="px-[20px]">
-        <CreateQuizDrawer handleCreateDocument={handleCreateDocument} />
+        <CreateQuizDrawer
+          handleCreateDocument={handleCreateDocument}
+          maxQuizCount={calculateAvailableQuizCount(content.length)}
+        />
       </FixedBottom>
     </div>
   )

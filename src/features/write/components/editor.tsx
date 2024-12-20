@@ -7,6 +7,7 @@ import { css } from '@emotion/css'
 import React from 'react'
 import { Remirror, ThemeProvider, useRemirror } from '@remirror/react'
 import { extensions } from '../libs/extensions'
+import { cn } from '@/shared/lib/utils'
 
 interface EditorProps {
   handleContentChange: (value: string) => void
@@ -55,8 +56,10 @@ export default function Editor({ initialContent, handleContentChange }: EditorPr
               }
             }
           `,
-          'prose prose-h1:text-4xl dark:prose-invert prose-p:my-0 prose-sm !shadow-none sm:prose-base lg:prose-lg xl:prose-md focus:outline-none',
-          'min-h-[100vh]',
+          cn(
+            'prose prose-h1:text-4xl dark:prose-invert prose-p:my-0 prose-sm !shadow-none sm:prose-base lg:prose-lg xl:prose-md focus:outline-none',
+            'min-h-[100vh]'
+          ),
         ]}
       >
         {/* <MarkdownToolbar /> */}

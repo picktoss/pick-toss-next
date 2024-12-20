@@ -7,21 +7,23 @@ import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from '@/shared/comp
 import { Slider } from '@/shared/components/ui/slider'
 import Text from '@/shared/components/ui/text'
 import { cn } from '@/shared/lib/utils'
+import { useUserStore } from '@/store/user'
 import { useState } from 'react'
 
 interface Props {
   handleCreateDocument: (params: { quizType: Quiz.Type; star: number }) => void
+  maxQuizCount: number
 }
 
-const CreateQuizDrawer = ({ handleCreateDocument }: Props) => {
-  const DEFAULT_QUIZ_COUNT = 10 // 초기값 10
+const CreateQuizDrawer = ({ handleCreateDocument, maxQuizCount }: Props) => {
+  const DOCUMENT_MIN_QUIZ_COUNT = 1
+  const DOCUMENT_MAX_QUIZ_COUNT = maxQuizCount
+  const DEFAULT_QUIZ_COUNT = 10
+
+  const { userInfo: user } = useUserStore()
   const [selectedQuizCount, setSelectedQuizCount] = useState(DEFAULT_QUIZ_COUNT)
   const [selectedQuizType, setSelectedQuizType] = useState<Quiz.Type>('MULTIPLE_CHOICE')
   const [isOpenMoreStar, setIsOpenMoreStar] = useState(false)
-
-  // 임시 (문서 글자 수에 따라 생성할 수 있는 최대 문제 개수 필요)
-  const DOCUMENT_MIN_QUIZ_COUNT = 1
-  const DOCUMENT_MAX_QUIZ_COUNT = 40
 
   const handleClickQuizType = (quizType: Quiz.Type) => {
     setSelectedQuizType(quizType)
@@ -104,7 +106,11 @@ const CreateQuizDrawer = ({ handleCreateDocument }: Props) => {
                 min={DOCUMENT_MIN_QUIZ_COUNT}
                 max={DOCUMENT_MAX_QUIZ_COUNT}
                 step={1}
-                defaultValue={[10]}
+                defaultValue={
+                  DOCUMENT_MAX_QUIZ_COUNT > DEFAULT_QUIZ_COUNT
+                    ? [DEFAULT_QUIZ_COUNT]
+                    : [DOCUMENT_MAX_QUIZ_COUNT]
+                }
                 value={[selectedQuizCount]}
                 onValueChange={(value) => setSelectedQuizCount(value[0] || DEFAULT_QUIZ_COUNT)}
               />
@@ -119,7 +125,7 @@ const CreateQuizDrawer = ({ handleCreateDocument }: Props) => {
               <Text typography="text2-medium" color="sub">
                 현재 나의 별:{' '}
                 <Text as={'span'} color="secondary">
-                  16개
+                  {user?.star}개
                 </Text>
               </Text>
 
