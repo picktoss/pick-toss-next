@@ -1,7 +1,17 @@
 {
   "version": "8.3.2",
   "language": "en",
-  "ignorePaths": ["node_modules", ".next", "*.js", "*.json", "*.html", "*.css", "*.md", "*.svg"],
+  "ignorePaths": [
+    "node_modules",
+    ".next",
+    "*.js",
+    "*.json",
+    "*.html",
+    "*.css",
+    "*.md",
+    "*.svg",
+    "public"
+  ],
   "files": ["src/**/*.tsx", "src/**/*.ts"],
   "words": [
     "autodocs",
