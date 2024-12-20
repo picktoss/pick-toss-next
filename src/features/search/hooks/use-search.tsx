@@ -43,9 +43,11 @@ export const useSearch = () => {
   }, [initialKeyword])
 
   /** 최근 검색어 리스트에서 특정 검색어 클릭 시 검색창에 키워드가 반영되도록하는 함수 */
-  const handleUpdateKeyword = (selectedKeyword: string) => {
+  const handleUpdateKeyword = (selectedKeyword: string, callbackUrl: string) => {
     setKeyword(selectedKeyword)
-    searchInputRef.current?.focus()
+
+    router.replace(callbackUrl)
+    setIsSearchFocused(false)
   }
 
   /** 검색창에 입력되어있는 키워드를 삭제하는 함수 */

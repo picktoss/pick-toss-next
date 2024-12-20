@@ -39,6 +39,10 @@ const SearchInDocument = () => {
     handleDeleteKeyword('/document/search')
   }
 
+  const onUpdateKeyword = (keyword: string) => {
+    handleUpdateKeyword(keyword, `?keyword=${keyword}`)
+  }
+
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     handleSubmit(e, `?keyword=${keyword}`)
   }
@@ -50,7 +54,7 @@ const SearchInDocument = () => {
         onChangeKeyword={onChangeKeyword}
         handleDeleteKeyword={onDeleteKeyword}
         handleSubmit={onSubmit}
-        handleUpdateKeyword={handleUpdateKeyword}
+        handleUpdateKeyword={onUpdateKeyword}
         searchContainerRef={searchContainerRef}
         searchInputRef={searchInputRef}
         isSearchFocused={isSearchFocused}

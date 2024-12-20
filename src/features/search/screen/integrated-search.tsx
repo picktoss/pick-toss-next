@@ -58,6 +58,10 @@ const IntegratedSearch = () => {
     handleDeleteKeyword('/search' + `?tab=${tab}`)
   }
 
+  const onUpdateKeyword = (keyword: string) => {
+    handleUpdateKeyword(keyword, `?tab=${tab}` + `&keyword=${keyword}`)
+  }
+
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     handleSubmit(e, `?tab=${tab}` + `&keyword=${keyword}`)
   }
@@ -104,7 +108,7 @@ const IntegratedSearch = () => {
         onChangeKeyword={onChangeKeyword}
         handleDeleteKeyword={onDeleteKeyword}
         handleSubmit={onSubmit}
-        handleUpdateKeyword={handleUpdateKeyword}
+        handleUpdateKeyword={onUpdateKeyword}
         searchContainerRef={searchContainerRef}
         searchInputRef={searchInputRef}
         isSearchFocused={isSearchFocused}
