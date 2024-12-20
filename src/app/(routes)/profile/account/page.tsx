@@ -5,28 +5,47 @@ import CategoryDrawer from '@/features/user/components/category-drawer'
 import SetNameDialog from '@/features/user/components/set-name-dialog'
 import Link from 'next/link'
 import { getUserInfo } from '@/requests/user/server'
+import { auth } from '@/app/api/auth/[...nextauth]/auth'
+import Image from 'next/image'
+import { getGravatarUrl } from '@/features/user/utils'
 
 const AccountPage = async () => {
   const user = await getUserInfo()
+  const session = await auth()
 
   const interestCategories = user.interestCategories?.length
     ? user.interestCategories
     : ['관심 분야 없음']
 
+  const getProfileImage = (): string | null => {
+    if (session?.user?.image) {
+      return session.user.image
+    }
+    if (session?.user?.email) {
+      return getGravatarUrl(session.user.email)
+    }
+    return null
+  }
+
+  const imageUrl = getProfileImage()
+
   return (
     <main className="h-[calc(100dvh-54px-88px)] w-full overflow-y-auto px-[16px]">
       <div className="flex-center h-fit w-full pb-[44px] pt-[24px]">
-        <div className="flex-center relative size-[96px] rounded-full bg-background-base-03">
-          {/* 이용자의 프로필 이미지 유무에 따라 렌더링 */}
-          <Icon name="person" className="size-[48px] text-icon-tertiary" />
-
-          <input type="file" name="file" id="userImage" className="hidden" />
+        <div className="flex-center relative size-[96px] overflow-hidden rounded-full bg-background-base-03">
+          {imageUrl ? (
+            <Image src={imageUrl} alt="" fill className="object-cover" />
+          ) : (
+            <Icon name="person" className="size-[48px] text-icon-tertiary" />
+          )}
+          {/* 이미지 등록용 버튼 */}
+          {/* <input type="file" name="file" id="userImage" className="hidden" />
           <label
             htmlFor="userImage"
             className="flex-center absolute bottom-[-7px] right-0 size-[32px] cursor-pointer rounded-full border border-border-default bg-background-base-01"
           >
             <Icon name="camera" className="size-[16px]" />
-          </label>
+          </label> */}
         </div>
       </div>
 

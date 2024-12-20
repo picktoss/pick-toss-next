@@ -9,12 +9,14 @@ import ReviewTop5Container from '@/features/document/components/review-top5-cont
 import InterestedCategoryCollections from '@/features/collection/components/interested-category-collections'
 import RandomQuizLottie from '@/features/quiz/components/random-quiz-lottie'
 import BombQuizLottie from '@/features/quiz/components/bomb-quiz-lottie'
-import { getTodayQuizSetId } from '@/requests/quiz/server'
+import { getQuizRecordsByDate, getTodayQuizSetId } from '@/requests/quiz/server'
 import { getDocuments } from '@/requests/document/server'
+import { getFormattedDate } from '@/shared/utils/date'
 
 const Home = async () => {
   const { quizSetId, createdAt, type } = await getTodayQuizSetId()
   const { documents } = await getDocuments()
+  const { currentConsecutiveDays } = await getQuizRecordsByDate(getFormattedDate(new Date()))
 
   const isEmpty = !documents || documents.length === 0
   const todayQuizState = isEmpty ? 'EMPTY' : type === 'READY' ? 'ARRIVED' : 'NOT_ARRIVED'
@@ -67,7 +69,7 @@ const Home = async () => {
         >
           <Icon name="calendar" className="size-[40px] p-[4px]" />
           <div className="flex flex-col items-start gap-[4px]">
-            <Text typography="title3">{25}일</Text>
+            <Text typography="title3">{currentConsecutiveDays}일</Text>
             <Text typography="text2-medium" color="sub">
               연속으로 푸는 중
             </Text>

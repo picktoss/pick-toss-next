@@ -9,8 +9,10 @@ import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import { cn } from '@/shared/lib/utils'
 import { useQuery } from '@tanstack/react-query'
 import { useParams, useRouter } from 'next/navigation'
+import { useId } from 'react'
 
 const Header = () => {
+  const toastId = useId()
   const { id } = useParams()
   const router = useRouter()
 
@@ -36,7 +38,10 @@ const Header = () => {
     updateDocumentMutate(updatePayload, {
       onSuccess: () => {
         router.push('/document/' + String(id))
-        toast({ description: '노트가 수정되었어요' })
+        toast({}).update({
+          id: toastId,
+          title: '노트가 수정되었어요',
+        })
       },
     })
   }

@@ -20,7 +20,7 @@ const AllSearchResults = ({
   keyword,
 }: Props) => {
   return (
-    <div className="flex h-[calc(100dvh-56px-50px)] flex-col gap-[20px] overflow-y-auto text-text1-medium">
+    <div className="flex h-[calc(100dvh-56px-50px)] flex-col gap-[20px] overflow-y-auto pb-[100px] text-text1-medium">
       {docsQuizLength > 0 && (
         <div className="flex flex-col">
           <DocumentQuizSearchList

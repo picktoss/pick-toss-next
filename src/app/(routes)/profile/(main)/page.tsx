@@ -2,20 +2,36 @@ import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
 import CategoryTooltip from '@/features/user/category-tooltip'
 import Link from 'next/link'
-import { PROFILE_MENU_LIST } from '@/features/user/constants/profile-menu-list'
+import { PROFILE_MENU_LIST } from '@/features/user/config/profile-menu-list'
 import Footer from '@/features/user/components/footer'
 import { getUserInfo } from '@/requests/user/server'
 import CategoryTag from '@/shared/components/custom/category-tag'
 import { CATEGORIES } from '@/features/category/config'
+import { auth } from '@/app/api/auth/[...nextauth]/auth'
+import Image from 'next/image'
+import { getGravatarUrl } from '@/features/user/utils'
 
 const ProfilePage = async () => {
   const user = await getUserInfo()
+  const session = await auth()
 
   const noInterests = !user.interestCategories.length
 
   const maxPossessDocumentCount = user.documentUsage.maxPossessDocumentCount
   const possessDocumentCount = user.documentUsage.possessDocumentCount
   const addableDocumentCount = maxPossessDocumentCount - possessDocumentCount
+
+  const getProfileImage = (): string | null => {
+    if (session?.user?.image) {
+      return session.user.image
+    }
+    if (session?.user?.email) {
+      return getGravatarUrl(session.user.email)
+    }
+    return null
+  }
+
+  const imageUrl = getProfileImage()
 
   return (
     <main className="h-[calc(100dvh-54px-88px)] w-full overflow-y-auto px-[16px] pb-[54px]">
@@ -26,13 +42,14 @@ const ProfilePage = async () => {
         {noInterests && <CategoryTooltip />}
 
         <div className="flex-center gap-[16px]">
-          <div className="flex-center size-[48px] rounded-full bg-background-base-03">
-            {/* 설정한 이미지가 없을 경우 아이콘 노출 */}
-            <Icon name="person" className="text-icon-tertiary" />
-
-            {/* 설정한 이미지 노출 */}
-            {/* <Image src={sampleProfileImg} alt="" className="size-full object-cover" /> */}
+          <div className="flex-center relative size-[48px] overflow-hidden rounded-full bg-background-base-03">
+            {imageUrl ? (
+              <Image src={imageUrl} alt="" fill className="object-cover" />
+            ) : (
+              <Icon name="person" className="text-icon-tertiary" />
+            )}
           </div>
+
           <div className="flex flex-col">
             <div className="flex-center gap-[12px]">
               <Text typography="subtitle1-bold">{user.name}</Text>

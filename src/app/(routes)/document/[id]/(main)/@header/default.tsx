@@ -20,11 +20,13 @@ import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import ConfirmDialogWidget from '@/widget/confirm-dialog'
 import { useDeleteDocument } from '@/requests/document/hooks'
 import { useEffect, useRef, useState } from 'react'
+import { useUserStore } from '@/store/user'
 
 // Header 컴포넌트
 const Header = () => {
   const router = useRouter()
   const { id } = useParams()
+  const { userInfo: user } = useUserStore()
 
   const [isTitleHidden, setIsTitleHidden] = useState(false)
   const titleRef = useRef<HTMLHeadingElement | null>(null)
@@ -92,7 +94,7 @@ const Header = () => {
             <div className="flex">
               <Icon name="star" className="mr-[4px] size-[16px]" />
               <Text as="span" typography="subtitle2-medium">
-                130
+                {user?.star}
               </Text>
 
               <Link href={String(id) + '/modify'} className="ml-[14px]">

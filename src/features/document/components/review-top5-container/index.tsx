@@ -17,7 +17,7 @@ const ReviewTop5Container = ({ isEmpty }: Props) => {
   if (isPending) {
     return (
       <div className="flex-center w-full">
-        <Loading />
+        <Loading className="z-10" />
       </div>
     )
   }

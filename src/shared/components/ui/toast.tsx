@@ -26,11 +26,11 @@ ToastViewport.displayName = ToastPrimitives.Viewport.displayName
 
 // eslint-disable-next-line tailwindcss/no-custom-classname
 const toastVariants = cva(
-  'group pointer-events-auto relative flex w-full items-center justify-between space-x-4 overflow-hidden rounded-[6px] border px-[16px] py-[12px] shadow-lg transition-all data-[swipe=cancel]:translate-x-0 data-[swipe=end]:translate-x-[var(--radix-toast-swipe-end-x)] data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=move]:transition-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[swipe=end]:animate-out data-[state=closed]:fade-out-80 data-[state=closed]:slide-out-to-right-full data-[state=open]:slide-in-from-bottom-full md:px-[24px] md:py-[18px]',
+  'group pointer-events-auto relative flex w-full items-center justify-between space-x-4 overflow-hidden rounded-[8px] border px-[16px] py-[12px] shadow-lg transition-all data-[swipe=cancel]:translate-x-0 data-[swipe=end]:translate-x-[var(--radix-toast-swipe-end-x)] data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=move]:transition-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[swipe=end]:animate-out data-[state=closed]:fade-out-80 data-[state=closed]:slide-out-to-right-full data-[state=open]:slide-in-from-bottom-full md:px-[24px] md:py-[18px]',
   {
     variants: {
       variant: {
-        default: 'bg-gray-08 text-white',
+        default: 'bg-background-toast text-white',
         destructive:
           'destructive border-destructive bg-destructive text-destructive-foreground group',
       },

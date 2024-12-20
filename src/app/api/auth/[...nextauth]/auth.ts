@@ -13,6 +13,7 @@ declare module 'next-auth' {
       account: Account
       dto: UserDTO
       isNewUser: boolean // 첫 로그인 여부 추가
+      image?: string | null
     } & DefaultSession['user']
   }
 }
@@ -26,8 +27,12 @@ export const {
   providers: [Kakao, Google],
   // debug: true,
   callbacks: {
-    jwt: async ({ token, account, trigger }) => {
+    jwt: async ({ token, user, account, trigger }) => {
       if (account) {
+        if (user) {
+          token.picture = user.image ?? null
+        }
+
         try {
           const { accessToken, accessTokenExpiration, signUp } = await signInApi({
             socialPlatform: account.provider.toUpperCase() as 'GOOGLE' | 'KAKAO',
@@ -92,6 +97,7 @@ export const {
       session.user.dto = token.userDTO as UserDTO
       session.user.account = token.account as Account
       session.user.isNewUser = (token.isNewUser as boolean) ?? false
+      session.user.image = token.picture ?? null
 
       return session
     },

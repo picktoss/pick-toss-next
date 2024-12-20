@@ -25,7 +25,7 @@ const ClientSetUp = () => {
     if (session?.user) {
       getUserInfoMutate()
     }
-  }, [session])
+  }, [session?.user, getUserInfoMutate])
 
   return null
 }
