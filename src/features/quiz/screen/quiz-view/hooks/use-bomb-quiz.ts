@@ -25,7 +25,7 @@ export const useBombQuiz = (key: Date) => {
 
   const { mutate: updateWrongQuizResultMutate } = useUpdateWrongQuizResult()
   // 무한 오답 터뜨리기 구현을 위한 쿼리 분리
-  // 남은 퀴즈 수가 1개일 때, 미리 서버에서 오답 리스트 불러와서 현재 리스트에 추가
+  // 남은 퀴즈 수가 3개일 때, 미리 서버에서 오답 리스트 불러와서 현재 리스트에 추가
 
   // 초기 퀴즈 데이터 쿼리 - enabled 옵션으로 한 번만 실행되도록 제어
   const { data: initialData, isLoading: isInitialLoading } = useQuery({
@@ -49,10 +49,10 @@ export const useBombQuiz = (key: Date) => {
     }
   }, [initialData, shouldFetchInitial])
 
-  // leftQuizCount가 1이 되면 추가 데이터를 가져오는 효과
+  // leftQuizCount가 3이 되면 추가 데이터를 가져오는 효과
   useEffect(() => {
     const fetchMoreQuizzes = () => {
-      if (leftQuizCount === 1 && !isLoadingMore) {
+      if (leftQuizCount === 3 && !isLoadingMore) {
         // 추후 확장성을 위해 저장된 배열을 이용하는 코드를 남겨두었습니다
         const results = prepareQuizResults(quizResults)
 
@@ -64,8 +64,18 @@ export const useBombQuiz = (key: Date) => {
               const result = await refetchAdditionalData()
 
               if (result.data?.quizzes) {
-                const currentQuizId = currentQuizInfo?.id
-                const addList = result.data.quizzes.filter((quiz) => quiz.id !== currentQuizId)
+                const lastThreeQuizIds = bombQuizList.map((quiz, index) => {
+                  if (
+                    index === currentIndex ||
+                    index === currentIndex + 1 ||
+                    index === currentIndex + 2
+                  ) {
+                    return quiz.id
+                  }
+                })
+                const addList = result.data.quizzes.filter(
+                  (quiz) => !lastThreeQuizIds.includes(quiz.id)
+                )
 
                 if (
                   result.data?.quizzes.length === 1 &&
@@ -128,7 +138,7 @@ export const useBombQuiz = (key: Date) => {
           if (hasNextQuiz) {
             navigateToNext(currentIndex)
           } else {
-            window.location.reload()
+            setBombQuizList([])
           }
         },
         onError: () => {
