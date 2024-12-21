@@ -5,7 +5,7 @@ import {
   collectionQuizzesInfo,
   createQuizSetForCheck,
   createReplayDocumentQuizSet,
-  fetchDirectoryQuizzes,
+  getDirectoryQuizzes,
   updateQuizResult,
   updateWrongQuizResult,
 } from './client'
@@ -21,7 +21,7 @@ import {
 export const useDirectoryQuizzes = (directoryId: number | null) => {
   return useQuery({
     queryKey: ['directoryQuizzes', directoryId],
-    queryFn: async () => fetchDirectoryQuizzes({ directoryId: directoryId! }),
+    queryFn: async () => getDirectoryQuizzes({ directoryId: directoryId! }),
     enabled: !!directoryId,
   })
 }

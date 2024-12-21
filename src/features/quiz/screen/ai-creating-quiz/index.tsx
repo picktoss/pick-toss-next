@@ -75,15 +75,13 @@ const AiCreatingQuiz = ({ documentId, documentName, directoryEmoji, onError }: P
     createCheckQuizSetMutate(documentId, {
       onSuccess: (data) => {
         router.push(
-          '/quiz/' +
-            data.quizSetId +
-            '?quizSetType=FIRST_QUIZ_SET' +
+          `/quiz/${data.quizSetId}?` +
+            'quizSetType=FIRST_QUIZ_SET' +
             '&' +
-            `createdAt=${data.createdAt}` +
+            `createdAt=${data.createdAt}&documentName=${documentName}&directoryEmoji=${directoryEmoji}` +
             '&' +
-            `documentName=${documentName}` +
-            '&' +
-            `directoryEmoji=${directoryEmoji}`
+            'redirectUrl=' +
+            `/document/${documentId}`
         )
       },
     })

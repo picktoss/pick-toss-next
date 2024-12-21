@@ -39,7 +39,7 @@ export const queries = createQueryKeyStore({
   quiz: {
     listByDocument: (params: { documentId: number; quizType?: Quiz.Type }) => ({
       queryKey: [params],
-      queryFn: () => REQUEST.quiz.fetchDocumentQuizzes(params),
+      queryFn: () => REQUEST.quiz.getDocumentQuizzes(params),
       enabled: !!params.documentId,
     }),
     allRecords: () => ({
@@ -53,16 +53,20 @@ export const queries = createQueryKeyStore({
     }),
     setRecord: (params: { quizSetId: string; quizSetType: Quiz.Set.Type }) => ({
       queryKey: [params],
-      queryFn: () => REQUEST.quiz.fetchQuizSetRecord(params),
+      queryFn: () => REQUEST.quiz.getQuizSetRecord(params),
       enabled: !!params.quizSetId,
     }),
     bomb: (key?: Date) => ({
       queryKey: [key],
-      queryFn: () => REQUEST.quiz.fetchWrongAnswerQuizzes(),
+      queryFn: () => REQUEST.quiz.getWrongAnswerQuizzes(),
     }),
     reviewPicks: (documentId: number) => ({
       queryKey: [documentId],
       queryFn: () => REQUEST.quiz.getReviewPicks(documentId),
+    }),
+    todayQuizInfo: () => ({
+      queryKey: [''],
+      queryFn: () => REQUEST.quiz.getTodayQuizInfo(),
     }),
   },
 

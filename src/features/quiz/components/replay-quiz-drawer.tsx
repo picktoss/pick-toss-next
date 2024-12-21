@@ -46,18 +46,13 @@ const ReplayQuizDrawer = ({
       {
         onSuccess: (data) =>
           router.push(
-            '/quiz/' +
-              data.quizSetId +
-              '?quizSetType=DOCUMENT_QUIZ_SET' +
+            `/quiz/${data.quizSetId}?` +
+              'quizSetType=DOCUMENT_QUIZ_SET' +
               '&' +
-              'createdAt=' +
-              data.createdAt +
+              `createdAt=${data.createdAt}&documentName=${documentName}&directoryEmoji=${directoryEmoji}` +
               '&' +
-              'documentName=' +
-              documentName +
-              '&' +
-              'directoryEmoji=' +
-              directoryEmoji
+              'redirectUrl=' +
+              `/document/${documentId}`
           ),
       }
     )

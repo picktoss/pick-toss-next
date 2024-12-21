@@ -3,7 +3,8 @@
 import { API_ENDPOINTS } from '@/shared/configs/endpoint'
 import { http } from '@/shared/lib/axios/http'
 
-export const fetchDirectoryQuizzes = async ({ directoryId }: { directoryId: number }) => {
+/** GET GET /directories/{directory_id}/quizzes - 디렉토리에 생성된 모든 퀴즈 랜덤하게 가져오기 */
+export const getDirectoryQuizzes = async ({ directoryId }: { directoryId: number }) => {
   try {
     const { data } = await http.get<Quiz.Response.GetDirectoryQuizzes>(
       API_ENDPOINTS.QUIZ.GET.BY_DIRECTORY(directoryId)
@@ -14,8 +15,8 @@ export const fetchDirectoryQuizzes = async ({ directoryId }: { directoryId: numb
   }
 }
 
-// query-keys.ts에서 사용 중
-export const fetchDocumentQuizzes = async ({
+/** GET /documents/{document_id}/quizzes - document_id에 해당하는 모든 퀴즈 가져오기 */
+export const getDocumentQuizzes = async ({
   documentId,
   quizType,
 }: {
@@ -37,8 +38,8 @@ export const fetchDocumentQuizzes = async ({
   }
 }
 
-// query-keys.ts에서 사용 중
-export const fetchWrongAnswerQuizzes = async () => {
+/** GET /incorrect-quizzes - 오답 터뜨리기 퀴즈 가져오기 */
+export const getWrongAnswerQuizzes = async () => {
   try {
     const { data } = await http.get<Quiz.Response.GetWrongAnswerQuizzes>(
       API_ENDPOINTS.QUIZ.GET.WRONG_ANSWER
@@ -49,8 +50,8 @@ export const fetchWrongAnswerQuizzes = async () => {
   }
 }
 
-// query-keys.ts에서 사용 중
-export const fetchQuizSetRecord = async ({
+/** GET /quizzes/{quiz_set_id}/{quiz_set_type}/quiz-record - 퀴즈 세트에 대한 상세 기록 */
+export const getQuizSetRecord = async ({
   quizSetId,
   quizSetType,
 }: {
@@ -67,6 +68,7 @@ export const fetchQuizSetRecord = async ({
   }
 }
 
+/** POST /quizzes/documents/{document_id}/check-quiz-set - 퀴즈 생성 후, 퀴즈 오류 확인을 위한 퀴즈세트 생성 */
 export const createQuizSetForCheck = async ({ documentId }: { documentId: number }) => {
   try {
     const { data } = await http.post<Quiz.Response.CreateQuizSet>(
@@ -79,6 +81,7 @@ export const createQuizSetForCheck = async ({ documentId }: { documentId: number
   }
 }
 
+/** POST /quizzes/documents/{document_id}/custom-quiz-set - 사용자가 생성한 기존 문서에서 직접 퀴즈 세트 (다시)생성 */
 export const createReplayDocumentQuizSet = async ({
   documentId,
   requestBody,
@@ -97,6 +100,7 @@ export const createReplayDocumentQuizSet = async ({
   }
 }
 
+/** PATCH /quiz/result - 퀴즈 결과 업데이트 */
 export const updateQuizResult = async (requestBody: Quiz.Request.UpdateQuizResult) => {
   try {
     const { data } = await http.patch<Quiz.Response.UpdateQuizResult>(
@@ -109,6 +113,7 @@ export const updateQuizResult = async (requestBody: Quiz.Request.UpdateQuizResul
   }
 }
 
+/** PATCH /quiz/result - 오답 터뜨리기 결과 업데이트 */
 export const updateWrongQuizResult = async (requestBody: Quiz.Request.UpdateWrongQuizResult) => {
   try {
     const response = await http.patch(API_ENDPOINTS.QUIZ.PATCH.UPDATE_WRONG_RESULT, requestBody)
@@ -119,6 +124,7 @@ export const updateWrongQuizResult = async (requestBody: Quiz.Request.UpdateWron
   }
 }
 
+/** POST /collections/{collection_id}/collection-quizzes - 컬렉션 퀴즈 시작하기 */
 export const collectionQuizzesInfo = async ({ collectionId }: { collectionId: number }) => {
   try {
     const { data } = await http.post<Quiz.Response.StartCollectionQuiz>(
@@ -130,6 +136,7 @@ export const collectionQuizzesInfo = async ({ collectionId }: { collectionId: nu
   }
 }
 
+/** GET /quizzes/quiz-records - 전체 퀴즈 기록 */
 export const getQuizRecords = async () => {
   try {
     const { data } = await http.get<Quiz.Response.GetQuizRecords>(
@@ -159,6 +166,16 @@ export const getReviewPicks = async (documentId: number) => {
     const { data } = await http.get<Quiz.Response.GetReviewPick>(
       API_ENDPOINTS.QUIZ.GET.REVIEW_PICK(documentId)
     )
+    return data
+  } catch (error: unknown) {
+    throw error
+  }
+}
+
+/** GET /quiz-sets/today - 오늘의 퀴즈 세트 정보 가져오기 */
+export const getTodayQuizInfo = async () => {
+  try {
+    const { data } = await http.get<Quiz.Response.GetTodayInfo>(API_ENDPOINTS.QUIZ.GET.TODAY_SET)
     return data
   } catch (error: unknown) {
     throw error

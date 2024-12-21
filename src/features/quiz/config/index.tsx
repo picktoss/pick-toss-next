@@ -102,3 +102,11 @@ export const reportOptions = [
 
 export const QUIZ_ANIMATION_DURATION = 1
 export const UNTIL_EXPLANATION_DRAWER_OPEN = 800
+
+export const todayQuizCheckList = [
+  { day: 1, isComplete: false },
+  { day: 2, isComplete: false },
+  { day: 3, isComplete: false },
+  { day: 4, isComplete: false },
+  { day: 5, isComplete: false },
+]

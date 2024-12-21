@@ -3,23 +3,16 @@ import InviteReward from '@/features/payment/components/invite-reward'
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
 import { getTodayQuizInfo } from '@/requests/quiz/server'
+import { todayQuizCheckList } from '@/features/quiz/config'
 
 const TodayQuizPage = async () => {
   const { currentConsecutiveDays } = await getTodayQuizInfo()
 
-  const defaultCheckData = [
-    { day: 1, isComplete: false },
-    { day: 2, isComplete: false },
-    { day: 3, isComplete: false },
-    { day: 4, isComplete: false },
-    { day: 5, isComplete: false },
-  ]
-
-  const todayCheckData = defaultCheckData.map((checkItem) => {
-    if (checkItem.day > currentConsecutiveDays) {
-      return { ...checkItem }
+  const todayCheckData = todayQuizCheckList.map((checkItem) => {
+    if (checkItem.day <= currentConsecutiveDays) {
+      return { ...checkItem, isComplete: true }
     }
-    return { ...checkItem, isComplete: true }
+    return { ...checkItem }
   })
 
   return (
