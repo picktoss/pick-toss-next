@@ -56,10 +56,16 @@ const RandomQuizView = ({ directories }: Props) => {
   const [openExplanation, setOpenExplanation] = useState(false)
 
   const { currentIndex, navigateToNext } = useQuizNavigation()
-  const { handleNext, quizResults, setQuizResults } = useQuizState({
+  const { quizResults, setQuizResults } = useQuizState({
     quizCount: randomQuizList.length,
     currentIndex,
   })
+
+  const currentQuiz = randomQuizList[currentIndex]
+  const currentResult = quizResults[currentIndex] as Exclude<
+    (typeof quizResults)[number],
+    undefined
+  >
 
   const handleSlideChange = (index: number) => {
     if (repository === 'directory') {
@@ -74,12 +80,13 @@ const RandomQuizView = ({ directories }: Props) => {
       setOpenExplanation(false)
     }
 
-    const hasNextQuiz = handleNext(currentIndex, randomQuizList.length)
-    if (hasNextQuiz) {
-      navigateToNext(currentIndex)
-    } else {
-      // TODO: 종료 로직 추가
+    if (repository === 'directory') {
+      // API 요청
     }
+
+    // 무한히 반복되기 위함
+    setRandomQuizList((prev) => [...prev, currentQuiz!])
+    navigateToNext(currentIndex)
   }
 
   const onAnswer = ({
@@ -108,12 +115,6 @@ const RandomQuizView = ({ directories }: Props) => {
       setTimeout(() => setOpenExplanation(true), 1000)
     }
   }
-
-  const currentQuiz = randomQuizList[currentIndex]
-  const currentResult = quizResults[currentIndex] as Exclude<
-    (typeof quizResults)[number],
-    undefined
-  >
 
   const [SwiperContainerWidth, setSwiperContainerWidth] = useState<number>(0)
   const swiperContainerRef = useRef<HTMLDivElement>(null)
