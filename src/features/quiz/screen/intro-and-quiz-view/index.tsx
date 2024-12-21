@@ -1,8 +1,10 @@
 'use client'
 
 import { useState } from 'react'
-import QuizView from './quiz-view'
-import QuizIntro from './intro'
+import QuizIntro from '../intro'
+import QuizView from '../quiz-view'
+// import QuizView from './quiz-view'
+// import QuizIntro from './intro'
 
 interface Props {
   quizSetType: Quiz.Set.Type

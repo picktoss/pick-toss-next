@@ -18,7 +18,7 @@ import { useCreateDocument } from '@/requests/document/hooks'
 import TitleInput from '@/features/write/components/title-input'
 import { useRouter } from 'next/navigation'
 import AiCreatingQuiz from '@/features/quiz/screen/ai-creating-quiz'
-import CreateQuizError from '@/features/quiz/screen/create-quiz-error.tsx'
+import CreateQuizError from '@/features/quiz/screen/create-quiz-error'
 
 const CreateWithFile = () => {
   const router = useRouter()

@@ -12,7 +12,7 @@ import { useDirectoryContext } from '@/features/directory/contexts/directory-con
 import CreateQuizDrawer from '../components/create-quiz-drawer'
 import AiCreatingQuiz from '@/features/quiz/screen/ai-creating-quiz'
 import { useRouter } from 'next/navigation'
-import CreateQuizError from '@/features/quiz/screen/create-quiz-error.tsx'
+import CreateQuizError from '@/features/quiz/screen/create-quiz-error'
 import { calculateAvailableQuizCount } from '@/features/document/utils'
 
 const Editor = dynamic(() => import('../components/editor'), {

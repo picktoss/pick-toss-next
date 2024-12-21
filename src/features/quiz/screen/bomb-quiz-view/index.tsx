@@ -1,15 +1,15 @@
 'use client'
 
 import Icon from '@/shared/components/custom/icon'
-import EmptyBombList from '../components/empty-bomb-list'
-import BombQuiz from '../components/bomb-quiz'
-import BombAnimation from '../components/bomb-animation'
 import { useState } from 'react'
-import WrongAnswerDialog from '../components/wrong-answer-dialog'
-import { getAnswerText } from '../utils'
 import { cn } from '@/shared/lib/utils'
 import Loading from '@/shared/components/custom/loading'
-import { useBombQuiz } from './quiz-view/hooks/use-bomb-quiz'
+import { useBombQuiz } from '../quiz-view/hooks/use-bomb-quiz'
+import EmptyBombList from '../../components/empty-bomb-list'
+import BombQuiz from '../../components/bomb-quiz'
+import BombAnimation from '../../components/bomb-animation'
+import WrongAnswerDialog from '../../components/wrong-answer-dialog'
+import { getAnswerText } from '../../utils'
 
 const BombQuizView = () => {
   const [key] = useState(new Date())
