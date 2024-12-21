@@ -1985,12 +1985,12 @@ export interface components {
       is3xxRedirection?: boolean
     }
     JspConfigDescriptor: {
-      taglibs?: components['schemas']['TaglibDescriptor'][]
       jspPropertyGroups?: components['schemas']['JspPropertyGroupDescriptor'][]
+      taglibs?: components['schemas']['TaglibDescriptor'][]
     }
     JspPropertyGroupDescriptor: {
+      defaultContentType?: string
       isXml?: string
-      deferredSyntaxAllowedAsLiteral?: string
       elIgnored?: string
       errorOnELNotFound?: string
       pageEncoding?: string
@@ -1999,7 +1999,7 @@ export interface components {
       includeCodas?: string[]
       trimDirectiveWhitespaces?: string
       errorOnUndeclaredNamespace?: string
-      defaultContentType?: string
+      deferredSyntaxAllowedAsLiteral?: string
       buffer?: string
       urlPatterns?: string[]
     }
@@ -2067,13 +2067,13 @@ export interface components {
       servletRegistrations?: {
         [key: string]: components['schemas']['ServletRegistration']
       }
-      defaultSessionTrackingModes?: ('COOKIE' | 'URL' | 'SSL')[]
       /** Format: int32 */
       effectiveMajorVersion?: number
       /** Format: int32 */
       effectiveMinorVersion?: number
       serverInfo?: string
       servletContextName?: string
+      defaultSessionTrackingModes?: ('COOKIE' | 'URL' | 'SSL')[]
       filterRegistrations?: {
         [key: string]: components['schemas']['FilterRegistration']
       }
@@ -2207,6 +2207,7 @@ export interface components {
       /** @enum {string} */
       quizType?: 'MIX_UP' | 'MULTIPLE_CHOICE'
       description?: string
+      choseAnswer?: string
     }
     GetDocumentsNeedingReviewResponse: {
       documents?: components['schemas']['GetReviewNeededDocumentsDto'][]
