@@ -134,11 +134,16 @@ export const useBombQuiz = (key: Date) => {
     updateWrongQuizResultMutate(
       { quizzes: results },
       {
-        onSuccess: () => {
+        onSuccess: async () => {
           if (hasNextQuiz) {
             navigateToNext(currentIndex)
           } else {
-            setBombQuizList([])
+            const result = await refetchAdditionalData()
+            if (result.data?.quizzes.length) {
+              window.location.replace('/quiz/bomb')
+            } else {
+              setBombQuizList([])
+            }
           }
         },
         onError: () => {
