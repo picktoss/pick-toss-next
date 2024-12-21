@@ -17,6 +17,23 @@ type Metadata = {
   directory: DeepRequired<components['schemas']['DirectoryDto']>
 }
 
+type RandomQuiz = {
+  id: number
+  question: string
+  answer: string
+  explanation: string
+  options: string[]
+  quizType: 'MIX_UP' | 'MULTIPLE_CHOICE'
+  document?: {
+    id: number
+    name: string
+  }
+  collection?: {
+    id: number
+    name: string
+  }
+}
+
 declare global {
   /** <참고>
    * OX : correct/incorrect
@@ -25,6 +42,7 @@ declare global {
   declare namespace Quiz {
     type Item = QuizItem
     type ReplayType = ReplayQuizType
+    type RandomItem = RandomQuiz
 
     type Type = QuizType
     type ReplayType = QuizType | 'RANDOM'

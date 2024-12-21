@@ -4,16 +4,16 @@ export const getOptionCondition = (
   rightAnswer: string
 ) => {
   if (!isQuizSolved(result)) return 'IDLE'
-  if (result.answer === true && result.choseAnswer === option) return 'RIGHT'
-  if (result.answer === false && result.choseAnswer === option) return 'WRONG'
+  if (result?.answer === true && result?.choseAnswer === option) return 'RIGHT'
+  if (result?.answer === false && result?.choseAnswer === option) return 'WRONG'
   if (option === rightAnswer) return 'RIGHT'
   return 'DISABLED'
 }
 
 export const getOXCondition = (result: Quiz.Result | null) => {
   if (!isQuizSolved(result)) return 'IDLE'
-  if (result.answer === true && result.choseAnswer === 'correct') return 'RIGHT'
-  if (result.answer === false && result.choseAnswer === 'correct') return 'WRONG'
+  if (result?.answer === true && result?.choseAnswer === 'correct') return 'RIGHT'
+  if (result?.answer === false && result?.choseAnswer === 'correct') return 'WRONG'
   return 'WRONG'
 }
 

@@ -25,3 +25,14 @@ export const getBookmarkedCollections = async () => {
     throw error
   }
 }
+
+export const getMyCollections = async () => {
+  try {
+    const { data } = await httpServer.get<Collection.Response.GetMyCollections>(
+      API_ENDPOINTS.COLLECTION.GET.MY_COLLECTIONS
+    )
+    return data
+  } catch (error) {
+    throw error
+  }
+}

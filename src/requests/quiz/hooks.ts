@@ -18,7 +18,7 @@ import {
 //   })
 // }
 
-export const useDirectoryQuizzes = (directoryId: number | null) => {
+export const useDirectoryQuizzes = (directoryId?: number) => {
   return useQuery({
     queryKey: ['directoryQuizzes', directoryId],
     queryFn: async () => getDirectoryQuizzes({ directoryId: directoryId! }),

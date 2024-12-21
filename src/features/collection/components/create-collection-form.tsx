@@ -51,7 +51,7 @@ const CreateCollectionForm = () => {
   const [emoji, setEmoji] = useState('🥹')
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
-  const [categoryCode, setCategoryCode] = useState(CATEGORIES[0]?.code ?? 'IT')
+  const [categoryCode, setCategoryCode] = useState(CATEGORIES[0]?.id ?? 'IT')
 
   const { data: directoryQuizzesData, isLoading: directoryQuizzesLoading } =
     useDirectoryQuizzes(selectedDirectoryId)
@@ -225,7 +225,7 @@ const CreateCollectionForm = () => {
             <DrawerTrigger>
               <div className="rounded-full bg-background-base-02 px-[14px] py-[5px]">
                 <CategoryTag
-                  title={CATEGORIES.find((category) => category.code === categoryCode)?.name ?? ''}
+                  title={CATEGORIES.find((category) => category.id === categoryCode)?.name ?? ''}
                 />
               </div>
             </DrawerTrigger>
@@ -235,10 +235,10 @@ const CreateCollectionForm = () => {
               </DrawerHeader>
               <div className="flex flex-col gap-2 p-4">
                 {CATEGORIES.map((category) => (
-                  <DrawerClose key={category.code}>
+                  <DrawerClose key={category.id}>
                     <CategoryTag
                       title={category.name}
-                      onClick={() => setCategoryCode(category.code)}
+                      onClick={() => setCategoryCode(category.id)}
                     />
                   </DrawerClose>
                 ))}

@@ -8,6 +8,7 @@ import {
   createBookmark,
   getMyCollections,
   getCollectionInfo,
+  getRandomCollectionQuizzes,
 } from './client'
 
 export const useCollections = () => {
@@ -35,6 +36,14 @@ export const useBookmarkedCollections = () => {
   return useQuery({
     queryKey: ['bookmarkedCollections'],
     queryFn: async () => getBookmarkedCollections(),
+  })
+}
+
+export const useRandomCollectionQuizzes = (categoryId?: string) => {
+  return useQuery({
+    queryKey: ['randomCollectionQuizzes', categoryId],
+    queryFn: async () => getRandomCollectionQuizzes({ categoryId: categoryId! }),
+    enabled: categoryId != null,
   })
 }
 

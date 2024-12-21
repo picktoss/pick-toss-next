@@ -102,6 +102,13 @@ declare global {
         paths['/api/v2/collections-analysis']['get']['responses']['200']['content']['application/json;charset=UTF-8']
       >
 
+      /** GET /api/v2/collections/{collection_category}/quizzes
+       * 북마크하거나 소유한 컬렉션 분야별로 모든 퀴즈 랜덤하게 가져오기
+       */
+      type GetRandomCollectionQuizzes = DeepRequired<
+        paths['/api/v2/collections/{collection_category}/quizzes']['get']['responses']['200']['content']['application/json;charset=UTF-8']
+      >
+
       /** POST /api/v2/collections
        * 컬렉션 생성
        */

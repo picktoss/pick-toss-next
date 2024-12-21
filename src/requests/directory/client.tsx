@@ -6,7 +6,7 @@ import { http } from '@/shared/lib/axios/http'
 /**
  * 모든 디렉토리 가져오기
  */
-export const fetchDirectories = async () => {
+export const getDirectories = async () => {
   try {
     const { data } = await http.get<Directory.Response.GetDirectories>(
       API_ENDPOINTS.DIRECTORY.GET.ALL

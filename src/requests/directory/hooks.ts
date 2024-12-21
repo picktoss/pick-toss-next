@@ -4,7 +4,7 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 import {
   createDirectory,
   deleteDirectory,
-  fetchDirectories,
+  getDirectories,
   fetchDirectory,
   updateDirectoryInfo,
 } from './client'
@@ -17,7 +17,7 @@ import { queries } from '@/shared/lib/tanstack-query/query-keys'
 export const useDirectories = () => {
   return useQuery({
     queryKey: ['directories'],
-    queryFn: async () => fetchDirectories(),
+    queryFn: async () => getDirectories(),
   })
 }
 
