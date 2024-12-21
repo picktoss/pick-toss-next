@@ -1,13 +1,11 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
 
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
-import { useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { cn } from '@/shared/lib/utils'
 
 import './style.css'
-import { quizzes } from '../../config'
 import Text from '@/shared/components/ui/text'
 import { Tabs, TabsList, TabsTrigger } from '@/shared/components/ui/tabs'
 import WrongAnswerDialog from '../../components/wrong-answer-dialog'
@@ -18,23 +16,21 @@ import GoBackButton from '@/shared/components/custom/go-back-button'
 import Tag from '@/shared/components/ui/tag'
 import QuizOptions from '../quiz-view/components/quiz-option'
 import { CATEGORIES } from '@/features/category/config'
-import { notFound } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { components } from '@/types/schema'
 import { DeepRequired } from 'react-hook-form'
+import { useRandomCollectionQuizzes } from '@/requests/collection/hooks'
+import { useDirectoryQuizzes } from '@/requests/quiz/hooks'
+import Loading from '@/shared/components/custom/loading'
 
 interface Props {
-  collections: DeepRequired<components['schemas']['CollectionDto']>[]
   directories: DeepRequired<components['schemas']['GetAllDirectoriesDirectoryDto']>[]
 }
 
-type CategoryWithQuizzesAndCollectionName = {
-  category: (typeof CATEGORIES)[number]
-  quizzes: (Quiz.Item & { tag: string })[]
-}
+const RandomQuizView = ({ directories }: Props) => {
+  const router = useRouter()
 
-const RandomQuizView = ({ collections, directories }: Props) => {
-  const randomQuizList = [...quizzes] // 임시
-
+  const [randomQuizList, setRandomQuizList] = useState<Quiz.RandomItem[]>([])
   const [repository, setRepository] = useState<'directory' | 'collection'>('directory')
   const [activeDirectoryIndex, setActiveDirectoryIndex] = useState(0)
   const [activeCategoryIndex, setActiveCategoryIndex] = useState(0)
@@ -43,9 +39,18 @@ const RandomQuizView = ({ collections, directories }: Props) => {
     () => directories[activeDirectoryIndex]?.id,
     [activeDirectoryIndex, directories]
   )
-  const activeCategoryCode = useMemo(
-    () => CATEGORIES[activeCategoryIndex]?.id,
-    [activeCategoryIndex]
+  const activeCategoryId = useMemo(() => CATEGORIES[activeCategoryIndex]?.id, [activeCategoryIndex])
+
+  const { data: randomCollectionQuizzesData } = useRandomCollectionQuizzes(activeCategoryId)
+  const randomCollectionQuizzes = useMemo(
+    () => randomCollectionQuizzesData?.quizzes ?? [],
+    [randomCollectionQuizzesData?.quizzes]
+  )
+
+  const { data: randomDirectoryQuizzesData } = useDirectoryQuizzes(activeDirectoryId)
+  const randomDirectoryQuizzes = useMemo(
+    () => randomDirectoryQuizzesData?.quizzes ?? [],
+    [randomDirectoryQuizzesData?.quizzes]
   )
 
   const [openExplanation, setOpenExplanation] = useState(false)
@@ -127,9 +132,22 @@ const RandomQuizView = ({ collections, directories }: Props) => {
 
   const slideItems = repository === 'directory' ? directories : CATEGORIES
 
-  if (!currentQuiz) {
-    notFound()
-  }
+  useEffect(() => {
+    if (repository === 'directory') {
+      setRandomQuizList(randomDirectoryQuizzes)
+    } else {
+      setRandomQuizList(randomCollectionQuizzes)
+    }
+    router.replace('/quiz/random')
+    setQuizResults([])
+  }, [
+    router,
+    repository,
+    randomCollectionQuizzes,
+    randomDirectoryQuizzes,
+    setRandomQuizList,
+    setQuizResults,
+  ])
 
   return (
     <div>
@@ -149,26 +167,32 @@ const RandomQuizView = ({ collections, directories }: Props) => {
           </div>
 
           {/* 문제 영역 */}
-          <div className="flex flex-col items-center">
-            <Tag colors={'secondary'} className="px-[8px] py-[4px]">
-              <Text typography="text2-bold">{currentQuiz.document.name}</Text>
-            </Tag>
+          {currentQuiz ? (
+            <div className="flex flex-col items-center">
+              <Tag colors={'secondary'} className="px-[8px] py-[4px]">
+                <Text typography="text2-bold">
+                  {currentQuiz.document?.name || currentQuiz.collection?.name}
+                </Text>
+              </Tag>
 
-            <Text
-              key={currentIndex}
-              typography="question"
-              className="mt-[12px] animate-fadeIn px-[30px] text-center"
-            >
-              {currentQuiz.question}
-            </Text>
+              <Text
+                key={currentIndex}
+                typography="question"
+                className="mt-[12px] animate-fadeIn px-[30px] text-center"
+              >
+                {currentQuiz.question}
+              </Text>
 
-            <QuizOptions
-              quiz={currentQuiz}
-              currentResult={currentResult}
-              onAnswer={onAnswer}
-              className="my-[16px] mt-[4dvh]"
-            />
-          </div>
+              <QuizOptions
+                quiz={currentQuiz}
+                currentResult={currentResult ?? null}
+                onAnswer={onAnswer}
+                className="my-[16px] mt-[4dvh]"
+              />
+            </div>
+          ) : (
+            <Loading center />
+          )}
 
           {/* 탭 영역 */}
           <Tabs
@@ -217,6 +241,7 @@ const RandomQuizView = ({ collections, directories }: Props) => {
                         emoji: item.emoji,
                       }}
                       variant={repository === 'directory' ? 'directory' : 'collection'}
+                      quizCount={randomQuizList.length}
                     />
                   </SwiperSlide>
                 )
@@ -229,10 +254,10 @@ const RandomQuizView = ({ collections, directories }: Props) => {
       <WrongAnswerDialog
         isOpen={openExplanation}
         setIsOpen={setOpenExplanation}
-        answer={getAnswerText(currentQuiz.answer)}
-        explanation={currentQuiz.explanation}
-        directoryName={currentQuiz.directory?.name ?? ''}
-        documentName={currentQuiz.document.name}
+        answer={getAnswerText(currentQuiz?.answer || '')}
+        explanation={currentQuiz?.explanation || ''}
+        directoryName={currentQuiz?.collection?.name ?? ''}
+        documentName={currentQuiz?.document?.name || currentQuiz?.collection?.name || ''}
         onNext={onNext}
       />
     </div>
@@ -249,9 +274,10 @@ interface SlideItemProps {
     emoji: string
   }
   variant: 'directory' | 'collection'
+  quizCount: number
 }
 
-const SlideItem = ({ isActive, data, variant }: SlideItemProps) => {
+const SlideItem = ({ isActive, data, variant, quizCount }: SlideItemProps) => {
   const styles = {
     directory: {
       background: {
@@ -277,9 +303,13 @@ const SlideItem = ({ isActive, data, variant }: SlideItemProps) => {
     <div
       className={cn(
         'rounded-[16px] p-[12px_14px_15px_14px] h-[12svh] aspect-[90/108]',
-        'flex flex-col items-center justify-between text-center min-h-[106px]',
+        'flex flex-col items-center justify-between text-center min-h-[106px] max-h-[140px]',
         currentStyle.background.base,
-        isActive && ['h-[16svh] min-h-[130px]', currentStyle.shadow, currentStyle.background.active]
+        isActive && [
+          'h-[16svh] max-h-[160px] min-h-[130px]',
+          currentStyle.shadow,
+          currentStyle.background.active,
+        ]
       )}
     >
       <div>
@@ -289,9 +319,9 @@ const SlideItem = ({ isActive, data, variant }: SlideItemProps) => {
         >
           {data.name}
         </Text>
-        {isActive && (
+        {isActive && quizCount > 0 && (
           <Text typography="text2-medium" color="primary-inverse" className="mt-[3px]">
-            232문제
+            {quizCount}문제
           </Text>
         )}
       </div>

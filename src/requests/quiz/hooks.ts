@@ -20,7 +20,7 @@ import { queries } from '@/shared/lib/tanstack-query/query-keys'
 //   })
 // }
 
-export const useDirectoryQuizzes = (directoryId: number | null) => {
+export const useDirectoryQuizzes = (directoryId?: number) => {
   return useQuery({
     queryKey: ['directoryQuizzes', directoryId],
     queryFn: async () => fetchDirectoryQuizzes({ directoryId: directoryId! }),

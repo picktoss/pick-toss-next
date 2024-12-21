@@ -6,7 +6,7 @@ import { QUIZ_ANIMATION_DURATION } from '@/features/quiz/config'
 import { cn } from '@/shared/lib/utils'
 
 interface QuizOptionsProps {
-  quiz: Quiz.Item
+  quiz: Quiz.Item | Quiz.RandomItem
   currentResult: Quiz.Result | null
   onAnswer: (params: { id: number; isRight: boolean; choseAnswer: string }) => void
   className?: HTMLElement['className']
@@ -31,7 +31,7 @@ const QuizOptions = ({ quiz, currentResult, onAnswer, className }: QuizOptionsPr
   if (quiz.quizType === 'MULTIPLE_CHOICE') {
     return (
       <motion.div
-        className={cn('flex flex-col gap-[12px]', className)}
+        className={cn('flex flex-col gap-[12px] w-full', className)}
         variants={container}
         initial="hidden"
         animate="show"

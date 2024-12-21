@@ -75,3 +75,14 @@ export const getCollectionInfo = async ({ collectionId }: { collectionId: number
     throw error
   }
 }
+
+export const getRandomCollectionQuizzes = async ({ categoryId }: { categoryId: string }) => {
+  try {
+    const { data } = await http.get<Collection.Response.GetRandomCollectionQuizzes>(
+      API_ENDPOINTS.COLLECTION.GET.RANDOM_QUIZZES(categoryId)
+    )
+    return data
+  } catch (error) {
+    throw error
+  }
+}

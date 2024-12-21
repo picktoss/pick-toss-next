@@ -34,6 +34,8 @@ export const API_ENDPOINTS = {
       BOOKMARKED: '/collections/bookmarked-collections',
       /** GET /collections-analysis - 컬렉션 분석 */
       ANALYSIS: '/collections-analysis',
+      /** GET /collections/{collection_category}/quizzes - 북마크하거나 소유한 컬렉션 분야별로 모든 퀴즈 랜덤하게 가져오기 */
+      RANDOM_QUIZZES: (categoryId: string) => `/collections/${categoryId}/quizzes`,
     },
     POST: {
       /** POST /collections - 컬렉션 생성 */
