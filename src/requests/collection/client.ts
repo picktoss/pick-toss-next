@@ -3,10 +3,15 @@
 import { API_ENDPOINTS } from '@/shared/configs/endpoint'
 import { http } from '@/shared/lib/axios/http'
 
-export const getAllCollections = async () => {
+export const getAllCollections = async (props?: {
+  collectionSortOption: 'POPULARITY' | 'UPDATED'
+  collectionCategory?: Collection.Field
+  quizType?: 'MIX_UP' | 'MULTIPLE_CHOICE'
+  quizCount: number
+}) => {
   try {
     const { data } = await http.get<Collection.Response.GetAllCollections>(
-      API_ENDPOINTS.COLLECTION.GET.ALL
+      API_ENDPOINTS.COLLECTION.GET.ALL(props)
     )
     return data
   } catch (error) {

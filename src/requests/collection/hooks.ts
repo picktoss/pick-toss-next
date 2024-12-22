@@ -11,10 +11,15 @@ import {
   getRandomCollectionQuizzes,
 } from './client'
 
-export const useCollections = () => {
+export const useCollections = (props?: {
+  collectionSortOption: 'POPULARITY' | 'UPDATED'
+  collectionCategory?: Collection.Field
+  quizType?: 'MIX_UP' | 'MULTIPLE_CHOICE'
+  quizCount: number
+}) => {
   return useQuery({
-    queryKey: ['collections'],
-    queryFn: async () => getAllCollections(),
+    queryKey: ['collections', JSON.stringify(props)],
+    queryFn: async () => getAllCollections(props),
   })
 }
 

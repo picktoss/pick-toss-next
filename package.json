@@ -64,6 +64,7 @@
     "pdfjs-dist": "^4.9.155",
     "prettier": "^2.8.8",
     "qs": "^6.12.1",
+    "query-string": "^9.1.1",
     "react": "^18",
     "react-canvas-confetti": "^2.0.7",
     "react-day-picker": "^8.10.1",

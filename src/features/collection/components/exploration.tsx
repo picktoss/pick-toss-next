@@ -9,11 +9,23 @@ import Loading from '@/shared/components/custom/loading'
 import { useUser } from '@/shared/hooks/use-user'
 import Link from 'next/link'
 import { useScrollPosition } from '@/shared/hooks/use-scroll-position'
+import SelectMinQuizCountDrawer from './select-min-quiz-count-drawer'
+import { useSearchParams } from 'next/navigation'
+import { DEFAULT_COLLECTION_QUIZ_COUNT } from '../config'
 
-const controlButtons = ['분야', '퀴즈 유형', '문제 수']
+const controlButtons = ['분야', '퀴즈 유형']
 
 const Exploration = () => {
-  const { data: collectionsData, isLoading } = useCollections()
+  const searchParams = useSearchParams()
+  const quizType = searchParams.get('quizType')
+  const minQuizCount = Number(searchParams.get('min-quiz-count')) || DEFAULT_COLLECTION_QUIZ_COUNT
+
+  const { data: collectionsData, isLoading } = useCollections({
+    collectionSortOption: 'POPULARITY',
+    collectionCategory: undefined,
+    quizType: undefined,
+    quizCount: minQuizCount,
+  })
   const { user } = useUser()
 
   const scrollContainerRef = useScrollPosition({ pageKey: 'exploration' })
@@ -33,6 +45,7 @@ const Exploration = () => {
               <Icon name="chevron-down" className="size-[12px] text-icon-tertiary" />
             </button>
           ))}
+          <SelectMinQuizCountDrawer count={minQuizCount} />
         </div>
         <Icon name="sort" className="size-[16px]" />
       </div>
