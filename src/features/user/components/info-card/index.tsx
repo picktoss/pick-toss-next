@@ -41,7 +41,7 @@ const UserInfoCard = () => {
                 {user.interestCategories.map((category) => (
                   <CategoryTag
                     key={category}
-                    title={CATEGORIES.find((value) => value.code === category)?.name ?? ''}
+                    title={CATEGORIES.find((value) => value.id === category)?.name ?? ''}
                     className="flex-center"
                   ></CategoryTag>
                 ))}

@@ -21,7 +21,7 @@ export const getDirectories = async () => {
 /**
  * directory_id로 디렉토리 가져오기
  */
-export const fetchDirectory = async (directoryId: Directory.Item['id']) => {
+export const getDirectory = async (directoryId: Directory.Item['id']) => {
   try {
     const { data } = await http.get<Directory.Response.GetDirectory>(
       API_ENDPOINTS.DIRECTORY.GET.BY_ID(directoryId)

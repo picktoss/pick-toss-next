@@ -47,7 +47,7 @@ const RandomQuizView = ({ directories }: Props) => {
     [randomCollectionQuizzesData?.quizzes]
   )
 
-  const { data: randomDirectoryQuizzesData } = useDirectoryQuizzes(activeDirectoryId)
+  const { data: randomDirectoryQuizzesData } = useDirectoryQuizzes(activeDirectoryId ?? null)
   const randomDirectoryQuizzes = useMemo(
     () => randomDirectoryQuizzesData?.quizzes ?? [],
     [randomDirectoryQuizzesData?.quizzes]

@@ -5,7 +5,7 @@ import {
   createDirectory,
   deleteDirectory,
   getDirectories,
-  fetchDirectory,
+  getDirectory,
   updateDirectoryInfo,
 } from './client'
 import { getQueryClient } from '@/shared/lib/tanstack-query/client'
@@ -27,7 +27,7 @@ export const useDirectories = () => {
 export const useDirectory = (directoryId: Directory.Item['id']) => {
   return useQuery({
     queryKey: ['directory', directoryId],
-    queryFn: async () => fetchDirectory(directoryId),
+    queryFn: async () => getDirectory(directoryId),
   })
 }
 

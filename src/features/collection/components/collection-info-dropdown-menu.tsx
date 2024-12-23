@@ -11,6 +11,7 @@ interface Props {
   collectionId: number
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const CollectionInfoDropdownMenu = ({ collectionId }: Props) => {
   return (
     <DropdownMenu>

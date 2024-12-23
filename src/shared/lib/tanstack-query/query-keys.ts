@@ -5,11 +5,11 @@ export const queries = createQueryKeyStore({
   directory: {
     list: () => ({
       queryKey: [''],
-      queryFn: () => REQUEST.directory.fetchDirectories(),
+      queryFn: () => REQUEST.directory.getDirectories(),
     }),
     item: (directoryId: number) => ({
       queryKey: [directoryId],
-      queryFn: () => REQUEST.directory.fetchDirectory(directoryId),
+      queryFn: () => REQUEST.directory.getDirectory(directoryId),
       enabled: !!directoryId,
     }),
   },

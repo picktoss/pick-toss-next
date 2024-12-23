@@ -11,7 +11,9 @@ import { useToast } from '@/shared/hooks/use-toast'
 export const useBombQuiz = (key: Date) => {
   const router = useRouter()
   const { toast } = useToast()
+
   const [openExplanation, setOpenExplanation] = useState(false)
+  const [openFinished, setOpenFinished] = useState(false)
 
   const [shouldFetchInitial, setShouldFetchInitial] = useState(true)
   const [bombQuizList, setBombQuizList] = useState<Quiz.Item[]>([])
@@ -143,6 +145,7 @@ export const useBombQuiz = (key: Date) => {
               window.location.replace('/quiz/bomb')
             } else {
               setBombQuizList([])
+              setOpenFinished(true)
             }
           }
         },
@@ -171,6 +174,8 @@ export const useBombQuiz = (key: Date) => {
 
     openExplanation,
     setOpenExplanation,
+    openFinished,
+    setOpenFinished,
 
     bombQuizList,
 
