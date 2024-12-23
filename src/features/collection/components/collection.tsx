@@ -66,6 +66,7 @@ const Collection = ({
                 name="book-mark"
                 className="size-[24px] cursor-pointer"
                 onClick={(e) => {
+                  e.preventDefault()
                   e.stopPropagation()
                   bookmarkMutate({ collectionId, isBookMarked: false })
                 }}

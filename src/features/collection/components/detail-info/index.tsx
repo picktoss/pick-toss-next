@@ -1,10 +1,11 @@
 'use client'
 
 import QuizCard from '@/features/quiz/components/quiz-card'
-import { useCollectionInfo } from '@/requests/collection/hooks'
+import { useBookmarkMutation, useCollectionInfo } from '@/requests/collection/hooks'
 import { useCollectionQuizzesInfo } from '@/requests/quiz/hooks'
 import CategoryTag from '@/shared/components/custom/category-tag'
 import FixedBottom from '@/shared/components/custom/fixed-bottom'
+import Icon from '@/shared/components/custom/icon'
 import Loading from '@/shared/components/custom/loading'
 import { Button } from '@/shared/components/ui/button'
 import Text from '@/shared/components/ui/text'
@@ -23,6 +24,7 @@ const DetailInfo = ({ id }: Props) => {
   const { user } = useUser()
   const { data: collectionData } = useCollectionInfo(id)
   const { mutate: createQuizSetMutate } = useCollectionQuizzesInfo()
+  const { mutate: bookmarkMutate } = useBookmarkMutation()
 
   const quizCounts = useMemo(() => {
     if (!collectionData?.quizzes) return { multiple: 0, ox: 0 }
@@ -61,6 +63,8 @@ const DetailInfo = ({ id }: Props) => {
   /** TODO: Spinner로 대체 */
   if (!collectionData) return <Loading center size="xs" />
 
+  const isOwner = user?.id === collectionData.member.creatorId
+
   return (
     <>
       <div>
@@ -76,9 +80,38 @@ const DetailInfo = ({ id }: Props) => {
         <div className="h-px w-full bg-border-divider" />
         <div className="p-[24px_16px_64px_16px]">
           <div>
-            <Text typography="subtitle1-bold" className="text-text-primary">
-              {quizCounts.multiple + quizCounts.ox} 문제
-            </Text>
+            <div className="flex items-center justify-between">
+              <Text typography="subtitle1-bold" className="text-text-primary">
+                {quizCounts.multiple + quizCounts.ox} 문제
+              </Text>
+              <div className="flex flex-col items-center gap-[4px]">
+                {isOwner && (
+                  <Icon name="book-mark-fill" className="size-[24px] text-icon-disabled" />
+                )}
+                {!isOwner &&
+                  (collectionData.bookmarked ? (
+                    <Icon
+                      name="book-mark-fill"
+                      className="size-[24px] cursor-pointer"
+                      onClick={() => {
+                        bookmarkMutate({ collectionId: collectionData.id, isBookMarked: true })
+                      }}
+                    />
+                  ) : (
+                    <Icon
+                      name="book-mark"
+                      className="size-[24px] cursor-pointer"
+                      onClick={() => {
+                        bookmarkMutate({ collectionId: collectionData.id, isBookMarked: false })
+                      }}
+                    />
+                  ))}
+                <Text typography="text2-medium" className="text-text-caption">
+                  {collectionData.bookmarkCount}
+                </Text>
+              </div>
+            </div>
+
             <div className="mt-[8px] flex items-center gap-[8px]">
               <Text typography="text1-medium" className="text-text-sub">
                 객관식 {quizCounts.multiple}

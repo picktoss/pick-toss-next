@@ -84,80 +84,133 @@ export const useBookmarkMutation = () => {
       await Promise.all([
         queryClient.cancelQueries({ queryKey: ['collections'] }),
         queryClient.cancelQueries({ queryKey: ['bookmarkedCollections'] }),
+        queryClient.cancelQueries({ queryKey: ['collectionInfo', collectionId] }),
       ])
 
-      // 이전 데이터 스냅샷 저장
-      const previousCollections = queryClient.getQueryData<Collection.Response.GetAllCollections>([
-        'collections',
-      ])
+      const collectionsQueries = queryClient.getQueriesData<Collection.Response.GetAllCollections>({
+        queryKey: ['collections'],
+      })
+
+      const previousDataMap = new Map()
+
+      // 모든 collections 쿼리에 대해 낙관적 업데이트 수행
+      collectionsQueries.forEach(([queryKey, data]) => {
+        if (data?.collections) {
+          // 이전 데이터 저장
+          previousDataMap.set(queryKey, data)
+
+          // 낙관적 업데이트
+          queryClient.setQueryData(queryKey, {
+            ...data,
+            collections: data.collections.map((collection) => {
+              if (collection.id === collectionId) {
+                return {
+                  ...collection,
+                  bookmarked: !isBookMarked,
+                  bookmarkCount: isBookMarked
+                    ? collection.bookmarkCount - 1
+                    : collection.bookmarkCount + 1,
+                }
+              }
+              return collection
+            }),
+          })
+        }
+      })
+
+      // 북마크된 컬렉션 데이터 처리
       const previousBookmarkedCollections =
         queryClient.getQueryData<Collection.Response.GetBookmarkedCollections>([
           'bookmarkedCollections',
         ])
 
-      // 전체 컬렉션 데이터 낙관적 업데이트
-      queryClient.setQueryData(['collections'], (old: Collection.Response.GetAllCollections) => {
-        const newCollections = {
-          ...old,
-          collections: old.collections.map((collection) => {
-            if (collection.id === collectionId) {
-              return {
-                ...collection,
-                isBookmarked: !collection.bookmarked,
-                bookmarkCount: isBookMarked
-                  ? collection.bookmarkCount - 1
-                  : collection.bookmarkCount + 1,
-              }
+      if (previousBookmarkedCollections?.collections) {
+        if (isBookMarked) {
+          // 북마크 제거 시
+          queryClient.setQueryData<Collection.Response.GetBookmarkedCollections>(
+            ['bookmarkedCollections'],
+            {
+              ...previousBookmarkedCollections,
+              collections: previousBookmarkedCollections.collections.filter(
+                (collection) => collection.id !== collectionId
+              ),
             }
-            return collection
-          }),
-        }
-        return newCollections
-      })
+          )
+        } else {
+          // 북마크 추가 시
+          // 가장 최신의 collection 데이터를 찾기 위해 모든 collections 쿼리를 확인
+          let collectionToAdd = null
+          for (const [, data] of collectionsQueries) {
+            const found = data?.collections.find((collection) => collection.id === collectionId)
+            if (found) {
+              collectionToAdd = found
+              break
+            }
+          }
 
-      // 북마크된 컬렉션 데이터 낙관적 업데이트
-      queryClient.setQueryData(
-        ['bookmarkedCollections'],
-        (old: Collection.Response.GetBookmarkedCollections) => {
-          if (isBookMarked) {
-            // 북마크 제거 시 해당 컬렉션을 목록에서 제거
-            return {
-              ...old,
-              collections: old.collections.filter((collection) => collection.id !== collectionId),
-            }
-          } else {
-            // 북마크 추가 시 해당 컬렉션을 목록에 추가
-            // collections 쿼리에서 해당 컬렉션 정보를 가져옴
-            const collectionsData = queryClient.getQueryData<Collection.Response.GetAllCollections>(
-              ['collections']
-            )
-            const collectionToAdd = collectionsData?.collections.find(
-              (collection) => collection.id === collectionId
-            )
-
-            if (collectionToAdd) {
-              return {
-                ...old,
-                collections: [...old.collections, collectionToAdd],
+          if (collectionToAdd) {
+            queryClient.setQueryData<Collection.Response.GetBookmarkedCollections>(
+              ['bookmarkedCollections'],
+              {
+                ...previousBookmarkedCollections,
+                collections: [
+                  ...previousBookmarkedCollections.collections,
+                  {
+                    ...collectionToAdd,
+                    bookmarked: true,
+                    bookmarkCount: collectionToAdd.bookmarkCount + 1,
+                  },
+                ],
               }
-            }
-            return old
+            )
           }
         }
-      )
+      }
 
-      return { previousCollections, previousBookmarkedCollections }
+      // 컬렉션 상세 낙관적 업데이트
+      const previousCollectionInfo =
+        queryClient.getQueryData<Collection.Response.GetCollectionInfo>([
+          'collectionInfo',
+          collectionId,
+        ])
+
+      if (previousCollectionInfo) {
+        queryClient.setQueryData<Collection.Response.GetCollectionInfo>(
+          ['collectionInfo', collectionId],
+          {
+            ...previousCollectionInfo,
+            bookmarked: !isBookMarked,
+            bookmarkCount: isBookMarked
+              ? previousCollectionInfo.bookmarkCount - 1
+              : previousCollectionInfo.bookmarkCount + 1,
+          }
+        )
+      }
+
+      return { previousDataMap, previousBookmarkedCollections, previousCollectionInfo }
     },
-    onError: (err, variables, context) => {
+    onError: (_, __, context) => {
       // 에러 발생 시 이전 데이터로 복구
-      queryClient.setQueryData(['collections'], context?.previousCollections)
-      queryClient.setQueryData(['bookmarkedCollections'], context?.previousBookmarkedCollections)
+      if (context?.previousDataMap) {
+        context.previousDataMap.forEach((data, queryKey) => {
+          queryClient.setQueryData(queryKey, data)
+        })
+      }
+      if (context?.previousBookmarkedCollections) {
+        queryClient.setQueryData(['bookmarkedCollections'], context.previousBookmarkedCollections)
+      }
+      if (context?.previousCollectionInfo) {
+        queryClient.setQueryData(
+          ['collectionInfo', context.previousCollectionInfo.id],
+          context.previousCollectionInfo
+        )
+      }
     },
     onSettled: async () => {
-      // 작업 완료 후 캐시 무효화
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: ['collections'] }),
         queryClient.invalidateQueries({ queryKey: ['bookmarkedCollections'] }),
+        queryClient.invalidateQueries({ queryKey: ['collectionInfo'] }),
       ])
     },
   })
