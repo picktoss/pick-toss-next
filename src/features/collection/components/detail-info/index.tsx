@@ -130,6 +130,16 @@ const DetailInfo = ({ id }: Props) => {
 
       {isMine && (
         <div className="flex-1 bg-background-base-02 px-[16px] py-[24px]">
+          <div className="mb-5 mt-2">
+            <Text typography="title3">
+              <span className="text-text-accent">{collectionData.solvedMemberCount}</span>명이 이
+              컬렉션을 풀었어요
+            </Text>
+            <Text typography="text1-medium" color="sub" className="mt-2">
+              문제별 평균 정답률을 확인해보세요
+            </Text>
+          </div>
+
           <div className="flex flex-col gap-[12px]">
             {collectionData.quizzes.map((quiz) => (
               <QuizCard
