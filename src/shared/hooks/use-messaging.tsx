@@ -6,6 +6,7 @@ import { initializeFirebaseMessaging } from '../../../firebase'
 import { useSession } from 'next-auth/react'
 import { usePostFcmToken } from '@/requests/fcm/hooks'
 import { getFCMToken } from '@/firebase/messaging/get-token'
+import { isAppLaunched } from '../utils/pwa'
 
 export const useMessaging = () => {
   const { data: session } = useSession()
@@ -24,7 +25,7 @@ export const useMessaging = () => {
             // 토큰 가져오기
             const token = await getFCMToken()
 
-            if (token) {
+            if (token && isAppLaunched()) {
               postFcmTokenMutate(token)
             }
           }
