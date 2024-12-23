@@ -10,6 +10,7 @@ import BombQuiz from '../../components/bomb-quiz'
 import BombAnimation from '../../components/bomb-animation'
 import WrongAnswerDialog from '../../components/wrong-answer-dialog'
 import { getAnswerText } from '../../utils'
+import FinishedBombDialog from '../../components/finished-bomb-dialog'
 
 const BombQuizView = () => {
   const [key] = useState(new Date())
@@ -20,6 +21,8 @@ const BombQuizView = () => {
 
     openExplanation,
     setOpenExplanation,
+    openFinished,
+    setOpenFinished,
 
     bombQuizList,
 
@@ -50,6 +53,8 @@ const BombQuizView = () => {
 
           <div className="flex-center size-full grow"></div>
         </div>
+
+        <FinishedBombDialog open={openFinished} onOpenChange={setOpenFinished} />
       </div>
     )
   }
