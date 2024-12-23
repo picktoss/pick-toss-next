@@ -149,18 +149,6 @@ const handlePdfFile = async (file: File): Promise<string> => {
           }
         }
 
-        // 띄어쓰기 처리
-        // 기호가 아닌 경우에만 띄어쓰기 추가
-        if (!isSymbol) {
-          // 현재 라인이 비어있지 않고, 마지막 문자가 띄어쓰기가 아닌 경우에만 띄어쓰기 추가
-          if (currentLine && !currentLine.endsWith(' ')) {
-            currentLine += ' '
-          }
-          currentLine += text
-        } else {
-          currentLine += text
-        }
-
         previousY = y
       })
 

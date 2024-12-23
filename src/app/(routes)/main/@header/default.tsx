@@ -15,10 +15,12 @@ const Header = () => {
       <Icon name="logo" className="h-[36px]" />
 
       <div className="flex-center gap-[16px]">
-        <Text typography="subtitle2-bold" color="secondary" className="flex-center">
-          <Icon name="star" className="mr-[4px] size-[20px]" />
-          {user?.star}
-        </Text>
+        <Link href={'/payment'}>
+          <Text typography="subtitle2-bold" color="secondary" className="flex-center">
+            <Icon name="star" className="mr-[4px] size-[20px]" />
+            {user?.star}
+          </Text>
+        </Link>
         <Link href={'/search'}>
           <Icon name="search" className="size-[24px]" />
         </Link>
