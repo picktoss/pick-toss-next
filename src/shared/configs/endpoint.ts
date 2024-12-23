@@ -1,3 +1,5 @@
+import QS from 'query-string'
+
 export const API_ENDPOINTS = {
   AUTH: {
     /** GET /oauth/url - Oauth url api */
@@ -21,7 +23,26 @@ export const API_ENDPOINTS = {
   COLLECTION: {
     GET: {
       /** GET /collections - 모든 컬렉션 가져오기(탐색) */
-      ALL: '/collections',
+      ALL: (props?: {
+        collectionSortOption: 'POPULARITY' | 'UPDATED'
+        collectionCategories: Collection.Field[]
+        quizType?: 'MIX_UP' | 'MULTIPLE_CHOICE' | ''
+        quizCount: number
+      }) => {
+        const query = props
+          ? QS.stringify({
+              'collection-sort-option': props.collectionSortOption,
+              'collection-category':
+                props.collectionCategories.length > 0
+                  ? props.collectionCategories.join(',')
+                  : undefined,
+              'quiz-type': props.quizType,
+              'quiz-count': props.quizCount,
+            })
+          : ''
+
+        return `/collections${query ? `?${query}` : ''}`
+      },
       /** GET /collections/{keyword} - 컬렉션 검색하기 */
       BY_KEYWORD: (keyword: string) => `/collections/${keyword}`,
       /** GET /collections/{collection_id}/collection_info - 만든 컬렉션 상세 정보 가져오기 */
