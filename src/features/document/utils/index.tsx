@@ -101,7 +101,15 @@ const Y_COORDINATE_THRESHOLD = 20
 // pdf 핸들러
 const handlePdfFile = async (file: File): Promise<string> => {
   const fileBuffer = await file.arrayBuffer()
-  const pdf = await pdfjs.getDocument({ data: fileBuffer }).promise
+
+  // CMap 설정 추가
+  const loadingTask = pdfjs.getDocument({
+    data: fileBuffer,
+    cMapUrl: '/cmaps/', // public 폴더 내의 cmaps 경로
+    cMapPacked: true,
+  })
+
+  const pdf = await loadingTask.promise
   let markdown = ''
 
   for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
