@@ -17,6 +17,7 @@ import Text from '@/shared/components/ui/text'
 import { useState } from 'react'
 import { DEFAULT_COLLECTION_QUIZ_COUNT } from '../config'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { cn } from '@/shared/lib/utils'
 
 interface Props {
   count: number
@@ -28,14 +29,22 @@ const SelectMinQuizCountDrawer = ({ count }: Props) => {
   const router = useRouter()
   const pathname = usePathname()
 
+  const isDefaultCount = innerCount === DEFAULT_COLLECTION_QUIZ_COUNT
+
   return (
     <Drawer>
       <DrawerTrigger asChild>
-        <button className="flex items-center gap-[4px] rounded-full border bg-button-fill-outlined py-[7.5px] pl-[14px] pr-[10px]">
-          <Text typography="button4" className="text-button-label-tertiary">
-            문제 수
-          </Text>
-          <Icon name="chevron-down" className="size-[12px] text-icon-tertiary" />
+        <button
+          className={cn(
+            'h-[32px] flex items-center gap-[4px] rounded-full border bg-button-fill-outlined pl-[14px] pr-[10px] text-button-label-tertiary',
+            !isDefaultCount && 'border-button-fill-primary text-text-accent'
+          )}
+        >
+          <Text typography="button4">{isDefaultCount ? '문제 수' : `${innerCount}문제`}</Text>
+          <Icon
+            name="chevron-down"
+            className={cn('size-[12px] text-icon-tertiary', !isDefaultCount && 'text-text-accent')}
+          />
         </button>
       </DrawerTrigger>
       <DrawerContent className="mx-auto h-[60vh] max-w-mobile px-4">
