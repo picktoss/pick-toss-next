@@ -12,18 +12,19 @@ import { useScrollPosition } from '@/shared/hooks/use-scroll-position'
 import SelectMinQuizCountDrawer from './select-min-quiz-count-drawer'
 import { useSearchParams } from 'next/navigation'
 import { DEFAULT_COLLECTION_QUIZ_COUNT } from '../config'
+import SelectQuizTypeDrawer from './select-quiz-type-drawer'
 
-const controlButtons = ['분야', '퀴즈 유형']
+const controlButtons = ['분야']
 
 const Exploration = () => {
   const searchParams = useSearchParams()
-  const quizType = searchParams.get('quizType')
+  const quizType = searchParams.get('quiz-type') as Quiz.Type
   const minQuizCount = Number(searchParams.get('min-quiz-count')) || DEFAULT_COLLECTION_QUIZ_COUNT
 
   const { data: collectionsData, isLoading } = useCollections({
     collectionSortOption: 'POPULARITY',
     collectionCategory: undefined,
-    quizType: undefined,
+    quizType,
     quizCount: minQuizCount,
   })
   const { user } = useUser()
@@ -45,6 +46,7 @@ const Exploration = () => {
               <Icon name="chevron-down" className="size-[12px] text-icon-tertiary" />
             </button>
           ))}
+          <SelectQuizTypeDrawer quizType={quizType} />
           <SelectMinQuizCountDrawer count={minQuizCount} />
         </div>
         <Icon name="sort" className="size-[16px]" />
