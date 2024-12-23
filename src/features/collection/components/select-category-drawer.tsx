@@ -45,7 +45,7 @@ const SelectCategoryDrawer = ({ categories }: Props) => {
           )}
         >
           <Text typography="button4">
-            {innerCategories.length < 1
+            {innerCategories.length === 0
               ? '분야'
               : `${CATEGORIES.find((category) => category.id === innerCategories[0])?.name}${
                   innerCategories.length > 1 ? ` 외 ${innerCategories.length - 1}` : ''
