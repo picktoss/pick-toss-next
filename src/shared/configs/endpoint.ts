@@ -25,14 +25,17 @@ export const API_ENDPOINTS = {
       /** GET /collections - 모든 컬렉션 가져오기(탐색) */
       ALL: (props?: {
         collectionSortOption: 'POPULARITY' | 'UPDATED'
-        collectionCategory?: Collection.Field | ''
+        collectionCategories: Collection.Field[]
         quizType?: 'MIX_UP' | 'MULTIPLE_CHOICE' | ''
         quizCount: number
       }) => {
         const query = props
           ? QS.stringify({
               'collection-sort-option': props.collectionSortOption,
-              'collection-category': props.collectionCategory,
+              'collection-category':
+                props.collectionCategories.length > 0
+                  ? props.collectionCategories.join(',')
+                  : undefined,
               'quiz-type': props.quizType,
               'quiz-count': props.quizCount,
             })

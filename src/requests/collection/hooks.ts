@@ -13,7 +13,7 @@ import {
 
 export const useCollections = (props?: {
   collectionSortOption: 'POPULARITY' | 'UPDATED'
-  collectionCategory?: Collection.Field
+  collectionCategories: Collection.Field[]
   quizType?: 'MIX_UP' | 'MULTIPLE_CHOICE'
   quizCount: number
 }) => {

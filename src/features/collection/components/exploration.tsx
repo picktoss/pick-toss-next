@@ -3,7 +3,6 @@
 import Icon from '@/shared/components/custom/icon'
 import Collection from './collection'
 import CollectionList from './collection-list'
-import Text from '@/shared/components/ui/text'
 import { useCollections } from '@/requests/collection/hooks'
 import Loading from '@/shared/components/custom/loading'
 import { useUser } from '@/shared/hooks/use-user'
@@ -13,17 +12,17 @@ import SelectMinQuizCountDrawer from './select-min-quiz-count-drawer'
 import { useSearchParams } from 'next/navigation'
 import { DEFAULT_COLLECTION_QUIZ_COUNT } from '../config'
 import SelectQuizTypeDrawer from './select-quiz-type-drawer'
-
-const controlButtons = ['분야']
+import SelectCategoryDrawer from './select-category-drawer'
 
 const Exploration = () => {
   const searchParams = useSearchParams()
+  const categories = searchParams.getAll('collection-category') as Collection.Field[]
   const quizType = searchParams.get('quiz-type') as Quiz.Type
   const minQuizCount = Number(searchParams.get('min-quiz-count')) || DEFAULT_COLLECTION_QUIZ_COUNT
 
   const { data: collectionsData, isLoading } = useCollections({
     collectionSortOption: 'POPULARITY',
-    collectionCategory: undefined,
+    collectionCategories: categories,
     quizType,
     quizCount: minQuizCount,
   })
@@ -35,17 +34,7 @@ const Exploration = () => {
     <>
       <div className="flex h-[60px] items-center justify-between px-[16px]">
         <div className="flex gap-[8px]">
-          {controlButtons.map((button) => (
-            <button
-              key={button}
-              className="flex items-center gap-[4px] rounded-full border bg-button-fill-outlined py-[7.5px] pl-[14px] pr-[10px]"
-            >
-              <Text typography="button4" className="text-button-label-tertiary">
-                {button}
-              </Text>
-              <Icon name="chevron-down" className="size-[12px] text-icon-tertiary" />
-            </button>
-          ))}
+          <SelectCategoryDrawer categories={categories} />
           <SelectQuizTypeDrawer quizType={quizType} />
           <SelectMinQuizCountDrawer count={minQuizCount} />
         </div>

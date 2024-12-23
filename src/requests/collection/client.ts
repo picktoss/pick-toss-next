@@ -5,7 +5,7 @@ import { http } from '@/shared/lib/axios/http'
 
 export const getAllCollections = async (props?: {
   collectionSortOption: 'POPULARITY' | 'UPDATED'
-  collectionCategory?: Collection.Field
+  collectionCategories: Collection.Field[]
   quizType?: 'MIX_UP' | 'MULTIPLE_CHOICE'
   quizCount: number
 }) => {
