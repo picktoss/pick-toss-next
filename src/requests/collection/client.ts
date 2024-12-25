@@ -91,3 +91,25 @@ export const getRandomCollectionQuizzes = async ({ categoryId }: { categoryId: s
     throw error
   }
 }
+
+export const deleteCollection = async (collectionId: number) => {
+  try {
+    await http.delete(API_ENDPOINTS.COLLECTION.DELETE.COLLECTION(collectionId))
+  } catch (error) {
+    throw error
+  }
+}
+
+export const updateCollectionInfo = async ({
+  collectionId,
+  payload,
+}: {
+  collectionId: number
+  payload: Collection.Request.UpdateInfo
+}) => {
+  try {
+    await http.patch(API_ENDPOINTS.COLLECTION.PATCH.UPDATE_INFO(collectionId), payload)
+  } catch (error) {
+    throw error
+  }
+}
