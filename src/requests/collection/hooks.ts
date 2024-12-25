@@ -9,6 +9,8 @@ import {
   getMyCollections,
   getCollectionInfo,
   getRandomCollectionQuizzes,
+  deleteCollection,
+  updateCollectionInfo,
 } from './client'
 
 export const useCollections = (props?: {
@@ -210,6 +212,36 @@ export const useBookmarkMutation = () => {
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: ['collections'] }),
         queryClient.invalidateQueries({ queryKey: ['bookmarkedCollections'] }),
+        queryClient.invalidateQueries({ queryKey: ['collectionInfo'] }),
+      ])
+    },
+  })
+}
+
+export const useDeleteCollection = () => {
+  const queryClient = getQueryClient()
+
+  return useMutation({
+    mutationFn: deleteCollection,
+    onSettled: async () => {
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ['collections'] }),
+        queryClient.invalidateQueries({ queryKey: ['myCollections'] }),
+        queryClient.invalidateQueries({ queryKey: ['collectionInfo'] }),
+      ])
+    },
+  })
+}
+
+export const useUpdateCollectionInfo = () => {
+  const queryClient = getQueryClient()
+
+  return useMutation({
+    mutationFn: updateCollectionInfo,
+    onSuccess: async () => {
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ['collections'] }),
+        queryClient.invalidateQueries({ queryKey: ['myCollections'] }),
         queryClient.invalidateQueries({ queryKey: ['collectionInfo'] }),
       ])
     },
