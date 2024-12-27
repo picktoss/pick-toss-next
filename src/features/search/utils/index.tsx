@@ -10,12 +10,12 @@ import { marked } from 'marked'
 export function highlightAndTrimText(text: string, keyword: string): JSX.Element | string {
   if (!text) return text
 
-  const totalLength = 70
+  const totalLength = 80
   const regex = new RegExp(`(${keyword})`, 'gi')
   const match = text.match(regex)
 
   if (!keyword || !match) {
-    // 키워드가 없으면 텍스트를 70자로 자르기
+    // 키워드가 없으면 텍스트를 80자로 자르기
     const trimmedText = text.length > totalLength ? text.slice(0, totalLength) + '...' : text
     return trimmedText
   }
