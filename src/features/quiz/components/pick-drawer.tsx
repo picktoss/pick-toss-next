@@ -56,7 +56,7 @@ const PickDrawer = ({ documentId }: { documentId: number }) => {
                         header={
                           <div className="flex items-center justify-between text-icon-tertiary">
                             <Tag colors="tertiary">{quiz.description}</Tag>
-                            <QuizCardMenu quizId={quiz.id} />
+                            <QuizCardMenu documentId={documentId} quizId={quiz.id} />
                           </div>
                         }
                         quiz={quiz}

@@ -60,7 +60,7 @@ const Quiz = () => {
                 <Text typography="title3" className="text-text-accent">
                   Q.
                 </Text>
-                <QuizCardMenu quizId={quiz.id} />
+                <QuizCardMenu documentId={Number(id)} quizId={quiz.id} />
               </div>
             }
             key={quiz.id}

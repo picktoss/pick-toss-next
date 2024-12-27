@@ -6,11 +6,22 @@ import { MouseEvent, useState } from 'react'
 import NoCollectionDialog from '../../collection/components/no-collection-dialog'
 import AddCollectionDrawer from '@/features/collection/components/add-collection-drawer'
 import ConfirmDialogWidget from '@/widget/confirm-dialog'
+import { useMyCollections } from '@/requests/collection/hooks'
+import { useDeleteQuiz } from '@/requests/quiz/hooks'
+
+interface Props {
+  documentId: number
+  quizId: number
+}
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const QuizCardMenu = ({ quizId }: { quizId: number }) => {
+const QuizCardMenu = ({ documentId, quizId }: Props) => {
   const [isAddCollectionOpen, setIsAddCollectionOpen] = useState(false)
   const [isOpenNoCollection, setIsOpenNoCollection] = useState(false)
+
+  const { data } = useMyCollections()
+  const userCollections = data?.collections
+  const { mutate: deleteQuizMutate } = useDeleteQuiz({ documentId: Number(documentId) })
 
   const handleClickBookmark = (e: MouseEvent) => {
     e.preventDefault()
@@ -22,9 +33,14 @@ const QuizCardMenu = ({ quizId }: { quizId: number }) => {
   }
 
   const checkExistCollection = () => {
-    // 임시
-    const isExistCollection = false
-    return isExistCollection
+    if (userCollections && userCollections.length > 0) {
+      return true
+    }
+    return false
+  }
+
+  const handleDeleteQuiz = () => {
+    deleteQuizMutate(quizId)
   }
 
   return (
@@ -49,7 +65,7 @@ const QuizCardMenu = ({ quizId }: { quizId: number }) => {
           </Text>
         }
         confirmButton={
-          <button onClick={() => {}} className="ml-[21px] p-[4px]">
+          <button onClick={handleDeleteQuiz} className="ml-[21px] p-[4px]">
             <Text color="critical">문제 삭제</Text>
           </button>
         }

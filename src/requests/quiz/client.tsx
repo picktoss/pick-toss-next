@@ -181,3 +181,13 @@ export const getTodayQuizInfo = async () => {
     throw error
   }
 }
+
+export const deleteQuiz = async (quizId: number) => {
+  try {
+    const response = await http.delete(API_ENDPOINTS.QUIZ.DELETE.QUIZ(quizId))
+    // eslint-disable-next-line no-console
+    console.log(response)
+  } catch (error: unknown) {
+    throw error
+  }
+}

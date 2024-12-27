@@ -5,10 +5,13 @@ import {
   collectionQuizzesInfo,
   createQuizSetForCheck,
   createReplayDocumentQuizSet,
+  deleteQuiz,
   getDirectoryQuizzes,
   updateQuizResult,
   updateWrongQuizResult,
 } from './client'
+import { getQueryClient } from '@/shared/lib/tanstack-query/client'
+import { queries } from '@/shared/lib/tanstack-query/query-keys'
 
 // 아직 사용처 없음 - 검토 필요
 // export const useTodayQuizSetId = () => {
@@ -57,5 +60,17 @@ export const useUpdateWrongQuizResult = () => {
 export const useCollectionQuizzesInfo = () => {
   return useMutation({
     mutationFn: collectionQuizzesInfo,
+  })
+}
+
+export const useDeleteQuiz = (params: { documentId: number; quizType?: Quiz.Type }) => {
+  const queryClient = getQueryClient()
+
+  return useMutation({
+    mutationFn: async (quizId: number) => deleteQuiz(quizId),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(queries.quiz.listByDocument(params))
+      await queryClient.invalidateQueries(queries.document.item(params.documentId))
+    },
   })
 }
