@@ -15,8 +15,11 @@ const ProfilePage = async () => {
   const user = await getUserInfo()
   const session = await auth()
 
-  /** swagger 타입 이슈로 DeepRequired 적용되어있기 때문에 optional 체이닝이 들어감 */
-  const noInterests = !user.interestCategories?.length || []
+  /** swagger 타입 이슈로 DeepRequired 적용되어있기 때문에 optional 체이닝이 들어감
+   * => noInterests가 무조건 true가 되어 한 번 리스트의 초기값을 설정해주는 방식으로 변경했습니다
+   */
+  const interestCategories = user.interestCategories ?? []
+  const noInterests = interestCategories.length === 0
 
   const maxPossessDocumentCount = user.documentUsage.maxPossessDocumentCount
   const possessDocumentCount = user.documentUsage.possessDocumentCount
