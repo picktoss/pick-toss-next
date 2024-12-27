@@ -12,7 +12,6 @@ import Text from '@/shared/components/ui/text'
 import { cn } from '@/shared/lib/utils'
 import Link from 'next/link'
 import { useParams, useRouter } from 'next/navigation'
-import usePreviousPath from '@/shared/hooks/use-previous-path'
 import GoBackButton from '@/shared/components/custom/go-back-button'
 import { getRelativeTime } from '@/shared/utils/date'
 import { useQuery } from '@tanstack/react-query'
@@ -31,7 +30,6 @@ const Header = () => {
   const [isTitleHidden, setIsTitleHidden] = useState(false)
   const titleRef = useRef<HTMLHeadingElement | null>(null)
 
-  const { getPreviousPath } = usePreviousPath({ getCustomPath: true })
   const { data } = useQuery(queries.document.item(Number(id)))
   const { mutate: deleteDocumentMutation } = useDeleteDocument()
 
@@ -57,11 +55,6 @@ const Header = () => {
     }
   }, [])
 
-  const handleClickCancel = () => {
-    const previousPath = getPreviousPath()
-    previousPath ? router.replace(previousPath) : router.replace('/')
-  }
-
   const handleClickDownload = (menuItemKey: string) => {
     if (menuItemKey === 'download') {
       alert('clicked ' + menuItemKey)
@@ -70,7 +63,7 @@ const Header = () => {
 
   const handleClickDelete = () => {
     deleteDocumentMutation([Number(id)], {
-      onSuccess: () => router.push('/document'),
+      onSuccess: () => router.replace('/document'),
     })
   }
   return (
@@ -83,7 +76,7 @@ const Header = () => {
         >
           <div className="flex size-full items-center justify-between">
             <div className="flex items-center">
-              <GoBackButton icon="cancel" onClick={handleClickCancel} />
+              <GoBackButton icon="cancel" />
               {isTitleHidden && (
                 <Text as="h2" typography="text1-medium" className="ml-[16px]">
                   {data?.documentName}

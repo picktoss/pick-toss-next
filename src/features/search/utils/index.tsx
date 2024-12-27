@@ -2,7 +2,7 @@
 
 import Text from '@/shared/components/ui/text'
 import React from 'react'
-import { marked } from 'marked'
+import { extractPlainText } from '@/features/document/utils'
 
 /**
  * 텍스트에서 키워드를 강조하는 함수
@@ -54,16 +54,6 @@ export function highlightAndTrimText(text: string, keyword: string): JSX.Element
       {suffix}
     </>
   )
-}
-
-export function extractPlainText(markdownText: string): string {
-  // 마크다운 -> HTML 변환
-  const html = marked(markdownText, { headerIds: false, mangle: false })
-
-  // HTML -> 텍스트 추출
-  const div = document.createElement('div')
-  div.innerHTML = html
-  return div.textContent || ''
 }
 
 /** 마크다운 텍스트를 받아

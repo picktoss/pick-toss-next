@@ -1,7 +1,19 @@
+import { marked } from 'marked'
 import * as pdfjs from 'pdfjs-dist'
 import '@/shared/utils/pdf'
 import { TextItem, TextMarkedContent } from 'pdfjs-dist/types/src/display/api'
 import mammoth from 'mammoth'
+
+/** markdown string을 받아 markdown 문법을 제거해 텍스트만 반환하는 함수 */
+export function extractPlainText(markdownText: string): string {
+  // 마크다운 -> HTML 변환
+  const html = marked(markdownText, { headerIds: false, mangle: false })
+
+  // HTML -> 텍스트 추출
+  const div = document.createElement('div')
+  div.innerHTML = html
+  return div.textContent || ''
+}
 
 // 1000자 당, 2문제 생성을 가정
 export const QUESTIONS_PER_THOUSAND = 2
@@ -10,10 +22,6 @@ export const calculateAvailableQuizCount = (charCount: number) => {
   // 문제 수 계산
   const quizCount = Math.floor((charCount / 1000) * QUESTIONS_PER_THOUSAND)
   return quizCount
-}
-
-function isTextItem(item: TextItem | TextMarkedContent): item is TextItem {
-  return 'str' in item && 'transform' in item
 }
 
 export const formatFileSize = (size: number) => {
@@ -48,6 +56,10 @@ export const isValidFileType = (file: File): boolean => {
   return Object.values(SUPPORTED_FILE_TYPES).some(
     (type) => type.mime === file.type || type.extension === fileExtension
   )
+}
+
+function isTextItem(item: TextItem | TextMarkedContent): item is TextItem {
+  return 'str' in item && 'transform' in item
 }
 
 /** 입력받은 file(pdf, docx, txt)을 markdown으로 변환해 반환하는 함수 */

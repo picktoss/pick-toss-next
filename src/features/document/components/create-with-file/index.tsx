@@ -7,11 +7,11 @@ import Text from '@/shared/components/ui/text'
 import { useEffect, useMemo, useState } from 'react'
 import {
   calculateAvailableQuizCount,
+  extractPlainText,
   formatFileSize,
   generateMarkdownFromFile,
   isValidFileType,
 } from '../../utils'
-import { extractPlainText } from '@/features/search/utils'
 import Editor from '@/features/write/components/editor'
 import { useDirectoryContext } from '@/features/directory/contexts/directory-context'
 import { useCreateDocument } from '@/requests/document/hooks'

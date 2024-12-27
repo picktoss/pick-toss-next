@@ -11,12 +11,8 @@ import Tag from '@/shared/components/ui/tag'
 import { useRouter } from 'next/navigation'
 import MoveDocumentDrawer from '@/features/document/components/move-document-drawer'
 import DeleteDocumentSwipeButton from '../delete-document-swipe-button'
-import usePreviousPath from '@/shared/hooks/use-previous-path'
 import { useDocumentContext } from '../../contexts/document-context'
-import { unified } from 'unified'
-import remarkParse from 'remark-parse'
-import remarkStringify from 'remark-stringify'
-import stripMarkdown from 'strip-markdown'
+import { extractPlainText } from '../../utils'
 
 interface DocumentProps {
   id: number
@@ -47,7 +43,6 @@ const SwipeableDocumentCard = ({
   const x = useMotionValue(0)
   const controls = useAnimation()
   const router = useRouter()
-  const { setPreviousPath } = usePreviousPath()
 
   const isChecked = checkDoc.isChecked(id)
 
@@ -68,28 +63,19 @@ const SwipeableDocumentCard = ({
     setIsDragging(false)
   }
 
-  const getTextRemoveMarkdownSyntax = (markdown: string): string => {
-    const result = unified()
-      .use(remarkParse) // 마크다운 파싱
-      .use(stripMarkdown) // 문법 제거
-      .use(remarkStringify)
-      .processSync(markdown) // 동기 처리
-
-    return String(result) // 결과 반환
+  const handleClickCard = () => {
+    if (isSelectMode) {
+      handleCheckedChange(!isChecked)
+      return
+    }
+    if (!isDragging && !isSwiped) {
+      router.push(`/document/${id}`)
+    }
   }
 
   return (
     <div
-      onClick={() => {
-        if (isSelectMode) {
-          handleCheckedChange(!isChecked)
-          return
-        }
-        if (!isDragging && !isSwiped) {
-          setPreviousPath('/document')
-          router.push(`/document/${id}`)
-        }
-      }}
+      onClick={handleClickCard}
       className={cn(
         `relative flex h-[104px] max-w-full items-center overflow-hidden rounded-[16px] bg-white px-[16px] pb-[20px] pt-[17px] shrink-0 cursor-pointer`,
         className
@@ -138,7 +124,7 @@ const SwipeableDocumentCard = ({
             typography="text1-regular"
             className="w-[calc(100%-55px)] truncate text-nowrap break-all text-text-sub"
           >
-            {getTextRemoveMarkdownSyntax(content)}
+            {extractPlainText(content)}
           </Text>
 
           <Text typography="text2-medium" className="flex w-fit items-center text-text-sub">
