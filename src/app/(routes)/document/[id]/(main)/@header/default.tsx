@@ -42,7 +42,7 @@ const Header = () => {
       },
       {
         root: null,
-        threshold: 0,
+        threshold: 0.5,
       }
     )
 
