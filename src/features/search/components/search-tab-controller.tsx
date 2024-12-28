@@ -3,7 +3,7 @@
 import Text from '@/shared/components/ui/text'
 import { cn } from '@/shared/lib/utils'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { SearchTab } from '../screen/integrated-search'
+import { SearchTab } from '../screens/integrated-search'
 
 const tabs = [
   { key: 'all', label: '전체' },

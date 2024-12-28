@@ -14,10 +14,12 @@ const Header = () => {
     <header className="flex h-[54px] w-full max-w-mobile items-center justify-between bg-background-base-01 px-[18px]">
       <Text typography="title2">{user?.name}님</Text>
       <div className="flex-center gap-[16px]">
-        <Text typography="subtitle2-bold" className="flex-center text-text-secondary">
-          <Icon name="star" className="mr-[4px] size-[20px]" />
-          {user?.star}
-        </Text>
+        <Link href={'/payment'}>
+          <Text typography="subtitle2-bold" className="flex-center text-text-secondary">
+            <Icon name="star" className="mr-[4px] size-[20px]" />
+            {user?.star}
+          </Text>
+        </Link>
         <Link href={'/notification'}>
           <Icon name="notification" className="size-[24px]" />
         </Link>

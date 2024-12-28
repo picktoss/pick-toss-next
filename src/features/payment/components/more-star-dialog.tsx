@@ -1,3 +1,5 @@
+'use client'
+
 import {
   Dialog,
   DialogClose,
@@ -13,9 +15,10 @@ import { useRouter } from 'next/navigation'
 interface Props {
   isOpen: boolean
   setIsOpen: (value: boolean) => void
+  onClickPayment?: () => void
 }
 
-const MoreStarDialog = ({ isOpen, setIsOpen }: Props) => {
+const MoreStarDialog = ({ isOpen, setIsOpen, onClickPayment }: Props) => {
   const router = useRouter()
 
   return (
@@ -46,9 +49,14 @@ const MoreStarDialog = ({ isOpen, setIsOpen }: Props) => {
           variant={'largeRound'}
           colors={'primary'}
           className="mb-[16px]"
-          onClick={() => router.push('/payment')}
+          onClick={
+            onClickPayment ??
+            (() => {
+              router.push('/payment')
+            })
+          }
         >
-          별 충전하기
+          별 무제한으로 이용하기
         </Button>
         <DialogClose className="text-button-text-tertiary">닫기</DialogClose>
       </DialogContent>

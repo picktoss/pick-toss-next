@@ -37,7 +37,7 @@ const CancelInquiryDialog = () => {
 
       <DialogContent
         displayCloseButton={false}
-        className="flex size-fit flex-col justify-center rounded-[20px] bg-background-base-01 p-[24px]"
+        className="flex size-fit min-w-[285px] flex-col justify-center rounded-[20px] bg-background-base-01 p-[24px]"
       >
         <DialogTitle className="mb-[16px] text-subtitle2-bold">문의를 취소할까요?</DialogTitle>
 

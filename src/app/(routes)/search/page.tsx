@@ -1,4 +1,4 @@
-import IntegratedSearch from '@/features/search/screen/integrated-search'
+import IntegratedSearch from '@/features/search/screens/integrated-search'
 
 const SearchPage = () => {
   return <IntegratedSearch />

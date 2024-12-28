@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import AvailableInviteView from '@/features/invite/screen/available-invite'
-import UnavailableInviteView from '@/features/invite/screen/unavailable-invite'
+import AvailableInviteView from '@/features/invite/screens/available-invite'
+import UnavailableInviteView from '@/features/invite/screens/unavailable-invite'
 
 interface Props {
   params: {

@@ -1,6 +1,7 @@
 'use client'
 
 import MoreStarDialog from '@/features/payment/components/more-star-dialog'
+import PaymentPopup from '@/features/payment/screen/payment-popup'
 import Icon from '@/shared/components/custom/icon'
 import { Button } from '@/shared/components/ui/button'
 import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from '@/shared/components/ui/drawer'
@@ -21,17 +22,22 @@ const CreateQuizDrawer = ({ handleCreateDocument, maxQuizCount }: Props) => {
   const DEFAULT_QUIZ_COUNT = 10
 
   const { userInfo: user } = useUserStore()
-  const [selectedQuizCount, setSelectedQuizCount] = useState(DEFAULT_QUIZ_COUNT)
+  const [selectedQuizCount, setSelectedQuizCount] = useState(
+    DOCUMENT_MAX_QUIZ_COUNT > DEFAULT_QUIZ_COUNT ? DEFAULT_QUIZ_COUNT : DOCUMENT_MAX_QUIZ_COUNT
+  )
   const [selectedQuizType, setSelectedQuizType] = useState<Quiz.Type>('MULTIPLE_CHOICE')
+
+  const [isOpenDrawer, setIsOpenDrawer] = useState(false)
   const [isOpenMoreStar, setIsOpenMoreStar] = useState(false)
+  const [isOpenPayment, setIsOpenPayment] = useState(false)
 
   const handleClickQuizType = (quizType: Quiz.Type) => {
     setSelectedQuizType(quizType)
   }
 
   const handleClickStart = () => {
-    // TODO: 이용자의 별 체크
-    const notEnoughStars = false // 임시
+    const notEnoughStars = (user?.star ?? 0) < selectedQuizCount
+
     if (notEnoughStars) {
       setIsOpenMoreStar(true)
       return
@@ -42,7 +48,7 @@ const CreateQuizDrawer = ({ handleCreateDocument, maxQuizCount }: Props) => {
 
   return (
     <>
-      <Drawer>
+      <Drawer open={isOpenDrawer} onOpenChange={setIsOpenDrawer}>
         <DrawerTrigger asChild>
           <Button variant={'largeRound'} colors={'primary'} className="flex-center h-[52px] w-full">
             퀴즈 만들기
@@ -147,7 +153,20 @@ const CreateQuizDrawer = ({ handleCreateDocument, maxQuizCount }: Props) => {
       </Drawer>
 
       {/* 이용자에게 별이 부족할 경우 아래 렌더링 */}
-      <MoreStarDialog isOpen={isOpenMoreStar} setIsOpen={setIsOpenMoreStar} />
+      <MoreStarDialog
+        isOpen={isOpenMoreStar}
+        setIsOpen={setIsOpenMoreStar}
+        onClickPayment={() => {
+          setIsOpenMoreStar(false)
+          setIsOpenDrawer(false)
+          setIsOpenPayment(true)
+        }}
+      />
+
+      {isOpenPayment && (
+        // 결제권유 창
+        <PaymentPopup isProUser={false} onClose={() => setIsOpenPayment(false)} />
+      )}
     </>
   )
 }

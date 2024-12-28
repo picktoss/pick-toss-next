@@ -1,4 +1,4 @@
-import SearchInDocument from '@/features/search/screen/search-in-document'
+import SearchInDocument from '@/features/search/screens/search-in-document'
 
 const SearchPage = () => {
   return <SearchInDocument />
