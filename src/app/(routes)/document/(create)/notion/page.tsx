@@ -1,4 +1,4 @@
-import CreateWithNotion from '@/features/document/components/create-with-notion'
+import CreateWithNotion from '@/features/document/screens/create-with-notion'
 
 const CreateWithNotionPage = () => {
   return <CreateWithNotion />

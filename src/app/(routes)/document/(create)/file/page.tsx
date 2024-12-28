@@ -1,4 +1,4 @@
-import CreateWithFile from '@/features/document/components/create-with-file'
+import CreateWithFile from '@/features/document/screens/create-with-file'
 
 const CreateWithFilePage = () => {
   return <CreateWithFile />

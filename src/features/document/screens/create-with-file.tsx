@@ -11,7 +11,7 @@ import {
   formatFileSize,
   generateMarkdownFromFile,
   isValidFileType,
-} from '../../utils'
+} from '../utils'
 import Editor from '@/features/write/components/editor'
 import { useDirectoryContext } from '@/features/directory/contexts/directory-context'
 import { useCreateDocument } from '@/requests/document/hooks'
