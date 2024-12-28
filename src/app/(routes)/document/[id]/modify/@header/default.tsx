@@ -1,6 +1,7 @@
 'use client'
 
 import { useDirectoryContext } from '@/features/directory/contexts/directory-context'
+import { UpdateDocumentSchema } from '@/features/document/config'
 import EditCancelDialog from '@/features/modify/components/edit-cancel-dialog'
 import { useEditDocumentContext } from '@/features/modify/context/edit-document-context'
 import { useUpdateDocument } from '@/requests/document/hooks'
@@ -9,13 +10,14 @@ import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import { cn } from '@/shared/lib/utils'
 import { useQuery } from '@tanstack/react-query'
 import { useParams, useRouter } from 'next/navigation'
-import { useId } from 'react'
+import { useEffect, useId, useState } from 'react'
 
 const Header = () => {
-  const toastId = useId()
   const { id } = useParams()
   const router = useRouter()
+  const [validationError, setValidationError] = useState<string | null>(null)
 
+  const toastId = useId()
   const { toast } = useToast()
 
   const { data } = useQuery(queries.document.item(Number(id)))
@@ -24,16 +26,38 @@ const Header = () => {
   const { documentTitle: title, editorMarkdownContent: content } = useEditDocumentContext()
   const { globalDirectoryId } = useDirectoryContext()
 
+  useEffect(() => {
+    if (validationError) {
+      toast({ variant: 'error' }).update({
+        id: toastId,
+        title: validationError,
+      })
+
+      setValidationError(null)
+    }
+  }, [validationError])
+
+  const validateUpdateDocument = (data: unknown) => {
+    const result = UpdateDocumentSchema.safeParse(data)
+    if (!result.success) {
+      setValidationError(result.error.errors[0]?.message ?? 'create validation error')
+      return false
+    }
+    setValidationError(null)
+    return true
+  }
+
   const handleClickSave = (id: number, title: string, content: string) => {
-    if (title.trim().length === 0 || content.trim().length === 0) {
-      alert('제목과 내용을 입력해주세요')
+    const updateDocumentData: Document.Request.UpdateContent = {
+      name: title,
+      file: content,
+    }
+
+    if (!validateUpdateDocument(updateDocumentData)) {
       return
     }
 
-    const blob = new Blob([content], { type: 'text/markdown' })
-    const file = new File([blob], `${title}.md`, { type: 'text/markdown' }) as unknown as string
-
-    const updatePayload = { documentId: id, requestBody: { name: title, file: file } }
+    const updatePayload = { documentId: id, requestBody: updateDocumentData }
 
     updateDocumentMutate(updatePayload, {
       onSuccess: () => {

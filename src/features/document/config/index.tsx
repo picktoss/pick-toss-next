@@ -96,3 +96,17 @@ export const CreateDocumentSchema = z.object({
 })
 
 export type CreateDocumentRequest = z.infer<typeof CreateDocumentSchema>
+
+// 문서 수정 요청 스키마
+export const UpdateDocumentSchema = z.object({
+  name: z
+    .string()
+    .min(DOCUMENT_CONSTRAINTS.TITLE.MIN, '노트 이름은 필수입니다')
+    .max(DOCUMENT_CONSTRAINTS.TITLE.MAX, '노트 이름은 최대 50자까지 가능합니다'),
+  file: z
+    .string()
+    .min(DOCUMENT_CONSTRAINTS.CONTENT.MIN, '노트 내용은 최소 1,000자 이상의 텍스트가 필요합니다')
+    .max(DOCUMENT_CONSTRAINTS.CONTENT.MAX, '노트 내용은 최대 50,000자까지 작성 가능합니다.'),
+})
+
+export type UpdateDocumentRequest = z.infer<typeof UpdateDocumentSchema>
