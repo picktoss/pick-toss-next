@@ -4,7 +4,7 @@ import CreateQuizDrawer from '@/features/write/components/create-quiz-drawer'
 import FixedBottom from '@/shared/components/custom/fixed-bottom'
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useId, useMemo, useState } from 'react'
 import {
   calculateAvailableQuizCount,
   extractPlainText,
@@ -19,21 +19,23 @@ import TitleInput from '@/features/write/components/title-input'
 import { useRouter } from 'next/navigation'
 import AiCreatingQuiz from '@/features/quiz/screen/ai-creating-quiz'
 import CreateQuizError from '@/features/quiz/screen/create-quiz-error'
+import { CreateDocumentSchema, FileInfo, FileInfoSchema } from '../config'
+import { useToast } from '@/shared/hooks/use-toast'
 
 const CreateWithFile = () => {
   const router = useRouter()
+
   const { selectedDirectory, selectDirectoryId, globalDirectoryId } = useDirectoryContext()
   const [documentId, setDocumentId] = useState<number | null>(null)
   const [showCreatePopup, setShowCreatePopup] = useState(false)
   const [createError, setCreateError] = useState<string | null>(null)
+  const [validationError, setValidationError] = useState<string | null>(null)
+  const [fileInfo, setFileInfo] = useState<FileInfo | null>(null)
 
   const { mutate: createDocumentMutate } = useCreateDocument()
-  const [fileInfo, setFileInfo] = useState<{
-    name: string
-    size: number
-    charCount: number
-    content: string
-  } | null>(null)
+
+  const toastId = useId()
+  const { toast } = useToast()
 
   const availableQuizCount = useMemo(
     () => calculateAvailableQuizCount(fileInfo?.charCount ?? 1000),
@@ -45,7 +47,18 @@ const CreateWithFile = () => {
   }
 
   useEffect(() => {
-    const handlePopState = (event: PopStateEvent) => {
+    if (validationError) {
+      toast({ variant: 'error' }).update({
+        id: toastId,
+        title: validationError,
+      })
+
+      setValidationError(null)
+    }
+  }, [validationError])
+
+  useEffect(() => {
+    const handlePopState = (event: PopStateEvent): void => {
       // ai 퀴즈 생성 팝업이 열려 있는 상태에서는 뒤로 가기 이벤트를 확인
       if (showCreatePopup) {
         event.preventDefault()
@@ -69,71 +82,92 @@ const CreateWithFile = () => {
     }
   }, [showCreatePopup, router, documentId])
 
+  const validateFileInfo = (info: unknown) => {
+    const result = FileInfoSchema.safeParse(info)
+    if (!result.success) {
+      setValidationError(result.error.errors[0]?.message ?? 'file validation error')
+      return false
+    }
+    setValidationError(null)
+    return true
+  }
+
+  const validateCreateDocument = (data: unknown) => {
+    const result = CreateDocumentSchema.safeParse(data)
+    if (!result.success) {
+      setValidationError(result.error.errors[0]?.message ?? 'create validation error')
+      return false
+    }
+    setValidationError(null)
+    return true
+  }
+
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (fileInfo) {
       setFileInfo(null)
+      setValidationError(null)
     }
 
     const file = e.target.files?.[0]
 
     if (!file || !isValidFileType(file)) {
-      alert('PDF, DOCX, TXT 파일만 업로드할 수 있습니다.')
+      setValidationError('PDF, DOCX, TXT 파일만 업로드할 수 있습니다.')
       if (e.target) {
         e.target.value = ''
       }
       return
     }
 
-    // 파일 이름과 크기 가져오기
-    const { name, size } = file
-
     try {
       const markdownString = await generateMarkdownFromFile(file)
       const markdownText = extractPlainText(markdownString)
 
-      if (markdownText.length < 1000 || markdownText.length > 50000) {
-        alert('최소 1,000자 이상, 최대 50,000자 이내의 텍스트를 포함한 파일을 첨부해주세요')
+      const newFileInfo = {
+        name: file.name,
+        size: file.size,
+        charCount: markdownText.length,
+        content: markdownString,
+      }
+
+      if (!validateFileInfo(newFileInfo)) {
         if (e.target) {
           e.target.value = ''
         }
         return
       }
 
-      // 상태 업데이트
-      setFileInfo({
-        name,
-        size,
-        charCount: markdownText.length,
-        content: markdownString,
-      })
+      setFileInfo(newFileInfo)
     } catch (err) {
       console.error('파일 처리 중 오류 발생:', err)
-      alert('파일 처리 중 문제가 발생했습니다.')
+      setValidationError('파일 처리 중 문제가 발생했습니다.')
     }
   }
 
   const handleCreateDocument = ({ quizType, star }: { quizType: Quiz.Type; star: number }) => {
-    // TODO: validation
-    if (!selectedDirectory || !fileInfo || fileInfo.charCount < 1000) {
+    if (!selectedDirectory || !fileInfo) {
+      setValidationError('노트를 생성할 문서 파일을 첨부해주세요')
       return
     }
 
-    createDocumentMutate(
-      {
-        directoryId: String(selectedDirectory.id),
-        documentName: fileInfo.name || 'file생성노트',
-        file: fileInfo.content,
-        quizType,
-        star: String(star),
-        documentType: 'FILE',
+    const createDocumentData: Document.Request.CreateDocument = {
+      directoryId: String(selectedDirectory.id),
+      documentName: fileInfo.name,
+      file: fileInfo.content,
+      quizType,
+      star: String(star),
+      documentType: 'FILE',
+    }
+
+    if (!validateCreateDocument(createDocumentData)) {
+      return
+    }
+
+    createDocumentMutate(createDocumentData, {
+      onSuccess: ({ id }) => {
+        setDocumentId(id)
+        setShowCreatePopup(true)
       },
-      {
-        onSuccess: ({ id }) => {
-          setDocumentId(id)
-          setShowCreatePopup(true)
-        },
-      }
-    )
+    })
   }
 
   const handleCreateError = (response: string) => {
@@ -188,7 +222,7 @@ const CreateWithFile = () => {
             </Text>
           </label>
           <Text typography="text1-medium" className="text-text-sub">
-            txt, docx 포맷, 3MB 이상 12MB 미만 파일 업로드
+            txt, docx 포맷, 6KB 이상 12MB 미만 파일 업로드
           </Text>
         </div>
       )}
@@ -235,7 +269,6 @@ const CreateWithFile = () => {
       )}
 
       <FixedBottom className="px-[20px]">
-        {/* TODO: file로 문서 생성하는 로직 필요 */}
         <CreateQuizDrawer
           handleCreateDocument={handleCreateDocument}
           maxQuizCount={availableQuizCount}

@@ -9,12 +9,15 @@ import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import TitleInput from '@/features/modify/components/title-input'
 import VisualEditor from '@/features/modify/components/visual-editor'
 import { useEditDocumentContext } from '@/features/modify/context/edit-document-context'
-import { MAX_CHARACTERS, MIN_CHARACTERS } from '@/features/document/config'
+import { DOCUMENT_CONSTRAINTS } from '@/features/document/config'
 
 const ModifyDocument = () => {
   const { id } = useParams()
   const { data, isPending } = useQuery(queries.document.item(Number(id)))
   const { editorMarkdownContent: content } = useEditDocumentContext()
+
+  const minContentChar = DOCUMENT_CONSTRAINTS.CONTENT.MIN
+  const maxContentChar = DOCUMENT_CONSTRAINTS.CONTENT.MAX
 
   if (isPending) {
     return <Loading center />
@@ -28,21 +31,21 @@ const ModifyDocument = () => {
         <div className="flex items-center">
           <Icon name="info" className="mr-[4px] size-[16px]" />
           <Text as="span" typography="text2-medium" className="text-text-caption">
-            최소 {MIN_CHARACTERS}자, 최대 {MAX_CHARACTERS}자 입력 가능
+            최소 {minContentChar}자, 최대 {maxContentChar}자 입력 가능
           </Text>
         </div>
         <Text typography="text1-medium" className="text-text-secondary">
           <Text
             as="span"
             color={
-              content.length < MIN_CHARACTERS || content.length > MAX_CHARACTERS
+              content.length < minContentChar || content.length > maxContentChar
                 ? 'critical'
                 : 'info'
             }
           >
             {content.length}
           </Text>{' '}
-          / {MAX_CHARACTERS}
+          / {maxContentChar}
         </Text>
       </div>
 

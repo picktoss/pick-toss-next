@@ -1,5 +1,13 @@
-export const MIN_CHARACTERS = 1000
-export const MAX_CHARACTERS = 50000
+export const DOCUMENT_CONSTRAINTS = {
+  TITLE: {
+    MIN: 1,
+    MAX: 50,
+  },
+  CONTENT: {
+    MIN: 1000,
+    MAX: 50000,
+  },
+} as const
 
 export const addDocumentButtons = [
   {
@@ -32,8 +40,8 @@ import { z } from 'zod'
 
 // 파일 관련 상수
 export const FILE_CONSTRAINTS = {
-  MIN_CHARS: 1000,
-  MAX_CHARS: 50000,
+  MIN_CHARS: DOCUMENT_CONSTRAINTS.CONTENT.MIN,
+  MAX_CHARS: DOCUMENT_CONSTRAINTS.CONTENT.MAX,
   MIN_SIZE: 6 * 1024, // 6KB
   MAX_SIZE: 12 * 1024 * 1024, // 12MB
   SUPPORTED_TYPES: {
@@ -74,20 +82,17 @@ export type FileInfo = z.infer<typeof FileInfoSchema>
 // 문서 생성 요청 스키마
 export const CreateDocumentSchema = z.object({
   directoryId: z.string().min(1, '폴더 선택은 필수입니다'),
-  documentName: z.string().min(1, '노트 이름은 필수입니다'),
-  file: z.string().min(1, '노트 내용은 필수입니다'),
+  documentName: z
+    .string()
+    .min(DOCUMENT_CONSTRAINTS.TITLE.MIN, '노트 이름은 필수입니다')
+    .max(DOCUMENT_CONSTRAINTS.TITLE.MAX, '노트 이름은 최대 50자까지 가능합니다'),
+  file: z
+    .string()
+    .min(DOCUMENT_CONSTRAINTS.CONTENT.MIN, '노트 내용은 최소 1,000자 이상의 텍스트가 필요합니다')
+    .max(DOCUMENT_CONSTRAINTS.CONTENT.MAX, '노트 내용은 최대 50,000자까지 작성 가능합니다.'),
   quizType: z.enum(['MULTIPLE_CHOICE', 'MIX_UP']),
   star: z.string().regex(/^[1-40]$/, '문제 수는 1-40 사이의 숫자여야 합니다'),
   documentType: z.enum(['FILE', 'TEXT', 'NOTION']),
 })
 
 export type CreateDocumentRequest = z.infer<typeof CreateDocumentSchema>
-
-// validation 유틸리티 함수
-export const validateFileInfo = (fileInfo: unknown) => {
-  return FileInfoSchema.safeParse(fileInfo)
-}
-
-export const validateCreateDocument = (data: unknown) => {
-  return CreateDocumentSchema.safeParse(data)
-}

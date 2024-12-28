@@ -1,35 +1,43 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useId, useState } from 'react'
 import TitleInput from '../components/title-input'
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
 import dynamic from 'next/dynamic'
 import FixedBottom from '@/shared/components/custom/fixed-bottom'
 import { useCreateDocument } from '@/requests/document/hooks'
-import { MAX_CHARACTERS, MIN_CHARACTERS } from '@/features/document/config'
+import { CreateDocumentSchema, DOCUMENT_CONSTRAINTS } from '@/features/document/config'
 import { useDirectoryContext } from '@/features/directory/contexts/directory-context'
 import CreateQuizDrawer from '../components/create-quiz-drawer'
 import AiCreatingQuiz from '@/features/quiz/screen/ai-creating-quiz'
 import { useRouter } from 'next/navigation'
 import CreateQuizError from '@/features/quiz/screen/create-quiz-error'
 import { calculateAvailableQuizCount } from '@/features/document/utils'
+import { useToast } from '@/shared/hooks/use-toast'
 
 const Editor = dynamic(() => import('../components/editor'), {
   ssr: false,
 })
 
 const WriteDocumentPage = () => {
+  const minContentChar = DOCUMENT_CONSTRAINTS.CONTENT.MIN
+  const maxContentChar = DOCUMENT_CONSTRAINTS.CONTENT.MAX
+
   const router = useRouter()
 
   const { selectedDirectory, selectDirectoryId, globalDirectoryId } = useDirectoryContext()
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [documentId, setDocumentId] = useState<number | null>(null)
+  const [validationError, setValidationError] = useState<string | null>(null)
   const [showCreatePopup, setShowCreatePopup] = useState(false)
   const [createError, setCreateError] = useState<string | null>(null)
 
   const { mutate: createDocumentMutate } = useCreateDocument()
+
+  const toastId = useId()
+  const { toast } = useToast()
 
   if (!selectedDirectory) {
     selectDirectoryId(globalDirectoryId)
@@ -40,29 +48,53 @@ const WriteDocumentPage = () => {
     setCreateError(response)
   }
 
+  const validateCreateDocument = (data: unknown) => {
+    const result = CreateDocumentSchema.safeParse(data)
+    if (!result.success) {
+      setValidationError(result.error.errors[0]?.message ?? 'create validation error')
+      return false
+    }
+    setValidationError(null)
+    return true
+  }
+
   const handleCreateDocument = ({ quizType, star }: { quizType: Quiz.Type; star: number }) => {
-    // TODO: validation
     if (!selectedDirectory) {
+      setValidationError('폴더 선택은 필수입니다')
       return
     }
 
-    createDocumentMutate(
-      {
-        directoryId: String(selectedDirectory.id),
-        documentName: title,
-        file: content,
-        quizType,
-        star: String(star),
-        documentType: 'TEXT',
+    const createDocumentData: Document.Request.CreateDocument = {
+      directoryId: String(selectedDirectory.id),
+      documentName: title,
+      file: content,
+      quizType,
+      star: String(star),
+      documentType: 'TEXT',
+    }
+
+    if (!validateCreateDocument(createDocumentData)) {
+      return
+    }
+
+    createDocumentMutate(createDocumentData, {
+      onSuccess: ({ id }) => {
+        setDocumentId(id)
+        setShowCreatePopup(true)
       },
-      {
-        onSuccess: ({ id }) => {
-          setDocumentId(id)
-          setShowCreatePopup(true)
-        },
-      }
-    )
+    })
   }
+
+  useEffect(() => {
+    if (validationError) {
+      toast({ variant: 'error' }).update({
+        id: toastId,
+        title: validationError,
+      })
+
+      setValidationError(null)
+    }
+  }, [validationError])
 
   useEffect(() => {
     const handlePopState = (event: PopStateEvent) => {
@@ -116,21 +148,21 @@ const WriteDocumentPage = () => {
         <div className="flex items-center">
           <Icon name="info" className="mr-[4px] size-[16px]" />
           <Text as="span" typography="text2-medium" className="text-text-caption">
-            최소 {MIN_CHARACTERS}자, 최대 {MAX_CHARACTERS}자 입력 가능
+            최소 {minContentChar}자, 최대 {maxContentChar}자 입력 가능
           </Text>
         </div>
         <Text typography="text1-medium" className="text-text-secondary">
           <Text
             as="span"
             color={
-              content.length < MIN_CHARACTERS || content.length > MAX_CHARACTERS
+              content.length < minContentChar || content.length > maxContentChar
                 ? 'critical'
                 : 'info'
             }
           >
             {content.length}
           </Text>{' '}
-          / {MAX_CHARACTERS}
+          / {maxContentChar}
         </Text>
       </div>
 

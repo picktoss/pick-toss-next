@@ -17,14 +17,13 @@ interface Props {
 }
 
 const CreateQuizDrawer = ({ handleCreateDocument, maxQuizCount }: Props) => {
-  const DOCUMENT_MIN_QUIZ_COUNT = 1
-  const DOCUMENT_MAX_QUIZ_COUNT = maxQuizCount
   const DEFAULT_QUIZ_COUNT = 10
+  const MAXIMUM_QUIZ_COUNT = 40
+  const DOCUMENT_MIN_QUIZ_COUNT = 1
+  const DOCUMENT_MAX_QUIZ_COUNT = Math.min(maxQuizCount, MAXIMUM_QUIZ_COUNT)
 
   const { userInfo: user } = useUserStore()
-  const [selectedQuizCount, setSelectedQuizCount] = useState(
-    DOCUMENT_MAX_QUIZ_COUNT > DEFAULT_QUIZ_COUNT ? DEFAULT_QUIZ_COUNT : DOCUMENT_MAX_QUIZ_COUNT
-  )
+  const [selectedQuizCount, setSelectedQuizCount] = useState(DEFAULT_QUIZ_COUNT)
   const [selectedQuizType, setSelectedQuizType] = useState<Quiz.Type>('MULTIPLE_CHOICE')
 
   const [isOpenDrawer, setIsOpenDrawer] = useState(false)
@@ -104,7 +103,7 @@ const CreateQuizDrawer = ({ handleCreateDocument, maxQuizCount }: Props) => {
             <div className="flex-center h-fit w-full flex-col border-t pb-[66px] pt-[26px] text-text-sub">
               <Text typography="text1-medium">만들 문제 수</Text>
               <Text typography="title1" className="mb-[28px] mt-[8px] text-text-accent">
-                {selectedQuizCount} 문제
+                {Math.min(selectedQuizCount, DOCUMENT_MAX_QUIZ_COUNT)} 문제
               </Text>
 
               {/* 문제 개수 슬라이더 */}
