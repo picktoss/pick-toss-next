@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import { cn } from '@/shared/lib/utils'
-import { dmSans, suit } from '@/shared/lib/fonts'
+import { suit } from '@/shared/lib/fonts'
 import { Metadatas } from '@/features/common/metadata'
 import { Providers } from '@/providers'
 import { Toaster } from '@/shared/components/ui/toaster'
@@ -24,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className={cn(suit.variable, dmSans.variable, 'bg-gray-01 font-dm-suit')}>
+      <body className={cn(suit.variable, 'bg-gray-01 font-suit')}>
         <Providers>
           <ClientSetUp />
           <div className="mx-auto min-h-screen max-w-mobile shadow-lg">{children}</div>
