@@ -24,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className={cn(suit.variable, 'bg-gray-01 font-suit')}>
+      <body className={cn(suit.variable, 'font-suit bg-gray-01')}>
         <Providers>
           <ClientSetUp />
           <div className="mx-auto min-h-screen max-w-mobile shadow-lg">{children}</div>
