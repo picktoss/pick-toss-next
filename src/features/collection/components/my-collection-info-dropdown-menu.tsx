@@ -23,15 +23,18 @@ const MyCollectionInfoDropdownMenu = ({ collectionId }: Props) => {
       <DropdownMenuTrigger>
         <Icon name="menu-dots" className="size-[24px]" />
       </DropdownMenuTrigger>
-      <DropdownMenuContent
-        className="min-w-[240px] bg-white p-0 *:cursor-pointer"
-        onClick={() => router.push(`/collections/edit-info/${collectionId}`)}
-      >
-        <DropdownMenuItem className="flex justify-between px-5 py-4 hover:bg-gray-100">
+      <DropdownMenuContent className="min-w-[240px] bg-white p-0 *:cursor-pointer">
+        <DropdownMenuItem
+          className="flex justify-between px-5 py-4 hover:bg-gray-100"
+          onClick={() => router.push(`/collections/edit-info/${collectionId}`)}
+        >
           <Text typography="subtitle2-medium">컬렉션 정보 수정</Text>
           <Icon name="write-line" className="size-[20px]" />
         </DropdownMenuItem>
-        <DropdownMenuItem className="flex justify-between px-5 py-4 hover:bg-gray-100">
+        <DropdownMenuItem
+          className="flex justify-between px-5 py-4 hover:bg-gray-100"
+          onClick={() => router.push(`/collections/edit-quiz/${collectionId}`)}
+        >
           <Text typography="subtitle2-medium">문제 편집</Text>
           <Icon name="write-line" className="size-[20px]" />
         </DropdownMenuItem>

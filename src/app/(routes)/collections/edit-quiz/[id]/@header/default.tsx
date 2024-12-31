@@ -7,7 +7,7 @@ const Header = () => {
       <GoBackButton icon="cancel" />
       <div className="absolute right-1/2 translate-x-1/2">
         <Text as="h1" typography="subtitle2-medium">
-          컬렉션 정보수정
+          문제 편집
         </Text>
       </div>
     </header>

@@ -1,5 +1,4 @@
 import type { Config } from 'tailwindcss'
-import { fontFamily } from 'tailwindcss/defaultTheme'
 
 const config = {
   darkMode: ['class'],
@@ -23,10 +22,7 @@ const config = {
         mobile: '430px',
       },
       fontFamily: {
-        sans: ['var(--font-sans)', ...fontFamily.sans],
         suit: ['var(--font-suit)'],
-        'dm-sans': ['var(--font-dm-sans'],
-        'dm-suit': ['var(--font-dm-sans)', 'var(--font-suit)'],
       },
       fontSize: {
         hero: [

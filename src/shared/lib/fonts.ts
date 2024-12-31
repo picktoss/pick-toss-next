@@ -1,14 +1,12 @@
 import localFont from 'next/font/local'
-import { DM_Sans } from 'next/font/google'
 
 export const suit = localFont({
-  src: '../../../public/fonts/SUIT-Variable.woff2',
+  src: [
+    {
+      path: '../../../public/fonts/SUIT-Variable.woff2',
+      weight: '100 900',
+      style: 'normal',
+    },
+  ],
   variable: '--font-suit',
-})
-
-export const dmSans = DM_Sans({
-  variable: '--font-dm-sans',
-  subsets: ['latin'],
-  style: ['italic', 'normal'],
-  adjustFontFallback: false,
 })
