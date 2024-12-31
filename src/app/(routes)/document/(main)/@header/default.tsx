@@ -21,9 +21,24 @@ const Header = () => {
   const { isSelectMode, setIsSelectMode, checkDoc } = useDocumentContext()
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
+  const handleClickHeader = (): void => {
+    if (isDrawerOpen) {
+      setIsDrawerOpen(false)
+    }
+  }
+
+  const handleClickAll = () => {
+    if (checkDoc.isAllChecked()) {
+      checkDoc.unCheckAll()
+    } else {
+      checkDoc.checkAll()
+    }
+  }
+
   return (
     <>
       <header
+        onClick={handleClickHeader}
         className={cn(
           'fixed right-1/2 top-0 z-20 translate-x-1/2 flex h-[54px] w-full max-w-[430px] flex-col justify-end bg-background-base-02 px-[16px] transition-all',
           isDrawerOpen && 'bg-background-base-01'
@@ -38,9 +53,9 @@ const Header = () => {
                 {selectedDirectory?.name}
               </Text>
 
-              <button onClick={() => checkDoc.checkAll()}>
+              <button onClick={handleClickAll}>
                 <Text as="span" typography="button4" className="text-button-text-primary">
-                  전체 선택
+                  {checkDoc.isAllChecked() ? '전체 해제' : '전체 선택'}
                 </Text>
               </button>
             </>
