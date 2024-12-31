@@ -28,7 +28,7 @@ const Header = () => {
 
   useEffect(() => {
     if (validationError) {
-      toast({ variant: 'error' }).update({
+      toast({}).update({
         id: toastId,
         title: validationError,
       })

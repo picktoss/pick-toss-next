@@ -65,11 +65,8 @@ export const FileInfoSchema = z.object({
   name: z.string().min(1, '파일 이름은 필수입니다'),
   size: z
     .number()
-    .min(
-      FILE_CONSTRAINTS.MIN_SIZE,
-      '파일 크기가 너무 작습니다. 6KB 이상의 파일만 업로드 가능합니다'
-    )
-    .max(FILE_CONSTRAINTS.MAX_SIZE, '12MB 미만의 파일만 업로드 가능합니다'),
+    .min(FILE_CONSTRAINTS.MIN_SIZE, '용량이 더 큰 파일을 선택해주세요')
+    .max(FILE_CONSTRAINTS.MAX_SIZE, '용량이 더 작은 파일을 선택해주세요'),
   charCount: z
     .number()
     .min(FILE_CONSTRAINTS.MIN_CHARS, '최소 1,000자 이상의 텍스트가 필요합니다')
@@ -88,8 +85,8 @@ export const CreateDocumentSchema = z.object({
     .max(DOCUMENT_CONSTRAINTS.TITLE.MAX, '노트 이름은 최대 50자까지 가능합니다'),
   file: z
     .string()
-    .min(DOCUMENT_CONSTRAINTS.CONTENT.MIN, '노트 내용은 최소 1,000자 이상의 텍스트가 필요합니다')
-    .max(DOCUMENT_CONSTRAINTS.CONTENT.MAX, '노트 내용은 최대 50,000자까지 작성 가능합니다.'),
+    .min(DOCUMENT_CONSTRAINTS.CONTENT.MIN, '최소 1,000자 이상의 텍스트가 필요합니다')
+    .max(DOCUMENT_CONSTRAINTS.CONTENT.MAX, '최대 50,000자까지 작성 가능합니다'),
   quizType: z.enum(['MULTIPLE_CHOICE', 'MIX_UP']),
   star: z.string().regex(/^[1-40]$/, '문제 수는 1-40 사이의 숫자여야 합니다'),
   documentType: z.enum(['FILE', 'TEXT', 'NOTION']),
@@ -105,8 +102,8 @@ export const UpdateDocumentSchema = z.object({
     .max(DOCUMENT_CONSTRAINTS.TITLE.MAX, '노트 이름은 최대 50자까지 가능합니다'),
   file: z
     .string()
-    .min(DOCUMENT_CONSTRAINTS.CONTENT.MIN, '노트 내용은 최소 1,000자 이상의 텍스트가 필요합니다')
-    .max(DOCUMENT_CONSTRAINTS.CONTENT.MAX, '노트 내용은 최대 50,000자까지 작성 가능합니다.'),
+    .min(DOCUMENT_CONSTRAINTS.CONTENT.MIN, '최소 1,000자 이상의 텍스트가 필요합니다')
+    .max(DOCUMENT_CONSTRAINTS.CONTENT.MAX, '최대 50,000자까지 작성 가능합니다.'),
 })
 
 export type UpdateDocumentRequest = z.infer<typeof UpdateDocumentSchema>

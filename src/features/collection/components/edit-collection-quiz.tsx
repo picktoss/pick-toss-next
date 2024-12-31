@@ -1,3 +1,5 @@
+'use client'
+
 import { useCollectionInfo } from '@/requests/collection/hooks'
 import { useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -15,6 +17,7 @@ const EditCollectionQuiz = () => {
     setQuizzes(collectionInfoData.quizzes)
   }, [collectionInfoData])
 
+  // eslint-disable-next-line no-console
   console.log(quizzes)
 
   return null
