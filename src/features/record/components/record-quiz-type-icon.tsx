@@ -24,6 +24,9 @@ const RecordQuizTypeIcon = ({ type, className }: Props) => {
           <Icon name="collection-type-round-icon" className={cn('size-[40px]', className)} />
         ),
       }}
+      defaultComponent={
+        <Icon name="document-type-round-icon" className={cn('size-[40px]', className)} />
+      }
     />
   )
 }
