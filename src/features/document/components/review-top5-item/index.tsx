@@ -30,7 +30,7 @@ const ReviewTop5Item = ({ ranking, documentId, documentTitle, directory, reviewC
       </div>
 
       <div className="flex items-center gap-[19px]">
-        {reviewCount && <Tag colors={'secondary'}>복습 필요 {reviewCount}</Tag>}
+        {reviewCount ? <Tag colors={'secondary'}>복습 필요 {reviewCount}</Tag> : null}
         <Icon name="chevron-right" className="size-[12px] text-icon-tertiary" />
       </div>
     </Link>
