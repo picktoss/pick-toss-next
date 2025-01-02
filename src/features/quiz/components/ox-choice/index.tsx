@@ -41,6 +41,7 @@ const OXChoice = ({ condition, userAnswer, onSelect }: OXChoiceProps) => {
   return (
     <div className="flex w-full gap-[13px] transition-all">
       <button
+        id="correctBtn"
         className="flex-1"
         disabled={disabled}
         onClick={() => {
@@ -50,6 +51,7 @@ const OXChoice = ({ condition, userAnswer, onSelect }: OXChoiceProps) => {
         <CorrectOptionIcon className="size-full" {...getIconColors('correct')} />
       </button>
       <button
+        id="incorrectBtn"
         className="flex-1"
         disabled={disabled}
         onClick={() => {
