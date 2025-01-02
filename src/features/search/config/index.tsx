@@ -1,5 +1,3 @@
-export const RECENT_SEARCHES = 'recentSearches'
-
 export const SEARCH_TABS = {
   ALL: 'all',
   QUIZ_NOTE: 'quiz-note',

@@ -1,7 +1,7 @@
 import { getLocalStorage, setLocalStorage } from '@/shared/utils/storage'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
-import { RECENT_SEARCHES } from '../config'
+import { LOCAL_KEY } from '@/constants'
 
 export const useSearch = () => {
   const router = useRouter()
@@ -34,12 +34,12 @@ export const useSearch = () => {
   useEffect(() => {
     if (!initialKeyword) return
 
-    const storageSearches = getLocalStorage<string[]>(RECENT_SEARCHES) ?? []
+    const storageSearches = getLocalStorage<string[]>(LOCAL_KEY.RECENT_SEARCHES) ?? []
     const newSearches = [
       initialKeyword,
       ...storageSearches.filter((search) => search !== initialKeyword),
     ].slice(0, 5)
-    setLocalStorage(RECENT_SEARCHES, newSearches)
+    setLocalStorage(LOCAL_KEY.RECENT_SEARCHES, newSearches)
   }, [initialKeyword])
 
   /** 최근 검색어 리스트에서 특정 검색어 클릭 시 검색창에 키워드가 반영되도록하는 함수 */

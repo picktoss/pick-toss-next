@@ -9,6 +9,7 @@ export const LOCAL_KEY = {
   SEARCH_PICK: 'search-pick',
   SEARCH_DOCUMENT: 'search-document',
 
+  RECENT_SEARCHES: 'recentSearches',
   BOMB_TUTORIAL_COMPLETE: 'bomb-tutorial-complete',
 }
 
