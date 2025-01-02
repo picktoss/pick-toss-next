@@ -15,6 +15,7 @@ import { useRouter } from 'next/navigation'
 import CreateQuizError from '@/features/quiz/screen/create-quiz-error'
 import { calculateAvailableQuizCount } from '@/features/document/utils'
 import { useToast } from '@/shared/hooks/use-toast'
+import ExitDialog from '@/features/quiz/screen/quiz-view/components/exit-dialog'
 
 const Editor = dynamic(() => import('../components/editor'), {
   ssr: false,
@@ -33,6 +34,7 @@ const WriteDocumentPage = () => {
   const [validationError, setValidationError] = useState<string | null>(null)
   const [showCreatePopup, setShowCreatePopup] = useState(false)
   const [createError, setCreateError] = useState<string | null>(null)
+  const [openExitDialog, setOpenExitDialog] = useState(false)
 
   const { mutate: createDocumentMutate } = useCreateDocument()
 
@@ -66,7 +68,7 @@ const WriteDocumentPage = () => {
 
     const createDocumentData: Document.Request.CreateDocument = {
       directoryId: String(selectedDirectory.id),
-      documentName: title,
+      documentName: title || '새로운 노트',
       file: content,
       quizType,
       star: String(star),
@@ -102,12 +104,8 @@ const WriteDocumentPage = () => {
       if (showCreatePopup) {
         event.preventDefault()
         window.history.pushState(null, '', window.location.href)
-        const userConfirm = window.confirm(
-          '현재 화면에서 나가시겠습니까? 지금 나가더라도 AI 퀴즈 생성이 중단되지는 않습니다.'
-        )
-        if (userConfirm && documentId) {
-          router.push(`/document/${documentId}`)
-        }
+
+        setOpenExitDialog(true)
       }
     }
 
@@ -124,14 +122,21 @@ const WriteDocumentPage = () => {
   if (documentId !== null && showCreatePopup) {
     return (
       <div className="h-dvh w-full max-w-mobile">
-        <div className="fixed right-1/2 z-[9999] h-dvh w-dvw max-w-mobile translate-x-1/2 bg-background-base-01">
+        <div className="fixed right-1/2 z-50 h-dvh w-dvw max-w-mobile translate-x-1/2 bg-background-base-01">
           <AiCreatingQuiz
             documentId={documentId}
-            documentName={title}
-            directoryEmoji={selectedDirectory?.emoji ?? ''}
+            documentName={title || '새로운 노트'}
+            directoryEmoji={selectedDirectory?.emoji ?? '📁'}
             onError={handleCreateError}
           />
         </div>
+
+        <ExitDialog
+          open={openExitDialog}
+          onOpenChange={setOpenExitDialog}
+          index={0}
+          isFirst={true}
+        />
       </div>
     )
   }
@@ -172,6 +177,7 @@ const WriteDocumentPage = () => {
         <CreateQuizDrawer
           handleCreateDocument={handleCreateDocument}
           maxQuizCount={calculateAvailableQuizCount(content.length)}
+          disabled={content.length < minContentChar}
         />
       </FixedBottom>
     </div>

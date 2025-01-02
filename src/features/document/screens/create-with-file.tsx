@@ -21,6 +21,7 @@ import AiCreatingQuiz from '@/features/quiz/screen/ai-creating-quiz'
 import CreateQuizError from '@/features/quiz/screen/create-quiz-error'
 import { CreateDocumentSchema, FileInfo, FileInfoSchema } from '../config'
 import { useToast } from '@/shared/hooks/use-toast'
+import ExitDialog from '@/features/quiz/screen/quiz-view/components/exit-dialog'
 
 const CreateWithFile = () => {
   const router = useRouter()
@@ -31,6 +32,7 @@ const CreateWithFile = () => {
   const [createError, setCreateError] = useState<string | null>(null)
   const [validationError, setValidationError] = useState<string | null>(null)
   const [fileInfo, setFileInfo] = useState<FileInfo | null>(null)
+  const [openExitDialog, setOpenExitDialog] = useState(false)
 
   const { mutate: createDocumentMutate } = useCreateDocument()
 
@@ -58,17 +60,13 @@ const CreateWithFile = () => {
   }, [validationError])
 
   useEffect(() => {
-    const handlePopState = (event: PopStateEvent): void => {
+    const handlePopState = (event: PopStateEvent) => {
       // ai 퀴즈 생성 팝업이 열려 있는 상태에서는 뒤로 가기 이벤트를 확인
       if (showCreatePopup) {
         event.preventDefault()
         window.history.pushState(null, '', window.location.href)
-        const userConfirm = window.confirm(
-          '현재 화면에서 나가시겠습니까? 지금 나가더라도 AI 퀴즈 생성이 중단되지는 않습니다.'
-        )
-        if (userConfirm && documentId) {
-          router.push(`/document/${documentId}`)
-        }
+
+        setOpenExitDialog(true)
       }
     }
 
@@ -123,7 +121,7 @@ const CreateWithFile = () => {
       const markdownText = extractPlainText(markdownString)
 
       const newFileInfo = {
-        name: file.name,
+        name: file.name || '새로운 노트',
         size: file.size,
         charCount: markdownText.length,
         content: markdownString,
@@ -151,7 +149,7 @@ const CreateWithFile = () => {
 
     const createDocumentData: Document.Request.CreateDocument = {
       directoryId: String(selectedDirectory.id),
-      documentName: fileInfo.name,
+      documentName: fileInfo.name || '새로운 노트',
       file: fileInfo.content,
       quizType,
       star: String(star),
@@ -178,14 +176,21 @@ const CreateWithFile = () => {
   if (fileInfo && documentId !== null && showCreatePopup) {
     return (
       <div className="h-dvh w-full max-w-mobile">
-        <div className="fixed right-1/2 z-[9999] h-dvh w-dvw max-w-mobile translate-x-1/2 bg-background-base-01">
+        <div className="fixed right-1/2 z-50 h-dvh w-dvw max-w-mobile translate-x-1/2 bg-background-base-01">
           <AiCreatingQuiz
             documentId={documentId}
-            documentName={fileInfo.name}
-            directoryEmoji={selectedDirectory?.emoji ?? ''}
+            documentName={fileInfo.name || '새로운 노트'}
+            directoryEmoji={selectedDirectory?.emoji ?? '📁'}
             onError={handleCreateError}
           />
         </div>
+
+        <ExitDialog
+          open={openExitDialog}
+          onOpenChange={setOpenExitDialog}
+          index={0}
+          isFirst={true}
+        />
       </div>
     )
   }
@@ -222,7 +227,7 @@ const CreateWithFile = () => {
             </Text>
           </label>
           <Text typography="text1-medium" className="text-text-sub">
-            txt, docx 포맷, 6KB 이상 12MB 미만 파일 업로드
+            txt, docx, pdf 포맷, 6KB 이상 12MB 미만 파일 업로드
           </Text>
         </div>
       )}
@@ -234,7 +239,7 @@ const CreateWithFile = () => {
             <div className="flex items-center">
               <Icon name="info" className="mr-[4px] size-[16px]" />
               <Text as="span" typography="text2-medium" className="mr-[4px] text-text-secondary">
-                {fileInfo?.name}
+                {fileInfo?.name || '새로운 노트'}
               </Text>
               <Text as="span" typography="text2-medium" className="text-text-caption">
                 {`(${formatFileSize(fileInfo?.size ?? 0)}, ${fileInfo?.charCount}자)`}
@@ -272,6 +277,7 @@ const CreateWithFile = () => {
         <CreateQuizDrawer
           handleCreateDocument={handleCreateDocument}
           maxQuizCount={availableQuizCount}
+          disabled={(fileInfo?.content?.length ?? 0) < 1000}
         />
       </FixedBottom>
     </div>

@@ -62,15 +62,15 @@ export const FILE_CONSTRAINTS = {
 
 // 파일 정보 스키마
 export const FileInfoSchema = z.object({
-  name: z.string().min(1, '파일 이름은 필수입니다'),
+  name: z.string().default('새로운 노트'),
   size: z
     .number()
     .min(FILE_CONSTRAINTS.MIN_SIZE, '용량이 더 큰 파일을 선택해주세요')
     .max(FILE_CONSTRAINTS.MAX_SIZE, '용량이 더 작은 파일을 선택해주세요'),
   charCount: z
     .number()
-    .min(FILE_CONSTRAINTS.MIN_CHARS, '최소 1,000자 이상의 텍스트가 필요합니다')
-    .max(FILE_CONSTRAINTS.MAX_CHARS, '최대 50,000자까지 업로드 가능합니다'),
+    .min(FILE_CONSTRAINTS.MIN_CHARS, '1,000자 이상인 파일을 업로드해주세요')
+    .max(FILE_CONSTRAINTS.MAX_CHARS, '50,000자 이하인 파일을 업로드해주세요'),
   content: z.string().min(1, '파일 내용은 필수입니다'),
 })
 
@@ -81,14 +81,14 @@ export const CreateDocumentSchema = z.object({
   directoryId: z.string().min(1, '폴더 선택은 필수입니다'),
   documentName: z
     .string()
-    .min(DOCUMENT_CONSTRAINTS.TITLE.MIN, '노트 이름은 필수입니다')
-    .max(DOCUMENT_CONSTRAINTS.TITLE.MAX, '노트 이름은 최대 50자까지 가능합니다'),
+    .max(DOCUMENT_CONSTRAINTS.TITLE.MAX, '노트 제목은 30자까지 작성할 수 있어요')
+    .default('새로운 노트'),
   file: z
     .string()
-    .min(DOCUMENT_CONSTRAINTS.CONTENT.MIN, '최소 1,000자 이상의 텍스트가 필요합니다')
-    .max(DOCUMENT_CONSTRAINTS.CONTENT.MAX, '최대 50,000자까지 작성 가능합니다'),
+    .min(DOCUMENT_CONSTRAINTS.CONTENT.MIN, '1,000자 이상의 텍스트가 필요합니다')
+    .max(DOCUMENT_CONSTRAINTS.CONTENT.MAX, '내용은 50,000자까지 작성 가능합니다'),
   quizType: z.enum(['MULTIPLE_CHOICE', 'MIX_UP']),
-  star: z.string().regex(/^[1-40]$/, '문제 수는 1-40 사이의 숫자여야 합니다'),
+  star: z.string(),
   documentType: z.enum(['FILE', 'TEXT', 'NOTION']),
 })
 
@@ -98,12 +98,13 @@ export type CreateDocumentRequest = z.infer<typeof CreateDocumentSchema>
 export const UpdateDocumentSchema = z.object({
   name: z
     .string()
-    .min(DOCUMENT_CONSTRAINTS.TITLE.MIN, '노트 이름은 필수입니다')
-    .max(DOCUMENT_CONSTRAINTS.TITLE.MAX, '노트 이름은 최대 50자까지 가능합니다'),
+    .min(DOCUMENT_CONSTRAINTS.TITLE.MIN, '노트 제목은 필수입니다')
+    .max(DOCUMENT_CONSTRAINTS.TITLE.MAX, '노트 제목은 30자까지 작성할 수 있어요')
+    .default('새로운 노트'),
   file: z
     .string()
-    .min(DOCUMENT_CONSTRAINTS.CONTENT.MIN, '최소 1,000자 이상의 텍스트가 필요합니다')
-    .max(DOCUMENT_CONSTRAINTS.CONTENT.MAX, '최대 50,000자까지 작성 가능합니다.'),
+    .min(DOCUMENT_CONSTRAINTS.CONTENT.MIN, '1,000자 이상의 텍스트가 필요합니다')
+    .max(DOCUMENT_CONSTRAINTS.CONTENT.MAX, '내용은 50,000자까지 작성 가능합니다'),
 })
 
 export type UpdateDocumentRequest = z.infer<typeof UpdateDocumentSchema>

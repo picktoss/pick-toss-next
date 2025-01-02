@@ -44,7 +44,11 @@ const CreateWithNotion = () => {
 
       <FixedBottom className="px-[20px]">
         {/* TODO: notion 문서 생성하는 로직 필요 */}
-        <CreateQuizDrawer handleCreateDocument={handleCreateDocument} maxQuizCount={40} />
+        <CreateQuizDrawer
+          handleCreateDocument={handleCreateDocument}
+          maxQuizCount={40}
+          disabled={true}
+        />
       </FixedBottom>
     </>
   )

@@ -14,9 +14,10 @@ import { useState } from 'react'
 interface Props {
   handleCreateDocument: (params: { quizType: Quiz.Type; star: number }) => void
   maxQuizCount: number
+  disabled: boolean
 }
 
-const CreateQuizDrawer = ({ handleCreateDocument, maxQuizCount }: Props) => {
+const CreateQuizDrawer = ({ handleCreateDocument, maxQuizCount, disabled }: Props) => {
   const DEFAULT_QUIZ_COUNT = 10
   const MAXIMUM_QUIZ_COUNT = 40
   const DOCUMENT_MIN_QUIZ_COUNT = 1
@@ -48,8 +49,13 @@ const CreateQuizDrawer = ({ handleCreateDocument, maxQuizCount }: Props) => {
   return (
     <>
       <Drawer open={isOpenDrawer} onOpenChange={setIsOpenDrawer}>
-        <DrawerTrigger asChild>
-          <Button variant={'largeRound'} colors={'primary'} className="flex-center h-[52px] w-full">
+        <DrawerTrigger asChild disabled={disabled}>
+          <Button
+            variant={'largeRound'}
+            colors={'primary'}
+            className="flex-center h-[52px] w-full"
+            disabled={disabled}
+          >
             퀴즈 만들기
           </Button>
         </DrawerTrigger>
@@ -143,7 +149,7 @@ const CreateQuizDrawer = ({ handleCreateDocument, maxQuizCount }: Props) => {
                 퀴즈 시작하기
                 <div className="flex-center size-[fit] rounded-full bg-[#D3DCE4]/[0.2] px-[8px]">
                   <Icon name="star" className="mr-[4px] size-[16px]" />
-                  <Text typography="text1-medium">10</Text>
+                  <Text typography="text1-medium">{selectedQuizCount}</Text>
                 </div>
               </Button>
             </div>
