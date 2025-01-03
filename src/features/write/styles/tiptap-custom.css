@@ -1,0 +1,51 @@
+/* 기본 wrapper 스타일 */
+.tiptap-editor-wrapper {
+  padding-bottom: 88px;
+  width: 100%;
+  max-width: 430px;
+  box-sizing: border-box;
+}
+
+/* ProseMirror의 에디터 영역 스타일 */
+.ProseMirror {
+  padding: 16px 20px;
+  width: 100%;
+  max-width: 430px;
+  min-height: 80vh;
+  box-sizing: border-box;
+
+  /* 스크롤바 숨김 */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.ProseMirror::-webkit-scrollbar {
+  display: none;
+}
+
+/* 리스트 스타일 */
+.ProseMirror ul {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 20px;
+}
+.ProseMirror li {
+  margin: 0;
+}
+.ProseMirror li::marker {
+  position: relative;
+  left: 18px;
+}
+
+/* 비어 있는 문단(placeholder용) */
+.ProseMirror p.is-editor-empty::before {
+  content: attr(data-placeholder) !important;
+  color: #d3dce4 !important;
+  pointer-events: none;
+  height: 0;
+
+  position: absolute;
+  top: 16px;
+  left: 20px;
+  width: calc(100% - 40px);
+  display: block;
+}

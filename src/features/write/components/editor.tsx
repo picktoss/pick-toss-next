@@ -1,14 +1,12 @@
 'use client'
 
-import '@remirror/styles/all.css'
-import '../styles/remirror-custom.css'
-
-import { css } from '@emotion/css'
-import React, { useCallback } from 'react'
-import { Remirror, ThemeProvider, useRemirror } from '@remirror/react'
-import { extensions } from '../libs/extensions'
+import { useEditor, EditorContent } from '@tiptap/react'
+import StarterKit from '@tiptap/starter-kit'
+import Placeholder from '@tiptap/extension-placeholder'
 import { cn } from '@/shared/lib/utils'
-import { RemirrorEventListener } from 'remirror'
+import TurndownService from 'turndown'
+import MarkdownIt from 'markdown-it'
+import '../styles/tiptap-custom.css'
 
 interface EditorProps {
   handleContentChange: (value: string) => void
@@ -16,101 +14,83 @@ interface EditorProps {
   maxLength?: number
 }
 
+// HTML을 마크다운으로 변환하기 위한 turndown 서비스 초기화
+const turndownService = new TurndownService({
+  headingStyle: 'atx',
+  hr: '---',
+  bulletListMarker: '-',
+  codeBlockStyle: 'fenced',
+  emDelimiter: '*',
+})
+turndownService.addRule('lineBreak', {
+  filter: 'br',
+  replacement: () => '\n',
+})
+
+// 마크다운을 HTML으로 변환
+const markdownParser = new MarkdownIt({
+  html: true,
+  breaks: true,
+})
+markdownParser.renderer.rules.text = (tokens, idx) => {
+  const content = tokens[idx]?.content ?? ''
+  return content.replace(/<br\s*\/?>/g, '\n')
+}
+
 export default function Editor({
-  initialContent,
+  initialContent = '',
   handleContentChange,
   maxLength = 50000,
 }: EditorProps) {
-  const { manager } = useRemirror({
-    extensions,
-    stringHandler: 'markdown',
-  })
+  const initialHTML = markdownParser.render(initialContent)
 
-  const handleEditorChange: RemirrorEventListener<Remirror.Extensions> = useCallback(
-    ({
-      helpers,
-      state,
-    }: {
-      helpers: {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        getMarkdown?: (state: any) => string
-      }
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      state: any
-    }) => {
+  const editor = useEditor({
+    extensions: [
+      StarterKit.configure({
+        paragraph: {
+          HTMLAttributes: {
+            class: 'mb-3',
+          },
+        },
+      }),
+      Placeholder.configure({
+        placeholder: '여기를 탭하여 입력을 시작하세요',
+        emptyEditorClass: 'is-editor-empty',
+      }),
+    ],
+    content: initialHTML,
+    editorProps: {
+      attributes: {
+        class: cn(
+          'prose prose-h1:text-4xl dark:prose-invert prose-p:my-0 prose-sm !shadow-none sm:prose-base lg:prose-lg xl:prose-md focus:outline-none',
+          'min-h-[100vh]'
+        ),
+      },
+    },
+    onUpdate: ({ editor }) => {
       try {
-        const markdown = helpers.getMarkdown && helpers.getMarkdown(state)
-        if (typeof markdown !== 'string') return
+        const content = editor.getText()
+        const contentLength = content.length
 
-        const newLength = markdown.length
-
-        if (newLength <= maxLength) {
+        if (contentLength <= maxLength) {
+          // HTML을 마크다운으로 변환
+          const html = editor.getHTML()
+          const markdown = turndownService.turndown(html)
           handleContentChange(markdown)
         } else {
-          const truncatedContent = markdown.slice(0, maxLength)
-
-          const editor = manager.view
-          if (editor) {
-            const currentSelection = editor.state.selection
-
-            editor.updateState(
-              editor.state.apply(
-                editor.state.tr
-                  .setSelection(currentSelection)
-                  .replaceWith(
-                    0,
-                    editor.state.doc.content.size,
-                    editor.state.schema.text(truncatedContent)
-                  )
-              )
-            )
-
-            editor.focus()
-          }
+          const truncatedContent = content.slice(0, maxLength)
+          editor.commands.setContent(truncatedContent)
+          editor.commands.focus()
         }
       } catch (error) {
-        console.error('Editor change error:', error)
+        console.error('Editor update error:', error)
       }
     },
-    [maxLength, manager, handleContentChange]
-  )
+  })
 
   return (
-    <ThemeProvider>
-      <Remirror
-        manager={manager}
-        autoRender="end"
-        initialContent={initialContent}
-        onChange={handleEditorChange}
-        placeholder="본문을 작성해보세요!"
-        classNames={[
-          css`
-            &.ProseMirror {
-              padding: 16px 20px;
-              margin-bottom: 100px;
-              width: 100%;
-              max-width: 430px;
-              min-height: 80vh;
-
-              .remirror-ul-list-content {
-                margin-top: 0;
-                margin-bottom: 0;
-                padding-left: 12px;
-              }
-              .remirror-list-item-marker-container {
-                left: -18px;
-              }
-              .remirror-list-item-with-custom-mark {
-                margin: 0;
-              }
-            }
-          `,
-          cn(
-            'prose prose-h1:text-4xl dark:prose-invert prose-p:my-0 prose-sm !shadow-none sm:prose-base lg:prose-lg xl:prose-md focus:outline-none',
-            'min-h-[100vh]'
-          ),
-        ]}
-      ></Remirror>
-    </ThemeProvider>
+    <div className="tiptap-editor-wrapper">
+      <EditorContent editor={editor} />
+    </div>
   )
 }
