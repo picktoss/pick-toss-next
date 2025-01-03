@@ -40,8 +40,6 @@ import { z } from 'zod'
 
 // 파일 관련 상수
 export const FILE_CONSTRAINTS = {
-  MIN_CHARS: DOCUMENT_CONSTRAINTS.CONTENT.MIN,
-  MAX_CHARS: DOCUMENT_CONSTRAINTS.CONTENT.MAX,
   MIN_SIZE: 6 * 1024, // 6KB
   MAX_SIZE: 12 * 1024 * 1024, // 12MB
   SUPPORTED_TYPES: {
@@ -67,10 +65,7 @@ export const FileInfoSchema = z.object({
     .number()
     .min(FILE_CONSTRAINTS.MIN_SIZE, '용량이 더 큰 파일을 선택해주세요')
     .max(FILE_CONSTRAINTS.MAX_SIZE, '용량이 더 작은 파일을 선택해주세요'),
-  charCount: z
-    .number()
-    .min(FILE_CONSTRAINTS.MIN_CHARS, '1,000자 이상인 파일을 업로드해주세요')
-    .max(FILE_CONSTRAINTS.MAX_CHARS, '50,000자 이하인 파일을 업로드해주세요'),
+  charCount: z.number(),
   content: z.string().min(1, '파일 내용은 필수입니다'),
 })
 

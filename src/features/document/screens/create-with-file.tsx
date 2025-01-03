@@ -19,7 +19,7 @@ import TitleInput from '@/features/write/components/title-input'
 import { useRouter } from 'next/navigation'
 import AiCreatingQuiz from '@/features/quiz/screen/ai-creating-quiz'
 import CreateQuizError from '@/features/quiz/screen/create-quiz-error'
-import { CreateDocumentSchema, FileInfo, FileInfoSchema } from '../config'
+import { CreateDocumentSchema, DOCUMENT_CONSTRAINTS, FileInfo, FileInfoSchema } from '../config'
 import { useToast } from '@/shared/hooks/use-toast'
 import ExitDialog from '@/features/quiz/screen/quiz-view/components/exit-dialog'
 
@@ -40,7 +40,7 @@ const CreateWithFile = () => {
   const { toast } = useToast()
 
   const availableQuizCount = useMemo(
-    () => calculateAvailableQuizCount(fileInfo?.charCount ?? 1000),
+    () => calculateAvailableQuizCount(fileInfo?.charCount ?? DOCUMENT_CONSTRAINTS.CONTENT.MIN),
     [fileInfo?.charCount]
   )
 
@@ -132,6 +132,14 @@ const CreateWithFile = () => {
           e.target.value = ''
         }
         return
+      }
+
+      if (newFileInfo.charCount < DOCUMENT_CONSTRAINTS.CONTENT.MIN) {
+        setValidationError('1,000자 이상인 파일을 업로드해주세요')
+      }
+
+      if (newFileInfo.charCount > DOCUMENT_CONSTRAINTS.CONTENT.MAX) {
+        setValidationError('50,000자 이하인 파일을 업로드해주세요')
       }
 
       setFileInfo(newFileInfo)
@@ -241,8 +249,19 @@ const CreateWithFile = () => {
               <Text as="span" typography="text2-medium" className="mr-[4px] text-text-secondary">
                 {fileInfo?.name || '새로운 노트'}
               </Text>
-              <Text as="span" typography="text2-medium" className="text-text-caption">
-                {`(${formatFileSize(fileInfo?.size ?? 0)}, ${fileInfo?.charCount}자)`}
+              <Text as="span" typography="text2-medium" color="caption">
+                ({formatFileSize(fileInfo?.size ?? 0)},{' '}
+                <Text
+                  as={'span'}
+                  color={
+                    fileInfo?.content.length < 1000 || fileInfo?.content.length > 50000
+                      ? 'critical'
+                      : 'caption'
+                  }
+                >
+                  {fileInfo?.content.length}자
+                </Text>
+                )
               </Text>
             </div>
             <input
@@ -277,7 +296,9 @@ const CreateWithFile = () => {
         <CreateQuizDrawer
           handleCreateDocument={handleCreateDocument}
           maxQuizCount={availableQuizCount}
-          disabled={(fileInfo?.content?.length ?? 0) < 1000}
+          disabled={
+            (fileInfo?.content?.length ?? 0) < 1000 || (fileInfo?.content?.length ?? 0) > 50000
+          }
         />
       </FixedBottom>
     </div>
