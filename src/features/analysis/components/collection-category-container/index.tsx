@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import Text from '@/shared/components/ui/text'
-import { analysisMockData } from '../../config'
+import { weekAnalysisMockData } from '../../config'
 import { CATEGORIES } from '@/features/category/config'
 import { cn } from '@/shared/lib/utils'
 
 interface Props {
-  data: (typeof analysisMockData)['quizCountPerCategory']
+  data: (typeof weekAnalysisMockData)['quizCountPerCategory']
 }
 
 const CollectionCategoryContainer = ({ data }: Props) => {
