@@ -6,9 +6,7 @@ import { cn } from '@/shared/lib/utils'
 import { formatToYYYYMM, getNextMonth, getPreviousMonth } from '@/shared/utils/date'
 import { useRouter, useSearchParams } from 'next/navigation'
 
-const MonthPeriodPicker = () => {
-  const today = new Date()
-
+const MonthPeriodPicker = ({ today }: { today: Date }) => {
   const router = useRouter()
   const searchParams = useSearchParams()
   const selectedMonth = searchParams.get('month') ?? formatToYYYYMM(today)

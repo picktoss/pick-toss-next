@@ -11,10 +11,11 @@ import { weekAnalysisMockData } from '../../config'
 
 interface Props {
   data: typeof weekAnalysisMockData
+  today: Date
 }
 
-const WeekGraphContainer = ({ data }: Props) => {
-  const todayDateString = formatToYYYYMMDD(new Date())
+const WeekGraphContainer = ({ data, today }: Props) => {
+  const todayDateString = formatToYYYYMMDD(today)
   const maxTotalCount = useMemo(
     () => Math.max(...data.quizzes.map((data) => data.totalQuizCount)),
     [data.quizzes]

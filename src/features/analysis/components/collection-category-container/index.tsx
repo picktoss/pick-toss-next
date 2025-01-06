@@ -9,7 +9,7 @@ interface Props {
 
 const CollectionCategoryContainer = ({ data }: Props) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const dataFormattedArray = Object.entries(data).filter(([_, quizCount]) => quizCount !== 0)
+  const dataFormattedArray = Object.entries(data)?.filter(([_, quizCount]) => quizCount !== 0) ?? []
   const categoryLength = dataFormattedArray.length
 
   const totalQuizCount = Object.values(data).reduce((accumulator, value) => accumulator + value, 0)

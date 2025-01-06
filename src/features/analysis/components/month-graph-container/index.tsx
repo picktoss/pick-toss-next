@@ -6,21 +6,24 @@ import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
 import { monthAnalysisMockData } from '../../config'
 import { formatToMD, formatToYYYYMM, formatToYYYYMMDD, isAdjacentDate } from '@/shared/utils/date'
-import { useCallback, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import MonthGraphItem from '../month-graph-item'
 
 interface Props {
   data: typeof monthAnalysisMockData
+  today: Date
 }
 
-const MonthGraphContainer = ({ data }: Props) => {
-  const today = new Date()
+const MonthGraphContainer = ({ data, today }: Props) => {
   const todayDateString = formatToYYYYMMDD(today)
   const selectedMonth = useSearchParams().get('month')
   const thisMonth = !selectedMonth || selectedMonth === formatToYYYYMM(today)
 
-  const maxTotalCount = Math.max(...data.quizzes.map((data) => data.totalQuizCount))
+  const maxTotalCount = useMemo(
+    () => Math.max(...data.quizzes.map((data) => data.totalQuizCount)),
+    [data.quizzes]
+  )
 
   const firstDateMD = formatToMD(data.quizzes[0]?.date ?? todayDateString)
   const lastDateMD = formatToMD(data.quizzes[data.quizzes.length - 1]?.date ?? todayDateString)

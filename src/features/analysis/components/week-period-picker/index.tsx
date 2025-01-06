@@ -12,9 +12,7 @@ import {
 } from '@/shared/utils/date'
 import { useRouter, useSearchParams } from 'next/navigation'
 
-const WeekPeriodPicker = () => {
-  const today = new Date()
-
+const WeekPeriodPicker = ({ today }: { today: Date }) => {
   const router = useRouter()
   const searchParams = useSearchParams()
   const startDate = searchParams.get('startDate') ?? formatToYYYYMMDD(getSixDaysAgo())
