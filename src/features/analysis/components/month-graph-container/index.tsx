@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
 
 import DirectorySelectDrawer from '@/features/directory/components/directory-select-drawer'

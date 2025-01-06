@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import Text from '@/shared/components/ui/text'
 import { weekAnalysisMockData } from '../../config'
 import { CATEGORIES } from '@/features/category/config'
@@ -9,6 +8,7 @@ interface Props {
 }
 
 const CollectionCategoryContainer = ({ data }: Props) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const dataFormattedArray = Object.entries(data).filter(([_, quizCount]) => quizCount !== 0)
   const categoryLength = dataFormattedArray.length
 
