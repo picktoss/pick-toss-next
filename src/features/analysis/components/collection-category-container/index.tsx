@@ -12,7 +12,7 @@ const CollectionCategoryContainer = ({ data }: Props) => {
   const dataFormattedArray = Object.entries(data)?.filter(([_, quizCount]) => quizCount !== 0) ?? []
   const categoryLength = dataFormattedArray.length
 
-  const totalQuizCount = Object.values(data).reduce((accumulator, value) => accumulator + value, 0)
+  const totalQuizCount = Object.values(data)?.reduce((accumulator, value) => accumulator + value, 0)
   const mostQuizzesCategory =
     dataFormattedArray.length > 0
       ? dataFormattedArray.reduce(

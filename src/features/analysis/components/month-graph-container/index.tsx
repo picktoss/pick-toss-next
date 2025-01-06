@@ -127,30 +127,31 @@ const MonthGraphContainer = ({ data, today }: Props) => {
               </div>
             )}
 
-            {data.quizzes.map((data, index) => {
-              const notSolved = data.totalQuizCount === 0
-              const scaleFactor = data.totalQuizCount / maxTotalCount
+            {Array.isArray(data.quizzes) &&
+              data.quizzes.map((data, index) => {
+                const notSolved = data.totalQuizCount === 0
+                const scaleFactor = data.totalQuizCount / maxTotalCount
 
-              const barHeight = notSolved ? 3 : scaleFactor * 100
-              const rightHeight = notSolved
-                ? 0
-                : (data.correctAnswerCount / data.totalQuizCount) * 100
+                const barHeight = notSolved ? 3 : scaleFactor * 100
+                const rightHeight = notSolved
+                  ? 0
+                  : (data.correctAnswerCount / data.totalQuizCount) * 100
 
-              return (
-                <MonthGraphItem
-                  key={index}
-                  date={
-                    data.date === todayDateString
-                      ? '오늘'
-                      : isAdjacentDate(data.date)
-                      ? ''
-                      : formatToMD(data.date)
-                  }
-                  barHeight={barHeight}
-                  rightHeight={rightHeight}
-                />
-              )
-            })}
+                return (
+                  <MonthGraphItem
+                    key={index}
+                    date={
+                      data.date === todayDateString
+                        ? '오늘'
+                        : isAdjacentDate(data.date)
+                        ? ''
+                        : formatToMD(data.date)
+                    }
+                    barHeight={barHeight}
+                    rightHeight={rightHeight}
+                  />
+                )
+              })}
           </div>
         </div>
       </div>

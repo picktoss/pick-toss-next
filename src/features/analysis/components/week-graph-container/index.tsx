@@ -79,29 +79,32 @@ const WeekGraphContainer = ({ data, today }: Props) => {
       </div>
 
       <div className="relative mt-[60px] flex h-[155px] w-full gap-[14px]">
-        {data.quizzes.map((data, index) => {
-          const notSolved = data.totalQuizCount === 0
-          const scaleFactor = data.totalQuizCount / maxTotalCount
+        {Array.isArray(data.quizzes) &&
+          data.quizzes.map((data, index) => {
+            const notSolved = data.totalQuizCount === 0
+            const scaleFactor = data.totalQuizCount / maxTotalCount
 
-          const barHeight = notSolved ? 10 : scaleFactor * 100
-          const rightHeight = notSolved ? 0 : (data.correctAnswerCount / data.totalQuizCount) * 100
+            const barHeight = notSolved ? 10 : scaleFactor * 100
+            const rightHeight = notSolved
+              ? 0
+              : (data.correctAnswerCount / data.totalQuizCount) * 100
 
-          return (
-            <WeekGraphItem
-              key={index}
-              index={index}
-              activeIndex={activeIndex}
-              handleBarClick={handleBarClick}
-              handleBarMouseEnter={handleBarMouseEnter}
-              handleBarMouseLeave={handleBarMouseLeave}
-              date={data.date === todayDateString ? '오늘' : formatToMD(data.date)}
-              totalCount={data.totalQuizCount}
-              rightCount={data.correctAnswerCount}
-              barHeight={barHeight}
-              rightHeight={rightHeight}
-            />
-          )
-        })}
+            return (
+              <WeekGraphItem
+                key={index}
+                index={index}
+                activeIndex={activeIndex}
+                handleBarClick={handleBarClick}
+                handleBarMouseEnter={handleBarMouseEnter}
+                handleBarMouseLeave={handleBarMouseLeave}
+                date={data.date === todayDateString ? '오늘' : formatToMD(data.date)}
+                totalCount={data.totalQuizCount}
+                rightCount={data.correctAnswerCount}
+                barHeight={barHeight}
+                rightHeight={rightHeight}
+              />
+            )
+          })}
       </div>
 
       <div className="mt-[20px] flex h-fit w-full rounded-[12px] bg-background-base-02 py-[18px]">
