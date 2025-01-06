@@ -137,16 +137,17 @@ const MonthGraphContainer = ({ data, today }: Props) => {
                   ? 0
                   : (data.correctAnswerCount / data.totalQuizCount) * 100
 
+                const renderDateText =
+                  data.date === todayDateString
+                    ? '오늘'
+                    : isAdjacentDate(data.date)
+                    ? ''
+                    : formatToMD(data.date)
+
                 return (
                   <MonthGraphItem
                     key={index}
-                    date={
-                      data.date === todayDateString
-                        ? '오늘'
-                        : isAdjacentDate(data.date)
-                        ? ''
-                        : formatToMD(data.date)
-                    }
+                    date={renderDateText}
                     barHeight={barHeight}
                     rightHeight={rightHeight}
                   />

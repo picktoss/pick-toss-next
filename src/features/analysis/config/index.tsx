@@ -4,9 +4,9 @@ const today = new Date()
 
 export const weekAnalysisMockData = {
   quizzes: [
-    { date: '2024-10-7', totalQuizCount: 15, correctAnswerCount: 10 },
-    { date: '2024-10-8', totalQuizCount: 18, correctAnswerCount: 15 },
-    { date: '2024-10-9', totalQuizCount: 50, correctAnswerCount: 35 },
+    { date: '2024-10-07', totalQuizCount: 15, correctAnswerCount: 10 },
+    { date: '2024-10-08', totalQuizCount: 18, correctAnswerCount: 15 },
+    { date: '2024-10-09', totalQuizCount: 50, correctAnswerCount: 35 },
     { date: '2024-10-10', totalQuizCount: 0, correctAnswerCount: 0 },
     { date: '2024-10-11', totalQuizCount: 18, correctAnswerCount: 15 },
     { date: '2024-10-12', totalQuizCount: 10, correctAnswerCount: 10 },
@@ -31,15 +31,15 @@ export const weekAnalysisMockData = {
 
 export const monthAnalysisMockData = {
   quizzes: [
-    { date: '2025-01-1', totalQuizCount: 10, correctAnswerCount: 10 },
-    { date: '2025-01-2', totalQuizCount: 18, correctAnswerCount: 15 },
-    { date: '2025-01-3', totalQuizCount: 0, correctAnswerCount: 0 },
-    { date: '2025-01-4', totalQuizCount: 15, correctAnswerCount: 10 },
-    { date: '2025-01-5', totalQuizCount: 70, correctAnswerCount: 55 },
-    // { date: '2024-10-6', totalQuizCount: 17, correctAnswerCount: 12 },
-    // { date: '2024-10-7', totalQuizCount: 15, correctAnswerCount: 10 },
-    // { date: '2024-10-8', totalQuizCount: 18, correctAnswerCount: 15 },
-    // { date: '2024-10-9', totalQuizCount: 24, correctAnswerCount: 20 },
+    { date: '2025-01-01', totalQuizCount: 10, correctAnswerCount: 10 },
+    { date: '2025-01-02', totalQuizCount: 18, correctAnswerCount: 15 },
+    { date: '2025-01-03', totalQuizCount: 0, correctAnswerCount: 0 },
+    { date: '2025-01-04', totalQuizCount: 15, correctAnswerCount: 10 },
+    { date: '2025-01-05', totalQuizCount: 70, correctAnswerCount: 55 },
+    // { date: '2024-10-06', totalQuizCount: 17, correctAnswerCount: 12 },
+    // { date: '2024-10-07', totalQuizCount: 15, correctAnswerCount: 10 },
+    // { date: '2024-10-08', totalQuizCount: 18, correctAnswerCount: 15 },
+    // { date: '2024-10-09', totalQuizCount: 24, correctAnswerCount: 20 },
     // { date: '2024-10-10', totalQuizCount: 17, correctAnswerCount: 12 },
     // { date: '2024-10-11', totalQuizCount: 10, correctAnswerCount: 10 },
     // { date: '2024-10-12', totalQuizCount: 18, correctAnswerCount: 15 },

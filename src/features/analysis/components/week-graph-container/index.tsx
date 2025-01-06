@@ -16,10 +16,15 @@ interface Props {
 
 const WeekGraphContainer = ({ data, today }: Props) => {
   const todayDateString = formatToYYYYMMDD(today)
-  const maxTotalCount = useMemo(
-    () => Math.max(...data.quizzes.map((data) => data.totalQuizCount)),
-    [data.quizzes]
-  )
+  const maxTotalCount = useMemo(() => {
+    try {
+      if (!data?.quizzes?.length) return 1 // 0으로 나누기 방지를 위해 1로 설정
+      return Math.max(...data.quizzes.map((data) => data.totalQuizCount))
+    } catch (error) {
+      console.error('Error calculating maxTotalCount:', error)
+      return 1
+    }
+  }, [data.quizzes])
 
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
   const { selectedDirectory } = useDirectoryContext()
@@ -89,6 +94,8 @@ const WeekGraphContainer = ({ data, today }: Props) => {
               ? 0
               : (data.correctAnswerCount / data.totalQuizCount) * 100
 
+            const renderDateText = data.date === todayDateString ? '오늘' : formatToMD(data.date)
+
             return (
               <WeekGraphItem
                 key={index}
@@ -97,7 +104,7 @@ const WeekGraphContainer = ({ data, today }: Props) => {
                 handleBarClick={handleBarClick}
                 handleBarMouseEnter={handleBarMouseEnter}
                 handleBarMouseLeave={handleBarMouseLeave}
-                date={data.date === todayDateString ? '오늘' : formatToMD(data.date)}
+                date={renderDateText}
                 totalCount={data.totalQuizCount}
                 rightCount={data.correctAnswerCount}
                 barHeight={barHeight}
