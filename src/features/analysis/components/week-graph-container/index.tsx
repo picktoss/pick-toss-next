@@ -4,7 +4,7 @@ import DirectorySelectDrawer from '@/features/directory/components/directory-sel
 import { useDirectoryContext } from '@/features/directory/contexts/directory-context'
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
-import { useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import WeekGraphItem from '../week-graph-item'
 import { formatToMD, formatToYYYYMMDD } from '@/shared/utils/date'
 import { weekAnalysisMockData } from '../../config'
@@ -15,7 +15,10 @@ interface Props {
 
 const WeekGraphContainer = ({ data }: Props) => {
   const todayDateString = formatToYYYYMMDD(new Date())
-  const maxTotalCount = Math.max(...data.quizzes.map((data) => data.totalQuizCount))
+  const maxTotalCount = useMemo(
+    () => Math.max(...data.quizzes.map((data) => data.totalQuizCount)),
+    [data.quizzes]
+  )
 
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
   const { selectedDirectory } = useDirectoryContext()
@@ -26,17 +29,17 @@ const WeekGraphContainer = ({ data }: Props) => {
     ? '전체 노트'
     : selectedDirectory.name
 
-  const handleBarClick = (index: number) => {
+  const handleBarClick = useCallback((index: number) => {
     setActiveIndex(index)
-  }
+  }, [])
 
-  const handleBarMouseEnter = (index: number) => {
+  const handleBarMouseEnter = useCallback((index: number) => {
     setActiveIndex(index)
-  }
+  }, [])
 
-  const handleBarMouseLeave = () => {
+  const handleBarMouseLeave = useCallback(() => {
     setActiveIndex(null)
-  }
+  }, [])
 
   return (
     <div className="flex h-fit w-full flex-col px-[16px] pb-[48px]">

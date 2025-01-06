@@ -13,11 +13,14 @@ const CollectionCategoryContainer = ({ data }: Props) => {
   const categoryLength = dataFormattedArray.length
 
   const totalQuizCount = Object.values(data).reduce((accumulator, value) => accumulator + value, 0)
-  const mostQuizzesCategory = dataFormattedArray.reduce(
-    (maxKey: Collection.Field, [key, value]) =>
-      value > data[maxKey] ? (key as Collection.Field) : maxKey,
-    Object.keys(data)[0] as Collection.Field
-  )
+  const mostQuizzesCategory =
+    dataFormattedArray.length > 0
+      ? dataFormattedArray.reduce(
+          (maxKey: Collection.Field, [key, value]) =>
+            value > data[maxKey] ? (key as Collection.Field) : maxKey,
+          Object.keys(data)[0] as Collection.Field
+        )
+      : null
 
   return (
     <div className="px-[16px] pb-[126px] pt-[24px]">
@@ -26,10 +29,16 @@ const CollectionCategoryContainer = ({ data }: Props) => {
       </Text>
 
       <Text typography="title3" className="mb-[28px] mt-[8px]">
-        <Text as={'span'} color="info">
-          {CATEGORIES.find((value) => value.id === mostQuizzesCategory)?.name}
-        </Text>{' '}
-        컬렉션을 가장 많이 풀었어요
+        {mostQuizzesCategory ? (
+          <>
+            <Text as={'span'} color="info">
+              {CATEGORIES.find((value) => value.id === mostQuizzesCategory)?.name}
+            </Text>{' '}
+            컬렉션을 가장 많이 풀었어요
+          </>
+        ) : (
+          '최근 푼 컬렉션이 없어요'
+        )}
       </Text>
 
       <div className="flex h-[24px] w-full overflow-hidden rounded-[8px] bg-border-divider">

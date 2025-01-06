@@ -5,12 +5,12 @@ import { useRouter, useSearchParams } from 'next/navigation'
 
 const AnalysisTab = () => {
   const router = useRouter()
-  const tab = useSearchParams().get('tab')
+  const tab = useSearchParams().get('tab') ?? 'week'
 
   return (
     <div className="w-full px-[16px] pt-[12px]">
       <Tabs
-        defaultValue={tab ?? 'week'}
+        defaultValue={tab}
         className="h-[48px] w-full rounded-[12px] bg-background-base-02 p-[4px]"
         onValueChange={(value) => router.replace(`?tab=${value}`)}
       >

@@ -6,7 +6,7 @@ import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
 import { monthAnalysisMockData } from '../../config'
 import { formatToMD, formatToYYYYMM, formatToYYYYMMDD, isAdjacentDate } from '@/shared/utils/date'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import MonthGraphItem from '../month-graph-item'
 
@@ -34,17 +34,17 @@ const MonthGraphContainer = ({ data }: Props) => {
     ? '전체 노트'
     : selectedDirectory.name
 
-  const handleBarClick = () => {
+  const handleBarClick = useCallback(() => {
     setActiveTooltip(true)
-  }
+  }, [])
 
-  const handleBarMouseEnter = () => {
+  const handleBarMouseEnter = useCallback(() => {
     setActiveTooltip(true)
-  }
+  }, [])
 
-  const handleBarMouseLeave = () => {
+  const handleBarMouseLeave = useCallback(() => {
     setActiveTooltip(false)
-  }
+  }, [])
 
   return (
     <div className="flex h-fit w-full flex-col px-[16px] pb-[48px]">
