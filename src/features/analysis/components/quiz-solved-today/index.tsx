@@ -4,8 +4,7 @@ import Link from 'next/link'
 
 const QuizSolvedToday = ({ quizCount }: { quizCount: number }) => {
   return (
-    // 클릭하면 퀴즈 분석의 오늘 날짜로 이동
-    <Link href={''} className="flex px-[15px]">
+    <Link href={'/analysis'} className="flex px-[15px]">
       <Icon name="graph" className="mr-[12.6px] size-[70px]" fill="var(--color-orange-400)" />
       <div className="flex flex-col">
         <Text typography="text1-medium" color="secondary">

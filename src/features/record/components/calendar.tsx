@@ -2,7 +2,7 @@
 
 import { Calendar } from '@/shared/components/ui/calendar'
 import { cn } from '@/shared/lib/utils'
-import { getFormattedDate } from '@/shared/utils/date'
+import { formatToYYYYMMDD } from '@/shared/utils/date'
 import { format } from 'date-fns'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useMemo } from 'react'
@@ -28,7 +28,7 @@ const CustomCalendar = ({ className }: Props) => {
 
   const handleSelect = (selected?: Date) => {
     if (selected) {
-      const formattedDate = getFormattedDate(selected)
+      const formattedDate = formatToYYYYMMDD(selected)
 
       router.replace(`?selectedDate=${formattedDate}`)
     }

@@ -4,7 +4,7 @@ import RecordList from '@/features/record/components/record-list'
 import { getQuizRecordsByDate } from '@/requests/quiz/server'
 import Icon from '@/shared/components/custom/icon'
 import { Button } from '@/shared/components/ui/button'
-import { getFormattedDate } from '@/shared/utils/date'
+import { formatToYYYYMMDD } from '@/shared/utils/date'
 import Link from 'next/link'
 
 interface Props {
@@ -15,7 +15,7 @@ interface Props {
 
 const RecordPage = async ({ searchParams }: Props) => {
   const today = new Date()
-  const selectedDate = searchParams.selectedDate ?? getFormattedDate(today)
+  const selectedDate = searchParams.selectedDate ?? formatToYYYYMMDD(today)
   const { currentConsecutiveDays, maxConsecutiveDays, quizRecords } = await getQuizRecordsByDate(
     selectedDate
   )

@@ -126,11 +126,117 @@ export function getCurrentTime() {
 }
 
 // YYYY-MM-DD 형식으로 반환
-export const getFormattedDate = (date: Date) => {
+export const formatToYYYYMMDD = (date: Date) => {
   const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
     2,
     '0'
   )}-${String(date.getDate()).padStart(2, '0')}`
 
   return formattedDate
+}
+
+// YYYY-MM 형식으로 반환
+export const formatToYYYYMM = (date: Date): string => {
+  const year = date.getFullYear()
+  const month = (date.getMonth() + 1).toString().padStart(2, '0') // 2자리로 맞춤
+  return `${year}-${month}`
+}
+
+// M.D 형식으로 변환
+export const formatToMD = (dateString: string): string => {
+  const date = new Date(dateString)
+
+  if (isNaN(date.getTime())) {
+    throw new Error('Invalid date string')
+  }
+
+  // 월(m)과 일(d) 앞의 '0' 제거
+  const month = date.getMonth() + 1
+  const day = date.getDate()
+
+  return `${month}.${day}`
+}
+
+/** 퀴즈 분석 월 단위 - 이전 달 계산 */
+export const getPreviousMonth = (yyyymm: string): string => {
+  const [year, month] = yyyymm.split('-').map(Number)
+  const date = new Date(year ?? 1, (month ?? 1) - 1) // 입력된 월로 Date 생성 (0부터 시작)
+
+  date.setMonth(date.getMonth() - 1) // 이전 달로 이동
+
+  const prevYear = date.getFullYear()
+  const prevMonth = (date.getMonth() + 1).toString().padStart(2, '0') // 2자리로 맞춤
+
+  return `${prevYear}-${prevMonth}`
+}
+
+/** 퀴즈 분석 월 단위 - 다음 달 계산 */
+export const getNextMonth = (yyyymm: string): string => {
+  const [year, month] = yyyymm.split('-').map(Number)
+  const date = new Date(year ?? 1, (month ?? 1) - 1) // 입력된 월로 Date 생성 (0부터 시작)
+
+  date.setMonth(date.getMonth() + 1) // 다음 달로 이동
+
+  const nextYear = date.getFullYear()
+  const nextMonth = (date.getMonth() + 1).toString().padStart(2, '0') // 2자리로 맞춤
+
+  return `${nextYear}-${nextMonth}`
+}
+
+/** 퀴즈 분석 주 단위 - 시작 날짜 계산 */
+export const getSixDaysAgo = (): Date => {
+  const today = new Date()
+  today.setDate(today.getDate() - 6)
+  return today
+}
+
+/** 퀴즈 분석 주 단위 - 특정 날짜를 넣으면 [7일 전 날짜, 1일 전 날짜] 반환 */
+export const getPastDatesFromGivenDate = (dateString: string): string[] => {
+  const date = new Date(dateString)
+
+  if (isNaN(date.getTime())) {
+    throw new Error('Invalid date string')
+  }
+
+  const formatDate = (date: Date): string => {
+    return date.toISOString().split('T')[0] ?? ''
+  }
+
+  const sevenDaysAgo = new Date(date)
+  sevenDaysAgo.setDate(date.getDate() - 7)
+
+  const oneDayAgo = new Date(date)
+  oneDayAgo.setDate(date.getDate() - 1)
+
+  return [formatDate(sevenDaysAgo), formatDate(oneDayAgo)]
+}
+
+/** 퀴즈 분석 주 단위 - 특정 날짜를 넣으면 [1일 후 날짜, 7일 후 날짜] 반환 */
+export const getFutureDatesFromGivenDate = (dateString: string): string[] => {
+  const date = new Date(dateString)
+
+  if (isNaN(date.getTime())) {
+    throw new Error('Invalid date string')
+  }
+
+  const formatDate = (date: Date): string => {
+    return date.toISOString().split('T')[0] ?? ''
+  }
+
+  const oneDayLater = new Date(date)
+  oneDayLater.setDate(date.getDate() + 1)
+
+  const sevenDaysLater = new Date(date)
+  sevenDaysLater.setDate(date.getDate() + 7)
+
+  return [formatDate(oneDayLater), formatDate(sevenDaysLater)]
+}
+
+/** 오늘을 기준으로 +-2일에 해당할 경우 true 반환 */
+export const isAdjacentDate = (dateString: string): boolean => {
+  const today = new Date()
+  const input = new Date(dateString)
+
+  const diffDays = Math.abs((today.getTime() - input.getTime()) / (1000 * 60 * 60 * 24))
+  return diffDays >= 0.5 && diffDays <= 2.5
 }

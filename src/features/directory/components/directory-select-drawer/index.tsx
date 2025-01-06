@@ -13,11 +13,15 @@ import {
 } from '@/shared/components/ui/drawer'
 import Text from '@/shared/components/ui/text'
 import { cn } from '@/shared/lib/utils'
-import { useState } from 'react'
+import React, { useState } from 'react'
 
-const DirectorySelectDrawer = () => {
+interface Props {
+  trigger: React.ReactNode
+}
+
+const DirectorySelectDrawer = ({ trigger }: Props) => {
   const [open, setOpen] = useState(false)
-  const { directories, selectDirectoryId, selectedDirectoryId, selectedDirectory, totalDocsCount } =
+  const { directories, selectDirectoryId, selectedDirectoryId, totalDocsCount } =
     useDirectoryContext()
 
   const handleDirectorySelect = (id: number) => {
@@ -25,19 +29,9 @@ const DirectorySelectDrawer = () => {
     setOpen(false)
   }
 
-  const directoryName = !selectedDirectory?.name
-    ? '전체 노트'
-    : selectedDirectory.tag === 'DEFAULT'
-    ? '전체 노트'
-    : selectedDirectory.name
-
   return (
     <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerTrigger asChild>
-        <button className="rounded-full bg-background-base-02 px-[16px] py-[5px]">
-          {`${selectedDirectory?.emoji ?? ''} ${directoryName}`}
-        </button>
-      </DrawerTrigger>
+      <DrawerTrigger asChild>{trigger}</DrawerTrigger>
 
       <DrawerContent
         overlayProps={{ className: 'max-w-mobile mx-auto' }}

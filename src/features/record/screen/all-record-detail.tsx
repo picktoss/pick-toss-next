@@ -3,7 +3,7 @@
 import Loading from '@/shared/components/custom/loading'
 import Text from '@/shared/components/ui/text'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
-import { formatDateKorean, getFormattedDate } from '@/shared/utils/date'
+import { formatDateKorean, formatToYYYYMMDD } from '@/shared/utils/date'
 import { useQuery } from '@tanstack/react-query'
 import { useSearchParams } from 'next/navigation'
 import RecordItem from '../components/record-item'
@@ -12,7 +12,7 @@ import { useEffect } from 'react'
 const AllRecordDetail = () => {
   const today = new Date()
   const searchParams = useSearchParams()
-  const selectedDate = searchParams.get('selectedDate') ?? getFormattedDate(today)
+  const selectedDate = searchParams.get('selectedDate') ?? formatToYYYYMMDD(today)
 
   const { data, isPending } = useQuery(queries.quiz.allRecords())
 
