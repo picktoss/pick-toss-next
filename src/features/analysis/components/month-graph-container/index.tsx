@@ -9,6 +9,7 @@ import { formatToMD, formatToYYYYMM, formatToYYYYMMDD, isAdjacentDate } from '@/
 import { useCallback, useMemo, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import MonthGraphItem from '../month-graph-item'
+import { Button } from '@/shared/components/ui/button'
 
 interface Props {
   data: typeof monthAnalysisMockData
@@ -19,6 +20,7 @@ const MonthGraphContainer = ({ data, today }: Props) => {
   const todayDateString = formatToYYYYMMDD(today)
   const selectedMonth = useSearchParams().get('month')
   const thisMonth = !selectedMonth || selectedMonth === formatToYYYYMM(today)
+  const isEmpty = !data.totalQuizCountDuringThePeriod
 
   const maxTotalCount = useMemo(
     () => Math.max(...data.quizzes.map((data) => data.totalQuizCount)),
@@ -62,7 +64,11 @@ const MonthGraphContainer = ({ data, today }: Props) => {
         }
       />
 
-      {thisMonth ? (
+      {isEmpty ? (
+        <Text typography="title3" className="my-[8px]">
+          이번 달에 푼 문제가 없어요
+        </Text>
+      ) : thisMonth ? (
         <Text typography="title3" className="my-[8px]">
           이번 달은{' '}
           <Text as={'span'} color="info">
@@ -162,7 +168,7 @@ const MonthGraphContainer = ({ data, today }: Props) => {
           <Text as={'span'} typography="text2-medium" color="sub">
             지난 달 같은 기간보다
           </Text>
-          <Text as={'span'} typography="subtitle2-bold">
+          <Text as={'span'} typography="subtitle2-bold" color={isEmpty ? 'sub' : 'primary'}>
             {0 < data.totalQuizCountDuringThePeriod && '+'}
             {0 > data.totalQuizCountDuringThePeriod && '-'}
             {data.differenceFromLastMonth} 문제
@@ -172,11 +178,17 @@ const MonthGraphContainer = ({ data, today }: Props) => {
           <Text as={'span'} typography="text2-medium" color="sub">
             평균 정답률
           </Text>
-          <Text as={'span'} typography="subtitle2-bold">
+          <Text as={'span'} typography="subtitle2-bold" color={isEmpty ? 'sub' : 'primary'}>
             {data.averageCorrectRate}%
           </Text>
         </div>
       </div>
+
+      {isEmpty && (
+        <Button variant={'mediumRound'} className="mt-[20px] w-full">
+          퀴즈노트에서 복습 시작하기
+        </Button>
+      )}
     </div>
   )
 }

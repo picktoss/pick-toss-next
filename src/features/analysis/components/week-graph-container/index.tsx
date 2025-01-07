@@ -8,6 +8,7 @@ import { useCallback, useMemo, useState } from 'react'
 import WeekGraphItem from '../week-graph-item'
 import { formatToMD, formatToYYYYMMDD } from '@/shared/utils/date'
 import { weekAnalysisMockData } from '../../config'
+import { Button } from '@/shared/components/ui/button'
 
 interface Props {
   data: typeof weekAnalysisMockData
@@ -25,6 +26,7 @@ const WeekGraphContainer = ({ data, today }: Props) => {
       return 1
     }
   }, [data.quizzes])
+  const isEmpty = !data.totalQuizCountDuringThePeriod
 
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
   const { selectedDirectory } = useDirectoryContext()
@@ -60,13 +62,19 @@ const WeekGraphContainer = ({ data, today }: Props) => {
         }
       />
 
-      <Text typography="title3" className="my-[8px]">
-        하루에{' '}
-        <Text as={'span'} color="info">
-          {data.averageQuizCountPerDay}문제
-        </Text>{' '}
-        정도 풀어요
-      </Text>
+      {isEmpty ? (
+        <Text typography="title3" className="my-[8px]">
+          최근 푼 문제가 없어요
+        </Text>
+      ) : (
+        <Text typography="title3" className="my-[8px]">
+          하루에{' '}
+          <Text as={'span'} color="info">
+            {data.averageQuizCountPerDay}문제
+          </Text>{' '}
+          정도 풀어요
+        </Text>
+      )}
 
       <div className="flex justify-end gap-[12px]">
         <div className="flex items-center">
@@ -119,7 +127,7 @@ const WeekGraphContainer = ({ data, today }: Props) => {
           <Text as={'span'} typography="text2-medium" color="sub">
             7일간 푼 문제
           </Text>
-          <Text as={'span'} typography="subtitle2-bold">
+          <Text as={'span'} typography="subtitle2-bold" color={isEmpty ? 'sub' : 'primary'}>
             {data.totalQuizCountDuringThePeriod} 문제
           </Text>
         </div>
@@ -127,11 +135,17 @@ const WeekGraphContainer = ({ data, today }: Props) => {
           <Text as={'span'} typography="text2-medium" color="sub">
             평균 정답률
           </Text>
-          <Text as={'span'} typography="subtitle2-bold">
+          <Text as={'span'} typography="subtitle2-bold" color={isEmpty ? 'sub' : 'primary'}>
             {data.averageCorrectRate}%
           </Text>
         </div>
       </div>
+
+      {isEmpty && (
+        <Button variant={'mediumRound'} className="mt-[20px] w-full">
+          퀴즈노트에서 복습 시작하기
+        </Button>
+      )}
     </div>
   )
 }

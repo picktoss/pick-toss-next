@@ -2,6 +2,7 @@ import Text from '@/shared/components/ui/text'
 import { weekAnalysisMockData } from '../../config'
 import { CATEGORIES } from '@/features/category/config'
 import { cn } from '@/shared/lib/utils'
+import { Button } from '@/shared/components/ui/button'
 
 interface Props {
   data: (typeof weekAnalysisMockData)['quizCountPerCategory']
@@ -87,6 +88,12 @@ const CollectionCategoryContainer = ({ data }: Props) => {
           )
         })}
       </div>
+
+      {dataFormattedArray.length === 0 && (
+        <Button variant={'mediumRound'} className="mt-[32px] w-full">
+          풀만한 컬렉션 보러가기
+        </Button>
+      )}
     </div>
   )
 }

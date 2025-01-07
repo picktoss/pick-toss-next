@@ -112,12 +112,12 @@ const ProfilePage = async () => {
           <Text typography="text2-medium">내 컬렉션</Text>
         </Link>
 
-        <div className="flex-center flex-col">
+        <Link href={'/analysis'} className="flex-center flex-col">
           <div className="rounded-[20px] bg-[#f8f8f8] p-[16px]">
             <Icon name="graph" className="w-[32px]" />
           </div>
           <Text typography="text2-medium">퀴즈 분석</Text>
-        </div>
+        </Link>
 
         <Link href={'/record'} className="flex-center flex-col">
           <div className="rounded-[20px] bg-[#f8f8f8] p-[16px]">
