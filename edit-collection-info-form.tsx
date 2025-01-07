@@ -19,16 +19,17 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from '@/shared/components/ui/dropdown-menu'
-import { Form, FormControl, FormField, FormItem } from '@/shared/components/ui/form'
 import Text from '@/shared/components/ui/text'
 import { Textarea } from '@/shared/components/ui/textarea'
-import { toast } from '@/shared/hooks/use-toast'
-import { zodResolver } from '@hookform/resolvers/zod'
 import EmojiPicker from 'emoji-picker-react'
 import { useParams, useRouter } from 'next/navigation'
-import { useEffect } from 'react'
+import { Form, FormControl, FormField, FormItem } from '@/shared/components/ui/form'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Input } from '@/shared/components/ui/input'
+import { toast } from '@/shared/hooks/use-toast'
+import { useEffect } from 'react'
 
 const CategoryId = z.enum([
   'IT',
@@ -55,6 +56,7 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>
 
+// 가짜
 const EditCollectionInfoForm = () => {
   const router = useRouter()
   const { id } = useParams()
@@ -121,7 +123,6 @@ const EditCollectionInfoForm = () => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="mt-3">
         <div>
-          {/* 이모지 선택 및 컬렉션 이름 입력 */}
           <div className="flex items-center gap-[20px]">
             <FormField
               control={form.control}
@@ -160,7 +161,7 @@ const EditCollectionInfoForm = () => {
                     <input
                       {...field}
                       placeholder="새로운 컬렉션"
-                      className="flex-1 bg-transparent text-title2 placeholder:text-text-placeholder-02 focus:outline-none"
+                      className="flex-1 w-full bg-transparent text-title2 placeholder:text-text-placeholder-02 focus:outline-none"
                       autoFocus
                     />
                   </FormControl>
@@ -169,9 +170,29 @@ const EditCollectionInfoForm = () => {
             />
           </div>
 
-          {/* 분야 선택 */}
-          <div className="mt-[25px] flex items-center gap-[5px]">
-            <Text typography="text1-medium" color="secondary">
+          <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem className="mt-[27px]">
+                <Text typography="text1-medium" color="secondary">
+                  컬렉션 설명<span className="text-text-accent">*</span>
+                </Text>
+                <FormControl>
+                  <Textarea
+                    {...field}
+                    className="mt-2 min-h-[130px] rounded-[8px] border-none bg-background-base-02"
+                  />
+                </FormControl>
+                <Text typography="text2-medium" color="caption" className="mt-2">
+                  200자 이내로 입력해주세요 ({field.value.length}/200)
+                </Text>
+              </FormItem>
+            )}
+          />
+
+          <div className="mt-[25px]">
+            <Text typography="text1-medium" color="sub">
               분야<span className="text-text-accent">*</span>
             </Text>
             <FormField
@@ -190,7 +211,7 @@ const EditCollectionInfoForm = () => {
                           />
                         </div>
                       </DrawerTrigger>
-                      <DrawerContent className="max-w-mobile mx-auto">
+                      <DrawerContent>
                         <DrawerHeader>
                           <DrawerTitle>카테고리를 선택해주세요.</DrawerTitle>
                         </DrawerHeader>
@@ -211,38 +232,14 @@ const EditCollectionInfoForm = () => {
               )}
             />
           </div>
-
-          {/* 컬렉션 설명 */}
-          <div className="mt-[27px]">
-            <Text typography="text1-medium" color="secondary">
-              컬렉션 설명<span className="text-text-accent">*</span>
-            </Text>
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Textarea
-                      {...field}
-                      className="mt-2 min-h-[130px] rounded-[8px] border-none bg-background-base-02"
-                    />
-                  </FormControl>
-                  <Text typography="text2-medium" color="caption" className="mt-2">
-                    200자 이내로 입력해주세요 ({field.value.length}/200)
-                  </Text>
-                </FormItem>
-              )}
-            />
-          </div>
         </div>
 
         <FixedBottom className="flex gap-[6px]">
           <Button
             variant={'largeRound'}
             className="w-full"
-            type="submit"
-            disabled={!form.formState.isValid}
+            onClick={form.handleSubmit(onSubmit)}
+            disabled={!form.formState.isDirty || isEditCollectionInfoPending}
           >
             저장하기
           </Button>
