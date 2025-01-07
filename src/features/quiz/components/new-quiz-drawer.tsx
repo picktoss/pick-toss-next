@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
 
 import { Button } from '@/shared/components/ui/button'
@@ -9,6 +8,10 @@ import { useState } from 'react'
 import Icon from '@/shared/components/custom/icon'
 import { cn } from '@/shared/lib/utils'
 import MoreStarDialog from '../../payment/components/more-star-dialog'
+import { useQuery } from '@tanstack/react-query'
+import { queries } from '@/shared/lib/tanstack-query/query-keys'
+import { calculateAvailableQuizCount } from '@/features/document/utils'
+import { useUserStore } from '@/store/user'
 
 interface Props {
   triggerComponent: React.ReactNode
@@ -17,18 +20,33 @@ interface Props {
 
 // NewQuizDrawer 컴포넌트
 const NewQuizDrawer = ({ triggerComponent, documentId }: Props) => {
-  const DEFAULT_QUIZ_COUNT = 10 // 초기값 10
+  const { userInfo: user } = useUserStore()
+  const { data } = useQuery(queries.document.item(documentId))
+  const contentLength = data?.content.trim().length ?? 1000
+  const maxQuizCount = calculateAvailableQuizCount(contentLength)
+
+  const DEFAULT_QUIZ_COUNT = 10
+  const MAXIMUM_QUIZ_COUNT = 40
+  const DOCUMENT_MIN_QUIZ_COUNT = 1
+  const DOCUMENT_MAX_QUIZ_COUNT = Math.min(maxQuizCount, MAXIMUM_QUIZ_COUNT)
+
   const [quizType, setQuizType] = useState('MULTIPLE_CHOICE')
   const [quizCount, setQuizCount] = useState(DEFAULT_QUIZ_COUNT)
   const [isOpenMoreStar, setIsOpenMoreStar] = useState(false)
 
-  // 임시 (문서 글자 수에 따라 생성할 수 있는 최대 문제 개수 필요)
-  const DOCUMENT_MIN_QUIZ_COUNT = 1
-  const DOCUMENT_MAX_QUIZ_COUNT = 40
+  const handleClickQuizType = (quizType: Quiz.Type) => {
+    setQuizType(quizType)
+  }
 
   const handleClickStart = () => {
-    // 기존 문서에서 새로운 퀴즈 생성하는 api 호출
-    // /quiz?documentId={documentId}로 이동
+    const notEnoughStars = (user?.star ?? 0) < quizCount
+
+    if (notEnoughStars) {
+      setIsOpenMoreStar(true)
+      return
+    }
+
+    // 문서에서 추가 퀴즈 생성하는 api 요청
   }
 
   return (
@@ -48,7 +66,7 @@ const NewQuizDrawer = ({ triggerComponent, documentId }: Props) => {
             {/* 문제 유형 선택 */}
             <div className="mb-[28px] flex gap-[8px]">
               <button
-                onClick={() => setQuizType('MULTIPLE_CHOICE')}
+                onClick={() => handleClickQuizType('MULTIPLE_CHOICE')}
                 className={cn(
                   'flex h-[136px] w-[168px] flex-col justify-end rounded-[16px] border px-[7px] pb-[15px] pt-[20px] focus:border-border-focused focus:bg-background-container-03 focus-visible:outline-none',
                   quizType === 'MULTIPLE_CHOICE' &&
@@ -65,7 +83,7 @@ const NewQuizDrawer = ({ triggerComponent, documentId }: Props) => {
               </button>
 
               <button
-                onClick={() => setQuizType('MIX_UP')}
+                onClick={() => handleClickQuizType('MIX_UP')}
                 className={cn(
                   'flex h-[136px] w-[168px] flex-col justify-end rounded-[16px] border pb-[15px] pt-[18px] focus:border-border-focused focus:bg-background-container-03 focus-visible:outline-none',
                   quizType === 'MIX_UP' && 'bg-background-container-03 border-border-focused'
@@ -97,27 +115,27 @@ const NewQuizDrawer = ({ triggerComponent, documentId }: Props) => {
               />
 
               <div className="mt-[10px] flex w-full items-center justify-between text-text2-medium text-text-sub">
-                <Text>5 문제</Text>
-                <Text>40 문제</Text>
+                <Text>{DOCUMENT_MIN_QUIZ_COUNT} 문제</Text>
+                <Text>{DOCUMENT_MAX_QUIZ_COUNT} 문제</Text>
               </div>
             </div>
 
             <div className="flex-center w-full flex-col pb-[40px] pt-[21px]">
               <Text typography="text2-medium">
                 <span className="text-text-sub">현재 나의 별: </span>
-                <span className="text-text-secondary">16개</span>
+                <span className="text-text-secondary">{user?.star}개</span>
               </Text>
 
               <Button
                 variant={'largeRound'}
                 colors={'special'}
                 className="mt-[5px] w-[335px] max-w-full text-button1 text-text-primary-inverse"
-                onClick={() => setIsOpenMoreStar(true)} // 임시
+                onClick={handleClickStart} // 임시
               >
                 퀴즈 시작하기
                 <div className="flex-center size-[fit] rounded-full bg-[#D3DCE4]/[0.2] px-[8px]">
                   <Icon name="star" className="mr-[4px] size-[16px]" />
-                  <Text typography="text1-medium">10</Text>
+                  <Text typography="text1-medium">{quizCount}</Text>
                 </div>
               </Button>
             </div>

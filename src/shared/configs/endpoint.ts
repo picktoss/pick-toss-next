@@ -127,6 +127,8 @@ export const API_ENDPOINTS = {
       CREATE: '/documents',
       /** POST /documents/search - 문서 검색 */
       SEARCH: '/documents/search',
+      /** POST /documents/{document_id}/add-quizzes - 문서에서 추가 퀴즈 생성 */
+      ADD_QUIZZES: (documentId: number) => `/documents/${documentId}/add-quizzes`,
     },
     DELETE: {
       /** DELETE /documents/delete-documents - 문서 삭제

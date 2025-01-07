@@ -100,3 +100,21 @@ export const getReviewNeedDocuments = async () => {
     throw error
   }
 }
+
+/** POST /documents/{document_id}/add-quizzes - 문서에서 추가 퀴즈 생성 */
+export const postAddQuizzesInDocument = async (
+  documentId: number,
+  requestBody: { star: number; quizType: Quiz.Type }
+) => {
+  try {
+    const response = await http.post(
+      API_ENDPOINTS.DOCUMENT.POST.ADD_QUIZZES(documentId),
+      requestBody
+    )
+    // eslint-disable-next-line no-console
+    console.log(response) // 디버깅용
+  } catch (error: unknown) {
+    console.error(error)
+    throw error
+  }
+}
