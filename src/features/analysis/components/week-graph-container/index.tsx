@@ -28,7 +28,8 @@ const WeekGraphContainer = ({ data, today }: Props) => {
   }, [data.quizzes])
   const isEmpty = !data.totalQuizCountDuringThePeriod
 
-  const [activeIndex, setActiveIndex] = useState<number | null>(null)
+  const defaultIndex = 6 // 오늘 데이터
+  const [activeIndex, setActiveIndex] = useState<number | null>(defaultIndex)
   const { selectedDirectory } = useDirectoryContext()
 
   const directoryName = !selectedDirectory?.name

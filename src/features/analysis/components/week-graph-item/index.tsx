@@ -34,7 +34,10 @@ const WeekGraphItem = ({
       className="relative flex size-full flex-col justify-end"
     >
       {index === activeIndex && (
-        <div className="absolute right-1/2 top-[-20px] z-10 mb-2 -translate-y-full translate-x-1/2">
+        <div
+          className="absolute right-1/2 z-10 mb-2 -translate-y-full translate-x-1/2"
+          style={{ bottom: `${barHeight === 100 ? 85 : barHeight}%` }}
+        >
           <div className="size-fit rounded-[8px] bg-background-toast px-[8px] py-[4px]">
             <Text as={'span'} typography="text2-bold" color="primary-inverse">
               {rightCount}/{totalCount}
