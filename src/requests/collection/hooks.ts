@@ -11,6 +11,7 @@ import {
   getRandomCollectionQuizzes,
   deleteCollection,
   updateCollectionInfo,
+  updateCollectionQuizzes,
 } from './client'
 
 export const useCollections = (props?: {
@@ -238,6 +239,21 @@ export const useUpdateCollectionInfo = () => {
 
   return useMutation({
     mutationFn: updateCollectionInfo,
+    onSuccess: async () => {
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ['collections'] }),
+        queryClient.invalidateQueries({ queryKey: ['myCollections'] }),
+        queryClient.invalidateQueries({ queryKey: ['collectionInfo'] }),
+      ])
+    },
+  })
+}
+
+export const useUpdateCollectionQuizzes = () => {
+  const queryClient = getQueryClient()
+
+  return useMutation({
+    mutationFn: updateCollectionQuizzes,
     onSuccess: async () => {
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: ['collections'] }),

@@ -113,3 +113,17 @@ export const updateCollectionInfo = async ({
     throw error
   }
 }
+
+export const updateCollectionQuizzes = async ({
+  collectionId,
+  payload,
+}: {
+  collectionId: number
+  payload: Collection.Request.UpdateQuizzes
+}) => {
+  try {
+    await http.patch(API_ENDPOINTS.COLLECTION.PATCH.UPDATE_QUIZZES(collectionId), payload)
+  } catch (error) {
+    throw error
+  }
+}
