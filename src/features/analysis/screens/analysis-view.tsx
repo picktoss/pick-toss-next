@@ -46,7 +46,7 @@ const AnalysisView = () => {
     [tab, weeklyAnalysisData, monthlyAnalysisData]
   )
 
-  if (weeklyIsPending || monthlyIsPending) {
+  if ((tab === 'week' && weeklyIsPending) || (tab === 'month' && monthlyIsPending)) {
     return <Loading center />
   }
 
