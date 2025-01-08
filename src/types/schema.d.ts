@@ -21,39 +21,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v2/test/create-today-quiz": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** 오늘의 퀴즈 생성 API(테스트 혹은 예외처리를 위한 API로서 실제 사용 X) */
-        post: operations["createTodayQuizForTest"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v2/test/create-member": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["createMemberForTest"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/api/v2/quizzes/documents/{document_id}/custom-quiz-set": {
         parameters: {
             query?: never;
@@ -156,23 +123,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v2/message/send": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** 메시지 전송 2 */
-        post: operations["messageSendSend"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/api/v2/message-send": {
         parameters: {
             query?: never;
@@ -182,7 +132,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** 메시지 전송 1 */
+        /** 앱 알림 푸시 */
         post: operations["messageSend"];
         delete?: never;
         options?: never;
@@ -345,6 +295,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v2/collections/{collection_id}/complaint": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 컬렉션 신고하기 */
+        post: operations["createCollectionComplaint"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v2/collections/{collection_id}/collection-quizzes": {
         parameters: {
             query?: never;
@@ -407,6 +374,24 @@ export interface paths {
         put?: never;
         /** 초대 코드 인증 */
         post: operations["verifyInviteCode"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/admin/collections": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 컬렉션 관리 */
+        get: operations["getCollections"];
+        put?: never;
+        /** 컬렉션 만들기 */
+        post: operations["createQuizInCollection"];
         delete?: never;
         options?: never;
         head?: never;
@@ -742,6 +727,40 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v2/quizzes/analysis/weekly": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 퀴즈 주단위 분석 */
+        get: operations["getQuizWeeklyAnalysis"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/quizzes/analysis/monthly": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 퀴즈 월단위 분석 */
+        get: operations["getQuizMonthlyAnalysis"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v2/quiz-sets/{quiz_set_id}": {
         parameters: {
             query?: never;
@@ -750,7 +769,7 @@ export interface paths {
             cookie?: never;
         };
         /** quiz_set_id와 quiz-set-type으로 퀴즈 가져오기 */
-        get: operations["getQuizSet"];
+        get: operations["getQuizSets"];
         put?: never;
         post?: never;
         delete?: never;
@@ -768,23 +787,6 @@ export interface paths {
         };
         /** 오늘의 퀴즈 세트 정보 가져오기 */
         get: operations["getQuizSetToday"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v2/quiz-analysis": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** 퀴즈 분석 */
-        get: operations["getQuizAnswerRateAnalysis"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1234,23 +1236,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v2/collections-analysis": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** 컬렉션 분석 */
-        get: operations["getCollectionAnalysis"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/api/v2/callback": {
         parameters: {
             query?: never;
@@ -1336,6 +1321,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v2/members/withdrawal": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** 회원 탈퇴 */
+        delete: operations["deleteMember"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v2/documents/delete-documents": {
         parameters: {
             query?: never;
@@ -1394,17 +1396,17 @@ export interface components {
         SaveFcmTokenRequest: {
             fcmToken?: string;
         };
+        CreateQuizzesByDocumentRequest: {
+            quizType?: string;
+            /** Format: int32 */
+            quizCount?: number;
+        };
         CreateQuizzesResponse: {
             quizSetId?: string;
             /** @enum {string} */
             quizSetType?: "TODAY_QUIZ_SET" | "DOCUMENT_QUIZ_SET" | "COLLECTION_QUIZ_SET" | "FIRST_QUIZ_SET";
             /** Format: date-time */
             createdAt?: string;
-        };
-        CreateQuizzesByDocumentRequest: {
-            quizType?: string;
-            /** Format: int32 */
-            quizCount?: number;
         };
         SaveAmountRequest: {
             orderId?: string;
@@ -1419,9 +1421,6 @@ export interface components {
         };
         CancelPaymentRequest: {
             paymentKey?: string;
-        };
-        FcmMessageDto: {
-            content?: string;
         };
         FcmNotificationRequestDto: {
             title?: string;
@@ -1571,6 +1570,10 @@ export interface components {
             /** Format: int64 */
             collectionId?: number;
         };
+        CreateCollectionComplaintRequest: {
+            files?: string[];
+            content?: string;
+        };
         SendVerificationCodeRequest: {
             email?: string;
         };
@@ -1580,6 +1583,20 @@ export interface components {
         };
         VerifyInviteCode: {
             inviteCode?: string;
+        };
+        CreateCollectionForAdminRequest: {
+            collectionName?: string;
+            collectionDescription?: string;
+            /** @enum {string} */
+            collectionCategory?: "IT" | "LAW" | "BUSINESS_ECONOMY" | "SOCIETY_POLITICS" | "LANGUAGE" | "MEDICINE_PHARMACY" | "ART" | "SCIENCE_ENGINEERING" | "HISTORY_PHILOSOPHY" | "OTHER";
+            quizzes?: components["schemas"]["CreateCollectionQuizzesDto"][];
+        };
+        CreateCollectionQuizzesDto: {
+            question?: string;
+            answer?: string;
+            /** @enum {string} */
+            quizType?: "MIX_UP" | "MULTIPLE_CHOICE";
+            options?: string[];
         };
         UpdateRandomQuizResultDto: {
             /** Format: int64 */
@@ -1599,9 +1616,17 @@ export interface components {
         };
         UpdateQuizResultRequest: {
             quizSetId?: string;
+            /** @enum {string} */
+            quizSetType?: "TODAY_QUIZ_SET" | "DOCUMENT_QUIZ_SET" | "COLLECTION_QUIZ_SET" | "FIRST_QUIZ_SET";
             quizzes?: components["schemas"]["UpdateQuizResultQuizDto"][];
         };
         UpdateQuizResultResponse: {
+            /** Format: int32 */
+            totalQuizCount?: number;
+            /** Format: int32 */
+            totalElapsedTime?: number;
+            /** Format: double */
+            correctAnswerRate?: number;
             /** Format: int32 */
             reward?: number;
             /** Format: int32 */
@@ -1676,14 +1701,7 @@ export interface components {
             /** Format: int32 */
             maxConsecutiveDays?: number;
         };
-        GetSingleQuizRecordByDateResponse: {
-            /** Format: int32 */
-            currentConsecutiveDays?: number;
-            /** Format: int32 */
-            maxConsecutiveDays?: number;
-            quizRecords?: components["schemas"]["GetSingleQuizRecordsDto"][];
-        };
-        GetSingleQuizRecordsDto: {
+        GetQuizRecordsDto: {
             quizSetId?: string;
             name?: string;
             /** Format: int32 */
@@ -1692,6 +1710,13 @@ export interface components {
             score?: number;
             /** @enum {string} */
             quizSetType?: "TODAY_QUIZ_SET" | "DOCUMENT_QUIZ_SET" | "COLLECTION_QUIZ_SET" | "FIRST_QUIZ_SET";
+        };
+        GetSingleQuizRecordByDateResponse: {
+            /** Format: int32 */
+            currentConsecutiveDays?: number;
+            /** Format: int32 */
+            maxConsecutiveDays?: number;
+            quizRecords?: components["schemas"]["GetQuizRecordsDto"][];
         };
         GetSingleQuizSetRecordDto: {
             /** Format: int64 */
@@ -1716,16 +1741,6 @@ export interface components {
             /** Format: date-time */
             createdAt?: string;
         };
-        GetQuizRecordsDto: {
-            quizSetId?: string;
-            name?: string;
-            /** Format: int32 */
-            quizCount?: number;
-            /** Format: int32 */
-            score?: number;
-            /** @enum {string} */
-            quizSetType?: "TODAY_QUIZ_SET" | "DOCUMENT_QUIZ_SET" | "COLLECTION_QUIZ_SET" | "FIRST_QUIZ_SET";
-        };
         GetQuizRecordsResponse: {
             /** Format: int32 */
             currentConsecutiveDays?: number;
@@ -1737,6 +1752,40 @@ export interface components {
             /** Format: date */
             solvedDate?: string;
             quizRecords?: components["schemas"]["GetQuizRecordsDto"][];
+        };
+        GetQuizWeeklyAnalysisResponse: {
+            quizzes?: components["schemas"]["QuizAnswerRateAnalysisDto"][];
+            /** Format: int32 */
+            averageDailyQuizCount?: number;
+            /** Format: double */
+            averageCorrectRate?: number;
+            /** Format: int32 */
+            weeklyTotalQuizCount?: number;
+            collectionsAnalysis?: {
+                [key: string]: number;
+            };
+        };
+        QuizAnswerRateAnalysisDto: {
+            /** Format: date */
+            date?: string;
+            /** Format: int32 */
+            totalQuizCount?: number;
+            /** Format: int32 */
+            correctAnswerCount?: number;
+        };
+        GetQuizMonthlyAnalysisResponse: {
+            quizzes?: components["schemas"]["QuizAnswerRateAnalysisDto"][];
+            /** Format: int32 */
+            monthlyTotalQuizCount?: number;
+            /** Format: int32 */
+            monthlyTotalCorrectQuizCount?: number;
+            /** Format: double */
+            averageCorrectAnswerRate?: number;
+            /** Format: int32 */
+            quizCountDifferenceFromLastMonth?: number;
+            collectionsAnalysis?: {
+                [key: string]: number;
+            };
         };
         GetQuizSetDirectoryDto: {
             /** Format: int64 */
@@ -1771,19 +1820,6 @@ export interface components {
             type?: "READY" | "NOT_READY" | "DONE";
             /** Format: date-time */
             createdAt?: string;
-        };
-        GetQuizAnswerRateAnalysisResponse: {
-            /** Format: int32 */
-            totalElapsedTime?: number;
-            quizzes?: components["schemas"]["QuizAnswerRateAnalysisDto"][];
-        };
-        QuizAnswerRateAnalysisDto: {
-            /** Format: date */
-            date?: string;
-            /** Format: int32 */
-            quizCount?: number;
-            /** Format: int32 */
-            incorrectAnswerCount?: number;
         };
         ApplicationContext: {
             parent?: components["schemas"]["ApplicationContext"];
@@ -1922,16 +1958,16 @@ export interface components {
         };
         JspPropertyGroupDescriptor: {
             defaultContentType?: string;
-            isXml?: string;
-            elIgnored?: string;
-            errorOnELNotFound?: string;
-            pageEncoding?: string;
+            deferredSyntaxAllowedAsLiteral?: string;
             scriptingInvalid?: string;
             includePreludes?: string[];
             includeCodas?: string[];
             trimDirectiveWhitespaces?: string;
             errorOnUndeclaredNamespace?: string;
-            deferredSyntaxAllowedAsLiteral?: string;
+            elIgnored?: string;
+            errorOnELNotFound?: string;
+            pageEncoding?: string;
+            isXml?: string;
             buffer?: string;
             urlPatterns?: string[];
         };
@@ -2005,10 +2041,10 @@ export interface components {
             effectiveMinorVersion?: number;
             serverInfo?: string;
             servletContextName?: string;
-            defaultSessionTrackingModes?: ("COOKIE" | "URL" | "SSL")[];
             filterRegistrations?: {
                 [key: string]: components["schemas"]["FilterRegistration"];
             };
+            defaultSessionTrackingModes?: ("COOKIE" | "URL" | "SSL")[];
             effectiveSessionTrackingModes?: ("COOKIE" | "URL" | "SSL")[];
             jspConfigDescriptor?: components["schemas"]["JspConfigDescriptor"];
             requestCharacterEncoding?: string;
@@ -2302,20 +2338,31 @@ export interface components {
         GetCollectionCategoriesResponse: {
             collectionCategories?: components["schemas"]["GetCollectionCategoriesDto"][];
         };
-        GetCollectionSAnalysisResponse: {
-            /**
-             * @description 컬렉션 분야와 해당 컬렉션을 푼 횟수 map
-             * @example {
-             *       "IT": 1,
-             *       "RAW": 1
-             *     }
-             */
-            collectionsAnalysis?: {
-                [key: string]: number;
-            };
-        };
         CreateInviteLinkResponse: {
             inviteLink?: string;
+        };
+        CheckInviteCodeBySignUpResponse: {
+            /** @enum {string} */
+            type?: "READY" | "NONE";
+        };
+        GetCollectionsForAdminCollectionDto: {
+            /** Format: int64 */
+            id?: number;
+            /** @enum {string} */
+            collectionCategory?: "IT" | "LAW" | "BUSINESS_ECONOMY" | "SOCIETY_POLITICS" | "LANGUAGE" | "MEDICINE_PHARMACY" | "ART" | "SCIENCE_ENGINEERING" | "HISTORY_PHILOSOPHY" | "OTHER";
+            name?: string;
+            /** Format: int32 */
+            quizCount?: number;
+            /** Format: int32 */
+            bookmarkCount?: number;
+            /** @enum {string} */
+            memberRole?: "ROLE_USER" | "ROLE_ADMIN";
+            memberName?: string;
+            /** Format: int32 */
+            complaintCount?: number;
+        };
+        GetCollectionsForAdminResponse: {
+            collections?: components["schemas"]["GetCollectionsForAdminCollectionDto"][];
         };
         DeleteInvalidQuizRequest: {
             /**
@@ -2323,6 +2370,10 @@ export interface components {
              * @enum {string}
              */
             quizErrorType?: "CHOICE_OR_QUESTION_MISSING" | "QUIZ_TYPE_MISMATCH" | "UNRELATED_QUIZ";
+        };
+        DeleteMemberRequest: {
+            reason?: string;
+            content?: string;
         };
         DeleteDocumentRequest: {
             documentIds?: number[];
@@ -2351,44 +2402,6 @@ export interface operations {
         responses: {
             /** @description OK */
             200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    createTodayQuizForTest: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description No Content */
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json;charset=UTF-8": components["schemas"]["CreateQuizzesResponse"];
-                };
-            };
-        };
-    };
-    createMemberForTest: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description No Content */
-            204: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -2568,28 +2581,6 @@ export interface operations {
             };
         };
     };
-    messageSendSend: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json;charset=UTF-8": components["schemas"]["FcmMessageDto"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
     messageSend: {
         parameters: {
             query?: never;
@@ -2752,7 +2743,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["CreateDocumentResponse"];
+                };
             };
         };
     };
@@ -2925,6 +2918,30 @@ export interface operations {
             };
         };
     };
+    createCollectionComplaint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                collection_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "multipart/form-data": components["schemas"]["CreateCollectionComplaintRequest"];
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
     createCollectionQuizSet: {
         parameters: {
             query?: never;
@@ -3026,6 +3043,48 @@ export interface operations {
                 content: {
                     "application/json": unknown;
                 };
+            };
+        };
+    };
+    getCollections: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["GetCollectionsForAdminResponse"];
+                };
+            };
+        };
+    };
+    createQuizInCollection: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["CreateCollectionForAdminRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };
@@ -3578,7 +3637,54 @@ export interface operations {
             };
         };
     };
-    getQuizSet: {
+    getQuizWeeklyAnalysis: {
+        parameters: {
+            query?: {
+                "directory-id"?: number;
+                startDate?: string;
+                endDate?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["GetQuizWeeklyAnalysisResponse"];
+                };
+            };
+        };
+    };
+    getQuizMonthlyAnalysis: {
+        parameters: {
+            query?: {
+                "directory-id"?: number;
+                month?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["GetQuizMonthlyAnalysisResponse"];
+                };
+            };
+        };
+    };
+    getQuizSets: {
         parameters: {
             query: {
                 "quiz-set-type": "TODAY_QUIZ_SET" | "DOCUMENT_QUIZ_SET" | "COLLECTION_QUIZ_SET" | "FIRST_QUIZ_SET";
@@ -3618,30 +3724,6 @@ export interface operations {
                 };
                 content: {
                     "application/json;charset=UTF-8": components["schemas"]["GetQuizSetTodayResponse"];
-                };
-            };
-        };
-    };
-    getQuizAnswerRateAnalysis: {
-        parameters: {
-            query?: {
-                "directory-id"?: number;
-                week?: string;
-                month?: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json;charset=UTF-8": components["schemas"]["GetQuizAnswerRateAnalysisResponse"];
                 };
             };
         };
@@ -4273,26 +4355,6 @@ export interface operations {
             };
         };
     };
-    getCollectionAnalysis: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json;charset=UTF-8": components["schemas"]["GetCollectionSAnalysisResponse"];
-                };
-            };
-        };
-    };
     googleLogin: {
         parameters: {
             query: {
@@ -4357,7 +4419,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["CheckInviteCodeBySignUpResponse"];
+                };
             };
         };
     };
@@ -4418,6 +4482,28 @@ export interface operations {
                 content: {
                     "application/json": unknown;
                 };
+            };
+        };
+    };
+    deleteMember: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["DeleteMemberRequest"];
+            };
+        };
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };

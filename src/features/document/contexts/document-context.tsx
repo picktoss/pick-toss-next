@@ -3,6 +3,7 @@
 import { useCheckList, UseCheckListReturn } from '@/shared/hooks/use-check-list'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import { useQuery } from '@tanstack/react-query'
+import { useSearchParams } from 'next/navigation'
 import { PropsWithChildren, createContext, useContext, useEffect, useMemo, useState } from 'react'
 
 interface DocumentContextValues {
@@ -30,6 +31,7 @@ export function DocumentProvider({
   initialValues,
   children,
 }: PropsWithChildren & { initialValues?: InitialValues }) {
+  const ref = useSearchParams().get('ref')
   const [isSelectMode, setIsSelectMode] = useState(initialValues?.isSelectMode ?? false)
   const [buttonHidden, setButtonHidden] = useState(initialValues?.buttonHidden ?? false)
   const [isExpandedBtns, setIsExpandedBtns] = useState(initialValues?.isExpandedBtns ?? false)
@@ -47,6 +49,12 @@ export function DocumentProvider({
   useEffect(() => {
     if (!isSelectMode) checkDoc.unCheckAll()
   }, [isSelectMode])
+
+  useEffect(() => {
+    if (ref && ref === 'add-first-document') {
+      setIsExpandedBtns(true)
+    }
+  }, [ref])
 
   const values = useMemo(
     () => ({

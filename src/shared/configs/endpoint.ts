@@ -192,8 +192,10 @@ export const API_ENDPOINTS = {
       BY_SET_ID: (quizSetId: string) => `/quiz-sets/${quizSetId}`,
       /** GET /quiz-sets/today - 오늘의 퀴즈 세트 정보 가져오기 */
       TODAY_SET: '/quiz-sets/today',
-      /** GET /quiz-analysis - 퀴즈 분석 */
-      ANALYSIS: '/quiz-analysis',
+      /** GET /quizzes/analysis/weekly - 퀴즈 주단위 분석 */
+      ANALYSIS_WEEKLY: '/quizzes/analysis/weekly',
+      /** GET /quizzes/analysis/monthly - 퀴즈 월단위위 분석 */
+      ANALYSIS_MONTHLY: '/quizzes/analysis/monthly',
       /** GET /documents/{document_id}/review-pick - document_id로 복습 pick 가져오기 */
       REVIEW_PICK: (documentId: number) => `/documents/${documentId}/review-pick`,
       /** GET /documents/{document_id}/quizzes - document_id에 해당하는 모든 퀴즈 가져오기 */

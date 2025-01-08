@@ -14,9 +14,16 @@ interface Props {
   documentName: string
   directoryEmoji: string
   onError: (response: string) => void
+  isAddQuizzes?: boolean
 }
 
-const AiCreatingQuiz = ({ documentId, documentName, directoryEmoji, onError }: Props) => {
+const AiCreatingQuiz = ({
+  documentId,
+  documentName,
+  directoryEmoji,
+  onError,
+  isAddQuizzes,
+}: Props) => {
   const router = useRouter()
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0)
   const [quizIsReady, setQuizIsReady] = useState(false)
@@ -76,12 +83,12 @@ const AiCreatingQuiz = ({ documentId, documentName, directoryEmoji, onError }: P
       onSuccess: (data) => {
         router.push(
           `/quiz/${data.quizSetId}?` +
-            'quizSetType=FIRST_QUIZ_SET' +
+            `quizSetType=${isAddQuizzes ? 'DOCUMENT_QUIZ_SET' : 'FIRST_QUIZ_SET'}` +
             '&' +
             `createdAt=${data.createdAt}&documentName=${documentName}&directoryEmoji=${directoryEmoji}` +
             '&' +
             'redirectUrl=' +
-            `/document/${documentId}`
+            `/document/${documentId}?prev=created`
         )
       },
     })

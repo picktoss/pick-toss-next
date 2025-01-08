@@ -8,15 +8,17 @@ import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 
 interface Props {
-  currentConsecutiveDays: number
+  prevConsecutiveDays: number
   todayCheckData: {
     day: number
     isComplete: boolean
   }[]
+  reward: number
 }
 
-const TodayQuizReward = ({ currentConsecutiveDays, todayCheckData }: Props) => {
+const TodayQuizReward = ({ prevConsecutiveDays, todayCheckData, reward }: Props) => {
   const router = useRouter()
+  const currentConsecutiveDays = (prevConsecutiveDays || 0) + 1
 
   return (
     <div className="flex-center h-dvh w-dvw max-w-mobile flex-col overflow-y-auto bg-background-base-01 px-[16px] pb-[100px]">
@@ -39,7 +41,7 @@ const TodayQuizReward = ({ currentConsecutiveDays, todayCheckData }: Props) => {
 
         <div className="flex-center mt-[20.38px] flex-col gap-[12px]">
           <Text typography="title1" className="text-text-accent">
-            연속 {(currentConsecutiveDays || 0) + 1}일 완료
+            연속 {currentConsecutiveDays}일 완료
           </Text>
           <Text typography="text1-medium" className="text-center text-text-secondary">
             오늘의 퀴즈를 완료할 때마다 별 5개를 드리고, <br />
@@ -48,7 +50,7 @@ const TodayQuizReward = ({ currentConsecutiveDays, todayCheckData }: Props) => {
         </div>
       </div>
 
-      <DayCheck checkData={todayCheckData} currentConsecutiveDays={currentConsecutiveDays} />
+      <DayCheck checkData={todayCheckData} prevConsecutiveDays={prevConsecutiveDays} />
 
       {/* TODO: 메인 화면으로 이동하면서 토스트 띄우기 */}
       <motion.div
@@ -64,7 +66,7 @@ const TodayQuizReward = ({ currentConsecutiveDays, todayCheckData }: Props) => {
         className="mt-[32px] w-full max-w-[220px]"
       >
         <Button onClick={() => router.replace('/main')} className="w-full">
-          별 5개 받기
+          별 {reward}개 받기
         </Button>
       </motion.div>
     </div>

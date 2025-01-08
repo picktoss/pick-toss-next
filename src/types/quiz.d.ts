@@ -172,6 +172,20 @@ declare global {
         paths['/api/v2/incorrect-quizzes']['get']['responses']['200']['content']['application/json;charset=UTF-8']
       >
 
+      /** GET /api/v2/quizzes/analysis/weekly
+       * 퀴즈 주단위 분석
+       */
+      type GetWeeklyAnalysis = DeepRequired<
+        paths['/api/v2/quizzes/analysis/weekly']['get']['responses']['200']['content']['application/json;charset=UTF-8']
+      >
+
+      /** GET /api/v2/quizzes/analysis/monthly
+       * 퀴즈 월단위 분석
+       */
+      type GetMonthlyAnalysis = DeepRequired<
+        paths['/api/v2/quizzes/analysis/monthly']['get']['responses']['200']['content']['application/json;charset=UTF-8']
+      >
+
       /** PATCH /api/v2/quiz/result
        * 퀴즈 결과 업데이트
        */

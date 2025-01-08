@@ -7,15 +7,22 @@ import Text from '@/shared/components/ui/text'
 import { useCallback, useMemo, useState } from 'react'
 import WeekGraphItem from '../week-graph-item'
 import { formatToMD, formatToYYYYMMDD } from '@/shared/utils/date'
-import { weekAnalysisMockData } from '../../config'
 import { Button } from '@/shared/components/ui/button'
 
 interface Props {
-  data: typeof weekAnalysisMockData
+  data?: Quiz.Response.GetWeeklyAnalysis
   today: Date
 }
 
 const WeekGraphContainer = ({ data, today }: Props) => {
+  const { selectedDirectory } = useDirectoryContext()
+
+  const directoryName = !selectedDirectory?.name
+    ? '전체 노트'
+    : selectedDirectory.tag === 'DEFAULT'
+    ? '전체 노트'
+    : selectedDirectory.name
+
   const todayDateString = formatToYYYYMMDD(today)
   const maxTotalCount = useMemo(() => {
     try {
@@ -25,18 +32,18 @@ const WeekGraphContainer = ({ data, today }: Props) => {
       console.error('Error calculating maxTotalCount:', error)
       return 1
     }
-  }, [data.quizzes])
-  const isEmpty = !data.totalQuizCountDuringThePeriod
+  }, [data?.quizzes])
+  const isEmpty = !data?.weeklyTotalQuizCount
+
+  const weeklyTotalQuizCount = !Number.isInteger(data?.weeklyTotalQuizCount)
+    ? 0
+    : data?.weeklyTotalQuizCount
+  const averageCorrectRate = !Number.isInteger(data?.averageCorrectRate)
+    ? 0
+    : data?.averageCorrectRate
 
   const defaultIndex = 6 // 오늘 데이터
   const [activeIndex, setActiveIndex] = useState<number | null>(defaultIndex)
-  const { selectedDirectory } = useDirectoryContext()
-
-  const directoryName = !selectedDirectory?.name
-    ? '전체 노트'
-    : selectedDirectory.tag === 'DEFAULT'
-    ? '전체 노트'
-    : selectedDirectory.name
 
   const handleBarClick = useCallback((index: number) => {
     setActiveIndex(index)
@@ -71,7 +78,7 @@ const WeekGraphContainer = ({ data, today }: Props) => {
         <Text typography="title3" className="my-[8px]">
           하루에{' '}
           <Text as={'span'} color="info">
-            {data.averageQuizCountPerDay}문제
+            {data?.averageDailyQuizCount}문제
           </Text>{' '}
           정도 풀어요
         </Text>
@@ -93,7 +100,7 @@ const WeekGraphContainer = ({ data, today }: Props) => {
       </div>
 
       <div className="relative mt-[60px] flex h-[155px] w-full gap-[14px]">
-        {Array.isArray(data.quizzes) &&
+        {Array.isArray(data?.quizzes) &&
           data.quizzes.map((data, index) => {
             const notSolved = data.totalQuizCount === 0
             const scaleFactor = data.totalQuizCount / maxTotalCount
@@ -129,7 +136,7 @@ const WeekGraphContainer = ({ data, today }: Props) => {
             7일간 푼 문제
           </Text>
           <Text as={'span'} typography="subtitle2-bold" color={isEmpty ? 'sub' : 'primary'}>
-            {data.totalQuizCountDuringThePeriod} 문제
+            {weeklyTotalQuizCount} 문제
           </Text>
         </div>
         <div className="flex-center w-1/2 flex-col">
@@ -137,7 +144,7 @@ const WeekGraphContainer = ({ data, today }: Props) => {
             평균 정답률
           </Text>
           <Text as={'span'} typography="subtitle2-bold" color={isEmpty ? 'sub' : 'primary'}>
-            {data.averageCorrectRate}%
+            {averageCorrectRate}%
           </Text>
         </div>
       </div>

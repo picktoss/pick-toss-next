@@ -41,8 +41,9 @@ export async function middleware(request: NextRequest) {
   if (session?.user?.id) {
     // Public-only URL 접근 시 리디렉션 처리
     if (isPublicOnlyUrl) {
+      const interestedCategoryComplete = request.cookies.get('interested-category-complete')
       // 첫 로그인 사용자 처리
-      if (session.user.isNewUser) {
+      if (session.user.isNewUser && !interestedCategoryComplete) {
         return NextResponse.redirect(new URL('/on-boarding', request.url))
       } else {
         // 이미 로그인한 사용자는 '/main'으로 이동

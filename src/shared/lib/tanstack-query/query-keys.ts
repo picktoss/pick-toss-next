@@ -68,6 +68,16 @@ export const queries = createQueryKeyStore({
       queryKey: [''],
       queryFn: () => REQUEST.quiz.getTodayQuizInfo(),
     }),
+    weeklyAnalysis: (startDate: string, endDate: string, directoryId?: number) => ({
+      queryKey: [directoryId, startDate, endDate],
+      queryFn: () => REQUEST.quiz.getWeeklyAnalysis(startDate, endDate, directoryId),
+      enabled: !!directoryId || !!startDate || !endDate,
+    }),
+    monthlyAnalysis: (month: string, directoryId?: number) => ({
+      queryKey: [directoryId, month],
+      queryFn: () => REQUEST.quiz.getMonthlyAnalysis(month, directoryId),
+      enabled: !!directoryId || !!month,
+    }),
   },
 
   collection: {

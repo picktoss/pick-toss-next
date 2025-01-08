@@ -1,24 +1,27 @@
 import Text from '@/shared/components/ui/text'
-import { weekAnalysisMockData } from '../../config'
 import { CATEGORIES } from '@/features/category/config'
 import { cn } from '@/shared/lib/utils'
 import { Button } from '@/shared/components/ui/button'
 
 interface Props {
-  data: (typeof weekAnalysisMockData)['quizCountPerCategory']
+  data?: Quiz.Response.GetWeeklyAnalysis['collectionsAnalysis']
 }
 
 const CollectionCategoryContainer = ({ data }: Props) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const dataFormattedArray = Object.entries(data)?.filter(([_, quizCount]) => quizCount !== 0) ?? []
+  const dataFormattedArray = data
+    ? // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      Object.entries(data)?.filter(([_, quizCount]) => quizCount !== 0) ?? []
+    : []
   const categoryLength = dataFormattedArray.length
 
-  const totalQuizCount = Object.values(data)?.reduce((accumulator, value) => accumulator + value, 0)
+  const totalQuizCount = data
+    ? Object.values(data)?.reduce((accumulator, value) => accumulator + value, 0)
+    : 0
   const mostQuizzesCategory =
-    dataFormattedArray.length > 0
+    data && dataFormattedArray.length > 0
       ? dataFormattedArray.reduce(
           (maxKey: Collection.Field, [key, value]) =>
-            value > data[maxKey] ? (key as Collection.Field) : maxKey,
+            data[maxKey] && value > data[maxKey] ? (key as Collection.Field) : maxKey,
           Object.keys(data)[0] as Collection.Field
         )
       : null

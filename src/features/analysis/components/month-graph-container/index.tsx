@@ -4,7 +4,6 @@ import DirectorySelectDrawer from '@/features/directory/components/directory-sel
 import { useDirectoryContext } from '@/features/directory/contexts/directory-context'
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
-import { monthAnalysisMockData } from '../../config'
 import { formatToMD, formatToYYYYMM, formatToYYYYMMDD, isAdjacentDate } from '@/shared/utils/date'
 import { useCallback, useMemo, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
@@ -12,25 +11,11 @@ import MonthGraphItem from '../month-graph-item'
 import { Button } from '@/shared/components/ui/button'
 
 interface Props {
-  data: typeof monthAnalysisMockData
+  data?: Quiz.Response.GetMonthlyAnalysis
   today: Date
 }
 
 const MonthGraphContainer = ({ data, today }: Props) => {
-  const todayDateString = formatToYYYYMMDD(today)
-  const selectedMonth = useSearchParams().get('month')
-  const thisMonth = !selectedMonth || selectedMonth === formatToYYYYMM(today)
-  const isEmpty = !data.totalQuizCountDuringThePeriod
-
-  const maxTotalCount = useMemo(
-    () => Math.max(...data.quizzes.map((data) => data.totalQuizCount)),
-    [data.quizzes]
-  )
-
-  const firstDateMD = formatToMD(data.quizzes[0]?.date ?? todayDateString)
-  const lastDateMD = formatToMD(data.quizzes[data.quizzes.length - 1]?.date ?? todayDateString)
-
-  const [activeTooltip, setActiveTooltip] = useState(false)
   const { selectedDirectory } = useDirectoryContext()
 
   const directoryName = !selectedDirectory?.name
@@ -38,6 +23,34 @@ const MonthGraphContainer = ({ data, today }: Props) => {
     : selectedDirectory.tag === 'DEFAULT'
     ? '전체 노트'
     : selectedDirectory.name
+
+  const todayDateString = formatToYYYYMMDD(today)
+  const selectedMonth = useSearchParams().get('month')
+  const thisMonth = !selectedMonth || selectedMonth === formatToYYYYMM(today)
+  const isEmpty = !data?.monthlyTotalQuizCount
+
+  const maxTotalCount = useMemo(() => {
+    try {
+      if (!data?.quizzes?.length) return 1 // 0으로 나누기 방지를 위해 1로 설정
+      return Math.max(...data.quizzes.map((data) => data.totalQuizCount))
+    } catch (error) {
+      console.error('Error calculating maxTotalCount:', error)
+      return 1
+    }
+  }, [data?.quizzes])
+
+  const quizCountDifferenceFromLastMonth = !Number.isInteger(data?.quizCountDifferenceFromLastMonth)
+    ? 0
+    : data?.quizCountDifferenceFromLastMonth
+
+  const averageCorrectRate = !Number.isInteger(data?.averageCorrectAnswerRate)
+    ? 0
+    : data?.averageCorrectAnswerRate
+
+  const firstDateMD = formatToMD(data?.quizzes[0]?.date ?? todayDateString)
+  const lastDateMD = formatToMD(data?.quizzes[data?.quizzes.length - 1]?.date ?? todayDateString)
+
+  const [activeTooltip, setActiveTooltip] = useState(false)
 
   const handleBarClick = useCallback(() => {
     setActiveTooltip(true)
@@ -64,23 +77,29 @@ const MonthGraphContainer = ({ data, today }: Props) => {
         }
       />
 
-      {isEmpty ? (
+      {thisMonth ? (
+        isEmpty ? (
+          <Text typography="title3" className="my-[8px]">
+            이번 달에 푼 문제가 없어요
+          </Text>
+        ) : (
+          <Text typography="title3" className="my-[8px]">
+            이번 달은{' '}
+            <Text as={'span'} color="info">
+              {data?.monthlyTotalQuizCount}문제
+            </Text>{' '}
+            풀고 있어요
+          </Text>
+        )
+      ) : isEmpty ? (
         <Text typography="title3" className="my-[8px]">
-          이번 달에 푼 문제가 없어요
-        </Text>
-      ) : thisMonth ? (
-        <Text typography="title3" className="my-[8px]">
-          이번 달은{' '}
-          <Text as={'span'} color="info">
-            {data.totalQuizCountDuringThePeriod}문제
-          </Text>{' '}
-          풀고 있어요
+          {selectedMonth?.split('-')[1]}월에 푼 문제가 없어요
         </Text>
       ) : (
         <Text typography="title3" className="my-[8px]">
           {selectedMonth?.split('-')[1]}월은{' '}
           <Text as={'span'} color="info">
-            {data.totalQuizCountDuringThePeriod}문제
+            {data?.monthlyTotalQuizCount}문제
           </Text>{' '}
           풀었어요
         </Text>
@@ -116,7 +135,7 @@ const MonthGraphContainer = ({ data, today }: Props) => {
                     {firstDateMD}~{lastDateMD}
                   </Text>
                   <Text as={'span'} typography="text2-bold" color="primary-inverse">
-                    {data.totalCorrectCountDuringThePeriod}/{data.totalQuizCountDuringThePeriod}
+                    {data?.monthlyTotalCorrectQuizCount}/{data?.monthlyTotalQuizCount}
                   </Text>
                 </div>
 
@@ -133,8 +152,8 @@ const MonthGraphContainer = ({ data, today }: Props) => {
               </div>
             )}
 
-            {Array.isArray(data.quizzes) &&
-              data.quizzes.map((data, index) => {
+            {Array.isArray(data?.quizzes) &&
+              data?.quizzes.map((data, index) => {
                 const notSolved = data.totalQuizCount === 0
                 const scaleFactor = data.totalQuizCount / maxTotalCount
 
@@ -149,6 +168,10 @@ const MonthGraphContainer = ({ data, today }: Props) => {
                     : isAdjacentDate(data.date)
                     ? ''
                     : formatToMD(data.date)
+
+                if (new Date(data.date).getTime() > today.getTime()) {
+                  return null
+                }
 
                 return (
                   <MonthGraphItem
@@ -169,9 +192,11 @@ const MonthGraphContainer = ({ data, today }: Props) => {
             지난 달 같은 기간보다
           </Text>
           <Text as={'span'} typography="subtitle2-bold" color={isEmpty ? 'sub' : 'primary'}>
-            {0 < data.totalQuizCountDuringThePeriod && '+'}
-            {0 > data.totalQuizCountDuringThePeriod && '-'}
-            {data.differenceFromLastMonth} 문제
+            {quizCountDifferenceFromLastMonth !== undefined &&
+              0 < quizCountDifferenceFromLastMonth &&
+              '+'}
+            {/* {0 > data.quizCountDifferenceFromLastMonth && '-'} */}
+            {quizCountDifferenceFromLastMonth} 문제
           </Text>
         </div>
         <div className="flex-center w-1/2 flex-col">
@@ -179,7 +204,7 @@ const MonthGraphContainer = ({ data, today }: Props) => {
             평균 정답률
           </Text>
           <Text as={'span'} typography="subtitle2-bold" color={isEmpty ? 'sub' : 'primary'}>
-            {data.averageCorrectRate}%
+            {averageCorrectRate}%
           </Text>
         </div>
       </div>

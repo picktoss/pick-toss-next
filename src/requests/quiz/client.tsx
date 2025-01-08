@@ -182,11 +182,50 @@ export const getTodayQuizInfo = async () => {
   }
 }
 
+/** DELETE /quizzes/{quiz_id}/delete-quiz - 퀴즈 삭제 */
 export const deleteQuiz = async (quizId: number) => {
   try {
     const response = await http.delete(API_ENDPOINTS.QUIZ.DELETE.QUIZ(quizId))
     // eslint-disable-next-line no-console
     console.log(response)
+  } catch (error: unknown) {
+    throw error
+  }
+}
+
+/** GET /quizzes/analysis/weekly - 퀴즈 주단위 분석 */
+export const getWeeklyAnalysis = async (
+  startDate: string,
+  endDate: string,
+  directoryId?: number
+) => {
+  const params = { 'directory-id': directoryId, startDate, endDate }
+
+  try {
+    const { data } = await http.get<Quiz.Response.GetWeeklyAnalysis>(
+      API_ENDPOINTS.QUIZ.GET.ANALYSIS_WEEKLY,
+      {
+        params,
+      }
+    )
+    return data
+  } catch (error: unknown) {
+    throw error
+  }
+}
+
+/** GET /quizzes/analysis/monthly - 퀴즈 월단위 분석 */
+export const getMonthlyAnalysis = async (month: string, directoryId?: number) => {
+  const params = { 'directory-id': directoryId, month }
+
+  try {
+    const { data } = await http.get<Quiz.Response.GetMonthlyAnalysis>(
+      API_ENDPOINTS.QUIZ.GET.ANALYSIS_MONTHLY,
+      {
+        params,
+      }
+    )
+    return data
   } catch (error: unknown) {
     throw error
   }

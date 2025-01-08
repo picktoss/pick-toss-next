@@ -64,6 +64,11 @@ const CategorySelectArea = () => {
       { interestCollectionCategories: values.categories as NonNullable<User.InterestedCategory>[] },
       {
         onSuccess: () => {
+          // 쿠키 설정
+          const expirationDate = new Date()
+          expirationDate.setDate(expirationDate.getDate() + 7)
+          document.cookie = `interested-category-complete=true; expires=${expirationDate.toUTCString()}; path=/`
+
           router.replace('/main')
         },
       }
