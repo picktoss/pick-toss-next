@@ -20,6 +20,7 @@ import ConfirmDialogWidget from '@/widget/confirm-dialog'
 import { useDeleteDocument } from '@/requests/document/hooks'
 import { useEffect, useRef, useState } from 'react'
 import { useUserStore } from '@/store/user'
+import { useDownloadQuiz } from '@/requests/quiz/hooks'
 
 // Header 컴포넌트
 const Header = () => {
@@ -32,6 +33,7 @@ const Header = () => {
   const titleRef = useRef<HTMLHeadingElement | null>(null)
 
   const { data } = useQuery(queries.document.item(Number(id)))
+  const { mutate: downloadQuizMutation } = useDownloadQuiz()
   const { mutate: deleteDocumentMutation } = useDeleteDocument()
 
   useEffect(() => {
@@ -66,7 +68,24 @@ const Header = () => {
 
   const handleClickDownload = (menuItemKey: string) => {
     if (menuItemKey === 'download') {
-      alert('clicked ' + menuItemKey)
+      downloadQuizMutation(Number(id), {
+        onSuccess: (data) => {
+          const blob = new Blob([data as unknown as ArrayBuffer], { type: 'application/pdf' })
+          const url = window.URL.createObjectURL(blob)
+
+          const a = document.createElement('a')
+          a.style.display = 'none'
+          a.href = url
+          a.download = 'quizzes.pdf'
+
+          document.body.appendChild(a)
+          a.click()
+
+          window.URL.revokeObjectURL(url)
+          document.body.removeChild(a)
+        },
+        onError: (error) => console.error('Download failed:', error),
+      })
     }
   }
 

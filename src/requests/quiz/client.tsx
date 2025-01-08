@@ -230,3 +230,18 @@ export const getMonthlyAnalysis = async (month: string, directoryId?: number) =>
     throw error
   }
 }
+
+/** GET /documents/{document_id}/download-quiz - 퀴즈 다운로드 */
+export const getDownloadQuizzes = async (documentId: number) => {
+  try {
+    const { data } = await http.get<Quiz.Response.DownloadQuiz>(
+      API_ENDPOINTS.QUIZ.GET.DOWNLOAD(documentId),
+      {
+        responseType: 'arraybuffer',
+      }
+    )
+    return data
+  } catch (error: unknown) {
+    throw error
+  }
+}

@@ -7,6 +7,7 @@ import {
   createReplayDocumentQuizSet,
   deleteQuiz,
   getDirectoryQuizzes,
+  getDownloadQuizzes,
   updateQuizResult,
   updateWrongQuizResult,
 } from './client'
@@ -72,5 +73,11 @@ export const useDeleteQuiz = (params: { documentId: number; quizType?: Quiz.Type
       await queryClient.invalidateQueries(queries.quiz.listByDocument(params))
       await queryClient.invalidateQueries(queries.document.item(params.documentId))
     },
+  })
+}
+
+export const useDownloadQuiz = () => {
+  return useMutation({
+    mutationFn: async (documentId: number) => getDownloadQuizzes(documentId),
   })
 }
