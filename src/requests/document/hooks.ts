@@ -3,10 +3,17 @@
 import { useMutation } from '@tanstack/react-query'
 import { useSession } from 'next-auth/react'
 import { createDocument } from './create-document'
-import { deleteDocument, getDocumentDetail, moveDocument, searchDocument } from './client'
+import {
+  deleteDocument,
+  getDocumentDetail,
+  moveDocument,
+  postAddQuizzesInDocument,
+  searchDocument,
+} from './client'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import { getQueryClient } from '@/shared/lib/tanstack-query/client'
 import { updateDocument } from './update-document'
+import { useUserInfo } from '../user/hooks'
 
 /**
  * 문서 상세 조회 Hook
@@ -22,10 +29,15 @@ export const useGetDocumentDetail = () => {
  */
 export const useCreateDocument = () => {
   const { data: session } = useSession()
+  const { mutate: userInfoMutate } = useUserInfo()
 
   return useMutation({
     mutationFn: (payload: Document.Request.CreateDocument) =>
       createDocument(payload, session?.user.accessToken || ''),
+    onSuccess: async () => {
+      // 이용자 정보 갱신
+      userInfoMutate()
+    },
   })
 }
 
@@ -90,5 +102,26 @@ export const useSearchDocument = () => {
   return useMutation({
     mutationFn: async (requestBody: Document.Request.SearchDocuments) =>
       searchDocument(requestBody),
+  })
+}
+
+/**
+ * 퀴즈 추가 생성 Hook
+ */
+export const useAddQuizzes = () => {
+  const { mutate: userInfoMutate } = useUserInfo()
+
+  return useMutation({
+    mutationFn: async ({
+      documentId,
+      requestBody,
+    }: {
+      documentId: number
+      requestBody: { star: number; quizType: Quiz.Type }
+    }) => postAddQuizzesInDocument(documentId, requestBody),
+    onSuccess: async () => {
+      // 이용자 정보 갱신
+      userInfoMutate()
+    },
   })
 }

@@ -11,11 +11,13 @@ import SyntaxHighlighter from 'react-syntax-highlighter'
 import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import remarkGfm from 'remark-gfm'
 
-const DocumentContent = () => {
+interface Props {
+  formattedContent?: string
+}
+
+const DocumentContent = ({ formattedContent }: Props) => {
   const { id } = useParams()
   const { data, isPending } = useQuery(queries.document.item(Number(id)))
-
-  const formattedContent = data?.content.replace(/\n/g, '\n\n')
 
   return (
     <div className="px-[20px] pb-[132px] pt-[10px]">

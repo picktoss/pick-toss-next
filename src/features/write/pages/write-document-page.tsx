@@ -11,11 +11,11 @@ import { CreateDocumentSchema, DOCUMENT_CONSTRAINTS } from '@/features/document/
 import { useDirectoryContext } from '@/features/directory/contexts/directory-context'
 import CreateQuizDrawer from '../components/create-quiz-drawer'
 import AiCreatingQuiz from '@/features/quiz/screen/ai-creating-quiz'
-import { useRouter } from 'next/navigation'
 import CreateQuizError from '@/features/quiz/screen/create-quiz-error'
 import { calculateAvailableQuizCount } from '@/features/document/utils'
 import { useToast } from '@/shared/hooks/use-toast'
 import ExitDialog from '@/features/quiz/screen/quiz-view/components/exit-dialog'
+import { useCreateQuiz } from '@/features/quiz/hooks/use-create-quiz'
 
 const Editor = dynamic(() => import('../components/editor'), {
   ssr: false,
@@ -25,16 +25,22 @@ const WriteDocumentPage = () => {
   const minContentChar = DOCUMENT_CONSTRAINTS.CONTENT.MIN
   const maxContentChar = DOCUMENT_CONSTRAINTS.CONTENT.MAX
 
-  const router = useRouter()
-
   const { selectedDirectory, selectDirectoryId, globalDirectoryId } = useDirectoryContext()
+  const [documentId, setDocumentId] = useState<number | null>(null)
+  const {
+    showCreatePopup,
+    setShowCreatePopup,
+    createError,
+    setCreateError,
+    openExitDialog,
+    setOpenExitDialog,
+
+    handleCreateError,
+  } = useCreateQuiz(documentId)
+
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
-  const [documentId, setDocumentId] = useState<number | null>(null)
   const [validationError, setValidationError] = useState<string | null>(null)
-  const [showCreatePopup, setShowCreatePopup] = useState(false)
-  const [createError, setCreateError] = useState<string | null>(null)
-  const [openExitDialog, setOpenExitDialog] = useState(false)
 
   const { mutate: createDocumentMutate } = useCreateDocument()
 
@@ -43,11 +49,6 @@ const WriteDocumentPage = () => {
 
   if (!selectedDirectory) {
     selectDirectoryId(globalDirectoryId)
-  }
-
-  const handleCreateError = (response: string) => {
-    setShowCreatePopup(false)
-    setCreateError(response)
   }
 
   const validateCreateDocument = (data: unknown) => {
@@ -97,27 +98,6 @@ const WriteDocumentPage = () => {
       setValidationError(null)
     }
   }, [validationError])
-
-  useEffect(() => {
-    const handlePopState = (event: PopStateEvent) => {
-      // ai 퀴즈 생성 팝업이 열려 있는 상태에서는 뒤로 가기 이벤트를 확인
-      if (showCreatePopup) {
-        event.preventDefault()
-        window.history.pushState(null, '', window.location.href)
-
-        setOpenExitDialog(true)
-      }
-    }
-
-    if (showCreatePopup) {
-      window.history.pushState(null, '', window.location.href)
-      window.addEventListener('popstate', handlePopState)
-    }
-
-    return () => {
-      window.removeEventListener('popstate', handlePopState)
-    }
-  }, [showCreatePopup, router, documentId])
 
   if (documentId !== null && showCreatePopup) {
     return (

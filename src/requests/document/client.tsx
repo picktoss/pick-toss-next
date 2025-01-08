@@ -107,12 +107,11 @@ export const postAddQuizzesInDocument = async (
   requestBody: { star: number; quizType: Quiz.Type }
 ) => {
   try {
-    const response = await http.post(
+    const { data } = await http.post<Document.Response.AddQuizzes>(
       API_ENDPOINTS.DOCUMENT.POST.ADD_QUIZZES(documentId),
       requestBody
     )
-    // eslint-disable-next-line no-console
-    console.log(response) // 디버깅용
+    return data
   } catch (error: unknown) {
     console.error(error)
     throw error

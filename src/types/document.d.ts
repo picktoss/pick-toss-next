@@ -110,13 +110,22 @@ declare global {
       /** POST /api/v2/documents
        * 문서 생성
        */
-      type CreateDocument = DeepRequired<components['schemas']['CreateDocumentResponse']>
+      type CreateDocument = DeepRequired<
+        paths['/api/v2/documents']['post']['responses']['201']['content']['application/json']
+      >
 
       /** POST /api/v2/documents/search
        * 문서 검색
        */
       type SearchDocuments = DeepRequired<
         paths['/api/v2/documents/search']['post']['responses']['200']['content']['application/json;charset=UTF-8']
+      >
+
+      /** POST /api/v2/documents/{document_id}/add-quizzes
+       * 문서에서 추가 퀴즈 생성
+       */
+      type AddQuizzes = DeepRequired<
+        paths['/api/v2/documents/{document_id}/add-quizzes']['post']['responses']['201']['content']['application/json;charset=UTF-8']
       >
     }
   }

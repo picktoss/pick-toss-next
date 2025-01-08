@@ -1,8 +1,4 @@
-import DocumentDetailController from '@/features/document/components/document-detail-controller'
-import DocumentFloatingButton from '@/features/document/components/document-floating-button'
-import { QuizListProvider } from '@/features/document/contexts/quiz-list-context'
-import DocumentContent from '@/features/document/screens/document-content'
-import Quiz from '@/features/document/screens/quiz'
+import DocumentDetailView from '@/features/document/screens/document-detail-view'
 import { getDocumentDetail } from '@/requests/document/server'
 import { notFound } from 'next/navigation'
 
@@ -26,23 +22,7 @@ const DocumentDetailPage = async ({ params, searchParams }: Props) => {
     return notFound()
   }
 
-  return (
-    <main className="min-h-screen">
-      <QuizListProvider>
-        <DocumentDetailController documentId={Number(id)} />
-
-        {activeTab === 'document-content' && <DocumentContent />}
-        {activeTab === 'quiz' && <Quiz />}
-      </QuizListProvider>
-
-      <DocumentFloatingButton
-        documentId={Number(id)}
-        documentName={data.documentName}
-        directoryEmoji={data.directory.emoji}
-        savedQuizCount={data.totalQuizCount}
-      />
-    </main>
-  )
+  return <DocumentDetailView documentId={Number(id)} activeTab={activeTab} />
 }
 
 export default DocumentDetailPage

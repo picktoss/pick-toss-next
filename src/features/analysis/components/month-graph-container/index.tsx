@@ -169,7 +169,7 @@ const MonthGraphContainer = ({ data, today }: Props) => {
                     ? ''
                     : formatToMD(data.date)
 
-                if (new Date(data.date).getTime() > today.getTime()) {
+                if (new Date(data.date).getTime() > new Date(todayDateString).getTime()) {
                   return null
                 }
 

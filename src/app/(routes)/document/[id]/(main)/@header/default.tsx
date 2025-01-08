@@ -146,7 +146,7 @@ const Header = () => {
                       typography="subtitle2-medium"
                       className="flex w-full items-center justify-between"
                     >
-                      docx로 퀴즈 다운로드
+                      pdf로 퀴즈 다운로드
                       <Icon name="download" className="size-[20px]" />
                     </Text>
                   </DropdownMenuItem>

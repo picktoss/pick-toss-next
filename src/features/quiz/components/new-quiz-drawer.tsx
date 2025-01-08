@@ -16,10 +16,13 @@ import { useUserStore } from '@/store/user'
 interface Props {
   triggerComponent: React.ReactNode
   documentId: number
+  documentName: string
+  directoryEmoji: string
+  startAddQuizzes: (quizCount: number, quizType: Quiz.Type) => void
 }
 
 // NewQuizDrawer 컴포넌트
-const NewQuizDrawer = ({ triggerComponent, documentId }: Props) => {
+const NewQuizDrawer = ({ triggerComponent, documentId, startAddQuizzes }: Props) => {
   const { userInfo: user } = useUserStore()
   const { data } = useQuery(queries.document.item(documentId))
   const contentLength = data?.content.trim().length ?? 1000
@@ -30,7 +33,7 @@ const NewQuizDrawer = ({ triggerComponent, documentId }: Props) => {
   const DOCUMENT_MIN_QUIZ_COUNT = 1
   const DOCUMENT_MAX_QUIZ_COUNT = Math.min(maxQuizCount, MAXIMUM_QUIZ_COUNT)
 
-  const [quizType, setQuizType] = useState('MULTIPLE_CHOICE')
+  const [quizType, setQuizType] = useState<Quiz.Type>('MULTIPLE_CHOICE')
   const [quizCount, setQuizCount] = useState(DEFAULT_QUIZ_COUNT)
   const [isOpenMoreStar, setIsOpenMoreStar] = useState(false)
 
@@ -38,15 +41,15 @@ const NewQuizDrawer = ({ triggerComponent, documentId }: Props) => {
     setQuizType(quizType)
   }
 
-  const handleClickStart = () => {
-    const notEnoughStars = (user?.star ?? 0) < quizCount
+  const handleClickStart = (quizCount: number, quizType: Quiz.Type) => {
+    const notEnoughStars = (user?.star ?? 0) < quizCount * 2
 
     if (notEnoughStars) {
       setIsOpenMoreStar(true)
       return
     }
 
-    // 문서에서 추가 퀴즈 생성하는 api 요청
+    startAddQuizzes(quizCount, quizType)
   }
 
   return (
@@ -130,12 +133,12 @@ const NewQuizDrawer = ({ triggerComponent, documentId }: Props) => {
                 variant={'largeRound'}
                 colors={'special'}
                 className="mt-[5px] w-[335px] max-w-full text-button1 text-text-primary-inverse"
-                onClick={handleClickStart} // 임시
+                onClick={() => handleClickStart(quizCount, quizType)} // 임시
               >
                 퀴즈 시작하기
                 <div className="flex-center size-[fit] rounded-full bg-[#D3DCE4]/[0.2] px-[8px]">
                   <Icon name="star" className="mr-[4px] size-[16px]" />
-                  <Text typography="text1-medium">{quizCount}</Text>
+                  <Text typography="text1-medium">{quizCount * 2}</Text>
                 </div>
               </Button>
             </div>
