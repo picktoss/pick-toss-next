@@ -181,6 +181,8 @@ export const API_ENDPOINTS = {
       TODAY_INFO: '/today-quiz-info',
       /** GET /quizzes - 생성된 모든 퀴즈 가져오기(전체 문서) */
       ALL: '/quizzes',
+      /** GET /quizzes/solved/today - 오늘 푼 퀴즈 수 */
+      SOLVED_TODAY: '/quizzes/solved/today',
       /** GET /quizzes/{quiz_set_id}/{quiz_set_type}/quiz-record - 퀴즈 세트에 대한 상세 기록 */
       RECORD: (quizSetId: string, quizSetType: Quiz.Set.Type) =>
         `/quizzes/${quizSetId}/${quizSetType}/quiz-record`,

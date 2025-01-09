@@ -34,7 +34,7 @@ export const useCreateDocument = () => {
   return useMutation({
     mutationFn: (payload: Document.Request.CreateDocument) =>
       createDocument(payload, session?.user.accessToken || ''),
-    onSuccess: async () => {
+    onSuccess: () => {
       // 이용자 정보 갱신
       userInfoMutate()
     },
@@ -119,7 +119,7 @@ export const useAddQuizzes = () => {
       documentId: number
       requestBody: { star: number; quizType: Quiz.Type }
     }) => postAddQuizzesInDocument(documentId, requestBody),
-    onSuccess: async () => {
+    onSuccess: () => {
       // 이용자 정보 갱신
       userInfoMutate()
     },

@@ -639,6 +639,23 @@ export interface paths {
         patch: operations["updateCollectionInfo"];
         trace?: never;
     };
+    "/api/v2/collections/random-quiz/result": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** 컬렉션 랜덤 퀴즈 결과 업데이트 */
+        patch: operations["updateCollectionRandomQuizResult"];
+        trace?: never;
+    };
     "/api/v2/collection/{collection_id}/add-quiz": {
         parameters: {
             query?: never;
@@ -702,6 +719,23 @@ export interface paths {
         };
         /** 퀴즈 세트에 대한 상세 기록 */
         get: operations["getSingleQuizSetRecord"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/quizzes/solved/today": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 오늘 푼 퀴즈 수 */
+        get: operations["getTodaySolvedQuizCount"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1741,6 +1775,10 @@ export interface components {
             /** Format: date-time */
             createdAt?: string;
         };
+        GetTodaySolvedQuizCountResponse: {
+            /** Format: int32 */
+            todaySolvedQuizCount?: number;
+        };
         GetQuizRecordsResponse: {
             /** Format: int32 */
             currentConsecutiveDays?: number;
@@ -1957,17 +1995,17 @@ export interface components {
             taglibs?: components["schemas"]["TaglibDescriptor"][];
         };
         JspPropertyGroupDescriptor: {
-            defaultContentType?: string;
             deferredSyntaxAllowedAsLiteral?: string;
+            elIgnored?: string;
+            errorOnELNotFound?: string;
+            pageEncoding?: string;
             scriptingInvalid?: string;
             includePreludes?: string[];
             includeCodas?: string[];
             trimDirectiveWhitespaces?: string;
             errorOnUndeclaredNamespace?: string;
-            elIgnored?: string;
-            errorOnELNotFound?: string;
-            pageEncoding?: string;
             isXml?: string;
+            defaultContentType?: string;
             buffer?: string;
             urlPatterns?: string[];
         };
@@ -2026,9 +2064,9 @@ export interface components {
             majorVersion?: number;
             /** Format: int32 */
             minorVersion?: number;
+            initParameterNames?: Record<string, never>;
             attributeNames?: Record<string, never>;
             contextPath?: string;
-            initParameterNames?: Record<string, never>;
             sessionTrackingModes?: ("COOKIE" | "URL" | "SSL")[];
             /** Format: int32 */
             sessionTimeout?: number;
@@ -2041,10 +2079,10 @@ export interface components {
             effectiveMinorVersion?: number;
             serverInfo?: string;
             servletContextName?: string;
+            defaultSessionTrackingModes?: ("COOKIE" | "URL" | "SSL")[];
             filterRegistrations?: {
                 [key: string]: components["schemas"]["FilterRegistration"];
             };
-            defaultSessionTrackingModes?: ("COOKIE" | "URL" | "SSL")[];
             effectiveSessionTrackingModes?: ("COOKIE" | "URL" | "SSL")[];
             jspConfigDescriptor?: components["schemas"]["JspConfigDescriptor"];
             requestCharacterEncoding?: string;
@@ -3504,6 +3542,28 @@ export interface operations {
             };
         };
     };
+    updateCollectionRandomQuizResult: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["UpdateRandomQuizResultRequest"];
+            };
+        };
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
     addQuizToCollection: {
         parameters: {
             query?: never;
@@ -3605,6 +3665,26 @@ export interface operations {
                 };
                 content: {
                     "application/json": unknown;
+                };
+            };
+        };
+    };
+    getTodaySolvedQuizCount: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["GetTodaySolvedQuizCountResponse"];
                 };
             };
         };

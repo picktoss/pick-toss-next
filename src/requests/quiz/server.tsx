@@ -91,3 +91,15 @@ export const getTodayQuizInfo = async () => {
     throw error
   }
 }
+
+/** GET /quizzes/solved/today - 오늘 푼 퀴즈 수 */
+export const getSolvedTodayCount = async () => {
+  try {
+    const { data } = await httpServer.get<Quiz.Response.GetSolvedToday>(
+      API_ENDPOINTS.QUIZ.GET.SOLVED_TODAY
+    )
+    return data
+  } catch (error: unknown) {
+    throw error
+  }
+}

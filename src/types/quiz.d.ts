@@ -95,6 +95,13 @@ declare global {
         paths['/api/v2/today-quiz-info']['get']['responses']['200']['content']['application/json;charset=UTF-8']
       >
 
+      /** GET /api/v2/quizzes/solved/today
+       * 오늘 푼 퀴즈 수
+       */
+      type GetSolvedToday = DeepRequired<
+        paths['/api/v2/quizzes/solved/today']['get']['responses']['200']['content']['application/json;charset=UTF-8']
+      >
+
       /** GET /api/v2/quizzes/{quiz_set_id}/{quiz_set_type}/quiz-record
        * 퀴즈 세트에 대한 상세 기록
        */
