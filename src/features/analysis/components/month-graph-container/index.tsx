@@ -43,9 +43,10 @@ const MonthGraphContainer = ({ data, today }: Props) => {
     ? 0
     : data?.quizCountDifferenceFromLastMonth
 
-  const averageCorrectRate = !Number.isInteger(data?.averageCorrectAnswerRate)
+  const integerAverageCorrectRate = Math.round(data?.averageCorrectAnswerRate ?? 0)
+  const averageCorrectRate = !Number.isInteger(integerAverageCorrectRate)
     ? 0
-    : data?.averageCorrectAnswerRate
+    : integerAverageCorrectRate
 
   const firstDateMD = formatToMD(data?.quizzes[0]?.date ?? todayDateString)
   const lastDateMD = formatToMD(data?.quizzes[data?.quizzes.length - 1]?.date ?? todayDateString)

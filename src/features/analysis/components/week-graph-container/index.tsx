@@ -38,9 +38,11 @@ const WeekGraphContainer = ({ data, today }: Props) => {
   const weeklyTotalQuizCount = !Number.isInteger(data?.weeklyTotalQuizCount)
     ? 0
     : data?.weeklyTotalQuizCount
-  const averageCorrectRate = !Number.isInteger(data?.averageCorrectRate)
+
+  const integerAverageCorrectRate = Math.round(data?.averageCorrectRate ?? 0)
+  const averageCorrectRate = !Number.isInteger(integerAverageCorrectRate)
     ? 0
-    : data?.averageCorrectRate
+    : integerAverageCorrectRate
 
   const defaultIndex = 6 // 오늘 데이터
   const [activeIndex, setActiveIndex] = useState<number | null>(defaultIndex)

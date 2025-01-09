@@ -9,8 +9,11 @@ interface Props {
 
 const CollectionCategoryContainer = ({ data }: Props) => {
   const dataFormattedArray = data
-    ? // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      Object.entries(data)?.filter(([_, quizCount]) => quizCount !== 0) ?? []
+    ? Object.entries(data)
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        ?.filter(([category, quizCount]) => quizCount !== 0)
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        ?.sort(([categoryA, a], [categoryB, b]) => b - a) ?? []
     : []
   const categoryLength = dataFormattedArray.length
 
