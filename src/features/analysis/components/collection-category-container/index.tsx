@@ -2,6 +2,7 @@ import Text from '@/shared/components/ui/text'
 import { CATEGORIES } from '@/features/category/config'
 import { cn } from '@/shared/lib/utils'
 import { Button } from '@/shared/components/ui/button'
+import Link from 'next/link'
 
 interface Props {
   data?: Quiz.Response.GetWeeklyAnalysis['collectionsAnalysis']
@@ -96,9 +97,11 @@ const CollectionCategoryContainer = ({ data }: Props) => {
       </div>
 
       {dataFormattedArray.length === 0 && (
-        <Button variant={'mediumRound'} className="mt-[32px] w-full">
-          풀만한 컬렉션 보러가기
-        </Button>
+        <Link href={'/collections'}>
+          <Button variant={'mediumRound'} className="mt-[32px] w-full">
+            풀만한 컬렉션 보러가기
+          </Button>
+        </Link>
       )}
     </div>
   )

@@ -9,6 +9,7 @@ import { useCallback, useMemo, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import MonthGraphItem from '../month-graph-item'
 import { Button } from '@/shared/components/ui/button'
+import Link from 'next/link'
 
 interface Props {
   data?: Quiz.Response.GetMonthlyAnalysis
@@ -211,9 +212,11 @@ const MonthGraphContainer = ({ data, today }: Props) => {
       </div>
 
       {isEmpty && (
-        <Button variant={'mediumRound'} className="mt-[20px] w-full">
-          퀴즈노트에서 복습 시작하기
-        </Button>
+        <Link href={'/document'}>
+          <Button variant={'mediumRound'} className="mt-[20px] w-full">
+            퀴즈노트에서 복습 시작하기
+          </Button>
+        </Link>
       )}
     </div>
   )

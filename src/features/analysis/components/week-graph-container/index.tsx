@@ -8,6 +8,7 @@ import { useCallback, useMemo, useState } from 'react'
 import WeekGraphItem from '../week-graph-item'
 import { formatToMD, formatToYYYYMMDD } from '@/shared/utils/date'
 import { Button } from '@/shared/components/ui/button'
+import Link from 'next/link'
 
 interface Props {
   data?: Quiz.Response.GetWeeklyAnalysis
@@ -152,9 +153,11 @@ const WeekGraphContainer = ({ data, today }: Props) => {
       </div>
 
       {isEmpty && (
-        <Button variant={'mediumRound'} className="mt-[20px] w-full">
-          퀴즈노트에서 복습 시작하기
-        </Button>
+        <Link href={'/document'}>
+          <Button variant={'mediumRound'} className="mt-[20px] w-full">
+            퀴즈노트에서 복습 시작하기
+          </Button>
+        </Link>
       )}
     </div>
   )
