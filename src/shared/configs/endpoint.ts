@@ -165,6 +165,10 @@ export const API_ENDPOINTS = {
       /** PATCH /members/update-collection-fields - 관심분야 태그 설정 */
       UPDATE_COLLECTION_CATEGORIES: '/members/update-collection-categories',
     },
+    DELETE: {
+      /** DELETE /members/withdrawal - 회원 탈퇴 */
+      WITHDRAWAL: '/members/withdrawal',
+    },
   },
 
   FCM: {

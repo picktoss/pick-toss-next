@@ -50,3 +50,16 @@ export const getUserInfo = async () => {
     throw error
   }
 }
+
+/** DELETE /members/withdrawal - 회원 탈퇴
+ * delete 메서드로 body를 받는 api입니다 (탈퇴 사유와 내용)
+ */
+export const deleteAccount = async (requestBody: User.Request.DeleteAccount) => {
+  try {
+    await http.delete(API_ENDPOINTS.USER.DELETE.WITHDRAWAL, {
+      data: requestBody,
+    })
+  } catch (error: unknown) {
+    throw error
+  }
+}

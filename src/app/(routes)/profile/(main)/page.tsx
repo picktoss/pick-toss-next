@@ -2,7 +2,7 @@ import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
 import CategoryTooltip from '@/features/user/category-tooltip'
 import Link from 'next/link'
-import { PROFILE_MENU_LIST } from '@/features/user/config/profile-menu-list'
+// import { PROFILE_MENU_LIST } from '@/features/user/config/profile-menu-list'
 import Footer from '@/features/user/components/footer'
 import { getUserInfo } from '@/requests/user/server'
 import CategoryTag from '@/shared/components/custom/category-tag'
@@ -10,6 +10,7 @@ import { CATEGORIES } from '@/features/category/config'
 import { auth } from '@/app/api/auth/[...nextauth]/auth'
 import Image from 'next/image'
 import { getGravatarUrl } from '@/features/user/utils'
+import { PROFILE_MENU_LIST } from '@/features/user/config'
 
 const ProfilePage = async () => {
   const user = await getUserInfo()

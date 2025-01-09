@@ -7,8 +7,11 @@ import {
   updateUserName,
   updateCollectionCategories,
   getUserInfo,
+  deleteAccount,
 } from './client'
 import { useUserStore } from '@/store/user'
+import { signOut } from 'next-auth/react'
+import { clearAllCookies } from '@/shared/utils/storage'
 
 /** GET /members/info - Get member info */
 export const useUserInfo = () => {
@@ -59,5 +62,22 @@ export const useUpdateCollectionCategories = () => {
     mutationFn: async (payload: User.Request.UpdateCollectionCategories) =>
       updateCollectionCategories(payload),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['userInfo'] }),
+  })
+}
+
+/** DELETE /members/withdrawal - 회원 탈퇴 */
+export const useDeleteAccount = () => {
+  return useMutation({
+    mutationFn: async (payload: User.Request.DeleteAccount) => deleteAccount(payload),
+    onSuccess: async () => {
+      clearAllCookies()
+      localStorage.clear()
+      sessionStorage.clear()
+
+      await signOut({
+        redirect: true,
+        callbackUrl: '/',
+      })
+    },
   })
 }
