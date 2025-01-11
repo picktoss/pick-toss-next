@@ -29,7 +29,10 @@ export const useDirectoryQuizzes = (directoryId: number | null) => {
     enabled: !!directoryId,
     staleTime: 0,
     gcTime: 0,
-    refetchOnMount: false,
+    refetchOnMount: true,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+    refetchIntervalInBackground: false,
   })
 }
 

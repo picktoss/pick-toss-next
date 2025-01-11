@@ -54,7 +54,10 @@ export const useRandomCollectionQuizzes = (categoryId?: string) => {
     enabled: categoryId != null,
     staleTime: 0,
     gcTime: 0,
-    refetchOnMount: false,
+    refetchOnMount: true,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+    refetchIntervalInBackground: false,
   })
 }
 
