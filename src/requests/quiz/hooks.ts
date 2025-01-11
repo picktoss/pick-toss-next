@@ -27,6 +27,9 @@ export const useDirectoryQuizzes = (directoryId: number | null) => {
     queryKey: ['directoryQuizzes', directoryId],
     queryFn: async () => getDirectoryQuizzes({ directoryId: directoryId! }),
     enabled: !!directoryId,
+    staleTime: 0,
+    gcTime: 0,
+    refetchOnMount: false,
   })
 }
 

@@ -141,14 +141,7 @@ const RandomQuizView = ({ directories }: Props) => {
     }
     router.replace('/quiz/random')
     setQuizResults([])
-  }, [
-    router,
-    repository,
-    randomCollectionQuizzes,
-    randomDirectoryQuizzes,
-    setRandomQuizList,
-    setQuizResults,
-  ])
+  }, [repository, randomDirectoryQuizzes, randomCollectionQuizzes])
 
   return (
     <div>

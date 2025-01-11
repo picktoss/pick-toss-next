@@ -52,6 +52,9 @@ export const useRandomCollectionQuizzes = (categoryId?: string) => {
     queryKey: ['randomCollectionQuizzes', categoryId],
     queryFn: async () => getRandomCollectionQuizzes({ categoryId: categoryId! }),
     enabled: categoryId != null,
+    staleTime: 0,
+    gcTime: 0,
+    refetchOnMount: false,
   })
 }
 
