@@ -22,6 +22,7 @@ import { DeepRequired } from 'react-hook-form'
 import { useRandomCollectionQuizzes } from '@/requests/collection/hooks'
 import { useDirectoryQuizzes } from '@/requests/quiz/hooks'
 import Loading from '@/shared/components/custom/loading'
+import { Button } from '@/shared/components/ui/button'
 
 interface Props {
   directories: DeepRequired<components['schemas']['GetAllDirectoriesDirectoryDto']>[]
@@ -41,17 +42,21 @@ const RandomQuizView = ({ directories }: Props) => {
   )
   const activeCategoryId = useMemo(() => CATEGORIES[activeCategoryIndex]?.id, [activeCategoryIndex])
 
-  const { data: randomCollectionQuizzesData } = useRandomCollectionQuizzes(activeCategoryId)
+  const { data: randomCollectionQuizzesData, isLoading: isLoadingCollectionQuizzes } =
+    useRandomCollectionQuizzes(activeCategoryId)
   const randomCollectionQuizzes = useMemo(
     () => randomCollectionQuizzesData?.quizzes ?? [],
     [randomCollectionQuizzesData?.quizzes]
   )
 
-  const { data: randomDirectoryQuizzesData } = useDirectoryQuizzes(activeDirectoryId ?? null)
+  const { data: randomDirectoryQuizzesData, isLoading: isLoadingDirectoryQuizzes } =
+    useDirectoryQuizzes(activeDirectoryId ?? null)
   const randomDirectoryQuizzes = useMemo(
     () => randomDirectoryQuizzesData?.quizzes ?? [],
     [randomDirectoryQuizzesData?.quizzes]
   )
+
+  const isLoading = isLoadingCollectionQuizzes || isLoadingDirectoryQuizzes
 
   const [openExplanation, setOpenExplanation] = useState(false)
 
@@ -184,8 +189,20 @@ const RandomQuizView = ({ directories }: Props) => {
                 className="my-[16px] mt-[4dvh]"
               />
             </div>
-          ) : (
+          ) : isLoading ? (
             <Loading center />
+          ) : repository === 'collection' ? (
+            <EmptyState
+              description="컬렉션을 만들거나, 다음에 드는 컬렉션을 담아보세요"
+              buttonText="컬렉션 보러가기"
+              onClick={() => router.push('/collections')}
+            />
+          ) : (
+            <EmptyState
+              description="내 노트를 추가하고 랜덤 퀴즈를 풀어보세요"
+              buttonText="노트 추가하러 가기"
+              onClick={() => router.push('/document')}
+            />
           )}
 
           {/* 탭 영역 */}
@@ -258,7 +275,47 @@ const RandomQuizView = ({ directories }: Props) => {
   )
 }
 
-export default RandomQuizView
+interface EmptyStateProps {
+  description: string
+  buttonText: string
+  onClick: () => void
+}
+
+const EmptyState = ({ description, buttonText, onClick }: EmptyStateProps) => {
+  return (
+    <div className="flex flex-col items-center justify-center center w-full">
+      <svg
+        width="81"
+        height="98"
+        viewBox="0 0 81 98"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M2 12C2 6.47715 6.47715 2 12 2H69C74.5228 2 79 6.47715 79 12V86C79 91.5228 74.5228 96 69 96H12C6.47715 96 2 91.5228 2 86V12Z"
+          stroke="#D3DCE4"
+          strokeWidth="3"
+          strokeLinecap="round"
+          strokeDasharray="4 6"
+        />
+        <path
+          d="M36.5305 54.4624C36.5305 49.2796 37.8537 47.6667 40.2866 46.1183C42.1646 44.8925 43.5945 43.6882 43.6159 41.8172C43.5945 39.9462 42.122 38.6989 40.2866 38.7204C39.0785 38.7061 37.9461 39.2736 37.3118 40.296C36.7375 41.2215 35.9148 42.1613 34.8255 42.1613H32.0273C30.9121 42.1613 29.9876 41.2394 30.2002 40.1447C31.1511 35.2468 35.3546 33 40.3293 33C46.5183 33 50.9787 36.0108 51 41.4731C50.9787 45.1075 49.0793 47.3226 46.2195 49.043C43.9146 50.3979 42.8262 51.7312 42.8049 54.4624C42.8049 54.7949 42.5353 55.0645 42.2027 55.0645H37.1326C36.8001 55.0645 36.5305 54.7949 36.5305 54.4624ZM35.9329 61.086C35.8902 58.9785 37.6616 57.2581 39.7744 57.2581C41.8232 57.2581 43.6372 58.9785 43.6585 61.086C43.6372 63.2581 41.8232 65 39.7744 65C37.6616 65 35.8902 63.2581 35.9329 61.086Z"
+          fill="#D3DCE4"
+        />
+      </svg>
+      <div className="mt-5 flex flex-col gap-8 items-center">
+        <Text typography="text1-medium" color="sub" className="text-center">
+          아직 퀴즈가 없어요
+          <br />
+          {description}
+        </Text>
+        <Button variant="mediumRound" onClick={onClick} className="w-fit px-6">
+          {buttonText}
+        </Button>
+      </div>
+    </div>
+  )
+}
 
 interface SlideItemProps {
   isActive: boolean
@@ -323,3 +380,5 @@ const SlideItem = ({ isActive, data, variant, quizCount }: SlideItemProps) => {
     </div>
   )
 }
+
+export default RandomQuizView
