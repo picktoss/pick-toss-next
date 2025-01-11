@@ -157,7 +157,7 @@ const RandomQuizView = ({ directories }: Props) => {
         <div className="relative h-[70dvh] min-h-fit w-full rounded-b-[24px] bg-white px-[16px]">
           {/* 헤더 영역 */}
           <div className="flex h-[54px] w-full items-center">
-            <GoBackButton icon="cancel" onClick={() => {}} />
+            <GoBackButton icon="cancel" onClick={() => router.back()} />
           </div>
 
           {/* 문제 영역 */}
