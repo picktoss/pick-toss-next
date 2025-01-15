@@ -27,6 +27,8 @@ export const useMessaging = () => {
 
             if (token && isAppLaunched()) {
               postFcmTokenMutate(token)
+              // eslint-disable-next-line no-console
+              console.log(token)
             }
           }
         } catch (error) {
