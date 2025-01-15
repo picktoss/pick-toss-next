@@ -19,8 +19,6 @@ export const useMessaging = () => {
     const setupMessaging = async () => {
       // 브라우저 환경에서만 실행, 세션이 있을 때만 실행
       if (typeof window !== 'undefined' && session?.user.accessToken) {
-        let unsubscribe: () => void | undefined
-
         try {
           const messaging = await initializeFirebaseMessaging()
 
@@ -36,7 +34,7 @@ export const useMessaging = () => {
             console.log(token)
 
             // 포그라운드 상태에서만 메시지 처리
-            unsubscribe = onMessage(messaging, (payload) => {
+            onMessage(messaging, (payload) => {
               // eslint-disable-next-line no-console
               console.log('포그라운드 메시지 수신:', payload)
 
@@ -56,8 +54,6 @@ export const useMessaging = () => {
               }
             })
           }
-
-          return () => unsubscribe()
         } catch (error) {
           console.error('FCM setup error:', error)
         }
