@@ -11,6 +11,7 @@ export const LOCAL_KEY = {
 
   RECENT_SEARCHES: 'recentSearches',
   BOMB_TUTORIAL_COMPLETE: 'bomb-tutorial-complete',
+  RANDOM_TUTORIAL_COMPLETE: 'random-tutorial-complete',
 
   INTERESTED_CATEGORY_COMPLETE: 'interested-category-complete',
 }
