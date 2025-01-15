@@ -23,6 +23,10 @@ import { useRandomCollectionQuizzes } from '@/requests/collection/hooks'
 import { useDirectoryQuizzes } from '@/requests/quiz/hooks'
 import Loading from '@/shared/components/custom/loading'
 import { Button } from '@/shared/components/ui/button'
+import { useSession } from 'next-auth/react'
+import { getLocalStorage } from '@/shared/utils/storage'
+import { LOCAL_KEY } from '@/constants'
+import RandomTutorial from '../random-tutorial'
 
 interface Props {
   directories: DeepRequired<components['schemas']['GetAllDirectoriesDirectoryDto']>[]
@@ -30,6 +34,7 @@ interface Props {
 
 const RandomQuizView = ({ directories }: Props) => {
   const router = useRouter()
+  const { data: session } = useSession()
 
   const [randomQuizList, setRandomQuizList] = useState<Quiz.RandomItem[]>([])
   const [repository, setRepository] = useState<'directory' | 'collection'>('directory')
@@ -148,6 +153,10 @@ const RandomQuizView = ({ directories }: Props) => {
     setQuizResults([])
   }, [repository, randomDirectoryQuizzes, randomCollectionQuizzes])
 
+  if (session?.user.isNewUser && !getLocalStorage(LOCAL_KEY.RANDOM_TUTORIAL_COMPLETE)) {
+    return <RandomTutorial />
+  }
+
   return (
     <div>
       {/* dimmed background */}
@@ -228,7 +237,7 @@ const RandomQuizView = ({ directories }: Props) => {
             <Swiper
               key={repository}
               width={SwiperContainerWidth}
-              slidesPerView={3}
+              slidesPerView={slideItems.length > 2 ? 3 : slideItems.length}
               centeredSlides={true}
               pagination={{
                 clickable: true,
@@ -283,7 +292,7 @@ interface EmptyStateProps {
 
 const EmptyState = ({ description, buttonText, onClick }: EmptyStateProps) => {
   return (
-    <div className="flex flex-col items-center justify-center center w-full">
+    <div className="center flex w-full flex-col items-center justify-center">
       <svg
         width="81"
         height="98"
@@ -303,7 +312,7 @@ const EmptyState = ({ description, buttonText, onClick }: EmptyStateProps) => {
           fill="#D3DCE4"
         />
       </svg>
-      <div className="mt-5 flex flex-col gap-8 items-center">
+      <div className="mt-5 flex flex-col items-center gap-8">
         <Text typography="text1-medium" color="sub" className="text-center">
           아직 퀴즈가 없어요
           <br />
