@@ -30,6 +30,9 @@ export const useMessaging = () => {
               postFcmTokenMutate(token)
             }
 
+            // eslint-disable-next-line no-console
+            console.log(token)
+
             // 포그라운드 상태에서만 메시지 처리
             onMessage(messaging, (payload) => {
               // eslint-disable-next-line no-console
