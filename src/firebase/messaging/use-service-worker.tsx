@@ -17,16 +17,15 @@ export const useServiceWorker = () => {
 
             if (messaging) {
               unsubscribe = onMessage(messaging, async (payload) => {
-                payload.data = {
-                  ...payload.data,
-                  handledInForeground: 'true',
+                // 앱이 포그라운드 상태일 때만 알림 표시
+                if (document.visibilityState === 'visible') {
+                  if (Notification.permission === 'granted') {
+                    await registration.showNotification(payload.notification?.title || '', {
+                      body: payload.notification?.body,
+                    })
+                  }
                 }
-
-                if (Notification.permission === 'granted') {
-                  await registration.showNotification(payload.notification?.title || '', {
-                    body: payload.notification?.body,
-                  })
-                }
+                // 백그라운드 상태일 때는 onBackgroundMessage가 처리하도록 함
               })
             }
           } catch (error) {
@@ -38,13 +37,13 @@ export const useServiceWorker = () => {
         })
     }
 
-    // cleanup 함수를 여기로 이동
     return () => {
       if (unsubscribe) {
         unsubscribe()
       }
     }
   }, [])
+
   // useEffect(() => {
   //   if ('serviceWorker' in navigator) {
   //     navigator.serviceWorker.register('/firebase-messaging-sw.js').catch((error) => {
