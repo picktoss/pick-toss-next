@@ -20,6 +20,10 @@ export const useMessaging = () => {
       // 브라우저 환경에서만 실행, 세션이 있을 때만 실행
       if (typeof window !== 'undefined' && session?.user.accessToken) {
         try {
+          // 알림 권한 요청
+          const hasPermission = await checkAndRequestNotificationPermission()
+          if (!hasPermission) return
+
           const messaging = await initializeFirebaseMessaging()
 
           if (messaging) {
@@ -62,4 +66,31 @@ export const useMessaging = () => {
 
     void setupMessaging()
   }, [session?.user.accessToken, postFcmTokenMutate])
+}
+
+const checkAndRequestNotificationPermission = async () => {
+  // 이미 권한이 허용된 경우
+  if (Notification.permission === 'granted') {
+    return true
+  }
+
+  // 이미 권한이 거부된 경우
+  if (Notification.permission === 'denied') {
+    // eslint-disable-next-line no-console
+    console.log('알림 권한이 이미 거부되어 있습니다.')
+    return false
+  }
+
+  // 권한이 아직 요청되지 않은 경우('default')에만 요청
+  if (Notification.permission === 'default') {
+    try {
+      const permission = await Notification.requestPermission()
+      return permission === 'granted'
+    } catch (error) {
+      console.error('알림 권한 요청 중 에러:', error)
+      return false
+    }
+  }
+
+  return false
 }
