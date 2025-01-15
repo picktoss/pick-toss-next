@@ -19,13 +19,19 @@ export const useServiceWorker = () => {
               unsubscribe = onMessage(messaging, async (payload) => {
                 // 앱이 포그라운드 상태일 때만 알림 표시
                 if (document.visibilityState === 'visible') {
+                  // eslint-disable-next-line no-console
+                  console.log('포그라운드 메시지 수신:', payload)
+
                   if (Notification.permission === 'granted') {
                     await registration.showNotification(payload.notification?.title || '', {
                       body: payload.notification?.body,
                     })
                   }
+                } else {
+                  // 백그라운드 상태일 때는 onBackgroundMessage가 처리하도록 함
+                  // eslint-disable-next-line no-console
+                  console.log('백그라운드 상태 메세지:', '서비스 워커에서 처리')
                 }
-                // 백그라운드 상태일 때는 onBackgroundMessage가 처리하도록 함
               })
             }
           } catch (error) {
