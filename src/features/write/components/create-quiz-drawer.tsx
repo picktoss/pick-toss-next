@@ -36,7 +36,7 @@ const CreateQuizDrawer = ({ handleCreateDocument, maxQuizCount, disabled }: Prop
   }
 
   const handleClickStart = () => {
-    const notEnoughStars = (user?.star ?? 0) < selectedQuizCount
+    const notEnoughStars = (user?.star ?? 0) < selectedQuizCount * 2
 
     if (notEnoughStars) {
       setIsOpenMoreStar(true)
@@ -149,7 +149,7 @@ const CreateQuizDrawer = ({ handleCreateDocument, maxQuizCount, disabled }: Prop
                 퀴즈 시작하기
                 <div className="flex-center size-[fit] rounded-full bg-[#D3DCE4]/[0.2] px-[8px]">
                   <Icon name="star" className="mr-[4px] size-[16px]" />
-                  <Text typography="text1-medium">{selectedQuizCount}</Text>
+                  <Text typography="text1-medium">{selectedQuizCount * 2}</Text>
                 </div>
               </Button>
             </div>

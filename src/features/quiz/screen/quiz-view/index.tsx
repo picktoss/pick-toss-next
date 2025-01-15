@@ -11,18 +11,10 @@ import QuizOptions from './components/quiz-option'
 import { isQuizSolved } from '../../utils'
 import ResultIcon from '../../components/result-icon'
 import ExitDialog from './components/exit-dialog'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import { useUpdateQuizResult } from '@/requests/quiz/hooks'
-// import FixedBottom from '@/shared/components/custom/fixed-bottom'
-// import { Button } from '@/shared/components/ui/button'
-// import Icon from '@/shared/components/custom/icon'
-// import Text from '@/shared/components/ui/text'
-// import QuizCard from '../../components/quiz-card'
-// import { msToElapsedTimeKorean } from '@/shared/utils/time'
 import TodayQuizReward from '../today-quiz-reward'
-import { useQuery } from '@tanstack/react-query'
-import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import QuizResult from '../quiz-result'
 import { todayQuizCheckList } from '../../config'
 
@@ -36,16 +28,6 @@ const QuizView = ({ quizzes, isFirst }: Props) => {
   const { id } = useParams()
   const redirectUrl = useSearchParams().get('redirectUrl')
   const quizSetType = useSearchParams().get('quizSetType')
-
-  const { data: todayQuizInfo } = useQuery(queries.quiz.todayQuizInfo())
-  const currentConsecutiveDays = todayQuizInfo?.currentConsecutiveDays ?? 0
-
-  const todayCheckData = todayQuizCheckList.map((checkItem) => {
-    if (checkItem.day <= currentConsecutiveDays) {
-      return { ...checkItem, isComplete: true }
-    }
-    return { ...checkItem }
-  })
 
   const { mutate: updateQuizResultMutate, isPending: isUpdatingQuizResult } = useUpdateQuizResult()
   const { currentIndex, navigateToNext } = useQuizNavigation()
@@ -65,9 +47,30 @@ const QuizView = ({ quizzes, isFirst }: Props) => {
 
   const [showResult, setShowResult] = useState(false)
   const [showRecord, setShowRecord] = useState(false)
+  const [todayQuizInfo, setTodayQuizInfo] = useState<{
+    reward: number
+    currentConsecutiveDays: number
+  } | null>(null)
   const [showTodayQuizReward, setShowTodayQuizReward] = useState(false)
 
   const [exitDialogOpen, setExitDialogOpen] = useState(false)
+
+  const defaultReward = 5
+  const prevConsecutiveDays = useMemo(
+    () => (todayQuizInfo?.currentConsecutiveDays ?? 1) - 1,
+    [todayQuizInfo?.currentConsecutiveDays]
+  )
+
+  const todayCheckData = useMemo(
+    () =>
+      todayQuizCheckList.map((checkItem) => {
+        if (checkItem.day <= prevConsecutiveDays) {
+          return { ...checkItem, isComplete: true }
+        }
+        return { ...checkItem }
+      }),
+    [prevConsecutiveDays]
+  )
 
   const currentQuiz = quizzes[currentIndex] ?? ({} as Quiz.Item)
   const currentResult = quizResults[currentIndex] ?? null
@@ -81,11 +84,18 @@ const QuizView = ({ quizzes, isFirst }: Props) => {
 
       const quizResultPayload = {
         quizSetId: id,
+        quizSetType,
         quizzes: quizResults,
       } as Quiz.Request.UpdateQuizResult
 
       updateQuizResultMutate(quizResultPayload, {
-        onSuccess: () => {
+        onSuccess: (data) => {
+          if (quizSetType === 'TODAY_QUIZ_SET') {
+            setTodayQuizInfo({
+              reward: data.reward,
+              currentConsecutiveDays: data.currentConsecutiveTodayQuizDate,
+            })
+          }
           setShowResult(true)
         },
       })
@@ -154,8 +164,9 @@ const QuizView = ({ quizzes, isFirst }: Props) => {
   if (showTodayQuizReward) {
     return (
       <TodayQuizReward
-        currentConsecutiveDays={currentConsecutiveDays}
+        prevConsecutiveDays={prevConsecutiveDays}
         todayCheckData={todayCheckData}
+        reward={todayQuizInfo?.reward ?? defaultReward}
       />
     )
   }

@@ -127,6 +127,8 @@ export const API_ENDPOINTS = {
       CREATE: '/documents',
       /** POST /documents/search - 문서 검색 */
       SEARCH: '/documents/search',
+      /** POST /documents/{document_id}/add-quizzes - 문서에서 추가 퀴즈 생성 */
+      ADD_QUIZZES: (documentId: number) => `/documents/${documentId}/add-quizzes`,
     },
     DELETE: {
       /** DELETE /documents/delete-documents - 문서 삭제
@@ -163,6 +165,10 @@ export const API_ENDPOINTS = {
       /** PATCH /members/update-collection-fields - 관심분야 태그 설정 */
       UPDATE_COLLECTION_CATEGORIES: '/members/update-collection-categories',
     },
+    DELETE: {
+      /** DELETE /members/withdrawal - 회원 탈퇴 */
+      WITHDRAWAL: '/members/withdrawal',
+    },
   },
 
   FCM: {
@@ -179,6 +185,8 @@ export const API_ENDPOINTS = {
       TODAY_INFO: '/today-quiz-info',
       /** GET /quizzes - 생성된 모든 퀴즈 가져오기(전체 문서) */
       ALL: '/quizzes',
+      /** GET /quizzes/solved/today - 오늘 푼 퀴즈 수 */
+      SOLVED_TODAY: '/quizzes/solved/today',
       /** GET /quizzes/{quiz_set_id}/{quiz_set_type}/quiz-record - 퀴즈 세트에 대한 상세 기록 */
       RECORD: (quizSetId: string, quizSetType: Quiz.Set.Type) =>
         `/quizzes/${quizSetId}/${quizSetType}/quiz-record`,
@@ -190,8 +198,10 @@ export const API_ENDPOINTS = {
       BY_SET_ID: (quizSetId: string) => `/quiz-sets/${quizSetId}`,
       /** GET /quiz-sets/today - 오늘의 퀴즈 세트 정보 가져오기 */
       TODAY_SET: '/quiz-sets/today',
-      /** GET /quiz-analysis - 퀴즈 분석 */
-      ANALYSIS: '/quiz-analysis',
+      /** GET /quizzes/analysis/weekly - 퀴즈 주단위 분석 */
+      ANALYSIS_WEEKLY: '/quizzes/analysis/weekly',
+      /** GET /quizzes/analysis/monthly - 퀴즈 월단위위 분석 */
+      ANALYSIS_MONTHLY: '/quizzes/analysis/monthly',
       /** GET /documents/{document_id}/review-pick - document_id로 복습 pick 가져오기 */
       REVIEW_PICK: (documentId: number) => `/documents/${documentId}/review-pick`,
       /** GET /documents/{document_id}/quizzes - document_id에 해당하는 모든 퀴즈 가져오기 */

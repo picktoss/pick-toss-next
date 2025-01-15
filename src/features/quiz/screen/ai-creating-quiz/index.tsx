@@ -74,14 +74,14 @@ const AiCreatingQuiz = ({ documentId, documentName, directoryEmoji, onError }: P
   const handleClickStart = () => {
     createCheckQuizSetMutate(documentId, {
       onSuccess: (data) => {
-        router.push(
+        router.replace(
           `/quiz/${data.quizSetId}?` +
-            'quizSetType=FIRST_QUIZ_SET' +
+            `quizSetType=FIRST_QUIZ_SET` +
             '&' +
             `createdAt=${data.createdAt}&documentName=${documentName}&directoryEmoji=${directoryEmoji}` +
             '&' +
             'redirectUrl=' +
-            `/document/${documentId}`
+            `/document/${documentId}?prev=created`
         )
       },
     })

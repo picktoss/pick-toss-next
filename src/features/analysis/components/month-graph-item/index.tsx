@@ -8,7 +8,7 @@ interface Props {
 }
 
 const MonthGraphItem = ({ date, barHeight, rightHeight }: Props) => {
-  const pointDate = [1, 8, 15, 23]
+  const pointDate = [1, 8, 15, 22, 29]
   const isPointDate = pointDate.find((value) => value === Number(date.split('.')[1]))
 
   return (

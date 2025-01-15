@@ -8,6 +8,7 @@ interface Props {
   documentName: string
   directoryEmoji: string
   savedQuizCount: number
+  startAddQuizzes: (quizCount: number, quizType: Quiz.Type) => void
 }
 
 const DocumentFloatingButton = ({
@@ -15,6 +16,7 @@ const DocumentFloatingButton = ({
   documentName,
   directoryEmoji,
   savedQuizCount,
+  startAddQuizzes,
 }: Props) => {
   return (
     <div className="flex-center fixed bottom-[43px] right-1/2 w-[60dvw] min-w-[266px] max-w-[270px] translate-x-1/2 rounded-full border border-border-default bg-background-toast px-[28px] py-[10px] text-button2 text-button-label-primary shadow-custom-shadow">
@@ -41,6 +43,9 @@ const DocumentFloatingButton = ({
           </button>
         }
         documentId={Number(documentId)}
+        documentName={documentName}
+        directoryEmoji={directoryEmoji}
+        startAddQuizzes={startAddQuizzes}
       />
     </div>
   )

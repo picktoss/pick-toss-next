@@ -1,23 +1,31 @@
 import Text from '@/shared/components/ui/text'
-import { weekAnalysisMockData } from '../../config'
 import { CATEGORIES } from '@/features/category/config'
 import { cn } from '@/shared/lib/utils'
+import { Button } from '@/shared/components/ui/button'
+import Link from 'next/link'
 
 interface Props {
-  data: (typeof weekAnalysisMockData)['quizCountPerCategory']
+  data?: Quiz.Response.GetWeeklyAnalysis['collectionsAnalysis']
 }
 
 const CollectionCategoryContainer = ({ data }: Props) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const dataFormattedArray = Object.entries(data)?.filter(([_, quizCount]) => quizCount !== 0) ?? []
+  const dataFormattedArray = data
+    ? Object.entries(data)
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        ?.filter(([category, quizCount]) => quizCount !== 0)
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        ?.sort(([categoryA, a], [categoryB, b]) => b - a) ?? []
+    : []
   const categoryLength = dataFormattedArray.length
 
-  const totalQuizCount = Object.values(data)?.reduce((accumulator, value) => accumulator + value, 0)
+  const totalQuizCount = data
+    ? Object.values(data)?.reduce((accumulator, value) => accumulator + value, 0)
+    : 0
   const mostQuizzesCategory =
-    dataFormattedArray.length > 0
+    data && dataFormattedArray.length > 0
       ? dataFormattedArray.reduce(
           (maxKey: Collection.Field, [key, value]) =>
-            value > data[maxKey] ? (key as Collection.Field) : maxKey,
+            data[maxKey] && value > data[maxKey] ? (key as Collection.Field) : maxKey,
           Object.keys(data)[0] as Collection.Field
         )
       : null
@@ -87,6 +95,14 @@ const CollectionCategoryContainer = ({ data }: Props) => {
           )
         })}
       </div>
+
+      {dataFormattedArray.length === 0 && (
+        <Link href={'/collections'}>
+          <Button variant={'mediumRound'} className="mt-[32px] w-full">
+            풀만한 컬렉션 보러가기
+          </Button>
+        </Link>
+      )}
     </div>
   )
 }

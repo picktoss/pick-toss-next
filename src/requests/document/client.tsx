@@ -100,3 +100,20 @@ export const getReviewNeedDocuments = async () => {
     throw error
   }
 }
+
+/** POST /documents/{document_id}/add-quizzes - 문서에서 추가 퀴즈 생성 */
+export const postAddQuizzesInDocument = async (
+  documentId: number,
+  requestBody: { star: number; quizType: Quiz.Type }
+) => {
+  try {
+    const { data } = await http.post<Document.Response.AddQuizzes>(
+      API_ENDPOINTS.DOCUMENT.POST.ADD_QUIZZES(documentId),
+      requestBody
+    )
+    return data
+  } catch (error: unknown) {
+    console.error(error)
+    throw error
+  }
+}

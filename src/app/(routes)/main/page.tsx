@@ -9,11 +9,16 @@ import ReviewTop5Container from '@/features/document/components/review-top5-cont
 import InterestedCategoryCollections from '@/features/collection/components/interested-category-collections'
 import RandomQuizLottie from '@/features/quiz/components/random-quiz-lottie'
 import BombQuizLottie from '@/features/quiz/components/bomb-quiz-lottie'
-import { getQuizRecordsByDate, getTodayQuizSetId } from '@/requests/quiz/server'
+import {
+  getQuizRecordsByDate,
+  getSolvedTodayCount,
+  getTodayQuizSetId,
+} from '@/requests/quiz/server'
 import { getDocuments } from '@/requests/document/server'
 import { formatToYYYYMMDD } from '@/shared/utils/date'
 
 const Home = async () => {
+  const { todaySolvedQuizCount } = await getSolvedTodayCount()
   const { quizSetId, createdAt, type } = await getTodayQuizSetId()
   const { documents } = await getDocuments()
   const { currentConsecutiveDays } = await getQuizRecordsByDate(formatToYYYYMMDD(new Date()))
@@ -29,6 +34,7 @@ const Home = async () => {
           state={todayQuizState}
           quizSetId={quizSetId}
           createdAt={createdAt ?? ''}
+          todaySolved={todaySolvedQuizCount}
         />
 
         {/* 오답 / 랜덤 퀴즈 */}

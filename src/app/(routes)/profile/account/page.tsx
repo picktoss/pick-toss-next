@@ -104,7 +104,9 @@ const AccountPage = async () => {
       </div>
 
       <div className="flex-center pb-[48px] pt-[187px]">
-        <button className="text-text1-medium text-text-caption">탈퇴하기</button>
+        <Link href={'/profile/resign'} className="text-text1-medium text-text-caption">
+          탈퇴하기
+        </Link>
       </div>
     </main>
   )

@@ -5,7 +5,7 @@ import InquiryTitleAndContent from '@/features/user/components/inquiry/title-and
 
 const InquiryPage = () => {
   return (
-    <main className="h-[calc(100dvh-54px-88px)] w-full overflow-y-auto">
+    <main className="h-[calc(100dvh-54px-124px)] w-full overflow-y-auto">
       <InquiryType />
 
       <div className="h-[8px] w-full bg-background-base-02"></div>

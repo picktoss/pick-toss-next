@@ -67,6 +67,7 @@ const InquiryTitleAndContent = () => {
             }}
             placeholder="문의 제목을 적어주세요"
             className="input-basic mb-[12px] flex h-[48px] w-full"
+            maxLength={50}
           />
         )}
       />

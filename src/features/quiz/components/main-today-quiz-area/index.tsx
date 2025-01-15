@@ -8,9 +8,10 @@ interface Props {
   state: 'EMPTY' | 'NOT_ARRIVED' | 'ARRIVED'
   quizSetId: string
   createdAt: string
+  todaySolved: number
 }
 
-const MainTodayQuizArea = ({ state, quizSetId, createdAt }: Props) => {
+const MainTodayQuizArea = ({ state, quizSetId, createdAt, todaySolved }: Props) => {
   return (
     <SwitchCase
       value={state}
@@ -19,7 +20,7 @@ const MainTodayQuizArea = ({ state, quizSetId, createdAt }: Props) => {
 
         NOT_ARRIVED: (
           <div className="flex flex-col pt-[25px]">
-            <QuizSolvedToday quizCount={15} />
+            <QuizSolvedToday quizCount={todaySolved} />
             <CountdownToMidnight />
           </div>
         ),

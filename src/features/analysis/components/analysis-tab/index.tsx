@@ -1,6 +1,7 @@
 'use client'
 
 import { Tabs, TabsList, TabsTrigger } from '@/shared/components/ui/tabs'
+import Text from '@/shared/components/ui/text'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 const AnalysisTab = () => {
@@ -16,10 +17,10 @@ const AnalysisTab = () => {
       >
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="week" className="h-[40px]">
-            주
+            <Text typography="button2">주</Text>
           </TabsTrigger>
           <TabsTrigger value="month" className="h-[40px]">
-            월
+            <Text typography="button2">월</Text>
           </TabsTrigger>
         </TabsList>
       </Tabs>

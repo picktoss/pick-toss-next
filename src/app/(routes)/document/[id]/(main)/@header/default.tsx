@@ -11,7 +11,7 @@ import {
 import Text from '@/shared/components/ui/text'
 import { cn } from '@/shared/lib/utils'
 import Link from 'next/link'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import GoBackButton from '@/shared/components/custom/go-back-button'
 import { getRelativeTime } from '@/shared/utils/date'
 import { useQuery } from '@tanstack/react-query'
@@ -20,17 +20,20 @@ import ConfirmDialogWidget from '@/widget/confirm-dialog'
 import { useDeleteDocument } from '@/requests/document/hooks'
 import { useEffect, useRef, useState } from 'react'
 import { useUserStore } from '@/store/user'
+import { useDownloadQuiz } from '@/requests/quiz/hooks'
 
 // Header 컴포넌트
 const Header = () => {
   const router = useRouter()
   const { id } = useParams()
+  const prev = useSearchParams().get('prev')
   const { userInfo: user } = useUserStore()
 
   const [isTitleHidden, setIsTitleHidden] = useState(false)
   const titleRef = useRef<HTMLHeadingElement | null>(null)
 
   const { data } = useQuery(queries.document.item(Number(id)))
+  const { mutate: downloadQuizMutation } = useDownloadQuiz()
   const { mutate: deleteDocumentMutation } = useDeleteDocument()
 
   useEffect(() => {
@@ -55,9 +58,34 @@ const Header = () => {
     }
   }, [])
 
+  const handleClickCancel = () => {
+    if (prev && prev === 'created') {
+      router.replace('/document')
+    } else {
+      router.back()
+    }
+  }
+
   const handleClickDownload = (menuItemKey: string) => {
     if (menuItemKey === 'download') {
-      alert('clicked ' + menuItemKey)
+      downloadQuizMutation(Number(id), {
+        onSuccess: (data) => {
+          const blob = new Blob([data as unknown as ArrayBuffer], { type: 'application/pdf' })
+          const url = window.URL.createObjectURL(blob)
+
+          const a = document.createElement('a')
+          a.style.display = 'none'
+          a.href = url
+          a.download = 'quizzes.pdf'
+
+          document.body.appendChild(a)
+          a.click()
+
+          window.URL.revokeObjectURL(url)
+          document.body.removeChild(a)
+        },
+        onError: (error) => console.error('Download failed:', error),
+      })
     }
   }
 
@@ -76,7 +104,7 @@ const Header = () => {
         >
           <div className="flex size-full items-center justify-between">
             <div className="flex items-center">
-              <GoBackButton icon="cancel" />
+              <GoBackButton icon="cancel" onClick={handleClickCancel} />
               {isTitleHidden && (
                 <Text as="h2" typography="text1-medium" className="ml-[16px]">
                   {data?.documentName}
@@ -118,7 +146,7 @@ const Header = () => {
                       typography="subtitle2-medium"
                       className="flex w-full items-center justify-between"
                     >
-                      docx로 퀴즈 다운로드
+                      pdf로 퀴즈 다운로드
                       <Icon name="download" className="size-[20px]" />
                     </Text>
                   </DropdownMenuItem>

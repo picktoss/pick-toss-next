@@ -36,6 +36,13 @@ declare global {
       type UpdateCollectionCategories = DeepRequired<
         paths['/api/v2/members/update-collection-categories']['patch']['requestBody']['content']['application/json;charset=UTF-8']
       >
+
+      /** DELETE /api/v2/members/withdrawal
+       * 회원 탈퇴
+       */
+      type DeleteAccount = DeepRequired<
+        paths['/api/v2/members/withdrawal']['delete']['requestBody']['content']['application/json;charset=UTF-8']
+      >
     }
   }
 }

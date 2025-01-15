@@ -2,7 +2,7 @@ import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
 import CategoryTooltip from '@/features/user/category-tooltip'
 import Link from 'next/link'
-import { PROFILE_MENU_LIST } from '@/features/user/config/profile-menu-list'
+// import { PROFILE_MENU_LIST } from '@/features/user/config/profile-menu-list'
 import Footer from '@/features/user/components/footer'
 import { getUserInfo } from '@/requests/user/server'
 import CategoryTag from '@/shared/components/custom/category-tag'
@@ -10,6 +10,7 @@ import { CATEGORIES } from '@/features/category/config'
 import { auth } from '@/app/api/auth/[...nextauth]/auth'
 import Image from 'next/image'
 import { getGravatarUrl } from '@/features/user/utils'
+import { PROFILE_MENU_LIST } from '@/features/user/config'
 
 const ProfilePage = async () => {
   const user = await getUserInfo()
@@ -112,12 +113,12 @@ const ProfilePage = async () => {
           <Text typography="text2-medium">내 컬렉션</Text>
         </Link>
 
-        <div className="flex-center flex-col">
+        <Link href={'/analysis'} className="flex-center flex-col">
           <div className="rounded-[20px] bg-[#f8f8f8] p-[16px]">
             <Icon name="graph" className="w-[32px]" />
           </div>
           <Text typography="text2-medium">퀴즈 분석</Text>
-        </div>
+        </Link>
 
         <Link href={'/record'} className="flex-center flex-col">
           <div className="rounded-[20px] bg-[#f8f8f8] p-[16px]">

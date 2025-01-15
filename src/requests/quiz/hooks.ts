@@ -7,6 +7,7 @@ import {
   createReplayDocumentQuizSet,
   deleteQuiz,
   getDirectoryQuizzes,
+  getDownloadQuizzes,
   updateQuizResult,
   updateWrongQuizResult,
 } from './client'
@@ -26,6 +27,12 @@ export const useDirectoryQuizzes = (directoryId: number | null) => {
     queryKey: ['directoryQuizzes', directoryId],
     queryFn: async () => getDirectoryQuizzes({ directoryId: directoryId! }),
     enabled: !!directoryId,
+    staleTime: 0,
+    gcTime: 0,
+    refetchOnMount: true,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+    refetchIntervalInBackground: false,
   })
 }
 
@@ -72,5 +79,11 @@ export const useDeleteQuiz = (params: { documentId: number; quizType?: Quiz.Type
       await queryClient.invalidateQueries(queries.quiz.listByDocument(params))
       await queryClient.invalidateQueries(queries.document.item(params.documentId))
     },
+  })
+}
+
+export const useDownloadQuiz = () => {
+  return useMutation({
+    mutationFn: async (documentId: number) => getDownloadQuizzes(documentId),
   })
 }

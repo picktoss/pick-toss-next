@@ -1,7 +1,7 @@
 'use client'
 
 import { createContext, useContext, ReactNode, useMemo } from 'react'
-import { useForm, UseFormReturn } from 'react-hook-form'
+import { useForm, UseFormReturn, useWatch } from 'react-hook-form'
 import { InquiryFormData, inquirySchema } from '../components/inquiry/config'
 import { zodResolver } from '@hookform/resolvers/zod'
 
@@ -16,6 +16,7 @@ export type Type =
 
 interface InquiryContextType extends InquiryFormData {
   form: UseFormReturn<InquiryFormData>
+  isValid: boolean | undefined
   setType: (type: Type) => void
   setTitle: (title: string) => void
   setContent: (content: string) => void
@@ -30,6 +31,8 @@ const InquiryContext = createContext<InquiryContextType | undefined>(undefined)
 export const InquiryProvider = ({ children }: { children: ReactNode }) => {
   const form = useForm<InquiryFormData>({
     resolver: zodResolver(inquirySchema),
+    mode: 'onChange',
+    reValidateMode: 'onChange',
     defaultValues: {
       type: 'ERROR',
       title: '',
@@ -40,24 +43,34 @@ export const InquiryProvider = ({ children }: { children: ReactNode }) => {
     },
   })
 
-  const { setValue, watch, handleSubmit: rhfHandleSubmit } = form
+  const { control, setValue, handleSubmit: rhfHandleSubmit } = form
 
-  const type = watch('type')
-  const title = watch('title')
-  const content = watch('content')
-  const email = watch('email')
-  const files = watch('files')
-  const isAgreeChecked = watch('isAgreeChecked')
+  const formValues = useWatch({
+    control,
+  })
+
+  const isValid = useMemo(() => {
+    if (formValues.title && formValues.content && formValues.email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+      return (
+        formValues.title.length > 0 &&
+        formValues.content.length > 0 &&
+        emailRegex.test(formValues.email || '') &&
+        formValues.isAgreeChecked === true
+      )
+    }
+  }, [formValues])
 
   const values = useMemo(
     () => ({
       form,
-      type,
-      title,
-      content,
-      email,
-      files,
-      isAgreeChecked,
+      type: formValues.type ?? 'ERROR',
+      title: formValues.title ?? '',
+      content: formValues.content ?? '',
+      email: formValues.email ?? '',
+      files: formValues.files ?? [],
+      isAgreeChecked: formValues.isAgreeChecked ?? false,
+      isValid,
       setType: (type: Type) => {
         setValue('type', type)
       },
@@ -78,7 +91,7 @@ export const InquiryProvider = ({ children }: { children: ReactNode }) => {
       },
       handleSubmit: (onSubmit: (data: InquiryFormData) => void) => rhfHandleSubmit(onSubmit),
     }),
-    [form, type, content, title, email, files, isAgreeChecked, rhfHandleSubmit, setValue]
+    [form, rhfHandleSubmit, setValue, isValid, formValues]
   )
 
   return <InquiryContext.Provider value={values}>{children}</InquiryContext.Provider>

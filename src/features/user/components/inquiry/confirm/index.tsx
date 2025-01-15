@@ -19,8 +19,8 @@ const InquiryConfirm = () => {
   const {
     form: { control },
     handleSubmit,
-    isAgreeChecked,
     setIsAgreeChecked,
+    isValid,
   } = useInquiry()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { accessToken } = useAuthStore()
@@ -58,7 +58,7 @@ const InquiryConfirm = () => {
   }
 
   return (
-    <div className="px-[16px] pb-[36px] pt-[7px]">
+    <div className="fixed bottom-0 right-1/2 w-full max-w-mobile translate-x-1/2 px-[16px] pb-[36px] pt-[7px]">
       <div className="flex items-center justify-between">
         <div className="flex gap-[8px]">
           <Controller
@@ -90,7 +90,7 @@ const InquiryConfirm = () => {
         onClick={handleSubmit(onSubmit)}
         colors={'primary'}
         className="mt-[9px] w-full"
-        disabled={!isAgreeChecked || isSubmitting}
+        disabled={!isValid || isSubmitting}
       >
         문의 보내기
       </Button>

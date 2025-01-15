@@ -46,3 +46,22 @@ export const PROFILE_MENU_LIST = {
     },
   ],
 } as const
+
+export const RESIGN_OPTIONS = [
+  {
+    key: 'UNSATISFACTORY_RESULTS',
+    label: '생성한 결과물이 만족스럽지 않아요',
+  },
+  {
+    key: 'INCONVENIENT_SERVICE',
+    label: '기능 등 서비스 이용이 불편해요',
+  },
+  {
+    key: 'MANY_SYSTEM_ERRORS',
+    label: '접속 오류 등 시스템 이용이 불편해요',
+  },
+  {
+    key: 'SECURITY_CONCERNS',
+    label: '개인정보 및 보안이 걱정돼요',
+  },
+] as const

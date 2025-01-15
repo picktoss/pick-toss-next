@@ -7,14 +7,23 @@ import Text from '@/shared/components/ui/text'
 import { useCallback, useMemo, useState } from 'react'
 import WeekGraphItem from '../week-graph-item'
 import { formatToMD, formatToYYYYMMDD } from '@/shared/utils/date'
-import { weekAnalysisMockData } from '../../config'
+import { Button } from '@/shared/components/ui/button'
+import Link from 'next/link'
 
 interface Props {
-  data: typeof weekAnalysisMockData
+  data?: Quiz.Response.GetWeeklyAnalysis
   today: Date
 }
 
 const WeekGraphContainer = ({ data, today }: Props) => {
+  const { selectedDirectory } = useDirectoryContext()
+
+  const directoryName = !selectedDirectory?.name
+    ? '전체 노트'
+    : selectedDirectory.tag === 'DEFAULT'
+    ? '전체 노트'
+    : selectedDirectory.name
+
   const todayDateString = formatToYYYYMMDD(today)
   const maxTotalCount = useMemo(() => {
     try {
@@ -24,16 +33,20 @@ const WeekGraphContainer = ({ data, today }: Props) => {
       console.error('Error calculating maxTotalCount:', error)
       return 1
     }
-  }, [data.quizzes])
+  }, [data?.quizzes])
+  const isEmpty = !data?.weeklyTotalQuizCount
 
-  const [activeIndex, setActiveIndex] = useState<number | null>(null)
-  const { selectedDirectory } = useDirectoryContext()
+  const weeklyTotalQuizCount = !Number.isInteger(data?.weeklyTotalQuizCount)
+    ? 0
+    : data?.weeklyTotalQuizCount
 
-  const directoryName = !selectedDirectory?.name
-    ? '전체 노트'
-    : selectedDirectory.tag === 'DEFAULT'
-    ? '전체 노트'
-    : selectedDirectory.name
+  const integerAverageCorrectRate = Math.round(data?.averageCorrectRate ?? 0)
+  const averageCorrectRate = !Number.isInteger(integerAverageCorrectRate)
+    ? 0
+    : integerAverageCorrectRate
+
+  const defaultIndex = 6 // 오늘 데이터
+  const [activeIndex, setActiveIndex] = useState<number | null>(defaultIndex)
 
   const handleBarClick = useCallback((index: number) => {
     setActiveIndex(index)
@@ -60,13 +73,19 @@ const WeekGraphContainer = ({ data, today }: Props) => {
         }
       />
 
-      <Text typography="title3" className="my-[8px]">
-        하루에{' '}
-        <Text as={'span'} color="info">
-          {data.averageQuizCountPerDay}문제
-        </Text>{' '}
-        정도 풀어요
-      </Text>
+      {isEmpty ? (
+        <Text typography="title3" className="my-[8px]">
+          최근 푼 문제가 없어요
+        </Text>
+      ) : (
+        <Text typography="title3" className="my-[8px]">
+          하루에{' '}
+          <Text as={'span'} color="info">
+            {data?.averageDailyQuizCount}문제
+          </Text>{' '}
+          정도 풀어요
+        </Text>
+      )}
 
       <div className="flex justify-end gap-[12px]">
         <div className="flex items-center">
@@ -84,7 +103,7 @@ const WeekGraphContainer = ({ data, today }: Props) => {
       </div>
 
       <div className="relative mt-[60px] flex h-[155px] w-full gap-[14px]">
-        {Array.isArray(data.quizzes) &&
+        {Array.isArray(data?.quizzes) &&
           data.quizzes.map((data, index) => {
             const notSolved = data.totalQuizCount === 0
             const scaleFactor = data.totalQuizCount / maxTotalCount
@@ -119,19 +138,27 @@ const WeekGraphContainer = ({ data, today }: Props) => {
           <Text as={'span'} typography="text2-medium" color="sub">
             7일간 푼 문제
           </Text>
-          <Text as={'span'} typography="subtitle2-bold">
-            {data.totalQuizCountDuringThePeriod} 문제
+          <Text as={'span'} typography="subtitle2-bold" color={isEmpty ? 'sub' : 'primary'}>
+            {weeklyTotalQuizCount} 문제
           </Text>
         </div>
         <div className="flex-center w-1/2 flex-col">
           <Text as={'span'} typography="text2-medium" color="sub">
             평균 정답률
           </Text>
-          <Text as={'span'} typography="subtitle2-bold">
-            {data.averageCorrectRate}%
+          <Text as={'span'} typography="subtitle2-bold" color={isEmpty ? 'sub' : 'primary'}>
+            {averageCorrectRate}%
           </Text>
         </div>
       </div>
+
+      {isEmpty && (
+        <Link href={'/document'}>
+          <Button variant={'mediumRound'} className="mt-[20px] w-full">
+            퀴즈노트에서 복습 시작하기
+          </Button>
+        </Link>
+      )}
     </div>
   )
 }
