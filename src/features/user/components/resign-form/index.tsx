@@ -105,7 +105,7 @@ const ResignForm = () => {
         {`500자 이내로 입력해주세요 (${watch('content')?.length || 0}/500)`}
       </Text>
 
-      <div className="fixed bottom-0 right-1/2 flex w-full max-w-mobile translate-x-1/2 flex-col px-[16px] pb-[36px] pt-[7px]">
+      <div className="fixed bottom-0 right-1/2 flex w-full max-w-mobile translate-x-1/2 flex-col bg-background-base-01 px-[16px] pb-[36px] pt-[7px]">
         <div className="mb-[9px] flex gap-[8px]">
           <Controller
             name="conformNotification"

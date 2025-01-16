@@ -14,12 +14,15 @@ import MonthGraphContainer from '../components/month-graph-container'
 import CollectionCategoryContainer from '../components/collection-category-container'
 import { useMemo } from 'react'
 
+type Tab = 'week' | 'month'
+
 const AnalysisView = () => {
   const today = new Date()
   const searchParams = useSearchParams()
+  const paramsTab = searchParams.get('tab') ?? ''
   const { selectedDirectoryId } = useDirectoryContext()
 
-  const tab = searchParams.get('tab') ?? 'week'
+  const tab = (['week', 'month'].includes(paramsTab) ? paramsTab : 'week') as Tab
   const startDate = searchParams.get('startDate') ?? formatToYYYYMMDD(getSixDaysAgo())
   const endDate = searchParams.get('endDate') ?? formatToYYYYMMDD(today)
   const selectedMonth = searchParams.get('month') ?? formatToYYYYMM(today)
@@ -46,6 +49,10 @@ const AnalysisView = () => {
     [tab, weeklyAnalysisData, monthlyAnalysisData]
   )
 
+  const thisWeek = tab === 'week' && endDate === formatToYYYYMMDD(today)
+  const thisMonth = tab === 'month' && selectedMonth === formatToYYYYMM(today)
+  const thisPeriod = thisWeek || thisMonth
+
   if ((tab === 'week' && weeklyIsPending) || (tab === 'month' && monthlyIsPending)) {
     return <Loading center />
   }
@@ -56,12 +63,16 @@ const AnalysisView = () => {
       {tab === 'week' && <WeekPeriodPicker today={today} />}
       {tab === 'month' && <MonthPeriodPicker today={today} />}
 
-      {tab === 'week' && <WeekGraphContainer data={weeklyAnalysisData} today={today} />}
-      {tab === 'month' && <MonthGraphContainer data={monthlyAnalysisData} today={today} />}
+      {tab === 'week' && (
+        <WeekGraphContainer data={weeklyAnalysisData} today={today} isThisWeek={thisWeek} />
+      )}
+      {tab === 'month' && (
+        <MonthGraphContainer data={monthlyAnalysisData} today={today} isThisMonth={thisMonth} />
+      )}
 
       <div className="h-[12px] w-full bg-background-base-02" />
 
-      <CollectionCategoryContainer data={collectionsAnalysis} />
+      <CollectionCategoryContainer isThisPeriod={thisPeriod} data={collectionsAnalysis} />
     </main>
   )
 }

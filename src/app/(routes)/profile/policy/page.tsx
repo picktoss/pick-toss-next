@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 const PolicyPage = () => {
   return (
-    <main className="h-[calc(100vh-54px)] w-full flex-col overflow-y-auto overflow-x-hidden pt-[8px]">
+    <main className="h-[calc(100dvh-54px)] w-full flex-col overflow-y-auto overflow-x-hidden pt-[8px]">
       <Link
         href="https://picktoss.notion.site/1209d818f56080fbb469e82def758e9c?pvs=4"
         target="_blank"

@@ -13,9 +13,10 @@ import Link from 'next/link'
 interface Props {
   data?: Quiz.Response.GetWeeklyAnalysis
   today: Date
+  isThisWeek: boolean
 }
 
-const WeekGraphContainer = ({ data, today }: Props) => {
+const WeekGraphContainer = ({ data, today, isThisWeek }: Props) => {
   const { selectedDirectory } = useDirectoryContext()
 
   const directoryName = !selectedDirectory?.name
@@ -152,9 +153,9 @@ const WeekGraphContainer = ({ data, today }: Props) => {
         </div>
       </div>
 
-      {isEmpty && (
+      {isThisWeek && isEmpty && (
         <Link href={'/document'}>
-          <Button variant={'mediumRound'} className="mt-[20px] w-full">
+          <Button variant={'mediumRound'} colors={'secondary'} className="mt-[20px] w-full">
             퀴즈노트에서 복습 시작하기
           </Button>
         </Link>
