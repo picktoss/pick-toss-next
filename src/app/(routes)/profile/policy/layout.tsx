@@ -9,7 +9,7 @@ interface LayoutProps extends PropsWithChildren {
 
 const Layout: FunctionComponent<LayoutProps> = ({ children, header }) => {
   return (
-    <div className="h-dvh overflow-hidden">
+    <div>
       {header}
       {children}
     </div>

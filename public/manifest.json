@@ -4,6 +4,7 @@
   "theme_color": "#FB8320",
   "background_color": "#ffffff",
   "display": "standalone",
+  "mobile-web-app-capable": "yes",
   "apple-mobile-web-app-capable": "yes",
   "orientation": "portrait",
   "scope": "/",
