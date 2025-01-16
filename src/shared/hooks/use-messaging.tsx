@@ -6,11 +6,12 @@ import { initializeFirebaseMessaging } from '../../../firebase'
 import { useSession } from 'next-auth/react'
 import { usePostFcmToken } from '@/requests/fcm/hooks'
 import { getFCMToken } from '@/firebase/messaging/get-token'
-import { isAppLaunched } from '../utils/pwa'
+import { useIsPWA } from './use-pwa'
 
 export const useMessaging = () => {
   const { data: session } = useSession()
   const { mutate: postFcmTokenMutate } = usePostFcmToken()
+  const isPWA = useIsPWA()
 
   useServiceWorker()
 
@@ -29,7 +30,7 @@ export const useMessaging = () => {
             // 토큰 가져오기
             const token = await getFCMToken()
 
-            if (token && isAppLaunched()) {
+            if (token && isPWA) {
               postFcmTokenMutate(token)
             }
           }
@@ -40,7 +41,7 @@ export const useMessaging = () => {
     }
 
     void setupMessaging()
-  }, [session?.user.accessToken, postFcmTokenMutate])
+  }, [session?.user.accessToken, postFcmTokenMutate, isPWA])
 }
 
 const checkAndRequestNotificationPermission = async () => {

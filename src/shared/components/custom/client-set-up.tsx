@@ -2,9 +2,10 @@
 
 import { useEffect } from 'react'
 import { useMessaging } from '@/shared/hooks/use-messaging'
-import { isAppLaunched, setPWAAppLaunched } from '@/shared/utils/pwa'
+import { setPWAAppLaunched } from '@/shared/utils/pwa'
 import { useSession } from 'next-auth/react'
 import { useUserInfo } from '@/requests/user/hooks'
+import { useIsPWA } from '@/shared/hooks/use-pwa'
 
 /**
  * 클라이언트에서 실행되어야 하는 초기 작업(PWA, 메시징 등)을 처리합니다.
@@ -13,13 +14,13 @@ import { useUserInfo } from '@/requests/user/hooks'
 const ClientSetUp = () => {
   const { data: session } = useSession()
   const { mutate: getUserInfoMutate } = useUserInfo()
+  const isPWA = useIsPWA()
 
   useMessaging()
 
   useEffect(() => {
-    const launched = isAppLaunched()
-    setPWAAppLaunched(launched)
-  }, [])
+    setPWAAppLaunched(isPWA)
+  }, [isPWA])
 
   useEffect(() => {
     if (session?.user) {

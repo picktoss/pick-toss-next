@@ -1,15 +1,15 @@
-export const isAppLaunched = (): boolean => {
-  if (typeof window !== 'undefined') {
-    const isPWA =
-      window.matchMedia('(display-mode: standalone)').matches ||
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
-      (window.navigator as any).standalone === true ||
-      document.referrer.includes('android-app://')
+// export const isAppLaunched = (): boolean => {
+//   if (typeof window !== 'undefined') {
+//     const isPWA =
+//       window.matchMedia('(display-mode: standalone)').matches ||
+//       // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
+//       (window.navigator as any).standalone === true ||
+//       document.referrer.includes('android-app://')
 
-    return isPWA
-  }
-  return false
-}
+//     return isPWA
+//   }
+//   return false
+// }
 
 export const checkPWAAppLaunched = () => {
   if (typeof window !== 'undefined') {
