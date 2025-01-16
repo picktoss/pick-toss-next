@@ -9,7 +9,7 @@ interface LayoutProps extends PropsWithChildren {
 
 const Layout: FunctionComponent<LayoutProps> = ({ children, header }) => {
   return (
-    <div>
+    <div className="center flex w-screen max-w-mobile flex-col overflow-hidden">
       {header}
       {children}
     </div>
