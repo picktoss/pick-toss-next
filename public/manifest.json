@@ -1,7 +1,7 @@
 {
   "name": "picktoss",
   "short_name": "picktoss",
-  "theme_color": "#FB8320",
+  "theme_color": "#ffffff",
   "background_color": "#ffffff",
   "display": "standalone",
   "mobile-web-app-capable": "yes",
