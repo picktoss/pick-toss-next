@@ -49,7 +49,7 @@ export const PROFILE_MENU_LIST = {
 
 export const RESIGN_OPTIONS = [
   {
-    key: 'UNSATISFACTORY_RESULTS',
+    key: 'UNSATISFACTORY_RESULT',
     label: '생성한 결과물이 만족스럽지 않아요',
   },
   {
@@ -57,7 +57,7 @@ export const RESIGN_OPTIONS = [
     label: '기능 등 서비스 이용이 불편해요',
   },
   {
-    key: 'MANY_SYSTEM_ERRORS',
+    key: 'SYSTEM_ISSUE',
     label: '접속 오류 등 시스템 이용이 불편해요',
   },
   {

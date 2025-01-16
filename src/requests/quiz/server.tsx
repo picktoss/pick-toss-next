@@ -103,3 +103,15 @@ export const getSolvedTodayCount = async () => {
     throw error
   }
 }
+
+/** GET /quiz-set/consecutive-days - 전체 퀴즈 연속일 현황 */
+export const getConsecutiveDays = async () => {
+  try {
+    const { data } = await httpServer.get<Quiz.Response.GetConsecutiveDays>(
+      API_ENDPOINTS.QUIZ.GET.CONSECUTIVE
+    )
+    return data
+  } catch (error: unknown) {
+    throw error
+  }
+}

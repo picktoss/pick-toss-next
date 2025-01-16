@@ -47,8 +47,8 @@ const ResignForm = () => {
     }
 
     const requestBody = {
-      reason: reason.label,
-      content: data.content ?? '',
+      reason: reason.key,
+      detail: data.content ?? '',
     }
 
     deleteAccountMutate(requestBody)

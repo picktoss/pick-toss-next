@@ -189,6 +189,13 @@ declare global {
       /** GET /api/v2/quizzes/analysis/monthly
        * 퀴즈 월단위 분석
        */
+      type GetConsecutiveDays = DeepRequired<
+        paths['/api/v2/quiz-set/consecutive-days']['get']['responses']['200']['content']['application/json;charset=UTF-8']
+      >
+
+      /** GET /api/v2/quiz-set/consecutive-days
+       * 전체 퀴즈 연속일 현황황
+       */
       type GetMonthlyAnalysis = DeepRequired<
         paths['/api/v2/quizzes/analysis/monthly']['get']['responses']['200']['content']['application/json;charset=UTF-8']
       >

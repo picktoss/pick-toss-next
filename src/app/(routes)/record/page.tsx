@@ -1,7 +1,7 @@
 import CustomCalendar from '@/features/record/components/calendar'
 import ConsecutiveDays from '@/features/record/components/consecutive-days'
 import RecordList from '@/features/record/components/record-list'
-import { getQuizRecordsByDate } from '@/requests/quiz/server'
+import { getConsecutiveDays, getQuizRecordsByDate } from '@/requests/quiz/server'
 import Icon from '@/shared/components/custom/icon'
 import { Button } from '@/shared/components/ui/button'
 import { formatToYYYYMMDD } from '@/shared/utils/date'
@@ -16,9 +16,8 @@ interface Props {
 const RecordPage = async ({ searchParams }: Props) => {
   const today = new Date()
   const selectedDate = searchParams.selectedDate ?? formatToYYYYMMDD(today)
-  const { currentConsecutiveDays, maxConsecutiveDays, quizRecords } = await getQuizRecordsByDate(
-    selectedDate
-  )
+  const { currentConsecutiveDays, maxConsecutiveDays } = await getConsecutiveDays()
+  const { quizRecords } = await getQuizRecordsByDate(selectedDate)
 
   return (
     <main className="h-[calc(100dvh-54px)] overflow-y-auto px-[16px]">
