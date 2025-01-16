@@ -1,7 +1,7 @@
 'use client'
 
 import { useMutation } from '@tanstack/react-query'
-import { postFcmToken } from '.'
+import { postFcmToken } from './client'
 import { useSession } from 'next-auth/react'
 
 export const usePostFcmToken = () => {
