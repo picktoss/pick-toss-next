@@ -1,18 +1,24 @@
 export const isAppLaunched = (): boolean => {
   if (typeof window !== 'undefined') {
-    return window.matchMedia('(display-mode: standalone)').matches
+    const isPWA =
+      window.matchMedia('(display-mode: standalone)').matches ||
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
+      (window.navigator as any).standalone === true ||
+      document.referrer.includes('android-app://')
+
+    return isPWA
   }
   return false
 }
 
 export const checkPWAAppLaunched = () => {
   if (typeof window !== 'undefined') {
-    return sessionStorage.getItem('pwaInstalled') === 'true'
+    return sessionStorage.getItem('isPwaApp') === 'true'
   }
 }
 
 export const setPWAAppLaunched = (launched: boolean) => {
   if (typeof window !== 'undefined') {
-    sessionStorage.setItem('pwaInstalled', launched.toString())
+    sessionStorage.setItem('isPwaApp', launched.toString())
   }
 }
