@@ -9,6 +9,7 @@ export const getFCMToken = async (): Promise<string | null> => {
       const token = await getMessagingToken(messaging, {
         vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
       })
+
       if (token) {
         return token
       } else {

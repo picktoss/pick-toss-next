@@ -21,6 +21,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v2/send": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 테스트 알림 푸시 */
+        post: operations["sendMessage"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v2/quizzes/documents/{document_id}/custom-quiz-set": {
         parameters: {
             query?: never;
@@ -380,18 +397,51 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v2/admin/collections": {
+    "/api/v2/admin/sign-up": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** 컬렉션 관리 */
-        get: operations["getCollections"];
+        get?: never;
         put?: never;
-        /** 컬렉션 만들기 */
-        post: operations["createQuizInCollection"];
+        /** 운영진 회원가입 */
+        post: operations["signUp"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/admin/login": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 운영진 로그인 */
+        post: operations["login_1"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/admin/collections/{collection_id}/info/update": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 컬렉션 공개여부 수정 */
+        post: operations["modifyCollectionInfo"];
         delete?: never;
         options?: never;
         head?: never;
@@ -821,6 +871,23 @@ export interface paths {
         };
         /** 오늘의 퀴즈 세트 정보 가져오기 */
         get: operations["getQuizSetToday"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/quiz-set/consecutive-days": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 전체 퀴즈 연속일 현황 */
+        get: operations["getCurrentConsecutiveSolvedQuizSet"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1321,6 +1388,40 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v2/admin/collections": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 컬렉션 관리 */
+        get: operations["getCollections"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/admin/collections/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 컬렉션 검색하기 */
+        get: operations["searchCollections_1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v2/quizzes/{quiz_id}/invalid": {
         parameters: {
             query?: never;
@@ -1429,6 +1530,11 @@ export interface components {
     schemas: {
         SaveFcmTokenRequest: {
             fcmToken?: string;
+        };
+        FcmSendDto: {
+            token?: string;
+            title?: string;
+            body?: string;
         };
         CreateQuizzesByDocumentRequest: {
             quizType?: string;
@@ -1618,19 +1724,19 @@ export interface components {
         VerifyInviteCode: {
             inviteCode?: string;
         };
-        CreateCollectionForAdminRequest: {
-            collectionName?: string;
-            collectionDescription?: string;
-            /** @enum {string} */
-            collectionCategory?: "IT" | "LAW" | "BUSINESS_ECONOMY" | "SOCIETY_POLITICS" | "LANGUAGE" | "MEDICINE_PHARMACY" | "ART" | "SCIENCE_ENGINEERING" | "HISTORY_PHILOSOPHY" | "OTHER";
-            quizzes?: components["schemas"]["CreateCollectionQuizzesDto"][];
+        SignUpRequest: {
+            name: string;
+            password: string;
         };
-        CreateCollectionQuizzesDto: {
-            question?: string;
-            answer?: string;
-            /** @enum {string} */
-            quizType?: "MIX_UP" | "MULTIPLE_CHOICE";
-            options?: string[];
+        AdminLoginRequest: {
+            name: string;
+            password: string;
+        };
+        AdminLoginResponse: {
+            accessToken?: string;
+        };
+        CreateCollectionForAdminRequest: {
+            isPublic?: boolean;
         };
         UpdateRandomQuizResultDto: {
             /** Format: int64 */
@@ -1746,10 +1852,6 @@ export interface components {
             quizSetType?: "TODAY_QUIZ_SET" | "DOCUMENT_QUIZ_SET" | "COLLECTION_QUIZ_SET" | "FIRST_QUIZ_SET";
         };
         GetSingleQuizRecordByDateResponse: {
-            /** Format: int32 */
-            currentConsecutiveDays?: number;
-            /** Format: int32 */
-            maxConsecutiveDays?: number;
             quizRecords?: components["schemas"]["GetQuizRecordsDto"][];
         };
         GetSingleQuizSetRecordDto: {
@@ -1780,10 +1882,6 @@ export interface components {
             todaySolvedQuizCount?: number;
         };
         GetQuizRecordsResponse: {
-            /** Format: int32 */
-            currentConsecutiveDays?: number;
-            /** Format: int32 */
-            maxConsecutiveDays?: number;
             quizRecords?: components["schemas"]["GetQuizRecordsSolvedDateDto"][];
         };
         GetQuizRecordsSolvedDateDto: {
@@ -1995,17 +2093,17 @@ export interface components {
             taglibs?: components["schemas"]["TaglibDescriptor"][];
         };
         JspPropertyGroupDescriptor: {
+            defaultContentType?: string;
             deferredSyntaxAllowedAsLiteral?: string;
             elIgnored?: string;
             errorOnELNotFound?: string;
             pageEncoding?: string;
             scriptingInvalid?: string;
+            isXml?: string;
             includePreludes?: string[];
             includeCodas?: string[];
             trimDirectiveWhitespaces?: string;
             errorOnUndeclaredNamespace?: string;
-            isXml?: string;
-            defaultContentType?: string;
             buffer?: string;
             urlPatterns?: string[];
         };
@@ -2064,21 +2162,15 @@ export interface components {
             majorVersion?: number;
             /** Format: int32 */
             minorVersion?: number;
-            initParameterNames?: Record<string, never>;
             attributeNames?: Record<string, never>;
             contextPath?: string;
+            initParameterNames?: Record<string, never>;
             sessionTrackingModes?: ("COOKIE" | "URL" | "SSL")[];
             /** Format: int32 */
             sessionTimeout?: number;
             servletRegistrations?: {
                 [key: string]: components["schemas"]["ServletRegistration"];
             };
-            /** Format: int32 */
-            effectiveMajorVersion?: number;
-            /** Format: int32 */
-            effectiveMinorVersion?: number;
-            serverInfo?: string;
-            servletContextName?: string;
             defaultSessionTrackingModes?: ("COOKIE" | "URL" | "SSL")[];
             filterRegistrations?: {
                 [key: string]: components["schemas"]["FilterRegistration"];
@@ -2087,6 +2179,12 @@ export interface components {
             jspConfigDescriptor?: components["schemas"]["JspConfigDescriptor"];
             requestCharacterEncoding?: string;
             responseCharacterEncoding?: string;
+            /** Format: int32 */
+            effectiveMajorVersion?: number;
+            /** Format: int32 */
+            effectiveMinorVersion?: number;
+            serverInfo?: string;
+            servletContextName?: string;
         };
         ServletRegistration: {
             mappings?: string[];
@@ -2365,6 +2463,7 @@ export interface components {
             /** Format: int64 */
             id?: number;
             name?: string;
+            isDeleted?: boolean;
         };
         GetCollectionCategoriesDto: {
             /** @enum {string} */
@@ -2396,8 +2495,10 @@ export interface components {
             /** @enum {string} */
             memberRole?: "ROLE_USER" | "ROLE_ADMIN";
             memberName?: string;
+            description?: string;
             /** Format: int32 */
             complaintCount?: number;
+            isDeleted?: boolean;
         };
         GetCollectionsForAdminResponse: {
             collections?: components["schemas"]["GetCollectionsForAdminCollectionDto"][];
@@ -2410,8 +2511,9 @@ export interface components {
             quizErrorType?: "CHOICE_OR_QUESTION_MISSING" | "QUIZ_TYPE_MISMATCH" | "UNRELATED_QUIZ";
         };
         DeleteMemberRequest: {
-            reason?: string;
-            content?: string;
+            /** @enum {string} */
+            reason?: "UNSATISFACTORY_RESULT" | "INCONVENIENT_SERVICE" | "SYSTEM_ISSUE" | "SECURITY_CONCERNS";
+            detail?: string;
         };
         DeleteDocumentRequest: {
             documentIds?: number[];
@@ -2444,6 +2546,30 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+        };
+    };
+    sendMessage: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["FcmSendDto"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": number;
+                };
             };
         };
     };
@@ -3084,27 +3210,7 @@ export interface operations {
             };
         };
     };
-    getCollections: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json;charset=UTF-8": components["schemas"]["GetCollectionsForAdminResponse"];
-                };
-            };
-        };
-    };
-    createQuizInCollection: {
+    signUp: {
         parameters: {
             query?: never;
             header?: never;
@@ -3113,7 +3219,29 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json;charset=UTF-8": components["schemas"]["CreateCollectionForAdminRequest"];
+                "application/json;charset=UTF-8": components["schemas"]["SignUpRequest"];
+            };
+        };
+        responses: {
+            /** @description Created */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    login_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["AdminLoginRequest"];
             };
         };
         responses: {
@@ -3122,7 +3250,49 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["AdminLoginResponse"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    modifyCollectionInfo: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                collection_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["CreateCollectionForAdminRequest"];
+            };
+        };
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
                 content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
             };
         };
     };
@@ -3804,6 +3974,26 @@ export interface operations {
                 };
                 content: {
                     "application/json;charset=UTF-8": components["schemas"]["GetQuizSetTodayResponse"];
+                };
+            };
+        };
+    };
+    getCurrentConsecutiveSolvedQuizSet: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["GetCurrentTodayQuizInfo"];
                 };
             };
         };
@@ -4501,6 +4691,54 @@ export interface operations {
                 };
                 content: {
                     "application/json;charset=UTF-8": components["schemas"]["CheckInviteCodeBySignUpResponse"];
+                };
+            };
+        };
+    };
+    getCollections: {
+        parameters: {
+            query?: {
+                "collection-category"?: "IT" | "LAW" | "BUSINESS_ECONOMY" | "SOCIETY_POLITICS" | "LANGUAGE" | "MEDICINE_PHARMACY" | "ART" | "SCIENCE_ENGINEERING" | "HISTORY_PHILOSOPHY" | "OTHER";
+                "is-deleted"?: boolean;
+                "member-role"?: "ROLE_USER" | "ROLE_ADMIN";
+                "complaint-count"?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["GetCollectionsForAdminResponse"];
+                };
+            };
+        };
+    };
+    searchCollections_1: {
+        parameters: {
+            query?: {
+                keyword?: string;
+                "member-name"?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["GetCollectionsForAdminResponse"];
                 };
             };
         };

@@ -5,10 +5,11 @@ import { Button } from '@/shared/components/ui/button'
 import Link from 'next/link'
 
 interface Props {
+  isThisPeriod: boolean
   data?: Quiz.Response.GetWeeklyAnalysis['collectionsAnalysis']
 }
 
-const CollectionCategoryContainer = ({ data }: Props) => {
+const CollectionCategoryContainer = ({ isThisPeriod, data }: Props) => {
   const dataFormattedArray = data
     ? Object.entries(data)
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -16,6 +17,7 @@ const CollectionCategoryContainer = ({ data }: Props) => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         ?.sort(([categoryA, a], [categoryB, b]) => b - a) ?? []
     : []
+
   const categoryLength = dataFormattedArray.length
 
   const totalQuizCount = data
@@ -96,9 +98,9 @@ const CollectionCategoryContainer = ({ data }: Props) => {
         })}
       </div>
 
-      {dataFormattedArray.length === 0 && (
+      {isThisPeriod && dataFormattedArray.length === 0 && (
         <Link href={'/collections'}>
-          <Button variant={'mediumRound'} className="mt-[32px] w-full">
+          <Button variant={'mediumRound'} colors={'secondary'} className="mt-[32px] w-full">
             풀만한 컬렉션 보러가기
           </Button>
         </Link>

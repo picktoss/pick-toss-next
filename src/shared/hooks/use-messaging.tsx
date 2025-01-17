@@ -6,26 +6,30 @@ import { initializeFirebaseMessaging } from '../../../firebase'
 import { useSession } from 'next-auth/react'
 import { usePostFcmToken } from '@/requests/fcm/hooks'
 import { getFCMToken } from '@/firebase/messaging/get-token'
-import { isAppLaunched } from '../utils/pwa'
+import { useIsPWA } from './use-pwa'
 
 export const useMessaging = () => {
   const { data: session } = useSession()
   const { mutate: postFcmTokenMutate } = usePostFcmToken()
+  const isPWA = useIsPWA()
 
   useServiceWorker()
 
   useEffect(() => {
     const setupMessaging = async () => {
-      // 브라우저 환경에서만 실행, 세션이 있을 때만 실행
-      if (typeof window !== 'undefined' && session?.user.accessToken) {
+      const isGranted = Notification.permission === 'granted'
+
+      // 브라우저 환경에서만 실행, 세션이 있을 때만, 알림 허용 상태일 때만 실행
+      if (typeof window !== 'undefined' && session?.user.accessToken && isGranted) {
         try {
           const messaging = await initializeFirebaseMessaging()
 
           if (messaging) {
-            // 토큰 가져오기
+            // 토큰 발급
             const token = await getFCMToken()
 
-            if (token && isAppLaunched()) {
+            if (token && isPWA) {
+              // 서버로 fcm 토큰 전송
               postFcmTokenMutate(token)
             }
           }
@@ -36,5 +40,5 @@ export const useMessaging = () => {
     }
 
     void setupMessaging()
-  }, [session?.user.accessToken, postFcmTokenMutate])
+  }, [session?.user.accessToken, postFcmTokenMutate, isPWA])
 }

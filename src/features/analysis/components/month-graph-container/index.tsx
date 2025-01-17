@@ -4,7 +4,7 @@ import DirectorySelectDrawer from '@/features/directory/components/directory-sel
 import { useDirectoryContext } from '@/features/directory/contexts/directory-context'
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
-import { formatToMD, formatToYYYYMM, formatToYYYYMMDD, isAdjacentDate } from '@/shared/utils/date'
+import { formatToMD, formatToYYYYMMDD, isAdjacentDate } from '@/shared/utils/date'
 import { useCallback, useMemo, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import MonthGraphItem from '../month-graph-item'
@@ -14,9 +14,10 @@ import Link from 'next/link'
 interface Props {
   data?: Quiz.Response.GetMonthlyAnalysis
   today: Date
+  isThisMonth: boolean
 }
 
-const MonthGraphContainer = ({ data, today }: Props) => {
+const MonthGraphContainer = ({ data, today, isThisMonth }: Props) => {
   const { selectedDirectory } = useDirectoryContext()
 
   const directoryName = !selectedDirectory?.name
@@ -27,7 +28,6 @@ const MonthGraphContainer = ({ data, today }: Props) => {
 
   const todayDateString = formatToYYYYMMDD(today)
   const selectedMonth = useSearchParams().get('month')
-  const thisMonth = !selectedMonth || selectedMonth === formatToYYYYMM(today)
   const isEmpty = !data?.monthlyTotalQuizCount
 
   const maxTotalCount = useMemo(() => {
@@ -79,7 +79,7 @@ const MonthGraphContainer = ({ data, today }: Props) => {
         }
       />
 
-      {thisMonth ? (
+      {isThisMonth ? (
         isEmpty ? (
           <Text typography="title3" className="my-[8px]">
             이번 달에 푼 문제가 없어요
@@ -211,9 +211,9 @@ const MonthGraphContainer = ({ data, today }: Props) => {
         </div>
       </div>
 
-      {isEmpty && (
+      {isThisMonth && isEmpty && (
         <Link href={'/document'}>
-          <Button variant={'mediumRound'} className="mt-[20px] w-full">
+          <Button variant={'mediumRound'} colors={'secondary'} className="mt-[20px] w-full">
             퀴즈노트에서 복습 시작하기
           </Button>
         </Link>

@@ -9,19 +9,14 @@ import ReviewTop5Container from '@/features/document/components/review-top5-cont
 import InterestedCategoryCollections from '@/features/collection/components/interested-category-collections'
 import RandomQuizLottie from '@/features/quiz/components/random-quiz-lottie'
 import BombQuizLottie from '@/features/quiz/components/bomb-quiz-lottie'
-import {
-  getQuizRecordsByDate,
-  getSolvedTodayCount,
-  getTodayQuizSetId,
-} from '@/requests/quiz/server'
+import { getConsecutiveDays, getSolvedTodayCount, getTodayQuizSetId } from '@/requests/quiz/server'
 import { getDocuments } from '@/requests/document/server'
-import { formatToYYYYMMDD } from '@/shared/utils/date'
 
 const Home = async () => {
   const { todaySolvedQuizCount } = await getSolvedTodayCount()
   const { quizSetId, createdAt, type } = await getTodayQuizSetId()
   const { documents } = await getDocuments()
-  const { currentConsecutiveDays } = await getQuizRecordsByDate(formatToYYYYMMDD(new Date()))
+  const { currentConsecutiveDays } = await getConsecutiveDays()
 
   const isEmpty = !documents || documents.length === 0
   const todayQuizState = isEmpty ? 'EMPTY' : type === 'READY' ? 'ARRIVED' : 'NOT_ARRIVED'
