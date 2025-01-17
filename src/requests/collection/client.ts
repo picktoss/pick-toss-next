@@ -127,3 +127,14 @@ export const updateCollectionQuizzes = async ({
     throw error
   }
 }
+
+export const searchCollections = async (keyword: string) => {
+  try {
+    const { data } = await http.get<Collection.Response.GetCollectionsByKeyword>(
+      API_ENDPOINTS.COLLECTION.GET.BY_KEYWORD(keyword)
+    )
+    return data
+  } catch (error) {
+    throw error
+  }
+}

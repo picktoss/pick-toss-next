@@ -12,6 +12,7 @@ import {
   deleteCollection,
   updateCollectionInfo,
   updateCollectionQuizzes,
+  searchCollections,
 } from './client'
 
 export const useCollections = (props?: {
@@ -267,5 +268,12 @@ export const useUpdateCollectionQuizzes = () => {
         queryClient.invalidateQueries({ queryKey: ['collectionInfo'] }),
       ])
     },
+  })
+}
+
+export const useSearchCollections = (keyword: string) => {
+  return useQuery({
+    queryKey: ['collections', 'searchCollections', keyword],
+    queryFn: async () => searchCollections(keyword),
   })
 }
