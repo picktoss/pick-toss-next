@@ -19,7 +19,6 @@ const InputWithCancelButton = ({
   inputValue,
   onChangeInputValue,
   searchInputRef,
-  isSearchFocused,
   setIsSearchFocused,
   onDeleteKeyword,
   onSubmit,
@@ -27,12 +26,7 @@ const InputWithCancelButton = ({
   const router = useRouter()
 
   const handleCancel = () => {
-    if (isSearchFocused) {
-      setIsSearchFocused(false)
-      return
-    } else {
-      router.back()
-    }
+    router.back()
   }
 
   return (

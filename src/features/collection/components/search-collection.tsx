@@ -1,10 +1,12 @@
 'use client'
 
 import { useState, useRef } from 'react'
+import { useSearchCollections } from '@/requests/collection/hooks'
 import InputWithCancelButton from '@/features/search/components/input-with-cancel-button'
 import CollectionSearchList from '@/features/search/components/collection-search-list'
 import RecentSearches from '@/features/search/components/recent-searches'
 import Text from '@/shared/components/ui/text'
+import Loading from '@/shared/components/custom/loading'
 
 interface Props {
   onSearch?: (keyword: string) => void
@@ -15,7 +17,18 @@ const SearchCollection = ({ onSearch }: Props) => {
   const [isSearchFocused, setIsSearchFocused] = useState(false)
   const searchInputRef = useRef<HTMLInputElement>(null)
   const searchContainerRef = useRef<HTMLDivElement>(null)
-  const [searchResults, setSearchResults] = useState<Collection.SearchedCollection[]>([])
+  const { data: apiSearchResults, isLoading } = useSearchCollections(keyword)
+
+  const searchResults: Collection.SearchedCollection[] =
+    apiSearchResults?.collections?.map((collection) => ({
+      id: collection.id,
+      name: collection.name,
+      emoji: collection.emoji,
+      bookmarkCount: collection.bookmarkCount,
+      collectionCategory: collection.collectionCategory as NonNullable<Collection.Field>,
+      memberName: collection.member.creatorName,
+      quizCount: collection.totalQuizCount,
+    })) ?? []
 
   const handleChangeKeyword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value)
@@ -34,13 +47,10 @@ const SearchCollection = ({ onSearch }: Props) => {
     e.preventDefault()
     if (!keyword.trim()) return
     onSearch?.(keyword)
-    // Here you would typically make an API call to search collections
-    // For now, we'll just use an empty array as placeholder
-    setSearchResults([])
   }
 
   return (
-    <div className="flex h-full w-full flex-col">
+    <div className="flex size-full flex-col">
       <InputWithCancelButton
         inputValue={keyword}
         onChangeInputValue={handleChangeKeyword}
@@ -50,14 +60,19 @@ const SearchCollection = ({ onSearch }: Props) => {
         onDeleteKeyword={handleDeleteKeyword}
         onSubmit={handleSubmit}
       />
-      {keyword && (
+      {keyword && isLoading && (
+        <div className="center mt-8 flex justify-center">
+          <Loading center />
+        </div>
+      )}
+      {keyword && !isLoading && (
         <CollectionSearchList length={searchResults.length} searchResults={searchResults} />
       )}
       {!keyword && isSearchFocused && (
         <RecentSearches containerRef={searchContainerRef} onUpdateKeyword={handleUpdateKeyword} />
       )}
-      {!keyword && !isSearchFocused && (
-        <div className="flex flex-col center items-center">
+      {keyword && !isLoading && searchResults.length === 0 && (
+        <div className="center flex flex-col items-center">
           <Text typography="subtitle1-bold">검색 결과가 없어요</Text>
           <Text typography="text1-medium" color="sub" className="mt-1">
             다른 키워드를 입력해보세요
