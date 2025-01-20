@@ -17,10 +17,11 @@ export const useMessaging = () => {
 
   useEffect(() => {
     const setupMessaging = async () => {
+      const isBrowser = typeof window !== 'undefined'
       const isGranted = Notification.permission === 'granted'
 
       // 브라우저 환경에서만 실행, 세션이 있을 때만, 알림 허용 상태일 때만 실행
-      if (typeof window !== 'undefined' && session?.user.accessToken && isGranted) {
+      if (isBrowser && session?.user.accessToken && isGranted) {
         try {
           const messaging = await initializeFirebaseMessaging()
 
