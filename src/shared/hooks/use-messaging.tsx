@@ -26,9 +26,9 @@ export const useMessaging = () => {
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
 
     const setupMessaging = async () => {
-      // alert(
-      //   `초기 상태: Browser=${isBrowser}, PWA=${isPWA}, iOS=${isIOS}, Permission=${Notification.permission}`
-      // )
+      alert(
+        `초기 상태: Browser=${isBrowser}, PWA=${isPWA}, iOS=${isIOS}, Permission=${Notification.permission}`
+      )
 
       if (Notification.permission === 'default' && isPWA && !isIOS) {
         try {

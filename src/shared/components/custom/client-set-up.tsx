@@ -19,11 +19,13 @@ const ClientSetUp = () => {
 
   useEffect(() => {
     setPWAAppLaunched(isPWA)
+  }, [isPWA])
 
+  useEffect(() => {
     if (session?.user) {
       getUserInfoMutate()
     }
-  }, [isPWA, session?.user, getUserInfoMutate])
+  }, [session?.user, getUserInfoMutate])
 
   return <NotificationPermissionDialog /> // ios 알림 권한 요청을 위한 dialog
   // return null
