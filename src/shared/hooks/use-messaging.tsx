@@ -14,13 +14,14 @@ export const useMessaging = () => {
   const { data: session } = useSession()
   const { mutate: postFcmTokenMutate } = usePostFcmToken()
   const isPWA = useIsPWA()
-  const isBrowser = typeof window !== 'undefined'
-  const isGranted = Notification.permission === 'granted'
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
 
   useServiceWorker()
 
   useEffect(() => {
+    const isBrowser = typeof window !== 'undefined'
+    const isGranted = Notification.permission === 'granted'
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
+
     const setupMessaging = async () => {
       // alert(
       //   `초기 상태: Browser=${isBrowser}, PWA=${isPWA}, iOS=${isIOS}, Permission=${Notification.permission}`
@@ -33,12 +34,6 @@ export const useMessaging = () => {
           // Service Worker 준비 상태 확인
           await navigator.serviceWorker.ready
           // alert('Service Worker Ready')
-
-          // // 숨겨진 버튼 찾아서 클릭
-          // const button = document.getElementById('notification-permission-button')
-          // if (button) {
-          //   button.click()
-          // }
         } catch (error) {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           // alert(`초기화 실패: ${error as any}`)
@@ -70,7 +65,7 @@ export const useMessaging = () => {
     }
 
     void setupMessaging()
-  }, [session?.user.accessToken, postFcmTokenMutate, isPWA, isGranted])
+  }, [session?.user.accessToken, postFcmTokenMutate, isPWA])
 }
 
 export const NotificationPermissionButton = () => {
@@ -101,11 +96,7 @@ export const NotificationPermissionButton = () => {
           e.preventDefault()
         }}
       >
-        <Button
-          onClick={handleClick}
-          className="" // 버튼을 숨김
-          id="notification-permission-button"
-        >
+        <Button onClick={handleClick} className="" id="notification-permission-button">
           알림 권한 설정하기
         </Button>
       </DialogContent>
