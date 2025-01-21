@@ -8,6 +8,7 @@ import { usePostFcmToken } from '@/requests/fcm/hooks'
 import { getFCMToken } from '@/firebase/messaging/get-token'
 import { useIsPWA } from './use-pwa'
 import { Dialog, DialogContent } from '../components/ui/dialog'
+import { Button } from '../components/ui/button'
 
 export const useMessaging = () => {
   const { data: session } = useSession()
@@ -98,14 +99,14 @@ export const NotificationPermissionButton = () => {
           e.preventDefault()
         }}
       >
-        <button
+        <Button
           ref={buttonRef}
           onClick={handleClick}
-          className="hidden" // 버튼을 숨김
+          className="" // 버튼을 숨김
           id="notification-permission-button"
         >
           알림 권한 설정하기
-        </button>
+        </Button>
       </DialogContent>
     </Dialog>
   )
