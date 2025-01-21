@@ -70,7 +70,7 @@ export const useMessaging = () => {
   }, [session?.user.accessToken, postFcmTokenMutate, isPWA])
 }
 
-export const NotificationPermissionButton = () => {
+export const NotificationPermissionDialog = () => {
   const [open, setOpen] = useState(true)
 
   const handleClick = async () => {
