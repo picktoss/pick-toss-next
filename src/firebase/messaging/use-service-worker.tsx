@@ -14,14 +14,14 @@ export const useServiceWorker = () => {
         // eslint-disable-next-line no-console
         console.log('ServiceWorker registration successful')
 
-        // 푸시 매니저 구독
-        const subscription = await registration.pushManager.subscribe({
-          userVisibleOnly: true,
-          applicationServerKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
-        })
+        // // 푸시 매니저 구독
+        // const subscription = await registration.pushManager.subscribe({
+        //   userVisibleOnly: true,
+        //   applicationServerKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
+        // })
 
-        // eslint-disable-next-line no-console
-        console.log('Push subscription:', subscription)
+        // // eslint-disable-next-line no-console
+        // console.log('Push subscription:', subscription)
 
         try {
           const messaging = await initializeFirebaseMessaging()
