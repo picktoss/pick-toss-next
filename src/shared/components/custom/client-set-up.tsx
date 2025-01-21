@@ -1,7 +1,7 @@
 'use client'
 
-import { useEffect } from 'react'
-import { useMessaging } from '@/shared/hooks/use-messaging'
+import { useEffect, useState } from 'react'
+import { NotificationPermissionButton, useMessaging } from '@/shared/hooks/use-messaging'
 import { setPWAAppLaunched } from '@/shared/utils/pwa'
 import { useSession } from 'next-auth/react'
 import { useUserInfo } from '@/requests/user/hooks'
@@ -12,15 +12,21 @@ import { useIsPWA } from '@/shared/hooks/use-pwa'
  * 렌더링은 하지 않습니다.
  */
 const ClientSetUp = () => {
+  const [renderPermissionDialog, setRenderPermissionDialog] = useState(false)
   const { data: session } = useSession()
   const { mutate: getUserInfoMutate } = useUserInfo()
   const isPWA = useIsPWA()
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
 
   useMessaging()
 
   useEffect(() => {
     setPWAAppLaunched(isPWA)
-  }, [isPWA])
+
+    if (session?.user && Notification.permission === 'default' && isPWA && isIOS) {
+      setRenderPermissionDialog(true)
+    }
+  }, [isPWA, session?.user, isIOS])
 
   useEffect(() => {
     if (session?.user) {
@@ -28,9 +34,10 @@ const ClientSetUp = () => {
     }
   }, [session?.user, getUserInfoMutate])
 
-  // return (
-  //   <NotificationPermissionButton />
-  // )
+  if (renderPermissionDialog) {
+    return <NotificationPermissionButton />
+  }
+
   return null
 }
 

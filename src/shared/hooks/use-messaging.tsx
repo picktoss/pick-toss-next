@@ -9,6 +9,8 @@ import { getFCMToken } from '@/firebase/messaging/get-token'
 import { useIsPWA } from './use-pwa'
 import { Dialog, DialogContent } from '../components/ui/dialog'
 import { Button } from '../components/ui/button'
+import Icon from '../components/custom/icon'
+import Text from '../components/ui/text'
 
 export const useMessaging = () => {
   const { data: session } = useSession()
@@ -79,11 +81,11 @@ export const NotificationPermissionButton = () => {
         applicationServerKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
       })
 
-      alert(`권한 요청 결과: ${Notification.permission}`)
+      // alert(`권한 요청 결과: ${Notification.permission}`)
       setOpen(false)
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      alert(`권한 요청 실패: ${error as any}`)
+      // alert(`권한 요청 실패: ${error as any}`)
     }
   }
 
@@ -91,13 +93,29 @@ export const NotificationPermissionButton = () => {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent
         displayCloseButton={false}
-        className="size-[280px] rounded-[16px] bg-background-base-01 p-[24px]"
+        className="flex-center size-fit flex-col rounded-[20px] bg-background-base-01 p-[24px]"
         onPointerDownOutside={(e) => {
           e.preventDefault()
         }}
       >
-        <Button onClick={handleClick} className="" id="notification-permission-button">
-          알림 권한 설정하기
+        <Icon name="today-quiz-and-blue-speech-bubble" className="mb-[24px] w-[212px]" />
+
+        <div className="flex-center mb-[36px] flex-col gap-[8px]">
+          <Text typography="title3" className="font-suit">
+            푸시 알림 허용 안내
+          </Text>
+
+          <Text typography="text1-regular" color="sub" className="text-center">
+            알림을 허용하시면 퀴즈 도착 확인 등 <br />더 편리한 서비스 이용이 가능해요
+          </Text>
+        </div>
+
+        <Button
+          onClick={handleClick}
+          className="w-full min-w-[260px]"
+          id="notification-permission-button"
+        >
+          설정하기
         </Button>
       </DialogContent>
     </Dialog>
