@@ -10,16 +10,37 @@ export const checkNotificationPermission = () => {
 
 /** 알림 권한 요청 함수 */
 export const requestNotificationPermission = async () => {
+  // iOS 체크
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
+  const isPWA = window.matchMedia('(display-mode: standalone)').matches
+
+  alert(`환경 체크: iOS=${isIOS}, PWA=${isPWA}, Permission=${Notification.permission}`)
+
   try {
-    // 다른 환경에서의 처리
-    if (Notification.permission === 'default') {
-      alert('권한 요청 시도')
-      const permission = await Notification.requestPermission()
-      alert(`권한 요청 결과: ${permission}`)
-      return permission === 'granted'
+    // iOS PWA에서는 service worker 준비 상태 확인
+    if (isIOS && isPWA) {
+      alert('iOS PWA 환경 감지')
+      const registration = await navigator.serviceWorker.ready
+      alert('Service Worker Ready')
+
+      await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
+      })
+
+      alert('Subscription 성공')
+      return true
     } else {
-      alert(`이미 권한 설정됨: ${Notification.permission}`)
-      return Notification.permission === 'granted'
+      // 다른 환경에서의 처리
+      if (Notification.permission === 'default') {
+        alert('권한 요청 시도')
+        const permission = await Notification.requestPermission()
+        alert(`권한 요청 결과: ${permission}`)
+        return permission === 'granted'
+      } else {
+        alert(`이미 권한 설정됨: ${Notification.permission}`)
+        return Notification.permission === 'granted'
+      }
     }
   } catch (error) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
