@@ -23,7 +23,7 @@ export const useMessaging = () => {
 
       alert('Notification.permission: ' + Notification.permission)
 
-      if (Notification.permission === 'default') {
+      if (Notification.permission === 'default' && isPWA) {
         try {
           await requestNotificationPermission()
         } catch (error) {
