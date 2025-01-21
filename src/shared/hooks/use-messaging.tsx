@@ -1,7 +1,7 @@
 'use client'
 
 import { useServiceWorker } from '@/firebase/messaging/use-service-worker'
-import { useEffect, useRef } from 'react'
+import { useEffect, useState } from 'react'
 import { initializeFirebaseMessaging } from '../../../firebase'
 import { useSession } from 'next-auth/react'
 import { usePostFcmToken } from '@/requests/fcm/hooks'
@@ -73,7 +73,7 @@ export const useMessaging = () => {
 }
 
 export const NotificationPermissionButton = () => {
-  const buttonRef = useRef<HTMLButtonElement>(null)
+  const [open, setOpen] = useState(true)
 
   const handleClick = async () => {
     try {
@@ -84,6 +84,7 @@ export const NotificationPermissionButton = () => {
       })
 
       alert(`권한 요청 결과: ${Notification.permission}`)
+      setOpen(false)
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       alert(`권한 요청 실패: ${error as any}`)
@@ -91,7 +92,7 @@ export const NotificationPermissionButton = () => {
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent
         displayCloseButton={false}
         className="size-[280px] rounded-[16px] bg-background-base-01 p-[24px]"
@@ -100,7 +101,6 @@ export const NotificationPermissionButton = () => {
         }}
       >
         <Button
-          ref={buttonRef}
           onClick={handleClick}
           className="" // 버튼을 숨김
           id="notification-permission-button"
