@@ -20,11 +20,32 @@ export const useMessaging = () => {
     const setupMessaging = async () => {
       const isBrowser = typeof window !== 'undefined'
       const isGranted = Notification.permission === 'granted'
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
 
-      alert('Notification.permission: ' + Notification.permission)
+      // 디버깅을 위한 상태 로깅
+      alert(
+        'Initial state:' +
+          isBrowser +
+          '/' +
+          isPWA +
+          '/' +
+          isIOS +
+          '/' +
+          'notification:' +
+          Notification.permission +
+          '/' +
+          'serviceWorker:' +
+          'serviceWorker' in
+          navigator
+      )
+
+      // alert('Notification.permission: ' + Notification.permission)
 
       if (Notification.permission === 'default' && isPWA) {
         try {
+          if (isIOS) {
+            await navigator.serviceWorker.ready
+          }
           await requestNotificationPermission()
         } catch (error) {
           // eslint-disable-next-line no-console
