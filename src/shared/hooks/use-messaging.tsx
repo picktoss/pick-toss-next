@@ -20,7 +20,7 @@ export const useMessaging = () => {
       const isBrowser = typeof window !== 'undefined'
       const isGranted = Notification.permission === 'granted'
 
-      alert('useMessaging')
+      alert('Notification.permission: ' + Notification.permission)
 
       // 브라우저 환경에서만 실행, 세션이 있을 때만, 알림 허용 상태일 때만 실행
       if (isBrowser && session?.user.accessToken && isGranted) {
