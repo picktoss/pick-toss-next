@@ -19,16 +19,16 @@ const ClientSetUp = () => {
   useMessaging()
 
   useEffect(() => {
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
-    const needPermissionDialog =
-      session?.user && Notification.permission === 'default' && isPWA && isIOS
     setPWAAppLaunched(isPWA)
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
+    const needPermissionDialog = Notification.permission === 'default' && isPWA && isIOS
 
     if (session?.user) {
       getUserInfoMutate()
-    }
-    if (needPermissionDialog) {
-      setRenderPermissionDialog(true)
+
+      if (needPermissionDialog) {
+        setRenderPermissionDialog(true)
+      }
     }
   }, [isPWA, session?.user, getUserInfoMutate])
 
