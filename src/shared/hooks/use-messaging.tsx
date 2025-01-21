@@ -20,9 +20,12 @@ export const useMessaging = () => {
       const isBrowser = typeof window !== 'undefined'
       const isGranted = Notification.permission === 'granted'
 
+      alert('useMessaging')
+
       // 브라우저 환경에서만 실행, 세션이 있을 때만, 알림 허용 상태일 때만 실행
       if (isBrowser && session?.user.accessToken && isGranted) {
         try {
+          alert('browser & session & granted')
           const messaging = await initializeFirebaseMessaging()
 
           if (messaging) {
@@ -30,11 +33,13 @@ export const useMessaging = () => {
             const token = await getFCMToken()
 
             if (token && isPWA) {
+              alert('get token & isPWA')
               // 서버로 fcm 토큰 전송
               postFcmTokenMutate(token)
             }
           }
         } catch (error) {
+          alert(error)
           console.error('FCM setup error:', error)
         }
       }
