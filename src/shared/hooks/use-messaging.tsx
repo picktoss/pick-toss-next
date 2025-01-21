@@ -22,25 +22,25 @@ export const useMessaging = () => {
   useEffect(() => {
     const isBrowser = typeof window !== 'undefined'
     const isGranted = Notification.permission === 'granted'
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
+    // const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
 
     const setupMessaging = async () => {
       // alert(
       //   `초기 상태: Browser=${isBrowser}, PWA=${isPWA}, iOS=${isIOS}, Permission=${Notification.permission}`
       // )
 
-      if (Notification.permission === 'default' && isPWA && isIOS) {
-        try {
-          // alert('iOS PWA 환경 감지')
+      // if (Notification.permission === 'default' && isPWA && isIOS) {
+      //   try {
+      //     alert('iOS PWA 환경 감지')
 
-          // Service Worker 준비 상태 확인
-          await navigator.serviceWorker.ready
-          // alert('Service Worker Ready')
-        } catch (error) {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          // alert(`초기화 실패: ${error as any}`)
-        }
-      }
+      //     // Service Worker 준비 상태 확인
+      //     await navigator.serviceWorker.ready
+      //     alert('Service Worker Ready')
+      //   } catch (error) {
+      //     // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      //     alert(`초기화 실패: ${error as any}`)
+      //   }
+      // }
 
       // 브라우저 환경에서만 실행, 세션이 있을 때만, 알림 허용 상태일 때만 실행
       if (isBrowser && session?.user.accessToken && isGranted) {
@@ -76,9 +76,8 @@ export const NotificationPermissionDialog = () => {
 
   useEffect(() => {
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
-    const needPermissionDialog = Notification.permission === 'default' && isPWA && isIOS
 
-    if (needPermissionDialog) {
+    if (Notification.permission === 'default' && isPWA && isIOS) {
       setOpen(true)
     }
   }, [isPWA])
@@ -91,11 +90,11 @@ export const NotificationPermissionDialog = () => {
         applicationServerKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
       })
 
-      // alert(`권한 요청 결과: ${Notification.permission}`)
+      alert(`권한 요청 결과: ${Notification.permission}`)
       setOpen(false)
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      // alert(`권한 요청 실패: ${error as any}`)
+      alert(`권한 요청 실패: ${error as any}`)
     }
   }
 
