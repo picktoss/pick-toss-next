@@ -7,6 +7,7 @@ import { useSession } from 'next-auth/react'
 import { usePostFcmToken } from '@/requests/fcm/hooks'
 import { getFCMToken } from '@/firebase/messaging/get-token'
 import { useIsPWA } from './use-pwa'
+import { Dialog, DialogContent } from '../components/ui/dialog'
 
 export const useMessaging = () => {
   const { data: session } = useSession()
@@ -25,8 +26,6 @@ export const useMessaging = () => {
         `초기 상태: Browser=${isBrowser}, PWA=${isPWA}, iOS=${isIOS}, Permission=${Notification.permission}`
       )
 
-      // alert('Notification.permission: ' + Notification.permission)
-
       if (Notification.permission === 'default' && isPWA && isIOS) {
         try {
           alert('iOS PWA 환경 감지')
@@ -34,11 +33,11 @@ export const useMessaging = () => {
           await navigator.serviceWorker.ready
           alert('Service Worker Ready')
 
-          // 숨겨진 버튼 찾아서 클릭
-          const button = document.getElementById('notification-permission-button')
-          if (button) {
-            button.click()
-          }
+          // // 숨겨진 버튼 찾아서 클릭
+          // const button = document.getElementById('notification-permission-button')
+          // if (button) {
+          //   button.click()
+          // }
         } catch (error) {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           alert(`초기화 실패: ${error as any}`)
@@ -91,13 +90,23 @@ export const NotificationPermissionButton = () => {
   }
 
   return (
-    <button
-      ref={buttonRef}
-      onClick={handleClick}
-      className="hidden" // 버튼을 숨김
-      id="notification-permission-button"
-    >
-      알림 권한 설정하기
-    </button>
+    <Dialog>
+      <DialogContent
+        displayCloseButton={false}
+        className="size-[280px] rounded-[16px] bg-background-base-01 p-[24px]"
+        onPointerDownOutside={(e) => {
+          e.preventDefault()
+        }}
+      >
+        <button
+          ref={buttonRef}
+          onClick={handleClick}
+          className="hidden" // 버튼을 숨김
+          id="notification-permission-button"
+        >
+          알림 권한 설정하기
+        </button>
+      </DialogContent>
+    </Dialog>
   )
 }
