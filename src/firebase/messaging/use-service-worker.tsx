@@ -10,7 +10,7 @@ export const useServiceWorker = () => {
 
     const setRegister = async () => {
       try {
-        const registration = await navigator.serviceWorker.register('/service-worker.js')
+        const registration = await navigator.serviceWorker.register('/firebase-messaging-sw.js')
         // eslint-disable-next-line no-console
         console.log('ServiceWorker registration successful')
 
