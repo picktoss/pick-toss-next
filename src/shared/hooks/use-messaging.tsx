@@ -49,7 +49,7 @@ export const useMessaging = () => {
             const token = await getFCMToken()
 
             if (token && isPWA) {
-              alert('fcm token: ' + token)
+              // alert('fcm token: ' + token)
 
               // 서버로 fcm 토큰 전송
               postFcmTokenMutate(token)
