@@ -12,6 +12,7 @@ import { useIsPWA } from '@/shared/hooks/use-pwa'
  */
 const ClientSetUp = () => {
   const [renderPermissionDialog, setRenderPermissionDialog] = useState(false)
+  const [isIOS, setIsIOS] = useState(false)
   const { data: session } = useSession()
   const { mutate: getUserInfoMutate } = useUserInfo()
   const isPWA = useIsPWA()
@@ -19,8 +20,13 @@ const ClientSetUp = () => {
   useMessaging()
 
   useEffect(() => {
+    const IOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
+    setIsIOS(IOS)
+  }, [])
+
+  useEffect(() => {
     setPWAAppLaunched(isPWA)
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
+
     const needPermissionDialog = Notification.permission === 'default' && isPWA && isIOS
 
     if (session?.user) {
@@ -30,7 +36,7 @@ const ClientSetUp = () => {
         setRenderPermissionDialog(true)
       }
     }
-  }, [isPWA, session?.user, getUserInfoMutate])
+  }, [isPWA, session?.user, getUserInfoMutate, isIOS])
 
   if (renderPermissionDialog) {
     return <NotificationPermissionDialog /> // ios 알림 권한 요청을 위한 dialog
