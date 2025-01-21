@@ -11,7 +11,7 @@ import { Dialog, DialogContent } from '../components/ui/dialog'
 import { Button } from '../components/ui/button'
 import Icon from '../components/custom/icon'
 import Text from '../components/ui/text'
-import { requestNotificationPermission } from '../utils/notification'
+// import { requestNotificationPermission } from '../utils/notification'
 
 export const useMessaging = () => {
   const { data: session } = useSession()
@@ -30,24 +30,11 @@ export const useMessaging = () => {
         `초기 상태: Browser=${isBrowser}, PWA=${isPWA}, iOS=${isIOS}, Permission=${Notification.permission}`
       )
 
-      if (Notification.permission === 'default' && isPWA && !isIOS) {
-        try {
-          void requestNotificationPermission()
-        } catch (error) {
-          console.error(error)
-        }
-      }
-
-      // if (Notification.permission === 'default' && isPWA && isIOS) {
+      // if (Notification.permission === 'default' && isPWA && !isIOS) {
       //   try {
-      //     alert('iOS PWA 환경 감지')
-
-      //     // Service Worker 준비 상태 확인
-      //     await navigator.serviceWorker.ready
-      //     alert('Service Worker Ready')
+      //     void requestNotificationPermission()
       //   } catch (error) {
-      //     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      //     alert(`초기화 실패: ${error as any}`)
+      //     console.error(error)
       //   }
       // }
 
