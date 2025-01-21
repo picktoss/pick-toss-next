@@ -22,21 +22,8 @@ export const useMessaging = () => {
       const isGranted = Notification.permission === 'granted'
       const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
 
-      // 디버깅을 위한 상태 로깅
       alert(
-        'Initial state:' +
-          isBrowser +
-          '/' +
-          isPWA +
-          '/' +
-          isIOS +
-          '/' +
-          'notification:' +
-          Notification.permission +
-          '/' +
-          'serviceWorker:' +
-          'serviceWorker' in
-          navigator
+        `초기 상태: Browser=${isBrowser}, PWA=${isPWA}, iOS=${isIOS}, Permission=${Notification.permission}`
       )
 
       // alert('Notification.permission: ' + Notification.permission)

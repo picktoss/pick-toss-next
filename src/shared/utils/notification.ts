@@ -14,40 +14,36 @@ export const requestNotificationPermission = async () => {
   const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
   const isPWA = window.matchMedia('(display-mode: standalone)').matches
 
-  // eslint-disable-next-line no-console
-  console.log('Environment check:', {
-    isIOS,
-    isPWA,
-    permission: Notification.permission,
-    serviceWorker: 'serviceWorker' in navigator,
-  })
-
-  // PWA 환경이 아니거나 이미 권한이 결정된 경우
-  if (!isPWA || Notification.permission !== 'default') {
-    return false
-  }
+  alert(`환경 체크: iOS=${isIOS}, PWA=${isPWA}, Permission=${Notification.permission}`)
 
   try {
-    // Service Worker 등록 확인
-    const registration = await navigator.serviceWorker.ready
+    // iOS PWA에서는 service worker 준비 상태 확인
+    if (isIOS && isPWA) {
+      alert('iOS PWA 환경 감지')
+      const registration = await navigator.serviceWorker.ready
+      alert('Service Worker Ready')
 
-    // iOS에서는 푸시 매니저를 통해 권한 요청
-    if (isIOS) {
-      const subscription = await registration.pushManager.subscribe({
+      await registration.pushManager.subscribe({
         userVisibleOnly: true,
         applicationServerKey: 'YOUR_VAPID_PUBLIC_KEY',
       })
 
-      // eslint-disable-next-line no-console
-      console.log('Push subscription successful:', subscription)
+      alert('Subscription 성공')
       return true
     } else {
-      // 다른 환경에서는 일반적인 방식으로 권한 요청
-      const permission = await Notification.requestPermission()
-      return permission === 'granted'
+      // 다른 환경에서의 처리
+      if (Notification.permission === 'default') {
+        alert('권한 요청 시도')
+        const permission = await Notification.requestPermission()
+        alert(`권한 요청 결과: ${permission}`)
+        return permission === 'granted'
+      } else {
+        alert(`이미 권한 설정됨: ${Notification.permission}`)
+        return Notification.permission === 'granted'
+      }
     }
   } catch (error) {
-    console.error('알림 권한 요청 실패:', error)
+    alert(`권한 요청 실패: ${error as string}`)
     return false
   }
 }
