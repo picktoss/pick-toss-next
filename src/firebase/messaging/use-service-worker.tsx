@@ -17,7 +17,7 @@ export const useServiceWorker = () => {
         // 푸시 매니저 구독
         const subscription = await registration.pushManager.subscribe({
           userVisibleOnly: true,
-          applicationServerKey: 'YOUR_VAPID_PUBLIC_KEY',
+          applicationServerKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
         })
 
         // eslint-disable-next-line no-console

@@ -25,7 +25,7 @@ export const requestNotificationPermission = async () => {
 
       await registration.pushManager.subscribe({
         userVisibleOnly: true,
-        applicationServerKey: 'YOUR_VAPID_PUBLIC_KEY',
+        applicationServerKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
       })
 
       alert('Subscription 성공')
@@ -43,7 +43,8 @@ export const requestNotificationPermission = async () => {
       }
     }
   } catch (error) {
-    alert(`권한 요청 실패: ${error as string}`)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    alert(`권한 요청 실패: ${error as any}`)
     return false
   }
 }
