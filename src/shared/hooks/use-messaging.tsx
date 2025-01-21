@@ -11,6 +11,7 @@ import { Dialog, DialogContent } from '../components/ui/dialog'
 import { Button } from '../components/ui/button'
 import Icon from '../components/custom/icon'
 import Text from '../components/ui/text'
+import { requestNotificationPermission } from '../utils/notification'
 
 export const useMessaging = () => {
   const { data: session } = useSession()
@@ -22,12 +23,20 @@ export const useMessaging = () => {
   useEffect(() => {
     const isBrowser = typeof window !== 'undefined'
     const isGranted = Notification.permission === 'granted'
-    // const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
 
     const setupMessaging = async () => {
       // alert(
       //   `초기 상태: Browser=${isBrowser}, PWA=${isPWA}, iOS=${isIOS}, Permission=${Notification.permission}`
       // )
+
+      if (Notification.permission === 'default' && isPWA && !isIOS) {
+        try {
+          void requestNotificationPermission()
+        } catch (error) {
+          console.error(error)
+        }
+      }
 
       // if (Notification.permission === 'default' && isPWA && isIOS) {
       //   try {
