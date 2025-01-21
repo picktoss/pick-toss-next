@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
-import { useMessaging } from '@/shared/hooks/use-messaging'
+import { NotificationPermissionButton, useMessaging } from '@/shared/hooks/use-messaging'
 import { setPWAAppLaunched } from '@/shared/utils/pwa'
 import { useSession } from 'next-auth/react'
 import { useUserInfo } from '@/requests/user/hooks'
@@ -28,7 +28,9 @@ const ClientSetUp = () => {
     }
   }, [session?.user, getUserInfoMutate])
 
-  return null
+  return (
+    <NotificationPermissionButton /> // hidden
+  )
 }
 
 export default ClientSetUp

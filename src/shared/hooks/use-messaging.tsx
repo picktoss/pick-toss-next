@@ -1,7 +1,7 @@
 'use client'
 
 import { useServiceWorker } from '@/firebase/messaging/use-service-worker'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { initializeFirebaseMessaging } from '../../../firebase'
 import { useSession } from 'next-auth/react'
 import { usePostFcmToken } from '@/requests/fcm/hooks'
@@ -28,16 +28,21 @@ export const useMessaging = () => {
 
       // alert('Notification.permission: ' + Notification.permission)
 
-      if (Notification.permission === 'default' && isPWA) {
+      if (Notification.permission === 'default' && isPWA && isIOS) {
         try {
-          if (isIOS) {
-            await navigator.serviceWorker.ready
+          alert('iOS PWA 환경 감지')
+          // Service Worker 준비 상태 확인
+          await navigator.serviceWorker.ready
+          alert('Service Worker Ready')
+
+          // 숨겨진 버튼 찾아서 클릭
+          const button = document.getElementById('notification-permission-button')
+          if (button) {
+            button.click()
           }
-          await requestNotificationPermission()
         } catch (error) {
-          // eslint-disable-next-line no-console
-          console.log(error)
-          alert(error)
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          alert(`초기화 실패: ${error as any}`)
         }
       }
 
@@ -66,4 +71,29 @@ export const useMessaging = () => {
 
     void setupMessaging()
   }, [session?.user.accessToken, postFcmTokenMutate, isPWA])
+}
+
+export const NotificationPermissionButton = () => {
+  const buttonRef = useRef<HTMLButtonElement>(null)
+
+  const handleClick = async () => {
+    try {
+      const result = await requestNotificationPermission()
+      alert(`권한 요청 결과: ${result}`)
+    } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      alert(`권한 요청 실패: ${error as any}`)
+    }
+  }
+
+  return (
+    <button
+      ref={buttonRef}
+      onClick={handleClick}
+      className="hidden" // 버튼을 숨김
+      id="notification-permission-button"
+    >
+      알림 권한 설정하기
+    </button>
+  )
 }
