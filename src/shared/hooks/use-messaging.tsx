@@ -71,7 +71,17 @@ export const useMessaging = () => {
 }
 
 export const NotificationPermissionDialog = () => {
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(false)
+  const isPWA = useIsPWA()
+
+  useEffect(() => {
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
+    const needPermissionDialog = Notification.permission === 'default' && isPWA && isIOS
+
+    if (needPermissionDialog) {
+      setOpen(true)
+    }
+  }, [isPWA])
 
   const handleClick = async () => {
     try {
