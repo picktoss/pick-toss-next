@@ -23,16 +23,17 @@ export const useMessaging = () => {
       const isGranted = Notification.permission === 'granted'
       const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
 
-      alert(
-        `초기 상태: Browser=${isBrowser}, PWA=${isPWA}, iOS=${isIOS}, Permission=${Notification.permission}`
-      )
+      // alert(
+      //   `초기 상태: Browser=${isBrowser}, PWA=${isPWA}, iOS=${isIOS}, Permission=${Notification.permission}`
+      // )
 
       if (Notification.permission === 'default' && isPWA && isIOS) {
         try {
-          alert('iOS PWA 환경 감지')
+          // alert('iOS PWA 환경 감지')
+
           // Service Worker 준비 상태 확인
           await navigator.serviceWorker.ready
-          alert('Service Worker Ready')
+          // alert('Service Worker Ready')
 
           // // 숨겨진 버튼 찾아서 클릭
           // const button = document.getElementById('notification-permission-button')
@@ -41,14 +42,14 @@ export const useMessaging = () => {
           // }
         } catch (error) {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          alert(`초기화 실패: ${error as any}`)
+          // alert(`초기화 실패: ${error as any}`)
         }
       }
 
       // 브라우저 환경에서만 실행, 세션이 있을 때만, 알림 허용 상태일 때만 실행
       if (isBrowser && session?.user.accessToken && isGranted) {
         try {
-          alert('browser & session & granted')
+          // alert('browser & session & granted')
           const messaging = await initializeFirebaseMessaging()
 
           if (messaging) {
@@ -56,13 +57,13 @@ export const useMessaging = () => {
             const token = await getFCMToken()
 
             if (token && isPWA) {
-              alert('get token & isPWA')
+              // alert('get token & isPWA')
               // 서버로 fcm 토큰 전송
               postFcmTokenMutate(token)
             }
           }
         } catch (error) {
-          alert(error)
+          // alert(error)
           console.error('FCM setup error:', error)
         }
       }
