@@ -7,6 +7,7 @@ import { useSession } from 'next-auth/react'
 import { usePostFcmToken } from '@/requests/fcm/hooks'
 import { getFCMToken } from '@/firebase/messaging/get-token'
 import { useIsPWA } from './use-pwa'
+import { requestNotificationPermission } from '../utils/notification'
 
 export const useMessaging = () => {
   const { data: session } = useSession()
@@ -21,6 +22,16 @@ export const useMessaging = () => {
       const isGranted = Notification.permission === 'granted'
 
       alert('Notification.permission: ' + Notification.permission)
+
+      if (Notification.permission === 'default') {
+        try {
+          await requestNotificationPermission()
+        } catch (error) {
+          // eslint-disable-next-line no-console
+          console.log(error)
+          alert(error)
+        }
+      }
 
       // 브라우저 환경에서만 실행, 세션이 있을 때만, 알림 허용 상태일 때만 실행
       if (isBrowser && session?.user.accessToken && isGranted) {

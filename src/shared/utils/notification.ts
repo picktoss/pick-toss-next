@@ -18,15 +18,19 @@ export const requestNotificationPermission = async () => {
       if (permission === 'granted') {
         // eslint-disable-next-line no-console
         console.log('알림 권한이 승인되었습니다.')
+        alert('알림 권한이 승인되었습니다.')
       } else {
         // eslint-disable-next-line no-console
         console.log('알림 권한이 거부되었습니다.')
+        alert('알림 권한이 거부되었습니다.')
       }
     } catch (error) {
       console.error('알림 권한 요청 중 에러:', error)
+      alert(error)
     }
   } else {
     // eslint-disable-next-line no-console
     console.log('알림 권한 상태:', Notification.permission)
+    alert('알림 권한 상태: ' + Notification.permission)
   }
 }
