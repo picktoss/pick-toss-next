@@ -7,7 +7,6 @@ import { useSession } from 'next-auth/react'
 import { usePostFcmToken } from '@/requests/fcm/hooks'
 import { getFCMToken } from '@/firebase/messaging/get-token'
 import { useIsPWA } from './use-pwa'
-import { requestNotificationPermission } from '../utils/notification'
 
 export const useMessaging = () => {
   const { data: session } = useSession()
@@ -78,8 +77,13 @@ export const NotificationPermissionButton = () => {
 
   const handleClick = async () => {
     try {
-      const result = await requestNotificationPermission()
-      alert(`권한 요청 결과: ${result}`)
+      const registration = await navigator.serviceWorker.ready
+      await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
+      })
+
+      alert(`권한 요청 결과: ${Notification.permission}`)
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       alert(`권한 요청 실패: ${error as any}`)
