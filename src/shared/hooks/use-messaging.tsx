@@ -14,15 +14,14 @@ export const useMessaging = () => {
   const { data: session } = useSession()
   const { mutate: postFcmTokenMutate } = usePostFcmToken()
   const isPWA = useIsPWA()
+  const isBrowser = typeof window !== 'undefined'
+  const isGranted = Notification.permission === 'granted'
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
 
   useServiceWorker()
 
   useEffect(() => {
     const setupMessaging = async () => {
-      const isBrowser = typeof window !== 'undefined'
-      const isGranted = Notification.permission === 'granted'
-      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
-
       // alert(
       //   `초기 상태: Browser=${isBrowser}, PWA=${isPWA}, iOS=${isIOS}, Permission=${Notification.permission}`
       // )
@@ -57,7 +56,8 @@ export const useMessaging = () => {
             const token = await getFCMToken()
 
             if (token && isPWA) {
-              // alert('get token & isPWA')
+              alert('fcm token: ' + token)
+
               // 서버로 fcm 토큰 전송
               postFcmTokenMutate(token)
             }
@@ -70,7 +70,7 @@ export const useMessaging = () => {
     }
 
     void setupMessaging()
-  }, [session?.user.accessToken, postFcmTokenMutate, isPWA])
+  }, [session?.user.accessToken, postFcmTokenMutate, isPWA, isGranted])
 }
 
 export const NotificationPermissionButton = () => {
