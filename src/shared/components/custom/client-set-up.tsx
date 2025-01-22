@@ -34,7 +34,6 @@ const ClientSetUp = () => {
   }, [session?.user, getUserInfoMutate])
 
   return <NotificationPermissionDialog /> // ios 알림 권한 요청을 위한 dialog
-  // return null
 }
 
 export default ClientSetUp
