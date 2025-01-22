@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
-import { NotificationPermissionDialog, useMessaging } from '@/shared/hooks/use-messaging'
+// import { NotificationPermissionDialog, useMessaging } from '@/shared/hooks/use-messaging'
 import { setPWAAppLaunched } from '@/shared/utils/pwa'
 import { useSession } from 'next-auth/react'
 import { useUserInfo } from '@/requests/user/hooks'
@@ -15,7 +15,7 @@ const ClientSetUp = () => {
   const { mutate: getUserInfoMutate } = useUserInfo()
   const isPWA = useIsPWA()
 
-  useMessaging()
+  // useMessaging()
 
   useEffect(() => {
     setPWAAppLaunched(isPWA)
@@ -27,7 +27,7 @@ const ClientSetUp = () => {
     }
   }, [session?.user, getUserInfoMutate])
 
-  return <NotificationPermissionDialog /> // ios 알림 권한 요청을 위한 dialog
+  // return <NotificationPermissionDialog /> // ios 알림 권한 요청을 위한 dialog
 }
 
 export default ClientSetUp
