@@ -6,7 +6,7 @@ import { initializeFirebaseMessaging } from '../../../firebase'
 
 export const useServiceWorker = () => {
   useEffect(() => {
-    let unsubscribe: (() => void) | undefined
+    // let unsubscribe: (() => void) | undefined
 
     const setRegister = async () => {
       try {
@@ -18,7 +18,7 @@ export const useServiceWorker = () => {
           const messaging = await initializeFirebaseMessaging()
 
           if (messaging) {
-            unsubscribe = onMessage(messaging, async (payload) => {
+            onMessage(messaging, async (payload) => {
               // 앱이 포그라운드 상태일 때만 알림 표시
               if (document.visibilityState === 'visible') {
                 // eslint-disable-next-line no-console
@@ -48,10 +48,10 @@ export const useServiceWorker = () => {
       void setRegister()
     }
 
-    return () => {
-      if (unsubscribe) {
-        unsubscribe()
-      }
-    }
+    // return () => {
+    //   if (unsubscribe) {
+    //     unsubscribe()
+    //   }
+    // }
   }, [])
 }
