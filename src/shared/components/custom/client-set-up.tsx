@@ -16,7 +16,11 @@ const ClientSetUp = () => {
   const { mutate: getUserInfoMutate } = useUserInfo()
   const isPWA = useIsPWA()
 
-  useMessaging()
+  const { isReadyNotification } = useMessaging()
+
+  useEffect(() => {
+    alert('알림 준비: ' + isReadyNotification)
+  }, [isReadyNotification])
 
   useEffect(() => {
     setPWAAppLaunched(isPWA)

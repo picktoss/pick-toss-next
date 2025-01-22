@@ -106,6 +106,7 @@ export const useMessaging = () => {
         if (isPWA) {
           const token = await getFCMToken()
           if (token) {
+            alert('fcm token: ' + token)
             postFcmTokenMutate(token)
           }
         }
