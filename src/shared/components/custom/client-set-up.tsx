@@ -19,7 +19,8 @@ const ClientSetUp = () => {
   const { isReadyNotification } = useMessaging()
 
   useEffect(() => {
-    alert('알림 준비: ' + isReadyNotification)
+    // eslint-disable-next-line no-console
+    console.log('알림 준비: ' + isReadyNotification)
   }, [isReadyNotification])
 
   useEffect(() => {

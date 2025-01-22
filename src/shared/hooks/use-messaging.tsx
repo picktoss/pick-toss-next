@@ -87,6 +87,8 @@ export const useMessaging = () => {
           } catch (error) {
             console.error('Notification permission request failed:', error)
             return
+          } finally {
+            window.location.reload()
           }
         }
 

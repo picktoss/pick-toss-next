@@ -28,13 +28,12 @@ const NotificationPermissionDialog = () => {
         userVisibleOnly: true,
         applicationServerKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
       })
-
-      alert(`권한 요청 결과: ${Notification.permission}`)
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      alert(`권한 요청 실패: ${error as any}`)
+      console.error(`권한 요청 실패: ${error as any}`)
     } finally {
       setOpen(false)
+      window.location.reload()
     }
   }
 
