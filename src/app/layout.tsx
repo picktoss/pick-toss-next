@@ -27,15 +27,11 @@ export default function RootLayout({
     <html lang="ko">
       <head>
         {/* PWA Manifest */}
-        {/* <link rel="manifest" href="/manifest.json" />
-        <meta name="mobile-web-app-capable" content="yes"></meta> */}
-        {/* Apple-specific settings */}
-        {/* <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="icon" type="image/svg+xml" href="/favicons/favicon.svg" />
+        <link rel="shortcut icon" href="/favicons/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png" />
         <meta name="apple-mobile-web-app-title" content="picktoss" />
-        <meta name="theme-color" content="#ffffff" />
-        <meta name="background-color" content="#ffffff" />
-        <meta name="orientation" content="portrait" /> */}
       </head>
       <body className={cn(suit.variable, 'font-suit bg-gray-01')}>
         <Providers>
