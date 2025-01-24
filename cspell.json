@@ -12,9 +12,13 @@
     "*.svg",
     "public"
   ],
-  "files": ["src/**/*.tsx", "src/**/*.ts"],
+  "files": [
+    "src/**/*.tsx",
+    "src/**/*.ts"
+  ],
   "words": [
     "autodocs",
+    "beforeinstallprompt",
     "classname",
     "cmaps",
     "customise",
