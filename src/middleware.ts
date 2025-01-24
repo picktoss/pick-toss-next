@@ -11,7 +11,6 @@ const publicUrls: Routes = {
 
 const publicOnlyUrls: Routes = {
   '/': true,
-  '/app-start': true,
   '/sign-in': true,
 }
 
