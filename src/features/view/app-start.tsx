@@ -4,7 +4,7 @@ import SocialLogin from '../auth/social-login'
 
 const AppStartView = () => {
   return (
-    <main className="flex-center h-[calc(100dvh-54px)] w-full flex-col overflow-y-auto overflow-x-hidden bg-background-base-01 px-[43px] scrollbar-hide">
+    <main className="flex-center relative z-20 h-[calc(100dvh-54px)] w-full flex-col overflow-y-auto overflow-x-hidden bg-background-base-01 px-[43px] scrollbar-hide">
       <Icon name="start-picktoss" className="h-auto w-[160px]" />
 
       <Icon name="logo" className="mb-[41.4px] mt-[17px] h-auto w-[182px]" />

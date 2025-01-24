@@ -22,12 +22,13 @@ const Landing = () => {
   }
 
   if (isDesktop) {
+    // 랜딩 페이지
     return (
-      <>
+      <div className="relative z-20 h-dvh w-screen max-w-mobile">
         <Header />
         <Intro />
         <Footer />
-      </>
+      </div>
     )
   }
 
