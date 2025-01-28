@@ -104,7 +104,7 @@ const AnimatedButtons = () => {
             {
               variant: 'mediumIcon',
               colors: 'special',
-              className: 'bg-gradient-to-r from-blue-400 via-none to-orange-500 shadow-float',
+              className: 'bg-gradient-to-r from-blue-400 via-none to-orange-500 shadow-float-light',
             },
             () => setIsExpandedBtns(true)
           )}
