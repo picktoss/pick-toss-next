@@ -397,6 +397,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v2/admin/test/notifications": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 자신에게 푸시 알림 보내기(테스트 용도) */
+        post: operations["createNotificationTest"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v2/admin/sign-up": {
         parameters: {
             query?: never;
@@ -414,6 +431,24 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v2/admin/notifications": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 푸시 알림 관리 */
+        get: operations["getNotifications_1"];
+        put?: never;
+        /** 푸시 알림 생성 */
+        post: operations["createNotification"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v2/admin/login": {
         parameters: {
             query?: never;
@@ -425,23 +460,6 @@ export interface paths {
         put?: never;
         /** 운영진 로그인 */
         post: operations["login_1"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v2/admin/collections/{collection_id}/info/update": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** 컬렉션 공개여부 수정 */
-        post: operations["modifyCollectionInfo"];
         delete?: never;
         options?: never;
         head?: never;
@@ -726,6 +744,40 @@ export interface paths {
         patch: operations["addQuizToCollection"];
         trace?: never;
     };
+    "/api/v2/admin/notifications/{notification_id}/update": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** 푸시 알림 상세 및 수정 */
+        patch: operations["updateNotification"];
+        trace?: never;
+    };
+    "/api/v2/admin/collections/{collection_id}/info/update": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** 컬렉션 공개여부 수정 */
+        patch: operations["modifyCollectionInfo"];
+        trace?: never;
+    };
     "/api/v2/today-quiz-info": {
         parameters: {
             query?: never;
@@ -1005,6 +1057,40 @@ export interface paths {
             cookie?: never;
         };
         get: operations["notionCallback"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/notifications": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 모든 알림 가져오기 */
+        get: operations["getNotifications"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/notifications/{notification_key}/check": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 알림 확인 */
+        get: operations["getNotificationByNotificationKey"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1388,6 +1474,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v2/admin/notifications/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 푸시 알림 검색 */
+        get: operations["getNotificationsByKeyword"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v2/admin/collections": {
         parameters: {
             query?: never;
@@ -1519,6 +1622,23 @@ export interface paths {
         post?: never;
         /** 컬렉션 북마크 취소하기 */
         delete: operations["deleteCollectionBookmark"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/admin/notifications/delete": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** 푸시 알림 삭제 */
+        delete: operations["deleteNotification"];
         options?: never;
         head?: never;
         patch?: never;
@@ -1724,6 +1844,19 @@ export interface components {
         VerifyInviteCode: {
             inviteCode?: string;
         };
+        CreateNotificationRequest: {
+            title?: string;
+            content?: string;
+            memo?: string;
+            /** @enum {string} */
+            notificationType?: "GENERAL" | "TODAY_QUIZ" | "COLLECTION" | "INVITE";
+            /** @enum {string} */
+            notificationTarget?: "ALL" | "QUIZ_INCOMPLETE_STATUS";
+            isActive?: boolean;
+            /** Format: date-time */
+            notificationTime?: string;
+            repeatDays?: ("MONDAY" | "TUESDAY" | "WEDNESDAY" | "THURSDAY" | "FRIDAY" | "SATURDAY" | "SUNDAY")[];
+        };
         SignUpRequest: {
             name: string;
             password: string;
@@ -1734,9 +1867,6 @@ export interface components {
         };
         AdminLoginResponse: {
             accessToken?: string;
-        };
-        CreateCollectionForAdminRequest: {
-            isPublic?: boolean;
         };
         UpdateRandomQuizResultDto: {
             /** Format: int64 */
@@ -1834,6 +1964,22 @@ export interface components {
         AddQuizToCollectionRequest: {
             /** Format: int64 */
             quizId?: number;
+        };
+        UpdateNotificationRequest: {
+            /** @enum {string} */
+            notificationType?: "GENERAL" | "TODAY_QUIZ" | "COLLECTION" | "INVITE";
+            /** @enum {string} */
+            notificationTarget?: "ALL" | "QUIZ_INCOMPLETE_STATUS";
+            /** Format: date-time */
+            notificationTime?: string;
+            title?: string;
+            content?: string;
+            memo?: string;
+            repeatDays?: ("MONDAY" | "TUESDAY" | "WEDNESDAY" | "THURSDAY" | "FRIDAY" | "SATURDAY" | "SUNDAY")[];
+            isActive?: boolean;
+        };
+        CreateCollectionForAdminRequest: {
+            isPublic?: boolean;
         };
         GetCurrentTodayQuizInfo: {
             /** Format: int32 */
@@ -2089,11 +2235,10 @@ export interface components {
             is3xxRedirection?: boolean;
         };
         JspConfigDescriptor: {
-            jspPropertyGroups?: components["schemas"]["JspPropertyGroupDescriptor"][];
             taglibs?: components["schemas"]["TaglibDescriptor"][];
+            jspPropertyGroups?: components["schemas"]["JspPropertyGroupDescriptor"][];
         };
         JspPropertyGroupDescriptor: {
-            defaultContentType?: string;
             deferredSyntaxAllowedAsLiteral?: string;
             elIgnored?: string;
             errorOnELNotFound?: string;
@@ -2104,6 +2249,7 @@ export interface components {
             includeCodas?: string[];
             trimDirectiveWhitespaces?: string;
             errorOnUndeclaredNamespace?: string;
+            defaultContentType?: string;
             buffer?: string;
             urlPatterns?: string[];
         };
@@ -2165,13 +2311,19 @@ export interface components {
             attributeNames?: Record<string, never>;
             contextPath?: string;
             initParameterNames?: Record<string, never>;
+            defaultSessionTrackingModes?: ("COOKIE" | "URL" | "SSL")[];
+            /** Format: int32 */
+            effectiveMajorVersion?: number;
+            /** Format: int32 */
+            effectiveMinorVersion?: number;
             sessionTrackingModes?: ("COOKIE" | "URL" | "SSL")[];
             /** Format: int32 */
             sessionTimeout?: number;
             servletRegistrations?: {
                 [key: string]: components["schemas"]["ServletRegistration"];
             };
-            defaultSessionTrackingModes?: ("COOKIE" | "URL" | "SSL")[];
+            serverInfo?: string;
+            servletContextName?: string;
             filterRegistrations?: {
                 [key: string]: components["schemas"]["FilterRegistration"];
             };
@@ -2179,12 +2331,6 @@ export interface components {
             jspConfigDescriptor?: components["schemas"]["JspConfigDescriptor"];
             requestCharacterEncoding?: string;
             responseCharacterEncoding?: string;
-            /** Format: int32 */
-            effectiveMajorVersion?: number;
-            /** Format: int32 */
-            effectiveMinorVersion?: number;
-            serverInfo?: string;
-            servletContextName?: string;
         };
         ServletRegistration: {
             mappings?: string[];
@@ -2212,6 +2358,18 @@ export interface components {
         TaglibDescriptor: {
             taglibURI?: string;
             taglibLocation?: string;
+        };
+        GetNotificationsDto: {
+            notificationKey?: string;
+            title?: string;
+            content?: string;
+            /** @enum {string} */
+            notificationType?: "GENERAL" | "TODAY_QUIZ" | "COLLECTION" | "INVITE";
+            /** Format: date-time */
+            receivedTime?: string;
+        };
+        GetNotificationsResponse: {
+            notifications?: components["schemas"]["GetNotificationsDto"][];
         };
         GetMemberInfoDocumentDto: {
             /** Format: int32 */
@@ -2517,6 +2675,9 @@ export interface components {
         };
         DeleteDocumentRequest: {
             documentIds?: number[];
+        };
+        DeleteNotificationRequest: {
+            notificationIds?: number[];
         };
     };
     responses: never;
@@ -3210,6 +3371,28 @@ export interface operations {
             };
         };
     };
+    createNotificationTest: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["CreateNotificationRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
     signUp: {
         parameters: {
             query?: never;
@@ -3225,6 +3408,48 @@ export interface operations {
         responses: {
             /** @description Created */
             201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    getNotifications_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["GetNotificationsResponse"];
+                };
+            };
+        };
+    };
+    createNotification: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["CreateNotificationRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -3253,38 +3478,6 @@ export interface operations {
                 content: {
                     "application/json;charset=UTF-8": components["schemas"]["AdminLoginResponse"];
                 };
-            };
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": unknown;
-                };
-            };
-        };
-    };
-    modifyCollectionInfo: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                collection_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json;charset=UTF-8": components["schemas"]["CreateCollectionForAdminRequest"];
-            };
-        };
-        responses: {
-            /** @description No Content */
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
             };
             400: {
                 headers: {
@@ -3766,6 +3959,62 @@ export interface operations {
             };
         };
     };
+    updateNotification: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notification_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["UpdateNotificationRequest"];
+            };
+        };
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    modifyCollectionInfo: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                collection_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["CreateCollectionForAdminRequest"];
+            };
+        };
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
     getCurrentTodayQuizInfo: {
         parameters: {
             query?: never;
@@ -4137,6 +4386,46 @@ export interface operations {
                 content: {
                     "application/json;charset=UTF-8": string;
                 };
+            };
+        };
+    };
+    getNotifications: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["GetNotificationsResponse"];
+                };
+            };
+        };
+    };
+    getNotificationByNotificationKey: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notification_key: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };
@@ -4695,6 +4984,29 @@ export interface operations {
             };
         };
     };
+    getNotificationsByKeyword: {
+        parameters: {
+            query: {
+                "notification-search-option": "TITLE_AND_CONTENT" | "TITLE" | "CONTENT";
+                keyword?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["GetNotificationsResponse"];
+                };
+            };
+        };
+    };
     getCollections: {
         parameters: {
             query?: {
@@ -4908,6 +5220,28 @@ export interface operations {
                 content: {
                     "application/json": unknown;
                 };
+            };
+        };
+    };
+    deleteNotification: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["DeleteNotificationRequest"];
+            };
+        };
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };

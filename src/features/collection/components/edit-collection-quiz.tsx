@@ -13,7 +13,7 @@ import { useDirectoryQuizzes } from '@/requests/quiz/hooks'
 import { useParams, useRouter } from 'next/navigation'
 import Loading from '@/shared/components/custom/loading'
 import { z } from 'zod'
-import { Form, FormControl, FormField, FormItem } from '@/shared/components/ui/form'
+import { Form, FormField, FormItem } from '@/shared/components/ui/form'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from '@/shared/hooks/use-toast'
@@ -83,6 +83,7 @@ const EditCollectionQuiz = () => {
       },
       {
         onSuccess: () => {
+          // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
           router.replace(`/collections/${id}`)
         },
         onError: () => {
