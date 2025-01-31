@@ -2,22 +2,12 @@
 
 import { Button } from '@/shared/components/ui/button'
 import { LogoIcon, MenuIcon } from '../svgs'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { LoginDialog } from './login-dialog'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import { checkPWAAppLaunched } from '@/shared/utils/pwa'
 
 export function Header() {
-  const router = useRouter()
   const [openMenu, setOpenMenu] = useState(false)
-  const isLaunched = checkPWAAppLaunched()
-
-  useEffect(() => {
-    if (isLaunched) {
-      router.replace('/app-start')
-    }
-  }, [isLaunched])
 
   return (
     <div className="sticky top-0 z-50">

@@ -349,6 +349,8 @@ const config = {
         modal: '0px 4px 12px 0px #00000040',
         'custom-shadow': '2px 2.5px 12.5px rgba(93, 99, 110, 0.15)',
         'dropdown-shadow': '0px 2px 32px 0px rgba(0, 0, 0, 0.15)',
+        'float-light': '0px 4px 20px rgba(0, 0, 0, 0.15)',
+        'float-thick': '0px 4px 20px rgba(0, 0, 0, 0.25)',
       },
       borderRadius: {
         lg: 'var(--radius)',
