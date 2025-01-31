@@ -1,34 +1,37 @@
 'use client'
 
-import DirectorySelect from '../../directory/components/directory-select'
 import FixedBottom from '@/shared/components/custom/fixed-bottom'
 import { Button } from '@/shared/components/ui/button'
 import Text from '@/shared/components/ui/text'
+import { useCollectionInfo, useUpdateCollectionQuizzes } from '@/requests/collection/hooks'
+import { useParams, useRouter } from 'next/navigation'
+import Loading from '@/shared/components/custom/loading'
+import { toast } from '@/shared/hooks/use-toast'
+import EditQuizCard from './edit-quiz-card'
+import { useEffect, useState } from 'react'
+import DirectorySelect from '../../directory/components/directory-select'
+import { useDirectories } from '@/requests/directory/hooks'
+import { useDirectoryQuizzes } from '@/requests/quiz/hooks'
 import SelectableQuizCard from './selectable-quiz-card'
 import { Checkbox } from '@/shared/components/ui/checkbox'
 import Label from '@/shared/components/ui/label'
-import { useCollectionInfo, useUpdateCollectionQuizzes } from '@/requests/collection/hooks'
-import { useDirectories } from '@/requests/directory/hooks'
-import { useDirectoryQuizzes } from '@/requests/quiz/hooks'
-import { useParams, useRouter } from 'next/navigation'
-import Loading from '@/shared/components/custom/loading'
 import { z } from 'zod'
-import { Form, FormField, FormItem } from '@/shared/components/ui/form'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { toast } from '@/shared/hooks/use-toast'
-import { useEffect, useState } from 'react'
+import { Form } from '@/shared/components/ui/form'
 
 const formSchema = z.object({
-  quizzes: z.array(z.number()).min(5, '최소 5개의 문제를 선택해주세요'),
+  quizzes: z.array(z.number()),
 })
 
 type FormValues = z.infer<typeof formSchema>
 
 const EditCollectionQuiz = () => {
+  const collectionId = Number(useParams().id)
   const router = useRouter()
-  const { id } = useParams()
-  const { data: collectionInfoData } = useCollectionInfo(Number(id))
+  const [isAddMode, setIsAddMode] = useState(false)
+  const [selectedDirectoryId, setSelectedDirectoryId] = useState<number | null>(null)
+  const [allChecked, setAllChecked] = useState(false)
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -37,31 +40,72 @@ const EditCollectionQuiz = () => {
     },
   })
 
+  const { data: collectionInfoData, isLoading: collectionInfoLoading } =
+    useCollectionInfo(collectionId)
   const { data: directoriesData, isLoading: directoriesLoading } = useDirectories()
-  const [selectedDirectoryId, setSelectedDirectoryId] = useState<number | null>(null)
-  const [allChecked, setAllChecked] = useState(false)
-
   const { data: directoryQuizzesData, isLoading: directoryQuizzesLoading } =
     useDirectoryQuizzes(selectedDirectoryId)
 
   const { mutate: updateCollectionQuizzesMutate, isPending: isUpdateCollectionQuizzesPending } =
     useUpdateCollectionQuizzes()
 
+  const handleDeleteQuiz = (quizId: number) => {
+    const currentQuizzes = form.getValues('quizzes')
+    if (currentQuizzes.length <= 5) {
+      toast({
+        variant: 'destructive',
+        title: '최소 5개의 문제가 필요합니다',
+        description: '더 이상 문제를 삭제할 수 없습니다.',
+      })
+      return
+    }
+
+    form.setValue(
+      'quizzes',
+      currentQuizzes.filter((id) => id !== quizId)
+    )
+  }
+
   const handleSelectAllClick = (check: boolean) => {
     if (!directoryQuizzesData) return
 
     setAllChecked(check)
+    const currentQuizzes = form.getValues('quizzes')
+
     if (check) {
-      const quizIds = directoryQuizzesData.quizzes.map((quiz) => quiz.id)
-      form.setValue('quizzes', quizIds)
+      const newQuizIds = directoryQuizzesData.quizzes
+        .map((quiz) => quiz.id)
+        .filter((id) => !currentQuizzes.includes(id))
+      form.setValue('quizzes', [...currentQuizzes, ...newQuizIds])
       return
     }
-    form.setValue('quizzes', [])
+
+    const quizIdsToRemove = directoryQuizzesData.quizzes.map((quiz) => quiz.id)
+    const remainingQuizzes = currentQuizzes.filter((id) => !quizIdsToRemove.includes(id))
+
+    if (remainingQuizzes.length < 5) {
+      toast({
+        variant: 'destructive',
+        title: '최소 5개의 문제가 필요합니다',
+        description: '더 이상 문제를 삭제할 수 없습니다.',
+      })
+      return
+    }
+
+    form.setValue('quizzes', remainingQuizzes)
   }
 
   const onSelectableQuizCardClick = (quizId: number) => {
     const currentQuizzes = form.getValues('quizzes')
     if (currentQuizzes.includes(quizId)) {
+      if (currentQuizzes.length <= 5) {
+        toast({
+          variant: 'destructive',
+          title: '최소 5개의 문제가 필요합니다',
+          description: '더 이상 문제를 삭제할 수 없습니다.',
+        })
+        return
+      }
       form.setValue(
         'quizzes',
         currentQuizzes.filter((id) => id !== quizId)
@@ -71,69 +115,65 @@ const EditCollectionQuiz = () => {
     form.setValue('quizzes', [...currentQuizzes, quizId])
   }
 
-  const onSubmit = (values: FormValues) => {
-    if (isUpdateCollectionQuizzesPending) return
+  const handleSubmit = (values: FormValues) => {
+    if (values.quizzes.length < 5) {
+      toast({
+        variant: 'destructive',
+        title: '최소 5개의 문제가 필요합니다',
+      })
+      return
+    }
 
     updateCollectionQuizzesMutate(
       {
-        collectionId: Number(id),
+        collectionId,
         payload: {
           quizzes: values.quizzes,
         },
       },
       {
         onSuccess: () => {
-          // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-          router.replace(`/collections/${id}`)
-        },
-        onError: () => {
           toast({
-            variant: 'destructive',
-            title: '컬렉션 수정에 실패했습니다.',
-            description: '다시 시도해주세요.',
+            title: '컬렉션이 수정되었습니다.',
           })
+          router.push(`/collections/${collectionId}`)
+          router.refresh()
         },
       }
     )
   }
 
   useEffect(() => {
-    if (!directoriesData) return
-    setSelectedDirectoryId(directoriesData.directories[0]?.id || null)
+    if (!collectionInfoData) return
+    form.setValue(
+      'quizzes',
+      collectionInfoData.quizzes.map((quiz) => quiz.id)
+    )
+  }, [collectionInfoData, form])
+
+  useEffect(() => {
+    if (!directoriesData?.directories.length) return
+    setSelectedDirectoryId(directoriesData.directories[0]!.id)
   }, [directoriesData])
 
   useEffect(() => {
     if (!directoryQuizzesData) return
     const currentQuizzes = form.getValues('quizzes')
-    setAllChecked(currentQuizzes.length === directoryQuizzesData.quizzes.length)
+    setAllChecked(directoryQuizzesData.quizzes.every((quiz) => currentQuizzes.includes(quiz.id)))
   }, [directoryQuizzesData, form])
 
-  useEffect(() => {
-    if (!collectionInfoData) return
-    form.reset({
-      quizzes: collectionInfoData.quizzes.map((quiz) => quiz.id),
-    })
-  }, [collectionInfoData, form])
-
-  const selectedQuizCount = form.watch('quizzes').length
-
-  if (!collectionInfoData || directoriesLoading || directoryQuizzesLoading) {
+  if (collectionInfoLoading || !collectionInfoData) {
     return <Loading center />
   }
 
-  return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="mt-[27px]">
-          <Text typography="title3" className="text-text-primary">
-            컬렉션의 문제를 수정해주세요
-          </Text>
-          <Text typography="text1-medium" className="mt-[8px] text-text-sub">
-            5문제 이상 선택해주세요.
-          </Text>
-        </div>
+  if (isAddMode) {
+    if (directoriesLoading || directoryQuizzesLoading) {
+      return <Loading center />
+    }
 
-        <div className="mt-[24px] pb-[120px]">
+    return (
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(handleSubmit)}>
           <div className="sticky top-[54px] z-20 flex h-[44px] items-center justify-between bg-white">
             <DirectorySelect
               directories={directoriesData?.directories ?? []}
@@ -141,57 +181,108 @@ const EditCollectionQuiz = () => {
               selectDirectoryId={(directoryId: number) => setSelectedDirectoryId(directoryId)}
             />
             <Text typography="text2-bold" className="text-text-accent">
-              {selectedQuizCount}개 선택됨
+              {form.watch('quizzes').length}개 선택됨
             </Text>
           </div>
 
-          <FormField
-            control={form.control}
-            name="quizzes"
-            render={() => (
-              <FormItem>
-                <div className="mt-[16px] flex items-center gap-[12px]">
-                  <Checkbox
-                    id="check-all"
-                    checked={allChecked}
-                    onCheckedChange={handleSelectAllClick}
-                  />
-                  <Label htmlFor="check-all" className="!text-text1-medium text-text-secondary">
-                    전체 선택
-                  </Label>
-                </div>
-              </FormItem>
-            )}
-          />
+          <div className="mt-3 pb-[120px]">
+            <div className="flex items-center gap-2">
+              <Checkbox id="all" checked={allChecked} onCheckedChange={handleSelectAllClick} />
+              <Label htmlFor="all">전체 선택</Label>
+            </div>
 
-          <ul className="mt-[23px] flex flex-col gap-[8px]">
-            {directoryQuizzesData?.quizzes.map((quiz) => (
-              <SelectableQuizCard
-                key={quiz.id}
-                quiz={quiz}
-                onSelect={onSelectableQuizCardClick}
-                selected={form.watch('quizzes').includes(quiz.id)}
-                order={form.watch('quizzes').indexOf(quiz.id) + 1}
+            <ul className="mt-[23px] flex flex-col gap-[8px]">
+              {directoryQuizzesData?.quizzes.map((quiz) => (
+                <SelectableQuizCard
+                  key={quiz.id}
+                  quiz={quiz}
+                  onSelect={() => onSelectableQuizCardClick(quiz.id)}
+                  selected={form.watch('quizzes').includes(quiz.id)}
+                  order={form.watch('quizzes').indexOf(quiz.id) + 1}
+                />
+              ))}
+            </ul>
+
+            <FixedBottom className="flex gap-[6px]">
+              <Button
+                type="button"
+                variant="largeRound"
+                colors="tertiary"
+                className="w-[35%]"
+                onClick={() => setIsAddMode(false)}
+              >
+                취소
+              </Button>
+              <Button
+                type="submit"
+                variant="largeRound"
+                className="flex-1"
+                disabled={isUpdateCollectionQuizzesPending}
+              >
+                저장하기
+              </Button>
+            </FixedBottom>
+          </div>
+        </form>
+      </Form>
+    )
+  }
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(handleSubmit)}>
+        <div className="flex h-[44px] items-center justify-between">
+          <Text typography="text1-medium">
+            총 <span className="text-text-accent">{form.watch('quizzes').length}</span> 문제
+          </Text>
+          <button
+            type="button"
+            onClick={() => setIsAddMode(true)}
+            className="flex items-center gap-3"
+          >
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle cx="12" cy="12" r="12" fill="#EBEFF3" />
+              <path
+                d="M11.999 6.6665V17.3332"
+                stroke="#4C5052"
+                strokeWidth="1.33333"
+                strokeLinecap="square"
+                strokeLinejoin="round"
               />
+              <path
+                d="M17.333 12.0005L6.66634 12.0005"
+                stroke="#4C5052"
+                strokeWidth="1.33333"
+                strokeLinecap="square"
+                strokeLinejoin="round"
+              />
+            </svg>
+
+            <Text typography="subtitle2-medium" color="secondary">
+              문제 추가
+            </Text>
+          </button>
+        </div>
+
+        <div className="mt-3 pb-[120px]">
+          <ul className="mt-[23px] flex flex-col gap-[8px]">
+            {collectionInfoData.quizzes.map((quiz) => (
+              <EditQuizCard key={quiz.id} quiz={quiz} onDelete={handleDeleteQuiz} />
             ))}
           </ul>
 
-          <FixedBottom className="flex gap-[6px]">
-            <Button
-              type="button"
-              variant="largeRound"
-              colors="tertiary"
-              className="w-[35%]"
-              onClick={() => form.setValue('quizzes', [])}
-            >
-              초기화
-            </Button>
+          <FixedBottom>
             <Button
               type="submit"
               variant="largeRound"
-              colors="primary"
-              className="flex-1"
-              disabled={selectedQuizCount < 5 || isUpdateCollectionQuizzesPending}
+              className="w-full"
+              disabled={isUpdateCollectionQuizzesPending}
             >
               저장하기
             </Button>
