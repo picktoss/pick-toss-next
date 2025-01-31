@@ -4,7 +4,7 @@ import { useState, useRef } from 'react'
 import { useSearchCollections } from '@/requests/collection/hooks'
 import InputWithCancelButton from '@/features/search/components/input-with-cancel-button'
 import CollectionSearchList from '@/features/search/components/collection-search-list'
-import RecentSearches from '@/features/search/components/recent-searches'
+// import RecentSearches from '@/features/search/components/recent-searches'
 import Text from '@/shared/components/ui/text'
 import Loading from '@/shared/components/custom/loading'
 
@@ -16,7 +16,7 @@ const SearchCollection = ({ onSearch }: Props) => {
   const [keyword, setKeyword] = useState('')
   const [isSearchFocused, setIsSearchFocused] = useState(false)
   const searchInputRef = useRef<HTMLInputElement>(null)
-  const searchContainerRef = useRef<HTMLDivElement>(null)
+  // const searchContainerRef = useRef<HTMLDivElement>(null)
   const { data: apiSearchResults, isLoading } = useSearchCollections(keyword)
 
   const searchResults: Collection.SearchedCollection[] =
@@ -38,10 +38,10 @@ const SearchCollection = ({ onSearch }: Props) => {
     setKeyword('')
   }
 
-  const handleUpdateKeyword = (selectedKeyword: string) => {
-    setKeyword(selectedKeyword)
-    setIsSearchFocused(false)
-  }
+  // const handleUpdateKeyword = (selectedKeyword: string) => {
+  //   setKeyword(selectedKeyword)
+  //   setIsSearchFocused(false)
+  // }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -65,11 +65,16 @@ const SearchCollection = ({ onSearch }: Props) => {
           <Loading center />
         </div>
       )}
-      {keyword && !isLoading && (
+      {keyword && !isLoading && searchResults.length > 0 && (
         <CollectionSearchList length={searchResults.length} searchResults={searchResults} />
       )}
-      {!keyword && isSearchFocused && (
+      {/* {!keyword && (
         <RecentSearches containerRef={searchContainerRef} onUpdateKeyword={handleUpdateKeyword} />
+      )} */}
+      {!keyword && (
+        <Text typography="text1-medium" color="sub" className="center mt-1">
+          검색어를 입력해보세요
+        </Text>
       )}
       {keyword && !isLoading && searchResults.length === 0 && (
         <div className="center flex flex-col items-center">

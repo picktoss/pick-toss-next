@@ -1,6 +1,6 @@
 import Image from 'next/image'
-import mobileSkySource from '../assets/mobile-sky.png'
-import desktopSkySource from '../assets/desktop-sky.png'
+import mobileSkySource from '@/../../public/images/mobile-sky.png'
+import desktopSkySource from '@/../../public/images/desktop-sky.png'
 import { Button } from '@/shared/components/ui/button'
 import { ArrowRightIcon, DocumentIcon, LightningIcon, LogoTextIcon } from '../svgs'
 import { BounceChevronDown } from './ui/bounce-chevron-down'

@@ -7,11 +7,11 @@ interface Routes {
 
 const publicUrls: Routes = {
   '/quiz/practice': true,
+  '/collections': true,
 }
 
 const publicOnlyUrls: Routes = {
   '/': true,
-  '/app-start': true,
   '/sign-in': true,
 }
 

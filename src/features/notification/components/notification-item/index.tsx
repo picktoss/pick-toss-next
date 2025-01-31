@@ -33,6 +33,7 @@ const NotificationItem = ({ type, title, content, date, isFirst, isLast }: Props
               SYSTEM: <Icon name="noti-system" className="size-[32px]" />,
               REWARD: <Icon name="noti-reward" className="size-[32px]" />,
             }}
+            defaultComponent={<Icon name="noti-system" className="size-[32px]" />}
           />
 
           <div className="flex flex-col">
