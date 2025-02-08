@@ -60,7 +60,7 @@ const DrawerContent = React.forwardRef<
         ref={ref}
         className={cn(
           'fixed z-50 mt-24 flex flex-col bg-white outline-none',
-          direction === 'bottom' && 'inset-x-0 bottom-0 h-auto rounded-t-[10px]',
+          direction === 'bottom' && 'inset-x-0 bottom-0 h-auto rounded-t-[20px]',
           direction === 'top' && '!inset-x-0 !top-0 h-auto',
           direction === 'left' && '!inset-y-0 !left-0 !h-full w-[80%]',
           direction === 'right' && '!inset-y-0 !right-0 !h-full w-[80%]',

@@ -30,8 +30,8 @@ const AccountPage = async () => {
   const imageUrl = getProfileImage()
 
   return (
-    <main className="h-[calc(100dvh-54px-88px)] w-full overflow-y-auto px-[16px]">
-      <div className="flex-center h-fit w-full pb-[44px] pt-[24px]">
+    <main className="relative h-[calc(100dvh-54px)] w-full overflow-y-auto px-[16px]">
+      <div className="flex-center w-full pb-[44px] pt-[24px]">
         <div className="flex-center relative size-[96px] overflow-hidden rounded-full bg-background-base-03">
           {imageUrl ? (
             <Image src={imageUrl} alt="" fill className="object-cover" />
@@ -71,7 +71,6 @@ const AccountPage = async () => {
               {user.email ? user.email : '이메일 주소를 등록해주세요'}
             </Text>
           </div>
-          <Icon name="chevron-right" className="size-[16px] text-icon-tertiary" />
         </Link>
 
         <button className="flex w-full items-center justify-between">
@@ -99,11 +98,10 @@ const AccountPage = async () => {
               )}
             </div>
           </div>
-          <Icon name="chevron-right" className="size-[16px] text-icon-tertiary" />
         </button>
       </div>
 
-      <div className="flex-center pb-[48px] pt-[187px]">
+      <div className="flex-center absolute bottom-12 right-1/2 translate-x-1/2">
         <Link href={'/profile/resign'} className="text-text1-medium text-text-caption">
           탈퇴하기
         </Link>

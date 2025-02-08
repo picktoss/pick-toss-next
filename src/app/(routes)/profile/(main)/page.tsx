@@ -55,7 +55,7 @@ const ProfilePage = async () => {
             )}
           </div>
 
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-1">
             <div className="flex-center gap-[12px]">
               <Text typography="subtitle1-bold">{user.name}</Text>
 
@@ -91,14 +91,14 @@ const ProfilePage = async () => {
             남은 퀴즈노트
           </Text>
           <Text typography="text1-bold" className="font-suit text-[var(--color-orange-400)]">
-            {possessDocumentCount} / {maxPossessDocumentCount}
+            {maxPossessDocumentCount - possessDocumentCount} / {maxPossessDocumentCount}
           </Text>
         </div>
         <div className="relative h-[8px] w-full overflow-hidden rounded-[12px] bg-background-base-02">
           <div
             style={{ width: (addableDocumentCount / maxPossessDocumentCount) * 100 + '%' }}
             className="absolute right-0 top-0 z-10 h-full bg-fill-secondary-orange"
-          ></div>
+          />
         </div>
         <Text typography="text1-medium" className="self-end text-text-sub">
           {addableDocumentCount}개의 노트를 더 저장할 수 있습니다
@@ -106,21 +106,21 @@ const ProfilePage = async () => {
       </div>
 
       <div className="flex-center mt-[28px] gap-[40px]">
-        <Link href={'/collections?tab=my-collection'} className="flex-center flex-col">
+        <Link href={'/collections?tab=my-collection'} className="flex-center flex-col gap-2">
           <div className="rounded-[20px] bg-[#f8f8f8] p-[16px]">
             <Icon name="my-collection" className="size-[32px]" />
           </div>
           <Text typography="text2-medium">내 컬렉션</Text>
         </Link>
 
-        <Link href={'/analysis'} className="flex-center flex-col">
+        <Link href={'/analysis'} className="flex-center flex-col gap-2">
           <div className="rounded-[20px] bg-[#f8f8f8] p-[16px]">
             <Icon name="graph" className="w-[32px]" />
           </div>
           <Text typography="text2-medium">퀴즈 분석</Text>
         </Link>
 
-        <Link href={'/record'} className="flex-center flex-col">
+        <Link href={'/record'} className="flex-center flex-col gap-2">
           <div className="rounded-[20px] bg-[#f8f8f8] p-[16px]">
             <Icon name="calendar" className="size-[32px]" />
           </div>
@@ -157,7 +157,8 @@ const ProfilePage = async () => {
             </Link>
           ))}
         </div>
-        <div className="flex flex-col">
+        {/* TODO: 결제 기능 붙은 후 */}
+        {/* <div className="flex flex-col">
           <Text typography="text2-medium" className="mb-[6px] text-text-caption">
             구독 관리
           </Text>
@@ -171,7 +172,7 @@ const ProfilePage = async () => {
               <Icon name="chevron-right" className="size-[12px]" />
             </Link>
           ))}
-        </div>
+        </div> */}
         <div className="flex flex-col">
           <Text typography="text2-medium" className="mb-[6px] text-text-caption">
             문의 및 알림

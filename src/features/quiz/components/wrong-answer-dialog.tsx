@@ -17,6 +17,8 @@ interface Props {
   directoryName: string
   documentName: string
   onNext: () => void
+  repository: 'directory' | 'collection'
+  collectionName: string
 }
 
 const WrongAnswerDialog = ({
@@ -26,6 +28,8 @@ const WrongAnswerDialog = ({
   explanation,
   directoryName,
   documentName,
+  repository,
+  collectionName,
   onNext,
 }: Props) => {
   return (
@@ -39,7 +43,7 @@ const WrongAnswerDialog = ({
       >
         <DialogHeader>
           <DialogTitle className="flex items-center gap-[16px]">
-            <Icon name="wrong-x-round" />
+            <Icon name="wrong-x-round" className="size-[52px]" />
             <Text typography="title1" color="wrong">
               오답
             </Text>
@@ -55,9 +59,15 @@ const WrongAnswerDialog = ({
             {explanation}
           </Text>
 
-          <Text typography="text2-medium" color="sub">
-            {directoryName} {'>'} {documentName}
-          </Text>
+          {repository === 'collection' ? (
+            <Text typography="text2-medium" color="sub">
+              {collectionName}
+            </Text>
+          ) : (
+            <Text typography="text2-medium" color="sub">
+              {directoryName} {'>'} {documentName}
+            </Text>
+          )}
         </div>
 
         <DialogFooter>

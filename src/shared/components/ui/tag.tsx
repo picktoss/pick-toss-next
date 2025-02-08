@@ -8,8 +8,7 @@ const tagVariants = cva(
     variants: {
       colors: {
         special: 'bg-gradient-to-r from-orange-500 to-blue-400 text-button-label-primary',
-        primary:
-          'bg-button-fill-primary text-button-label-primary hover:bg-button-fill-primary-hover',
+        primary: 'bg-button-fill-primary text-button-label-primary',
         'primary-loading': 'bg-button-fill-primary-loading text-button-label-primary',
         secondary: 'bg-button-fill-secondary text-button-label-secondary',
         tertiary: 'bg-button-fill-tertiary text-button-label-tertiary',

@@ -27,6 +27,7 @@ import { useSession } from 'next-auth/react'
 import { getLocalStorage } from '@/shared/utils/storage'
 import { LOCAL_KEY } from '@/constants'
 import RandomTutorial from '../random-tutorial'
+import { useDirectory } from '@/requests/directory/hooks'
 
 interface Props {
   directories: DeepRequired<components['schemas']['GetAllDirectoriesDirectoryDto']>[]
@@ -56,6 +57,8 @@ const RandomQuizView = ({ directories }: Props) => {
 
   const { data: randomDirectoryQuizzesData, isLoading: isLoadingDirectoryQuizzes } =
     useDirectoryQuizzes(activeDirectoryId ?? null)
+  const { data: activeDirectoryData } = useDirectory(activeDirectoryId!)
+
   const randomDirectoryQuizzes = useMemo(
     () => randomDirectoryQuizzesData?.quizzes ?? [],
     [randomDirectoryQuizzesData?.quizzes]
@@ -166,7 +169,6 @@ const RandomQuizView = ({ directories }: Props) => {
           repository === 'directory' ? 'bg-orange-100' : 'bg-blue-100'
         )}
       />
-
       <div className="fixed z-10 flex w-screen max-w-mobile flex-col">
         <div className="relative h-[70dvh] min-h-fit w-full rounded-b-[24px] bg-white px-[16px]">
           {/* 헤더 영역 */}
@@ -177,8 +179,8 @@ const RandomQuizView = ({ directories }: Props) => {
           {/* 문제 영역 */}
           {currentQuiz ? (
             <div className="flex flex-col items-center">
-              <Tag colors={'secondary'} className="px-[8px] py-[4px]">
-                <Text typography="text2-bold">
+              <Tag className="rounded-[8px] bg-background-base-02 px-[8px] py-[4px] hover:bg-background-base-02">
+                <Text typography="text2-bold" color="sub">
                   {currentQuiz.document?.name || currentQuiz.collection?.name}
                 </Text>
               </Tag>
@@ -238,12 +240,13 @@ const RandomQuizView = ({ directories }: Props) => {
               key={repository}
               width={SwiperContainerWidth}
               slidesPerView={slideItems.length > 2 ? 3 : slideItems.length}
+              loop={true}
               centeredSlides={true}
               pagination={{
                 clickable: true,
               }}
               initialSlide={repository === 'directory' ? activeDirectoryIndex : activeCategoryIndex}
-              onSlideChange={(data) => handleSlideChange(data.activeIndex)}
+              onSlideChange={(data) => handleSlideChange(data.realIndex)}
             >
               {slideItems.map((item, index) => {
                 const isActive =
@@ -276,8 +279,10 @@ const RandomQuizView = ({ directories }: Props) => {
         setIsOpen={setOpenExplanation}
         answer={getAnswerText(currentQuiz?.answer || '')}
         explanation={currentQuiz?.explanation || ''}
-        directoryName={currentQuiz?.collection?.name ?? ''}
-        documentName={currentQuiz?.document?.name || currentQuiz?.collection?.name || ''}
+        repository={repository}
+        collectionName={currentQuiz?.collection?.name || ''}
+        directoryName={activeDirectoryData?.name || ''}
+        documentName={currentQuiz?.document?.name || ''}
         onNext={onNext}
       />
     </div>
@@ -367,7 +372,7 @@ const SlideItem = ({ isActive, data, variant, quizCount }: SlideItemProps) => {
         currentStyle.background.base,
         isActive && [
           'h-[16svh] max-h-[160px] min-h-[130px]',
-          currentStyle.shadow,
+          // currentStyle.shadow,
           currentStyle.background.active,
         ]
       )}
@@ -379,7 +384,7 @@ const SlideItem = ({ isActive, data, variant, quizCount }: SlideItemProps) => {
         >
           {data.name}
         </Text>
-        {isActive && quizCount > 0 && (
+        {isActive && (
           <Text typography="text2-medium" color="primary-inverse" className="mt-[3px]">
             {quizCount}문제
           </Text>
