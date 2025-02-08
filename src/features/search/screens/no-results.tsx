@@ -3,7 +3,7 @@ import { cn } from '@/shared/lib/utils'
 
 const NoResults = ({ className }: { className?: HTMLElement['className'] }) => {
   return (
-    <div className={cn('flex-center flex-col', className)}>
+    <div className={cn('flex-center flex-col gap-1', className)}>
       <Text typography="subtitle1-bold">검색결과가 없습니다</Text>
       <Text typography="text1-medium" className="text-text-sub">
         다른 키워드를 입력해보세요
