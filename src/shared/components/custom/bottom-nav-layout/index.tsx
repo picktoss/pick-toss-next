@@ -16,7 +16,7 @@ const BottomNavLayout = ({ where = '홈', children }: Props) => {
   return (
     <div className={cn(activeItem && 'pb-[88px]')}>
       {children}
-      <div className="fixed bottom-0 h-[88px] w-full max-w-mobile border border-border-default bg-background-base-01 pb-[24px] pt-[18px]">
+      <div className="fixed bottom-0 h-[88px] w-full max-w-mobile border border-border-default bg-background-base-01 pb-[24px] pt-[10px]">
         <div className="flex px-[20px]">
           {navigationItems.map((item) => {
             const { title, href, Icon } = item
