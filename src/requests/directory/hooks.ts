@@ -28,6 +28,7 @@ export const useDirectory = (directoryId: Directory.Item['id']) => {
   return useQuery({
     queryKey: ['directory', directoryId],
     queryFn: async () => getDirectory(directoryId),
+    enabled: directoryId !== null,
   })
 }
 
