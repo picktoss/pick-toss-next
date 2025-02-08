@@ -38,7 +38,7 @@ const MyCollection = () => {
 
   return (
     <>
-      <div className="flex h-[60px] border-b border-border-divider text-text-sub transition-all">
+      <div className="flex border-b border-border-divider py-3 text-text-sub transition-all">
         {sort.map((tab) => (
           <button
             key={tab.key}

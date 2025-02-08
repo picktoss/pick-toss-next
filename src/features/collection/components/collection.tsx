@@ -1,4 +1,3 @@
-import { CATEGORIES } from '@/features/category/config'
 import { useBookmarkMutation } from '@/requests/collection/hooks'
 import CategoryTag from '@/shared/components/custom/category-tag'
 import Icon from '@/shared/components/custom/icon'
@@ -33,8 +32,6 @@ const Collection = ({
   creatorName,
 }: Props) => {
   const { mutate: bookmarkMutate } = useBookmarkMutation()
-
-  const categoryLabel = CATEGORIES.find((categoryItem) => categoryItem.id === category)?.name ?? ''
 
   return (
     <div className={cn('min-w-[166px]', className)}>
@@ -83,7 +80,7 @@ const Collection = ({
           <Text typography="subtitle2-bold">{title}</Text>
         </div>
         <h3 className="mt-[8px]">
-          <CategoryTag title={categoryLabel} />
+          <CategoryTag title={category} />
         </h3>
         <div className="mt-[16px] flex items-center gap-[8px]">
           <Text typography="text2-medium" className="text-text-secondary">
