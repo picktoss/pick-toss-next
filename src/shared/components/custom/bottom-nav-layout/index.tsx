@@ -27,8 +27,8 @@ const BottomNavLayout = ({ where = '홈', children }: Props) => {
                 <Icon isActive={isActive} />
                 <span
                   className={cn(
-                    'text-text2-bold text-button-text-disabled',
-                    isActive && 'text-button-text-primary'
+                    '!text-text2-medium text-button-text-disabled',
+                    isActive && '!text-text2-bold text-button-text-primary'
                   )}
                 >
                   {title}
