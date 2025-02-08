@@ -55,7 +55,11 @@ const InputWithCancelButton = ({
         />
       </form>
 
-      <button type="button" onClick={handleCancel} className="ml-[17px] w-fit text-text-secondary">
+      <button
+        type="button"
+        onClick={handleCancel}
+        className="ml-[17px] w-fit flex-none text-text-secondary"
+      >
         취소
       </button>
     </header>
