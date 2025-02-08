@@ -380,7 +380,7 @@ const SlideItem = ({ isActive, data, variant, quizCount }: SlideItemProps) => {
         >
           {data.name}
         </Text>
-        {isActive && quizCount > 0 && (
+        {isActive && (
           <Text typography="text2-medium" color="primary-inverse" className="mt-[3px]">
             {quizCount}문제
           </Text>
