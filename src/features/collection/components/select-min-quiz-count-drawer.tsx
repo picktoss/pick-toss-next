@@ -81,7 +81,7 @@ const SelectMinQuizCountDrawer = ({ count }: Props) => {
             </div>
           </div>
         </div>
-        <FixedBottom className="flex gap-1.5">
+        <FixedBottom className="flex items-start gap-1.5">
           <Button
             className="w-[35%]"
             colors="tertiary"
