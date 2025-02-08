@@ -6,9 +6,11 @@
   "display": "standalone",
   "mobile-web-app-capable": "yes",
   "apple-mobile-web-app-capable": "yes",
+  "apple-mobile-web-app-status-bar-style": "black-translucent",
   "orientation": "portrait",
   "scope": "/",
   "start_url": "/",
+  "viewport": "width=device-width, initial-scale=1, shrink-to-fit=yes, viewport-fit=cover",
   "icons": [
     {
       "src": "favicons/favicon.ico",
