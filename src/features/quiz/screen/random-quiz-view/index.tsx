@@ -238,12 +238,13 @@ const RandomQuizView = ({ directories }: Props) => {
               key={repository}
               width={SwiperContainerWidth}
               slidesPerView={slideItems.length > 2 ? 3 : slideItems.length}
+              loop={true}
               centeredSlides={true}
               pagination={{
                 clickable: true,
               }}
               initialSlide={repository === 'directory' ? activeDirectoryIndex : activeCategoryIndex}
-              onSlideChange={(data) => handleSlideChange(data.activeIndex)}
+              onSlideChange={(data) => handleSlideChange(data.realIndex)}
             >
               {slideItems.map((item, index) => {
                 const isActive =
@@ -367,7 +368,7 @@ const SlideItem = ({ isActive, data, variant, quizCount }: SlideItemProps) => {
         currentStyle.background.base,
         isActive && [
           'h-[16svh] max-h-[160px] min-h-[130px]',
-          currentStyle.shadow,
+          // currentStyle.shadow,
           currentStyle.background.active,
         ]
       )}

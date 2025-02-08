@@ -41,7 +41,7 @@ const Home = async () => {
             <Text typography="subtitle1-bold" className="mb-[2px]">
               오답 터뜨리기
             </Text>
-            <Text typography="text2-medium" color="sub" className="mb-[27px]">
+            <Text typography="text1-medium" color="sub" className="mb-[27px]">
               틀린 문제 정복하기
             </Text>
 
@@ -55,7 +55,7 @@ const Home = async () => {
             <Text typography="subtitle1-bold" className="mb-[2px]">
               랜덤 퀴즈
             </Text>
-            <Text typography="text2-medium" color="sub" className="mb-[27px]">
+            <Text typography="text1-medium" color="sub" className="mb-[27px]">
               한 문제씩 빠르게 풀기
             </Text>
 
@@ -71,7 +71,7 @@ const Home = async () => {
           <Icon name="calendar" className="size-[40px] p-[4px]" />
           <div className="flex flex-col items-start gap-[4px]">
             <Text typography="title3">{currentConsecutiveDays}일</Text>
-            <Text typography="text2-medium" color="sub">
+            <Text typography="text1-medium" color="sub">
               연속으로 푸는 중
             </Text>
           </div>
