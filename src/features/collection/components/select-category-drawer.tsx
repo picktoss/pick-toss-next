@@ -86,7 +86,9 @@ const SelectCategoryDrawer = ({ categories }: Props) => {
                 }}
               />
               <Label htmlFor={category.id} className="py-2.5">
-                <Text typography="text1-medium">{category.name}</Text>
+                <Text typography="subtitle2-medium" color="primary">
+                  {category.name}
+                </Text>
               </Label>
             </div>
           ))}
