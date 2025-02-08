@@ -95,6 +95,7 @@ interface Props {
 }
 
 const DirectorySelectDrawer = ({ isDrawerOpen, setIsDrawerOpen, directories }: Props) => {
+  const [openCreateDirectory, setOpenCreateDirectory] = useState(false)
   const {
     selectedDirectory,
     selectedDirectoryId,
@@ -173,10 +174,18 @@ const DirectorySelectDrawer = ({ isDrawerOpen, setIsDrawerOpen, directories }: P
               </div>
             </div>
 
-            <CreateDirectoryDialog />
+            <button
+              onClick={() => setOpenCreateDirectory(true)}
+              className="my-[7px] flex items-center px-[20px] py-[10px]"
+            >
+              <Icon name="plus-circle" className="mr-[16px]" />
+              폴더 추가
+            </button>
           </div>
         </DrawerContent>
       </Drawer>
+
+      <CreateDirectoryDialog open={openCreateDirectory} onOpenChange={setOpenCreateDirectory} />
     </>
   )
 }
