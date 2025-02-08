@@ -17,8 +17,8 @@ interface Props {
   directoryName: string
   documentName: string
   onNext: () => void
-  repository: 'directory' | 'collection'
-  collectionName: string
+  repository?: 'directory' | 'collection'
+  collectionName?: string
 }
 
 const WrongAnswerDialog = ({
