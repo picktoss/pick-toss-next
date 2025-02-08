@@ -38,13 +38,13 @@ const MyCollection = () => {
 
   return (
     <>
-      <div className="flex border-b border-border-divider py-3 text-text-sub transition-all">
+      <div className="flex border-b border-border-divider text-text-sub transition-all">
         {sort.map((tab) => (
           <button
             key={tab.key}
             className={cn(
               'flex-1',
-              activeTab === tab.key && 'border-b-[2px] border-button-fill-selected'
+              activeTab === tab.key && 'border-b-[2px] py-3 border-button-fill-selected'
             )}
             onClick={() => handleTabChange(tab.key)}
           >
