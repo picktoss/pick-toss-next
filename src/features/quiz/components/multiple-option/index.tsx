@@ -40,13 +40,13 @@ const MultipleOption = ({
         {condition === 'WRONG' && <Icon name="wrong-x-round" />}
       </div>
       <Text
-        typography="text1-medium"
+        typography="subtitle2-medium"
         className={cn(
           'text-start',
           condition === 'IDLE' && 'text-text-secondary',
           condition === 'DISABLED' && 'text-text-disabled',
           condition === 'WRONG' && 'text-text-disabled',
-          condition === 'RIGHT' && 'text-border-right !text-text1-bold'
+          condition === 'RIGHT' && 'text-border-right !text-subtitle2-bold'
         )}
       >
         {option}
