@@ -106,21 +106,21 @@ const ProfilePage = async () => {
       </div>
 
       <div className="flex-center mt-[28px] gap-[40px]">
-        <Link href={'/collections?tab=my-collection'} className="flex-center flex-col gap-1">
+        <Link href={'/collections?tab=my-collection'} className="flex-center flex-col gap-2">
           <div className="rounded-[20px] bg-[#f8f8f8] p-[16px]">
             <Icon name="my-collection" className="size-[32px]" />
           </div>
           <Text typography="text2-medium">내 컬렉션</Text>
         </Link>
 
-        <Link href={'/analysis'} className="flex-center flex-col gap-1">
+        <Link href={'/analysis'} className="flex-center flex-col gap-2">
           <div className="rounded-[20px] bg-[#f8f8f8] p-[16px]">
             <Icon name="graph" className="w-[32px]" />
           </div>
           <Text typography="text2-medium">퀴즈 분석</Text>
         </Link>
 
-        <Link href={'/record'} className="flex-center flex-col gap-1">
+        <Link href={'/record'} className="flex-center flex-col gap-2">
           <div className="rounded-[20px] bg-[#f8f8f8] p-[16px]">
             <Icon name="calendar" className="size-[32px]" />
           </div>
