@@ -82,7 +82,7 @@ export default function Editor({
         autoRender="end"
         initialContent={initialContent}
         onChange={handleEditorChange}
-        placeholder="본문을 작성해보세요!"
+        placeholder="여기를 탭하여 입력을 시작하세요"
         classNames={[
           css`
             &.ProseMirror {
