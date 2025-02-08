@@ -172,10 +172,10 @@ export const getReviewPicks = async (documentId: number) => {
   }
 }
 
-/** GET /quiz-sets/today - 오늘의 퀴즈 세트 정보 가져오기 */
+/** GET /today-quiz-info - 오늘의 퀴즈 현황 */
 export const getTodayQuizInfo = async () => {
   try {
-    const { data } = await http.get<Quiz.Response.GetTodayInfo>(API_ENDPOINTS.QUIZ.GET.TODAY_SET)
+    const { data } = await http.get<Quiz.Response.GetTodayInfo>(API_ENDPOINTS.QUIZ.GET.TODAY_INFO)
     return data
   } catch (error: unknown) {
     throw error
@@ -239,6 +239,40 @@ export const getDownloadQuizzes = async (documentId: number) => {
       {
         responseType: 'arraybuffer',
       }
+    )
+    return data
+  } catch (error: unknown) {
+    throw error
+  }
+}
+
+/** GET /quizzes/solved/today - 오늘 푼 퀴즈 수 */
+export const getSolvedTodayCount = async () => {
+  try {
+    const { data } = await http.get<Quiz.Response.GetSolvedToday>(
+      API_ENDPOINTS.QUIZ.GET.SOLVED_TODAY
+    )
+    return data
+  } catch (error: unknown) {
+    throw error
+  }
+}
+
+/** GET /quiz-sets/today - 오늘의 퀴즈 세트 정보 가져오기 */
+export const getTodayQuizSetId = async () => {
+  try {
+    const { data } = await http.get<Quiz.Response.GetTodayQuizSet>(API_ENDPOINTS.QUIZ.GET.TODAY_SET)
+    return data
+  } catch (error: unknown) {
+    throw error
+  }
+}
+
+/** GET /quiz-set/consecutive-days - 전체 퀴즈 연속일 현황 */
+export const getConsecutiveDays = async () => {
+  try {
+    const { data } = await http.get<Quiz.Response.GetConsecutiveDays>(
+      API_ENDPOINTS.QUIZ.GET.CONSECUTIVE
     )
     return data
   } catch (error: unknown) {

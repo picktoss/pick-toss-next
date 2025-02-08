@@ -78,6 +78,18 @@ export const queries = createQueryKeyStore({
       queryFn: () => REQUEST.quiz.getMonthlyAnalysis(month, directoryId),
       enabled: !!directoryId || !!month,
     }),
+    solvedQuizCount: () => ({
+      queryKey: [''],
+      queryFn: () => REQUEST.quiz.getSolvedTodayCount(),
+    }),
+    todayQuizSetInfo: () => ({
+      queryKey: [''],
+      queryFn: () => REQUEST.quiz.getTodayQuizSetId(),
+    }),
+    consecutiveDays: () => ({
+      queryKey: [''],
+      queryFn: () => REQUEST.quiz.getConsecutiveDays(),
+    }),
   },
 
   collection: {
