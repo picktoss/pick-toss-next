@@ -71,7 +71,6 @@ const AccountPage = async () => {
               {user.email ? user.email : '이메일 주소를 등록해주세요'}
             </Text>
           </div>
-          <Icon name="chevron-right" className="size-[16px] text-icon-tertiary" />
         </Link>
 
         <button className="flex w-full items-center justify-between">
@@ -99,7 +98,6 @@ const AccountPage = async () => {
               )}
             </div>
           </div>
-          <Icon name="chevron-right" className="size-[16px] text-icon-tertiary" />
         </button>
       </div>
 
