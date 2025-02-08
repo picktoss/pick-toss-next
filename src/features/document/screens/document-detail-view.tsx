@@ -99,7 +99,7 @@ const DocumentDetailView = ({ documentId, activeTab }: Props) => {
       <DocumentFloatingButton
         documentId={documentId}
         documentName={documentDetail?.documentName ?? ''}
-        directoryEmoji={documentDetail?.directory.emoji ?? ''}
+        directoryEmoji={documentDetail?.directory.emoji ?? '📁'}
         savedQuizCount={documentDetail?.totalQuizCount ?? 0}
         startAddQuizzes={startAddQuizzes}
       />
