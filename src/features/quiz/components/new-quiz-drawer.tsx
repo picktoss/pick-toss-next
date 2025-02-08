@@ -30,7 +30,7 @@ const NewQuizDrawer = ({ triggerComponent, documentId, startAddQuizzes }: Props)
 
   const DEFAULT_QUIZ_COUNT = 10
   const MAXIMUM_QUIZ_COUNT = 40
-  const DOCUMENT_MIN_QUIZ_COUNT = 1
+  const DOCUMENT_MIN_QUIZ_COUNT = maxQuizCount < 5 ? maxQuizCount : 5
   const DOCUMENT_MAX_QUIZ_COUNT = Math.min(maxQuizCount, MAXIMUM_QUIZ_COUNT)
 
   const [quizType, setQuizType] = useState<Quiz.Type>('MULTIPLE_CHOICE')
@@ -42,7 +42,7 @@ const NewQuizDrawer = ({ triggerComponent, documentId, startAddQuizzes }: Props)
   }
 
   const handleClickStart = (quizCount: number, quizType: Quiz.Type) => {
-    const notEnoughStars = (user?.star ?? 0) < quizCount * 2
+    const notEnoughStars = (user?.star ?? 0) < quizCount
 
     if (notEnoughStars) {
       setIsOpenMoreStar(true)
@@ -138,7 +138,7 @@ const NewQuizDrawer = ({ triggerComponent, documentId, startAddQuizzes }: Props)
                 퀴즈 시작하기
                 <div className="flex-center size-[fit] rounded-full bg-[#D3DCE4]/[0.2] px-[8px]">
                   <Icon name="star" className="mr-[4px] size-[16px]" />
-                  <Text typography="text1-medium">{quizCount * 2}</Text>
+                  <Text typography="text1-medium">{quizCount}</Text>
                 </div>
               </Button>
             </div>

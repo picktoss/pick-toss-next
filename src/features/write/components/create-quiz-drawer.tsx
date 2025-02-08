@@ -20,7 +20,7 @@ interface Props {
 const CreateQuizDrawer = ({ handleCreateDocument, maxQuizCount, disabled }: Props) => {
   const DEFAULT_QUIZ_COUNT = 10
   const MAXIMUM_QUIZ_COUNT = 40
-  const DOCUMENT_MIN_QUIZ_COUNT = 1
+  const DOCUMENT_MIN_QUIZ_COUNT = maxQuizCount < 5 ? maxQuizCount : 5
   const DOCUMENT_MAX_QUIZ_COUNT = Math.min(maxQuizCount, MAXIMUM_QUIZ_COUNT)
 
   const { userInfo: user } = useUserStore()
@@ -36,7 +36,7 @@ const CreateQuizDrawer = ({ handleCreateDocument, maxQuizCount, disabled }: Prop
   }
 
   const handleClickStart = () => {
-    const notEnoughStars = (user?.star ?? 0) < selectedQuizCount * 2
+    const notEnoughStars = (user?.star ?? 0) < selectedQuizCount
 
     if (notEnoughStars) {
       setIsOpenMoreStar(true)
@@ -149,7 +149,7 @@ const CreateQuizDrawer = ({ handleCreateDocument, maxQuizCount, disabled }: Prop
                 퀴즈 시작하기
                 <div className="flex-center size-[fit] rounded-full bg-[#D3DCE4]/[0.2] px-[8px]">
                   <Icon name="star" className="mr-[4px] size-[16px]" />
-                  <Text typography="text1-medium">{selectedQuizCount * 2}</Text>
+                  <Text typography="text1-medium">{selectedQuizCount}</Text>
                 </div>
               </Button>
             </div>
