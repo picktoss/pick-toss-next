@@ -58,7 +58,7 @@ const AccountPage = async () => {
           }
         />
 
-        <Link href={'verify-email'} className="flex w-full items-center justify-between">
+        <div className="flex w-full items-center justify-between">
           <div className="flex flex-col items-start gap-[4px]">
             <Text typography="text2-medium" className="text-text-sub">
               이메일
@@ -71,9 +71,9 @@ const AccountPage = async () => {
               {user.email ? user.email : '이메일 주소를 등록해주세요'}
             </Text>
           </div>
-        </Link>
+        </div>
 
-        <button className="flex w-full items-center justify-between">
+        <div className="flex w-full items-center justify-between">
           <div className="flex flex-col items-start gap-[4px]">
             <Text typography="text2-medium" className="text-text-sub">
               로그인 정보
@@ -98,7 +98,7 @@ const AccountPage = async () => {
               )}
             </div>
           </div>
-        </button>
+        </div>
       </div>
 
       <div className="flex-center absolute bottom-12 right-1/2 translate-x-1/2">

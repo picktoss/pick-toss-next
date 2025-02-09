@@ -70,8 +70,6 @@ const AnalysisView = () => {
         <MonthGraphContainer data={monthlyAnalysisData} today={today} isThisMonth={thisMonth} />
       )}
 
-      <div className="h-[12px] w-full bg-background-base-02" />
-
       <CollectionCategoryContainer isThisPeriod={thisPeriod} data={collectionsAnalysis} />
     </main>
   )
