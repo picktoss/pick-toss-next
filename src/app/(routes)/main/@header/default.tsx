@@ -8,7 +8,7 @@ import { useUserStore } from '@/store/user'
 import Link from 'next/link'
 
 const Header = () => {
-  useDynamicThemeColor('var(--color-gray-50)')
+  useDynamicThemeColor('#F5F7F9')
   usePreviousPath()
   const { userInfo: user } = useUserStore()
 
