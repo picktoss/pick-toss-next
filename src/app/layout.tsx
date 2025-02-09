@@ -36,7 +36,7 @@ export default function RootLayout({
       <body className={cn(suit.variable, 'font-suit bg-gray-01')}>
         <Providers>
           <ClientSetUp />
-          <div className="mx-auto min-h-dvh max-w-mobile shadow-lg">{children}</div>
+          <div className="mx-auto min-h-screen max-w-mobile shadow-lg">{children}</div>
         </Providers>
         <Toaster />
       </body>

@@ -18,10 +18,11 @@ interface Props {
 }
 
 const CreateQuizDrawer = ({ handleCreateDocument, maxQuizCount, disabled }: Props) => {
-  const DEFAULT_QUIZ_COUNT = 10
+  // const DEFAULT_QUIZ_COUNT = 10
   const MAXIMUM_QUIZ_COUNT = 40
   const DOCUMENT_MIN_QUIZ_COUNT = maxQuizCount < 5 ? maxQuizCount : 5
   const DOCUMENT_MAX_QUIZ_COUNT = Math.min(maxQuizCount, MAXIMUM_QUIZ_COUNT)
+  const DEFAULT_QUIZ_COUNT = DOCUMENT_MAX_QUIZ_COUNT
 
   const { userInfo: user } = useUserStore()
   const [selectedQuizCount, setSelectedQuizCount] = useState(DEFAULT_QUIZ_COUNT)

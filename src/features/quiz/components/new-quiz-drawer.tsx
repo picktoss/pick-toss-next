@@ -28,10 +28,11 @@ const NewQuizDrawer = ({ triggerComponent, documentId, startAddQuizzes }: Props)
   const contentLength = data?.content.trim().length ?? 1000
   const maxQuizCount = calculateAvailableQuizCount(contentLength)
 
-  const DEFAULT_QUIZ_COUNT = 10
+  // const DEFAULT_QUIZ_COUNT = 10
   const MAXIMUM_QUIZ_COUNT = 40
   const DOCUMENT_MIN_QUIZ_COUNT = maxQuizCount < 5 ? maxQuizCount : 5
   const DOCUMENT_MAX_QUIZ_COUNT = Math.min(maxQuizCount, MAXIMUM_QUIZ_COUNT)
+  const DEFAULT_QUIZ_COUNT = DOCUMENT_MAX_QUIZ_COUNT
 
   const [quizType, setQuizType] = useState<Quiz.Type>('MULTIPLE_CHOICE')
   const [quizCount, setQuizCount] = useState(DEFAULT_QUIZ_COUNT)
