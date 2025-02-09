@@ -2,11 +2,13 @@
 
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
+import { useDynamicThemeColor } from '@/shared/hooks/use-dynamic-theme-color'
 import usePreviousPath from '@/shared/hooks/use-previous-path'
 import { useUserStore } from '@/store/user'
 import Link from 'next/link'
 
 const Header = () => {
+  useDynamicThemeColor('var(--color-gray-50)')
   usePreviousPath()
   const { userInfo: user } = useUserStore()
 

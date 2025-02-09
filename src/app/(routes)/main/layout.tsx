@@ -10,12 +10,10 @@ interface LayoutProps extends PropsWithChildren {
 
 const Layout: FunctionComponent<LayoutProps> = ({ header, children }) => {
   return (
-    <div className="center min-h-screen w-dvw max-w-mobile bg-background-base-02">
-      <BottomNavLayout where="홈">
-        {header}
-        {children}
-      </BottomNavLayout>
-    </div>
+    <BottomNavLayout where="홈">
+      {header}
+      {children}
+    </BottomNavLayout>
   )
 }
 
