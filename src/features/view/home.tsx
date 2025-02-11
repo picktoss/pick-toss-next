@@ -2,7 +2,6 @@
 
 import { useIsPWA } from '@/shared/hooks/use-pwa'
 import { useScreenSize } from '@/shared/hooks/use-screen-size'
-import AppInstallView from './app-install'
 import MainTodayQuizArea from '../quiz/components/main-today-quiz-area'
 import Link from 'next/link'
 import Text from '@/shared/components/ui/text'
@@ -16,6 +15,7 @@ import { DocumentProvider } from '../document/contexts/document-context'
 import AddDocumentMenu from '../document/components/add-document-menu'
 import Loading from '@/shared/components/custom/loading'
 import { useHomeData } from '@/shared/hooks/use-home-data-fetching'
+import WebInstallView from './web-install'
 
 const Home = () => {
   const {
@@ -35,7 +35,7 @@ const Home = () => {
   const isPWA = useIsPWA()
 
   if (isMobile && !isPWA) {
-    return <AppInstallView />
+    return <WebInstallView />
   }
 
   if (loading) {
