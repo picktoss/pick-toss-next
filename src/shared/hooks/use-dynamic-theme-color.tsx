@@ -8,5 +8,11 @@ export const useDynamicThemeColor = (color: string) => {
     if (metaTag) {
       metaTag.setAttribute('content', color)
     }
+
+    return () => {
+      if (metaTag) {
+        metaTag.setAttribute('content', '#ffffff')
+      }
+    }
   }, [color])
 }

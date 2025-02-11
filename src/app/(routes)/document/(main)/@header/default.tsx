@@ -13,9 +13,11 @@ import { useDirectories } from '@/requests/directory/hooks'
 import CreateDirectoryDialog from '@/features/directory/components/create-directory-dialog'
 import { useDocumentContext } from '@/features/document/contexts/document-context'
 import { useDirectoryContext } from '@/features/directory/contexts/directory-context'
+import { useDynamicThemeColor } from '@/shared/hooks/use-dynamic-theme-color'
 
 // Header 컴포넌트
 const Header = () => {
+  useDynamicThemeColor('#F5F7F9')
   const { data } = useDirectories()
   const { selectedDirectory } = useDirectoryContext()
   const { isSelectMode, setIsSelectMode, checkDoc } = useDocumentContext()
