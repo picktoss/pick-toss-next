@@ -37,6 +37,15 @@ const Header = () => {
     }
   }
 
+  useEffect(() => {
+    if (isDrawerOpen) {
+      const metaTag = document.querySelector('meta[name="theme-color"]')
+      if (metaTag) {
+        metaTag.setAttribute('content', '#ffffff')
+      }
+    }
+  }, [isDrawerOpen])
+
   return (
     <>
       <header
@@ -126,7 +135,7 @@ const DirectorySelectDrawer = ({ isDrawerOpen, setIsDrawerOpen, directories }: P
     <>
       <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen} direction="top">
         <DrawerTrigger asChild>
-          <button className="flex size-fit items-center">
+          <div className="flex size-fit items-center">
             <h2 className="mr-[8px] text-title2">
               {selectedDirectory
                 ? `${selectedDirectory.emoji ?? ''} ${
@@ -135,7 +144,7 @@ const DirectorySelectDrawer = ({ isDrawerOpen, setIsDrawerOpen, directories }: P
                 : '전체 노트'}
             </h2>
             <Icon name="chevron-down" className="size-[20px]"></Icon>
-          </button>
+          </div>
         </DrawerTrigger>
 
         <DrawerContent
