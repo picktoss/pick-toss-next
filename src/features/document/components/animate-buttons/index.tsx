@@ -91,7 +91,7 @@ const AnimatedButtons = () => {
   return (
     <div
       className={cn(
-        'absolute w-full bottom-[120px] right-[22px] z-50 pointer-events-auto',
+        'fixed w-full bottom-[120px] right-[22px] z-50 pointer-events-auto',
         buttonHidden && 'z-0'
       )}
     >
