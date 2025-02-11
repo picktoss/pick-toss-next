@@ -56,14 +56,14 @@ const AnimatedButtons = () => {
     handleTap?: () => void,
     text?: { bottomCss: string; content: string }
   ) => (
-    <div key={key} className="absolute bottom-0 right-0 w-full">
+    <div key={key}>
       <motion.div
         custom={custom}
         variants={buttonVariants}
         initial={isFirstRender && custom === 'plus' ? false : 'hidden'}
         animate="visible"
         exit="exit"
-        className="absolute bottom-0 right-0"
+        className="fixed bottom-[120px] right-[22px]"
         onTap={handleTap}
       >
         <Button {...buttonProps}>
@@ -89,13 +89,13 @@ const AnimatedButtons = () => {
   )
 
   return (
-    <div
-      className={cn(
-        'fixed w-full bottom-[120px] right-[22px] z-50 pointer-events-auto',
-        buttonHidden && 'z-0'
-      )}
-    >
-      <AnimatePresence>
+    <AnimatePresence>
+      <div
+        className={cn(
+          'fixed w-full bottom-[120px] right-[22px] z-50 pointer-events-auto',
+          buttonHidden && 'z-0'
+        )}
+      >
         {!isExpandedBtns &&
           renderMotionButton(
             'plus',
@@ -134,8 +134,8 @@ const AnimatedButtons = () => {
             )}
           </>
         )}
-      </AnimatePresence>
-    </div>
+      </div>
+    </AnimatePresence>
   )
 }
 
