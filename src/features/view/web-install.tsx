@@ -39,8 +39,8 @@ const WebInstallView = () => {
                 컬렉션으로 이동하기
               </Button>
             </Link>
-            <Link href={'/app-install'} className="w-full">
-              지금 앱에서 전부 이용하기
+            <Link href={'/app-install'}>
+              <Button className="w-full">지금 앱에서 전부 이용하기</Button>
             </Link>
           </div>
         </main>
