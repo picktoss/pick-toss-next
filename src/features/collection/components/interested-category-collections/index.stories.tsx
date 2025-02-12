@@ -6,7 +6,7 @@ const meta = {
   component: InterestedCategoryCollections,
   tags: ['autodocs'],
   argTypes: {
-    interestedCategory: {
+    interestedCategories: {
       control: 'text',
       description: '설정된 관심 분야 이름',
     },
@@ -27,13 +27,13 @@ type Story = StoryObj<typeof InterestedCategoryCollections>
 // 관심분야가 설정되지 않은 상태
 export const NoCategory: Story = {
   args: {
-    interestedCategory: undefined,
+    interestedCategories: undefined,
   },
 }
 
 // 관심분야가 설정된 상태
 export const WithCategory: Story = {
   args: {
-    interestedCategory: 'IT/프로그래밍',
+    interestedCategories: ['IT'],
   },
 }
