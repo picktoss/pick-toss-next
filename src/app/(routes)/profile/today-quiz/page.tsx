@@ -1,9 +1,10 @@
 import DayCheck from '@/features/quiz/components/today-quiz-check/day-check'
-import InviteReward from '@/features/payment/components/invite-reward-drawer'
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
 import { getTodayQuizInfo } from '@/requests/quiz/server'
 import { todayQuizCheckList } from '@/features/quiz/config'
+import InviteRewardDrawer from '@/features/payment/components/invite-reward-drawer'
+import Tag from '@/shared/components/ui/tag'
 
 const TodayQuizPage = async () => {
   const { currentConsecutiveDays } = await getTodayQuizInfo()
@@ -32,7 +33,19 @@ const TodayQuizPage = async () => {
 
       <DayCheck checkData={todayCheckData} />
 
-      <InviteReward className="mt-[20px]" />
+      <InviteRewardDrawer
+        triggerComponent={
+          <button className="mt-[20px] flex h-[56px] w-full items-center justify-between rounded-[12px] bg-background-container-03 px-[20px] py-[10px]">
+            <div className="flex-center gap-[8px]">
+              <Tag className="bg-fill-primary-blue">EVENT</Tag>
+              <Text typography="text1-bold" className="text-text-info">
+                친구 초대하고 픽토스 PRO 이용하기
+              </Text>
+            </div>
+            <Icon name="chevron-right" className="size-[16px] text-icon-tertiary" />
+          </button>
+        }
+      />
     </main>
   )
 }
