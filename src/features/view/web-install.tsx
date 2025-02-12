@@ -4,13 +4,10 @@ import NIGHT_SKY_IMG from '@/../../public/images/star-background-white.png'
 import Icon from '@/shared/components/custom/icon'
 import { Button } from '@/shared/components/ui/button'
 import Text from '@/shared/components/ui/text'
-import { useInstallPWA } from '@/shared/hooks/use-install-pwa'
 import Image from 'next/image'
 import Link from 'next/link'
 
 const WebInstallView = () => {
-  const { handleInstallClick } = useInstallPWA()
-
   return (
     <div
       className="fixed bottom-0 right-1/2 z-20 h-screen w-dvw max-w-mobile translate-x-1/2"
@@ -42,9 +39,9 @@ const WebInstallView = () => {
                 컬렉션으로 이동하기
               </Button>
             </Link>
-            <Button onClick={handleInstallClick} className="w-full">
+            <Link href={'/app-install'} className="w-full">
               지금 앱에서 전부 이용하기
-            </Button>
+            </Link>
           </div>
         </main>
       </div>
