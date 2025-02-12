@@ -15,6 +15,7 @@ const SwipeableCardList = ({ cardComponents }: { cardComponents: React.ReactNode
   const [moveAtOnceWidth, setMoveAtOnceWidth] = useState(0)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [currentOffset, setCurrentOffset] = useState(0)
+  const [isMoving, setIsMoving] = useState(false)
 
   // 컨테이너와 콘텐츠 너비 설정
   useEffect(() => {
@@ -31,6 +32,33 @@ const SwipeableCardList = ({ cardComponents }: { cardComponents: React.ReactNode
       })
     }
   }, [cardComponents])
+
+  // containerRef에서는 수직 스크롤을 막기 위한 코드
+  useEffect(() => {
+    const container = containerRef.current
+
+    if (container) {
+      container.addEventListener('wheel', handleWheel, { passive: false })
+    }
+
+    return () => {
+      if (container) {
+        container.removeEventListener('wheel', handleWheel)
+      }
+    }
+  }, [])
+
+  // 이동 시작 시 호출될 함수
+  const handleMoveStart = () => {
+    setIsMoving(true)
+  }
+
+  // 이동 종료 시 호출될 함수 (타이머를 통해 약간의 지연 후 클릭 활성화)
+  const handleMoveEnd = () => {
+    setTimeout(() => {
+      setIsMoving(false)
+    }, 100) // 100ms 후에 클릭 가능하도록 설정
+  }
 
   // 스크롤 방향에 따라 컨테이너 크기만큼 이동하고 끝을 감지
   const handleDirection = (direction: 'next' | 'prev') => {
@@ -54,30 +82,22 @@ const SwipeableCardList = ({ cardComponents }: { cardComponents: React.ReactNode
     })
   }
 
-  // containerRef에서는 수직 스크롤을 막기 위한 코드
-  useEffect(() => {
-    const container = containerRef.current
-
-    if (container) {
-      container.addEventListener('wheel', handleWheel, { passive: false })
-    }
-
-    return () => {
-      if (container) {
-        container.removeEventListener('wheel', handleWheel)
-      }
-    }
-  }, [])
+  // 드래그 시작 핸들러
+  const handleDragStart = () => {
+    handleMoveStart()
+  }
 
   // 드래그 종료 시 방향에 따라 이동
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleDragEnd = (_: any, info: PanInfo) => {
-    const threshold = 20
+    const threshold = 1
     if (info.offset.x < -threshold) {
       handleDirection('next')
     } else if (info.offset.x > threshold) {
       handleDirection('prev')
     }
+
+    handleMoveEnd()
   }
 
   // 휠 이벤트 처리: 휠을 통해 좌우 이동
@@ -111,10 +131,14 @@ const SwipeableCardList = ({ cardComponents }: { cardComponents: React.ReactNode
         <motion.div
           key={'motion_' + index}
           ref={itemRef}
-          className={cn(index === cardComponents.length - 1 && 'mr-[16px]')}
+          className={cn(
+            index === cardComponents.length - 1 && 'mr-[16px]',
+            isMoving ? 'pointer-events-none' : 'pointer-events-auto'
+          )}
           drag="x"
           dragConstraints={constraints}
           style={{ x }}
+          onDragStart={handleDragStart}
           onDragEnd={handleDragEnd}
           animate={controls}
         >

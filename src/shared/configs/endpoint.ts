@@ -49,8 +49,8 @@ export const API_ENDPOINTS = {
       INFO: (collectionId: number) => `/collections/${collectionId}/info`,
       /** GET /collections/my-collections - 직접 생성한 컬렉션 가져오기 */
       MY_COLLECTIONS: '/collections/my-collections',
-      /** GET /collections/interest-field-collection - 사용자 관심 분야 컬렉션 가져오기 */
-      INTEREST_FIELD: '/collections/interest-field-collection',
+      /** GET /collections/interest-category-collection - 사용자 관심 분야 컬렉션 가져오기 */
+      INTEREST_CATEGORY: '/collections/interest-category-collection',
       /** GET /collections/bookmarked-collections - 북마크한 컬렉션 가져오기 */
       BOOKMARKED: '/collections/bookmarked-collections',
       /** GET /collections-analysis - 컬렉션 분석 */

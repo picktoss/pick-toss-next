@@ -98,6 +98,10 @@ export const queries = createQueryKeyStore({
       queryFn: () => REQUEST.collection.getCollectionInfo({ collectionId }),
       enabled: !!collectionId,
     }),
+    interestedCategory: () => ({
+      queryKey: [''],
+      queryFn: () => REQUEST.collection.interestedCategoryCollections(),
+    }),
   },
 
   search: {

@@ -84,7 +84,7 @@ declare global {
       /** GET /api/v2/collections/interest-category-collection
        * 사용자 관심 분야 컬렉션 가져오기
        */
-      type GetInterestFieldCollections = DeepRequired<
+      type GetInterestCategoryCollections = DeepRequired<
         paths['/api/v2/collections/interest-category-collection']['get']['responses']['200']['content']['application/json;charset=UTF-8']
       >
 

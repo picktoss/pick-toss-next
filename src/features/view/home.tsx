@@ -19,9 +19,11 @@ import WebInstallView from './web-install'
 import { useSession } from 'next-auth/react'
 import OnBoarding from './on-boarding'
 import Cookies from 'js-cookie'
+import { useUserStore } from '@/store/user'
 
 const Home = () => {
   const { data: session } = useSession()
+  const { userInfo } = useUserStore()
   const {
     todaySolvedQuizCount,
     quizSetId,
@@ -118,7 +120,7 @@ const Home = () => {
 
       <div className="flex flex-col gap-[32px] pb-[95px]">
         {/* 픽토스님의 관심분야 컬렉션 */}
-        <InterestedCategoryCollections interestedCategory={'IT/프로그래밍'} />
+        <InterestedCategoryCollections interestedCategories={userInfo?.interestCategories} />
 
         {/* 픽토스 이용 가이드 */}
         {/* 추후 외부 노션 페이지로 연결 */}

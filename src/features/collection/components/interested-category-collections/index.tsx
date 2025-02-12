@@ -1,20 +1,31 @@
+'use client'
+
 import SwipeableCardList from '@/shared/components/custom/swipeable-card-list'
 import Text from '@/shared/components/ui/text'
 import Link from 'next/link'
-import { InterestedCategoryItems } from '../../config/interested-category-items'
-import InterestedCategoryItemCard from '../interested-category-item-card'
 import { Button } from '@/shared/components/ui/button'
 import SetInterestedCategoryDrawer from '@/features/category/components/set-interested-category-drawer'
+import Collection from '../collection'
+import { useUserStore } from '@/store/user'
+import { useQuery } from '@tanstack/react-query'
+import { queries } from '@/shared/lib/tanstack-query/query-keys'
+
+interface Props {
+  interestedCategories?: string[]
+}
 
 // 메인페이지의 유저 관심분야 컬렉션
-const InterestedCategoryCollections = ({ interestedCategory }: { interestedCategory?: string }) => {
+const InterestedCategoryCollections = ({ interestedCategories }: Props) => {
+  const { userInfo } = useUserStore()
+  const { data } = useQuery(queries.collection.interestedCategory())
+
   return (
     <div className="flex w-full flex-col">
       <div className="mb-[20px] flex items-center justify-between">
-        <Text typography="title3">픽토스님의 관심분야 컬렉션</Text>
-        {interestedCategory && (
+        <Text typography="title3">{userInfo?.name}님의 관심분야 컬렉션</Text>
+        {interestedCategories && (
           // 더보기 클릭 - '분야'필터에 관심분야 설정된 상태의 컬렉션 gnb로 이동
-          <Link href={''}>
+          <Link href={`/collections?collection-category=${interestedCategories.join('%2C')}`}>
             <Text typography="text1-medium" color="sub">
               더보기
             </Text>
@@ -22,17 +33,20 @@ const InterestedCategoryCollections = ({ interestedCategory }: { interestedCateg
         )}
       </div>
 
-      {interestedCategory ? (
+      {interestedCategories && data ? (
         <SwipeableCardList
-          cardComponents={InterestedCategoryItems.map((item) => (
-            <InterestedCategoryItemCard
-              key={item.id}
-              emoji={item.emoji}
-              title={item.name}
-              isBookmarked={false}
-              bookmarkCount={item.bookmarkCount}
-              quizCount={item.quizCount}
-            />
+          cardComponents={data.collections.map((item) => (
+            <Link href={`/collections/${item.id}`} key={item.id}>
+              <Collection
+                collectionId={item.id}
+                emoji={item.emoji}
+                title={item.name}
+                category={item.collectionCategory}
+                problemCount={item.totalQuizCount}
+                bookMarkCount={item.bookmarkCount}
+                creatorName={item.member.creatorName}
+              />
+            </Link>
           ))}
         />
       ) : (

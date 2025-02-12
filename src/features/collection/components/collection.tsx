@@ -11,7 +11,7 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
   title: string
   category: string
   problemCount: number
-  lastUpdated: string
+  lastUpdated?: string
   isBookMarked?: boolean
   isOwner?: boolean
   bookMarkCount: number
@@ -61,7 +61,7 @@ const Collection = ({
             ) : (
               <Icon
                 name="book-mark"
-                className="size-[24px] cursor-pointer"
+                className="size-[20px] cursor-pointer text-text-secondary"
                 onClick={(e) => {
                   e.preventDefault()
                   e.stopPropagation()
@@ -74,22 +74,24 @@ const Collection = ({
           </Text>
         </div>
 
-        <div className="text-[36px] leading-[120%] tracking-[-0.02em]">{emoji}</div>
+        <div className="text-[40px] leading-[120%] tracking-[-0.02em]">{emoji}</div>
 
-        <div className="mt-[10px] line-clamp-2">
-          <Text typography="subtitle2-bold">{title}</Text>
-        </div>
         <h3 className="mt-[8px]">
           <CategoryTag title={category} />
         </h3>
-        <div className="mt-[16px] flex items-center gap-[8px]">
+        <div className="mt-[8px] line-clamp-2">
+          <Text typography="subtitle2-bold">{title}</Text>
+        </div>
+        <div className="mt-[8px] flex items-center gap-[8px]">
           <Text typography="text2-medium" className="text-text-secondary">
             {problemCount} 문제
           </Text>
           {isOwner ? (
-            <Text typography="caption-medium" className="text-text-caption">
-              {lastUpdated} 업데이트
-            </Text>
+            lastUpdated && (
+              <Text typography="caption-medium" className="text-text-caption">
+                {lastUpdated} 업데이트
+              </Text>
+            )
           ) : (
             <Text typography="caption-medium" className="text-text-caption">
               {'@'}

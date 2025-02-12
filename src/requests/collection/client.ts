@@ -138,3 +138,14 @@ export const searchCollections = async (keyword: string) => {
     throw error
   }
 }
+
+export const interestedCategoryCollections = async () => {
+  try {
+    const { data } = await http.get<Collection.Response.GetInterestCategoryCollections>(
+      API_ENDPOINTS.COLLECTION.GET.INTEREST_CATEGORY
+    )
+    return data
+  } catch (error) {
+    throw error
+  }
+}
