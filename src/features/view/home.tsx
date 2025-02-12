@@ -16,8 +16,12 @@ import AddDocumentMenu from '../document/components/add-document-menu'
 import Loading from '@/shared/components/custom/loading'
 import { useHomeData } from '@/shared/hooks/use-home-data-fetching'
 import WebInstallView from './web-install'
+import { useSession } from 'next-auth/react'
+import OnBoarding from './on-boarding'
+import Cookies from 'js-cookie'
 
 const Home = () => {
+  const { data: session } = useSession()
   const {
     todaySolvedQuizCount,
     quizSetId,
@@ -33,9 +37,15 @@ const Home = () => {
 
   const { isMobile } = useScreenSize()
   const isPWA = useIsPWA()
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+  const interestedCategoryCompleted = Cookies.get('interested-category-complete')
 
   if (isMobile && !isPWA) {
     return <WebInstallView />
+  }
+
+  if (session?.user.isNewUser && isPWA && interestedCategoryCompleted !== 'true') {
+    return <OnBoarding />
   }
 
   if (loading) {
