@@ -2,6 +2,13 @@ import { REQUEST } from '@/requests'
 import { createQueryKeyStore } from '@lukemorales/query-key-factory'
 
 export const queries = createQueryKeyStore({
+  auth: {
+    inviteLink: () => ({
+      queryKey: [''],
+      queryFn: () => REQUEST.auth.getInviteLink(),
+    }),
+  },
+
   directory: {
     list: () => ({
       queryKey: [''],

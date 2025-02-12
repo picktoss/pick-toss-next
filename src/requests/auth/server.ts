@@ -22,3 +22,13 @@ export const signIn = async (params: SignInParams) => {
     throw error
   }
 }
+
+/** POST /auth/invite-code/verify - 초대 코드 인증 */
+export const verifyInviteCode = async (requestBody: Auth.Request.VerifyInviteCode) => {
+  try {
+    await httpServer.post(API_ENDPOINTS.AUTH.INVITE_CODE_VERIFY, requestBody)
+    return true
+  } catch (error: unknown) {
+    return false
+  }
+}

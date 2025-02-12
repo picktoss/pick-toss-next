@@ -1,7 +1,8 @@
 'use client'
 
+import InviteRewardDrawer from '@/features/payment/components/invite-reward-drawer'
 import MoreStarDialog from '@/features/payment/components/more-star-dialog'
-import PaymentPopup from '@/features/payment/screen/payment-popup'
+// import PaymentPopup from '@/features/payment/screen/payment-popup'
 import Icon from '@/shared/components/custom/icon'
 import { Button } from '@/shared/components/ui/button'
 import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from '@/shared/components/ui/drawer'
@@ -30,7 +31,10 @@ const CreateQuizDrawer = ({ handleCreateDocument, maxQuizCount, disabled }: Prop
 
   const [isOpenDrawer, setIsOpenDrawer] = useState(false)
   const [isOpenMoreStar, setIsOpenMoreStar] = useState(false)
-  const [isOpenPayment, setIsOpenPayment] = useState(false)
+  // const [isOpenPayment, setIsOpenPayment] = useState(false)
+
+  // TODO: 결제 기능 구현 후 아래 코드 삭제
+  const [isOpenInvite, setIsOpenInvite] = useState(false)
 
   const handleClickQuizType = (quizType: Quiz.Type) => {
     setSelectedQuizType(quizType)
@@ -165,14 +169,22 @@ const CreateQuizDrawer = ({ handleCreateDocument, maxQuizCount, disabled }: Prop
         onClickPayment={() => {
           setIsOpenMoreStar(false)
           setIsOpenDrawer(false)
-          setIsOpenPayment(true)
+          // setIsOpenPayment(true)
+          setIsOpenInvite(true)
         }}
       />
 
-      {isOpenPayment && (
+      {/* {isOpenPayment && (
         // 결제권유 창
         <PaymentPopup isProUser={false} onClose={() => setIsOpenPayment(false)} />
-      )}
+      )} */}
+
+      {/* TODO: 결제 기능 구현 후 아래 코드 삭제 */}
+      <InviteRewardDrawer
+        triggerComponent={<></>}
+        open={isOpenInvite}
+        onOpenChange={setIsOpenInvite}
+      />
     </>
   )
 }

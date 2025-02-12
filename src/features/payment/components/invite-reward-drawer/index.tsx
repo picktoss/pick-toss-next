@@ -1,3 +1,5 @@
+'use client'
+
 import Icon from '@/shared/components/custom/icon'
 import { Button } from '@/shared/components/ui/button'
 import {
@@ -8,29 +10,44 @@ import {
   DrawerTrigger,
 } from '@/shared/components/ui/drawer'
 import { Input } from '@/shared/components/ui/input'
-import Tag from '@/shared/components/ui/tag'
 import Text from '@/shared/components/ui/text'
-import { cn } from '@/shared/lib/utils'
 import InviteRewardInfo from '../invite-reward-info'
+import Image from 'next/image'
+import { useInviteLink } from '@/requests/auth/hooks'
+import { useEffect, useState } from 'react'
 
-const InviteReward = ({ className }: { className?: HTMLElement['className'] }) => {
+interface Props {
+  triggerComponent: React.ReactNode
+  open?: boolean
+  onOpenChange?: (value: boolean) => void
+}
+
+const InviteRewardDrawer = ({ triggerComponent, open, onOpenChange }: Props) => {
+  const { mutate: inviteLinkMutate } = useInviteLink()
+  const [inviteLink, setInviteLink] = useState('')
+
+  useEffect(() => {
+    inviteLinkMutate(undefined, {
+      onSuccess: (data) => {
+        setInviteLink(data.inviteLink)
+      },
+    })
+  }, [inviteLinkMutate])
+
+  const handleCopy = async () => {
+    if (!inviteLink) return
+
+    try {
+      await navigator.clipboard.writeText(inviteLink)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return (
-    <Drawer>
-      <DrawerTrigger asChild>
-        <button
-          className={cn(
-            'flex h-[56px] w-full items-center justify-between rounded-[12px] bg-background-container-03 px-[20px] py-[10px]',
-            className
-          )}
-        >
-          <div className="flex-center gap-[8px]">
-            <Tag className="bg-fill-primary-blue">EVENT</Tag>
-            <Text typography="text1-bold" className="text-text-info">
-              친구 초대하고 픽토스 PRO 이용하기
-            </Text>
-          </div>
-          <Icon name="chevron-right" className="size-[16px] text-icon-tertiary" />
-        </button>
+    <Drawer open={open} onOpenChange={onOpenChange}>
+      <DrawerTrigger asChild className="cursor-pointer">
+        {triggerComponent}
       </DrawerTrigger>
 
       <DrawerContent
@@ -39,20 +56,21 @@ const InviteReward = ({ className }: { className?: HTMLElement['className'] }) =
       >
         <div className="my-[20px] flex h-[calc(80dvh-12px)] w-full flex-col gap-[63px] overflow-y-auto px-[45px]">
           <DrawerHeader className="flex h-fit w-full flex-col items-center gap-[24px] px-0">
-            <div className="flex-center h-[110px] w-[212px]">
+            <Image src={'/images/stars-in-box.png'} alt="" width={100} height={107.3} />
+            {/* <div className="flex-center h-[110px] w-[212px]">
               <Icon name="infinite-color-inverse" />
-            </div>
+            </div> */}
 
             <div className="flex flex-col items-center gap-[8px]">
               <div className="relative">
-                <DrawerTitle className="font-suit text-title3">초대할 때마다 7일!</DrawerTitle>
+                <DrawerTitle className="font-suit text-title3">초대할 때마다 50개!</DrawerTitle>
                 <InviteRewardInfo />
               </div>
 
               <Text typography="text1-regular" color="secondary" className="text-center">
                 친구, 가족, 지인들에게 픽토스를 공유해주세요 <br />
-                그분이 해당 링크를 통해 픽토스에 가입하실 경우 <br />두 분 모두에게 픽토스 PRO 7일
-                이용권을 드려요!
+                그분이 해당 링크를 통해 픽토스에 가입하실 경우 <br />두 분 모두에게 별 50개를
+                드려요!
               </Text>
             </div>
           </DrawerHeader>
@@ -60,9 +78,9 @@ const InviteReward = ({ className }: { className?: HTMLElement['className'] }) =
           <div className="flex flex-col gap-[20px]">
             <Input
               label="내 링크"
-              defaultValue={'www.picktoss-example-link/22345'}
+              value={inviteLink}
               right={
-                <Button variant={'tinySquare'} colors={'outlined'}>
+                <Button variant={'tinySquare'} colors={'outlined'} onClick={handleCopy}>
                   복사하기
                 </Button>
               }
@@ -91,4 +109,4 @@ const InviteReward = ({ className }: { className?: HTMLElement['className'] }) =
   )
 }
 
-export default InviteReward
+export default InviteRewardDrawer
