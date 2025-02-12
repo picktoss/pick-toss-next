@@ -47,7 +47,12 @@
   }
 }
 
+html {
+  overscroll-behavior: none;
+}
+
 body {
+  overflow-y: auto;
   -ms-overflow-style: none; /* IE, Edge */
 }
 body::-webkit-scrollbar {
