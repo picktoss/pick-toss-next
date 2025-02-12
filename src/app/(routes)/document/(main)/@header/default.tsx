@@ -38,10 +38,13 @@ const Header = () => {
   }
 
   useEffect(() => {
-    if (isDrawerOpen) {
-      const metaTag = document.querySelector('meta[name="theme-color"]')
-      if (metaTag) {
+    const metaTag = document.querySelector('meta[name="theme-color"]')
+
+    if (metaTag) {
+      if (isDrawerOpen) {
         metaTag.setAttribute('content', '#ffffff')
+      } else {
+        metaTag.setAttribute('content', '#F5F7F9')
       }
     }
   }, [isDrawerOpen])
