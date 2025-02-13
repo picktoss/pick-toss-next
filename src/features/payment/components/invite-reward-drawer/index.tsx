@@ -11,7 +11,7 @@ import {
 } from '@/shared/components/ui/drawer'
 import { Input } from '@/shared/components/ui/input'
 import Text from '@/shared/components/ui/text'
-import InviteRewardInfo from '../invite-reward-info'
+// import InviteRewardInfo from '../invite-reward-info'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
@@ -106,14 +106,18 @@ const InviteRewardDrawer = ({ triggerComponent, open, onOpenChange }: Props) => 
         <div className="my-[20px] flex h-[calc(80dvh-12px)] w-full flex-col gap-[45px] overflow-y-auto px-[45px]">
           <DrawerHeader className="flex h-fit w-full flex-col items-center gap-[24px] px-0">
             <Image src={'/images/stars-in-box.png'} alt="" width={115.54} height={109.95} />
+            {/* 아래는 PRO버전 이미지 코드입니다 */}
             {/* <div className="flex-center h-[110px] w-[212px]">
               <Icon name="infinite-color-inverse" />
             </div> */}
 
             <div className="flex flex-col items-center gap-[8px]">
               <div className="relative">
-                <DrawerTitle className="font-suit text-title3">초대할 때마다 50개!</DrawerTitle>
-                <InviteRewardInfo />
+                <DrawerTitle>
+                  <Text typography="title2">초대할 때마다 50개!</Text>
+                </DrawerTitle>
+                {/* 아래는 PRO버전 코드입니다 */}
+                {/* <InviteRewardInfo /> */}
               </div>
 
               <Text typography="text1-regular" color="secondary" className="text-center">
