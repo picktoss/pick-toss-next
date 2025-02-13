@@ -66,7 +66,6 @@ export const shareToKakao = async (options: ShareOptions) => {
     throw new Error('Kakao SDK가 초기화되지 않았습니다.')
   }
 
-  // PWA에서 실행 중인지 확인
   const isPWA = window.matchMedia('(display-mode: standalone)').matches
 
   if (isPWA && isIOSSafari()) {
@@ -75,16 +74,22 @@ export const shareToKakao = async (options: ShareOptions) => {
       JSON.stringify({
         template_id: process.env.NEXT_PUBLIC_KAKAO_TEMPLATE_ID, // 카카오 템플릿 ID
         template_args: {
-          title,
-          description,
-          image_url: imageUrl,
+          // title,
+          // description,
+          // image_url: imageUrl,
           web_url: inviteLinkUrl,
           mobile_web_url: inviteLinkUrl,
         },
       })
     )
 
-    window.location.href = `kakaolink://send?template_id=${process.env.NEXT_PUBLIC_KAKAO_TEMPLATE_ID}&template_args=${kakaoLink}`
+    const linkUrl = `kakaokompassauth://feedlink?app_key=${process.env.NEXT_PUBLIC_KAKAO_JAVASCRIPT_KEY}&template_id=${process.env.NEXT_PUBLIC_KAKAO_TEMPLATE_ID}&template_args=${kakaoLink}`
+
+    // iOS 15 이상에서는 setTimeout으로 약간의 지연을 주어야 더 안정적으로 작동한다고 함
+    setTimeout(() => {
+      window.location.href = linkUrl
+    }, 100)
+
     return
   }
 
