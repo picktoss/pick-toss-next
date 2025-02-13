@@ -27,23 +27,23 @@ export const loadKakaoSDK = () => {
 }
 
 // iOS Safari에서 실행 중인지 확인
-const isIOSSafari = (): boolean => {
-  const ua = navigator.userAgent.toLowerCase()
-  return (
-    /iphone|ipad|ipod/.test(ua) &&
-    /safari/.test(ua) &&
-    !/(chrome|crios|fxios|line|edge|fb|instagram)/.test(ua)
-  )
-}
+// const isIOSSafari = (): boolean => {
+//   const ua = navigator.userAgent.toLowerCase()
+//   return (
+//     /iphone|ipad|ipod/.test(ua) &&
+//     /safari/.test(ua) &&
+//     !/(chrome|crios|fxios|line|edge|fb|instagram)/.test(ua)
+//   )
+// }
 
 // PWA에서 실행 중인지 확인
-const isPWA = (): boolean => {
-  return window.matchMedia('(display-mode: standalone)').matches
-}
+// const isPWA = (): boolean => {
+//   return window.matchMedia('(display-mode: standalone)').matches
+// }
 
 export const shareToKakao = async (options: ShareOptions) => {
   const { title, description, inviteLinkUrl } = options
-  const appKey = process.env.NEXT_PUBLIC_KAKAO_JAVASCRIPT_KEY
+  // const appKey = process.env.NEXT_PUBLIC_KAKAO_JAVASCRIPT_KEY
   const templateId = process.env.NEXT_PUBLIC_KAKAO_TEMPLATE_ID
 
   if (!window.Kakao?.isInitialized()) {
@@ -51,24 +51,24 @@ export const shareToKakao = async (options: ShareOptions) => {
   }
 
   // iOS PWA 환경에서의 처리
-  if (isPWA() && isIOSSafari()) {
-    const kakaoLink = encodeURIComponent(
-      JSON.stringify({
-        template_id: templateId, // 카카오 템플릿 ID
-        template_args: {
-          web_url: inviteLinkUrl,
-          mobile_web_url: inviteLinkUrl,
-        },
-      })
-    )
+  // if (isPWA() && isIOSSafari()) {
+  //   const kakaoLink = encodeURIComponent(
+  //     JSON.stringify({
+  //       template_id: templateId, // 카카오 템플릿 ID
+  //       template_args: {
+  //         web_url: inviteLinkUrl,
+  //         mobile_web_url: inviteLinkUrl,
+  //       },
+  //     })
+  //   )
 
-    const linkUrl = `kakaolink://send?app_key=${appKey}&template_id=${templateId}&template_args=${kakaoLink}`
+  //   const linkUrl = `kakaolink://send?app_key=${appKey}&template_id=${templateId}&template_args=${kakaoLink}`
 
-    setTimeout(() => {
-      window.location.href = linkUrl
-    }, 100)
-    return
-  }
+  //   setTimeout(() => {
+  //     window.location.href = linkUrl
+  //   }, 100)
+  //   return
+  // }
 
   try {
     // 카카오 메시지 템플릿 사용
