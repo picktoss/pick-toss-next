@@ -26,21 +26,6 @@ export const loadKakaoSDK = () => {
   })
 }
 
-// iOS Safari에서 실행 중인지 확인
-// const isIOSSafari = (): boolean => {
-//   const ua = navigator.userAgent.toLowerCase()
-//   return (
-//     /iphone|ipad|ipod/.test(ua) &&
-//     /safari/.test(ua) &&
-//     !/(chrome|crios|fxios|line|edge|fb|instagram)/.test(ua)
-//   )
-// }
-
-// PWA에서 실행 중인지 확인
-// const isPWA = (): boolean => {
-//   return window.matchMedia('(display-mode: standalone)').matches
-// }
-
 // 폴백 : 기본 공유 사용
 const fallbackToWebShare = async (options: ShareOptions) => {
   const { title, description, inviteLinkUrl } = options
@@ -75,33 +60,12 @@ export const shareToKakao = async (options: ShareOptions) => {
     throw new Error('Kakao SDK가 초기화되지 않았습니다.')
   }
 
-  // iOS PWA 환경에서의 처리
-  // if (isPWA() && isIOSSafari()) {
-  //   const kakaoLink = encodeURIComponent(
-  //     JSON.stringify({
-  //       template_id: templateId, // 카카오 템플릿 ID
-  //       template_args: {
-  //         web_url: inviteLinkUrl,
-  //         mobile_web_url: inviteLinkUrl,
-  //       },
-  //     })
-  //   )
-
-  //   const linkUrl = `kakaolink://send?app_key=${appKey}&template_id=${templateId}&template_args=${kakaoLink}`
-
-  //   setTimeout(() => {
-  //     window.location.href = linkUrl
-  //   }, 100)
-  //   return
-  // }
-
   try {
     // 카카오 메시지 템플릿 사용
     window.Kakao.Share.sendCustom({
       templateId: Number(templateId),
       templateArgs: {
-        web_url: inviteLinkUrl,
-        mobile_web_url: inviteLinkUrl,
+        code: inviteLinkUrl.split('/invite/')[1] ?? '',
       },
     })
   } catch (error) {
