@@ -39,7 +39,7 @@
   "permissions": ["notifications"],
   "scope_extensions": [
     {
-      "origin": "kakaokompassauth://"
+      "origin": "kakaolink://"
     }
   ]
 }
