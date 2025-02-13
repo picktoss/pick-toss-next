@@ -13,8 +13,9 @@ import { Input } from '@/shared/components/ui/input'
 import Text from '@/shared/components/ui/text'
 import InviteRewardInfo from '../invite-reward-info'
 import Image from 'next/image'
-import { useInviteLink } from '@/requests/auth/hooks'
 import { useEffect, useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { queries } from '@/shared/lib/tanstack-query/query-keys'
 
 interface Props {
   triggerComponent: React.ReactNode
@@ -23,16 +24,14 @@ interface Props {
 }
 
 const InviteRewardDrawer = ({ triggerComponent, open, onOpenChange }: Props) => {
-  const { mutate: inviteLinkMutate } = useInviteLink()
+  const { data } = useQuery(queries.auth.inviteLink())
   const [inviteLink, setInviteLink] = useState('')
 
   useEffect(() => {
-    inviteLinkMutate(undefined, {
-      onSuccess: (data) => {
-        setInviteLink(data.inviteLink)
-      },
-    })
-  }, [inviteLinkMutate])
+    if (data) {
+      setInviteLink(data.inviteLink)
+    }
+  }, [data])
 
   const handleCopy = async () => {
     if (!inviteLink) return
@@ -54,9 +53,9 @@ const InviteRewardDrawer = ({ triggerComponent, open, onOpenChange }: Props) => 
         overlayProps={{ className: 'max-w-mobile mx-auto' }}
         className="mx-auto flex h-[80dvh] max-w-mobile flex-col rounded-t-[20px]"
       >
-        <div className="my-[20px] flex h-[calc(80dvh-12px)] w-full flex-col gap-[63px] overflow-y-auto px-[45px]">
+        <div className="my-[20px] flex h-[calc(80dvh-12px)] w-full flex-col gap-[45px] overflow-y-auto px-[45px]">
           <DrawerHeader className="flex h-fit w-full flex-col items-center gap-[24px] px-0">
-            <Image src={'/images/stars-in-box.png'} alt="" width={100} height={107.3} />
+            <Image src={'/images/stars-in-box.png'} alt="" width={115.54} height={109.95} />
             {/* <div className="flex-center h-[110px] w-[212px]">
               <Icon name="infinite-color-inverse" />
             </div> */}
