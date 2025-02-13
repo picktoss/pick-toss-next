@@ -157,7 +157,7 @@ const InviteRewardDrawer = ({ triggerComponent, open, onOpenChange }: Props) => 
 
             <div className="flex flex-col gap-[8px]">
               <Button
-                onClick={handleKakaoShare}
+                onClick={async () => await handleKakaoShare()}
                 variant={'mediumRound'}
                 className="w-full bg-background-kakao text-icon-kakao hover:bg-background-kakao"
               >
