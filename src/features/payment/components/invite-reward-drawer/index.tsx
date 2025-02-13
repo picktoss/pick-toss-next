@@ -16,6 +16,7 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
+import { useKakaoSDK } from '@/shared/hooks/use-kakao-sdk'
 
 interface Props {
   triggerComponent: React.ReactNode
@@ -26,12 +27,61 @@ interface Props {
 const InviteRewardDrawer = ({ triggerComponent, open, onOpenChange }: Props) => {
   const { data } = useQuery(queries.auth.inviteLink())
   const [inviteLink, setInviteLink] = useState('')
+  const { isLoaded: isKakaoSDKLoaded, error: kakaoSDKError } = useKakaoSDK()
 
   useEffect(() => {
     if (data) {
       setInviteLink(data.inviteLink)
     }
   }, [data])
+
+  // 카카오톡에 공유
+  const handleKakaoShare = () => {
+    if (!isKakaoSDKLoaded || kakaoSDKError) {
+      console.error('Kakao SDK 로드 실패:', kakaoSDKError)
+      return
+    }
+
+    window.Kakao.Share.sendDefault({
+      objectType: 'feed',
+      content: {
+        title: '픽토스에 초대합니다!',
+        description: '내 노트 필기에서 ai로 문제를 만들어보세요!',
+        imageUrl: '(이미지의 웹 url 필요)',
+        link: {
+          mobileWebUrl: inviteLink,
+          webUrl: inviteLink,
+        },
+      },
+      buttons: [
+        {
+          title: '초대 링크로 가기',
+          link: {
+            mobileWebUrl: inviteLink,
+            webUrl: inviteLink,
+          },
+        },
+      ],
+    })
+  }
+
+  // 기본 공유하기
+  const handleNativeShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: '픽토스에 초대합니다!',
+          text: '친구 초대하고 별 50개 받으세요!',
+          url: inviteLink,
+        })
+      } catch (error) {
+        console.error('공유하기 실패:', error)
+      }
+    } else {
+      // 공유 API를 지원하지 않는 환경에서는 클립보드에 복사
+      await handleCopy()
+    }
+  }
 
   const handleCopy = async () => {
     if (!inviteLink) return
@@ -89,6 +139,7 @@ const InviteRewardDrawer = ({ triggerComponent, open, onOpenChange }: Props) => 
 
             <div className="flex flex-col gap-[8px]">
               <Button
+                onClick={handleKakaoShare}
                 variant={'mediumRound'}
                 className="w-full bg-background-kakao text-icon-kakao hover:bg-background-kakao"
               >
@@ -96,7 +147,7 @@ const InviteRewardDrawer = ({ triggerComponent, open, onOpenChange }: Props) => 
                 카카오톡에 공유하기
               </Button>
 
-              <Button variant={'mediumRound'} className="w-full">
+              <Button onClick={handleNativeShare} variant={'mediumRound'} className="w-full">
                 <Icon name="share" className="mr-[8px] size-[20px]" />
                 링크 공유하기
               </Button>
