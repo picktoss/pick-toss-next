@@ -30,7 +30,7 @@ interface KakaoShareDefault {
 
 interface KakaoShare {
   sendDefault: (settings: KakaoShareDefault) => void
-  sendCustom: (templateId: number, templateArgs?: Record<string, string>) => void
+  sendCustom: (templateInfo: { templateId: number; templateArgs?: Record<string, string> }) => void
 }
 
 interface KakaoInstance {
