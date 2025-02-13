@@ -17,6 +17,7 @@ import { useEffect, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import { useKakaoSDK } from '@/shared/hooks/use-kakao-sdk'
+import { shareToKakao } from '@/shared/utils/kakao'
 
 interface Props {
   triggerComponent: React.ReactNode
@@ -36,33 +37,46 @@ const InviteRewardDrawer = ({ triggerComponent, open, onOpenChange }: Props) => 
   }, [data])
 
   // 카카오톡에 공유
-  const handleKakaoShare = () => {
+  const handleKakaoShare = async () => {
     if (!isKakaoSDKLoaded || kakaoSDKError) {
       console.error('Kakao SDK 로드 실패:', kakaoSDKError)
       return
     }
 
-    window.Kakao.Share.sendDefault({
-      objectType: 'feed',
-      content: {
+    try {
+      const imageUrl = `${process.env.NEXTAUTH_URL}/images/picktoss-start.png`
+
+      await shareToKakao({
         title: '픽토스에 초대합니다!',
-        description: '내 노트 필기에서 ai로 문제를 만들어보세요!',
-        imageUrl: '(이미지의 웹 url 필요)',
-        link: {
-          mobileWebUrl: inviteLink,
-          webUrl: inviteLink,
-        },
-      },
-      buttons: [
-        {
-          title: '초대 링크로 가기',
-          link: {
-            mobileWebUrl: inviteLink,
-            webUrl: inviteLink,
-          },
-        },
-      ],
-    })
+        description:
+          '내 노트 필기에서 ai로 문제를 만들고 풀어보세요! 매일매일 도착하는 랜덤 문제가 학습 능력을 향상시켜줄거에요!',
+        imageUrl: imageUrl,
+        inviteLinkUrl: inviteLink,
+      })
+    } catch (error) {
+      console.error('공유하기 실패:', error)
+    }
+    // window.Kakao.Share.sendDefault({
+    //   objectType: 'feed',
+    //   content: {
+    //     title: '픽토스에 초대합니다!',
+    //     description: '내 노트 필기에서 ai로 문제를 만들고 풀어보세요! 매일매일 도착하는 랜덤 문제가 학습 능력을 향상시켜줄거에요!',
+    //     imageUrl: '(이미지의 웹 url 필요)',
+    //     link: {
+    //       mobileWebUrl: inviteLink,
+    //       webUrl: inviteLink,
+    //     },
+    //   },
+    //   buttons: [
+    //     {
+    //       title: '초대 링크로 가기',
+    //       link: {
+    //         mobileWebUrl: inviteLink,
+    //         webUrl: inviteLink,
+    //       },
+    //     },
+    //   ],
+    // })
   }
 
   // 기본 공유하기

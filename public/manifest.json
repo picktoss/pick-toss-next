@@ -36,5 +36,10 @@
     }
   ],
   "splash_pages": null,
-  "permissions": ["notifications"]
+  "permissions": ["notifications"],
+  "scope_extensions": [
+    {
+      "origin": "kakaolink://"
+    }
+  ]
 }
