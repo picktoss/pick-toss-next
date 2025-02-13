@@ -7,24 +7,37 @@ const AvailableInviteView = ({ code }: { code: string }) => {
   return (
     <>
       <Image
+        src={'/images/stars-in-box.png'}
+        alt=""
+        width={160}
+        height={169.8}
+        className="my-[32.2px]"
+      />
+      {/* <Image
         src={'/images/invite-letter.png'}
         alt=""
         width={198}
         height={210}
         className="my-[29px]"
-      />
+      /> */}
 
       <Text typography="title1" className="mb-[8px]">
         {'픽토스'}님이 보내신
       </Text>
 
       <Text typography="title1" className="mb-[16px]">
+        픽토스 초대와{' '}
+        <Text as="span" color="accent">
+          별 50개!
+        </Text>
+      </Text>
+      {/* <Text typography="title1" className="mb-[16px]">
         {'픽토스'}{' '}
         <Text as="span" color="special">
           PRO
         </Text>{' '}
         무료 이용권
-      </Text>
+      </Text> */}
 
       <Text typography="text1-medium" color="sub" className="text-center">
         하루 5분으로 내가 배운 것을 기억하세요 <br />

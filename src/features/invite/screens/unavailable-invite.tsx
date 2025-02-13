@@ -24,7 +24,7 @@ const UnavailableInviteView = () => {
 
       <Text typography="text1-medium" color="sub" className="text-center">
         링크 유효기간이 만료되어, 새로운 초대 링크가 필요해요 <br />
-        픽토스 PRO 무료 이용권을 받고 싶다면 <br />
+        초대 보상을 받고 싶다면 <br />
         친구에게 링크를 다시 요청해보세요
       </Text>
 
