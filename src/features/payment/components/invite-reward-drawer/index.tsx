@@ -69,15 +69,11 @@ const InviteRewardDrawer = ({ triggerComponent, open, onOpenChange }: Props) => 
   const handleNativeShare = async () => {
     const imageUrl = `${process.env.NEXTAUTH_URL}/images/share-thumbnail.png`
 
-    const response = await fetch(imageUrl)
-    const blob = await response.blob()
-    const file = new File([blob], 'share-thumbnail.png', { type: blob.type })
-
     const content = {
       title: inviteText.title,
       text: inviteText.description,
       url: inviteLink,
-      files: [file],
+      imageUrl,
     }
 
     // fallback: 공유 API를 지원하지 않는 환경에서는 클립보드에 복사

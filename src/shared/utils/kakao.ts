@@ -34,15 +34,11 @@ const fallbackToWebShare = async (options: ShareOptions) => {
 
   try {
     // 기본 공유 기능 사용
-    const response = await fetch(imageUrl)
-    const blob = await response.blob()
-    const file = new File([blob], 'share-thumbnail.png', { type: blob.type })
-
     const content = {
       title,
       text: description,
       url: inviteLinkUrl,
-      files: [file],
+      imageUrl,
     }
 
     await nativeShare(content)
