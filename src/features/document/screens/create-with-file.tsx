@@ -41,7 +41,7 @@ const CreateWithFile = () => {
 
   const availableQuizCount = useMemo(
     () => calculateAvailableQuizCount(fileInfo?.charCount ?? DOCUMENT_CONSTRAINTS.CONTENT.MIN),
-    [fileInfo?.charCount]
+    [fileInfo]
   )
 
   if (!selectedDirectory) {

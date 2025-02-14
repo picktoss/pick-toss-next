@@ -10,7 +10,7 @@ import { Slider } from '@/shared/components/ui/slider'
 import Text from '@/shared/components/ui/text'
 import { cn } from '@/shared/lib/utils'
 import { useUserStore } from '@/store/user'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 interface Props {
   handleCreateDocument: (params: { quizType: Quiz.Type; star: number }) => void
@@ -19,7 +19,6 @@ interface Props {
 }
 
 const CreateQuizDrawer = ({ handleCreateDocument, maxQuizCount, disabled }: Props) => {
-  // const DEFAULT_QUIZ_COUNT = 10
   const MAXIMUM_QUIZ_COUNT = 40
   const DOCUMENT_MIN_QUIZ_COUNT = maxQuizCount < 5 ? maxQuizCount : 5
   const DOCUMENT_MAX_QUIZ_COUNT = Math.min(maxQuizCount, MAXIMUM_QUIZ_COUNT)
@@ -35,6 +34,10 @@ const CreateQuizDrawer = ({ handleCreateDocument, maxQuizCount, disabled }: Prop
 
   // TODO: 결제 기능 구현 후 아래 코드 삭제
   const [isOpenInvite, setIsOpenInvite] = useState(false)
+
+  useEffect(() => {
+    setSelectedQuizCount(DEFAULT_QUIZ_COUNT)
+  }, [DEFAULT_QUIZ_COUNT])
 
   const handleClickQuizType = (quizType: Quiz.Type) => {
     setSelectedQuizType(quizType)
