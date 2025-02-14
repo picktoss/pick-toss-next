@@ -2,6 +2,7 @@
 
 import { cn } from '@/shared/lib/utils'
 import { motion, PanInfo, useAnimation, useMotionValue } from 'framer-motion'
+import debounce from 'lodash.debounce'
 import { useEffect, useRef, useState } from 'react'
 
 const SwipeableCardList = ({ cardComponents }: { cardComponents: React.ReactNode[] }) => {
@@ -101,7 +102,7 @@ const SwipeableCardList = ({ cardComponents }: { cardComponents: React.ReactNode
   }
 
   // 휠 이벤트 처리: 휠을 통해 좌우 이동
-  const handleWheel = (event: React.WheelEvent | WheelEvent) => {
+  const handleWheel = debounce((event: React.WheelEvent | WheelEvent) => {
     if (containerRef.current && containerRef.current.contains(event.target as Node)) {
       if (Math.abs(event.deltaY) > 1) {
         event.preventDefault()
@@ -119,7 +120,7 @@ const SwipeableCardList = ({ cardComponents }: { cardComponents: React.ReactNode
         }
       })
     }
-  }
+  }, 50)
 
   return (
     <motion.div
