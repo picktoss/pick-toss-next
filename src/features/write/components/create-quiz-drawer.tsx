@@ -114,7 +114,7 @@ const CreateQuizDrawer = ({ handleCreateDocument, maxQuizCount, disabled }: Prop
             <div className="flex-center h-fit w-full flex-col border-t pb-[66px] pt-[26px] text-text-sub">
               <Text typography="text1-medium">만들 문제 수</Text>
               <Text typography="title1" className="mb-[28px] mt-[8px] text-text-accent">
-                {Math.min(selectedQuizCount, DOCUMENT_MAX_QUIZ_COUNT)} 문제
+                {selectedQuizCount} 문제
               </Text>
 
               {/* 문제 개수 슬라이더 */}
@@ -122,11 +122,7 @@ const CreateQuizDrawer = ({ handleCreateDocument, maxQuizCount, disabled }: Prop
                 min={DOCUMENT_MIN_QUIZ_COUNT}
                 max={DOCUMENT_MAX_QUIZ_COUNT}
                 step={1}
-                defaultValue={
-                  DOCUMENT_MAX_QUIZ_COUNT > DEFAULT_QUIZ_COUNT
-                    ? [DEFAULT_QUIZ_COUNT]
-                    : [DOCUMENT_MAX_QUIZ_COUNT]
-                }
+                defaultValue={[DEFAULT_QUIZ_COUNT]}
                 value={[selectedQuizCount]}
                 onValueChange={(value) => setSelectedQuizCount(value[0] || DEFAULT_QUIZ_COUNT)}
               />
