@@ -1,3 +1,5 @@
+import { nativeShare } from './share'
+
 interface ShareOptions {
   title: string
   description: string
@@ -26,29 +28,37 @@ export const loadKakaoSDK = () => {
   })
 }
 
-// 폴백 : 기본 공유 사용
+// 폴백 : 기본 공유, 카카오톡 웹 공유
 const fallbackToWebShare = async (options: ShareOptions) => {
-  const { title, description, inviteLinkUrl } = options
+  const { title, description, inviteLinkUrl, imageUrl } = options
 
-  // 기본 공유 API 사용
-  if (navigator.share) {
-    try {
-      await navigator.share({
-        title,
-        text: description,
-        url: inviteLinkUrl,
-      })
-      return
-    } catch (error) {
-      console.error('기본 공유 API 실패:', error)
+  try {
+    // 기본 공유 기능 사용
+    const response = await fetch(imageUrl)
+    const blob = await response.blob()
+    const file = new File([blob], 'share-thumbnail.png', { type: blob.type })
+
+    const content = {
+      title,
+      text: description,
+      url: inviteLinkUrl,
+      files: [file],
     }
+
+    await nativeShare(content)
+  } catch (error) {
+    console.error(error)
   }
 
-  // 카카오톡 웹 공유 링크로 폴백
-  const webShareUrl = `https://sharer.kakao.com/talk/friends/picker/link?url=${encodeURIComponent(
-    inviteLinkUrl
-  )}`
-  window.open(webShareUrl, '_blank')
+  try {
+    // 카카오톡 웹 공유 링크로 폴백
+    const webShareUrl = `https://sharer.kakao.com/talk/friends/picker/link?url=${encodeURIComponent(
+      inviteLinkUrl
+    )}`
+    window.open(webShareUrl, '_blank')
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 export const shareToKakao = async (options: ShareOptions) => {

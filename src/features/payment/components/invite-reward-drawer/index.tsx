@@ -18,6 +18,14 @@ import { useQuery } from '@tanstack/react-query'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import { useKakaoSDK } from '@/shared/hooks/use-kakao-sdk'
 import { shareToKakao } from '@/shared/utils/kakao'
+import { nativeShare } from '@/shared/utils/share'
+
+// TODO: PRO버전으로 변경 시 내용 수정
+const inviteText = {
+  title: '지금 가입하고 별 50개 더 받으세요!',
+  description:
+    '픽토스에서는 AI퀴즈로 매일 간단하게 내가 배운 걸 기억할 수 있어요. 이 초대권을 통해 픽토스에 가입하실 경우 두 분 모두에게 퀴즈를 만들 수 있는 별 50를 추가로 드려요!',
+}
 
 interface Props {
   triggerComponent: React.ReactNode
@@ -44,12 +52,11 @@ const InviteRewardDrawer = ({ triggerComponent, open, onOpenChange }: Props) => 
     }
 
     try {
-      const imageUrl = `${process.env.NEXTAUTH_URL}/images/picktoss-start.png`
+      const imageUrl = `${process.env.NEXTAUTH_URL}/images/share-thumbnail.png`
 
       await shareToKakao({
-        title: '픽토스에 초대합니다!',
-        description:
-          '내 노트 필기에서 ai로 문제를 만들고 풀어보세요! 매일매일 도착하는 랜덤 문제가 학습 능력을 향상시켜줄거에요!',
+        title: inviteText.title,
+        description: inviteText.description,
         imageUrl: imageUrl,
         inviteLinkUrl: inviteLink,
       })
@@ -60,20 +67,21 @@ const InviteRewardDrawer = ({ triggerComponent, open, onOpenChange }: Props) => 
 
   // 기본 공유하기
   const handleNativeShare = async () => {
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: '픽토스에 초대합니다!',
-          text: '친구 초대하고 별 50개 받으세요!',
-          url: inviteLink,
-        })
-      } catch (error) {
-        console.error('공유하기 실패:', error)
-      }
-    } else {
-      // 공유 API를 지원하지 않는 환경에서는 클립보드에 복사
-      await handleCopy()
+    const imageUrl = `${process.env.NEXTAUTH_URL}/images/share-thumbnail.png`
+
+    const response = await fetch(imageUrl)
+    const blob = await response.blob()
+    const file = new File([blob], 'share-thumbnail.png', { type: blob.type })
+
+    const content = {
+      title: inviteText.title,
+      text: inviteText.description,
+      url: inviteLink,
+      files: [file],
     }
+
+    // fallback: 공유 API를 지원하지 않는 환경에서는 클립보드에 복사
+    await nativeShare(content, handleCopy)
   }
 
   const handleCopy = async () => {
