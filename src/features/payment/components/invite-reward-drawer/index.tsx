@@ -13,12 +13,13 @@ import { Input } from '@/shared/components/ui/input'
 import Text from '@/shared/components/ui/text'
 // import InviteRewardInfo from '../invite-reward-info'
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import { useEffect, useId, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import { useKakaoSDK } from '@/shared/hooks/use-kakao-sdk'
 import { shareToKakao } from '@/shared/utils/kakao'
 import { nativeShare } from '@/shared/utils/share'
+import { useToast } from '@/shared/hooks/use-toast'
 
 // TODO: PRO버전으로 변경 시 내용 수정
 const inviteText = {
@@ -37,6 +38,9 @@ const InviteRewardDrawer = ({ triggerComponent, open, onOpenChange }: Props) => 
   const { data } = useQuery(queries.auth.inviteLink())
   const [inviteLink, setInviteLink] = useState('')
   const { isLoaded: isKakaoSDKLoaded, error: kakaoSDKError } = useKakaoSDK()
+
+  const toastId = useId()
+  const { toast } = useToast()
 
   useEffect(() => {
     if (data) {
@@ -85,6 +89,11 @@ const InviteRewardDrawer = ({ triggerComponent, open, onOpenChange }: Props) => 
 
     try {
       await navigator.clipboard.writeText(inviteLink)
+
+      toast({}).update({
+        id: toastId,
+        title: '링크가 복사되었어요',
+      })
     } catch (error) {
       console.error(error)
     }
