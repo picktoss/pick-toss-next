@@ -87,7 +87,7 @@ const UpdateDirectoryDialog = ({ directoryId, prevName, prevEmoji }: Props) => {
           </DropdownMenu>
 
           <input
-            className="grow border-b border-border-divider py-[10px] outline-none"
+            className="w-full border-b border-border-divider py-[10px] outline-none"
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="폴더 이름"
