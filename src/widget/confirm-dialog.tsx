@@ -8,22 +8,26 @@ import {
 import { cn } from '@/shared/lib/utils'
 
 interface Props {
-  triggerComponent: React.ReactNode
+  confirmButton: React.ReactNode
+  triggerComponent?: React.ReactNode
+  open?: boolean
+  onOpenChange?: (value: boolean) => void
   title?: string
   content: React.ReactNode
   cancelText?: string
-  confirmButton: React.ReactNode
 }
 
 const ConfirmDialogWidget = ({
   triggerComponent,
+  open,
+  onOpenChange,
   title,
   content,
   cancelText = '취소',
   confirmButton,
 }: Props) => {
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>{triggerComponent}</DialogTrigger>
 
       <DialogContent

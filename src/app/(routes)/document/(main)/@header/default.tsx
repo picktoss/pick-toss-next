@@ -5,7 +5,7 @@ import Text from '@/shared/components/ui/text'
 import { useEffect, useState } from 'react'
 import { cn } from '@/shared/lib/utils'
 import Link from 'next/link'
-import { Drawer, DrawerContent, DrawerTrigger } from '@/shared/components/ui/drawer'
+import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from '@/shared/components/ui/drawer'
 import SortIconBtn from '@/features/document/components/sort-icon-button'
 import DirectoryMenuDots from '@/features/directory/components/directory-menu-dots'
 import GoBackButton from '@/shared/components/custom/go-back-button'
@@ -155,6 +155,7 @@ const DirectorySelectDrawer = ({ isDrawerOpen, setIsDrawerOpen, directories }: P
           overlayProps={{ className: 'z-[19] bg-black/60 max-w-mobile mx-auto' }}
           hideSidebar
         >
+          <DrawerTitle></DrawerTitle>
           <div className="flex h-fit flex-col bg-background-base-01">
             <div className="border-b border-border-divider">
               <div className="mb-[11px] mt-[24px] flex max-h-[220px] flex-col overflow-y-auto px-[18px]">

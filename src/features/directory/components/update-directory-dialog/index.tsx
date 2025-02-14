@@ -1,32 +1,23 @@
 import { useUpdateDirectoryInfo } from '@/requests/directory/hooks'
-import Icon from '@/shared/components/custom/icon'
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogTitle,
-  DialogTrigger,
-} from '@/shared/components/ui/dialog'
+import { Dialog, DialogClose, DialogContent, DialogTitle } from '@/shared/components/ui/dialog'
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/shared/components/ui/dropdown-menu'
-import Text from '@/shared/components/ui/text'
 import { cn } from '@/shared/lib/utils'
 import EmojiPicker from 'emoji-picker-react'
 import { useState } from 'react'
 
 interface Props {
+  open: boolean
+  onOpenChange: (value: boolean) => void
   directoryId: number | null
   prevName: string
   prevEmoji: string
 }
 
-const UpdateDirectoryDialog = ({ directoryId, prevName, prevEmoji }: Props) => {
-  const [open, setOpen] = useState(false)
-
+const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prevEmoji }: Props) => {
   const [name, setName] = useState(prevName ?? '')
   const [emoji, setEmoji] = useState(prevEmoji ?? '📁')
 
@@ -43,23 +34,11 @@ const UpdateDirectoryDialog = ({ directoryId, prevName, prevEmoji }: Props) => {
       emoji,
     })
 
-    setOpen(false)
+    onOpenChange(false)
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <DropdownMenuItem
-          className="w-[240px] cursor-pointer border-t border-border-divider px-[20px] py-[16px]"
-          onSelect={(e) => e.preventDefault()}
-        >
-          <Text typography="subtitle2-medium" className="flex w-full items-center justify-between">
-            폴더 이름 바꾸기
-            <Icon name="write-line" className="size-[20px]" />
-          </Text>
-        </DropdownMenuItem>
-      </DialogTrigger>
-
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
         className="flex min-h-[190px] w-[280px] flex-col items-center justify-between rounded-[16px] bg-background-base-01"
         displayCloseButton={false}
