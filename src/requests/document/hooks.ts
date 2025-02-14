@@ -72,6 +72,7 @@ export const useMoveDocument = (listOption: {
     mutationFn: async (payload: Document.Request.MoveDocument) => moveDocument(payload),
     onSuccess: async () => {
       // 문서 목록 갱신
+      await queryClient.invalidateQueries(queries.directory.list())
       await queryClient.invalidateQueries(queries.document.list(listOption))
     },
   })

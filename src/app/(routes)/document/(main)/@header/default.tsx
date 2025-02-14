@@ -137,7 +137,7 @@ const DirectorySelectDrawer = ({ isDrawerOpen, setIsDrawerOpen, directories }: P
   return (
     <>
       <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen} direction="top">
-        <DrawerTrigger asChild>
+        <DrawerTrigger asChild className="cursor-pointer">
           <div className="flex size-fit items-center">
             <h2 className="mr-[8px] text-title2">
               {selectedDirectory

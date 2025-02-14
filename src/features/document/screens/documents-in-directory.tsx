@@ -68,7 +68,9 @@ const DocumentsInDirectory = () => {
               content={document.previewContent ?? ''}
               quizCount={document.totalQuizCount}
               characterCount={document.characterCount}
-              directory={document.directory.name}
+              directory={
+                document.directory.tag === 'DEFAULT' ? '전체 노트' : document.directory.name
+              }
               className={cn(idx === data.documents.length - 1 && 'mb-[30px]')}
               reviewCount={document.reviewNeededQuizCount}
             />

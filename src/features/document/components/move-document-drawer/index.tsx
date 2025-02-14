@@ -34,10 +34,12 @@ const MoveDocumentDrawer = ({ triggerComponent, documentId, usedSwipeRef }: Prop
   const [selectedDirectoryId, setSelectedDirectoryId] = useState<number | null>(globalDirectoryId)
   const [isOpen, setIsOpen] = useState(false)
 
-  const { mutate: moveDocumentMutation } = useMoveDocument({
-    directoryId: String(presentDirectoryId),
-    sortOption,
-  })
+  const params =
+    presentDirectoryId !== null
+      ? { directoryId: String(presentDirectoryId), sortOption }
+      : { sortOption }
+
+  const { mutate: moveDocumentMutation } = useMoveDocument(params)
 
   const handleClickMove = () => {
     const documentIds = documentId ? [documentId] : checkDoc.getCheckedIds().map((id) => Number(id))
