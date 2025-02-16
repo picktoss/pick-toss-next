@@ -43,7 +43,7 @@ const DocumentList = ({ children }: PropsWithChildren) => {
 
   return (
     <>
-      <div className="mt-[54px] flex h-[calc(100dvh-88px-54px)] w-full flex-col gap-[8px] overflow-y-auto overflow-x-hidden px-[14px]">
+      <div className="mt-[54px] flex h-[calc(100dvh-88px-54px)] w-full flex-col gap-[8px] overflow-y-auto overflow-x-hidden px-[14px] scrollbar-hide">
         {children}
       </div>
 

@@ -1,7 +1,6 @@
 'use client'
 
 import { useDirectoryContext } from '@/features/directory/contexts/directory-context'
-import Loading from '@/shared/components/custom/loading'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import { formatToYYYYMM, formatToYYYYMMDD, getSixDaysAgo } from '@/shared/utils/date'
 import { useQuery } from '@tanstack/react-query'
@@ -27,14 +26,14 @@ const AnalysisView = () => {
   const endDate = searchParams.get('endDate') ?? formatToYYYYMMDD(today)
   const selectedMonth = searchParams.get('month') ?? formatToYYYYMM(today)
 
-  const { data: weeklyAnalysisData, isPending: weeklyIsPending } = useQuery(
+  const { data: weeklyAnalysisData } = useQuery(
     queries.quiz.weeklyAnalysis(
       startDate,
       endDate,
       selectedDirectoryId !== null ? selectedDirectoryId : undefined
     )
   )
-  const { data: monthlyAnalysisData, isPending: monthlyIsPending } = useQuery(
+  const { data: monthlyAnalysisData } = useQuery(
     queries.quiz.monthlyAnalysis(
       selectedMonth + '-01',
       selectedDirectoryId !== null ? selectedDirectoryId : undefined
@@ -53,10 +52,6 @@ const AnalysisView = () => {
   const thisMonth = tab === 'month' && selectedMonth === formatToYYYYMM(today)
   const thisPeriod = thisWeek || thisMonth
 
-  if ((tab === 'week' && weeklyIsPending) || (tab === 'month' && monthlyIsPending)) {
-    return <Loading center />
-  }
-
   return (
     <main className="h-[calc(100dvh-54px)] w-full flex-col overflow-y-auto overflow-x-hidden">
       <AnalysisTab />
@@ -69,8 +64,6 @@ const AnalysisView = () => {
       {tab === 'month' && (
         <MonthGraphContainer data={monthlyAnalysisData} today={today} isThisMonth={thisMonth} />
       )}
-
-      <div className="h-[12px] w-full bg-background-base-02" />
 
       <CollectionCategoryContainer isThisPeriod={thisPeriod} data={collectionsAnalysis} />
     </main>

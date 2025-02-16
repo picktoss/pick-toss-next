@@ -4,10 +4,9 @@ import Icon from '@/shared/components/custom/icon'
 interface Props {
   leftQuizCount: number
   setOpenExplanation?: (value: boolean) => void
-  onNext: () => void
 }
 
-const BombAnimationFail = ({ leftQuizCount, setOpenExplanation, onNext }: Props) => {
+const BombAnimationFail = ({ leftQuizCount, setOpenExplanation }: Props) => {
   const bombPositions = [
     // 이전 쌓여있는 폭탄들 (고정 이동)
     { x: '-210px', targetX: '-275px', rotate: -90, delay: 0.5 },
@@ -44,7 +43,6 @@ const BombAnimationFail = ({ leftQuizCount, setOpenExplanation, onNext }: Props)
           delay={bomb.delay}
           onAnimationComplete={() => {
             if (setOpenExplanation) setOpenExplanation(true)
-            if (onNext) onNext()
           }}
         />
       ))}

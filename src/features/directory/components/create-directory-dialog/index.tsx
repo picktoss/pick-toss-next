@@ -1,24 +1,23 @@
+'use client'
+
 import { useCreateDirectory } from '@/requests/directory/hooks'
-import Icon from '@/shared/components/custom/icon'
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogTitle,
-  DialogTrigger,
-} from '@/shared/components/ui/dialog'
+import { Dialog, DialogClose, DialogContent, DialogTitle } from '@/shared/components/ui/dialog'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from '@/shared/components/ui/dropdown-menu'
+import Text from '@/shared/components/ui/text'
 import { cn } from '@/shared/lib/utils'
 import EmojiPicker from 'emoji-picker-react'
 import { useState } from 'react'
 
-const CreateDirectoryDialog = () => {
-  const [open, setOpen] = useState(false)
+interface Props {
+  open: boolean
+  onOpenChange: (value: boolean) => void
+}
 
+const CreateDirectoryDialog = ({ open, onOpenChange }: Props) => {
   const [name, setName] = useState('')
   const [emoji, setEmoji] = useState('📁')
 
@@ -34,7 +33,7 @@ const CreateDirectoryDialog = () => {
       emoji,
     })
 
-    setOpen(false)
+    onOpenChange(false)
   }
 
   return (
@@ -43,21 +42,16 @@ const CreateDirectoryDialog = () => {
       onOpenChange={(value) => {
         setEmoji('📁')
         setName('')
-        setOpen(value)
+        onOpenChange(value)
       }}
     >
-      <DialogTrigger asChild>
-        <button className="my-[7px] flex items-center px-[20px] py-[10px]">
-          <Icon name="plus-circle" className="mr-[16px]" />
-          폴더 추가
-        </button>
-      </DialogTrigger>
-
       <DialogContent
         className="flex min-h-[190px] w-[280px] flex-col items-center justify-between rounded-[16px] bg-background-base-01"
         displayCloseButton={false}
       >
-        <DialogTitle className="mb-[32px] w-full text-subtitle2-bold">폴더 만들기</DialogTitle>
+        <DialogTitle className="mb-[32px] w-full">
+          <Text typography="subtitle2-bold">폴더 만들기</Text>
+        </DialogTitle>
 
         <div className="flex h-[40px] w-full">
           <DropdownMenu>
@@ -80,7 +74,7 @@ const CreateDirectoryDialog = () => {
           </DropdownMenu>
 
           <input
-            className="grow border-b border-border-divider py-[10px] outline-none"
+            className="w-full border-b border-border-divider py-[10px] outline-none"
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="폴더 이름"

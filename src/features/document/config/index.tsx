@@ -22,12 +22,12 @@ export const addDocumentButtons = [
     text: { bottomCss: 'bottom-[157.5px]', content: '파일 업로드하기' },
     href: '/document/file',
   },
-  {
-    key: 'notion',
-    position: 212,
-    text: { bottomCss: 'bottom-[225.5px]', content: '페이지 연동하기' },
-    href: '/document/notion',
-  },
+  // {
+  //   key: 'notion',
+  //   position: 212,
+  //   text: { bottomCss: 'bottom-[225.5px]', content: '페이지 연동하기' },
+  //   href: '/document/notion',
+  // },
 ] as const
 
 export const quizTypeFilters = [

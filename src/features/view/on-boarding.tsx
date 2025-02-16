@@ -1,7 +1,19 @@
+'use client'
+
 import CategorySelectArea from '@/features/category/components/category-select-area'
 import Text from '@/shared/components/ui/text'
+import { useIsPWA } from '@/shared/hooks/use-pwa'
+import { useScreenSize } from '@/shared/hooks/use-screen-size'
+import WebInstallView from './web-install'
 
-const OnBoardingPage = () => {
+const OnBoarding = () => {
+  const { isMobile } = useScreenSize()
+  const isPWA = useIsPWA()
+
+  if (isMobile && !isPWA) {
+    return <WebInstallView />
+  }
+
   return (
     <main className="flex h-[calc(100dvh-54px)] w-full flex-col overflow-y-auto overflow-x-hidden bg-background-base-01 px-[16px] scrollbar-hide">
       <Text typography="title2" className="mt-[70px]">
@@ -16,4 +28,4 @@ const OnBoardingPage = () => {
   )
 }
 
-export default OnBoardingPage
+export default OnBoarding

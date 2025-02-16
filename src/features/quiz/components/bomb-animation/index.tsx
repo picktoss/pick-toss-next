@@ -32,11 +32,7 @@ const BombAnimation = ({
       {currentResult.answer ? (
         <BombAnimationSuccess leftQuizCount={leftQuizCount} onNext={onNext} />
       ) : (
-        <BombAnimationFail
-          leftQuizCount={leftQuizCount}
-          setOpenExplanation={setOpenExplanation}
-          onNext={onNext}
-        />
+        <BombAnimationFail leftQuizCount={leftQuizCount} setOpenExplanation={setOpenExplanation} />
       )}
     </>
   )

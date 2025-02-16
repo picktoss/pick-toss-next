@@ -2,9 +2,10 @@ import NIGHT_SKY_IMG from '@/../../public/images/pro-star-background.png'
 import Image from 'next/image'
 import Text from '@/shared/components/ui/text'
 import Icon from '@/shared/components/custom/icon'
-import InviteReward from '@/features/payment/components/invite-reward'
 import { Button } from '@/shared/components/ui/button'
 import GoBackButton from '@/shared/components/custom/go-back-button'
+import Tag from '@/shared/components/ui/tag'
+import InviteRewardDrawer from '@/features/payment/components/invite-reward-drawer'
 
 interface Props {
   isProUser: boolean
@@ -84,7 +85,19 @@ const PaymentPopup = ({ isProUser, onClose }: Props) => {
             </Button>
 
             {/* 친구 초대 버튼 */}
-            <InviteReward />
+            <InviteRewardDrawer
+              triggerComponent={
+                <button className="flex h-[56px] w-full items-center justify-between rounded-[12px] bg-background-container-03 px-[20px] py-[10px]">
+                  <div className="flex-center gap-[8px]">
+                    <Tag className="bg-fill-primary-blue">EVENT</Tag>
+                    <Text typography="text1-bold" className="text-text-info">
+                      친구 초대하고 픽토스 PRO 이용하기
+                    </Text>
+                  </div>
+                  <Icon name="chevron-right" className="size-[16px] text-icon-tertiary" />
+                </button>
+              }
+            />
           </div>
         </main>
       </div>

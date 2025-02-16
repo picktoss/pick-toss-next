@@ -61,7 +61,7 @@ const Header = () => {
 
     updateDocumentMutate(updatePayload, {
       onSuccess: () => {
-        router.push('/document/' + String(id))
+        router.replace('/document/' + String(id))
         toast({}).update({
           id: toastId,
           title: '노트가 수정되었어요',

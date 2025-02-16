@@ -1,3 +1,4 @@
+import * as auth from './auth/client'
 import * as directory from './directory/client'
 import * as document from './document/client'
 import * as documentServer from './document/server'
@@ -9,6 +10,7 @@ import * as search from './search/client'
 import * as notification from './notification/client'
 
 export const REQUEST = {
+  auth,
   directory,
   document,
   documentServer,

@@ -34,10 +34,12 @@ const MoveDocumentDrawer = ({ triggerComponent, documentId, usedSwipeRef }: Prop
   const [selectedDirectoryId, setSelectedDirectoryId] = useState<number | null>(globalDirectoryId)
   const [isOpen, setIsOpen] = useState(false)
 
-  const { mutate: moveDocumentMutation } = useMoveDocument({
-    directoryId: String(presentDirectoryId),
-    sortOption,
-  })
+  const params =
+    presentDirectoryId !== null
+      ? { directoryId: String(presentDirectoryId), sortOption }
+      : { sortOption }
+
+  const { mutate: moveDocumentMutation } = useMoveDocument(params)
 
   const handleClickMove = () => {
     const documentIds = documentId ? [documentId] : checkDoc.getCheckedIds().map((id) => Number(id))
@@ -66,7 +68,7 @@ const MoveDocumentDrawer = ({ triggerComponent, documentId, usedSwipeRef }: Prop
         overlayProps={{ className: 'max-w-mobile mx-auto' }}
         className="mx-auto h-[80dvh] max-w-mobile rounded-t-[20px]"
       >
-        <div className="mt-[24px] flex max-h-[calc(100%-154px)] w-full flex-col px-[18px]">
+        <div className="mt-[24px] flex h-[calc(100%-154px)] w-full flex-col px-[18px]">
           <DrawerTitle className="text-title3">다른 폴더로 이동</DrawerTitle>
 
           <Text typography="text1-medium" className="mt-[8px] text-text-sub">

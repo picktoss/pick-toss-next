@@ -45,7 +45,7 @@ const ReplayQuizDrawer = ({
       },
       {
         onSuccess: (data) =>
-          router.push(
+          router.replace(
             `/quiz/${data.quizSetId}?` +
               'quizSetType=DOCUMENT_QUIZ_SET' +
               '&' +

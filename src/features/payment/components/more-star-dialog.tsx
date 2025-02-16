@@ -58,7 +58,7 @@ const MoreStarDialog = ({ isOpen, setIsOpen, onClickPayment }: Props) => {
             })
           }
         >
-          별 무제한으로 이용하기
+          친구 초대하고 별 받기
         </Button>
         <DialogClose className="text-button-text-tertiary">닫기</DialogClose>
       </DialogContent>

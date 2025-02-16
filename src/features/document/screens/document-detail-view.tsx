@@ -38,10 +38,6 @@ const DocumentDetailView = ({ documentId, activeTab }: Props) => {
     handleCreateError,
   } = useCreateQuiz(documentId)
 
-  // const [showCreatePopup, setShowCreatePopup] = useState(false)
-  // const [createError, setCreateError] = useState<string | null>(null)
-  // const [openExitDialog, setOpenExitDialog] = useState(false)
-
   const startAddQuizzes = (quizCount: number, quizType: Quiz.Type) => {
     const requestBody = {
       star: quizCount,
@@ -59,32 +55,6 @@ const DocumentDetailView = ({ documentId, activeTab }: Props) => {
     )
   }
 
-  // const handleCreateError = (response: string) => {
-  //   setShowCreatePopup(false)
-  //   setCreateError(response)
-  // }
-
-  // useEffect(() => {
-  //   const handlePopState = (event: PopStateEvent) => {
-  //     // ai 퀴즈 생성 팝업이 열려 있는 상태에서는 뒤로 가기 이벤트를 확인
-  //     if (showCreatePopup) {
-  //       event.preventDefault()
-  //       window.history.pushState(null, '', window.location.href)
-
-  //       setOpenExitDialog(true)
-  //     }
-  //   }
-
-  //   if (showCreatePopup) {
-  //     window.history.pushState(null, '', window.location.href)
-  //     window.addEventListener('popstate', handlePopState)
-  //   }
-
-  //   return () => {
-  //     window.removeEventListener('popstate', handlePopState)
-  //   }
-  // }, [showCreatePopup, router, documentId])
-
   if (isPending) {
     return <Loading center />
   }
@@ -92,7 +62,7 @@ const DocumentDetailView = ({ documentId, activeTab }: Props) => {
   if (documentId !== null && showCreatePopup) {
     return (
       <div className="h-dvh w-full max-w-mobile">
-        <div className="fixed top-0 right-1/2 z-50 h-dvh w-dvw max-w-mobile translate-x-1/2 bg-background-base-01">
+        <div className="fixed right-1/2 top-0 z-50 h-dvh w-dvw max-w-mobile translate-x-1/2 bg-background-base-01">
           <AiCreatingQuiz
             documentId={documentId}
             documentName={documentDetail?.documentName ?? ''}
@@ -129,7 +99,7 @@ const DocumentDetailView = ({ documentId, activeTab }: Props) => {
       <DocumentFloatingButton
         documentId={documentId}
         documentName={documentDetail?.documentName ?? ''}
-        directoryEmoji={documentDetail?.directory.emoji ?? ''}
+        directoryEmoji={documentDetail?.directory.emoji ?? '📁'}
         savedQuizCount={documentDetail?.totalQuizCount ?? 0}
         startAddQuizzes={startAddQuizzes}
       />

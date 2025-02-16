@@ -5,7 +5,7 @@ import Text from '@/shared/components/ui/text'
 import { useEffect, useState } from 'react'
 import { cn } from '@/shared/lib/utils'
 import Link from 'next/link'
-import { Drawer, DrawerContent, DrawerTrigger } from '@/shared/components/ui/drawer'
+import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from '@/shared/components/ui/drawer'
 import SortIconBtn from '@/features/document/components/sort-icon-button'
 import DirectoryMenuDots from '@/features/directory/components/directory-menu-dots'
 import GoBackButton from '@/shared/components/custom/go-back-button'
@@ -13,9 +13,11 @@ import { useDirectories } from '@/requests/directory/hooks'
 import CreateDirectoryDialog from '@/features/directory/components/create-directory-dialog'
 import { useDocumentContext } from '@/features/document/contexts/document-context'
 import { useDirectoryContext } from '@/features/directory/contexts/directory-context'
+import { useDynamicThemeColor } from '@/shared/hooks/use-dynamic-theme-color'
 
 // Header 컴포넌트
 const Header = () => {
+  useDynamicThemeColor('#F5F7F9')
   const { data } = useDirectories()
   const { selectedDirectory } = useDirectoryContext()
   const { isSelectMode, setIsSelectMode, checkDoc } = useDocumentContext()
@@ -34,6 +36,18 @@ const Header = () => {
       checkDoc.checkAll()
     }
   }
+
+  useEffect(() => {
+    const metaTag = document.querySelector('meta[name="theme-color"]')
+
+    if (metaTag) {
+      if (isDrawerOpen) {
+        metaTag.setAttribute('content', '#ffffff')
+      } else {
+        metaTag.setAttribute('content', '#F5F7F9')
+      }
+    }
+  }, [isDrawerOpen])
 
   return (
     <>
@@ -95,6 +109,7 @@ interface Props {
 }
 
 const DirectorySelectDrawer = ({ isDrawerOpen, setIsDrawerOpen, directories }: Props) => {
+  const [openCreateDirectory, setOpenCreateDirectory] = useState(false)
   const {
     selectedDirectory,
     selectedDirectoryId,
@@ -122,8 +137,8 @@ const DirectorySelectDrawer = ({ isDrawerOpen, setIsDrawerOpen, directories }: P
   return (
     <>
       <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen} direction="top">
-        <DrawerTrigger asChild>
-          <button className="flex size-fit items-center">
+        <DrawerTrigger asChild className="cursor-pointer">
+          <div className="flex size-fit items-center">
             <h2 className="mr-[8px] text-title2">
               {selectedDirectory
                 ? `${selectedDirectory.emoji ?? ''} ${
@@ -132,7 +147,7 @@ const DirectorySelectDrawer = ({ isDrawerOpen, setIsDrawerOpen, directories }: P
                 : '전체 노트'}
             </h2>
             <Icon name="chevron-down" className="size-[20px]"></Icon>
-          </button>
+          </div>
         </DrawerTrigger>
 
         <DrawerContent
@@ -140,6 +155,7 @@ const DirectorySelectDrawer = ({ isDrawerOpen, setIsDrawerOpen, directories }: P
           overlayProps={{ className: 'z-[19] bg-black/60 max-w-mobile mx-auto' }}
           hideSidebar
         >
+          <DrawerTitle></DrawerTitle>
           <div className="flex h-fit flex-col bg-background-base-01">
             <div className="border-b border-border-divider">
               <div className="mb-[11px] mt-[24px] flex max-h-[220px] flex-col overflow-y-auto px-[18px]">
@@ -173,10 +189,18 @@ const DirectorySelectDrawer = ({ isDrawerOpen, setIsDrawerOpen, directories }: P
               </div>
             </div>
 
-            <CreateDirectoryDialog />
+            <button
+              onClick={() => setOpenCreateDirectory(true)}
+              className="my-[7px] flex items-center px-[20px] py-[10px]"
+            >
+              <Icon name="plus-circle" className="mr-[16px]" />
+              폴더 추가
+            </button>
           </div>
         </DrawerContent>
       </Drawer>
+
+      <CreateDirectoryDialog open={openCreateDirectory} onOpenChange={setOpenCreateDirectory} />
     </>
   )
 }

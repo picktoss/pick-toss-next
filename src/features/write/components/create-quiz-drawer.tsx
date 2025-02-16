@@ -1,7 +1,8 @@
 'use client'
 
+import InviteRewardDrawer from '@/features/payment/components/invite-reward-drawer'
 import MoreStarDialog from '@/features/payment/components/more-star-dialog'
-import PaymentPopup from '@/features/payment/screen/payment-popup'
+// import PaymentPopup from '@/features/payment/screen/payment-popup'
 import Icon from '@/shared/components/custom/icon'
 import { Button } from '@/shared/components/ui/button'
 import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from '@/shared/components/ui/drawer'
@@ -9,7 +10,7 @@ import { Slider } from '@/shared/components/ui/slider'
 import Text from '@/shared/components/ui/text'
 import { cn } from '@/shared/lib/utils'
 import { useUserStore } from '@/store/user'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 interface Props {
   handleCreateDocument: (params: { quizType: Quiz.Type; star: number }) => void
@@ -18,10 +19,10 @@ interface Props {
 }
 
 const CreateQuizDrawer = ({ handleCreateDocument, maxQuizCount, disabled }: Props) => {
-  const DEFAULT_QUIZ_COUNT = 10
   const MAXIMUM_QUIZ_COUNT = 40
-  const DOCUMENT_MIN_QUIZ_COUNT = 1
+  const DOCUMENT_MIN_QUIZ_COUNT = maxQuizCount < 5 ? maxQuizCount : 5
   const DOCUMENT_MAX_QUIZ_COUNT = Math.min(maxQuizCount, MAXIMUM_QUIZ_COUNT)
+  const DEFAULT_QUIZ_COUNT = DOCUMENT_MAX_QUIZ_COUNT
 
   const { userInfo: user } = useUserStore()
   const [selectedQuizCount, setSelectedQuizCount] = useState(DEFAULT_QUIZ_COUNT)
@@ -29,14 +30,21 @@ const CreateQuizDrawer = ({ handleCreateDocument, maxQuizCount, disabled }: Prop
 
   const [isOpenDrawer, setIsOpenDrawer] = useState(false)
   const [isOpenMoreStar, setIsOpenMoreStar] = useState(false)
-  const [isOpenPayment, setIsOpenPayment] = useState(false)
+  // const [isOpenPayment, setIsOpenPayment] = useState(false)
+
+  // TODO: 결제 기능 구현 후 아래 코드 삭제
+  const [isOpenInvite, setIsOpenInvite] = useState(false)
+
+  useEffect(() => {
+    setSelectedQuizCount(DEFAULT_QUIZ_COUNT)
+  }, [DEFAULT_QUIZ_COUNT])
 
   const handleClickQuizType = (quizType: Quiz.Type) => {
     setSelectedQuizType(quizType)
   }
 
   const handleClickStart = () => {
-    const notEnoughStars = (user?.star ?? 0) < selectedQuizCount * 2
+    const notEnoughStars = (user?.star ?? 0) < selectedQuizCount
 
     if (notEnoughStars) {
       setIsOpenMoreStar(true)
@@ -109,7 +117,7 @@ const CreateQuizDrawer = ({ handleCreateDocument, maxQuizCount, disabled }: Prop
             <div className="flex-center h-fit w-full flex-col border-t pb-[66px] pt-[26px] text-text-sub">
               <Text typography="text1-medium">만들 문제 수</Text>
               <Text typography="title1" className="mb-[28px] mt-[8px] text-text-accent">
-                {Math.min(selectedQuizCount, DOCUMENT_MAX_QUIZ_COUNT)} 문제
+                {selectedQuizCount} 문제
               </Text>
 
               {/* 문제 개수 슬라이더 */}
@@ -117,11 +125,7 @@ const CreateQuizDrawer = ({ handleCreateDocument, maxQuizCount, disabled }: Prop
                 min={DOCUMENT_MIN_QUIZ_COUNT}
                 max={DOCUMENT_MAX_QUIZ_COUNT}
                 step={1}
-                defaultValue={
-                  DOCUMENT_MAX_QUIZ_COUNT > DEFAULT_QUIZ_COUNT
-                    ? [DEFAULT_QUIZ_COUNT]
-                    : [DOCUMENT_MAX_QUIZ_COUNT]
-                }
+                defaultValue={[DEFAULT_QUIZ_COUNT]}
                 value={[selectedQuizCount]}
                 onValueChange={(value) => setSelectedQuizCount(value[0] || DEFAULT_QUIZ_COUNT)}
               />
@@ -149,7 +153,7 @@ const CreateQuizDrawer = ({ handleCreateDocument, maxQuizCount, disabled }: Prop
                 퀴즈 시작하기
                 <div className="flex-center size-[fit] rounded-full bg-[#D3DCE4]/[0.2] px-[8px]">
                   <Icon name="star" className="mr-[4px] size-[16px]" />
-                  <Text typography="text1-medium">{selectedQuizCount * 2}</Text>
+                  <Text typography="text1-medium">{selectedQuizCount}</Text>
                 </div>
               </Button>
             </div>
@@ -164,14 +168,22 @@ const CreateQuizDrawer = ({ handleCreateDocument, maxQuizCount, disabled }: Prop
         onClickPayment={() => {
           setIsOpenMoreStar(false)
           setIsOpenDrawer(false)
-          setIsOpenPayment(true)
+          // setIsOpenPayment(true)
+          setIsOpenInvite(true)
         }}
       />
 
-      {isOpenPayment && (
+      {/* {isOpenPayment && (
         // 결제권유 창
         <PaymentPopup isProUser={false} onClose={() => setIsOpenPayment(false)} />
-      )}
+      )} */}
+
+      {/* TODO: 결제 기능 구현 후 아래 코드 삭제 */}
+      <InviteRewardDrawer
+        triggerComponent={<></>}
+        open={isOpenInvite}
+        onOpenChange={setIsOpenInvite}
+      />
     </>
   )
 }

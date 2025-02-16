@@ -24,7 +24,11 @@ const Quiz = () => {
   const { data, isPending } = useQuery(queries.quiz.listByDocument(params))
 
   if (isPending) {
-    return <Loading center />
+    return (
+      <div className="flex-center h-[calc(100dvh-300px)]">
+        <Loading />
+      </div>
+    )
   }
 
   return (

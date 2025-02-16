@@ -32,6 +32,7 @@ export default function RootLayout({
         <link rel="shortcut icon" href="/favicons/favicon.ico" />
         <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png" />
         <meta name="apple-mobile-web-app-title" content="picktoss" />
+        <meta name="theme-color" content="#ffffff" />
       </head>
       <body className={cn(suit.variable, 'font-suit bg-gray-01')}>
         <Providers>

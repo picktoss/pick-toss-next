@@ -12,18 +12,22 @@
     "*.svg",
     "public"
   ],
-  "files": [
-    "src/**/*.tsx",
-    "src/**/*.ts"
-  ],
+  "files": ["src/**/*.tsx", "src/**/*.ts"],
   "words": [
     "autodocs",
     "beforeinstallprompt",
     "classname",
     "cmaps",
+    "crios",
     "customise",
+    "feedlink",
+    "fxios",
     "hanmail",
+    "itms",
     "kakao",
+    "kakaokompassauth",
+    "kakaolink",
+    "KAKAOTALK",
     "KEYPOINT",
     "kisa",
     "lotties",

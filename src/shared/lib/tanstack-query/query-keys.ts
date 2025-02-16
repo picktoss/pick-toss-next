@@ -2,6 +2,13 @@ import { REQUEST } from '@/requests'
 import { createQueryKeyStore } from '@lukemorales/query-key-factory'
 
 export const queries = createQueryKeyStore({
+  auth: {
+    inviteLink: () => ({
+      queryKey: [''],
+      queryFn: () => REQUEST.auth.getInviteLink(),
+    }),
+  },
+
   directory: {
     list: () => ({
       queryKey: [''],
@@ -78,6 +85,18 @@ export const queries = createQueryKeyStore({
       queryFn: () => REQUEST.quiz.getMonthlyAnalysis(month, directoryId),
       enabled: !!directoryId || !!month,
     }),
+    solvedQuizCount: () => ({
+      queryKey: [''],
+      queryFn: () => REQUEST.quiz.getSolvedTodayCount(),
+    }),
+    todayQuizSetInfo: () => ({
+      queryKey: [''],
+      queryFn: () => REQUEST.quiz.getTodayQuizSetId(),
+    }),
+    consecutiveDays: () => ({
+      queryKey: [''],
+      queryFn: () => REQUEST.quiz.getConsecutiveDays(),
+    }),
   },
 
   collection: {
@@ -85,6 +104,10 @@ export const queries = createQueryKeyStore({
       queryKey: [collectionId],
       queryFn: () => REQUEST.collection.getCollectionInfo({ collectionId }),
       enabled: !!collectionId,
+    }),
+    interestedCategory: () => ({
+      queryKey: [''],
+      queryFn: () => REQUEST.collection.interestedCategoryCollections(),
     }),
   },
 

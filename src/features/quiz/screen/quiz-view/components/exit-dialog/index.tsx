@@ -26,13 +26,13 @@ const ExitDialog = ({ open, onOpenChange, index, isFirst }: ExitDialogProps) => 
   useEffect(() => {
     // 현재 페이지를 history stack에 추가
     // searchParams가 변경되면 해당 페이지로 이동하기 위해 index값을 의존성 배열에 추가
-    window.history.pushState(null, document.title, window.location.href)
+    window.history.replaceState(null, document.title, window.location.href)
   }, [index])
 
   useEffect(() => {
     const handlePopState = () => {
       // 뒤로가기 시도시 현재 페이지 유지
-      window.history.pushState(null, document.title, window.location.href)
+      window.history.replaceState(null, document.title, window.location.href)
       onOpenChange(true)
     }
 

@@ -1,6 +1,6 @@
 'use client'
 
-import Text from '@/shared/components/ui/text'
+// import Text from '@/shared/components/ui/text'
 import DimmedBackground from './dimmed-background'
 import AnimatedButtons from './animate-buttons'
 import { cn } from '@/shared/lib/utils'
@@ -17,7 +17,7 @@ const AddDocumentMenu = () => {
       )}
     >
       <DimmedBackground isExpandedBtns={isExpandedBtns}>
-        <div className="flex-center absolute bottom-[396px] right-[16px] z-20 h-[32px] w-[243px] rounded-[16px] bg-background-tooltip opacity-100">
+        {/* <div className="flex-center absolute bottom-[396px] right-[16px] z-20 h-[32px] w-[243px] rounded-[16px] bg-background-tooltip opacity-100">
           <Text as="span" typography="text2-medium" className="text-text-primary-inverse">
             노션 페이지를 수정해도 업데이트 할 수 있어요
           </Text>
@@ -34,7 +34,7 @@ const AddDocumentMenu = () => {
               fill="#4D7BF9"
             />
           </svg>
-        </div>
+        </div> */}
       </DimmedBackground>
       <AnimatedButtons />
     </div>

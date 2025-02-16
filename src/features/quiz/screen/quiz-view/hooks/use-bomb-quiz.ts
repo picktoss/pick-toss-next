@@ -43,6 +43,11 @@ export const useBombQuiz = (key: Date) => {
   const currentQuizInfo = bombQuizList[currentIndex]
   const currentAnswerState = quizResults[currentIndex]?.answer
 
+  useEffect(() => {
+    // eslint-disable-next-line no-console
+    console.log(bombQuizList)
+  }, [bombQuizList])
+
   // 초기 데이터가 로드되면 quizList를 설정하고 초기 페칭을 비활성화
   useEffect(() => {
     if (initialData?.quizzes && shouldFetchInitial) {
