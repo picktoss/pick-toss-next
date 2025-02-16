@@ -7,7 +7,7 @@ import { Button } from '@/shared/components/ui/button'
 import FixedBottom from '@/shared/components/custom/fixed-bottom'
 
 interface Props {
-  collectQuizCount: number
+  correctQuizCount: number
   quizzes: QuizItem[]
   totalElapsedTime: number
   showRecord: boolean
@@ -22,7 +22,7 @@ interface Props {
 }
 
 const QuizResult = ({
-  collectQuizCount,
+  correctQuizCount,
   quizzes,
   totalElapsedTime,
   showRecord,
@@ -38,7 +38,7 @@ const QuizResult = ({
           <div className="pt-[98px] text-center">
             <Text typography="subtitle1-bold">퀴즈 완료!</Text>
             <Text typography="hero" className="mt-1">
-              <span className="text-text-info">{collectQuizCount}</span>/{quizzes.length}
+              <span className="text-text-info">{correctQuizCount}</span>/{quizzes.length}
             </Text>
           </div>
 
@@ -79,7 +79,7 @@ const QuizResult = ({
                 정답률
               </Text>
               <Text typography="subtitle2-bold" className="mt-0.5">
-                {Math.floor((collectQuizCount / quizzes.length) * 100)}%
+                {Math.floor((correctQuizCount / quizzes.length) * 100)}%
               </Text>
             </div>
           </div>
@@ -88,7 +88,7 @@ const QuizResult = ({
         {showRecord ? (
           <div className="mt-[49px]">
             <Text typography="title3">
-              {quizzes.length}문제 중 <span className="text-text-info">{collectQuizCount}문제</span>{' '}
+              {quizzes.length}문제 중 <span className="text-text-info">{correctQuizCount}문제</span>{' '}
               맞았어요
             </Text>
             <div className="mt-5 flex flex-col gap-3">

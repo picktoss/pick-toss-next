@@ -10,6 +10,7 @@ interface Props {
   createdAt: string
   documentInfo?: { name: string; directoryEmoji: string }
   collectionInfo?: { name: string; emoji: string }
+  redirectUrl?: string
 }
 
 const IntroAndQuizView = ({
@@ -18,6 +19,7 @@ const IntroAndQuizView = ({
   createdAt,
   documentInfo,
   collectionInfo,
+  redirectUrl,
 }: Props) => {
   const [finishedIntro, setFinishedIntro] = useState(false)
 
@@ -41,7 +43,13 @@ const IntroAndQuizView = ({
     )
   }
 
-  return <QuizView quizzes={quizzes} isFirst={quizSetType === 'FIRST_QUIZ_SET'} />
+  return (
+    <QuizView
+      quizzes={quizzes}
+      isFirst={quizSetType === 'FIRST_QUIZ_SET'}
+      exitRedirectUrl={redirectUrl}
+    />
+  )
 }
 
 export default IntroAndQuizView

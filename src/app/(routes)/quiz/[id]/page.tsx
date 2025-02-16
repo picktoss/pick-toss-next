@@ -30,6 +30,7 @@ const QuizDetailPage = async ({ params, searchParams }: Props) => {
     directoryEmoji = '📁',
     collectionName,
     collectionEmoji,
+    redirectUrl,
   } = searchParams
 
   const quizSet = await getQuizSetById({
@@ -58,6 +59,7 @@ const QuizDetailPage = async ({ params, searchParams }: Props) => {
       quizzes={quizSet.quizzes}
       documentInfo={documentInfo}
       collectionInfo={collectionInfo}
+      redirectUrl={redirectUrl}
     />
   )
 }
