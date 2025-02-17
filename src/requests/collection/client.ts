@@ -149,3 +149,30 @@ export const interestedCategoryCollections = async () => {
     throw error
   }
 }
+
+/** GET /collections/quizzes/{quiz_id} - 해당 quizId가 컬렉션에 있는지 확인하기 */
+export const getMyCollectionsForAddQuiz = async (quizId: number) => {
+  try {
+    const { data } = await http.get<Collection.Response.GetMyCollectionsForAddQuiz>(
+      API_ENDPOINTS.COLLECTION.GET.FOR_ADD_QUIZ(quizId)
+    )
+    return data
+  } catch (error) {
+    throw error
+  }
+}
+
+/** PATCH /collection/{collection_id}/add-quiz - 컬렉션에 퀴즈 추가 */
+export const addQuizToCollection = async (payload: {
+  collectionId: number
+  requestBody: { quizId: number }
+}) => {
+  try {
+    await http.patch(
+      API_ENDPOINTS.COLLECTION.PATCH.ADD_QUIZ(payload.collectionId),
+      payload.requestBody
+    )
+  } catch (error) {
+    throw error
+  }
+}

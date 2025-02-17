@@ -208,7 +208,7 @@ const CategorySelectArea = () => {
           ></FormField>
         </motion.div>
 
-        <Button className="w-full" disabled={currentCategories.length === 0}>
+        <Button type='submit' className="w-full" disabled={currentCategories.length === 0}>
           완료
         </Button>
       </form>

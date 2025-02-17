@@ -109,6 +109,13 @@ declare global {
         paths['/api/v2/collections/{collection_category}/quizzes']['get']['responses']['200']['content']['application/json;charset=UTF-8']
       >
 
+      /** GET /api/v2/collections/quizzes/{quiz_id}
+       * 해당 quizId가 컬렉션에 있는지 확인하기
+       */
+      type GetMyCollectionsForAddQuiz = DeepRequired<
+        paths['/api/v2/collections/quizzes/{quiz_id}']['get']['responses']['200']['content']['application/json;charset=UTF-8']
+      >
+
       /** POST /api/v2/collections
        * 컬렉션 생성
        */

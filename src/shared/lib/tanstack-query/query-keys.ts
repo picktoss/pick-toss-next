@@ -109,6 +109,10 @@ export const queries = createQueryKeyStore({
       queryKey: [''],
       queryFn: () => REQUEST.collection.interestedCategoryCollections(),
     }),
+    myListForAddQuiz: (quizId: number) => ({
+      queryKey: [quizId],
+      queryFn: () => REQUEST.collection.getMyCollectionsForAddQuiz(quizId),
+    }),
   },
 
   search: {

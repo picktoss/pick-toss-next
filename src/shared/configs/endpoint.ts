@@ -63,6 +63,8 @@ export const API_ENDPOINTS = {
       ANALYSIS: '/collections-analysis',
       /** GET /collections/{collection_category}/quizzes - 북마크하거나 소유한 컬렉션 분야별로 모든 퀴즈 랜덤하게 가져오기 */
       RANDOM_QUIZZES: (categoryId: string) => `/collections/${categoryId}/quizzes`,
+      /** GET /collections/quizzes/{quiz_id} - 해당 quizId가 컬렉션에 있는지 확인하기 */
+      FOR_ADD_QUIZ: (quizId: number) => `/collections/quizzes/${quizId}`,
     },
     POST: {
       /** POST /collections - 컬렉션 생성 */

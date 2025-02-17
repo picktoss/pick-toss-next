@@ -49,7 +49,11 @@ const QuizCardMenu = ({ documentId, quizId }: Props) => {
         <Icon name="add-book-mark" className="size-[20px]" />
       </button>
       <NoCollectionDialog isOpen={isOpenNoCollection} onOpenChange={setIsOpenNoCollection} />
-      <AddCollectionDrawer isOpen={isAddCollectionOpen} onOpenChange={setIsAddCollectionOpen} />
+      <AddCollectionDrawer
+        selectedQuizId={quizId}
+        isOpen={isAddCollectionOpen}
+        onOpenChange={setIsAddCollectionOpen}
+      />
 
       <ConfirmDialogWidget
         triggerComponent={

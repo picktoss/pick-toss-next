@@ -2,15 +2,33 @@
 
 import Text from '@/shared/components/ui/text'
 import { Button } from '@/shared/components/ui/button'
-import { Drawer, DrawerContent, DrawerFooter, DrawerTitle } from '@/shared/components/ui/drawer'
+import { Drawer, DrawerContent, DrawerTitle } from '@/shared/components/ui/drawer'
+// import CategoryTag from '@/shared/components/custom/category-tag'
+import { useAddQuizToCollection } from '@/requests/collection/hooks'
+import { useQuery } from '@tanstack/react-query'
+import { queries } from '@/shared/lib/tanstack-query/query-keys'
 
 interface Props {
+  selectedQuizId: number
   isOpen: boolean
   onOpenChange: (value: boolean) => void
 }
 
 // AddCollectionDrawer 컴포넌트
-const AddCollectionDrawer = ({ isOpen, onOpenChange }: Props) => {
+const AddCollectionDrawer = ({ selectedQuizId, isOpen, onOpenChange }: Props) => {
+  const { data } = useQuery(queries.collection.myListForAddQuiz(selectedQuizId))
+  const { mutate: addQuizMutate } = useAddQuizToCollection(selectedQuizId)
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const addQuiz = (collectionId: number) => {
+    const payload = {
+      collectionId,
+      requestBody: { quizId: selectedQuizId },
+    }
+
+    addQuizMutate(payload)
+  }
+
   return (
     <Drawer open={isOpen} onOpenChange={onOpenChange}>
       <DrawerContent
@@ -22,23 +40,34 @@ const AddCollectionDrawer = ({ isOpen, onOpenChange }: Props) => {
 
           <div className="flex grow flex-col gap-[24px] overflow-y-auto border-t py-[25px]">
             {/* 컬렉션 map */}
-            {Array.from({ length: 5 }).map((_, idx) => (
-              <div key={idx} className="flex items-center justify-between">
-                <Text typography="subtitle2-medium">🔥파이썬OX퀴즈</Text>
-                <Button variant={'tinySquare'} colors={'secondary'} className="mr-[2px]">
-                  추가하기
-                </Button>
-                {/* 추가된 상태일 경우 버튼이 텍스트로 변경 - '추가됨' */}
-              </div>
-            ))}
+            {data &&
+              data.collections.map((collection) => (
+                <div key={collection.id} className="flex items-center justify-between">
+                  <div className="flex items-center gap-[8px]">
+                    <Text typography="subtitle2-medium" className="max-w-[142px] truncate">
+                      {collection.emoji} {collection.name}
+                    </Text>
+                    {/* <CategoryTag title={collection.collectionCategory} /> */}
+                  </div>
+
+                  {collection.isQuizIncluded ? (
+                    <Text typography="text1-medium" color="caption">
+                      추가됨
+                    </Text>
+                  ) : (
+                    <Button
+                      onClick={() => addQuiz(collection.id)}
+                      variant={'tinySquare'}
+                      colors={'secondary'}
+                      className="mr-[2px]"
+                    >
+                      추가하기
+                    </Button>
+                  )}
+                </div>
+              ))}
           </div>
         </div>
-
-        <DrawerFooter>
-          <Button variant={'largeRound'} colors={'primary'} className="w-full">
-            완료
-          </Button>
-        </DrawerFooter>
       </DrawerContent>
     </Drawer>
   )

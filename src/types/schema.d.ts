@@ -72,7 +72,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v2/payments/verify-amount": {
+    "/api/v2/payments/verify": {
         parameters: {
             query?: never;
             header?: never;
@@ -81,15 +81,15 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** 결제금액 확인 */
-        post: operations["verifyAmount"];
+        /** 포트원 결제 정보 검증 */
+        post: operations["verifyPayment"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/api/v2/payments/temp-save": {
+    "/api/v2/payments/save": {
         parameters: {
             query?: never;
             header?: never;
@@ -98,25 +98,8 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** 주문과 결제금액 임시저장 */
-        post: operations["tempSaveAmount"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v2/payments/confirm": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** 결제 승인 요청 */
-        post: operations["confirmPayment"];
+        /** 결제 정보 저장 */
+        post: operations["createPayments"];
         delete?: never;
         options?: never;
         head?: never;
@@ -132,8 +115,8 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** 결제 취소 요청 */
-        post: operations["cancelPayment"];
+        /** 결제 취소하기 */
+        post: operations["cancelPayments"];
         delete?: never;
         options?: never;
         head?: never;
@@ -391,23 +374,6 @@ export interface paths {
         put?: never;
         /** 초대 코드 인증 */
         post: operations["verifyInviteCode"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v2/admin/test/notifications": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** 자신에게 푸시 알림 보내기(테스트 용도) */
-        post: operations["createNotificationTest"];
         delete?: never;
         options?: never;
         head?: never;
@@ -948,40 +914,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v2/payments/{payment_key}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** paymentKey로 결제 조회 */
-        get: operations["getPaymentByPaymentKey"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v2/payments/orders/{order_id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** orderId로 결제 조회 */
-        get: operations["getPaymentByOrderId"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/api/v2/oauth/url": {
         parameters: {
             query?: never;
@@ -1355,6 +1287,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v2/collections/quizzes/{quiz_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 해당 quizId가 컬렉션에 있는지 확인하기 */
+        get: operations["getCollectionContainingQuiz"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v2/collections/my-collections": {
         parameters: {
             query?: never;
@@ -1466,6 +1415,23 @@ export interface paths {
         };
         /** 초대 코드로 회원가입했는지 체크 */
         get: operations["checkInviteCodeBySignUp"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/admin/notifications/{notification_id}/info": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 푸시 알림 상세 정보 조회 */
+        get: operations["findSingleNotification"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1668,19 +1634,83 @@ export interface components {
             /** Format: date-time */
             createdAt?: string;
         };
-        SaveAmountRequest: {
-            orderId?: string;
+        VerifyPaymentRequest: {
+            impUid?: string;
             /** Format: int32 */
             amount?: number;
         };
-        TossPaymentRequest: {
-            paymentKey?: string;
-            orderId?: string;
+        IamportResponsePayment: {
+            /** Format: int32 */
+            code?: number;
+            message?: string;
+            response?: components["schemas"]["Payment"];
+        };
+        Payment: {
+            channel?: string;
+            escrow?: boolean;
+            name?: string;
+            amount?: number;
+            currency?: string;
+            status?: string;
+            pgTid?: string;
+            payMethod?: string;
+            pgProvider?: string;
+            embPgProvider?: string;
+            applyNum?: string;
+            bankCode?: string;
+            bankName?: string;
+            cardCode?: string;
+            cardName?: string;
+            /** Format: int32 */
+            cardType?: number;
+            vbankCode?: string;
+            vbankName?: string;
+            vbankNum?: string;
+            vbankHolder?: string;
+            /** Format: date-time */
+            vbankDate?: string;
+            /** Format: int64 */
+            vbankIssuedAt?: number;
+            cancelAmount?: number;
+            /** Format: int64 */
+            startedAt?: number;
+            /** Format: date-time */
+            paidAt?: string;
+            /** Format: date-time */
+            failedAt?: string;
+            /** Format: date-time */
+            cancelledAt?: string;
+            failReason?: string;
+            cancelReason?: string;
+            receiptUrl?: string;
+            cancelHistory?: components["schemas"]["PaymentCancelDetail"][];
+            cashReceiptIssued?: boolean;
+            customerUidUsage?: string;
+            impUid?: string;
+            merchantUid?: string;
+            buyerName?: string;
+            buyerEmail?: string;
+            buyerTel?: string;
+            buyerAddr?: string;
+            buyerPostcode?: string;
+            customData?: string;
+            customerUid?: string;
+            cardNumber?: string;
+            /** Format: int32 */
+            cardQuota?: number;
+        };
+        PaymentCancelDetail: {
+            amount?: number;
+            reason?: string;
+            pgTid?: string;
+            /** Format: int64 */
+            cancelledAt?: number;
+            receiptUrl?: string;
+        };
+        CreatePaymentsRequest: {
+            impUid?: string;
             /** Format: int32 */
             amount?: number;
-        };
-        CancelPaymentRequest: {
-            paymentKey?: string;
         };
         FcmNotificationRequestDto: {
             title?: string;
@@ -1844,22 +1874,22 @@ export interface components {
         VerifyInviteCode: {
             inviteCode?: string;
         };
+        SignUpRequest: {
+            name: string;
+            password: string;
+        };
         CreateNotificationRequest: {
             title?: string;
             content?: string;
             memo?: string;
             /** @enum {string} */
-            notificationType?: "GENERAL" | "TODAY_QUIZ" | "COLLECTION" | "INVITE";
+            notificationType?: "GENERAL" | "TODAY_QUIZ" | "COLLECTION" | "STAR_REWARD" | "UPDATE_NEWS";
             /** @enum {string} */
-            notificationTarget?: "ALL" | "QUIZ_INCOMPLETE_STATUS";
+            notificationTarget?: "ALL" | "QUIZ_INCOMPLETE_STATUS" | "QUIZ_INCOMPLETE_STATUS_FOUR_DAYS" | "COLLECTION_NOT_GENERATE" | "IT" | "LAW" | "BUSINESS_ECONOMY" | "SOCIETY_POLITICS" | "LANGUAGE" | "MEDICINE_PHARMACY" | "ART" | "SCIENCE_ENGINEERING" | "HISTORY_PHILOSOPHY";
             isActive?: boolean;
             /** Format: date-time */
             notificationTime?: string;
             repeatDays?: ("MONDAY" | "TUESDAY" | "WEDNESDAY" | "THURSDAY" | "FRIDAY" | "SATURDAY" | "SUNDAY")[];
-        };
-        SignUpRequest: {
-            name: string;
-            password: string;
         };
         AdminLoginRequest: {
             name: string;
@@ -1967,9 +1997,9 @@ export interface components {
         };
         UpdateNotificationRequest: {
             /** @enum {string} */
-            notificationType?: "GENERAL" | "TODAY_QUIZ" | "COLLECTION" | "INVITE";
+            notificationType?: "GENERAL" | "TODAY_QUIZ" | "COLLECTION" | "STAR_REWARD" | "UPDATE_NEWS";
             /** @enum {string} */
-            notificationTarget?: "ALL" | "QUIZ_INCOMPLETE_STATUS";
+            notificationTarget?: "ALL" | "QUIZ_INCOMPLETE_STATUS" | "QUIZ_INCOMPLETE_STATUS_FOUR_DAYS" | "COLLECTION_NOT_GENERATE" | "IT" | "LAW" | "BUSINESS_ECONOMY" | "SOCIETY_POLITICS" | "LANGUAGE" | "MEDICINE_PHARMACY" | "ART" | "SCIENCE_ENGINEERING" | "HISTORY_PHILOSOPHY";
             /** Format: date-time */
             notificationTime?: string;
             title?: string;
@@ -2308,22 +2338,16 @@ export interface components {
             majorVersion?: number;
             /** Format: int32 */
             minorVersion?: number;
+            initParameterNames?: Record<string, never>;
             attributeNames?: Record<string, never>;
             contextPath?: string;
-            initParameterNames?: Record<string, never>;
-            defaultSessionTrackingModes?: ("COOKIE" | "URL" | "SSL")[];
-            /** Format: int32 */
-            effectiveMajorVersion?: number;
-            /** Format: int32 */
-            effectiveMinorVersion?: number;
             sessionTrackingModes?: ("COOKIE" | "URL" | "SSL")[];
             /** Format: int32 */
             sessionTimeout?: number;
             servletRegistrations?: {
                 [key: string]: components["schemas"]["ServletRegistration"];
             };
-            serverInfo?: string;
-            servletContextName?: string;
+            defaultSessionTrackingModes?: ("COOKIE" | "URL" | "SSL")[];
             filterRegistrations?: {
                 [key: string]: components["schemas"]["FilterRegistration"];
             };
@@ -2331,6 +2355,12 @@ export interface components {
             jspConfigDescriptor?: components["schemas"]["JspConfigDescriptor"];
             requestCharacterEncoding?: string;
             responseCharacterEncoding?: string;
+            /** Format: int32 */
+            effectiveMajorVersion?: number;
+            /** Format: int32 */
+            effectiveMinorVersion?: number;
+            serverInfo?: string;
+            servletContextName?: string;
         };
         ServletRegistration: {
             mappings?: string[];
@@ -2364,7 +2394,7 @@ export interface components {
             title?: string;
             content?: string;
             /** @enum {string} */
-            notificationType?: "GENERAL" | "TODAY_QUIZ" | "COLLECTION" | "INVITE";
+            notificationType?: "GENERAL" | "TODAY_QUIZ" | "COLLECTION" | "STAR_REWARD" | "UPDATE_NEWS";
             /** Format: date-time */
             receivedTime?: string;
         };
@@ -2617,6 +2647,16 @@ export interface components {
             quizType?: "MIX_UP" | "MULTIPLE_CHOICE";
             collection?: components["schemas"]["QuizInCollectionByCollectionDto"];
         };
+        GetCollectionContainingQuiz: {
+            collections?: components["schemas"]["GetCollectionContainingQuizDto"][];
+        };
+        GetCollectionContainingQuizDto: {
+            /** Format: int64 */
+            id?: number;
+            name?: string;
+            emoji?: string;
+            isQuizIncluded?: boolean;
+        };
         GetCollectionCategoriesCollectionDto: {
             /** Format: int64 */
             id?: number;
@@ -2639,6 +2679,43 @@ export interface components {
         CheckInviteCodeBySignUpResponse: {
             /** @enum {string} */
             type?: "READY" | "NONE";
+        };
+        GetNotificationsForAdminDto: {
+            /** Format: int64 */
+            id?: number;
+            title?: string;
+            content?: string;
+            memo?: string;
+            /** @enum {string} */
+            notificationType?: "GENERAL" | "TODAY_QUIZ" | "COLLECTION" | "STAR_REWARD" | "UPDATE_NEWS";
+            repeatDays?: string[];
+            isActive?: boolean;
+            /** Format: date-time */
+            notificationTime?: string;
+            /** @enum {string} */
+            notificationTarget?: "ALL" | "QUIZ_INCOMPLETE_STATUS" | "QUIZ_INCOMPLETE_STATUS_FOUR_DAYS" | "COLLECTION_NOT_GENERATE" | "IT" | "LAW" | "BUSINESS_ECONOMY" | "SOCIETY_POLITICS" | "LANGUAGE" | "MEDICINE_PHARMACY" | "ART" | "SCIENCE_ENGINEERING" | "HISTORY_PHILOSOPHY";
+        };
+        GetNotificationsForAdminResponse: {
+            notifications?: components["schemas"]["GetNotificationsForAdminDto"][];
+            /** Format: int64 */
+            totalNotifications?: number;
+            /** Format: int32 */
+            totalPages?: number;
+        };
+        GetSingleNotificationForAdminResponse: {
+            /** Format: int64 */
+            id?: number;
+            title?: string;
+            content?: string;
+            memo?: string;
+            /** @enum {string} */
+            notificationType?: "GENERAL" | "TODAY_QUIZ" | "COLLECTION" | "STAR_REWARD" | "UPDATE_NEWS";
+            repeatDays?: string[];
+            isActive?: boolean;
+            /** Format: date-time */
+            notificationTime?: string;
+            /** @enum {string} */
+            notificationTarget?: "ALL" | "QUIZ_INCOMPLETE_STATUS" | "QUIZ_INCOMPLETE_STATUS_FOUR_DAYS" | "COLLECTION_NOT_GENERATE" | "IT" | "LAW" | "BUSINESS_ECONOMY" | "SOCIETY_POLITICS" | "LANGUAGE" | "MEDICINE_PHARMACY" | "ART" | "SCIENCE_ENGINEERING" | "HISTORY_PHILOSOPHY";
         };
         GetCollectionsForAdminCollectionDto: {
             /** Format: int64 */
@@ -2798,7 +2875,7 @@ export interface operations {
             };
         };
     };
-    verifyAmount: {
+    verifyPayment: {
         parameters: {
             query?: never;
             header?: never;
@@ -2807,7 +2884,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json;charset=UTF-8": components["schemas"]["SaveAmountRequest"];
+                "application/json;charset=UTF-8": components["schemas"]["VerifyPaymentRequest"];
             };
         };
         responses: {
@@ -2817,20 +2894,12 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json;charset=UTF-8": Record<string, never>;
-                };
-            };
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": unknown;
+                    "application/json;charset=UTF-8": components["schemas"]["IamportResponsePayment"];
                 };
             };
         };
     };
-    tempSaveAmount: {
+    createPayments: {
         parameters: {
             query?: never;
             header?: never;
@@ -2839,44 +2908,12 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json;charset=UTF-8": components["schemas"]["SaveAmountRequest"];
+                "application/json;charset=UTF-8": components["schemas"]["CreatePaymentsRequest"];
             };
         };
         responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json;charset=UTF-8": Record<string, never>;
-                };
-            };
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": unknown;
-                };
-            };
-        };
-    };
-    confirmPayment: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json;charset=UTF-8": components["schemas"]["TossPaymentRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
+            /** @description Created */
+            201: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -2884,18 +2921,14 @@ export interface operations {
             };
         };
     };
-    cancelPayment: {
+    cancelPayments: {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        requestBody: {
-            content: {
-                "application/json;charset=UTF-8": components["schemas"]["CancelPaymentRequest"];
-            };
-        };
+        requestBody?: never;
         responses: {
             /** @description OK */
             200: {
@@ -3371,28 +3404,6 @@ export interface operations {
             };
         };
     };
-    createNotificationTest: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json;charset=UTF-8": components["schemas"]["CreateNotificationRequest"];
-            };
-        };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
     signUp: {
         parameters: {
             query?: never;
@@ -3417,7 +3428,9 @@ export interface operations {
     };
     getNotifications_1: {
         parameters: {
-            query?: never;
+            query?: {
+                page?: number;
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -3430,7 +3443,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json;charset=UTF-8": components["schemas"]["GetNotificationsResponse"];
+                    "application/json;charset=UTF-8": components["schemas"]["GetNotificationsForAdminResponse"];
                 };
             };
         };
@@ -3448,12 +3461,20 @@ export interface operations {
             };
         };
         responses: {
-            /** @description OK */
-            200: {
+            /** @description Created */
+            201: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
             };
         };
     };
@@ -4247,46 +4268,6 @@ export interface operations {
             };
         };
     };
-    getPaymentByPaymentKey: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                payment_key: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    getPaymentByOrderId: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                order_id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
     oauthUrlApi: {
         parameters: {
             query?: never;
@@ -4426,6 +4407,14 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
             };
         };
     };
@@ -4608,7 +4597,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json;charset=UTF-8": string[];
+                    "application/json;charset=UTF-8": string;
                 };
             };
         };
@@ -4826,6 +4815,36 @@ export interface operations {
             };
         };
     };
+    getCollectionContainingQuiz: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                quiz_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["GetCollectionContainingQuiz"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
     getAllByMemberId: {
         parameters: {
             query?: never;
@@ -4984,10 +5003,35 @@ export interface operations {
             };
         };
     };
+    findSingleNotification: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                notification_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["GetSingleNotificationForAdminResponse"];
+                };
+            };
+        };
+    };
     getNotificationsByKeyword: {
         parameters: {
             query: {
+                page?: number;
                 "notification-search-option": "TITLE_AND_CONTENT" | "TITLE" | "CONTENT";
+                "notification-type"?: "GENERAL" | "TODAY_QUIZ" | "COLLECTION" | "STAR_REWARD" | "UPDATE_NEWS";
+                "is-active"?: boolean;
                 keyword?: string;
             };
             header?: never;
@@ -5002,7 +5046,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json;charset=UTF-8": components["schemas"]["GetNotificationsResponse"];
+                    "application/json;charset=UTF-8": components["schemas"]["GetNotificationsForAdminResponse"];
                 };
             };
         };

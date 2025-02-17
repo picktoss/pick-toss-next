@@ -13,7 +13,9 @@ import {
   updateCollectionInfo,
   updateCollectionQuizzes,
   searchCollections,
+  addQuizToCollection,
 } from './client'
+import { queries } from '@/shared/lib/tanstack-query/query-keys'
 
 export const useCollections = (props?: {
   collectionSortOption: 'POPULARITY' | 'UPDATED'
@@ -275,5 +277,23 @@ export const useSearchCollections = (keyword: string) => {
   return useQuery({
     queryKey: ['collections', 'searchCollections', keyword],
     queryFn: async () => searchCollections(keyword),
+  })
+}
+
+export const useAddQuizToCollection = (quizId: number) => {
+  const queryClient = getQueryClient()
+
+  return useMutation({
+    mutationFn: async (payload: { collectionId: number; requestBody: { quizId: number } }) =>
+      addQuizToCollection(payload),
+    onSuccess: async () => {
+      // TODO: 컬렉션에 퀴즈 추가를 위한 별도 api가 생긴다면 해당 쿼리 추가
+      await Promise.all([
+        queryClient.invalidateQueries(queries.collection.myListForAddQuiz(quizId)),
+        queryClient.invalidateQueries({ queryKey: ['collections'] }),
+        queryClient.invalidateQueries({ queryKey: ['myCollections'] }),
+        queryClient.invalidateQueries({ queryKey: ['collectionInfo'] }),
+      ])
+    },
   })
 }
