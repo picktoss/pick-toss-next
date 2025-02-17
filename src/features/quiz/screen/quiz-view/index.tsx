@@ -137,7 +137,9 @@ const QuizView = ({ quizzes, isFirst, exitRedirectUrl }: Props) => {
     if (quizSetType === 'TODAY_QUIZ_SET') {
       setShowTodayQuizReward(true)
       setShowResult(false)
+      return
     }
+
     redirectUrl ? router.replace(redirectUrl) : router.replace('/')
   }
 

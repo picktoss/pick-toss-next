@@ -65,7 +65,10 @@ const TodayQuizReward = ({ prevConsecutiveDays, todayCheckData, reward }: Props)
         }}
         className="mt-[32px] w-full max-w-[220px]"
       >
-        <Button onClick={() => router.replace('/main')} className="w-full">
+        <Button
+          onClick={() => router.replace('/main?' + 'reward-type=TODAY_QUIZ' + `reward=${reward}`)}
+          className="w-full"
+        >
           별 {reward}개 받기
         </Button>
       </motion.div>

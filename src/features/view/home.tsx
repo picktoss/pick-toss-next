@@ -20,10 +20,22 @@ import { useSession } from 'next-auth/react'
 import OnBoarding from './on-boarding'
 import Cookies from 'js-cookie'
 import { useUserStore } from '@/store/user'
+import { useSearchParams } from 'next/navigation'
+import { useToast } from '@/shared/hooks/use-toast'
+import { useEffect, useId } from 'react'
+
+type RewardType = 'TODAY_QUIZ' | 'INVITE' | 'EVENT'
 
 const Home = () => {
   const { data: session } = useSession()
   const { userInfo } = useUserStore()
+
+  const rewardType = useSearchParams().get('reward-type') as RewardType | null
+  const reward = useSearchParams().get('reward')
+
+  const toastId = useId()
+  const { toast } = useToast()
+
   const {
     todaySolvedQuizCount,
     quizSetId,
@@ -41,6 +53,15 @@ const Home = () => {
   const isPWA = useIsPWA()
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
   const interestedCategoryCompleted = Cookies.get('interested-category-complete')
+
+  useEffect(() => {
+    if (rewardType === 'TODAY_QUIZ') {
+      toast({}).update({
+        id: toastId,
+        title: `별 ${reward}개가 추가되었어요`,
+      })
+    }
+  }, [toast, toastId, rewardType, reward])
 
   if (isMobile && !isPWA) {
     return <WebInstallView />
