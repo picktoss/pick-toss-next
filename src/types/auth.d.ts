@@ -19,6 +19,13 @@ declare global {
       type GetInviteLink = DeepRequired<
         paths['/api/v2/auth/invite']['get']['responses']['201']['content']['application/json;charset=UTF-8']
       >
+
+      /** GET /api/v2/auth/invite/{invite_code}/creator
+       * 초대 링크 생성자 정보 가져오기
+       */
+      type GetInviteCreator = DeepRequired<
+        paths['/api/v2/auth/invite/{invite_code}/creator']['get']['responses']['200']['content']['application/json;charset=UTF-8']
+      >
     }
   }
 }

@@ -1,9 +1,15 @@
+'use client'
+
 import { Button } from '@/shared/components/ui/button'
 import Text from '@/shared/components/ui/text'
+import { queries } from '@/shared/lib/tanstack-query/query-keys'
+import { useQuery } from '@tanstack/react-query'
 import Image from 'next/image'
 import Link from 'next/link'
 
 const AvailableInviteView = ({ code }: { code: string }) => {
+  const { data } = useQuery(queries.auth.inviteCreator(code))
+
   return (
     <>
       <Image
@@ -22,7 +28,7 @@ const AvailableInviteView = ({ code }: { code: string }) => {
       /> */}
 
       <Text typography="title1" className="mb-[8px]">
-        {'픽토스'}님이 보내신
+        {data?.name}님이 보내신
       </Text>
 
       <Text typography="title1" className="mb-[16px]">

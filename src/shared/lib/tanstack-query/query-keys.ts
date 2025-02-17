@@ -7,6 +7,10 @@ export const queries = createQueryKeyStore({
       queryKey: [''],
       queryFn: () => REQUEST.auth.getInviteLink(),
     }),
+    inviteCreator: (inviteCode: string) => ({
+      queryKey: [inviteCode],
+      queryFn: () => REQUEST.auth.getInviteCreator(inviteCode),
+    }),
   },
 
   directory: {
