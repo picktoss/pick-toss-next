@@ -11,11 +11,12 @@ import {
 } from '@/shared/components/ui/dialog'
 import Text from '@/shared/components/ui/text'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useId, useState } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { Form, FormControl, FormField, FormItem } from '@/shared/components/ui/form'
+import { useToast } from '@/shared/hooks/use-toast'
 
 const formSchema = z.object({
   name: z.string().min(1, '이름을 입력해주세요'),
@@ -26,6 +27,9 @@ type FormValues = z.infer<typeof formSchema>
 const SetNameDialog = ({ userName }: { userName: string }) => {
   const router = useRouter()
   const [open, setOpen] = useState(false)
+
+  const toastId = useId()
+  const { toast } = useToast()
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -45,6 +49,10 @@ const SetNameDialog = ({ userName }: { userName: string }) => {
         onSuccess: () => {
           router.refresh()
           setOpen(false)
+          toast({}).update({
+            id: toastId,
+            title: '이름이 변경되었어요',
+          })
         },
       }
     )
