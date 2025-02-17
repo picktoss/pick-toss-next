@@ -3,7 +3,7 @@
 import Text from '@/shared/components/ui/text'
 import { Button } from '@/shared/components/ui/button'
 import { Drawer, DrawerContent, DrawerTitle } from '@/shared/components/ui/drawer'
-// import CategoryTag from '@/shared/components/custom/category-tag'
+import CategoryTag from '@/shared/components/custom/category-tag'
 import { useAddQuizToCollection } from '@/requests/collection/hooks'
 import { useQuery } from '@tanstack/react-query'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
@@ -14,8 +14,8 @@ interface Props {
   onOpenChange: (value: boolean) => void
 }
 
-// AddCollectionDrawer 컴포넌트
-const AddCollectionDrawer = ({ selectedQuizId, isOpen, onOpenChange }: Props) => {
+// AddQuizToCollectionDrawer 컴포넌트
+const AddQuizToCollectionDrawer = ({ selectedQuizId, isOpen, onOpenChange }: Props) => {
   const { data } = useQuery(queries.collection.myListForAddQuiz(selectedQuizId))
   const { mutate: addQuizMutate } = useAddQuizToCollection(selectedQuizId)
 
@@ -47,7 +47,7 @@ const AddCollectionDrawer = ({ selectedQuizId, isOpen, onOpenChange }: Props) =>
                     <Text typography="subtitle2-medium" className="max-w-[142px] truncate">
                       {collection.emoji} {collection.name}
                     </Text>
-                    {/* <CategoryTag title={collection.collectionCategory} /> */}
+                    <CategoryTag title={collection.collectionCategory} />
                   </div>
 
                   {collection.isQuizIncluded ? (
@@ -73,4 +73,4 @@ const AddCollectionDrawer = ({ selectedQuizId, isOpen, onOpenChange }: Props) =>
   )
 }
 
-export default AddCollectionDrawer
+export default AddQuizToCollectionDrawer

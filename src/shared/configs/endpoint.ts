@@ -8,10 +8,10 @@ export const API_ENDPOINTS = {
     HEALTH_CHECK: '/health-check',
     /** GET /callback - Oauth callback */
     CALLBACK: '/callback',
-    /** GET /auth/invite-link - 초대 링크 생성 */
-    INVITE_LINK: '/auth/invite-link',
-    /** GET /auth/invite-code/check - 초대 코드로 회원가입했는지 체크 */
-    INVITE_CODE_CHECK: '/auth/invite-code/check',
+    /** GET /auth/invite - 초대 링크 생성 */
+    INVITE_LINK: '/auth/invite',
+    /** GET /auth/invite/status - 초대 코드로 회원가입했는지 체크 */
+    INVITE_CODE_CHECK: '/auth/invite/status',
     /** POST /login - login */
     LOGIN: '/login',
     /** POST /auth/verification */
@@ -22,8 +22,8 @@ export const API_ENDPOINTS = {
       /** POST /test/create-today-quiz - 오늘의 퀴즈 생성 API(테스트용) */
       CREATE_TODAY_QUIZ: '/test/create-today-quiz',
     },
-    /** POST /auth/invite-code/verify */
-    INVITE_CODE_VERIFY: '/auth/invite-code/verify',
+    /** POST /auth/invite/verify */
+    INVITE_CODE_VERIFY: '/auth/invite/verify',
   },
 
   COLLECTION: {

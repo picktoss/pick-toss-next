@@ -4,10 +4,10 @@ import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
 import { MouseEvent, useState } from 'react'
 import NoCollectionDialog from '../../collection/components/no-collection-dialog'
-import AddCollectionDrawer from '@/features/collection/components/add-collection-drawer'
 import ConfirmDialogWidget from '@/widget/confirm-dialog'
 import { useMyCollections } from '@/requests/collection/hooks'
 import { useDeleteQuiz } from '@/requests/quiz/hooks'
+import AddQuizToCollectionDrawer from '@/features/collection/components/add-quiz-to-collection-drawer'
 
 interface Props {
   documentId: number
@@ -49,7 +49,7 @@ const QuizCardMenu = ({ documentId, quizId }: Props) => {
         <Icon name="add-book-mark" className="size-[20px]" />
       </button>
       <NoCollectionDialog isOpen={isOpenNoCollection} onOpenChange={setIsOpenNoCollection} />
-      <AddCollectionDrawer
+      <AddQuizToCollectionDrawer
         selectedQuizId={quizId}
         isOpen={isAddCollectionOpen}
         onOpenChange={setIsAddCollectionOpen}

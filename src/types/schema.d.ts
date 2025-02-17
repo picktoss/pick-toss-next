@@ -363,7 +363,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v2/auth/invite-code/verify": {
+    "/api/v2/auth/invite/verify": {
         parameters: {
             query?: never;
             header?: never;
@@ -1389,7 +1389,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v2/auth/invite-link": {
+    "/api/v2/auth/invite": {
         parameters: {
             query?: never;
             header?: never;
@@ -1406,7 +1406,24 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v2/auth/invite-code/check": {
+    "/api/v2/auth/invite/{invite_code}/creator": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 초대 링크 생성자 정보 가져오기 */
+        get: operations["getInviteMemberInfo"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/auth/invite/status": {
         parameters: {
             query?: never;
             header?: never;
@@ -1652,10 +1669,10 @@ export interface components {
             amount?: number;
             currency?: string;
             status?: string;
-            pgTid?: string;
             payMethod?: string;
             pgProvider?: string;
             embPgProvider?: string;
+            pgTid?: string;
             applyNum?: string;
             bankCode?: string;
             bankName?: string;
@@ -1684,7 +1701,6 @@ export interface components {
             cancelReason?: string;
             receiptUrl?: string;
             cancelHistory?: components["schemas"]["PaymentCancelDetail"][];
-            cashReceiptIssued?: boolean;
             customerUidUsage?: string;
             impUid?: string;
             merchantUid?: string;
@@ -1695,9 +1711,10 @@ export interface components {
             buyerPostcode?: string;
             customData?: string;
             customerUid?: string;
-            cardNumber?: string;
             /** Format: int32 */
             cardQuota?: number;
+            cardNumber?: string;
+            cashReceiptIssued?: boolean;
         };
         PaymentCancelDetail: {
             amount?: number;
@@ -2348,6 +2365,12 @@ export interface components {
                 [key: string]: components["schemas"]["ServletRegistration"];
             };
             defaultSessionTrackingModes?: ("COOKIE" | "URL" | "SSL")[];
+            /** Format: int32 */
+            effectiveMajorVersion?: number;
+            /** Format: int32 */
+            effectiveMinorVersion?: number;
+            serverInfo?: string;
+            servletContextName?: string;
             filterRegistrations?: {
                 [key: string]: components["schemas"]["FilterRegistration"];
             };
@@ -2355,12 +2378,6 @@ export interface components {
             jspConfigDescriptor?: components["schemas"]["JspConfigDescriptor"];
             requestCharacterEncoding?: string;
             responseCharacterEncoding?: string;
-            /** Format: int32 */
-            effectiveMajorVersion?: number;
-            /** Format: int32 */
-            effectiveMinorVersion?: number;
-            serverInfo?: string;
-            servletContextName?: string;
         };
         ServletRegistration: {
             mappings?: string[];
@@ -2655,6 +2672,7 @@ export interface components {
             id?: number;
             name?: string;
             emoji?: string;
+            collectionCategory?: string;
             isQuizIncluded?: boolean;
         };
         GetCollectionCategoriesCollectionDto: {
@@ -2675,6 +2693,9 @@ export interface components {
         };
         CreateInviteLinkResponse: {
             inviteLink?: string;
+        };
+        GetInviteMemberResponse: {
+            name?: string;
         };
         CheckInviteCodeBySignUpResponse: {
             /** @enum {string} */
@@ -4983,6 +5004,36 @@ export interface operations {
             };
         };
     };
+    getInviteMemberInfo: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                invite_code: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["GetInviteMemberResponse"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
     checkInviteCodeBySignUp: {
         parameters: {
             query?: never;
@@ -4999,6 +5050,14 @@ export interface operations {
                 };
                 content: {
                     "application/json;charset=UTF-8": components["schemas"]["CheckInviteCodeBySignUpResponse"];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
                 };
             };
         };
