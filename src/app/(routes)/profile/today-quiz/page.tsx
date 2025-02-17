@@ -39,7 +39,7 @@ const TodayQuizPage = async () => {
             <div className="flex-center gap-[8px]">
               <Tag className="bg-fill-primary-blue">EVENT</Tag>
               <Text typography="text1-bold" className="text-text-info">
-                친구 초대하고 픽토스 PRO 이용하기
+                친구 초대하고 무료로 별 받기
               </Text>
             </div>
             <Icon name="chevron-right" className="size-[16px] text-icon-tertiary" />
