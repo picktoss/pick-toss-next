@@ -1,11 +1,12 @@
 'use client'
 
+import Loading from '@/shared/components/custom/loading'
 import { Calendar } from '@/shared/components/ui/calendar'
 import { cn } from '@/shared/lib/utils'
 import { formatToYYYYMMDD } from '@/shared/utils/date'
 import { format } from 'date-fns'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 interface Props {
   className?: HTMLElement['className']
@@ -18,6 +19,8 @@ const CustomCalendar = ({ className }: Props) => {
   const searchParams = useSearchParams()
   const selectedDateString = searchParams.get('selectedDate')
 
+  const [showLoading, setShowLoading] = useState(false)
+
   const selectedDate = useMemo(() => {
     if (selectedDateString) {
       const [year, month, day] = selectedDateString.split('-').map(Number)
@@ -26,7 +29,13 @@ const CustomCalendar = ({ className }: Props) => {
     return today
   }, [selectedDateString, today])
 
+  useEffect(() => {
+    setShowLoading(false)
+  }, [selectedDateString])
+
   const handleSelect = (selected?: Date) => {
+    setShowLoading(true)
+
     if (selected) {
       const formattedDate = formatToYYYYMMDD(selected)
 
@@ -35,22 +44,26 @@ const CustomCalendar = ({ className }: Props) => {
   }
 
   return (
-    <Calendar
-      required
-      today={today}
-      mode="single"
-      formatters={{
-        formatCaption: (Date: Date) => `${format(Date, 'M')}월`,
-        formatWeekdayName: (Date: Date) => {
-          const weekdays = ['일', '월', '화', '수', '목', '금', '토']
-          return weekdays[Date.getDay()]
-        },
-      }}
-      className={cn('w-full', className)}
-      selected={selectedDate}
-      onSelect={(date?: Date) => handleSelect(date)}
-      selectedMonth={selectedDate}
-    />
+    <>
+      {showLoading && <Loading className="absolute right-1/2 top-[250px] z-50 translate-x-1/2" />}
+
+      <Calendar
+        required
+        today={today}
+        mode="single"
+        formatters={{
+          formatCaption: (Date: Date) => `${format(Date, 'M')}월`,
+          formatWeekdayName: (Date: Date) => {
+            const weekdays = ['일', '월', '화', '수', '목', '금', '토']
+            return weekdays[Date.getDay()]
+          },
+        }}
+        className={cn('w-full', className)}
+        selected={selectedDate}
+        onSelect={(date?: Date) => handleSelect(date)}
+        selectedMonth={selectedDate}
+      />
+    </>
   )
 }
 
