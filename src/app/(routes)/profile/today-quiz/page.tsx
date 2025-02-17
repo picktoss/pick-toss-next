@@ -22,7 +22,7 @@ const TodayQuizPage = async () => {
         <Icon name="today-quiz" className="ml-[12px] size-[100px]" />
         <div className="flex-center mt-[20.38px] flex-col gap-[12px]">
           <Text typography="title1" className="text-text-accent">
-            연속 {currentConsecutiveDays || 0}일 완료
+            연속 {currentConsecutiveDays}일 완료
           </Text>
           <Text typography="text1-medium" className="text-center text-text-secondary">
             오늘의 퀴즈를 완료할 때마다 별 5개를 드리고, <br />
