@@ -78,7 +78,7 @@ const Home = () => {
             <Text typography="subtitle1-bold" className="mb-[2px]">
               오답 터뜨리기
             </Text>
-            <Text typography="text2-medium" color="sub" className="mb-[27px]">
+            <Text typography="text1-medium" color="sub" className="mb-[27px]">
               틀린 문제 정복하기
             </Text>
 
@@ -92,7 +92,7 @@ const Home = () => {
             <Text typography="subtitle1-bold" className="mb-[2px]">
               랜덤 퀴즈
             </Text>
-            <Text typography="text2-medium" color="sub" className="mb-[27px]">
+            <Text typography="text1-medium" color="sub" className="mb-[27px]">
               한 문제씩 빠르게 풀기
             </Text>
 

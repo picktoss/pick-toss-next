@@ -36,7 +36,7 @@ export default function VisualEditor({ prevContent }: VisualEditorProps) {
           // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
           setEditorMarkdownContent(helpers.getMarkdown && helpers.getMarkdown(state))
         }
-        placeholder="본문을 작성해보세요!"
+        placeholder="여기를 탭하여 입력을 시작하세요"
         classNames={[
           css`
             &.ProseMirror {

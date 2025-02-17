@@ -1,6 +1,5 @@
 'use client'
 
-import Icon from '@/shared/components/custom/icon'
 import Collection from './collection'
 import CollectionList from './collection-list'
 import { useCollections } from '@/requests/collection/hooks'
@@ -13,15 +12,18 @@ import { useSearchParams } from 'next/navigation'
 import { DEFAULT_COLLECTION_QUIZ_COUNT } from '../config'
 import SelectQuizTypeDrawer from './select-quiz-type-drawer'
 import SelectCategoryDrawer from './select-category-drawer'
+import { SortCollectionDropdown } from './sort-collection-dropdown'
+import { useState } from 'react'
 
 const Exploration = () => {
   const searchParams = useSearchParams()
   const categories = searchParams.getAll('collection-category') as Collection.Field[]
   const quizType = searchParams.get('quiz-type') as Quiz.Type
   const minQuizCount = Number(searchParams.get('min-quiz-count')) || DEFAULT_COLLECTION_QUIZ_COUNT
+  const [sortOption, setSortOption] = useState<'POPULARITY' | 'UPDATED'>('POPULARITY')
 
   const { data: collectionsData, isLoading } = useCollections({
-    collectionSortOption: 'POPULARITY',
+    collectionSortOption: sortOption,
     collectionCategories: categories,
     quizType,
     quizCount: minQuizCount,
@@ -38,7 +40,9 @@ const Exploration = () => {
           <SelectQuizTypeDrawer quizType={quizType} />
           <SelectMinQuizCountDrawer count={minQuizCount} />
         </div>
-        <Icon name="sort" className="size-[16px]" />
+        <SortCollectionDropdown
+          sort={(option: 'POPULARITY' | 'UPDATED') => setSortOption(option)}
+        />
       </div>
 
       <CollectionList ref={scrollContainerRef}>

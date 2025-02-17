@@ -18,9 +18,10 @@ interface ExitDialogProps {
   onOpenChange: (open: boolean) => void
   index: number
   isFirst: boolean
+  redirectUrl?: string
 }
 
-const ExitDialog = ({ open, onOpenChange, index, isFirst }: ExitDialogProps) => {
+const ExitDialog = ({ open, onOpenChange, index, isFirst, redirectUrl }: ExitDialogProps) => {
   const router = useRouter()
 
   useEffect(() => {
@@ -81,7 +82,11 @@ const ExitDialog = ({ open, onOpenChange, index, isFirst }: ExitDialogProps) => 
           </DialogDescription>
         </DialogHeader>
         <div className="mt-[29px] flex flex-col gap-[8px]">
-          <Button variant="mediumRound" className="w-full" onClick={() => router.replace('/main')}>
+          <Button
+            variant="mediumRound"
+            className="w-full"
+            onClick={() => router.replace(redirectUrl || '/main')}
+          >
             나가기
           </Button>
           <Button

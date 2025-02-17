@@ -21,9 +21,10 @@ import { todayQuizCheckList } from '../../config'
 interface Props {
   quizzes: Quiz.Item[]
   isFirst: boolean | undefined
+  exitRedirectUrl?: string
 }
 
-const QuizView = ({ quizzes, isFirst }: Props) => {
+const QuizView = ({ quizzes, isFirst, exitRedirectUrl }: Props) => {
   const router = useRouter()
   const { id } = useParams()
   const redirectUrl = useSearchParams().get('redirectUrl')
@@ -145,12 +146,12 @@ const QuizView = ({ quizzes, isFirst }: Props) => {
     runTimer()
   }, [runTimer])
 
-  const collectQuizCount = quizResults.reduce((acc, cur) => acc + (cur?.answer ? 1 : 0), 0)
+  const correctQuizCount = quizResults.reduce((acc, cur) => acc + (cur?.answer ? 1 : 0), 0)
 
   if (showResult) {
     return (
       <QuizResult
-        collectQuizCount={collectQuizCount}
+        correctQuizCount={correctQuizCount}
         totalElapsedTime={totalElapsedTime}
         showRecord={showRecord}
         setShowRecord={setShowRecord}
@@ -220,6 +221,7 @@ const QuizView = ({ quizzes, isFirst }: Props) => {
         open={exitDialogOpen}
         onOpenChange={setExitDialogOpen}
         isFirst={isFirst ?? false}
+        redirectUrl={exitRedirectUrl}
       />
     </div>
   )
