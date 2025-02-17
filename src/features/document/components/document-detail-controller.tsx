@@ -1,6 +1,5 @@
 'use client'
 
-import PickDrawer from '@/features/quiz/components/pick-drawer'
 import Text from '@/shared/components/ui/text'
 import { cn } from '@/shared/lib/utils'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -10,7 +9,7 @@ const tabs = [
   { key: 'quiz', label: '퀴즈' },
 ] as const
 
-const DocumentDetailController = ({ documentId }: { documentId: number }) => {
+const DocumentDetailController = () => {
   const router = useRouter()
   const tab = useSearchParams().get('tab') ?? ''
   const activeTab = ['document-content', 'quiz'].includes(tab) ? tab : 'document-content'
@@ -45,8 +44,6 @@ const DocumentDetailController = ({ documentId }: { documentId: number }) => {
           </button>
         ))}
       </div>
-
-      <PickDrawer documentId={documentId} />
     </div>
   )
 }

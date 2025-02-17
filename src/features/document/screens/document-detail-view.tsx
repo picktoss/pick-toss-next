@@ -7,8 +7,6 @@ import ExitDialog from '@/features/quiz/screen/quiz-view/components/exit-dialog'
 import Loading from '@/shared/components/custom/loading'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import { useQuery } from '@tanstack/react-query'
-// import { useRouter } from 'next/navigation'
-// import { useEffect, useState } from 'react'
 import { QuizListProvider } from '../contexts/quiz-list-context'
 import DocumentDetailController from '../components/document-detail-controller'
 import DocumentContent from './document-content'
@@ -16,6 +14,7 @@ import Quiz from './quiz'
 import DocumentFloatingButton from '../components/document-floating-button'
 import { useAddQuizzes } from '@/requests/document/hooks'
 import { useCreateQuiz } from '@/features/quiz/hooks/use-create-quiz'
+import PickDrawer from '@/features/quiz/components/pick-drawer'
 
 interface Props {
   documentId: number
@@ -88,7 +87,9 @@ const DocumentDetailView = ({ documentId, activeTab }: Props) => {
   return (
     <main className="min-h-screen">
       <QuizListProvider>
-        <DocumentDetailController documentId={documentId} />
+        <DocumentDetailController />
+
+        <PickDrawer documentId={documentId} />
 
         {activeTab === 'document-content' && (
           <DocumentContent formattedContent={formattedContent} />
