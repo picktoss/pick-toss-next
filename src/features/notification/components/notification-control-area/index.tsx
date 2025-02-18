@@ -3,12 +3,11 @@
 import { Switch } from '@/shared/components/ui/switch'
 import Text from '@/shared/components/ui/text'
 import { useNotification } from '../../contexts/notification-context'
-import { useQuery } from '@tanstack/react-query'
-import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import { useEffect } from 'react'
+import { useUserStore } from '@/store/user'
 
 const NotificationControlArea = () => {
-  const { data: user } = useQuery(queries.user.info())
+  const { userInfo } = useUserStore()
   // const [isOpen, setIsOpen] = useState(false)
   const {
     allowNotification,
@@ -29,10 +28,10 @@ const NotificationControlArea = () => {
   // }, [switchStates.email])
 
   useEffect(() => {
-    if (user) {
-      handleAllowNotification(user.quizNotificationEnabled)
+    if (userInfo) {
+      handleAllowNotification(userInfo.quizNotificationEnabled)
     }
-  }, [user, handleAllowNotification])
+  }, [userInfo, handleAllowNotification])
 
   return (
     <main className="h-[calc(100dvh-54px-88px)] w-full overflow-y-auto px-[16px]">
@@ -40,7 +39,7 @@ const NotificationControlArea = () => {
         <Text typography="subtitle2-bold">서비스 알림</Text>
         <Switch
           size={'md'}
-          defaultChecked={user?.quizNotificationEnabled}
+          defaultChecked={userInfo?.quizNotificationEnabled}
           checked={allowNotification}
           onCheckedChange={handleAllowNotification}
         />

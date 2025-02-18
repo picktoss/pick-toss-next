@@ -128,13 +128,6 @@ export const queries = createQueryKeyStore({
     }),
   },
 
-  user: {
-    info: () => ({
-      queryKey: [''],
-      queryFn: () => REQUEST.user.getUserInfo(),
-    }),
-  },
-
   notification: {
     all: () => ({
       queryKey: [''],

@@ -29,14 +29,14 @@ export const useGetDocumentDetail = () => {
  */
 export const useCreateDocument = () => {
   const { data: session } = useSession()
-  const { mutate: userInfoMutate } = useUserInfo()
+  const { mutate: refetchUserInfo } = useUserInfo()
 
   return useMutation({
     mutationFn: (payload: Document.Request.CreateDocument) =>
       createDocument(payload, session?.user.accessToken || ''),
     onSuccess: () => {
       // 이용자 정보 갱신
-      userInfoMutate()
+      refetchUserInfo()
     },
   })
 }
@@ -110,7 +110,7 @@ export const useSearchDocument = () => {
  * 퀴즈 추가 생성 Hook
  */
 export const useAddQuizzes = () => {
-  const { mutate: userInfoMutate } = useUserInfo()
+  const { mutate: refetchUserInfo } = useUserInfo()
 
   return useMutation({
     mutationFn: async ({
@@ -122,7 +122,7 @@ export const useAddQuizzes = () => {
     }) => postAddQuizzesInDocument(documentId, requestBody),
     onSuccess: () => {
       // 이용자 정보 갱신
-      userInfoMutate()
+      refetchUserInfo()
     },
   })
 }

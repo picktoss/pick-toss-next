@@ -13,6 +13,7 @@ import {
 } from './client'
 import { getQueryClient } from '@/shared/lib/tanstack-query/client'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
+import { useUserInfo } from '../user/hooks'
 
 // 아직 사용처 없음 - 검토 필요
 // export const useTodayQuizSetId = () => {
@@ -52,8 +53,11 @@ export const useReplayDocumentQuiz = () => {
 }
 
 export const useUpdateQuizResult = () => {
+  const { mutate: refetchUserInfo } = useUserInfo()
+
   return useMutation({
     mutationFn: async (requestBody: Quiz.Request.UpdateQuizResult) => updateQuizResult(requestBody),
+    onSuccess: () => refetchUserInfo(),
   })
 }
 

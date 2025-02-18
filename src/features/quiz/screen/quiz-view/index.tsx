@@ -58,7 +58,7 @@ const QuizView = ({ quizzes, isFirst, exitRedirectUrl }: Props) => {
 
   const defaultReward = 5
   const prevConsecutiveDays = useMemo(
-    () => todayQuizInfo?.currentConsecutiveDays ?? 1,
+    () => (todayQuizInfo?.currentConsecutiveDays ?? 1) - 1,
     [todayQuizInfo?.currentConsecutiveDays]
   )
 
