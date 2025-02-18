@@ -45,7 +45,12 @@ const CustomCalendar = ({ className }: Props) => {
 
   return (
     <>
-      {showLoading && <Loading className="absolute right-1/2 top-[250px] z-50 translate-x-1/2" />}
+      {showLoading && (
+        <div className="absolute right-1/2 top-[150px] z-50 h-[316px] w-[398px] translate-x-1/2">
+          <div className="size-full bg-white opacity-50" />
+          <Loading center />
+        </div>
+      )}
 
       <Calendar
         required
