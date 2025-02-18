@@ -129,7 +129,7 @@ const Home = () => {
           <Icon name="calendar" className="size-[40px] p-[4px]" />
           <div className="flex flex-col items-start gap-[4px]">
             <Text typography="title3">{currentConsecutiveDays}일</Text>
-            <Text typography="text2-medium" color="sub">
+            <Text typography="text1-medium" color="sub">
               연속으로 푸는 중
             </Text>
           </div>

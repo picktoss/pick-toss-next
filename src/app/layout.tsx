@@ -7,6 +7,8 @@ import { Providers } from '@/providers'
 import { Toaster } from '@/shared/components/ui/toaster'
 import ClientSetUp from '@/shared/components/custom/client-set-up'
 import '@/../../firebase'
+import { Suspense } from 'react'
+import Splash from '@/features/view/splash'
 
 export const metadata: Metadata = Metadatas.root()
 
@@ -35,11 +37,13 @@ export default function RootLayout({
         <meta name="theme-color" content="#ffffff" />
       </head>
       <body className={cn(suit.variable, 'font-suit bg-gray-01')}>
-        <Providers>
-          <ClientSetUp />
-          <div className="mx-auto min-h-dvh max-w-mobile shadow-lg">{children}</div>
-        </Providers>
-        <Toaster />
+        <Suspense fallback={<Splash />}>
+          <Providers>
+            <ClientSetUp />
+            <div className="mx-auto min-h-dvh max-w-mobile shadow-lg">{children}</div>
+          </Providers>
+          <Toaster />
+        </Suspense>
       </body>
     </html>
   )
