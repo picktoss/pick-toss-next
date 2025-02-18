@@ -60,22 +60,10 @@ export const TodayQuizNotification: Story = {
   },
 }
 
-// ANALYSIS 타입의 알림 스토리
-export const AnalysisNotification: Story = {
-  args: {
-    type: 'ANALYSIS',
-    title: '최근 퀴즈 분석',
-    content: '내가 푼 문제 수, 정답률은 체크하셨나요?',
-    date: currentDate,
-    isFirst: false,
-    isLast: false,
-  },
-}
-
 // SYSTEM 타입의 알림 스토리
-export const SystemNotification: Story = {
+export const UpdateNewsNotification: Story = {
   args: {
-    type: 'SYSTEM',
+    type: 'UPDATE_NEWS',
     title: '시스템 점검 공지',
     content: '내일 오전 2시에 시스템 점검이 예정되어 있습니다.',
     date: currentDate,
@@ -87,7 +75,7 @@ export const SystemNotification: Story = {
 // 마지막 알림(REWARD 타입)
 export const LastRewardNotification: Story = {
   args: {
-    type: 'REWARD',
+    type: 'STAR_REWARD',
     title: '보상 지급 완료',
     content: '친구 초대 보상이 지급되었습니다.',
     date: currentDate,
