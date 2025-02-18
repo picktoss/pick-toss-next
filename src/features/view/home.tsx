@@ -30,8 +30,9 @@ const Home = () => {
   const { data: session } = useSession()
   const { userInfo } = useUserStore()
 
-  const rewardType = useSearchParams().get('reward-type') as RewardType | null
-  const reward = useSearchParams().get('reward')
+  const searchParams = useSearchParams()
+  const rewardType = searchParams.get('reward-type') as RewardType | null
+  const reward = searchParams.get('reward')
 
   const toastId = useId()
   const { toast } = useToast()
@@ -51,11 +52,10 @@ const Home = () => {
 
   const { isMobile } = useScreenSize()
   const isPWA = useIsPWA()
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
   const interestedCategoryCompleted = Cookies.get('interested-category-complete')
 
   useEffect(() => {
-    if (rewardType === 'TODAY_QUIZ') {
+    if (reward && rewardType === 'TODAY_QUIZ') {
       toast({}).update({
         id: toastId,
         title: `별 ${reward}개가 추가되었어요`,
