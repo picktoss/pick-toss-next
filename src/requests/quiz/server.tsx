@@ -80,11 +80,11 @@ export const getQuizDetailRecord = async ({
   }
 }
 
-/** GET /quiz-sets/today - 오늘의 퀴즈 세트 정보 가져오기 */
+/** GET /today-quiz-info - 오늘의 퀴즈 현황 */
 export const getTodayQuizInfo = async () => {
   try {
     const { data } = await httpServer.get<Quiz.Response.GetTodayInfo>(
-      API_ENDPOINTS.QUIZ.GET.TODAY_SET
+      API_ENDPOINTS.QUIZ.GET.TODAY_INFO
     )
     return data
   } catch (error: unknown) {
