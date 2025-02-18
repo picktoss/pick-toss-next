@@ -4,10 +4,8 @@ import Text from '@/shared/components/ui/text'
 import { cn } from '@/shared/lib/utils'
 import { getRelativeTime } from '@/shared/utils/date'
 
-export type NotificationType = 'TODAY_QUIZ' | 'ANALYSIS' | 'SYSTEM' | 'REWARD'
-
 interface Props {
-  type: NotificationType
+  type: Notification.Response.GetAllNotifications['notifications'][0]['notificationType']
   title: string
   content: string
   date: string
@@ -21,19 +19,20 @@ const NotificationItem = ({ type, title, content, date, isFirst, isLast }: Props
       <div
         className={cn(
           'flex h-fit w-full items-center justify-between py-[20px] border-t border-border-divider',
-          isFirst && 'border-none mt-[13px]'
+          isFirst && 'border-none'
         )}
       >
         <div className="flex items-center gap-[16px]">
           <SwitchCase
             value={type}
             caseBy={{
+              GENERAL: <Icon name="noti-general" className="size-[32px]" />,
+              UPDATE_NEWS: <Icon name="noti-update-news" className="size-[32px]" />,
               TODAY_QUIZ: <Icon name="noti-today-quiz" className="size-[32px]" />,
-              ANALYSIS: <Icon name="noti-analysis" className="size-[32px]" />,
-              SYSTEM: <Icon name="noti-system" className="size-[32px]" />,
-              REWARD: <Icon name="noti-reward" className="size-[32px]" />,
+              COLLECTION: <Icon name="noti-collection" className="size-[32px]" />,
+              STAR_REWARD: <Icon name="noti-reward" className="size-[32px]" />,
             }}
-            defaultComponent={<Icon name="noti-system" className="size-[32px]" />}
+            defaultComponent={<Icon name="noti-general" className="size-[32px]" />}
           />
 
           <div className="flex flex-col">

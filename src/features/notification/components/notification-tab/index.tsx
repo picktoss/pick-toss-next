@@ -18,7 +18,7 @@ const NotificationTab = () => {
 
         router.replace(`notification?tab=${eventTarget.id}`)
       }}
-      className="flex items-center gap-[8px] px-[16px] py-[8px]"
+      className="mb-[13px] flex items-center gap-[8px] px-[16px] py-[8px]"
     >
       <Button
         id="all"

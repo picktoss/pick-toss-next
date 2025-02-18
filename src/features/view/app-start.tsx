@@ -1,6 +1,7 @@
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
 import SocialLogin from '../auth/social-login'
+import Link from 'next/link'
 
 const AppStartView = () => {
   return (
@@ -13,10 +14,26 @@ const AppStartView = () => {
 
       <SocialLogin className="mb-[20px] mt-[16px]" />
 
-      {/* TODO: '개인정보보호 정책'과 '서비스 이용약관' 밑줄 처리 및 페이지 연결 */}
       <Text typography="caption-medium" color="caption" className="text-center">
-        로그인 시 개인정보보호 정책 및 서비스 이용약관에 동의하는 것으로 간주하며, 서비스 이용을
-        위해 이메일과 이름을 수집합니다.
+        로그인 시{' '}
+        <Link
+          href="https://picktoss.notion.site/1209d818f56080fbb469e82def758e9c?pvs=4"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline"
+        >
+          개인정보보호 정책
+        </Link>{' '}
+        및{' '}
+        <Link
+          href="https://picktoss.notion.site/1209d818f560809aad11c5b64020d735?pvs=4"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline"
+        >
+          서비스 이용약관
+        </Link>
+        에 동의하는 것으로 간주하며, 서비스 이용을 위해 이메일과 이름을 수집합니다.
       </Text>
     </main>
   )

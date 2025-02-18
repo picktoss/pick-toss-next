@@ -1,10 +1,10 @@
 import Notification from '@/features/notification/components/notification'
-import NotificationTab from '@/features/notification/components/notification-tab'
+// import NotificationTab from '@/features/notification/components/notification-tab'
 
 const NotificationPage = () => {
   return (
     <>
-      <NotificationTab />
+      {/* <NotificationTab /> */}
 
       <Notification />
     </>

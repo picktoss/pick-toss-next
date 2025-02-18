@@ -1,7 +1,6 @@
-import { NotificationType } from '../components/notification-item'
-
 // export const NotificationList = []
 
+export type NotificationType = 'TODAY_QUIZ' | 'ANALYSIS' | 'SYSTEM' | 'REWARD'
 export const NotificationList = [
   {
     id: 1,

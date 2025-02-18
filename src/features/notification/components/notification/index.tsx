@@ -28,7 +28,7 @@ const Notification = () => {
           {notificationList.map((notification, index) => (
             <NotificationItem
               key={notification.notificationKey}
-              type={'SYSTEM'}
+              type={notification.notificationType}
               title={notification.title}
               content={notification.content}
               date={notification.receivedTime}
