@@ -19,7 +19,7 @@ const AnalysisView = () => {
   const today = new Date()
   const searchParams = useSearchParams()
   const paramsTab = searchParams.get('tab') ?? ''
-  const { selectedDirectoryId } = useDirectoryContext()
+  const { selectedDirectoryId, globalDirectoryId } = useDirectoryContext()
 
   const tab = (['week', 'month'].includes(paramsTab) ? paramsTab : 'week') as Tab
   const startDate = searchParams.get('startDate') ?? formatToYYYYMMDD(getSixDaysAgo())
@@ -30,13 +30,21 @@ const AnalysisView = () => {
     queries.quiz.weeklyAnalysis(
       startDate,
       endDate,
-      selectedDirectoryId !== null ? selectedDirectoryId : undefined
+      selectedDirectoryId !== null
+        ? selectedDirectoryId === globalDirectoryId
+          ? undefined
+          : selectedDirectoryId
+        : undefined
     )
   )
   const { data: monthlyAnalysisData } = useQuery(
     queries.quiz.monthlyAnalysis(
       selectedMonth + '-01',
-      selectedDirectoryId !== null ? selectedDirectoryId : undefined
+      selectedDirectoryId !== null
+        ? selectedDirectoryId === globalDirectoryId
+          ? undefined
+          : selectedDirectoryId
+        : undefined
     )
   )
 
