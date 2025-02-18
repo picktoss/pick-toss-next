@@ -36,7 +36,11 @@ const DocumentQuizSearchList = ({ length, searchResults, keyword }: Props) => {
             }
             resultType={searchItem.question ? 'quiz' : 'document'}
             relativeDirectory={
-              searchItem.directory ? searchItem.directory.name : searchItem.directoryName ?? ''
+              searchItem.directory
+                ? searchItem.directory.name === '기본 폴더'
+                  ? '전체 노트'
+                  : searchItem.directory.name
+                : searchItem.directoryName ?? ''
             }
             lastItem={idx === searchResults.length - 1}
           />
