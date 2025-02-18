@@ -71,13 +71,10 @@ const InviteRewardDrawer = ({ triggerComponent, open, onOpenChange }: Props) => 
 
   // 기본 공유하기
   const handleNativeShare = async () => {
-    const imageUrl = `${process.env.NEXTAUTH_URL}/images/share-thumbnail.png`
-
     const content = {
       title: inviteText.title,
       text: inviteText.description,
       url: inviteLink,
-      imageUrl,
     }
 
     // fallback: 공유 API를 지원하지 않는 환경에서는 클립보드에 복사

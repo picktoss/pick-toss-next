@@ -30,7 +30,7 @@ export const loadKakaoSDK = () => {
 
 // 폴백 : 기본 공유, 카카오톡 웹 공유
 const fallbackToWebShare = async (options: ShareOptions) => {
-  const { title, description, inviteLinkUrl, imageUrl } = options
+  const { title, description, inviteLinkUrl } = options
 
   try {
     // 기본 공유 기능 사용
@@ -38,7 +38,6 @@ const fallbackToWebShare = async (options: ShareOptions) => {
       title,
       text: description,
       url: inviteLinkUrl,
-      imageUrl,
     }
 
     await nativeShare(content)
