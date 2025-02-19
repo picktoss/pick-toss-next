@@ -75,7 +75,7 @@ const SwipeableDocumentCard = ({
 
   const handleResetSwipe = async () => {
     await controls.start({ x: 0 })
-    x.set(0)
+    setTimeout(() => x.set(0), 10)
 
     setIsSwiped(false)
     setIsDragging(false)
