@@ -75,8 +75,11 @@ const SwipeableDocumentCard = ({
 
   const handleResetSwipe = async () => {
     await controls.start({ x: 0 })
-    setIsSwiped(false)
-    setIsDragging(false)
+
+    if (isSwiped || isDragging) {
+      setIsSwiped(false)
+      setIsDragging(false)
+    }
   }
 
   return (
@@ -91,7 +94,7 @@ const SwipeableDocumentCard = ({
       <motion.div
         className={cn(
           `flex h-[104px] max-w-full items-center rounded-[16px] px-[16px] py-[17px]`,
-          isSwiped ? 'translate-x-[-116px]' : 'translate-x-0'
+          isSwiped && 'translate-x-[-116px]'
         )}
         drag={isSelectMode ? false : 'x'}
         dragConstraints={{ left: -130, right: 0 }}
@@ -149,7 +152,7 @@ const SwipeableDocumentCard = ({
         <div
           className={cn(
             'absolute h-[calc(100%+2px)] inset-y-0 right-[-160px] flex flex-row overflow-hidden rounded-r-[16px] transition-all',
-            isSwiped ? 'translate-x-[-16px]' : 'translate-x-0'
+            isSwiped && 'translate-x-[-16px]'
           )}
         >
           <MoveDocumentDrawer
