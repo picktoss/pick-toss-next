@@ -28,18 +28,6 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <head>
-        <meta property="og:title" content="지금 가입하고 별 50개 더 받으세요!" />
-        <meta
-          property="og:description"
-          content="픽토스에서는 AI퀴즈로 매일 간단하게 내가 배운 걸 기억할 수 있어요. 이 초대권을 통해 픽토스에 가입하실 경우 두 분 모두에게 퀴즈를 만들 수 있는 별 50를 추가로 드려요!"
-        />
-        {/* 배포 후 url 수정 필요 */}
-        <meta
-          property="og:image"
-          content="https://pick-toss-next.vercel.app/images/share-thumbnail.png"
-        />
-        <meta property="og:url" content="https://pick-toss-next.vercel.app/invite/" />
-        <meta property="og:type" content="website" />
         {/* PWA Manifest */}
         <link rel="manifest" href="/manifest.json" />
         <link rel="icon" type="image/svg+xml" href="/favicons/favicon.svg" />
