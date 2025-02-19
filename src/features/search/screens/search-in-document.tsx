@@ -61,11 +61,11 @@ const SearchInDocument = () => {
         setIsSearchFocused={setIsSearchFocused}
       />
 
-      {isPending && <Loading center />}
-
       {!isSearchFocused &&
-        // 검색 결과 X
-        (!data || searchResults.length === 0 ? (
+        (isPending ? (
+          <Loading center />
+        ) : // 검색 결과 X
+        !data || searchResults.length === 0 ? (
           <NoResults className="h-[calc(100dvh-56px)]" />
         ) : (
           // 검색 결과 O : 검색 결과 리스트

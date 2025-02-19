@@ -43,9 +43,6 @@ const IntegratedSearch = () => {
     ...(data?.collections ?? []),
   ] as Collection.SearchedCollection[]
 
-  // 테스트용
-  // const searchResultsInCollection = mockCollectionList
-
   const DocsQuizResultsLength = searchResultsInQuizNote.length
   const CollectionResultsLength = searchResultsInCollection.length
   const isEmptyList = searchResultsInQuizNote.length === 0 && searchResultsInCollection.length === 0
@@ -115,13 +112,13 @@ const IntegratedSearch = () => {
         setIsSearchFocused={setIsSearchFocused}
       />
 
-      {isPending && <Loading center />}
-
       {!isSearchFocused && (
         <>
           <SearchTabController />
 
-          {!data || isEmptyList ? (
+          {isPending ? (
+            <Loading center />
+          ) : !data || isEmptyList ? (
             // 검색 결과 X
             <NoResults className="h-[calc(100dvh-56px-50px)]" />
           ) : (
