@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion, PanInfo, useAnimation, useMotionValue } from 'framer-motion'
 import Icon from '@/shared/components/custom/icon'
 import { cn } from '@/shared/lib/utils'
@@ -38,6 +38,8 @@ const SwipeableDocumentCard = ({
   reviewCount,
 }: DocumentProps) => {
   const { isSelectMode, checkDoc } = useDocumentContext()
+
+  const [isAnimating, setIsAnimating] = useState(false)
   const [isSwiped, setIsSwiped] = useState(false)
   const [isDragging, setIsDragging] = useState(false)
   const x = useMotionValue(0)
@@ -52,13 +54,19 @@ const SwipeableDocumentCard = ({
     checked ? checkDoc.check(id) : checkDoc.unCheck(id)
   }
 
-  const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+  const handleDragEnd = async (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     if (info.offset.x < -30) {
       setIsSwiped(true) // 30px 이상 드래그하면 스와이프
-      void controls.start({ x: -130 }) // 요소 왼쪽으로 130px 이동
+
+      setIsAnimating(true)
+      await controls.start({ x: -130 }) // 요소 왼쪽으로 130px 이동
+      setIsAnimating(false)
     } else {
       setIsSwiped(false) // 스와이프 취소
-      void controls.start({ x: 0 }) // 원래 위치로 이동
+
+      setIsAnimating(true)
+      await controls.start({ x: 0 }) // 원래 위치로 이동
+      setIsAnimating(false)
     }
     setIsDragging(false)
   }
@@ -74,12 +82,19 @@ const SwipeableDocumentCard = ({
   }
 
   const handleResetSwipe = async () => {
+    setIsAnimating(true)
     await controls.start({ x: 0 })
-    setTimeout(() => x.set(0), 10)
+    setIsAnimating(false)
 
     setIsSwiped(false)
     setIsDragging(false)
   }
+
+  useEffect(() => {
+    if (!isAnimating && !isDragging && !isSwiped) {
+      x.set(0)
+    }
+  }, [isDragging, isSwiped, isAnimating])
 
   return (
     <div
@@ -146,6 +161,7 @@ const SwipeableDocumentCard = ({
 
         {/* Swipe로 보여지는 버튼 영역 */}
         <motion.div
+          initial={false}
           animate={{ x: isSwiped ? 144 : 160 }}
           transition={{ type: 'spring', stiffness: 300, damping: 30 }}
           className="absolute inset-y-0 right-0 flex h-[calc(100%+2px)] flex-row overflow-hidden rounded-r-[16px]"
