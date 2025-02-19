@@ -91,10 +91,7 @@ const SwipeableDocumentCard = ({
     >
       {/* Swipe 영역 */}
       <motion.div
-        className={cn(
-          `flex h-[104px] max-w-full items-center rounded-[16px] px-[16px] py-[17px]`,
-          isSwiped && 'translate-x-[-116px]'
-        )}
+        className="flex h-[104px] max-w-full items-center rounded-[16px] px-[16px] py-[17px]"
         drag={isSelectMode ? false : 'x'}
         dragConstraints={{ left: -130, right: 0 }}
         onDrag={() => !isSelectMode && setIsDragging(true)}
@@ -148,11 +145,10 @@ const SwipeableDocumentCard = ({
         </div>
 
         {/* Swipe로 보여지는 버튼 영역 */}
-        <div
-          className={cn(
-            'absolute h-[calc(100%+2px)] inset-y-0 right-[-160px] flex flex-row overflow-hidden rounded-r-[16px] transition-all',
-            isSwiped && 'translate-x-[-16px]'
-          )}
+        <motion.div
+          animate={{ x: isSwiped ? -16 : 0 }}
+          transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+          className="absolute inset-y-0 right-[-160px] flex h-[calc(100%+2px)] flex-row overflow-hidden rounded-r-[16px]"
         >
           <MoveDocumentDrawer
             triggerComponent={
@@ -165,7 +161,7 @@ const SwipeableDocumentCard = ({
             resetSwipe={handleResetSwipe}
           />
           <DeleteDocumentSwipeButton documentId={id} quizCount={quizCount} />
-        </div>
+        </motion.div>
       </motion.div>
     </div>
   )
