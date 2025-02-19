@@ -46,23 +46,20 @@ const PickDrawer = ({ documentId }: { documentId: number }) => {
 
             <div className="mt-[24px] flex grow flex-col gap-[14px] overflow-y-auto px-[9px] pb-[14px]">
               {data &&
-                data.quizzes.map(
-                  (quiz) =>
-                    quiz.description && (
-                      <QuizCard
-                        key={quiz.id}
-                        answerMode
-                        userAnswer={quiz.choseAnswer}
-                        header={
-                          <div className="flex items-center justify-between text-icon-tertiary">
-                            <Tag colors="tertiary">{quiz.description}</Tag>
-                            <QuizCardMenu documentId={documentId} quizId={quiz.id} />
-                          </div>
-                        }
-                        quiz={quiz}
-                      />
-                    )
-                )}
+                data.quizzes.map((quiz) => (
+                  <QuizCard
+                    key={quiz.id}
+                    answerMode
+                    userAnswer={quiz.choseAnswer}
+                    header={
+                      <div className="flex items-center justify-between text-icon-tertiary">
+                        <Tag colors="tertiary">{quiz.description}</Tag>
+                        <QuizCardMenu documentId={documentId} quizId={quiz.id} />
+                      </div>
+                    }
+                    quiz={quiz}
+                  />
+                ))}
             </div>
           </div>
         </div>
