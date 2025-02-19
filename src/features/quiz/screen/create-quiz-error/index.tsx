@@ -1,13 +1,26 @@
+'use client'
+
+import { useDeleteDocument } from '@/requests/document/hooks'
 import { Button } from '@/shared/components/ui/button'
 import Text from '@/shared/components/ui/text'
 import Image from 'next/image'
 
 interface Props {
+  documentId?: number
   setCreateError: (error: string | null) => void
 }
 
 // 에러 테스트
-const CreateQuizError = ({ setCreateError }: Props) => {
+const CreateQuizError = ({ documentId, setCreateError }: Props) => {
+  const { mutate: deleteDocumentMutate } = useDeleteDocument()
+
+  const handleCancel = () => {
+    if (documentId) {
+      deleteDocumentMutate([documentId])
+    }
+    setCreateError(null)
+  }
+
   return (
     <div className="center flex-center z-30 h-dvh w-dvw max-w-mobile flex-col bg-background-base-01">
       <Image src={'/images/error.png'} alt="" width={204} height={128} />
@@ -29,12 +42,12 @@ const CreateQuizError = ({ setCreateError }: Props) => {
           </Text>
         </div>
         <div className="flex flex-col gap-[8px] px-[15px]">
-          <Button onClick={() => setCreateError(null)} variant={'mediumRound'} className="w-full">
+          <Button onClick={handleCancel} variant={'mediumRound'} className="w-full">
             노트 수정하러 가기
           </Button>
-          <Button variant={'mediumRound'} colors={'secondary'} className="w-full">
+          {/* <Button variant={'mediumRound'} colors={'secondary'} className="w-full">
             퀴즈 다시 만들기
-          </Button>
+          </Button> */}
         </div>
       </div>
     </div>

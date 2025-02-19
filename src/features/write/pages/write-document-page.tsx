@@ -121,8 +121,8 @@ const WriteDocumentPage = () => {
     )
   }
 
-  if (createError !== null) {
-    return <CreateQuizError setCreateError={setCreateError} />
+  if (documentId !== null && createError !== null) {
+    return <CreateQuizError documentId={documentId} setCreateError={setCreateError} />
   }
 
   return (
