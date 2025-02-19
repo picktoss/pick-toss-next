@@ -146,9 +146,9 @@ const SwipeableDocumentCard = ({
 
         {/* Swipe로 보여지는 버튼 영역 */}
         <motion.div
-          animate={{ x: isSwiped ? -16 : 0 }}
+          animate={{ x: isSwiped ? 144 : 160 }}
           transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-          className="absolute inset-y-0 right-[-160px] flex h-[calc(100%+2px)] flex-row overflow-hidden rounded-r-[16px]"
+          className="absolute inset-y-0 right-0 flex h-[calc(100%+2px)] flex-row overflow-hidden rounded-r-[16px]"
         >
           <MoveDocumentDrawer
             triggerComponent={
