@@ -20,7 +20,7 @@ import { useMoveDocument } from '@/requests/document/hooks'
 interface Props {
   triggerComponent: React.ReactNode
   documentId?: number
-  resetSwipe?: () => Promise<void>
+  resetSwipe?: () => void
 }
 
 // MoveDocumentDrawer 컴포넌트
@@ -52,10 +52,10 @@ const MoveDocumentDrawer = ({ triggerComponent, documentId, resetSwipe }: Props)
     }
 
     moveDocumentMutation(requestBody, {
-      onSuccess: async () => {
+      onSuccess: () => {
         setIsOpen(false)
         setIsSelectMode(false)
-        resetSwipe && (await resetSwipe())
+        resetSwipe && resetSwipe()
       },
     })
   }

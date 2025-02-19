@@ -74,8 +74,7 @@ const SwipeableDocumentCard = ({
     }
   }
 
-  const handleResetSwipe = async () => {
-    await controls.start({ x: 0 })
+  const handleResetSwipe = () => {
     router.refresh()
   }
 
