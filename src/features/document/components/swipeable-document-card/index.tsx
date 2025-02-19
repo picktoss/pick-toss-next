@@ -77,10 +77,8 @@ const SwipeableDocumentCard = ({
     await controls.start({ x: 0 })
     x.set(0)
 
-    if (isSwiped || isDragging) {
-      setIsSwiped(false)
-      setIsDragging(false)
-    }
+    setIsSwiped(false)
+    setIsDragging(false)
   }
 
   return (
