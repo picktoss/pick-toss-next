@@ -18,7 +18,7 @@ interface Props {
 
 const TodayQuizReward = ({ prevConsecutiveDays, todayCheckData, reward }: Props) => {
   const router = useRouter()
-  const currentConsecutiveDays = (prevConsecutiveDays || 0) + 1
+  const currentConsecutiveDays = (prevConsecutiveDays ?? 0) + 1
 
   return (
     <div className="flex-center h-dvh w-dvw max-w-mobile flex-col overflow-y-auto bg-background-base-01 px-[16px] pb-[100px]">

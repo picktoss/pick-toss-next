@@ -95,6 +95,14 @@ const QuizView = ({ quizzes, isFirst, exitRedirectUrl }: Props) => {
       updateQuizResultMutate(quizResultPayload, {
         onSuccess: (data) => {
           if (quizSetType === 'TODAY_QUIZ_SET') {
+            // eslint-disable-next-line no-console
+            console.log(
+              'reward: ',
+              data.reward,
+              ' / currentConsecutiveDays: ',
+              data.currentConsecutiveTodayQuizDate
+            )
+
             setTodayQuizInfo({
               reward: data.reward,
               currentConsecutiveDays: data.currentConsecutiveTodayQuizDate,
