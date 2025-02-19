@@ -20,11 +20,11 @@ import { useMoveDocument } from '@/requests/document/hooks'
 interface Props {
   triggerComponent: React.ReactNode
   documentId?: number
-  usedSwipeRef?: boolean
+  resetSwipe?: () => void
 }
 
 // MoveDocumentDrawer 컴포넌트
-const MoveDocumentDrawer = ({ triggerComponent, documentId, usedSwipeRef }: Props) => {
+const MoveDocumentDrawer = ({ triggerComponent, documentId, resetSwipe }: Props) => {
   const {
     directories,
     globalDirectoryId,
@@ -55,7 +55,7 @@ const MoveDocumentDrawer = ({ triggerComponent, documentId, usedSwipeRef }: Prop
       onSuccess: () => {
         setIsOpen(false)
         setIsSelectMode(false)
-        usedSwipeRef && window.location.reload()
+        resetSwipe && resetSwipe()
       },
     })
   }
