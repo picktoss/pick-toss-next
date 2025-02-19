@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { motion, PanInfo, useAnimation, useMotionValue } from 'framer-motion'
 import Icon from '@/shared/components/custom/icon'
 import { cn } from '@/shared/lib/utils'
@@ -39,7 +39,6 @@ const SwipeableDocumentCard = ({
 }: DocumentProps) => {
   const { isSelectMode, checkDoc } = useDocumentContext()
 
-  const [isAnimating, setIsAnimating] = useState(false)
   const [isSwiped, setIsSwiped] = useState(false)
   const [isDragging, setIsDragging] = useState(false)
   const x = useMotionValue(0)
@@ -57,16 +56,10 @@ const SwipeableDocumentCard = ({
   const handleDragEnd = async (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     if (info.offset.x < -30) {
       setIsSwiped(true) // 30px 이상 드래그하면 스와이프
-
-      setIsAnimating(true)
       await controls.start({ x: -130 }) // 요소 왼쪽으로 130px 이동
-      setIsAnimating(false)
     } else {
       setIsSwiped(false) // 스와이프 취소
-
-      setIsAnimating(true)
       await controls.start({ x: 0 }) // 원래 위치로 이동
-      setIsAnimating(false)
     }
     setIsDragging(false)
   }
@@ -84,19 +77,15 @@ const SwipeableDocumentCard = ({
   const handleResetSwipe = async () => {
     setIsDragging(false)
 
-    setIsAnimating(true)
     await controls.start({ x: 0 })
     x.set(0)
-    setIsAnimating(false)
 
     setIsSwiped(false)
-  }
 
-  useEffect(() => {
-    if (!isAnimating && !isDragging && !isSwiped) {
+    requestAnimationFrame(() => {
       x.set(0)
-    }
-  }, [isDragging, isSwiped, isAnimating])
+    })
+  }
 
   return (
     <div
