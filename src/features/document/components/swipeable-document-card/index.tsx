@@ -82,12 +82,14 @@ const SwipeableDocumentCard = ({
   }
 
   const handleResetSwipe = async () => {
+    setIsDragging(false)
+
     setIsAnimating(true)
     await controls.start({ x: 0 })
+    x.set(0)
     setIsAnimating(false)
 
     setIsSwiped(false)
-    setIsDragging(false)
   }
 
   useEffect(() => {
