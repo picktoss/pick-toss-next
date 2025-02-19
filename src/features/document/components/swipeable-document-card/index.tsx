@@ -74,8 +74,8 @@ const SwipeableDocumentCard = ({
   }
 
   const handleResetSwipe = async () => {
-    x.set(0)
     await controls.start({ x: 0 })
+    x.set(0)
 
     if (isSwiped || isDragging) {
       setIsSwiped(false)
