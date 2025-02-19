@@ -76,16 +76,7 @@ const SwipeableDocumentCard = ({
 
   const handleResetSwipe = async () => {
     await controls.start({ x: 0 })
-    setIsDragging(false)
-    setIsSwiped(false) // 상태 업데이트는 애니메이션 이후
-
-    x.set(0)
-
-    // iOS에서 다시 위치 변경되는 문제 방지
-    requestAnimationFrame(() => {
-      setIsSwiped(false) // 상태 업데이트는 애니메이션 이후
-      x.set(0)
-    })
+    router.refresh()
   }
 
   return (
