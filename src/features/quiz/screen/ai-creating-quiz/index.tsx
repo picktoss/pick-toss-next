@@ -78,7 +78,7 @@ const AiCreatingQuiz = ({ documentId, documentName, directoryEmoji, onError }: P
           `/quiz/${data.quizSetId}?` +
             `quizSetType=FIRST_QUIZ_SET` +
             '&' +
-            `createdAt=${data.createdAt}&documentName=${documentName}&directoryEmoji=${directoryEmoji}` +
+            `createdAt=${data.createdAt}&documentId=${documentId}&documentName=${documentName}&directoryEmoji=${directoryEmoji}` +
             '&' +
             'redirectUrl=' +
             `/document/${documentId}?prev=created`

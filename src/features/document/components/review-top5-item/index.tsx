@@ -22,7 +22,9 @@ const ReviewTop5Item = ({ ranking, documentId, documentTitle, directory, reviewC
           {ranking}
         </Text>
         <div className="flex flex-col items-start gap-[2px]">
-          <Text typography="subtitle2-medium">{documentTitle}</Text>
+          <Text typography="subtitle2-medium" className="max-w-[240px] truncate">
+            {documentTitle}
+          </Text>
           <Text typography="text2-medium" color="caption">
             {directory}
           </Text>

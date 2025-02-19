@@ -52,12 +52,17 @@ export const useReplayDocumentQuiz = () => {
   })
 }
 
-export const useUpdateQuizResult = () => {
+export const useUpdateQuizResult = (documentId?: number) => {
+  const queryClient = getQueryClient()
   const { mutate: refetchUserInfo } = useUserInfo()
 
   return useMutation({
     mutationFn: async (requestBody: Quiz.Request.UpdateQuizResult) => updateQuizResult(requestBody),
-    onSuccess: () => refetchUserInfo(),
+    onSuccess: async () => {
+      refetchUserInfo()
+      await queryClient.invalidateQueries(queries.document.list())
+      await queryClient.invalidateQueries(queries.document.item(documentId))
+    },
   })
 }
 

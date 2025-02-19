@@ -29,8 +29,11 @@ const QuizView = ({ quizzes, isFirst, exitRedirectUrl }: Props) => {
   const { id } = useParams()
   const redirectUrl = useSearchParams().get('redirectUrl')
   const quizSetType = useSearchParams().get('quizSetType')
+  const documentId = useSearchParams().get('documentId') ?? '0'
 
-  const { mutate: updateQuizResultMutate, isPending: isUpdatingQuizResult } = useUpdateQuizResult()
+  const { mutate: updateQuizResultMutate, isPending: isUpdatingQuizResult } = useUpdateQuizResult(
+    Number(documentId)
+  )
   const { currentIndex, navigateToNext } = useQuizNavigation()
   const {
     quizResults,

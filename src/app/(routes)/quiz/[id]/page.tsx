@@ -12,6 +12,7 @@ interface Props {
     quizSetType: Quiz.Set.Type
     createdAt: string
     // 문서 퀴즈일 경우
+    documentId?: string
     documentName?: string
     directoryEmoji?: string
     // 콜렉션 퀴즈일 경우
@@ -26,7 +27,8 @@ const QuizDetailPage = async ({ params, searchParams }: Props) => {
   const {
     quizSetType,
     createdAt,
-    documentName,
+    documentId = '',
+    documentName = '',
     directoryEmoji = '📁',
     collectionName,
     collectionEmoji,
@@ -42,7 +44,7 @@ const QuizDetailPage = async ({ params, searchParams }: Props) => {
   const hasCollectionInfo = collectionName !== undefined && collectionEmoji !== undefined
 
   const documentInfo = hasDocumentInfo
-    ? { name: documentName, directoryEmoji: directoryEmoji }
+    ? { id: documentId, name: documentName, directoryEmoji: directoryEmoji }
     : undefined
   const collectionInfo = hasCollectionInfo
     ? { name: collectionName, emoji: collectionEmoji }

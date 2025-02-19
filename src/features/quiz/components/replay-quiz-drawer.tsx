@@ -54,7 +54,7 @@ const ReplayQuizDrawer = ({
             `/quiz/${data.quizSetId}?` +
               'quizSetType=DOCUMENT_QUIZ_SET' +
               '&' +
-              `createdAt=${data.createdAt}&documentName=${documentName}&directoryEmoji=${directoryEmoji}` +
+              `createdAt=${data.createdAt}&documentId=${documentId}&documentName=${documentName}&directoryEmoji=${directoryEmoji}` +
               '&' +
               'redirectUrl=' +
               `/document/${documentId}`

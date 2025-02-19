@@ -8,7 +8,7 @@ interface Props {
   quizSetType: Quiz.Set.Type
   quizzes: Quiz.Item[]
   createdAt: string
-  documentInfo?: { name: string; directoryEmoji: string }
+  documentInfo?: { id: string; name: string; directoryEmoji: string }
   collectionInfo?: { name: string; emoji: string }
   redirectUrl?: string
 }
