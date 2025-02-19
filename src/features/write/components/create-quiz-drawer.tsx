@@ -88,10 +88,10 @@ const CreateQuizDrawer = ({ handleCreateDocument, maxQuizCount, disabled }: Prop
                 )}
               >
                 <Icon name="multiple-quiz-icon" className="mb-[7.05px] w-[70px]" />
-                <Text typography="subtitle2-bold" className="mb-[4px] pl-[9px]">
+                <Text typography="subtitle2-bold" className="mb-[4px] pl-[9px] text-left">
                   객관식
                 </Text>
-                <Text typography="text2-medium" className="pl-[9px] text-text-sub">
+                <Text typography="text2-medium" className="pl-[9px] text-left text-text-sub">
                   4개 선택지 중 정답 고르기
                 </Text>
               </button>
@@ -105,10 +105,10 @@ const CreateQuizDrawer = ({ handleCreateDocument, maxQuizCount, disabled }: Prop
                 )}
               >
                 <Icon name="o-x-quiz-icon" className="mb-[10px] w-[81px] pl-[14px]" />
-                <Text typography="subtitle2-bold" className="mb-[4px] pl-[20px]">
+                <Text typography="subtitle2-bold" className="mb-[4px] pl-[20px] text-left">
                   O/X
                 </Text>
-                <Text typography="text2-medium" className="pl-[20px] text-text-sub">
+                <Text typography="text2-medium" className="pl-[20px] text-left text-text-sub">
                   참과 거짓 판단하기
                 </Text>
               </button>
@@ -150,7 +150,7 @@ const CreateQuizDrawer = ({ handleCreateDocument, maxQuizCount, disabled }: Prop
                 className="mt-[5px] w-full text-button1 text-text-primary-inverse"
                 onClick={handleClickStart}
               >
-                퀴즈 시작하기
+                퀴즈 만들기
                 <div className="flex-center size-[fit] rounded-full bg-[#D3DCE4]/[0.2] px-[8px]">
                   <Icon name="star" className="mr-[4px] size-[16px]" />
                   <Text typography="text1-medium">{selectedQuizCount}</Text>

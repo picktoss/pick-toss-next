@@ -16,6 +16,7 @@ interface Props {
   documentName: string
   directoryEmoji: string
   savedQuizCount: number
+  quizTypes: Quiz.Type[]
 }
 
 // ReplayQuizDrawer 컴포넌트
@@ -25,6 +26,7 @@ const ReplayQuizDrawer = ({
   documentName,
   directoryEmoji,
   savedQuizCount,
+  quizTypes,
 }: Props) => {
   const router = useRouter()
 
@@ -34,6 +36,9 @@ const ReplayQuizDrawer = ({
   const [quizCount, setQuizCount] = useState(savedQuizCount)
 
   const minQuizCount = savedQuizCount > 5 ? 5 : 1
+
+  const isIncludeMultiple = quizTypes.find((type) => type === 'MULTIPLE_CHOICE')
+  const isIncludeMixUp = quizTypes.find((type) => type === 'MIX_UP')
 
   const handleClickStart = () => {
     // 퀴즈 다시 풀기 세트 생성하는 api 호출해 quiz set id 얻어
@@ -72,18 +77,17 @@ const ReplayQuizDrawer = ({
           </DrawerTitle>
 
           {/* 문제 유형 선택 */}
-          {/* TODO: 해당 문서에서 생성된 퀴즈들 중, 특정 유형이 없다면 그 유형은 disabled 처리해야함 */}
           <div className="mb-[28px] flex gap-[8px]">
             <button
               onClick={() => setQuizType('RANDOM')}
               className={cn(
-                'flex h-[150px] w-[110px] flex-col justify-end rounded-[16px] border px-[20px] pb-[15px] pt-[20px] focus:border-border-focused focus:bg-background-container-03 focus-visible:outline-none disabled:pointer-events-none disabled:grayscale disabled:bg-background-disabled disabled:text-text-disabled',
+                'flex h-[150px] w-[110px] flex-col justify-end rounded-[16px] border px-[16px] pb-[15px] pt-[20px] focus:border-border-focused focus:bg-background-container-03 focus-visible:outline-none disabled:pointer-events-none disabled:grayscale disabled:bg-background-disabled disabled:text-text-disabled',
                 quizType === 'RANDOM' && 'bg-background-container-03 border-border-focused'
               )}
             >
               <Icon name="random-quiz-icon" className="mb-[7.05px] w-[76px]" />
-              <Text typography="subtitle2-bold" className="mb-[4px]">
-                랜덤
+              <Text typography="subtitle2-bold" className="mb-[4px] text-left">
+                전체
               </Text>
               <Text typography="text2-medium" className="flex text-start text-text-sub">
                 모든 유형 <br /> 랜덤으로 섞기
@@ -91,33 +95,49 @@ const ReplayQuizDrawer = ({
             </button>
 
             <button
+              disabled={!isIncludeMultiple}
               onClick={() => setQuizType('MULTIPLE_CHOICE')}
               className={cn(
-                'flex h-[150px] w-[110px] flex-col justify-end rounded-[16px] border px-[7px] pb-[15px] pt-[20px] focus:border-border-focused focus:bg-background-container-03 focus-visible:outline-none disabled:grayscale disabled:bg-background-disabled disabled:text-text-disabled',
+                'flex h-[150px] w-[110px] flex-col justify-end rounded-[16px] border px-[7px] pb-[15px] pt-[20px] focus:border-border-focused focus:bg-background-container-03 focus-visible:outline-none disabled:bg-border-divider disabled:text-icon-tertiary disabled:border-none',
                 quizType === 'MULTIPLE_CHOICE' && 'bg-background-container-03 border-border-focused'
               )}
             >
-              <Icon name="multiple-quiz-icon" className="mb-[7.05px] w-[70px]" />
-              <Text typography="subtitle2-bold" className="mb-[4px] pl-[9px]">
+              <Icon
+                name={!isIncludeMultiple ? 'disabled-multiple-quiz-icon' : 'multiple-quiz-icon'}
+                className="mb-[7.05px] w-[70px]"
+              />
+              <Text typography="subtitle2-bold" className="mb-[4px] pl-[9px] text-left">
                 객관식
               </Text>
-              <Text typography="text2-medium" className="flex pl-[9px] text-start text-text-sub">
+              <Text
+                typography="text2-medium"
+                color={!isIncludeMultiple ? 'caption' : 'sub'}
+                className="flex pl-[9px] text-start"
+              >
                 4개 선택지 중 <br /> 정답 고르기
               </Text>
             </button>
 
             <button
+              disabled={!isIncludeMixUp}
               onClick={() => setQuizType('MIX_UP')}
               className={cn(
-                'flex h-[150px] w-[110px] flex-col justify-end rounded-[16px] border pb-[15px] pt-[18px] focus:border-border-focused focus:bg-background-container-03 focus-visible:outline-none disabled:grayscale disabled:bg-background-disabled disabled:text-text-disabled',
+                'flex h-[150px] w-[110px] flex-col justify-end rounded-[16px] border pb-[15px] pt-[18px] focus:border-border-focused focus:bg-background-container-03 focus-visible:outline-none disabled:bg-border-divider disabled:text-icon-tertiary disabled:border-none',
                 quizType === 'MIX_UP' && 'bg-background-container-03 border-border-focused'
               )}
             >
-              <Icon name="o-x-quiz-icon" className="mb-[10px] w-[81px] pl-[14px]" />
-              <Text typography="subtitle2-bold" className="mb-[4px] pl-[20px]">
+              <Icon
+                name={!isIncludeMixUp ? 'disabled-o-x-quiz-icon' : 'o-x-quiz-icon'}
+                className="mb-[10px] w-[81px] pl-[10px]"
+              />
+              <Text typography="subtitle2-bold" className="mb-[4px] pl-[16px] text-left">
                 O/X
               </Text>
-              <Text typography="text2-medium" className="flex pl-[20px] text-start text-text-sub">
+              <Text
+                typography="text2-medium"
+                color={!isIncludeMixUp ? 'caption' : 'sub'}
+                className="flex pl-[16px] text-start"
+              >
                 참과 거짓 <br /> 판단하기
               </Text>
             </button>

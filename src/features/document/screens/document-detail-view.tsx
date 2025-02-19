@@ -15,6 +15,7 @@ import DocumentFloatingButton from '../components/document-floating-button'
 import { useAddQuizzes } from '@/requests/document/hooks'
 import { useCreateQuiz } from '@/features/quiz/hooks/use-create-quiz'
 import PickDrawer from '@/features/quiz/components/pick-drawer'
+import { useMemo } from 'react'
 
 interface Props {
   documentId: number
@@ -25,6 +26,11 @@ const DocumentDetailView = ({ documentId, activeTab }: Props) => {
   const { data: documentDetail, isPending } = useQuery(queries.document.item(documentId))
   const { mutate: addQuizzesMutate } = useAddQuizzes()
   const formattedContent = documentDetail?.content.replace(/\n/g, '\n\n')
+
+  const quizTypes = useMemo(
+    () => Array.from(new Set(documentDetail?.quizzes.map((quiz) => quiz.quizType))) as Quiz.Type[],
+    [documentDetail]
+  )
 
   const { selectedDirectory } = useDirectoryContext()
   const {
@@ -103,6 +109,7 @@ const DocumentDetailView = ({ documentId, activeTab }: Props) => {
         directoryEmoji={documentDetail?.directory.emoji ?? '📁'}
         savedQuizCount={documentDetail?.totalQuizCount ?? 0}
         startAddQuizzes={startAddQuizzes}
+        quizTypes={quizTypes}
       />
     </main>
   )

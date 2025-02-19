@@ -9,6 +9,7 @@ interface Props {
   directoryEmoji: string
   savedQuizCount: number
   startAddQuizzes: (quizCount: number, quizType: Quiz.Type) => void
+  quizTypes: Quiz.Type[]
 }
 
 const DocumentFloatingButton = ({
@@ -17,6 +18,7 @@ const DocumentFloatingButton = ({
   directoryEmoji,
   savedQuizCount,
   startAddQuizzes,
+  quizTypes,
 }: Props) => {
   return (
     <div className="flex-center fixed bottom-[43px] right-1/2 w-[60dvw] min-w-[266px] max-w-[270px] translate-x-1/2 rounded-full border border-border-default bg-background-toast px-[28px] py-[10px] text-button2 text-button-label-primary shadow-float-thick">
@@ -31,6 +33,7 @@ const DocumentFloatingButton = ({
         documentName={documentName}
         directoryEmoji={directoryEmoji}
         savedQuizCount={savedQuizCount}
+        quizTypes={quizTypes}
       />
 
       <NewQuizDrawer
