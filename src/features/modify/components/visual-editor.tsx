@@ -32,10 +32,14 @@ export default function VisualEditor({ prevContent }: VisualEditorProps) {
         manager={manager}
         autoRender="end"
         initialContent={prevContent}
-        onChange={({ helpers, state }) =>
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-          setEditorMarkdownContent(helpers.getMarkdown && helpers.getMarkdown(state))
-        }
+        onChange={({ helpers, state }) => {
+          if (helpers.getMarkdown) {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+            const markdown = helpers.getMarkdown(state)
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+            setEditorMarkdownContent(markdown)
+          }
+        }}
         placeholder="여기를 탭하여 입력을 시작하세요"
         classNames={[
           css`
@@ -59,6 +63,29 @@ export default function VisualEditor({ prevContent }: VisualEditorProps) {
               }
               .remirror-list-item-with-custom-mark {
                 margin: 0;
+              }
+
+              /* Add styles to preserve whitespace and line breaks */
+              white-space: pre-wrap;
+              word-wrap: break-word;
+
+              /* Ensure paragraphs have proper spacing */
+              p {
+                margin: 1em 0;
+                line-height: 1.5;
+              }
+
+              /* Add spacing between block elements */
+              h1,
+              h2,
+              h3,
+              h4,
+              h5,
+              h6,
+              ul,
+              ol,
+              blockquote {
+                margin: 1em 0;
               }
             }
           `,

@@ -58,10 +58,6 @@ export const isValidFileType = (file: File): boolean => {
   )
 }
 
-function isTextItem(item: TextItem | TextMarkedContent): item is TextItem {
-  return 'str' in item && 'transform' in item
-}
-
 /** 입력받은 file(pdf, docx, txt)을 markdown으로 변환해 반환하는 함수 */
 export const generateMarkdownFromFile = async (file: File): Promise<string> => {
   if (!file) {
@@ -107,52 +103,105 @@ export const generateMarkdownFromFile = async (file: File): Promise<string> => {
 }
 
 // 기호 정규식 패턴 정의 + y좌표 임계점 정의
-const SYMBOL_REGEX = /^[#*●•★☆※✔✖☑⬜⬛]+$/
+const SYMBOL_REGEX = /^[-•∙＊※○●■□▪︎⚫️#*●•★☆※✔✖☑⬜⬛]+$/
 const Y_COORDINATE_THRESHOLD = 20
 
-// pdf 핸들러
+const isTextItem = (item: TextItem | TextMarkedContent): item is TextItem => {
+  if ('str' in item && 'transform' in item) {
+    return item && typeof item.str === 'string' && Array.isArray(item.transform)
+  }
+
+  return 'str' in item && 'transform' in item
+}
+
+const extractFontSize = (item: TextItem): number => {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+  return Math.abs(item.transform[0]) || Math.abs(item.transform[3]) || 10
+}
+
+// pdf 핸들러 (수정 버전)
 const handlePdfFile = async (file: File): Promise<string> => {
   const fileBuffer = await file.arrayBuffer()
 
-  // CMap 설정 추가
   const loadingTask = pdfjs.getDocument({
     data: fileBuffer,
-    cMapUrl: '/cmaps/', // public 폴더 내의 cmaps 경로
+    cMapUrl: '/cmaps/',
     cMapPacked: true,
   })
 
   const pdf = await loadingTask.promise
   let markdown = ''
+  const fontSizes: number[] = []
+
+  // **폰트 크기 수집 (제목 임계값 계산)**
+  for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+    const page = await pdf.getPage(pageNum)
+    const textContent = await page.getTextContent()
+
+    textContent.items.filter(isTextItem).forEach((item) => {
+      fontSizes.push(extractFontSize(item))
+    })
+  }
+
+  // ✅ 기준 폰트 크기를 평균값으로 변경
+  const averageFontSize = fontSizes.reduce((sum, size) => sum + size, 0) / fontSizes.length
+  const h1Threshold = averageFontSize * 1.6 // H1: 기존보다 높게 설정
+  const h2Threshold = averageFontSize * 1.3 // H2: H1보다 작지만 더 큰 폰트
+  const h3Threshold = averageFontSize * 1.0 // H3: 일반 텍스트보다 크게 설정
 
   for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
     try {
       const page = await pdf.getPage(pageNum)
       const textContent = await page.getTextContent()
 
-      // Y 좌표와 텍스트 데이터를 저장
-      const textItems: { y: number; text: string }[] = textContent.items
+      const textItems: { y: number; text: string; fontSize: number }[] = textContent.items
         .filter(isTextItem)
         .map((item) => {
           const transform: number[] = item.transform as number[]
           const y = transform[5] ?? 0
-          return { y, text: item.str }
+          const fontSize = extractFontSize(item)
+          return { y, text: item.str, fontSize }
         })
 
       // Y 좌표 기준으로 정렬 (위에서 아래로)
       textItems.sort((a, b) => b.y - a.y)
 
-      // 줄바꿈 감지 및 텍스트 조합
       let previousY: number | null = null
       let currentLine = ''
 
-      textItems.forEach(({ y, text }) => {
-        // 현재 텍스트가 기호인지 확인
+      textItems.forEach(({ y, text, fontSize }) => {
         const isSymbol = SYMBOL_REGEX.test(text)
 
-        // 1. 기호 기준 줄바꿈
+        // 1. 제목 처리
+        if (fontSize >= h1Threshold) {
+          if (currentLine) {
+            markdown += currentLine.replace(/\s+/g, ' ') + '\n'
+            currentLine = ''
+          }
+          markdown += `\n# ${text}\n\n`
+          previousY = y
+          return
+        } else if (fontSize >= h2Threshold) {
+          if (currentLine) {
+            markdown += currentLine.replace(/\s+/g, ' ') + '\n'
+            currentLine = ''
+          }
+          markdown += `\n## ${text}\n\n`
+          previousY = y
+          return
+        } else if (fontSize >= h3Threshold) {
+          if (currentLine) {
+            markdown += currentLine.replace(/\s+/g, ' ') + '\n'
+            currentLine = ''
+          }
+          markdown += `\n### ${text}\n\n`
+          previousY = y
+          return
+        }
+
+        // 2. 기호 기준 줄바꿈
         if (isSymbol) {
           if (currentLine) {
-            // 현재 라인의 시작/끝 공백은 보존하되, 중복 공백만 제거
             markdown += currentLine.replace(/\s+/g, ' ') + '\n<br/>\n'
             currentLine = ''
           }
@@ -161,7 +210,7 @@ const handlePdfFile = async (file: File): Promise<string> => {
           return
         }
 
-        // 2. Y 좌표 기반 줄바꿈
+        // 3. Y 좌표 기반 줄바꿈
         if (previousY !== null && Math.abs(previousY - y) > Y_COORDINATE_THRESHOLD) {
           if (currentLine) {
             markdown += currentLine.replace(/\s+/g, ' ') + '\n\n'
@@ -169,10 +218,8 @@ const handlePdfFile = async (file: File): Promise<string> => {
           }
         }
 
-        // 띄어쓰기 처리
-        // 기호가 아닌 경우에만 띄어쓰기 추가
+        // 4. 띄어쓰기 처리
         if (!isSymbol) {
-          // 현재 라인이 비어있지 않고, 마지막 문자가 띄어쓰기가 아닌 경우에만 띄어쓰기 추가
           if (currentLine && !currentLine.endsWith(' ')) {
             currentLine += ' '
           }
@@ -199,6 +246,96 @@ const handlePdfFile = async (file: File): Promise<string> => {
 
   return markdown.trim()
 }
+
+// pdf 핸들러 (처음 버전)
+// const handlePdfFile = async (file: File): Promise<string> => {
+//   const fileBuffer = await file.arrayBuffer()
+
+//   // CMap 설정 추가
+//   const loadingTask = pdfjs.getDocument({
+//     data: fileBuffer,
+//     cMapUrl: '/cmaps/', // public 폴더 내의 cmaps 경로
+//     cMapPacked: true,
+//   })
+
+//   const pdf = await loadingTask.promise
+//   let markdown = ''
+
+//   for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+//     try {
+//       const page = await pdf.getPage(pageNum)
+//       const textContent = await page.getTextContent()
+
+//       // Y 좌표와 텍스트 데이터를 저장
+//       const textItems: { y: number; text: string }[] = textContent.items
+//         .filter(isTextItem)
+//         .map((item) => {
+//           const transform: number[] = item.transform as number[]
+//           const y = transform[5] ?? 0
+//           return { y, text: item.str }
+//         })
+
+//       // Y 좌표 기준으로 정렬 (위에서 아래로)
+//       textItems.sort((a, b) => b.y - a.y)
+
+//       // 줄바꿈 감지 및 텍스트 조합
+//       let previousY: number | null = null
+//       let currentLine = ''
+
+//       textItems.forEach(({ y, text }) => {
+//         // 현재 텍스트가 기호인지 확인
+//         const isSymbol = SYMBOL_REGEX.test(text)
+
+//         // 1. 기호 기준 줄바꿈
+//         if (isSymbol) {
+//           if (currentLine) {
+//             // 현재 라인의 시작/끝 공백은 보존하되, 중복 공백만 제거
+//             markdown += currentLine.replace(/\s+/g, ' ') + '\n<br/>\n'
+//             currentLine = ''
+//           }
+//           markdown += text
+//           previousY = y
+//           return
+//         }
+
+//         // 2. Y 좌표 기반 줄바꿈
+//         if (previousY !== null && Math.abs(previousY - y) > Y_COORDINATE_THRESHOLD) {
+//           if (currentLine) {
+//             markdown += currentLine.replace(/\s+/g, ' ') + '\n\n'
+//             currentLine = ''
+//           }
+//         }
+
+//         // 띄어쓰기 처리
+//         // 기호가 아닌 경우에만 띄어쓰기 추가
+//         if (!isSymbol) {
+//           // 현재 라인이 비어있지 않고, 마지막 문자가 띄어쓰기가 아닌 경우에만 띄어쓰기 추가
+//           if (currentLine && !currentLine.endsWith(' ')) {
+//             currentLine += ' '
+//           }
+//           currentLine += text
+//         } else {
+//           currentLine += text
+//         }
+
+//         previousY = y
+//       })
+
+//       // 마지막 라인 처리
+//       if (currentLine) {
+//         markdown += currentLine.replace(/\s+/g, ' ')
+//       }
+
+//       // 페이지 구분
+//       markdown += '\n<br/><br/>\n'
+//     } catch (error) {
+//       console.error(`PDF 페이지 ${pageNum} 처리 중 오류:`, error)
+//       throw new Error(`PDF 페이지 ${pageNum} 처리 중 오류가 발생했습니다.`)
+//     }
+//   }
+
+//   return markdown.trim()
+// }
 
 // docx 핸들러
 const handleDocxFile = async (file: File): Promise<string> => {
