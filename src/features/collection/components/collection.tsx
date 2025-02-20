@@ -40,7 +40,7 @@ const Collection = ({
           {isOwner && (
             <Icon
               name="book-mark-fill"
-              className="size-[24px] text-icon-disabled"
+              className="size-[20px] text-icon-disabled"
               onClick={(e) => {
                 e.preventDefault()
                 e.stopPropagation()
@@ -51,7 +51,7 @@ const Collection = ({
             (isBookMarked ? (
               <Icon
                 name="book-mark-fill"
-                className="size-[24px] cursor-pointer text-text-secondary"
+                className="size-[20px] cursor-pointer text-text-secondary"
                 onClick={(e) => {
                   e.preventDefault()
                   e.stopPropagation()

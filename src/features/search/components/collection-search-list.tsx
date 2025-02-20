@@ -27,7 +27,7 @@ const CollectionSearchList = ({ length, searchResults }: Props) => {
               problemCount={collectionItem.quizCount}
               bookMarkCount={collectionItem.bookmarkCount}
               creatorName={collectionItem.memberName}
-              lastUpdated={''}
+              isOwner
               className="rounded-[16px] border border-border-default"
             />
           </Link>

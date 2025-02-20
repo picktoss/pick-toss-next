@@ -45,6 +45,8 @@ const InterestedCategoryCollections = ({ interestedCategories }: Props) => {
                 problemCount={item.totalQuizCount}
                 bookMarkCount={item.bookmarkCount}
                 creatorName={item.member.creatorName}
+                isBookMarked={item.bookmarked}
+                isOwner={item.member.creatorId === userInfo?.id}
               />
             </Link>
           ))}
