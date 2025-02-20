@@ -1,12 +1,11 @@
 'use client'
 
-import Icon from '@/shared/components/custom/icon'
 import Loading from '@/shared/components/custom/loading'
 import Text from '@/shared/components/ui/text'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'next/navigation'
-import { ClassAttributes, HTMLAttributes } from 'react'
+import { ClassAttributes, HTMLAttributes, useEffect, useRef, useState } from 'react'
 import Markdown, { ExtraProps } from 'react-markdown'
 import SyntaxHighlighter from 'react-syntax-highlighter'
 import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism'
@@ -21,10 +20,10 @@ const DocumentContent = ({ formattedContent }: Props) => {
   const { data, isPending } = useQuery(queries.document.item(Number(id)))
 
   const convertBrToNewline = (content: string = '') => {
-    const integrated = content.replace(/\n\s*\n/g, '\n')
+    // const integrated = content.replace(/\n\s*\n/g, '\n')
     // <br/>, <br />, <br>, </br> 등의 다양한 형태를 모두 처리
-    return integrated.replace(/<br\s*\/?>/gi, '\n')
-    // return integrated
+    // return integrated.replace(/<br\s*\/?>/gi, '\n\n')
+    return content.replace(/<br\s*\/?>/gi, '\n\n')
   }
 
   return (
@@ -38,14 +37,13 @@ const DocumentContent = ({ formattedContent }: Props) => {
               remarkPlugins={[remarkGfm]}
               components={{
                 code: handleMarkDownCodeBlock,
-                p: handleParagraph,
+                p: HandleParagraph,
                 h1: handleHeading1,
                 h2: handleHeading2,
                 h3: handleHeading3,
                 h4: handleHeading4,
                 ol: handleOrderedList,
                 ul: handleUnorderedList,
-                li: handleListItem,
               }}
             >
               {convertBrToNewline(formattedContent)}
@@ -78,10 +76,23 @@ const handleMarkDownCodeBlock = (
 }
 
 // 단락 핸들러
-const handleParagraph = (props: HTMLAttributes<HTMLParagraphElement>) => {
+const HandleParagraph = (props: HTMLAttributes<HTMLParagraphElement>) => {
+  const pRef = useRef<HTMLParagraphElement>(null)
+  const [isOrderedList, setIsOrderedList] = useState(false)
+
+  useEffect(() => {
+    if (pRef.current?.parentElement?.tagName === 'LI') {
+      setIsOrderedList(true)
+    }
+  }, [])
+
+  if (isOrderedList) {
+    return <span {...props}>{props.children}</span>
+  }
+
   return (
     <>
-      <p {...props} className="whitespace-pre-wrap leading-relaxed">
+      <p ref={pRef} {...props} className="my-[10px] whitespace-pre-wrap leading-relaxed">
         {props.children}
       </p>
     </>
@@ -129,7 +140,7 @@ const handleHeading4 = (props: HTMLAttributes<HTMLHeadingElement>) => (
 const handleOrderedList = (props: HTMLAttributes<HTMLUListElement>) => (
   <>
     <br />
-    <ol {...props} className="pl-5">
+    <ol {...props} className="!list-decimal pl-5" style={{ listStyleType: 'decimal' }}>
       {props.children}
     </ol>
     <br />
@@ -140,72 +151,9 @@ const handleOrderedList = (props: HTMLAttributes<HTMLUListElement>) => (
 const handleUnorderedList = (props: HTMLAttributes<HTMLUListElement>) => (
   <>
     <br />
-    <ul {...props} className="pl-5">
+    <ul {...props} className="!list-disc pl-5">
       {props.children}
     </ul>
     <br />
   </>
 )
-
-// 목록 아이템 핸들러
-const handleListItem = (props: HTMLAttributes<HTMLLIElement>) => (
-  <li {...props} className="flex items-start space-x-2">
-    <span className="pt-[10px]">
-      <Icon name="middle-dot" className="size-[6px] text-text-secondary" />
-    </span>
-    <span>{props.children}</span>
-  </li>
-)
-
-// const DocumentContent = ({ formattedContent }: Props) => {
-//   const { id } = useParams()
-//   const { data, isPending } = useQuery(queries.document.item(Number(id)))
-
-//   return (
-//     <div className="px-[20px] pb-[132px] pt-[10px]">
-//       {isPending ? (
-//         <Loading center />
-//       ) : (
-//         data && (
-//           <Text className="font-suit">
-//             <Markdown
-//               remarkPlugins={[remarkGfm]}
-//               components={{ code: handleMarkDownCodeBlock, p: handleParagraph }}
-//             >
-//               {formattedContent}
-//             </Markdown>
-//           </Text>
-//         )
-//       )}
-//     </div>
-//   )
-// }
-
-// export default DocumentContent
-
-// const handleMarkDownCodeBlock = (
-//   props: ClassAttributes<HTMLElement> & HTMLAttributes<HTMLElement> & ExtraProps
-// ) => {
-//   // style, node, ref는 사용하지 않음
-//   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-//   const { children, className, style, node, ref, ...rest } = props
-//   const match = /language-(\w+)/.exec(className || '')
-//   return match ? (
-//     <SyntaxHighlighter {...rest} style={dracula} language={match[1]} PreTag="div">
-//       {String(children).replace(/\n$/, '')}
-//     </SyntaxHighlighter>
-//   ) : (
-//     <code {...props} className={className}>
-//       {children}
-//     </code>
-//   )
-// }
-
-// const handleParagraph = (props: HTMLAttributes<HTMLParagraphElement>) => {
-//   return (
-//     <>
-//       <p {...props}>{props.children}</p>
-//       <br />
-//     </>
-//   )
-// }

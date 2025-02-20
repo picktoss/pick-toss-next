@@ -104,7 +104,7 @@ export const generateMarkdownFromFile = async (file: File): Promise<string> => {
 
 // 기호 정규식 패턴 정의 + y좌표 임계점 정의
 const SYMBOL_REGEX = /^[-•∙＊※○●■□▪︎⚫️#*●•★☆※✔✖☑⬜⬛]+$/
-const Y_COORDINATE_THRESHOLD = 20
+const Y_COORDINATE_THRESHOLD = 18
 
 const isTextItem = (item: TextItem | TextMarkedContent): item is TextItem => {
   if ('str' in item && 'transform' in item) {

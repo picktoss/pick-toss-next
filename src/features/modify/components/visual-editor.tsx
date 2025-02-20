@@ -36,6 +36,7 @@ export default function VisualEditor({ prevContent }: VisualEditorProps) {
           if (helpers.getMarkdown) {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             const markdown = helpers.getMarkdown(state)
+
             // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
             setEditorMarkdownContent(markdown)
           }
@@ -89,7 +90,7 @@ export default function VisualEditor({ prevContent }: VisualEditorProps) {
               }
             }
           `,
-          'prose prose-h1:text-4xl dark:prose-invert prose-p:my-0 prose-sm !shadow-none sm:prose-base lg:prose-lg xl:prose-md focus:outline-none',
+          'prose prose-h1:text-4xl dark:prose-invert prose-p:my-0 prose-sm !shadow-none sm:prose-base lg:prose-lg xl:prose-md focus:outline-none !list-decimal',
           'min-h-[100vh]',
         ]}
       >
