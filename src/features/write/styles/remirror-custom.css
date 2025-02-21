@@ -5,8 +5,11 @@
   box-sizing: border-box;
 }
 
-.ProseMirror {
+.remirror-theme .ProseMirror {
   padding: 16px 20px;
+  padding-bottom: 100px;
+}
+.ProseMirror {
   width: 100%;
   /* min-width: 100vw; */
   max-width: 430px;
