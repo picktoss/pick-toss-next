@@ -36,11 +36,13 @@
 
 .remirror-list-item-with-custom-mark {
   margin-bottom: 1em;
+  vertical-align: middle;
 }
 
 .remirror-list-item-with-custom-mark p {
   height: fit-content;
   margin: 0;
+  vertical-align: top;
 }
 
 .remirror-theme h1 {
