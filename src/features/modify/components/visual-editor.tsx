@@ -45,52 +45,40 @@ export default function VisualEditor({ prevContent }: VisualEditorProps) {
         classNames={[
           css`
             &.ProseMirror {
-              padding: 16px 20px;
-              padding-bottom: 100px;
-              width: 100%;
-              /* min-width: 100vw; */
-              max-width: 430px;
-              min-height: 80vh;
-
-              .remirror-ul-list-content {
-                margin-top: 0;
-                margin-bottom: 0;
-                // default padding-left 28px
-                padding-left: 12px;
-              }
-              .remirror-list-item-marker-container {
-                // default left 32px
-                left: -18px;
-              }
-              .remirror-list-item-with-custom-mark {
-                margin: 0;
-              }
-
-              /* Add styles to preserve whitespace and line breaks */
+              /* ../styles/remirror-custom.css에 기본 설정 */
               white-space: pre-wrap;
               word-wrap: break-word;
 
-              /* Ensure paragraphs have proper spacing */
               p {
-                margin: 1em 0;
+                margin: 0 0 1.2em 0;
                 line-height: 1.5;
+                display: inline-block;
               }
 
               /* Add spacing between block elements */
-              h1,
-              h2,
+              h1 {
+                margin: 1.2em 0;
+              }
+              h2 {
+                margin: 1em 0;
+              }
               h3,
               h4,
-              h5,
-              h6,
               ul,
-              ol,
+              ol {
+                margin: 0.8em 0;
+              }
               blockquote {
                 margin: 1em 0;
               }
+
+              .remirror-list-item-with-custom-mark p {
+                height: fit-content;
+                margin: 0;
+              }
             }
           `,
-          'prose prose-h1:text-4xl dark:prose-invert prose-p:my-0 prose-sm !shadow-none sm:prose-base lg:prose-lg xl:prose-md focus:outline-none !list-decimal',
+          'prose prose-h1:text-4xl prose-h2:text-[1.72rem] prose-h3:text-[1.5rem] prose-h4:text-[1.2rem] dark:prose-invert prose-p:my-0 prose-sm !shadow-none sm:prose-base lg:prose-lg xl:prose-md focus:outline-none !list-decimal',
           'min-h-[100vh]',
         ]}
       >

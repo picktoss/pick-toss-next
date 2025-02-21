@@ -140,7 +140,11 @@ const handleHeading4 = (props: HTMLAttributes<HTMLHeadingElement>) => (
 const handleOrderedList = (props: HTMLAttributes<HTMLUListElement>) => (
   <>
     <br />
-    <ol {...props} className="!list-decimal pl-5" style={{ listStyleType: 'decimal' }}>
+    <ol
+      {...props}
+      className="flex !list-decimal flex-col gap-[10px] pl-5"
+      style={{ listStyleType: 'decimal' }}
+    >
       {props.children}
     </ol>
     <br />
@@ -151,7 +155,7 @@ const handleOrderedList = (props: HTMLAttributes<HTMLUListElement>) => (
 const handleUnorderedList = (props: HTMLAttributes<HTMLUListElement>) => (
   <>
     <br />
-    <ul {...props} className="!list-disc pl-5">
+    <ul {...props} className="flex !list-disc flex-col gap-[10px] pl-5">
       {props.children}
     </ul>
     <br />
