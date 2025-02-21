@@ -120,7 +120,7 @@ export default function Editor({
             }
           `,
           cn(
-            'prose prose-h1:text-4xl prose-h2:text-[1.72rem] prose-h3:text-[1.5rem] prose-h4:text-[1.2rem] dark:prose-invert prose-p:my-0 prose-sm !shadow-none sm:prose-base lg:prose-lg xl:prose-md focus:outline-none',
+            'prose prose-h1:text-4xl dark:prose-invert prose-p:my-0 prose-sm !shadow-none sm:prose-base lg:prose-lg xl:prose-md focus:outline-none',
             'min-h-[100vh]'
           ),
         ]}

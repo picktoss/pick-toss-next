@@ -20,9 +20,6 @@ const DocumentContent = ({ formattedContent }: Props) => {
   const { data, isPending } = useQuery(queries.document.item(Number(id)))
 
   const convertBrToNewline = (content: string = '') => {
-    // const integrated = content.replace(/\n\s*\n/g, '\n')
-    // <br/>, <br />, <br>, </br> 등의 다양한 형태를 모두 처리
-    // return integrated.replace(/<br\s*\/?>/gi, '\n\n')
     return content.replace(/<br\s*\/?>/gi, '\n\n')
   }
 
