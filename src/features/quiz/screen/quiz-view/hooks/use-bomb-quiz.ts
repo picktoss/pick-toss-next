@@ -27,7 +27,7 @@ export const useBombQuiz = (key: Date) => {
 
   const { mutate: updateWrongQuizResultMutate } = useUpdateWrongQuizResult()
   // 무한 오답 터뜨리기 구현을 위한 쿼리 분리
-  // 남은 퀴즈 수가 3개일 때, 미리 서버에서 오답 리스트 불러와서 현재 리스트에 추가
+  // 남은 퀴즈 수가 3개 or 1개일 때, 미리 서버에서 오답 리스트 불러와서 현재 리스트에 추가
 
   // 초기 퀴즈 데이터 쿼리 - enabled 옵션으로 한 번만 실행되도록 제어
   const { data: initialData, isLoading: isInitialLoading } = useQuery({
@@ -43,11 +43,6 @@ export const useBombQuiz = (key: Date) => {
   const currentQuizInfo = bombQuizList[currentIndex]
   const currentAnswerState = quizResults[currentIndex]?.answer
 
-  useEffect(() => {
-    // eslint-disable-next-line no-console
-    console.log(bombQuizList)
-  }, [bombQuizList])
-
   // 초기 데이터가 로드되면 quizList를 설정하고 초기 페칭을 비활성화
   useEffect(() => {
     if (initialData?.quizzes && shouldFetchInitial) {
@@ -56,11 +51,10 @@ export const useBombQuiz = (key: Date) => {
     }
   }, [initialData, shouldFetchInitial])
 
-  // leftQuizCount가 3이 되면 추가 데이터를 가져오는 효과
+  // leftQuizCount가 3 혹은 1이 되면 추가 데이터를 가져오는 효과
   useEffect(() => {
     const fetchMoreQuizzes = () => {
-      if (leftQuizCount === 3 && !isLoadingMore) {
-        // 추후 확장성을 위해 저장된 배열을 이용하는 코드를 남겨두었습니다
+      if ((leftQuizCount === 3 || leftQuizCount === 1) && !isLoadingMore) {
         const results = prepareQuizResults(quizResults)
 
         updateWrongQuizResultMutate(
@@ -71,19 +65,27 @@ export const useBombQuiz = (key: Date) => {
               const result = await refetchAdditionalData()
 
               if (result.data?.quizzes) {
-                const lastThreeQuizIds = bombQuizList.map((quiz, index) => {
-                  if (
+                // 기존 bombQuizList에서 현재 보여주는 3개의 퀴즈 ID 저장
+                const lastThreeQuizIds = bombQuizList
+                  .map((quiz, index) =>
                     index === currentIndex ||
                     index === currentIndex + 1 ||
                     index === currentIndex + 2
-                  ) {
-                    return quiz.id
-                  }
-                })
-                const addList = result.data.quizzes.filter(
-                  (quiz) => !lastThreeQuizIds.includes(quiz.id)
-                )
+                      ? quiz.id
+                      : null
+                  )
+                  .filter(Boolean) // null 제거
 
+                const totalQuizzes = result.data.quizzes.length
+
+                // ✅ leftQuizCount === 3 → 마지막 3개를 제외한 리스트 추가
+                // ✅ leftQuizCount === 1 → 마지막 1개를 제외한 리스트 추가
+                const numToExclude = leftQuizCount === 3 ? 3 : 1
+                const addList = result.data.quizzes
+                  .slice(0, totalQuizzes - numToExclude)
+                  .filter((quiz) => !lastThreeQuizIds.includes(quiz.id))
+
+                // 중복 데이터 확인 후 추가
                 if (
                   result.data?.quizzes.length === 1 &&
                   result.data?.quizzes[0]?.id === currentQuizInfo?.id
@@ -147,7 +149,11 @@ export const useBombQuiz = (key: Date) => {
           } else {
             const result = await refetchAdditionalData()
             if (result.data?.quizzes.length) {
-              window.location.replace('/quiz/bomb')
+              // 무한모드
+              setBombQuizList(result.data.quizzes)
+              setQuizResults(new Array(result.data.quizzes.length).fill(null) as null[])
+
+              router.replace('/quiz/bomb')
             } else {
               setBombQuizList([])
               setOpenFinished(true)
