@@ -80,6 +80,9 @@ body::-webkit-scrollbar {
     @apply box-border;
     font-synthesis: none !important;
   }
+  body {
+    @apply overscroll-none;
+  }
 }
 
 @layer utilities {
