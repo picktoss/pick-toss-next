@@ -50,7 +50,7 @@ const Header = () => {
 
     if (titleRef.current) {
       observer.observe(titleRef.current)
-    } else if (titleRef.current && isDrawerOpen) {
+    } else if (titleRef.current) {
       observer.unobserve(titleRef.current)
     }
 
