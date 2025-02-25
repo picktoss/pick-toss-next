@@ -12,6 +12,7 @@ interface Props {
   onAnimationComplete: () => void
 }
 
+/** className : 카드 요소에 적용 */
 const SpringUpCardAnimation = ({
   className,
   cardName,

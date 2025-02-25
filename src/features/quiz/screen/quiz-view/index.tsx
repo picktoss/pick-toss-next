@@ -60,8 +60,9 @@ const QuizView = ({ quizzes, isFirst, exitRedirectUrl }: Props) => {
   const [exitDialogOpen, setExitDialogOpen] = useState(false)
 
   const defaultReward = 5
+  // 연속 5일 이후 오늘의 퀴즈 체크 화면 처리에 따라 변경될 수도 있음
   const prevConsecutiveDays = useMemo(
-    () => (todayQuizInfo?.currentConsecutiveDays ?? 1) - 1,
+    () => ((todayQuizInfo?.currentConsecutiveDays ?? 1) % 5) - 1,
     [todayQuizInfo?.currentConsecutiveDays]
   )
 

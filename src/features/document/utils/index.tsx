@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { marked } from 'marked'
 import * as pdfjs from 'pdfjs-dist'
 import '@/shared/utils/pdf'
@@ -119,7 +120,7 @@ const extractFontSize = (item: TextItem): number => {
   return Math.abs(item.transform[0]) || Math.abs(item.transform[3]) || 10
 }
 
-// pdf 핸들러 (텍스트 분리 현상 개선)
+// pdf 핸들러 (텍스트 분리 현상 개선 + 띄어쓰기 처리 + 제목 처리)
 const handlePdfFile = async (file: File): Promise<string> => {
   const fileBuffer = await file.arrayBuffer()
 
@@ -148,9 +149,6 @@ const handlePdfFile = async (file: File): Promise<string> => {
   const h2Threshold = averageFontSize * 1.3
   const h3Threshold = averageFontSize * 1.0
 
-  // 자간 처리를 위한 상수 정의
-  // const SPACE_THRESHOLD = averageFontSize * 0.3 // 실제 띄어쓰기로 간주할 거리
-
   for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
     try {
       const page = await pdf.getPage(pageNum)
@@ -168,7 +166,7 @@ const handlePdfFile = async (file: File): Promise<string> => {
         }
       })
 
-      // Y 좌표 그룹화
+      // Y 좌표 그룹화 (동적으로 y좌표 기준 정의)
       const yGroups: { [key: number]: number } = {}
       textItems.forEach((item) => {
         let foundGroup = false
@@ -224,7 +222,7 @@ const handlePdfFile = async (file: File): Promise<string> => {
         const isSymbol = SYMBOL_REGEX.test(text)
 
         // 새로운 줄 판단
-        const isNewLine = previousY !== null && Math.abs(previousY - y) > fontSize * 0.8
+        const isNewLine = previousY !== null && Math.abs(previousY - y) > fontSize * 1.2
 
         if (isNewLine && currentLine) {
           lines.push({
@@ -328,156 +326,6 @@ const handlePdfFile = async (file: File): Promise<string> => {
 
   return markdown.trim()
 }
-
-// pdf 핸들러 (자간 감지 + 제목 처리 버전)
-// const handlePdfFile = async (file: File): Promise<string> => {
-//   const fileBuffer = await file.arrayBuffer()
-
-//   const loadingTask = pdfjs.getDocument({
-//     data: fileBuffer,
-//     cMapUrl: '/cmaps/',
-//     cMapPacked: true,
-//   })
-
-//   const pdf = await loadingTask.promise
-//   let markdown = ''
-//   const fontSizes: number[] = []
-
-//   // 폰트 크기 수집 (제목 임계값 계산)
-//   for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
-//     const page = await pdf.getPage(pageNum)
-//     const textContent = await page.getTextContent()
-
-//     textContent.items.filter(isTextItem).forEach((item) => {
-//       fontSizes.push(extractFontSize(item))
-//     })
-//   }
-
-//   const averageFontSize = fontSizes.reduce((sum, size) => sum + size, 0) / fontSizes.length
-//   const h1Threshold = averageFontSize * 1.6
-//   const h2Threshold = averageFontSize * 1.3
-//   const h3Threshold = averageFontSize * 1.0
-
-//   // 자간 처리를 위한 상수 정의
-//   const SPACE_THRESHOLD = averageFontSize * 0.3 // 실제 띄어쓰기로 간주할 거리
-
-//   for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
-//     try {
-//       const page = await pdf.getPage(pageNum)
-//       const textContent = await page.getTextContent()
-
-//       const textItems: {
-//         x: number
-//         y: number
-//         text: string
-//         fontSize: number
-//         width: number
-//       }[] = textContent.items.filter(isTextItem).map((item) => {
-//         const transform: number[] = item.transform as number[]
-//         return {
-//           x: transform[4] ?? 0,
-//           y: transform[5] ?? 0,
-//           text: item.str,
-//           fontSize: extractFontSize(item),
-//           width: item.width ?? 0,
-//         }
-//       })
-
-//       // Y 좌표로 먼저 정렬하고, 같은 Y 좌표 내에서는 X 좌표로 정렬
-//       textItems.sort((a, b) => {
-//         const yDiff = b.y - a.y
-//         // Y 좌표가 비슷한 경우 (같은 줄로 간주)
-//         if (Math.abs(yDiff) < Y_COORDINATE_THRESHOLD) {
-//           return a.x - b.x // X 좌표로 정렬 (왼쪽에서 오른쪽으로)
-//         }
-//         return yDiff // 다른 줄인 경우 Y 좌표로 정렬
-//       })
-
-//       let previousY: number | null = null
-//       let currentLine = ''
-//       let previousX: number | null = null
-
-//       textItems.forEach(({ x, y, text, fontSize, width }) => {
-//         const isSymbol = SYMBOL_REGEX.test(text)
-
-//         // 제목 처리
-//         if (fontSize >= h1Threshold) {
-//           if (currentLine) {
-//             markdown += currentLine.replace(/\s+/g, ' ') + '\n'
-//             currentLine = ''
-//           }
-//           markdown += `\n# ${text}\n\n`
-//           previousY = y
-//           previousX = x + width
-//           return
-//         } else if (fontSize >= h2Threshold) {
-//           if (currentLine) {
-//             markdown += currentLine.replace(/\s+/g, ' ') + '\n'
-//             currentLine = ''
-//           }
-//           markdown += `\n## ${text}\n\n`
-//           previousY = y
-//           previousX = x + width
-//           return
-//         } else if (fontSize >= h3Threshold) {
-//           if (currentLine) {
-//             markdown += currentLine.replace(/\s+/g, ' ') + '\n'
-//             currentLine = ''
-//           }
-//           markdown += `\n### ${text}\n\n`
-//           previousY = y
-//           previousX = x + width
-//           return
-//         }
-
-//         // 새로운 줄 시작
-//         if (previousY !== null && Math.abs(previousY - y) > Y_COORDINATE_THRESHOLD) {
-//           if (currentLine) {
-//             markdown += currentLine.replace(/\s+/g, ' ') + '\n\n'
-//             currentLine = ''
-//           }
-//           previousX = null
-//         }
-
-//         // 자간과 띄어쓰기 처리
-//         if (!isSymbol) {
-//           if (previousX !== null) {
-//             const gap = x - previousX
-//             if (gap > SPACE_THRESHOLD) {
-//               if (!currentLine.endsWith(' ')) {
-//                 currentLine += ' '
-//               }
-//             }
-//           }
-//           currentLine += text
-//         } else {
-//           // 기호가 나타나면 현재 라인을 초기화하고 기호부터 시작
-//           if (currentLine) {
-//             markdown += currentLine.replace(/\s+/g, ' ') + '\n'
-//             currentLine = ''
-//           }
-//           currentLine = text + ' ' // 기호 뒤에 공백 추가
-//         }
-
-//         previousY = y
-//         previousX = x + width
-//       })
-
-//       // 마지막 라인 처리
-//       if (currentLine) {
-//         markdown += currentLine.replace(/\s+/g, ' ')
-//       }
-
-//       // 페이지 구분
-//       markdown += '\n<br/><br/>\n'
-//     } catch (error) {
-//       console.error(`PDF 페이지 ${pageNum} 처리 중 오류:`, error)
-//       throw new Error(`PDF 페이지 ${pageNum} 처리 중 오류가 발생했습니다.`)
-//     }
-//   }
-
-//   return markdown.trim()
-// }
 
 // pdf 핸들러 (제목 처리 버전)
 // const handlePdfFile = async (file: File): Promise<string> => {
