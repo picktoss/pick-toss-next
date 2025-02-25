@@ -25,7 +25,8 @@ const MultipleOption = ({
         condition === 'IDLE' && 'bg-background-base-01 border-border-default',
         condition === 'DISABLED' && 'bg-background-disabled',
         condition === 'WRONG' && 'bg-background-disabled',
-        condition === 'RIGHT' && 'bg-green-200 border-border-right'
+        condition === 'RIGHT' && 'bg-green-200 border-border-right',
+        condition !== 'IDLE' && 'pointer-events-none'
       )}
     >
       <div
