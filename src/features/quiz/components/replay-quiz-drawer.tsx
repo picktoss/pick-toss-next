@@ -64,7 +64,7 @@ const ReplayQuizDrawer = ({
   }
 
   return (
-    <Drawer>
+    <Drawer modal>
       <DrawerTrigger asChild>{triggerComponent}</DrawerTrigger>
 
       <DrawerContent

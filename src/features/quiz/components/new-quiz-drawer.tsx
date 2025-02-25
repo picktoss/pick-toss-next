@@ -55,7 +55,7 @@ const NewQuizDrawer = ({ triggerComponent, documentId, startAddQuizzes }: Props)
 
   return (
     <>
-      <Drawer>
+      <Drawer modal>
         <DrawerTrigger asChild>{triggerComponent}</DrawerTrigger>
 
         <DrawerContent
