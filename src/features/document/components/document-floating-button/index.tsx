@@ -21,7 +21,7 @@ const DocumentFloatingButton = ({
   quizTypes,
 }: Props) => {
   return (
-    <div className="flex-center fixed bottom-[43px] right-1/2 w-[60dvw] min-w-[266px] max-w-[270px] translate-x-1/2 rounded-full bg-background-toast px-[28px] py-[10px] text-button2 text-button-label-primary shadow-float-thick">
+    <div className="flex-center fixed bottom-[43px] right-1/2 z-50 w-[60dvw] min-w-[266px] max-w-[270px] translate-x-1/2 rounded-full bg-background-toast px-[28px] py-[10px] text-button2 text-button-label-primary shadow-float-thick">
       <ReplayQuizDrawer
         triggerComponent={
           <button className="flex-center border-r border-icon-secondary py-[5.5px] pr-[20px]">
