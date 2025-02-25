@@ -59,8 +59,9 @@ const NewQuizDrawer = ({ triggerComponent, documentId, startAddQuizzes }: Props)
         <DrawerTrigger asChild>{triggerComponent}</DrawerTrigger>
 
         <DrawerContent
-          overlayProps={{ className: 'max-w-mobile mx-auto' }}
+          overlayProps={{ className: 'max-w-mobile mx-auto', onClick: (e) => e.stopPropagation() }}
           className="mx-auto h-fit max-h-[90dvh] max-w-mobile rounded-t-[20px]"
+          onClick={(e) => e.stopPropagation()}
         >
           <div className="my-[24px] flex h-fit flex-col items-center overflow-y-auto overflow-x-hidden px-[16px]">
             <DrawerTitle className="mb-[38px] w-full font-suit text-title3">
