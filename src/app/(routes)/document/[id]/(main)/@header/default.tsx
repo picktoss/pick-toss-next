@@ -21,7 +21,7 @@ import { useDeleteDocument } from '@/requests/document/hooks'
 import { useEffect, useRef, useState } from 'react'
 import { useUserStore } from '@/store/user'
 import { useDownloadQuiz } from '@/requests/quiz/hooks'
-import { useDocumentDetailContext } from '@/features/document/contexts/document-detail-context'
+// import { useDocumentDetailContext } from '@/features/document/contexts/document-detail-context'
 
 // Header 컴포넌트
 const Header = () => {
@@ -30,7 +30,7 @@ const Header = () => {
   const prev = useSearchParams().get('prev')
 
   const { userInfo: user } = useUserStore()
-  const { isDrawerOpen } = useDocumentDetailContext()
+  // const { isDrawerOpen } = useDocumentDetailContext()
 
   const [isTitleHidden, setIsTitleHidden] = useState(false)
   const titleRef = useRef<HTMLHeadingElement | null>(null)
@@ -51,10 +51,10 @@ const Header = () => {
       )
     }
 
-    if (isDrawerOpen) {
-      observerRef.current?.disconnect()
-      return
-    }
+    // if (isDrawerOpen) {
+    //   observerRef.current?.disconnect()
+    //   return
+    // }
 
     if (titleRef.current) {
       observerRef.current?.observe(titleRef.current)
@@ -63,7 +63,7 @@ const Header = () => {
     return () => {
       observerRef.current?.disconnect()
     }
-  }, [isDrawerOpen])
+  }, [])
 
   const handleClickCancel = () => {
     if (prev && prev === 'created') {
