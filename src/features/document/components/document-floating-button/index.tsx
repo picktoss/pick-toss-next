@@ -5,6 +5,8 @@ import ReplayQuizDrawer from '@/features/quiz/components/replay-quiz-drawer'
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
 import { createPortal } from 'react-dom'
+import { useDocumentDetailContext } from '../../contexts/document-detail-context'
+import { useEffect } from 'react'
 
 interface Props {
   documentId: number
@@ -23,6 +25,39 @@ const DocumentFloatingButton = ({
   startAddQuizzes,
   quizTypes,
 }: Props) => {
+  const { setIsDrawerOpen } = useDocumentDetailContext()
+
+  const handleOpenChange = (open: boolean) => {
+    const scrollContainer = document.getElementById('mobileViewContainer')
+
+    if (scrollContainer) {
+      if (open) {
+        setIsDrawerOpen(true)
+        scrollContainer.style.overflow = 'hidden' // 스크롤 막기
+        scrollContainer.style.pointerEvents = 'none' // 클릭 안되도록
+      } else {
+        setIsDrawerOpen(false)
+        scrollContainer.style.pointerEvents = 'auto' // 원래대로
+        scrollContainer.style.overflow = 'auto' // 스크롤 원래대로 복구
+      }
+    } else {
+      // eslint-disable-next-line no-console
+      console.warn('⚠️ mobileViewContainer를 찾을 수 없습니다.')
+    }
+  }
+
+  // Drawer가 닫힐 때 overflow 속성 원복
+  useEffect(() => {
+    return () => {
+      const scrollContainer = document.getElementById('mobileViewContainer')
+
+      if (scrollContainer) {
+        scrollContainer.style.pointerEvents = 'auto'
+        scrollContainer.style.overflow = ''
+      }
+    }
+  }, [])
+
   return (
     <>
       {createPortal(
@@ -39,6 +74,7 @@ const DocumentFloatingButton = ({
             directoryEmoji={directoryEmoji}
             savedQuizCount={savedQuizCount}
             quizTypes={quizTypes}
+            onOpenChange={handleOpenChange}
           />
 
           <NewQuizDrawer
@@ -58,6 +94,7 @@ const DocumentFloatingButton = ({
             documentName={documentName}
             directoryEmoji={directoryEmoji}
             startAddQuizzes={startAddQuizzes}
+            onOpenChange={handleOpenChange}
           />
         </div>,
         document.body
