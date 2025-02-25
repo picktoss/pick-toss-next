@@ -34,37 +34,38 @@ const Header = () => {
 
   const [isTitleHidden, setIsTitleHidden] = useState(false)
   const titleRef = useRef<HTMLHeadingElement | null>(null)
+  const observerRef = useRef<IntersectionObserver | null>(null)
 
   const { data } = useQuery(queries.document.item(Number(id)))
   const { mutate: downloadQuizMutation } = useDownloadQuiz()
   const { mutate: deleteDocumentMutation } = useDeleteDocument()
 
   useEffect(() => {
-    // eslint-disable-next-line no-console
-    console.log(isDrawerOpen)
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!isDrawerOpen) {
-          setIsTitleHidden(!entry?.isIntersecting)
+    if (!observerRef.current) {
+      observerRef.current = new IntersectionObserver(
+        ([entry]) => {
+          if (!isDrawerOpen) {
+            setIsTitleHidden(!entry?.isIntersecting)
+          }
+        },
+        {
+          root: null,
+          threshold: 0.5,
         }
-      },
-      {
-        root: null,
-        threshold: 0.5,
-      }
-    )
+      )
+    }
 
-    if (titleRef.current && !isDrawerOpen) {
-      observer.observe(titleRef.current)
-    } else if (titleRef.current && isDrawerOpen) {
-      observer.unobserve(titleRef.current)
+    if (isDrawerOpen) {
+      observerRef.current?.disconnect()
+      return
+    }
+
+    if (titleRef.current) {
+      observerRef.current?.observe(titleRef.current)
     }
 
     return () => {
-      if (titleRef.current) {
-        observer.unobserve(titleRef.current)
-      }
+      observerRef.current?.disconnect()
     }
   }, [isDrawerOpen])
 
