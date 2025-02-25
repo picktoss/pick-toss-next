@@ -67,9 +67,10 @@ const ReplayQuizDrawer = ({
   return (
     <Drawer onOpenChange={onOpenChange}>
       <DrawerTrigger asChild>{triggerComponent}</DrawerTrigger>
+
       <DrawerContent
         overlayProps={{ className: 'max-w-mobile mx-auto' }}
-        className="mx-auto h-fit max-h-[90dvh] max-w-mobile rounded-t-[20px]"
+        className="pointer-events-auto mx-auto h-fit max-h-[90dvh] max-w-mobile rounded-t-[20px]"
       >
         <div className="my-[24px] flex h-fit flex-col items-center overflow-y-auto overflow-x-hidden px-[16px]">
           <DrawerTitle className="mb-[38px] w-full font-suit text-title3">

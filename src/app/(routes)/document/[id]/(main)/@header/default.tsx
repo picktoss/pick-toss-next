@@ -40,6 +40,9 @@ const Header = () => {
   const { mutate: deleteDocumentMutation } = useDeleteDocument()
 
   useEffect(() => {
+    // eslint-disable-next-line no-console
+    console.log(isDrawerOpen)
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (!isDrawerOpen) {
