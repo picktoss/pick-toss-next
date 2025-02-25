@@ -17,7 +17,6 @@ interface Props {
   directoryEmoji: string
   savedQuizCount: number
   quizTypes: Quiz.Type[]
-  onOpenChange: (open: boolean) => void
 }
 
 // ReplayQuizDrawer 컴포넌트
@@ -28,7 +27,6 @@ const ReplayQuizDrawer = ({
   directoryEmoji,
   savedQuizCount,
   quizTypes,
-  onOpenChange,
 }: Props) => {
   const router = useRouter()
 
@@ -65,7 +63,7 @@ const ReplayQuizDrawer = ({
   }
 
   return (
-    <Drawer onOpenChange={onOpenChange}>
+    <Drawer>
       <DrawerTrigger asChild>{triggerComponent}</DrawerTrigger>
 
       <DrawerContent
