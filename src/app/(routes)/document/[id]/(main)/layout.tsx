@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { DirectoryProvider } from '@/features/directory/contexts/directory-context'
 import { DocumentProvider } from '@/features/document/contexts/document-context'
 import RootLoading from '@/app/loading'
+import { DocumentDetailProvider } from '@/features/document/contexts/document-detail-context'
 
 export const metadata: Metadata = {}
 
@@ -15,8 +16,10 @@ const Layout: FunctionComponent<LayoutProps> = ({ header, children }) => {
     <Suspense fallback={<RootLoading />}>
       <DirectoryProvider>
         <DocumentProvider>
-          {header}
-          {children}
+          <DocumentDetailProvider>
+            {header}
+            {children}
+          </DocumentDetailProvider>
         </DocumentProvider>
       </DirectoryProvider>
     </Suspense>

@@ -4,11 +4,12 @@ import { Button } from '@/shared/components/ui/button'
 import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from '@/shared/components/ui/drawer'
 import { Slider } from '@/shared/components/ui/slider'
 import Text from '@/shared/components/ui/text'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Icon from '@/shared/components/custom/icon'
 import { cn } from '@/shared/lib/utils'
 import { useReplayDocumentQuiz } from '@/requests/quiz/hooks'
 import { useRouter } from 'next/navigation'
+import { useDocumentDetailContext } from '@/features/document/contexts/document-detail-context'
 
 interface Props {
   triggerComponent: React.ReactNode
@@ -31,7 +32,9 @@ const ReplayQuizDrawer = ({
   const router = useRouter()
 
   const { mutate: replayDocumentQuizMutate } = useReplayDocumentQuiz()
+  const { setIsDrawerOpen } = useDocumentDetailContext()
 
+  const [openDrawer, setOpenDrawer] = useState(false)
   const [quizType, setQuizType] = useState<Quiz.ReplayType>('RANDOM')
   const [quizCount, setQuizCount] = useState(savedQuizCount)
 
@@ -39,6 +42,10 @@ const ReplayQuizDrawer = ({
 
   const isIncludeMultiple = quizTypes.find((type) => type === 'MULTIPLE_CHOICE')
   const isIncludeMixUp = quizTypes.find((type) => type === 'MIX_UP')
+
+  useEffect(() => {
+    setIsDrawerOpen(openDrawer)
+  }, [setIsDrawerOpen, openDrawer])
 
   const handleClickStart = () => {
     // 퀴즈 다시 풀기 세트 생성하는 api 호출해 quiz set id 얻어
@@ -64,13 +71,12 @@ const ReplayQuizDrawer = ({
   }
 
   return (
-    <Drawer>
+    <Drawer open={openDrawer} onOpenChange={setOpenDrawer} modal>
       <DrawerTrigger asChild>{triggerComponent}</DrawerTrigger>
 
       <DrawerContent
-        overlayProps={{ className: 'max-w-mobile mx-auto', onClick: (e) => e.stopPropagation() }}
+        overlayProps={{ className: 'max-w-mobile mx-auto' }}
         className="mx-auto h-fit max-h-[90dvh] max-w-mobile rounded-t-[20px]"
-        onClick={(e) => e.stopPropagation()}
       >
         <div className="my-[24px] flex h-fit flex-col items-center overflow-y-auto overflow-x-hidden px-[16px]">
           <DrawerTitle className="mb-[38px] w-full font-suit text-title3">

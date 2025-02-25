@@ -21,13 +21,16 @@ import { useDeleteDocument } from '@/requests/document/hooks'
 import { useEffect, useRef, useState } from 'react'
 import { useUserStore } from '@/store/user'
 import { useDownloadQuiz } from '@/requests/quiz/hooks'
+import { useDocumentDetailContext } from '@/features/document/contexts/document-detail-context'
 
 // Header 컴포넌트
 const Header = () => {
   const router = useRouter()
   const { id } = useParams()
   const prev = useSearchParams().get('prev')
+
   const { userInfo: user } = useUserStore()
+  const { isDrawerOpen } = useDocumentDetailContext()
 
   const [isTitleHidden, setIsTitleHidden] = useState(false)
   const titleRef = useRef<HTMLHeadingElement | null>(null)
@@ -39,7 +42,9 @@ const Header = () => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIsTitleHidden(!entry?.isIntersecting)
+        if (!isDrawerOpen) {
+          setIsTitleHidden(!entry?.isIntersecting)
+        }
       },
       {
         root: null,
@@ -47,7 +52,7 @@ const Header = () => {
       }
     )
 
-    if (titleRef.current) {
+    if (titleRef.current && !isDrawerOpen) {
       observer.observe(titleRef.current)
     }
 
@@ -56,7 +61,7 @@ const Header = () => {
         observer.unobserve(titleRef.current)
       }
     }
-  }, [])
+  }, [isDrawerOpen])
 
   const handleClickCancel = () => {
     if (prev && prev === 'created') {
