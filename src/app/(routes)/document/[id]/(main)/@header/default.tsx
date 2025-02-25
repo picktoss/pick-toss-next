@@ -43,11 +43,7 @@ const Header = () => {
   useEffect(() => {
     if (!observerRef.current) {
       observerRef.current = new IntersectionObserver(
-        ([entry]) => {
-          if (!isDrawerOpen) {
-            setIsTitleHidden(!entry?.isIntersecting)
-          }
-        },
+        ([entry]) => setIsTitleHidden(!entry?.isIntersecting),
         {
           root: null,
           threshold: 0.5,

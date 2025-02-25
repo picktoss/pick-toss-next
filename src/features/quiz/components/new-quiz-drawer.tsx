@@ -19,11 +19,10 @@ interface Props {
   documentName: string
   directoryEmoji: string
   startAddQuizzes: (quizCount: number, quizType: Quiz.Type) => void
-  onOpenChange: (open: boolean) => void
 }
 
 // NewQuizDrawer 컴포넌트
-const NewQuizDrawer = ({ triggerComponent, documentId, startAddQuizzes, onOpenChange }: Props) => {
+const NewQuizDrawer = ({ triggerComponent, documentId, startAddQuizzes }: Props) => {
   const { userInfo: user } = useUserStore()
 
   const { data } = useQuery(queries.document.item(documentId))
@@ -56,7 +55,7 @@ const NewQuizDrawer = ({ triggerComponent, documentId, startAddQuizzes, onOpenCh
 
   return (
     <>
-      <Drawer onOpenChange={onOpenChange}>
+      <Drawer>
         <DrawerTrigger asChild>{triggerComponent}</DrawerTrigger>
 
         <DrawerContent
