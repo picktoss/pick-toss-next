@@ -15,7 +15,7 @@ const CollectionQuizIntro = ({
   onAnimationComplete,
 }: Props) => {
   return (
-    <div className="flex-center h-dvh w-dvw max-w-mobile bg-background-base-02">
+    <div className="flex-center h-dvh w-dvw max-w-mobile bg-background-base-02 pb-[100px]">
       <SpringUpCardAnimation
         className="bg-[var(--color-gray-800)]"
         cardName={
