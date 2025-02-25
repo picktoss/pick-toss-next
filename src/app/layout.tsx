@@ -40,7 +40,9 @@ export default function RootLayout({
         <Suspense fallback={<Splash />}>
           <Providers>
             <ClientSetUp />
-            <div className="mx-auto min-h-dvh max-w-mobile shadow-lg">{children}</div>
+            <div id="mobileViewContainer" className="mx-auto min-h-dvh max-w-mobile shadow-lg">
+              {children}
+            </div>
           </Providers>
           <Toaster />
         </Suspense>

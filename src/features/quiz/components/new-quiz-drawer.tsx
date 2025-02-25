@@ -4,7 +4,7 @@ import { Button } from '@/shared/components/ui/button'
 import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from '@/shared/components/ui/drawer'
 import { Slider } from '@/shared/components/ui/slider'
 import Text from '@/shared/components/ui/text'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Icon from '@/shared/components/custom/icon'
 import { cn } from '@/shared/lib/utils'
 import MoreStarDialog from '../../payment/components/more-star-dialog'
@@ -12,7 +12,6 @@ import { useQuery } from '@tanstack/react-query'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import { calculateAvailableQuizCount } from '@/features/document/utils'
 import { useUserStore } from '@/store/user'
-import { useDocumentDetailContext } from '@/features/document/contexts/document-detail-context'
 
 interface Props {
   triggerComponent: React.ReactNode
@@ -20,12 +19,12 @@ interface Props {
   documentName: string
   directoryEmoji: string
   startAddQuizzes: (quizCount: number, quizType: Quiz.Type) => void
+  onOpenChange: (open: boolean) => void
 }
 
 // NewQuizDrawer 컴포넌트
-const NewQuizDrawer = ({ triggerComponent, documentId, startAddQuizzes }: Props) => {
+const NewQuizDrawer = ({ triggerComponent, documentId, startAddQuizzes, onOpenChange }: Props) => {
   const { userInfo: user } = useUserStore()
-  const { setIsDrawerOpen } = useDocumentDetailContext()
 
   const { data } = useQuery(queries.document.item(documentId))
   const contentLength = data?.content.trim().length ?? 1000
@@ -36,14 +35,9 @@ const NewQuizDrawer = ({ triggerComponent, documentId, startAddQuizzes }: Props)
   const DOCUMENT_MAX_QUIZ_COUNT = Math.min(maxQuizCount, MAXIMUM_QUIZ_COUNT)
   const DEFAULT_QUIZ_COUNT = DOCUMENT_MAX_QUIZ_COUNT
 
-  const [openDrawer, setOpenDrawer] = useState(false)
   const [quizType, setQuizType] = useState<Quiz.Type>('MULTIPLE_CHOICE')
   const [quizCount, setQuizCount] = useState(DEFAULT_QUIZ_COUNT)
   const [isOpenMoreStar, setIsOpenMoreStar] = useState(false)
-
-  useEffect(() => {
-    setIsDrawerOpen(openDrawer)
-  }, [setIsDrawerOpen, openDrawer])
 
   const handleClickQuizType = (quizType: Quiz.Type) => {
     setQuizType(quizType)
@@ -62,7 +56,7 @@ const NewQuizDrawer = ({ triggerComponent, documentId, startAddQuizzes }: Props)
 
   return (
     <>
-      <Drawer open={openDrawer} onOpenChange={setOpenDrawer}>
+      <Drawer onOpenChange={onOpenChange}>
         <DrawerTrigger asChild>{triggerComponent}</DrawerTrigger>
         <DrawerContent
           overlayProps={{ className: 'max-w-mobile mx-auto' }}
