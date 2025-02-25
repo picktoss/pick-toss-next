@@ -14,18 +14,29 @@ const NotificationPermissionDialog = () => {
   const isPWA = useIsPWA()
 
   useEffect(() => {
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
+    const checkNotificationPermission = async () => {
+      if (typeof window === 'undefined') return
+      if (!session?.user.accessToken || !isPWA) return
 
-    if (Notification.permission === 'denied') {
-      return
-    } else if (
-      session?.user.accessToken &&
-      isPWA &&
-      Notification.permission === 'default' &&
-      isIOS
-    ) {
-      setOpen(true)
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
+
+      // iOS에서는 시스템에서 알림을 차단해도 'default'로 나올 수 있으므로 추가 검사 필요
+      if (Notification.permission === 'default' && isIOS) {
+        try {
+          const result = await navigator.permissions.query({ name: 'notifications' })
+
+          if (result.state === 'denied') {
+            return // 시스템 차단된 경우 Dialog 안 띄움
+          }
+
+          setOpen(true) // 정상 default인 경우 Dialog 열기
+        } catch (error) {
+          console.error('🚨 권한 조회 실패:', error)
+        }
+      }
     }
+
+    void checkNotificationPermission()
   }, [session?.user.accessToken, isPWA])
 
   const handleClick = async () => {
