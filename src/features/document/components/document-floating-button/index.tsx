@@ -97,7 +97,7 @@ const DocumentFloatingButton = ({
             // onOpenChange={handleOpenChange}
           />
         </div>,
-        document.body
+        document.getElementById('mobileViewContainer') || document.body
       )}
     </>
   )

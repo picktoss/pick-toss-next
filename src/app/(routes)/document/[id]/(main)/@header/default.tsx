@@ -21,7 +21,7 @@ import { useDeleteDocument } from '@/requests/document/hooks'
 import { useEffect, useRef, useState } from 'react'
 import { useUserStore } from '@/store/user'
 import { useDownloadQuiz } from '@/requests/quiz/hooks'
-// import { useDocumentDetailContext } from '@/features/document/contexts/document-detail-context'
+import { useDocumentDetailContext } from '@/features/document/contexts/document-detail-context'
 
 // Header 컴포넌트
 const Header = () => {
@@ -30,7 +30,7 @@ const Header = () => {
   const prev = useSearchParams().get('prev')
 
   const { userInfo: user } = useUserStore()
-  // const { isDrawerOpen } = useDocumentDetailContext()
+  const { isDrawerOpen } = useDocumentDetailContext()
 
   const [isTitleHidden, setIsTitleHidden] = useState(false)
   const titleRef = useRef<HTMLHeadingElement | null>(null)
@@ -43,7 +43,12 @@ const Header = () => {
   useEffect(() => {
     if (!observerRef.current) {
       observerRef.current = new IntersectionObserver(
-        ([entry]) => setIsTitleHidden(!entry?.isIntersecting),
+        ([entry]) => {
+          // 🛑 Drawer가 열려 있다면 `isTitleHidden` 변경하지 않음
+          if (!isDrawerOpen) {
+            setIsTitleHidden(!entry?.isIntersecting)
+          }
+        },
         {
           root: null,
           threshold: 0.5,
@@ -63,7 +68,7 @@ const Header = () => {
     return () => {
       observerRef.current?.disconnect()
     }
-  }, [])
+  }, [isDrawerOpen])
 
   const handleClickCancel = () => {
     if (prev && prev === 'created') {
