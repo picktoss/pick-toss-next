@@ -16,7 +16,14 @@ const NotificationPermissionDialog = () => {
   useEffect(() => {
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
 
-    if (session?.user.accessToken && isPWA && Notification.permission === 'default' && isIOS) {
+    if (Notification.permission === 'denied') {
+      return
+    } else if (
+      session?.user.accessToken &&
+      isPWA &&
+      Notification.permission === 'default' &&
+      isIOS
+    ) {
       setOpen(true)
     }
   }, [session?.user.accessToken, isPWA])
