@@ -3,21 +3,28 @@
 import { PropsWithChildren, createContext, useContext, useMemo, useState } from 'react'
 
 interface DocumentDetailContextValues {
+  isNewQuizOpen: boolean
+  setIsNewQuizOpen: (value: boolean) => void
+  isReplayQuizOpen: boolean
+  setIsReplayQuizOpen: (value: boolean) => void
   isDrawerOpen: boolean
-  setIsDrawerOpen: (value: boolean) => void
 }
 
 const DocumentDetailContext = createContext<DocumentDetailContextValues | null>(null)
 
 export function DocumentDetailProvider({ children }: PropsWithChildren) {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+  const [isNewQuizOpen, setIsNewQuizOpen] = useState(false)
+  const [isReplayQuizOpen, setIsReplayQuizOpen] = useState(false)
 
   const values = useMemo(
     () => ({
-      isDrawerOpen,
-      setIsDrawerOpen,
+      isNewQuizOpen,
+      setIsNewQuizOpen,
+      isReplayQuizOpen,
+      setIsReplayQuizOpen,
+      isDrawerOpen: isNewQuizOpen || isReplayQuizOpen,
     }),
-    [isDrawerOpen, setIsDrawerOpen]
+    [isNewQuizOpen, setIsNewQuizOpen, isReplayQuizOpen, setIsReplayQuizOpen]
   )
 
   return <DocumentDetailContext.Provider value={values}>{children}</DocumentDetailContext.Provider>

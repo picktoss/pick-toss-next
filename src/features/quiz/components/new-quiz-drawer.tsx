@@ -4,7 +4,7 @@ import { Button } from '@/shared/components/ui/button'
 import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from '@/shared/components/ui/drawer'
 import { Slider } from '@/shared/components/ui/slider'
 import Text from '@/shared/components/ui/text'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Icon from '@/shared/components/custom/icon'
 import { cn } from '@/shared/lib/utils'
 import MoreStarDialog from '../../payment/components/more-star-dialog'
@@ -12,6 +12,7 @@ import { useQuery } from '@tanstack/react-query'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import { calculateAvailableQuizCount } from '@/features/document/utils'
 import { useUserStore } from '@/store/user'
+import { useDocumentDetailContext } from '@/features/document/contexts/document-detail-context'
 
 interface Props {
   triggerComponent: React.ReactNode
@@ -19,11 +20,10 @@ interface Props {
   documentName: string
   directoryEmoji: string
   startAddQuizzes: (quizCount: number, quizType: Quiz.Type) => void
-  onOpenChange: (open: boolean) => void
 }
 
 // NewQuizDrawer 컴포넌트
-const NewQuizDrawer = ({ triggerComponent, documentId, startAddQuizzes, onOpenChange }: Props) => {
+const NewQuizDrawer = ({ triggerComponent, documentId, startAddQuizzes }: Props) => {
   const { userInfo: user } = useUserStore()
 
   const { data } = useQuery(queries.document.item(documentId))
@@ -39,7 +39,7 @@ const NewQuizDrawer = ({ triggerComponent, documentId, startAddQuizzes, onOpenCh
   const [quizCount, setQuizCount] = useState(DEFAULT_QUIZ_COUNT)
   const [isOpenMoreStar, setIsOpenMoreStar] = useState(false)
 
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+  const { isNewQuizOpen, setIsNewQuizOpen } = useDocumentDetailContext()
 
   const handleClickQuizType = (quizType: Quiz.Type) => {
     setQuizType(quizType)
@@ -56,19 +56,15 @@ const NewQuizDrawer = ({ triggerComponent, documentId, startAddQuizzes, onOpenCh
     startAddQuizzes(quizCount, quizType)
   }
 
-  useEffect(() => {
-    onOpenChange(isDrawerOpen)
-  }, [onOpenChange, isDrawerOpen])
-
   return (
     <>
       {/* iOS Safari Drawer & Scroll 관련 버그 해결: Overlay 직접 구현 */}
-      {isDrawerOpen && (
+      {isNewQuizOpen && (
         <div
           className="fixed bottom-[-43px] right-1/2 z-[9999] h-dvh w-dvw translate-x-1/2 "
           onClick={() => {
-            if (isDrawerOpen) {
-              setIsDrawerOpen(false)
+            if (isNewQuizOpen) {
+              setIsNewQuizOpen(false)
             }
           }}
         >
@@ -76,7 +72,7 @@ const NewQuizDrawer = ({ triggerComponent, documentId, startAddQuizzes, onOpenCh
         </div>
       )}
 
-      <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen} modal={false}>
+      <Drawer open={isNewQuizOpen} onOpenChange={setIsNewQuizOpen} modal={false}>
         <DrawerTrigger asChild>{triggerComponent}</DrawerTrigger>
 
         <DrawerContent className="pointer-events-auto z-[9999] mx-auto h-fit max-h-[90dvh] max-w-mobile rounded-t-[20px]">

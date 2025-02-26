@@ -4,11 +4,12 @@ import { Button } from '@/shared/components/ui/button'
 import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from '@/shared/components/ui/drawer'
 import { Slider } from '@/shared/components/ui/slider'
 import Text from '@/shared/components/ui/text'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Icon from '@/shared/components/custom/icon'
 import { cn } from '@/shared/lib/utils'
 import { useReplayDocumentQuiz } from '@/requests/quiz/hooks'
 import { useRouter } from 'next/navigation'
+import { useDocumentDetailContext } from '@/features/document/contexts/document-detail-context'
 
 interface Props {
   triggerComponent: React.ReactNode
@@ -17,7 +18,6 @@ interface Props {
   directoryEmoji: string
   savedQuizCount: number
   quizTypes: Quiz.Type[]
-  onOpenChange: (open: boolean) => void
 }
 
 // ReplayQuizDrawer 컴포넌트
@@ -28,7 +28,6 @@ const ReplayQuizDrawer = ({
   directoryEmoji,
   savedQuizCount,
   quizTypes,
-  onOpenChange,
 }: Props) => {
   const router = useRouter()
 
@@ -41,7 +40,7 @@ const ReplayQuizDrawer = ({
   const isIncludeMultiple = quizTypes.find((type) => type === 'MULTIPLE_CHOICE')
   const isIncludeMixUp = quizTypes.find((type) => type === 'MIX_UP')
 
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+  const { isReplayQuizOpen, setIsReplayQuizOpen } = useDocumentDetailContext()
 
   const handleClickStart = () => {
     // 퀴즈 다시 풀기 세트 생성하는 api 호출해 quiz set id 얻어
@@ -66,19 +65,15 @@ const ReplayQuizDrawer = ({
     )
   }
 
-  useEffect(() => {
-    onOpenChange(isDrawerOpen)
-  }, [onOpenChange, isDrawerOpen])
-
   return (
     <>
       {/* iOS Safari Drawer & Scroll 관련 버그 해결: Overlay 직접 구현 */}
-      {isDrawerOpen && (
+      {isReplayQuizOpen && (
         <div
           className="fixed bottom-[-43px] right-1/2 z-[9999] h-dvh w-dvw translate-x-1/2 "
           onClick={() => {
-            if (isDrawerOpen) {
-              setIsDrawerOpen(false)
+            if (isReplayQuizOpen) {
+              setIsReplayQuizOpen(false)
             }
           }}
         >
@@ -86,7 +81,7 @@ const ReplayQuizDrawer = ({
         </div>
       )}
 
-      <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen} modal={false}>
+      <Drawer open={isReplayQuizOpen} onOpenChange={setIsReplayQuizOpen} modal={false}>
         <DrawerTrigger asChild>{triggerComponent}</DrawerTrigger>
 
         <DrawerContent className="pointer-events-auto z-[9999] mx-auto h-fit max-h-[90dvh] max-w-mobile rounded-t-[20px]">

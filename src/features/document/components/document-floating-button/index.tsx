@@ -5,7 +5,7 @@ import ReplayQuizDrawer from '@/features/quiz/components/replay-quiz-drawer'
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
 import { useDocumentDetailContext } from '../../contexts/document-detail-context'
-// import { useEffect } from 'react'
+import useDrawerScrollLock from '@/shared/hooks/use-drawer-scroll-lock'
 
 interface Props {
   documentId: number
@@ -24,42 +24,10 @@ const DocumentFloatingButton = ({
   startAddQuizzes,
   quizTypes,
 }: Props) => {
-  const { setIsDrawerOpen } = useDocumentDetailContext()
-
-  const handleOpenChange = (open: boolean) => {
-    setIsDrawerOpen(open)
-  }
+  const { isDrawerOpen } = useDocumentDetailContext()
 
   // iOS Safari Drawer & Scroll 관련 버그 해결
-  // useEffect(() => {
-  //   const disableTouchMove = (e: TouchEvent) => {
-  //     if (isDrawerOpen) {
-  //       e.preventDefault()
-  //     }
-  //   }
-
-  //   const disableScroll = () => {
-  //     document.documentElement.style.overflow = 'hidden'
-  //     document.documentElement.style.height = '100%'
-  //   }
-  //   const enableScroll = () => {
-  //     document.documentElement.style.overflow = 'auto'
-  //     document.documentElement.style.height = ''
-  //   }
-
-  //   if (isDrawerOpen) {
-  //     disableScroll()
-  //     document.addEventListener('touchmove', disableTouchMove, { passive: false })
-  //   } else {
-  //     enableScroll()
-  //     document.removeEventListener('touchmove', disableTouchMove)
-  //   }
-
-  //   return () => {
-  //     enableScroll()
-  //     document.removeEventListener('touchmove', disableTouchMove)
-  //   }
-  // }, [isDrawerOpen])
+  useDrawerScrollLock(isDrawerOpen)
 
   return (
     <div className="flex-center fixed bottom-[43px] right-1/2 z-50 w-[60dvw] min-w-[266px] max-w-[270px] translate-x-1/2 rounded-full bg-background-toast px-[28px] py-[10px] text-button2 text-button-label-primary shadow-float-thick">
@@ -75,7 +43,6 @@ const DocumentFloatingButton = ({
         directoryEmoji={directoryEmoji}
         savedQuizCount={savedQuizCount}
         quizTypes={quizTypes}
-        onOpenChange={handleOpenChange}
       />
 
       <NewQuizDrawer
@@ -91,7 +58,6 @@ const DocumentFloatingButton = ({
         documentName={documentName}
         directoryEmoji={directoryEmoji}
         startAddQuizzes={startAddQuizzes}
-        onOpenChange={handleOpenChange}
       />
     </div>
   )
