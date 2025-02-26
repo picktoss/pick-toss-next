@@ -19,11 +19,11 @@ interface Props {
   documentName: string
   directoryEmoji: string
   startAddQuizzes: (quizCount: number, quizType: Quiz.Type) => void
-  // onOpenChange: (open: boolean) => void
+  onOpenChange: (open: boolean) => void
 }
 
 // NewQuizDrawer 컴포넌트
-const NewQuizDrawer = ({ triggerComponent, documentId, startAddQuizzes }: Props) => {
+const NewQuizDrawer = ({ triggerComponent, documentId, startAddQuizzes, onOpenChange }: Props) => {
   const { userInfo: user } = useUserStore()
 
   const { data } = useQuery(queries.document.item(documentId))
@@ -56,12 +56,13 @@ const NewQuizDrawer = ({ triggerComponent, documentId, startAddQuizzes }: Props)
 
   return (
     <>
-      <Drawer>
+      <Drawer onOpenChange={onOpenChange}>
         <DrawerTrigger asChild>{triggerComponent}</DrawerTrigger>
 
         <DrawerContent
-          overlayProps={{ className: 'max-w-mobile mx-auto' }}
+          overlayProps={{ className: 'max-w-mobile mx-auto', onClick: (e) => e.stopPropagation() }}
           className="pointer-events-auto mx-auto h-fit max-h-[90dvh] max-w-mobile rounded-t-[20px]"
+          onClick={(e) => e.stopPropagation()}
         >
           <div className="my-[24px] flex h-fit flex-col items-center overflow-y-auto overflow-x-hidden px-[16px]">
             <DrawerTitle className="mb-[38px] w-full font-suit text-title3">

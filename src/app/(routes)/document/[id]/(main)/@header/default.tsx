@@ -56,10 +56,11 @@ const Header = () => {
       )
     }
 
-    // if (isDrawerOpen) {
-    //   observerRef.current?.disconnect()
-    //   return
-    // }
+    if (isDrawerOpen) {
+      setIsTitleHidden(false)
+      observerRef.current?.disconnect()
+      return
+    }
 
     if (titleRef.current) {
       observerRef.current?.observe(titleRef.current)
@@ -108,7 +109,7 @@ const Header = () => {
   }
   return (
     <>
-      <header>
+      <header className="relative">
         <div
           className={cn(
             'fixed right-1/2 top-0 z-20 flex h-[54px] w-full max-w-[430px] translate-x-1/2 bg-background-base-01 px-[16px]'

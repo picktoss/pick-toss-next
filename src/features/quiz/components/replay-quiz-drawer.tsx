@@ -17,7 +17,7 @@ interface Props {
   directoryEmoji: string
   savedQuizCount: number
   quizTypes: Quiz.Type[]
-  // onOpenChange: (open: boolean) => void
+  onOpenChange: (open: boolean) => void
 }
 
 // ReplayQuizDrawer 컴포넌트
@@ -28,8 +28,8 @@ const ReplayQuizDrawer = ({
   directoryEmoji,
   savedQuizCount,
   quizTypes,
-}: // onOpenChange,
-Props) => {
+  onOpenChange,
+}: Props) => {
   const router = useRouter()
 
   const { mutate: replayDocumentQuizMutate } = useReplayDocumentQuiz()
@@ -65,12 +65,13 @@ Props) => {
   }
 
   return (
-    <Drawer>
+    <Drawer onOpenChange={onOpenChange}>
       <DrawerTrigger asChild>{triggerComponent}</DrawerTrigger>
 
       <DrawerContent
-        overlayProps={{ className: 'max-w-mobile mx-auto' }}
+        overlayProps={{ className: 'max-w-mobile mx-auto', onClick: (e) => e.stopPropagation() }}
         className="pointer-events-auto mx-auto h-fit max-h-[90dvh] max-w-mobile rounded-t-[20px]"
+        onClick={(e) => e.stopPropagation()}
       >
         <div className="my-[24px] flex h-fit flex-col items-center overflow-y-auto overflow-x-hidden px-[16px]">
           <DrawerTitle className="mb-[38px] w-full font-suit text-title3">
