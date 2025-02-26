@@ -18,7 +18,7 @@ import { useQuery } from '@tanstack/react-query'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import ConfirmDialogWidget from '@/widget/confirm-dialog'
 import { useDeleteDocument } from '@/requests/document/hooks'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useUserStore } from '@/store/user'
 import { useDownloadQuiz } from '@/requests/quiz/hooks'
 import { useDocumentDetailContext } from '@/features/document/contexts/document-detail-context'
@@ -41,8 +41,8 @@ const Header = () => {
   const { mutate: deleteDocumentMutation } = useDeleteDocument()
 
   // 스크롤 이벤트 핸들러
-  const handleScroll = () => {
-    if (isDrawerOpen) return // Drawer가 열려있으면 무시
+  const handleScroll = useCallback(() => {
+    if (isDrawerOpen) return
 
     const titleElement = titleRef.current
     if (!titleElement) return
@@ -50,16 +50,11 @@ const Header = () => {
     const rect = titleElement.getBoundingClientRect()
     const headerHeight = 54 // Fixed header의 높이
 
-    if (rect.top + rect.height / 2 < headerHeight) {
-      setIsTitleHidden(true)
-    } else {
-      setIsTitleHidden(false)
-    }
-  }
+    setIsTitleHidden(rect.top + rect.height / 2 < headerHeight)
+  }, [isDrawerOpen])
 
   // 스크롤 이벤트 설정
   useEffect(() => {
-    // const scrollContainer = document.getElementById('mobileViewContainer') || window
     let ticking = false
 
     const scrollListener = () => {
@@ -77,12 +72,12 @@ const Header = () => {
     return () => {
       window.removeEventListener('scroll', scrollListener)
     }
-  }, [isDrawerOpen])
+  }, [handleScroll])
 
   // 첫 렌더링 시 스크롤 위치에 따라 상태 설정
   useEffect(() => {
     handleScroll()
-  }, [])
+  }, [handleScroll])
 
   // useEffect(() => {
   //   if (!observerRef.current) {
