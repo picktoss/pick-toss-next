@@ -33,11 +33,11 @@ const DocumentFloatingButton = ({
     if (scrollContainer) {
       if (open) {
         setIsDrawerOpen(true)
+        scrollContainer.style.pointerEvents = 'none' // 클릭 안되도록
         // scrollContainer.style.overflow = 'hidden' // 스크롤 막기
-        // scrollContainer.style.pointerEvents = 'none' // 클릭 안되도록
       } else {
         setIsDrawerOpen(false)
-        // scrollContainer.style.pointerEvents = 'auto' // 원래대로
+        scrollContainer.style.pointerEvents = 'auto' // 원래대로
         // scrollContainer.style.overflow = 'auto' // 스크롤 원래대로 복구
       }
     } else {
