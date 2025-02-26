@@ -6,7 +6,7 @@ import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
 import { createPortal } from 'react-dom'
 import { useDocumentDetailContext } from '../../contexts/document-detail-context'
-// import { useEffect } from 'react'
+import { useEffect } from 'react'
 
 interface Props {
   documentId: number
@@ -46,17 +46,17 @@ const DocumentFloatingButton = ({
     }
   }
 
-  // // Drawer가 닫힐 때 overflow 속성 원복
-  // useEffect(() => {
-  //   return () => {
-  //     const scrollContainer = document.getElementById('mobileViewContainer')
+  // unmount시 overflow 속성 원복
+  useEffect(() => {
+    return () => {
+      const scrollContainer = document.getElementById('mobileViewContainer')
 
-  //     if (scrollContainer) {
-  //       scrollContainer.style.pointerEvents = 'auto'
-  //       scrollContainer.style.overflow = ''
-  //     }
-  //   }
-  // }, [])
+      if (scrollContainer) {
+        scrollContainer.style.pointerEvents = 'auto'
+        // scrollContainer.style.overflow = ''
+      }
+    }
+  }, [])
 
   return (
     <>
