@@ -34,11 +34,9 @@ const DocumentFloatingButton = ({
       if (open) {
         setIsDrawerOpen(true)
         scrollContainer.style.pointerEvents = 'none' // 클릭 안되도록
-        // scrollContainer.style.overflow = 'hidden' // 스크롤 막기
       } else {
         setIsDrawerOpen(false)
         scrollContainer.style.pointerEvents = 'auto' // 원래대로
-        // scrollContainer.style.overflow = 'auto' // 스크롤 원래대로 복구
       }
     } else {
       // eslint-disable-next-line no-console
@@ -53,7 +51,6 @@ const DocumentFloatingButton = ({
 
       if (scrollContainer) {
         scrollContainer.style.pointerEvents = 'auto'
-        // scrollContainer.style.overflow = ''
       }
     }
   }, [])

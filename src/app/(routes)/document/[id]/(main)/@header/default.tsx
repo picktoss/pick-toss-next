@@ -34,42 +34,86 @@ const Header = () => {
 
   const [isTitleHidden, setIsTitleHidden] = useState(false)
   const titleRef = useRef<HTMLHeadingElement | null>(null)
-  const observerRef = useRef<IntersectionObserver | null>(null)
+  // const observerRef = useRef<IntersectionObserver | null>(null)
 
   const { data } = useQuery(queries.document.item(Number(id)))
   const { mutate: downloadQuizMutation } = useDownloadQuiz()
   const { mutate: deleteDocumentMutation } = useDeleteDocument()
 
-  useEffect(() => {
-    if (!observerRef.current) {
-      observerRef.current = new IntersectionObserver(
-        ([entry]) => {
-          // 🛑 Drawer가 열려 있다면 `isTitleHidden` 변경하지 않음
-          if (!isDrawerOpen) {
-            setIsTitleHidden(!entry?.isIntersecting)
-          }
-        },
-        {
-          root: null,
-          threshold: 0.5,
-        }
-      )
-    }
+  // 스크롤 이벤트 핸들러
+  const handleScroll = () => {
+    if (isDrawerOpen) return // Drawer가 열려있으면 무시
 
-    if (isDrawerOpen) {
+    const titleElement = titleRef.current
+    if (!titleElement) return
+
+    const rect = titleElement.getBoundingClientRect()
+    const headerHeight = 54 // Fixed header의 높이
+
+    if (rect.top + rect.height / 2 < headerHeight) {
+      setIsTitleHidden(true)
+    } else {
       setIsTitleHidden(false)
-      observerRef.current?.disconnect()
-      return
+    }
+  }
+
+  // 스크롤 이벤트 설정
+  useEffect(() => {
+    // const scrollContainer = document.getElementById('mobileViewContainer') || window
+    let ticking = false
+
+    const scrollListener = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          handleScroll()
+          ticking = false
+        })
+        ticking = true
+      }
     }
 
-    if (titleRef.current) {
-      observerRef.current?.observe(titleRef.current)
-    }
+    window.addEventListener('scroll', scrollListener, { passive: true })
 
     return () => {
-      observerRef.current?.disconnect()
+      window.removeEventListener('scroll', scrollListener)
     }
   }, [isDrawerOpen])
+
+  // 첫 렌더링 시 스크롤 위치에 따라 상태 설정
+  useEffect(() => {
+    handleScroll()
+  }, [])
+
+  // useEffect(() => {
+  //   if (!observerRef.current) {
+  //     observerRef.current = new IntersectionObserver(
+  //       ([entry]) => {
+  //         // 🛑 Drawer가 열려 있다면 `isTitleHidden` 변경하지 않음
+  //         if (!isDrawerOpen) {
+  //           setIsTitleHidden(!entry?.isIntersecting)
+  //         }
+  //       },
+  //       {
+  //         root: null,
+  //         threshold: 0.5,
+  //       }
+  //     )
+  //   }
+
+  //   if (isDrawerOpen) {
+  //     setIsTitleHidden(false)
+  //     observerRef.current?.disconnect()
+  //     return
+  //   }
+
+  //   if (titleRef.current) {
+  //     observerRef.current?.observe(titleRef.current)
+  //   }
+
+  //   return () => {
+  //     observerRef.current?.disconnect()
+  //   }
+  // }, [isDrawerOpen])
 
   const handleClickCancel = () => {
     if (prev && prev === 'created') {
