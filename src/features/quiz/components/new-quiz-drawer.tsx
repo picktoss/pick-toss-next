@@ -4,7 +4,7 @@ import { Button } from '@/shared/components/ui/button'
 import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from '@/shared/components/ui/drawer'
 import { Slider } from '@/shared/components/ui/slider'
 import Text from '@/shared/components/ui/text'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Icon from '@/shared/components/custom/icon'
 import { cn } from '@/shared/lib/utils'
 import MoreStarDialog from '../../payment/components/more-star-dialog'
@@ -39,6 +39,8 @@ const NewQuizDrawer = ({ triggerComponent, documentId, startAddQuizzes, onOpenCh
   const [quizCount, setQuizCount] = useState(DEFAULT_QUIZ_COUNT)
   const [isOpenMoreStar, setIsOpenMoreStar] = useState(false)
 
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+
   const handleClickQuizType = (quizType: Quiz.Type) => {
     setQuizType(quizType)
   }
@@ -54,16 +56,34 @@ const NewQuizDrawer = ({ triggerComponent, documentId, startAddQuizzes, onOpenCh
     startAddQuizzes(quizCount, quizType)
   }
 
+  useEffect(() => {
+    onOpenChange(isDrawerOpen)
+  }, [onOpenChange, isDrawerOpen])
+
   return (
     <>
-      <Drawer onOpenChange={onOpenChange}>
+      {/* Overlay 직접 구현 */}
+      {isDrawerOpen && (
+        <div
+          className="fixed bottom-[-43px] right-1/2 z-[9999] h-dvh w-dvw translate-x-1/2 "
+          onClick={() => {
+            if (isDrawerOpen) {
+              setIsDrawerOpen(false)
+            }
+          }}
+        >
+          <div className="mx-auto h-dvh max-w-mobile bg-black opacity-80" />
+        </div>
+      )}
+
+      <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen} modal={false}>
         <DrawerTrigger asChild>{triggerComponent}</DrawerTrigger>
 
         <DrawerContent
-          overlayProps={{
-            className: 'max-w-mobile mx-auto z-[9998]',
-            // onClick: (e) => e.stopPropagation(),
-          }}
+          // overlayProps={{
+          //   className: 'max-w-mobile mx-auto z-[9998]',
+          //   // onClick: (e) => e.stopPropagation(),
+          // }}
           className="pointer-events-auto z-[9999] mx-auto h-fit max-h-[90dvh] max-w-mobile rounded-t-[20px]"
           // onClick={(e) => e.stopPropagation()}
           // onTouchStart={(e) => e.stopPropagation()}
