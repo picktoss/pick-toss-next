@@ -5,7 +5,7 @@ import ReplayQuizDrawer from '@/features/quiz/components/replay-quiz-drawer'
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
 import { useDocumentDetailContext } from '../../contexts/document-detail-context'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 interface Props {
   documentId: number
@@ -25,8 +25,13 @@ const DocumentFloatingButton = ({
   quizTypes,
 }: Props) => {
   const { isDrawerOpen, setIsDrawerOpen } = useDocumentDetailContext()
+  const [scrollY, setScrollY] = useState(0)
 
   const handleOpenChange = (open: boolean) => {
+    if (open) {
+      setScrollY(window.scrollY) // 현재 스크롤 위치 저장
+      window.scrollTo(0, 0) // 최상단 이동
+    }
     setIsDrawerOpen(open)
   }
 
@@ -58,7 +63,7 @@ const DocumentFloatingButton = ({
 
     if (isDrawerOpen) {
       document.body.style.overflow = 'hidden'
-      document.body.style.position = 'fixed' // 스크롤 방지
+      document.body.style.position = 'fixed'
       document.body.style.width = '100%'
       document.addEventListener('touchmove', disableTouchMove, { passive: false })
     } else {
@@ -66,6 +71,9 @@ const DocumentFloatingButton = ({
       document.body.style.position = ''
       document.body.style.width = ''
       document.removeEventListener('touchmove', disableTouchMove)
+
+      // Drawer가 닫히면 저장된 위치로 복원
+      window.scrollTo(0, scrollY)
     }
 
     return () => {
@@ -74,7 +82,7 @@ const DocumentFloatingButton = ({
       document.body.style.width = ''
       document.removeEventListener('touchmove', disableTouchMove)
     }
-  }, [isDrawerOpen])
+  }, [isDrawerOpen, scrollY])
 
   // unmount시 overflow 속성 원복
   // useEffect(() => {
