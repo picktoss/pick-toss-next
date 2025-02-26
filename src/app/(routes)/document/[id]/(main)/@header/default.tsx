@@ -40,45 +40,6 @@ const Header = () => {
   const { mutate: downloadQuizMutation } = useDownloadQuiz()
   const { mutate: deleteDocumentMutation } = useDeleteDocument()
 
-  // 스크롤 이벤트 핸들러
-  // const handleScroll = useCallback(() => {
-  //   if (isDrawerOpen) return
-
-  //   const titleElement = titleRef.current
-  //   if (!titleElement) return
-
-  //   const rect = titleElement.getBoundingClientRect()
-  //   const headerHeight = 54 // Fixed header의 높이
-
-  //   setIsTitleHidden(rect.top + rect.height / 2 < headerHeight)
-  // }, [isDrawerOpen])
-
-  // // 스크롤 이벤트 설정
-  // useEffect(() => {
-  //   let ticking = false
-
-  //   const scrollListener = () => {
-  //     if (!ticking) {
-  //       requestAnimationFrame(() => {
-  //         handleScroll()
-  //         ticking = false
-  //       })
-  //       ticking = true
-  //     }
-  //   }
-
-  //   window.addEventListener('scroll', scrollListener, { passive: true })
-
-  //   return () => {
-  //     window.removeEventListener('scroll', scrollListener)
-  //   }
-  // }, [handleScroll])
-
-  // // 첫 렌더링 시 스크롤 위치에 따라 상태 설정
-  // useEffect(() => {
-  //   handleScroll()
-  // }, [handleScroll])
-
   useEffect(() => {
     if (!observerRef.current) {
       observerRef.current = new IntersectionObserver(

@@ -5,7 +5,7 @@ import ReplayQuizDrawer from '@/features/quiz/components/replay-quiz-drawer'
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
 import { useDocumentDetailContext } from '../../contexts/document-detail-context'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 interface Props {
   documentId: number
@@ -25,29 +25,10 @@ const DocumentFloatingButton = ({
   quizTypes,
 }: Props) => {
   const { isDrawerOpen, setIsDrawerOpen } = useDocumentDetailContext()
-  const [scrollY, setScrollY] = useState(0)
 
   const handleOpenChange = (open: boolean) => {
     setIsDrawerOpen(open)
   }
-
-  // const handleOpenChange = (open: boolean) => {
-  //   if (open) {
-  //     setIsDrawerOpen(true)
-  //     // scrollContainer.style.pointerEvents = 'none' // 클릭 안되도록
-  //   } else {
-  //     setIsDrawerOpen(false)
-  //     // scrollContainer.style.pointerEvents = 'auto' // 원래대로
-  //   }
-
-  //   // const scrollContainer = document.getElementById('mobileViewContainer')
-
-  //   // if (scrollContainer) {
-  //   // } else {
-  //   //   // eslint-disable-next-line no-console
-  //   //   console.warn('⚠️ mobileViewContainer를 찾을 수 없습니다.')
-  //   // }
-  // }
 
   // iOS Safari Drawer & Scroll 관련 버그 해결
   useEffect(() => {
@@ -57,50 +38,55 @@ const DocumentFloatingButton = ({
       }
     }
 
+    const disableScroll = () => {
+      document.documentElement.style.overflow = 'hidden'
+      document.documentElement.style.height = '100%'
+    }
+    const enableScroll = () => {
+      document.documentElement.style.overflow = ''
+      document.documentElement.style.height = ''
+    }
+
     if (isDrawerOpen) {
-      setScrollY(window.scrollY)
-
-      setTimeout(() => {
-        window.scrollTo(0, 0)
-      }, 0)
-
-      // 브라우저가 스크롤을 최상단으로 이동한 후 스타일 적용
-      requestAnimationFrame(() => {
-        document.body.style.overflow = 'hidden'
-        document.body.style.position = 'fixed'
-        document.body.style.width = '100%'
-        document.addEventListener('touchmove', disableTouchMove, { passive: false })
-      })
+      disableScroll()
+      document.addEventListener('touchmove', disableTouchMove, { passive: false })
     } else {
-      document.body.style.overflow = ''
-      document.body.style.position = ''
-      document.body.style.width = ''
+      enableScroll()
       document.removeEventListener('touchmove', disableTouchMove)
-
-      // Drawer가 닫히면 저장된 위치로 복원
-      setTimeout(() => {
-        window.scrollTo(0, scrollY)
-      }, 0) // 다음 이벤트 루프로 넘겨 실행
     }
 
     return () => {
-      document.body.style.overflow = ''
-      document.body.style.position = ''
-      document.body.style.width = ''
+      enableScroll()
       document.removeEventListener('touchmove', disableTouchMove)
     }
-  }, [isDrawerOpen, scrollY])
+  }, [isDrawerOpen])
 
-  // unmount시 overflow 속성 원복
   // useEffect(() => {
-  //   return () => {
-  //     const scrollContainer = document.getElementById('mobileViewContainer')
-
-  //     if (scrollContainer) {
-  //       scrollContainer.style.pointerEvents = 'auto'
+  //   const disableTouchMove = (e: TouchEvent) => {
+  //     if (isDrawerOpen) {
+  //       e.preventDefault()
   //     }
   //   }
-  // }, [])
+
+  //   if (isDrawerOpen) {
+  //     document.body.style.overflow = 'hidden'
+  //     // document.body.style.position = 'fixed'
+  //     // document.body.style.width = '100%'
+  //     document.addEventListener('touchmove', disableTouchMove, { passive: false })
+  //   } else {
+  //     document.body.style.overflow = ''
+  //     // document.body.style.position = ''
+  //     // document.body.style.width = ''
+  //     document.removeEventListener('touchmove', disableTouchMove)
+  //   }
+
+  //   return () => {
+  //     document.body.style.overflow = ''
+  //     // document.body.style.position = ''
+  //     // document.body.style.width = ''
+  //     document.removeEventListener('touchmove', disableTouchMove)
+  //   }
+  // }, [isDrawerOpen])
 
   return (
     <div className="flex-center fixed bottom-[43px] right-1/2 z-50 w-[60dvw] min-w-[266px] max-w-[270px] translate-x-1/2 rounded-full bg-background-toast px-[28px] py-[10px] text-button2 text-button-label-primary shadow-float-thick">

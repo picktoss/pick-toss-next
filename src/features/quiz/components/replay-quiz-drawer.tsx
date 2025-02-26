@@ -71,13 +71,13 @@ const ReplayQuizDrawer = ({
       <DrawerContent
         overlayProps={{
           className: 'max-w-mobile mx-auto z-[9998]',
-          onClick: (e) => e.stopPropagation(),
+          // onClick: (e) => e.stopPropagation(),
         }}
         className="pointer-events-auto z-[9999] mx-auto h-fit max-h-[90dvh] max-w-mobile rounded-t-[20px]"
-        onClick={(e) => e.stopPropagation()}
-        onTouchStart={(e) => e.stopPropagation()}
-        onTouchMove={(e) => e.stopPropagation()}
-        onTouchEnd={(e) => e.stopPropagation()}
+        // onClick={(e) => e.stopPropagation()}
+        // onTouchStart={(e) => e.stopPropagation()}
+        // onTouchMove={(e) => e.stopPropagation()}
+        // onTouchEnd={(e) => e.stopPropagation()}
       >
         <div className="my-[24px] flex h-fit flex-col items-center overflow-y-auto overflow-x-hidden px-[16px]">
           <DrawerTitle className="mb-[38px] w-full font-suit text-title3">
