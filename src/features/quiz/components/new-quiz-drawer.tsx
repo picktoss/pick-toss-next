@@ -62,7 +62,7 @@ const NewQuizDrawer = ({ triggerComponent, documentId, startAddQuizzes, onOpenCh
 
   return (
     <>
-      {/* Overlay 직접 구현 */}
+      {/* iOS Safari Drawer & Scroll 관련 버그 해결: Overlay 직접 구현 */}
       {isDrawerOpen && (
         <div
           className="fixed bottom-[-43px] right-1/2 z-[9999] h-dvh w-dvw translate-x-1/2 "
@@ -79,17 +79,7 @@ const NewQuizDrawer = ({ triggerComponent, documentId, startAddQuizzes, onOpenCh
       <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen} modal={false}>
         <DrawerTrigger asChild>{triggerComponent}</DrawerTrigger>
 
-        <DrawerContent
-          // overlayProps={{
-          //   className: 'max-w-mobile mx-auto z-[9998]',
-          //   // onClick: (e) => e.stopPropagation(),
-          // }}
-          className="pointer-events-auto z-[9999] mx-auto h-fit max-h-[90dvh] max-w-mobile rounded-t-[20px]"
-          // onClick={(e) => e.stopPropagation()}
-          // onTouchStart={(e) => e.stopPropagation()}
-          // onTouchMove={(e) => e.stopPropagation()}
-          // onTouchEnd={(e) => e.stopPropagation()}
-        >
+        <DrawerContent className="pointer-events-auto z-[9999] mx-auto h-fit max-h-[90dvh] max-w-mobile rounded-t-[20px]">
           <div className="my-[24px] flex h-fit flex-col items-center overflow-y-auto overflow-x-hidden px-[16px]">
             <DrawerTitle className="mb-[38px] w-full font-suit text-title3">
               원하는 유형과 문제 수를 선택해주세요

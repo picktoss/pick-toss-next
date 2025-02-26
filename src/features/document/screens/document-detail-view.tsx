@@ -91,7 +91,7 @@ const DocumentDetailView = ({ documentId, activeTab }: Props) => {
   }
 
   return (
-    <main className="relative min-h-screen">
+    <main className="min-h-screen">
       <QuizListProvider>
         <DocumentDetailController />
 

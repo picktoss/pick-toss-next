@@ -5,7 +5,7 @@ import ReplayQuizDrawer from '@/features/quiz/components/replay-quiz-drawer'
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
 import { useDocumentDetailContext } from '../../contexts/document-detail-context'
-import { useEffect } from 'react'
+// import { useEffect } from 'react'
 
 interface Props {
   documentId: number
@@ -24,43 +24,13 @@ const DocumentFloatingButton = ({
   startAddQuizzes,
   quizTypes,
 }: Props) => {
-  const { isDrawerOpen, setIsDrawerOpen } = useDocumentDetailContext()
+  const { setIsDrawerOpen } = useDocumentDetailContext()
 
   const handleOpenChange = (open: boolean) => {
     setIsDrawerOpen(open)
   }
 
   // iOS Safari Drawer & Scroll 관련 버그 해결
-  useEffect(() => {
-    const disableTouchMove = (e: TouchEvent) => {
-      if (isDrawerOpen) {
-        e.preventDefault()
-      }
-    }
-
-    const disableScroll = () => {
-      document.documentElement.style.overflow = 'hidden'
-      document.documentElement.style.height = '100%'
-    }
-    const enableScroll = () => {
-      document.documentElement.style.overflow = ''
-      document.documentElement.style.height = ''
-    }
-
-    if (isDrawerOpen) {
-      disableScroll()
-      document.addEventListener('touchmove', disableTouchMove, { passive: false })
-    } else {
-      enableScroll()
-      document.removeEventListener('touchmove', disableTouchMove)
-    }
-
-    return () => {
-      enableScroll()
-      document.removeEventListener('touchmove', disableTouchMove)
-    }
-  }, [isDrawerOpen])
-
   // useEffect(() => {
   //   const disableTouchMove = (e: TouchEvent) => {
   //     if (isDrawerOpen) {
@@ -68,22 +38,25 @@ const DocumentFloatingButton = ({
   //     }
   //   }
 
+  //   const disableScroll = () => {
+  //     document.documentElement.style.overflow = 'hidden'
+  //     document.documentElement.style.height = '100%'
+  //   }
+  //   const enableScroll = () => {
+  //     document.documentElement.style.overflow = 'auto'
+  //     document.documentElement.style.height = ''
+  //   }
+
   //   if (isDrawerOpen) {
-  //     document.body.style.overflow = 'hidden'
-  //     // document.body.style.position = 'fixed'
-  //     // document.body.style.width = '100%'
+  //     disableScroll()
   //     document.addEventListener('touchmove', disableTouchMove, { passive: false })
   //   } else {
-  //     document.body.style.overflow = ''
-  //     // document.body.style.position = ''
-  //     // document.body.style.width = ''
+  //     enableScroll()
   //     document.removeEventListener('touchmove', disableTouchMove)
   //   }
 
   //   return () => {
-  //     document.body.style.overflow = ''
-  //     // document.body.style.position = ''
-  //     // document.body.style.width = ''
+  //     enableScroll()
   //     document.removeEventListener('touchmove', disableTouchMove)
   //   }
   // }, [isDrawerOpen])
