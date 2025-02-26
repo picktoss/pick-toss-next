@@ -18,7 +18,7 @@ import { useQuery } from '@tanstack/react-query'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import ConfirmDialogWidget from '@/widget/confirm-dialog'
 import { useDeleteDocument } from '@/requests/document/hooks'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useUserStore } from '@/store/user'
 import { useDownloadQuiz } from '@/requests/quiz/hooks'
 import { useDocumentDetailContext } from '@/features/document/contexts/document-detail-context'
@@ -34,81 +34,75 @@ const Header = () => {
 
   const [isTitleHidden, setIsTitleHidden] = useState(false)
   const titleRef = useRef<HTMLHeadingElement | null>(null)
-  // const observerRef = useRef<IntersectionObserver | null>(null)
+  const observerRef = useRef<IntersectionObserver | null>(null)
 
   const { data } = useQuery(queries.document.item(Number(id)))
   const { mutate: downloadQuizMutation } = useDownloadQuiz()
   const { mutate: deleteDocumentMutation } = useDeleteDocument()
 
   // 스크롤 이벤트 핸들러
-  const handleScroll = useCallback(() => {
-    if (isDrawerOpen) return
+  // const handleScroll = useCallback(() => {
+  //   if (isDrawerOpen) return
 
-    const titleElement = titleRef.current
-    if (!titleElement) return
+  //   const titleElement = titleRef.current
+  //   if (!titleElement) return
 
-    const rect = titleElement.getBoundingClientRect()
-    const headerHeight = 54 // Fixed header의 높이
+  //   const rect = titleElement.getBoundingClientRect()
+  //   const headerHeight = 54 // Fixed header의 높이
 
-    setIsTitleHidden(rect.top + rect.height / 2 < headerHeight)
-  }, [isDrawerOpen])
+  //   setIsTitleHidden(rect.top + rect.height / 2 < headerHeight)
+  // }, [isDrawerOpen])
 
-  // 스크롤 이벤트 설정
-  useEffect(() => {
-    let ticking = false
-
-    const scrollListener = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          handleScroll()
-          ticking = false
-        })
-        ticking = true
-      }
-    }
-
-    window.addEventListener('scroll', scrollListener, { passive: true })
-
-    return () => {
-      window.removeEventListener('scroll', scrollListener)
-    }
-  }, [handleScroll])
-
-  // 첫 렌더링 시 스크롤 위치에 따라 상태 설정
-  useEffect(() => {
-    handleScroll()
-  }, [handleScroll])
-
+  // // 스크롤 이벤트 설정
   // useEffect(() => {
-  //   if (!observerRef.current) {
-  //     observerRef.current = new IntersectionObserver(
-  //       ([entry]) => {
-  //         // 🛑 Drawer가 열려 있다면 `isTitleHidden` 변경하지 않음
-  //         if (!isDrawerOpen) {
-  //           setIsTitleHidden(!entry?.isIntersecting)
-  //         }
-  //       },
-  //       {
-  //         root: null,
-  //         threshold: 0.5,
-  //       }
-  //     )
+  //   let ticking = false
+
+  //   const scrollListener = () => {
+  //     if (!ticking) {
+  //       requestAnimationFrame(() => {
+  //         handleScroll()
+  //         ticking = false
+  //       })
+  //       ticking = true
+  //     }
   //   }
 
-  //   if (isDrawerOpen) {
-  //     setIsTitleHidden(false)
-  //     observerRef.current?.disconnect()
-  //     return
-  //   }
-
-  //   if (titleRef.current) {
-  //     observerRef.current?.observe(titleRef.current)
-  //   }
+  //   window.addEventListener('scroll', scrollListener, { passive: true })
 
   //   return () => {
-  //     observerRef.current?.disconnect()
+  //     window.removeEventListener('scroll', scrollListener)
   //   }
-  // }, [isDrawerOpen])
+  // }, [handleScroll])
+
+  // // 첫 렌더링 시 스크롤 위치에 따라 상태 설정
+  // useEffect(() => {
+  //   handleScroll()
+  // }, [handleScroll])
+
+  useEffect(() => {
+    if (!observerRef.current) {
+      observerRef.current = new IntersectionObserver(
+        ([entry]) => {
+          // 🛑 Drawer가 열려 있다면 `isTitleHidden` 변경하지 않음
+          if (!isDrawerOpen) {
+            setIsTitleHidden(!entry?.isIntersecting)
+          }
+        },
+        {
+          root: null,
+          threshold: 0.5,
+        }
+      )
+    }
+
+    if (titleRef.current) {
+      observerRef.current?.observe(titleRef.current)
+    }
+
+    return () => {
+      observerRef.current?.disconnect()
+    }
+  }, [isDrawerOpen])
 
   const handleClickCancel = () => {
     if (prev && prev === 'created') {

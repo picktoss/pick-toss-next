@@ -28,10 +28,6 @@ const DocumentFloatingButton = ({
   const [scrollY, setScrollY] = useState(0)
 
   const handleOpenChange = (open: boolean) => {
-    if (open) {
-      setScrollY(window.scrollY) // 현재 스크롤 위치 저장
-      window.scrollTo(0, 0) // 최상단 이동
-    }
     setIsDrawerOpen(open)
   }
 
@@ -62,10 +58,19 @@ const DocumentFloatingButton = ({
     }
 
     if (isDrawerOpen) {
-      document.body.style.overflow = 'hidden'
-      document.body.style.position = 'fixed'
-      document.body.style.width = '100%'
-      document.addEventListener('touchmove', disableTouchMove, { passive: false })
+      setScrollY(window.scrollY)
+
+      setTimeout(() => {
+        window.scrollTo(0, 0)
+      }, 0)
+
+      // 브라우저가 스크롤을 최상단으로 이동한 후 스타일 적용
+      requestAnimationFrame(() => {
+        document.body.style.overflow = 'hidden'
+        document.body.style.position = 'fixed'
+        document.body.style.width = '100%'
+        document.addEventListener('touchmove', disableTouchMove, { passive: false })
+      })
     } else {
       document.body.style.overflow = ''
       document.body.style.position = ''
@@ -73,7 +78,9 @@ const DocumentFloatingButton = ({
       document.removeEventListener('touchmove', disableTouchMove)
 
       // Drawer가 닫히면 저장된 위치로 복원
-      window.scrollTo(0, scrollY)
+      setTimeout(() => {
+        window.scrollTo(0, scrollY)
+      }, 0) // 다음 이벤트 루프로 넘겨 실행
     }
 
     return () => {
