@@ -35,12 +35,34 @@ interface Props {
 }
 
 const InviteRewardDrawer = ({ triggerComponent, open, onOpenChange }: Props) => {
-  const { data } = useQuery(queries.auth.inviteLink())
+  const { data, refetch } = useQuery(queries.auth.inviteLink())
+  const [shouldRefetch, setShouldRefetch] = useState(false)
   const [inviteLink, setInviteLink] = useState('')
   const { isLoaded: isKakaoSDKLoaded, error: kakaoSDKError } = useKakaoSDK()
 
   const toastId = useId()
   const { toast } = useToast()
+
+  // Drawer가 열릴 때마다 쿼리 강제 리페치
+  useEffect(() => {
+    const inviteLinkRefetch = async () => {
+      try {
+        if (open) {
+          await refetch()
+          return
+        }
+
+        if (shouldRefetch) {
+          await refetch()
+          return
+        }
+      } catch (error) {
+        console.error('리페치 중 오류 발생:', error)
+      }
+    }
+
+    void inviteLinkRefetch()
+  }, [open, refetch, shouldRefetch])
 
   useEffect(() => {
     if (data) {
@@ -98,7 +120,7 @@ const InviteRewardDrawer = ({ triggerComponent, open, onOpenChange }: Props) => 
 
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
-      <DrawerTrigger asChild className="cursor-pointer">
+      <DrawerTrigger onClick={() => setShouldRefetch(true)} asChild className="cursor-pointer">
         {triggerComponent}
       </DrawerTrigger>
 
