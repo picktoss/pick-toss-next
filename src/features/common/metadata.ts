@@ -1,9 +1,13 @@
 import { Metadata } from 'next'
 
+/** TODO: 배포 url 변경 후 수정 필요 */
 export const Metadatas = {
   root(): Metadata {
+    const baseUrl = 'https://pick-toss-next.vercel.app'
+    // const baseUrl = 'https://www.picktoss.com';
+
     return {
-      metadataBase: new URL(`https://www.picktoss.com`),
+      metadataBase: new URL(baseUrl),
       title: '픽토스 | 나만의 AI 퀴즈',
       manifest: '/manifest.json',
       description: 'AI로 생성하는 나만의 퀴즈',
@@ -13,9 +17,9 @@ export const Metadatas = {
         icon: '/images/picktoss-logo.png',
       },
       openGraph: {
-        url: 'https://www.picktoss.com',
+        url: baseUrl,
         images: {
-          url: '/images/share-thumbnail.png',
+          url: `${baseUrl}/images/share-thumbnail.png`,
         },
         title: '지금 가입하고 별 50개 더 받으세요!',
         description:
