@@ -1,3 +1,4 @@
+import { LOCAL_KEY } from '@/constants'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
@@ -18,8 +19,8 @@ export const useUserStore = create(
       setUserInfo: (userInfo) => set({ userInfo: userInfo }),
     }),
     {
-      name: 'user-storage', // localStorage용
-      partialize: (state) => ({ ...state, userInfo: state.userInfo }),
+      name: LOCAL_KEY.USER_STORAGE, // localStorage용
+      // partialize: (state) => ({ ...state, userInfo: state.userInfo }),
     }
   )
 )

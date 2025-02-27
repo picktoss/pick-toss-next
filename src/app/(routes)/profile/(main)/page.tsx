@@ -57,7 +57,7 @@ const ProfilePage = async () => {
             </div>
 
             <div className="flex flex-col gap-1">
-              <div className="flex-center gap-[12px]">
+              <div className="flex items-center gap-[12px]">
                 <Text typography="subtitle1-bold">{user.name}</Text>
 
                 {noInterests ? (

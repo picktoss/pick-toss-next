@@ -14,7 +14,7 @@ import { CATEGORY_OPTION } from '@/constants'
 import { Checkbox } from '@/shared/components/ui/checkbox'
 import { Button } from '@/shared/components/ui/button'
 import SetCategoryCompleteDialog from '@/features/category/components/set-category-complete-dialog'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import * as z from 'zod'
 import { useUpdateCollectionCategories } from '@/requests/user/hooks'
 import { useForm } from 'react-hook-form'
@@ -42,6 +42,14 @@ const CategoryDrawer = ({
   const [open, setOpen] = useState(false)
   const [completeOpen, setCompleteOpen] = useState(false)
   const { mutate, isPending } = useUpdateCollectionCategories()
+
+  const isExistInterestedCategory = useMemo(
+    () =>
+      interestedCategories &&
+      interestedCategories.length !== 0 &&
+      interestedCategories[0] !== '관심 분야 없음',
+    [interestedCategories]
+  )
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -80,9 +88,9 @@ const CategoryDrawer = ({
                 관심분야
               </Text>
 
-              {interestedCategories && interestedCategories[0] ? (
+              {isExistInterestedCategory ? (
                 <div className="flex items-center gap-[3px]">
-                  {interestedCategories.map((category) => (
+                  {interestedCategories?.map((category) => (
                     <CategoryTag
                       key={category}
                       title={CATEGORIES.find((value) => value.id === category)?.name ?? ''}

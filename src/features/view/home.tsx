@@ -23,8 +23,11 @@ import { useUserStore } from '@/store/user'
 import { useSearchParams } from 'next/navigation'
 import { useToast } from '@/shared/hooks/use-toast'
 import { useEffect, useId } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { queries } from '@/shared/lib/tanstack-query/query-keys'
+import InviteRewardDialog from '../invite/components/invite-reward-dialog'
 
-type RewardType = 'TODAY_QUIZ' | 'INVITE' | 'EVENT'
+type RewardType = 'TODAY_QUIZ' | 'EVENT'
 
 const Home = () => {
   const { data: session } = useSession()
@@ -53,6 +56,9 @@ const Home = () => {
   const { isMobile } = useScreenSize()
   const isPWA = useIsPWA()
   const interestedCategoryCompleted = Cookies.get('interested-category-complete')
+
+  const isChecked = !!Cookies.get('check-invited')
+  const { data: isInvited } = useQuery(queries.auth.checkInviteSignUp(isChecked))
 
   useEffect(() => {
     if (reward && rewardType === 'TODAY_QUIZ') {
@@ -168,6 +174,8 @@ const Home = () => {
       <DocumentProvider>
         <AddDocumentMenu />
       </DocumentProvider>
+
+      {session?.user.isNewUser && isInvited && <InviteRewardDialog />}
     </main>
   )
 }

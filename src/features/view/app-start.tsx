@@ -2,6 +2,7 @@ import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
 import SocialLogin from '../auth/social-login'
 import Link from 'next/link'
+import ClearBrowserData from '../user/components/clear-browser-data'
 
 const AppStartView = () => {
   return (
@@ -13,6 +14,7 @@ const AppStartView = () => {
       <Text typography="subtitle2-medium">3초만에 픽토스 시작하기</Text>
 
       <SocialLogin className="mb-[20px] mt-[16px]" />
+      <ClearBrowserData />
 
       <Text typography="caption-medium" color="caption" className="text-center">
         로그인 시{' '}

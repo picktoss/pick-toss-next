@@ -3,9 +3,13 @@
 import { API_ENDPOINTS } from '@/shared/configs/endpoint'
 import { httpServer } from '@/shared/lib/axios/http-server'
 
-interface SignInParams {
+interface SignInRequestBody {
   socialPlatform: 'KAKAO' | 'GOOGLE'
   accessToken: string
+}
+
+interface SignInParams {
+  'invite-link': string
 }
 
 interface SignInResponse {
@@ -14,9 +18,11 @@ interface SignInResponse {
   signUp: boolean
 }
 
-export const signIn = async (params: SignInParams) => {
+export const signIn = async (requestBody: SignInRequestBody, params?: SignInParams) => {
   try {
-    const { data } = await httpServer.post<SignInResponse>(API_ENDPOINTS.AUTH.LOGIN, params)
+    const { data } = await httpServer.post<SignInResponse>(API_ENDPOINTS.AUTH.LOGIN, requestBody, {
+      params: params ?? {},
+    })
     return data
   } catch (error) {
     throw error
@@ -29,6 +35,7 @@ export const verifyInviteCode = async (requestBody: Auth.Request.VerifyInviteCod
     await httpServer.post(API_ENDPOINTS.AUTH.INVITE_CODE_VERIFY, requestBody)
     return true
   } catch (error: unknown) {
+    console.error(error)
     return false
   }
 }

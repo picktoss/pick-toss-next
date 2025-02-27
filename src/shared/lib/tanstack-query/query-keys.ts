@@ -14,6 +14,11 @@ export const queries = createQueryKeyStore({
       queryKey: [inviteCode],
       queryFn: () => REQUEST.auth.getInviteCreator(inviteCode),
     }),
+    checkInviteSignUp: (isChecked: boolean) => ({
+      queryKey: [isChecked],
+      queryFn: () => REQUEST.auth.checkSignUpWithInviteCode(),
+      enabled: !isChecked,
+    }),
   },
 
   directory: {

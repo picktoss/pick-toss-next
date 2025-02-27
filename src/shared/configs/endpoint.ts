@@ -11,7 +11,7 @@ export const API_ENDPOINTS = {
     /** GET /auth/invite - 초대 링크 생성 */
     INVITE_LINK: '/auth/invite',
     /** GET /auth/invite/status - 초대 코드로 회원가입했는지 체크 */
-    INVITE_CODE_CHECK: '/auth/invite/status',
+    INVITE_SIGN_UP_CHECK: '/auth/invite/status',
     /** GET /auth/invite/{invite_code}/creator - 초대 링크 생성자 정보 가져오기 */
     INVITE_CREATOR: (inviteCode: string) => `/auth/invite/${inviteCode}/creator`,
     /** POST /login - login */

@@ -10,6 +10,7 @@ import { motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import { ControllerRenderProps, useForm } from 'react-hook-form'
 import * as z from 'zod'
+import Cookies from 'js-cookie'
 
 const formSchema = z.object({
   categories: z
@@ -65,10 +66,7 @@ const CategorySelectArea = () => {
       {
         onSuccess: () => {
           // 쿠키 설정
-          const expirationDate = new Date()
-          expirationDate.setDate(expirationDate.getDate() + 7)
-          document.cookie = `interested-category-complete=true; expires=${expirationDate.toUTCString()}; path=/`
-
+          Cookies.set('interested-category-complete', 'true', { expires: 7 })
           router.replace('/main')
         },
       }
@@ -208,7 +206,7 @@ const CategorySelectArea = () => {
           ></FormField>
         </motion.div>
 
-        <Button type='submit' className="w-full" disabled={currentCategories.length === 0}>
+        <Button type="submit" className="w-full" disabled={currentCategories.length === 0}>
           완료
         </Button>
       </form>

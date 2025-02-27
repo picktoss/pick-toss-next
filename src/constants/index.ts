@@ -13,7 +13,8 @@ export const LOCAL_KEY = {
   BOMB_TUTORIAL_COMPLETE: 'bomb-tutorial-complete',
   RANDOM_TUTORIAL_COMPLETE: 'random-tutorial-complete',
 
-  INTERESTED_CATEGORY_COMPLETE: 'interested-category-complete',
+  AUTH_STORAGE: 'auth-storage',
+  USER_STORAGE: 'user-storage',
 }
 
 export const CATEGORY_OPTION = [

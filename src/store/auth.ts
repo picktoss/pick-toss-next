@@ -1,3 +1,4 @@
+import { LOCAL_KEY } from '@/constants'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
@@ -15,8 +16,8 @@ export const useAuthStore = create(
       setAccessToken: (token) => set({ accessToken: token }),
     }),
     {
-      name: 'auth-storage', // localStorage용
-      partialize: (state) => ({ ...state, accessToken: state.accessToken }),
+      name: LOCAL_KEY.AUTH_STORAGE, // localStorage용
+      // partialize: (state) => ({ ...state, accessToken: state.accessToken }),
     }
   )
 )

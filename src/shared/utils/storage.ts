@@ -1,3 +1,5 @@
+import Cookies from 'js-cookie'
+
 export const setLocalStorage = <T>(key: string, value: T): void => {
   try {
     const serializedValue = JSON.stringify(value)
@@ -26,13 +28,10 @@ export const removeLocalStorage = (key: string): void => {
 }
 
 export const clearAllCookies = () => {
-  const cookies = document.cookie.split(';')
+  const cookies = Cookies.get() // 현재 설정된 모든 쿠키 가져오기
 
-  for (const cookie of cookies) {
-    const eqPos = cookie.indexOf('=')
-    const name = eqPos > -1 ? cookie.substring(0, eqPos).trim() : cookie.trim()
-    // 모든 path와 domain에서 쿠키 삭제
-    document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;`
-    document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;domain=${window.location.hostname}`
+  for (const name in cookies) {
+    Cookies.remove(name, { path: '/' }) // ✅ 모든 쿠키 삭제
+    Cookies.remove(name, { path: '/', domain: window.location.hostname }) // ✅ 도메인 설정된 쿠키 삭제
   }
 }

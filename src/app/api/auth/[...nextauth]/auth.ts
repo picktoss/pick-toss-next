@@ -6,13 +6,19 @@ import { UserDTO } from '@/actions/types/dto/user.dto'
 import { signIn as signInApi } from '@/requests/auth/server'
 
 declare module 'next-auth' {
+  interface Account {
+    params?: {
+      state?: string
+    }
+  }
+
   interface Session {
     user: {
       id: string
       accessToken: string
       account: Account
       dto: UserDTO
-      isNewUser: boolean // 첫 로그인 여부 추가
+      isNewUser: boolean // 첫 로그인 여부
       image?: string | null
     } & DefaultSession['user']
   }
@@ -29,15 +35,29 @@ export const {
   callbacks: {
     jwt: async ({ token, user, account, trigger }) => {
       if (account) {
+        // `account.params.state`에서 `inviteCode` 추출
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        const state = account.params?.state ? JSON.parse(account.params.state) : null
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        const inviteCode = state?.inviteCode as string
+
+        if (inviteCode) {
+          token.inviteCode = inviteCode // inviteCode JWT에 저장
+        }
+
         if (user) {
           token.picture = user.image ?? null
         }
 
         try {
-          const { accessToken, accessTokenExpiration, signUp } = await signInApi({
-            socialPlatform: account.provider.toUpperCase() as 'GOOGLE' | 'KAKAO',
-            accessToken: account.access_token as string,
-          })
+          const { accessToken, accessTokenExpiration, signUp } = await signInApi(
+            {
+              socialPlatform: account.provider.toUpperCase() as 'GOOGLE' | 'KAKAO',
+              accessToken: account.access_token as string,
+            },
+            inviteCode ? { 'invite-link': inviteCode } : undefined
+          )
+
           token.account = account
           token.accessToken = accessToken
           token.accessTokenExpiration = accessTokenExpiration
