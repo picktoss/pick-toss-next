@@ -39,6 +39,11 @@ const CustomCalendar = ({ className }: Props) => {
     if (selected) {
       const formattedDate = formatToYYYYMMDD(selected)
 
+      if (selectedDateString === formattedDate) {
+        setShowLoading(false)
+        return
+      }
+
       router.replace(`?selectedDate=${formattedDate}`)
     }
   }
