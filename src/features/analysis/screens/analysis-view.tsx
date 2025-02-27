@@ -12,6 +12,7 @@ import WeekGraphContainer from '../components/week-graph-container'
 import MonthGraphContainer from '../components/month-graph-container'
 import CollectionCategoryContainer from '../components/collection-category-container'
 import { useMemo } from 'react'
+import Loading from '@/shared/components/custom/loading'
 
 type Tab = 'week' | 'month'
 
@@ -26,7 +27,7 @@ const AnalysisView = () => {
   const endDate = searchParams.get('endDate') ?? formatToYYYYMMDD(today)
   const selectedMonth = searchParams.get('month') ?? formatToYYYYMM(today)
 
-  const { data: weeklyAnalysisData } = useQuery(
+  const { data: weeklyAnalysisData, isPending: isWeeklyDataLoading } = useQuery(
     queries.quiz.weeklyAnalysis(
       startDate,
       endDate,
@@ -37,7 +38,7 @@ const AnalysisView = () => {
         : undefined
     )
   )
-  const { data: monthlyAnalysisData } = useQuery(
+  const { data: monthlyAnalysisData, isPending: isMonthlyDataLoading } = useQuery(
     queries.quiz.monthlyAnalysis(
       selectedMonth + '-01',
       selectedDirectoryId !== null
@@ -56,12 +57,19 @@ const AnalysisView = () => {
     [tab, weeklyAnalysisData, monthlyAnalysisData]
   )
 
+  const isLoading = useMemo(
+    () => isWeeklyDataLoading || isMonthlyDataLoading,
+    [isWeeklyDataLoading, isMonthlyDataLoading]
+  )
+
   const thisWeek = tab === 'week' && endDate === formatToYYYYMMDD(today)
   const thisMonth = tab === 'month' && selectedMonth === formatToYYYYMM(today)
   const thisPeriod = thisWeek || thisMonth
 
   return (
     <main className="h-[calc(100dvh-54px)] w-full flex-col overflow-y-auto overflow-x-hidden">
+      {isLoading && <Loading center />}
+
       <AnalysisTab />
       {tab === 'week' && <WeekPeriodPicker today={today} />}
       {tab === 'month' && <MonthPeriodPicker today={today} />}
