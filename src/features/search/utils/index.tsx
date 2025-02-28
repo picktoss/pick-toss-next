@@ -28,7 +28,7 @@ export function highlightAndTrimText(text: string, keyword: string): JSX.Element
   const surroundingLength = Math.floor((totalLength - keywordLength) / 2)
 
   const start = Math.max(0, keywordIndex - surroundingLength)
-  const end = Math.min(text.length, keywordIndex + keywordLength + surroundingLength)
+  const end = Math.min(text.length, start + 80)
 
   const trimmedText = text.slice(start, end)
 

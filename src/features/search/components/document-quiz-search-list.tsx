@@ -29,7 +29,13 @@ const DocumentQuizSearchList = ({ length, searchResults, keyword }: Props) => {
               ) : (
                 // 퀴즈 결과
                 highlightAndTrimText(
-                  `Q.${searchItem.question ?? '...'} A.${searchItem.answer ?? '...'}`,
+                  `Q.${searchItem.question ?? '...'} A.${
+                    (searchItem.answer === 'correct'
+                      ? 'O'
+                      : searchItem.answer === 'incorrect'
+                      ? 'X'
+                      : searchItem.answer) ?? '...'
+                  }`,
                   keyword ?? ''
                 )
               )
