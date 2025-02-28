@@ -11,7 +11,7 @@ interface Props {
 }
 
 const QuizSetFullAdView = ({ onClose }: Props) => {
-  useDynamicThemeColor('#FFFFFF', '#F5F7F9')
+  useDynamicThemeColor('#FFFFFF', '#FFFFFF')
 
   const [count, setCount] = useState(3)
 
