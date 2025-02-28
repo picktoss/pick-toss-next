@@ -21,9 +21,8 @@ export const Metadatas = {
         images: {
           url: `${baseUrl}/images/share-thumbnail.png`,
         },
-        title: '지금 가입하고 별 50개 더 받으세요!',
-        description:
-          '픽토스에서는 AI퀴즈로 매일 간단하게 내가 배운 걸 기억할 수 있어요. 이 초대권을 통해 픽토스에 가입하실 경우 두 분 모두에게 퀴즈를 만들 수 있는 별 50를 추가로 드려요!',
+        title: '픽토스: 나를 성장시키는 똑똑한 퀴즈',
+        description: '픽토스에서는 AI퀴즈로 매일 간단하게 내가 배운 걸 기억할 수 있어요.',
       },
     }
   },
