@@ -20,7 +20,7 @@ import { useSession } from 'next-auth/react'
 import OnBoarding from './on-boarding'
 import Cookies from 'js-cookie'
 import { useUserStore } from '@/store/user'
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useToast } from '@/shared/hooks/use-toast'
 import { useEffect, useId } from 'react'
 import { useQuery } from '@tanstack/react-query'
@@ -33,6 +33,7 @@ const Home = () => {
   const { data: session } = useSession()
   const { userInfo } = useUserStore()
 
+  const router = useRouter()
   const searchParams = useSearchParams()
   const rewardType = searchParams.get('reward-type') as RewardType | null
   const reward = searchParams.get('reward')
@@ -66,8 +67,9 @@ const Home = () => {
         id: toastId,
         title: `별 ${reward}개가 추가되었어요`,
       })
+      setTimeout(() => router.replace('/'), 10)
     }
-  }, [toast, toastId, rewardType, reward])
+  }, [toast, toastId, rewardType, reward, router])
 
   if (isMobile && !isPWA) {
     return <WebInstallView />

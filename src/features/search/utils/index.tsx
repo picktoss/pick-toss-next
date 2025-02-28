@@ -11,7 +11,7 @@ export function highlightAndTrimText(text: string, keyword: string): JSX.Element
   if (!text) return text
 
   const totalLength = 80
-  const regex = new RegExp(`(${keyword})`, 'gi')
+  const regex = new RegExp(`(${keyword})`, 'gi') // RegExp로 정규표현식 생성
   const match = text.match(regex)
 
   if (!keyword || !match) {
