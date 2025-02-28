@@ -17,7 +17,7 @@ import { useDynamicThemeColor } from '@/shared/hooks/use-dynamic-theme-color'
 
 // Header 컴포넌트
 const Header = () => {
-  useDynamicThemeColor('#F5F7F9')
+  useDynamicThemeColor('#F5F7F9', '#FFFFFF')
   const { data } = useDirectories()
   const { selectedDirectory } = useDirectoryContext()
   const { isSelectMode, setIsSelectMode, checkDoc } = useDocumentContext()

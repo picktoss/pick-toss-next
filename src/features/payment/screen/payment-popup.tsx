@@ -1,3 +1,5 @@
+'use client'
+
 import NIGHT_SKY_IMG from '@/../../public/images/pro-star-background.png'
 import Image from 'next/image'
 import Text from '@/shared/components/ui/text'
@@ -6,6 +8,7 @@ import { Button } from '@/shared/components/ui/button'
 import GoBackButton from '@/shared/components/custom/go-back-button'
 import Tag from '@/shared/components/ui/tag'
 import InviteRewardDrawer from '@/features/payment/components/invite-reward-drawer'
+import { useDynamicThemeColor } from '@/shared/hooks/use-dynamic-theme-color'
 
 interface Props {
   isProUser: boolean
@@ -13,6 +16,8 @@ interface Props {
 }
 
 const PaymentPopup = ({ isProUser, onClose }: Props) => {
+  useDynamicThemeColor('#000000', '#FFFFFF')
+
   return (
     <div
       className="fixed bottom-0 right-1/2 z-20 h-dvh w-dvw max-w-mobile translate-x-1/2"

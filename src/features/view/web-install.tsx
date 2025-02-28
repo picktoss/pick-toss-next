@@ -4,10 +4,13 @@ import NIGHT_SKY_IMG from '@/../../public/images/star-background-white.png'
 import Icon from '@/shared/components/custom/icon'
 import { Button } from '@/shared/components/ui/button'
 import Text from '@/shared/components/ui/text'
+import { useDynamicThemeColor } from '@/shared/hooks/use-dynamic-theme-color'
 import Image from 'next/image'
 import Link from 'next/link'
 
 const WebInstallView = () => {
+  useDynamicThemeColor('#000000', '#FFFFFF')
+
   return (
     <div
       className="fixed bottom-0 right-1/2 z-20 h-screen w-dvw max-w-mobile translate-x-1/2"
