@@ -6,6 +6,7 @@ export const queries = createQueryKeyStore({
     inviteLink: () => ({
       queryKey: [''],
       queryFn: () => REQUEST.auth.getInviteLink(),
+      enabled: false,
       refetchOnWindowFocus: false, // 윈도우 포커스시 자동 리페치 방지
       staleTime: 0,
       cacheTime: 0,

@@ -35,40 +35,31 @@ interface Props {
 }
 
 const InviteRewardDrawer = ({ triggerComponent, open, onOpenChange }: Props) => {
+  // 외부 제어 여부 확인 (controlled vs uncontrolled)
+  const isControlled = open !== undefined
+  const [internalOpen, setInternalOpen] = useState(false) // 내부 상태는 uncontrolled 모드에서만 사용
+  const isOpen = isControlled ? open : internalOpen
+
   const { data, refetch } = useQuery(queries.auth.inviteLink())
-  const [shouldRefetch, setShouldRefetch] = useState(false)
+
+  // const [isOpen, setIsOpen] = useState(false)
   const [inviteLink, setInviteLink] = useState('')
   const { isLoaded: isKakaoSDKLoaded, error: kakaoSDKError } = useKakaoSDK()
 
   const toastId = useId()
   const { toast } = useToast()
 
-  // Drawer가 열릴 때마다 쿼리 강제 리페치
-  useEffect(() => {
-    const inviteLinkRefetch = async () => {
-      try {
-        if (open) {
-          await refetch()
-          return
-        }
-
-        if (shouldRefetch) {
-          await refetch()
-          return
-        }
-      } catch (error) {
-        console.error('리페치 중 오류 발생:', error)
-      }
+  const handleOpenChange = (value: boolean) => {
+    // uncontrolled 모드일 때만 내부 상태 업데이트
+    if (!isControlled) {
+      setInternalOpen(value)
     }
 
-    void inviteLinkRefetch()
-  }, [open, refetch, shouldRefetch])
-
-  useEffect(() => {
-    if (data) {
-      setInviteLink(data.inviteLink)
+    // 부모에게 상태 변경 알림
+    if (onOpenChange) {
+      onOpenChange(value)
     }
-  }, [data])
+  }
 
   // 카카오톡에 공유
   const handleKakaoShare = async () => {
@@ -118,9 +109,30 @@ const InviteRewardDrawer = ({ triggerComponent, open, onOpenChange }: Props) => 
     }
   }
 
+  // Drawer가 열릴 때마다 쿼리 강제 리페치
+  useEffect(() => {
+    if (isOpen) {
+      const inviteLinkRefetch = async () => {
+        try {
+          await refetch()
+        } catch (error) {
+          console.error('리페치 중 오류 발생:', error)
+        }
+      }
+
+      void inviteLinkRefetch()
+    }
+  }, [isOpen, refetch])
+
+  useEffect(() => {
+    if (data) {
+      setInviteLink(data.inviteLink)
+    }
+  }, [data])
+
   return (
-    <Drawer open={open} onOpenChange={onOpenChange}>
-      <DrawerTrigger onClick={() => setShouldRefetch(true)} asChild className="cursor-pointer">
+    <Drawer open={isOpen} onOpenChange={handleOpenChange}>
+      <DrawerTrigger asChild className="cursor-pointer">
         {triggerComponent}
       </DrawerTrigger>
 
