@@ -42,7 +42,6 @@ const InviteRewardDrawer = ({ triggerComponent, open, onOpenChange }: Props) => 
 
   const { data, refetch } = useQuery(queries.auth.inviteLink())
 
-  // const [isOpen, setIsOpen] = useState(false)
   const [inviteLink, setInviteLink] = useState('')
   const { isLoaded: isKakaoSDKLoaded, error: kakaoSDKError } = useKakaoSDK()
 
@@ -55,7 +54,7 @@ const InviteRewardDrawer = ({ triggerComponent, open, onOpenChange }: Props) => 
       setInternalOpen(value)
     }
 
-    // 부모에게 상태 변경 알림
+    // 외부 제어일 경우, 부모에게 상태 변경 알림
     if (onOpenChange) {
       onOpenChange(value)
     }
