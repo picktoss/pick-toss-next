@@ -55,7 +55,7 @@ export const {
               socialPlatform: account.provider.toUpperCase() as 'GOOGLE' | 'KAKAO',
               accessToken: account.access_token as string,
             },
-            inviteCode ? { 'invite-link': inviteCode } : undefined
+            inviteCode ? { 'invite-code': inviteCode } : undefined
           )
 
           token.account = account

@@ -9,7 +9,7 @@ interface SignInRequestBody {
 }
 
 interface SignInParams {
-  'invite-link': string
+  'invite-code': string
 }
 
 interface SignInResponse {

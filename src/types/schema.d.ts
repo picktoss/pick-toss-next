@@ -21,6 +21,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v2/test/create-today-quiz": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 오늘의 퀴즈 생성 API(테스트 혹은 예외처리를 위한 API로서 실제 사용 X) */
+        post: operations["createTodayQuizForTest"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v2/send": {
         parameters: {
             query?: never;
@@ -1701,6 +1718,7 @@ export interface components {
             cancelReason?: string;
             receiptUrl?: string;
             cancelHistory?: components["schemas"]["PaymentCancelDetail"][];
+            cashReceiptIssued?: boolean;
             customerUidUsage?: string;
             impUid?: string;
             merchantUid?: string;
@@ -1711,10 +1729,9 @@ export interface components {
             buyerPostcode?: string;
             customData?: string;
             customerUid?: string;
+            cardNumber?: string;
             /** Format: int32 */
             cardQuota?: number;
-            cardNumber?: string;
-            cashReceiptIssued?: boolean;
         };
         PaymentCancelDetail: {
             amount?: number;
@@ -1755,8 +1772,7 @@ export interface components {
             emoji?: string;
             /** Format: int32 */
             bookmarkCount?: number;
-            /** @enum {string} */
-            collectionCategory?: "IT" | "LAW" | "BUSINESS_ECONOMY" | "SOCIETY_POLITICS" | "LANGUAGE" | "MEDICINE_PHARMACY" | "ART" | "SCIENCE_ENGINEERING" | "HISTORY_PHILOSOPHY" | "OTHER";
+            collectionCategory?: string;
             memberName?: string;
             /** Format: int32 */
             quizCount?: number;
@@ -2282,10 +2298,11 @@ export interface components {
             is3xxRedirection?: boolean;
         };
         JspConfigDescriptor: {
-            taglibs?: components["schemas"]["TaglibDescriptor"][];
             jspPropertyGroups?: components["schemas"]["JspPropertyGroupDescriptor"][];
+            taglibs?: components["schemas"]["TaglibDescriptor"][];
         };
         JspPropertyGroupDescriptor: {
+            defaultContentType?: string;
             deferredSyntaxAllowedAsLiteral?: string;
             elIgnored?: string;
             errorOnELNotFound?: string;
@@ -2296,7 +2313,6 @@ export interface components {
             includeCodas?: string[];
             trimDirectiveWhitespaces?: string;
             errorOnUndeclaredNamespace?: string;
-            defaultContentType?: string;
             buffer?: string;
             urlPatterns?: string[];
         };
@@ -2334,6 +2350,7 @@ export interface components {
         ServletContext: {
             sessionCookieConfig?: components["schemas"]["SessionCookieConfig"];
             virtualServerName?: string;
+            initParameterNames?: Record<string, never>;
             classLoader?: {
                 name?: string;
                 registeredAsParallelCapable?: boolean;
@@ -2355,7 +2372,6 @@ export interface components {
             majorVersion?: number;
             /** Format: int32 */
             minorVersion?: number;
-            initParameterNames?: Record<string, never>;
             attributeNames?: Record<string, never>;
             contextPath?: string;
             sessionTrackingModes?: ("COOKIE" | "URL" | "SSL")[];
@@ -2364,7 +2380,6 @@ export interface components {
             servletRegistrations?: {
                 [key: string]: components["schemas"]["ServletRegistration"];
             };
-            defaultSessionTrackingModes?: ("COOKIE" | "URL" | "SSL")[];
             /** Format: int32 */
             effectiveMajorVersion?: number;
             /** Format: int32 */
@@ -2374,6 +2389,7 @@ export interface components {
             filterRegistrations?: {
                 [key: string]: components["schemas"]["FilterRegistration"];
             };
+            defaultSessionTrackingModes?: ("COOKIE" | "URL" | "SSL")[];
             effectiveSessionTrackingModes?: ("COOKIE" | "URL" | "SSL")[];
             jspConfigDescriptor?: components["schemas"]["JspConfigDescriptor"];
             requestCharacterEncoding?: string;
@@ -2808,6 +2824,26 @@ export interface operations {
             };
         };
     };
+    createTodayQuizForTest: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": string;
+                };
+            };
+        };
+    };
     sendMessage: {
         parameters: {
             query?: never;
@@ -2985,7 +3021,7 @@ export interface operations {
     login: {
         parameters: {
             query?: {
-                "invite-link"?: string;
+                "invite-code"?: string;
             };
             header?: never;
             path?: never;
