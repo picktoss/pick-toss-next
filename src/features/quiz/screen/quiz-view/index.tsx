@@ -187,7 +187,7 @@ const QuizView = ({ quizzes, isFirst, exitRedirectUrl }: Props) => {
   }
 
   return (
-    <div className="fixed">
+    <div className="fixed w-full max-w-mobile">
       <QuizHeader
         isRunning={isRunning}
         totalElapsedTime={totalElapsedTime}

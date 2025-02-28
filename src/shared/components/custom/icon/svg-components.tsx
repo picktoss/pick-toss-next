@@ -2974,3 +2974,91 @@ export const DisabledMultipleQuizIcon = ({ ...props }) => {
     </svg>
   )
 }
+
+export const LeftSparkleGroup = ({ ...props }) => {
+  return (
+    <svg
+      width="72"
+      height="101"
+      viewBox="0 0 72 101"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <rect
+        width="5.73056"
+        height="14.9245"
+        transform="matrix(0.802509 0.59664 -0.610636 0.791911 43.1133 0)"
+        fill="#FFAB40"
+      />
+      <rect
+        width="5.71633"
+        height="14.9633"
+        transform="matrix(0.907683 0.419657 -0.440292 0.897855 7.27246 84.8555)"
+        fill="#FFAB40"
+      />
+      <rect
+        width="5.60219"
+        height="15.2672"
+        transform="matrix(-0.37149 0.928437 -0.935637 -0.352963 17.3389 52.4443)"
+        fill="#95B0F8"
+      />
+      <rect
+        width="5.58006"
+        height="15.3247"
+        transform="matrix(0.450955 0.892547 -0.892815 0.450424 33.2744 59.9238)"
+        fill="#FFD180"
+      />
+      <rect
+        width="5.70415"
+        height="14.9963"
+        transform="matrix(0.0167561 0.99986 -0.999959 -0.00902212 70.9961 15.1353)"
+        fill="#577CFF"
+      />
+    </svg>
+  )
+}
+
+export const RightSparkleGroup = ({ ...props }) => {
+  return (
+    <svg
+      width="80"
+      height="100"
+      viewBox="0 0 80 100"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <rect
+        width="5.73056"
+        height="14.9245"
+        transform="matrix(-0.952111 0.305754 0.322422 0.946596 74.9268 23.459)"
+        fill="#FFAB40"
+      />
+      <rect
+        width="5.71633"
+        height="14.9633"
+        transform="matrix(-0.907683 0.419657 0.440292 0.897855 71.1562 83.9414)"
+        fill="#FFAB40"
+      />
+      <rect
+        width="5.60219"
+        height="15.2672"
+        transform="matrix(0.37149 0.928437 0.935637 -0.352963 41.6973 63.439)"
+        fill="#95B0F8"
+      />
+      <rect
+        width="5.58006"
+        height="15.3247"
+        transform="matrix(-0.0104023 0.999946 0.999952 0.00980748 26.1631 37.0029)"
+        fill="#FFD180"
+      />
+      <rect
+        width="5.70415"
+        height="14.9963"
+        transform="matrix(-0.867542 0.497365 0.519561 0.854433 4.94824 0)"
+        fill="#577CFF"
+      />
+    </svg>
+  )
+}

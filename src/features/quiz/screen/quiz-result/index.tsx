@@ -1,3 +1,5 @@
+'use client'
+
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
 import { msToElapsedTimeKorean } from '@/shared/utils/time'
@@ -5,6 +7,7 @@ import { QuizItem } from '@/types/quiz'
 import QuizCard from '../../components/quiz-card'
 import { Button } from '@/shared/components/ui/button'
 import FixedBottom from '@/shared/components/custom/fixed-bottom'
+import { motion } from 'framer-motion'
 
 interface Props {
   correctQuizCount: number
@@ -31,7 +34,24 @@ const QuizResult = ({
   onClick,
 }: Props) => {
   return (
-    <div className="min-h-dvh bg-background-base-02 px-4 pb-[100px]">
+    <div className="relative min-h-dvh bg-background-base-02 px-4 pb-[100px]">
+      <motion.div
+        className="absolute left-[55px] top-[38px]"
+        initial={{ rotate: 60, scale: 0, y: 50 }}
+        animate={{ rotate: 0, scale: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: 'easeOut' }}
+      >
+        <Icon name="left-sparkle-group" />
+      </motion.div>
+      <motion.div
+        className="absolute right-[55px] top-[38px]"
+        initial={{ rotate: -60, scale: 0, y: 50 }}
+        animate={{ rotate: 0, scale: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: 'easeOut' }}
+      >
+        <Icon name="right-sparkle-group" />
+      </motion.div>
+
       <div className="translate-y-[15vh] pb-[140px]">
         <div className="relative w-full rounded-[20px] bg-white">
           <Icon name="complete-quiz" className="absolute right-1/2 top-[-58px] translate-x-1/2" />
