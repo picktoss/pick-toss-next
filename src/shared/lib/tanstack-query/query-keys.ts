@@ -11,6 +11,11 @@ export const queries = createQueryKeyStore({
       staleTime: 0,
       cacheTime: 0,
     }),
+    verifyInvite: (requestBody: Auth.Request.VerifyInviteCode) => ({
+      queryKey: [requestBody],
+      queryFn: () => REQUEST.auth.verifyInviteCode(requestBody),
+      enabled: requestBody.inviteCode !== '',
+    }),
     inviteCreator: (inviteCode: string) => ({
       queryKey: [inviteCode],
       queryFn: () => REQUEST.auth.getInviteCreator(inviteCode),
