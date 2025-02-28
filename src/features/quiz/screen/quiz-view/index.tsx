@@ -17,6 +17,7 @@ import { useUpdateQuizResult } from '@/requests/quiz/hooks'
 import TodayQuizReward from '../today-quiz-reward'
 import QuizResult from '../quiz-result'
 import { todayQuizCheckList } from '../../config'
+import QuizSetFullAdView from '@/features/advertisement/screens/quiz-set-full-ad-view'
 
 interface Props {
   quizzes: Quiz.Item[]
@@ -56,6 +57,7 @@ const QuizView = ({ quizzes, isFirst, exitRedirectUrl }: Props) => {
     currentConsecutiveDays: number
   } | null>(null)
   const [showTodayQuizReward, setShowTodayQuizReward] = useState(false)
+  const [showAdvertisement, setShowAdvertisement] = useState(false)
 
   const [exitDialogOpen, setExitDialogOpen] = useState(false)
 
@@ -152,7 +154,29 @@ const QuizView = ({ quizzes, isFirst, exitRedirectUrl }: Props) => {
       return
     }
 
-    redirectUrl ? router.replace(redirectUrl) : router.replace('/')
+    setShowAdvertisement(true)
+    setShowResult(false)
+  }
+
+  const handleClickReward = () => {
+    setShowAdvertisement(true)
+    setShowTodayQuizReward(false)
+  }
+
+  const handleCloseAd = () => {
+    if (quizSetType === 'TODAY_QUIZ_SET') {
+      router.replace(
+        '/main?' + 'reward-type=TODAY_QUIZ' + `&reward=${todayQuizInfo?.reward ?? defaultReward}`
+      )
+      return
+    }
+
+    if (redirectUrl) {
+      router.replace(redirectUrl)
+      return
+    }
+
+    router.replace('/')
   }
 
   useEffect(() => {
@@ -182,8 +206,13 @@ const QuizView = ({ quizzes, isFirst, exitRedirectUrl }: Props) => {
         prevConsecutiveDays={prevConsecutiveDays}
         todayCheckData={todayCheckData}
         reward={todayQuizInfo?.reward ?? defaultReward}
+        onClick={handleClickReward}
       />
     )
+  }
+
+  if (showAdvertisement) {
+    return <QuizSetFullAdView onClose={handleCloseAd} />
   }
 
   return (

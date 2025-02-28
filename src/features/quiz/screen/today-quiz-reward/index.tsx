@@ -4,7 +4,6 @@ import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
 import DayCheck from '../../components/today-quiz-check/day-check'
 import { Button } from '@/shared/components/ui/button'
-import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 
 interface Props {
@@ -14,10 +13,10 @@ interface Props {
     isComplete: boolean
   }[]
   reward: number
+  onClick: () => void
 }
 
-const TodayQuizReward = ({ prevConsecutiveDays, todayCheckData, reward }: Props) => {
-  const router = useRouter()
+const TodayQuizReward = ({ prevConsecutiveDays, todayCheckData, reward, onClick }: Props) => {
   const currentConsecutiveDays = (prevConsecutiveDays ?? 0) + 1
 
   return (
@@ -65,10 +64,7 @@ const TodayQuizReward = ({ prevConsecutiveDays, todayCheckData, reward }: Props)
         }}
         className="mt-[32px] w-full max-w-[220px]"
       >
-        <Button
-          onClick={() => router.replace('/main?' + 'reward-type=TODAY_QUIZ' + `&reward=${reward}`)}
-          className="w-full"
-        >
+        <Button onClick={onClick} className="w-full">
           별 {reward}개 받기
         </Button>
       </motion.div>
