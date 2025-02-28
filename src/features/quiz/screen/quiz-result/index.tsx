@@ -41,7 +41,7 @@ const QuizResult = ({
         animate={{ rotate: 0, scale: 1, y: 0 }}
         transition={{ duration: 0.4, ease: 'easeOut' }}
       >
-        <Icon name="left-sparkle-group" />
+        <Icon name="left-sparkle-group" className="h-[calc(15vh-30px)]" />
       </motion.div>
       <motion.div
         className="absolute right-[55px] top-[38px]"
@@ -49,7 +49,7 @@ const QuizResult = ({
         animate={{ rotate: 0, scale: 1, y: 0 }}
         transition={{ duration: 0.4, ease: 'easeOut' }}
       >
-        <Icon name="right-sparkle-group" />
+        <Icon name="right-sparkle-group" className="h-[calc(15vh-30px)]" />
       </motion.div>
 
       <div className="translate-y-[15vh] pb-[140px]">
