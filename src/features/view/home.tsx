@@ -36,8 +36,12 @@ const Home = () => {
 
   const router = useRouter()
   const searchParams = useSearchParams()
+
   const rewardType = searchParams.get('reward-type') as RewardType | null
   const reward = searchParams.get('reward')
+
+  const inviteCode = searchParams.get('invite-code') ?? ''
+  const { data: isInvited } = useQuery(queries.auth.rewardInviteSignUp(inviteCode))
 
   const toastId = useId()
   const { toast } = useToast()
@@ -60,7 +64,7 @@ const Home = () => {
   const interestedCategoryCompleted = Cookies.get('interested-category-complete')
 
   const isChecked = !!Cookies.get('check-invited')
-  const { data: isInvited } = useQuery(queries.auth.checkInviteSignUp(isChecked))
+  const { data: isSuccessInvite } = useQuery(queries.auth.checkInviteSignUp(isChecked))
 
   useEffect(() => {
     if (reward && rewardType === 'TODAY_QUIZ') {
@@ -182,7 +186,7 @@ const Home = () => {
         <AddDocumentMenu />
       </DocumentProvider>
 
-      {session?.user.isNewUser && isInvited && <InviteRewardDialog />}
+      {((session?.user.isNewUser && isInvited) || isSuccessInvite) && <InviteRewardDialog />}
     </main>
   )
 }

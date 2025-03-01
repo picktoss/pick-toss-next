@@ -10,6 +10,12 @@ declare global {
       type VerifyInviteCode = DeepRequired<
         paths['/api/v2/auth/invite/verify']['post']['requestBody']['content']['application/json;charset=UTF-8']
       >
+      /** POST /api/v2/auth/invite/reward
+       * 초대 코드 인증 후 별 지급
+       */
+      type RewardInviteSignUp = DeepRequired<
+        paths['/api/v2/auth/invite/reward']['post']['requestBody']['content']['application/json;charset=UTF-8']
+      >
     }
 
     declare namespace Response {
@@ -25,6 +31,13 @@ declare global {
        */
       type GetInviteCreator = DeepRequired<
         paths['/api/v2/auth/invite/{invite_code}/creator']['get']['responses']['200']['content']['application/json;charset=UTF-8']
+      >
+
+      /** GET /api/v2/auth/invite/status
+       * 초대 코드로 회원가입했는지 체크
+       */
+      type GetInviteStatus = DeepRequired<
+        paths['/api/v2/auth/invite/status']['get']['responses']['200']['content']['application/json;charset=UTF-8']
       >
     }
   }

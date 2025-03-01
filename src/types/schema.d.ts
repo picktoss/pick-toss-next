@@ -389,8 +389,25 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** 초대 코드 인증 */
+        /** 초대 코드 유효성 검사 */
         post: operations["verifyInviteCode"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/auth/invite/reward": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 초대 코드 인증 후 별 지급 */
+        post: operations["rewardForInviteCode"];
         delete?: never;
         options?: never;
         head?: never;
@@ -906,6 +923,23 @@ export interface paths {
         };
         /** 오늘의 퀴즈 세트 정보 가져오기 */
         get: operations["getQuizSetToday"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/quiz-set/{solved_date}/consecutive-days": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 월별 퀴즈 연속일 기록 */
+        get: operations["getConsecutiveSolvedQuizSetDates"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1725,8 +1759,8 @@ export interface components {
             buyerName?: string;
             buyerEmail?: string;
             buyerTel?: string;
-            buyerAddr?: string;
             buyerPostcode?: string;
+            buyerAddr?: string;
             customData?: string;
             customerUid?: string;
             cardNumber?: string;
@@ -2166,6 +2200,14 @@ export interface components {
             /** Format: date-time */
             createdAt?: string;
         };
+        GetConsecutiveSolvedQuizSetDatesResponse: {
+            solvedQuizDateRecords?: components["schemas"]["GetQuizRecordByDateDto"][];
+        };
+        GetQuizRecordByDateDto: {
+            /** Format: date */
+            date?: string;
+            isSolved?: boolean;
+        };
         ApplicationContext: {
             parent?: components["schemas"]["ApplicationContext"];
             id?: string;
@@ -2298,17 +2340,17 @@ export interface components {
             is3xxRedirection?: boolean;
         };
         JspConfigDescriptor: {
-            jspPropertyGroups?: components["schemas"]["JspPropertyGroupDescriptor"][];
             taglibs?: components["schemas"]["TaglibDescriptor"][];
+            jspPropertyGroups?: components["schemas"]["JspPropertyGroupDescriptor"][];
         };
         JspPropertyGroupDescriptor: {
             defaultContentType?: string;
+            isXml?: string;
             deferredSyntaxAllowedAsLiteral?: string;
             elIgnored?: string;
             errorOnELNotFound?: string;
             pageEncoding?: string;
             scriptingInvalid?: string;
-            isXml?: string;
             includePreludes?: string[];
             includeCodas?: string[];
             trimDirectiveWhitespaces?: string;
@@ -2350,7 +2392,6 @@ export interface components {
         ServletContext: {
             sessionCookieConfig?: components["schemas"]["SessionCookieConfig"];
             virtualServerName?: string;
-            initParameterNames?: Record<string, never>;
             classLoader?: {
                 name?: string;
                 registeredAsParallelCapable?: boolean;
@@ -2374,12 +2415,14 @@ export interface components {
             minorVersion?: number;
             attributeNames?: Record<string, never>;
             contextPath?: string;
+            initParameterNames?: Record<string, never>;
             sessionTrackingModes?: ("COOKIE" | "URL" | "SSL")[];
             /** Format: int32 */
             sessionTimeout?: number;
             servletRegistrations?: {
                 [key: string]: components["schemas"]["ServletRegistration"];
             };
+            defaultSessionTrackingModes?: ("COOKIE" | "URL" | "SSL")[];
             /** Format: int32 */
             effectiveMajorVersion?: number;
             /** Format: int32 */
@@ -2389,7 +2432,6 @@ export interface components {
             filterRegistrations?: {
                 [key: string]: components["schemas"]["FilterRegistration"];
             };
-            defaultSessionTrackingModes?: ("COOKIE" | "URL" | "SSL")[];
             effectiveSessionTrackingModes?: ("COOKIE" | "URL" | "SSL")[];
             jspConfigDescriptor?: components["schemas"]["JspConfigDescriptor"];
             requestCharacterEncoding?: string;
@@ -3020,9 +3062,7 @@ export interface operations {
     };
     login: {
         parameters: {
-            query?: {
-                "invite-code"?: string;
-            };
+            query?: never;
             header?: never;
             path?: never;
             cookie?: never;
@@ -3432,6 +3472,36 @@ export interface operations {
         };
     };
     verifyInviteCode: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json;charset=UTF-8": components["schemas"]["VerifyInviteCode"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    rewardForInviteCode: {
         parameters: {
             query?: never;
             header?: never;
@@ -4301,6 +4371,28 @@ export interface operations {
                 };
                 content: {
                     "application/json;charset=UTF-8": components["schemas"]["GetQuizSetTodayResponse"];
+                };
+            };
+        };
+    };
+    getConsecutiveSolvedQuizSetDates: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                solved_date: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json;charset=UTF-8": components["schemas"]["GetConsecutiveSolvedQuizSetDatesResponse"];
                 };
             };
         };

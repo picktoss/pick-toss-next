@@ -8,21 +8,15 @@ interface SignInRequestBody {
   accessToken: string
 }
 
-interface SignInParams {
-  'invite-code': string
-}
-
 interface SignInResponse {
   accessToken: string
   accessTokenExpiration: string
   signUp: boolean
 }
 
-export const signIn = async (requestBody: SignInRequestBody, params?: SignInParams) => {
+export const signIn = async (requestBody: SignInRequestBody) => {
   try {
-    const { data } = await httpServer.post<SignInResponse>(API_ENDPOINTS.AUTH.LOGIN, requestBody, {
-      params: params ?? {},
-    })
+    const { data } = await httpServer.post<SignInResponse>(API_ENDPOINTS.AUTH.LOGIN, requestBody)
     return data
   } catch (error) {
     throw error

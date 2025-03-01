@@ -14,10 +14,11 @@ interface Props {
 const SocialLogin = ({ className, inviteCode }: Props) => {
   // 소셜 로그인 처리 함수
   const handleSocialLogin = async (provider: 'google' | 'kakao') => {
-    await signIn(provider, {
-      state: JSON.stringify({ inviteCode }), // `state`를 활용해 `inviteCode` 전달
-      callbackUrl: '/', // 로그인 후 메인 페이지로 이동
-    })
+    const options = inviteCode
+      ? { callbackUrl: `/main?invite-code=${inviteCode}` }
+      : { callbackUrl: '/' }
+
+    await signIn(provider, options)
   }
 
   return (

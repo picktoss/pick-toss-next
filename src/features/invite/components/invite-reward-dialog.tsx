@@ -1,9 +1,14 @@
+'use client'
+
 import Icon from '@/shared/components/custom/icon'
 import { Button } from '@/shared/components/ui/button'
 import { Dialog, DialogClose, DialogContent, DialogTitle } from '@/shared/components/ui/dialog'
 import Text from '@/shared/components/ui/text'
+import { useRouter } from 'next/navigation'
 
 const InviteRewardDialog = () => {
+  const router = useRouter()
+
   return (
     <Dialog defaultOpen>
       <DialogContent
@@ -30,7 +35,9 @@ const InviteRewardDialog = () => {
         </Text>
 
         <DialogClose className="mt-[36px] w-full focus:outline-none">
-          <Button className="w-full">별 50개 받기</Button>
+          <Button onClick={() => router.replace('/')} className="w-full">
+            별 50개 받기
+          </Button>
         </DialogClose>
       </DialogContent>
     </Dialog>

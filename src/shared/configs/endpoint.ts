@@ -26,6 +26,8 @@ export const API_ENDPOINTS = {
     },
     /** POST /auth/invite/verify */
     INVITE_CODE_VERIFY: '/auth/invite/verify',
+    /** POST /auth/invite/reward */
+    REWARD_INVITE_SIGN_UP: '/auth/invite/reward',
   },
 
   COLLECTION: {

@@ -35,28 +35,15 @@ export const {
   callbacks: {
     jwt: async ({ token, user, account, trigger }) => {
       if (account) {
-        // `account.params.state`에서 `inviteCode` 추출
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        const state = account.params?.state ? JSON.parse(account.params.state) : null
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        const inviteCode = state?.inviteCode as string
-
-        if (inviteCode) {
-          token.inviteCode = inviteCode // inviteCode JWT에 저장
-        }
-
         if (user) {
           token.picture = user.image ?? null
         }
 
         try {
-          const { accessToken, accessTokenExpiration, signUp } = await signInApi(
-            {
-              socialPlatform: account.provider.toUpperCase() as 'GOOGLE' | 'KAKAO',
-              accessToken: account.access_token as string,
-            },
-            inviteCode ? { 'invite-code': inviteCode } : undefined
-          )
+          const { accessToken, accessTokenExpiration, signUp } = await signInApi({
+            socialPlatform: account.provider.toUpperCase() as 'GOOGLE' | 'KAKAO',
+            accessToken: account.access_token as string,
+          })
 
           token.account = account
           token.accessToken = accessToken
@@ -65,6 +52,7 @@ export const {
         } catch (error) {
           throw new Error('Failed to get backend access token')
         }
+
         // 회원가입 했을 때만 첫 사용자인지 알 수 있다
         try {
           // httpServer를 사용할 수 없음. 그 안에서 auth 를 통해 session을 호출하는데, 현 시점에서는 session이 없음
