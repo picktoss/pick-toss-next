@@ -213,6 +213,8 @@ export const API_ENDPOINTS = {
       ALL_RECORDS: '/quizzes/quiz-records',
       /** GET /quizzes/{solved_date}/quiz-record - 날짜별 퀴즈 기록 */
       DATE_RECORDS: (solvedDate: string) => `/quizzes/${solvedDate}/quiz-record`,
+      /** GET /quiz-set/{solved_date}/consecutive-days - 월별 퀴즈 연속일 기록 */
+      RECORDS_CONSECUTIVE_DAYS: (solvedDate: string) => `/quiz-set/${solvedDate}/consecutive-days`,
       /** GET /quiz-sets/{quiz_set_id} - quiz_set_id와 quiz-set-type으로 퀴즈 가져오기 */
       BY_SET_ID: (quizSetId: string) => `/quiz-sets/${quizSetId}`,
       /** GET /quiz-sets/today - 오늘의 퀴즈 세트 정보 가져오기 */

@@ -2,8 +2,10 @@
 
 import Loading from '@/shared/components/custom/loading'
 import { Calendar } from '@/shared/components/ui/calendar'
+import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import { cn } from '@/shared/lib/utils'
 import { formatToYYYYMMDD } from '@/shared/utils/date'
+import { useQuery } from '@tanstack/react-query'
 import { format } from 'date-fns'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
@@ -17,9 +19,7 @@ const CustomCalendar = ({ className }: Props) => {
 
   const router = useRouter()
   const searchParams = useSearchParams()
-  const selectedDateString = searchParams.get('selectedDate')
-
-  const [showLoading, setShowLoading] = useState(false)
+  const selectedDateString = searchParams.get('selectedDate') ?? formatToYYYYMMDD(today)
 
   const selectedDate = useMemo(() => {
     if (selectedDateString) {
@@ -28,6 +28,11 @@ const CustomCalendar = ({ className }: Props) => {
     }
     return today
   }, [selectedDateString, today])
+
+  const [showLoading, setShowLoading] = useState(false)
+  const [currentMonth, setCurrentMonth] = useState(selectedDate) // 📌 현재 달을 추적
+
+  const { data } = useQuery(queries.quiz.recordsConsecutiveDays(formatToYYYYMMDD(currentMonth)))
 
   useEffect(() => {
     setShowLoading(false)
@@ -71,7 +76,9 @@ const CustomCalendar = ({ className }: Props) => {
         className={cn('w-full', className)}
         selected={selectedDate}
         onSelect={(date?: Date) => handleSelect(date)}
-        selectedMonth={selectedDate}
+        selectedMonth={currentMonth} // 📌 현재 선택된 월
+        onMonthChange={(month) => setCurrentMonth(month)} // 📌 월 변경 감지
+        solvedQuizDateRecords={data?.solvedQuizDateRecords}
       />
     </>
   )

@@ -160,6 +160,18 @@ export const getQuizRecordsByDate = async (date: string) => {
   }
 }
 
+/** GET /quiz-set/{solved_date}/consecutive-days - 월별 퀴즈 연속일 기록 */
+export const getRecordsConsecutiveDays = async (date: string) => {
+  try {
+    const { data } = await http.get<Quiz.Response.GetRecordsConsecutiveDays>(
+      API_ENDPOINTS.QUIZ.GET.RECORDS_CONSECUTIVE_DAYS(date)
+    )
+    return data
+  } catch (error: unknown) {
+    throw error
+  }
+}
+
 /** GET /documents/{document_id}/review-pick - document_id로 복습 pick 가져오기 */
 export const getReviewPicks = async (documentId: number) => {
   try {

@@ -81,6 +81,11 @@ export const queries = createQueryKeyStore({
       queryFn: () => REQUEST.quiz.getQuizRecordsByDate(date),
       enabled: !!date,
     }),
+    recordsConsecutiveDays: (date: string) => ({
+      queryKey: [date],
+      queryFn: () => REQUEST.quiz.getRecordsConsecutiveDays(date),
+      enabled: !!date,
+    }),
     setRecord: (params: { quizSetId: string; quizSetType: Quiz.Set.Type }) => ({
       queryKey: [params],
       queryFn: () => REQUEST.quiz.getQuizSetRecord(params),

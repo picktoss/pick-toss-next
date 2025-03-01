@@ -123,6 +123,13 @@ declare global {
         paths['/api/v2/quizzes/{solved_date}/quiz-record']['get']['responses']['200']['content']['application/json;charset=UTF-8']
       >
 
+      /** GET /api/v2/quiz-set/{solved_date}/consecutive-days
+       * 월별 퀴즈 연속일 기록
+       */
+      type GetRecordsConsecutiveDays = DeepRequired<
+        paths['/api/v2/quiz-set/{solved_date}/consecutive-days']['get']['responses']['200']['content']['application/json;charset=UTF-8']
+      >
+
       /** GET /api/v2/quiz-sets/{quiz_set_id}
        * quizSet-type과 quizSet_id로 퀴즈 세트 가져오기
        */
