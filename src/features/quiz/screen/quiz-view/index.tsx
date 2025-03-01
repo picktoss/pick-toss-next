@@ -11,13 +11,13 @@ import QuizOptions from './components/quiz-option'
 import { isQuizSolved } from '../../utils'
 import ResultIcon from '../../components/result-icon'
 import ExitDialog from './components/exit-dialog'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import { useUpdateQuizResult } from '@/requests/quiz/hooks'
 import TodayQuizReward from '../today-quiz-reward'
 import QuizResult from '../quiz-result'
-import { todayQuizCheckList } from '../../config'
 import QuizSetFullAdView from '@/features/advertisement/screens/quiz-set-full-ad-view'
+import useTodayQuizInfo from './hooks/use-today-quiz-info'
 
 interface Props {
   quizzes: Quiz.Item[]
@@ -50,45 +50,21 @@ const QuizView = ({ quizzes, isFirst, exitRedirectUrl }: Props) => {
     currentIndex,
   })
 
+  const {
+    defaultReward,
+    todayQuizInfo,
+    setTodayQuizInfo,
+    updatedConsecutiveDays,
+    prevConsecutiveDays,
+    todayCheckData,
+  } = useTodayQuizInfo()
+
   const [showResult, setShowResult] = useState(false)
   const [showRecord, setShowRecord] = useState(false)
-  const [todayQuizInfo, setTodayQuizInfo] = useState<{
-    reward: number
-    currentConsecutiveDays: number
-  } | null>(null)
   const [showTodayQuizReward, setShowTodayQuizReward] = useState(false)
   const [showAdvertisement, setShowAdvertisement] = useState(false)
 
   const [exitDialogOpen, setExitDialogOpen] = useState(false)
-
-  const defaultReward = 5
-
-  const updatedConsecutiveDays = useMemo(
-    () => todayQuizInfo?.currentConsecutiveDays ?? 1,
-    [todayQuizInfo?.currentConsecutiveDays]
-  )
-
-  const divided5Days = useMemo(() => {
-    const remainder = updatedConsecutiveDays % 5
-    if (updatedConsecutiveDays > 1 && remainder === 0) {
-      return 5
-    }
-
-    return remainder
-  }, [updatedConsecutiveDays])
-
-  const prevConsecutiveDays = useMemo(() => divided5Days - 1, [divided5Days])
-
-  const todayCheckData = useMemo(
-    () =>
-      todayQuizCheckList.map((checkItem) => {
-        if (checkItem.day <= prevConsecutiveDays) {
-          return { ...checkItem, isComplete: true }
-        }
-        return { ...checkItem }
-      }),
-    [prevConsecutiveDays]
-  )
 
   const currentQuiz = quizzes[currentIndex] ?? ({} as Quiz.Item)
   const currentResult = quizResults[currentIndex] ?? null
