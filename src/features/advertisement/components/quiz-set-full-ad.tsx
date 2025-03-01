@@ -23,7 +23,12 @@ const QuizSetFullAd = () => {
     }
   }, [])
 
-  return <div id="adfit-full-quiz" className="flex-center w-full"></div>
+  return (
+    <div
+      id="adfit-full-quiz"
+      className="flex-center h-[250px] w-[320px] overflow-hidden rounded-[24px]"
+    ></div>
+  )
 }
 
 export default QuizSetFullAd
