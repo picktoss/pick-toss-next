@@ -10,7 +10,10 @@ const TodayQuizPage = async () => {
   const { currentConsecutiveDays } = await getTodayQuizInfo()
 
   const todayCheckData = todayQuizCheckList.map((checkItem) => {
-    if (checkItem.day <= currentConsecutiveDays % 5) {
+    const remainder = currentConsecutiveDays % 5
+    const divided5Days = currentConsecutiveDays > 1 && remainder === 0 ? 5 : remainder
+
+    if (checkItem.day <= divided5Days) {
       return { ...checkItem, isComplete: true }
     }
     return { ...checkItem }

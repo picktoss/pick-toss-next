@@ -7,6 +7,7 @@ import { Button } from '@/shared/components/ui/button'
 import { motion } from 'framer-motion'
 
 interface Props {
+  consecutiveDays: number
   prevConsecutiveDays: number
   todayCheckData: {
     day: number
@@ -16,9 +17,13 @@ interface Props {
   onClick: () => void
 }
 
-const TodayQuizReward = ({ prevConsecutiveDays, todayCheckData, reward, onClick }: Props) => {
-  const currentConsecutiveDays = (prevConsecutiveDays ?? 0) + 1
-
+const TodayQuizReward = ({
+  consecutiveDays,
+  prevConsecutiveDays,
+  todayCheckData,
+  reward,
+  onClick,
+}: Props) => {
   return (
     <div className="flex-center h-dvh w-dvw max-w-mobile flex-col overflow-y-auto bg-background-base-01 px-[16px] pb-[100px]">
       <div className="flex-center mt-[63px] flex-col">
@@ -40,7 +45,7 @@ const TodayQuizReward = ({ prevConsecutiveDays, todayCheckData, reward, onClick 
 
         <div className="flex-center mt-[20.38px] flex-col gap-[12px]">
           <Text typography="title1" className="text-text-accent">
-            연속 {currentConsecutiveDays}일 완료
+            연속 {consecutiveDays}일 완료
           </Text>
           <Text typography="text1-medium" className="text-center text-text-secondary">
             오늘의 퀴즈를 완료할 때마다 별 5개를 드리고, <br />
