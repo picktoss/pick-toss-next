@@ -5,7 +5,7 @@ import Icon from '@/shared/components/custom/icon'
 
 const Splash = () => {
   return (
-    <div className="relative z-10 h-dvh w-screen max-w-mobile overflow-hidden bg-background-base-01">
+    <div className="fixed right-1/2 z-50 h-dvh w-screen max-w-mobile translate-x-1/2 overflow-hidden bg-background-base-01">
       {/* <motion.div
         className="center"
         initial={{ x: 200, y: -100, opacity: 0 }}
