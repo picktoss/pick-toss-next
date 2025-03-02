@@ -38,6 +38,7 @@ const DrawerOverlay = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Overlay>
 >(({ className, ...props }, ref) => {
   const { direction } = React.useContext(DrawerContext)
+
   const metaTag = document.querySelector('meta[name="theme-color"]')
 
   const prevColorRef = React.useRef<string | null>(null)

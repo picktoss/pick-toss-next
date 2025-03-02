@@ -5,24 +5,43 @@ import DimmedBackground from './dimmed-background'
 import AnimatedButtons from './animate-buttons'
 import { cn } from '@/shared/lib/utils'
 import { useDocumentContext } from '../contexts/document-context'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const AddDocumentMenu = () => {
   const { isExpandedBtns } = useDocumentContext()
 
+  const isFirstRender = useRef(true)
   const metaTag = document.querySelector('meta[name="theme-color"]')
-  const prevColorRef = useRef<string | null>(null)
-  if (!prevColorRef.current) {
-    prevColorRef.current = metaTag?.getAttribute('content') ?? '#ffffff'
-  }
+  const [currentPageColor, setCurrentPageColor] = useState<string | null | undefined>(null)
 
   useEffect(() => {
+    const metaTag = document.querySelector('meta[name="theme-color"]')
+    const currentPageColor = metaTag?.getAttribute('content')
+
+    setCurrentPageColor(currentPageColor)
+  }, [])
+
+  // const currentPageColor = metaTag?.getAttribute('content')
+
+  // const prevColorRef = useRef<string | null>(null)
+  // if (!prevColorRef.current) {
+  //   prevColorRef.current = metaTag?.getAttribute('content') ?? '#ffffff'
+  // }
+
+  useEffect(() => {
+    // 첫 렌더링인 경우 아무 작업도 하지 않고 첫 렌더링 플래그만 false로 변경
+    if (isFirstRender.current) {
+      isFirstRender.current = false
+      return
+    }
+
+    // 첫 렌더링이 아닌 경우에만 아래 로직 실행
     if (isExpandedBtns) {
       metaTag?.setAttribute('content', '#000000')
     } else {
-      metaTag?.setAttribute('content', prevColorRef.current ?? '#ffffff')
+      metaTag?.setAttribute('content', currentPageColor ?? '#ffffff')
     }
-  }, [isExpandedBtns])
+  }, [isFirstRender, currentPageColor, isExpandedBtns])
 
   return (
     <div

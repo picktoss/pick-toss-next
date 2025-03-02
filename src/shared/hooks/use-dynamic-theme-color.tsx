@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 
-export const useDynamicThemeColor = (mountColor: string | null, unmountColor = '#ffffff') => {
+export const useDynamicThemeColor = (mountColor: string | null, unmountColor?: string | null) => {
   useEffect(() => {
     const metaTag = document.querySelector('meta[name="theme-color"]')
 
@@ -11,7 +11,7 @@ export const useDynamicThemeColor = (mountColor: string | null, unmountColor = '
     }
 
     return () => {
-      if (metaTag) {
+      if (metaTag && unmountColor) {
         metaTag.setAttribute('content', unmountColor)
       }
     }
