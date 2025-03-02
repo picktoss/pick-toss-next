@@ -23,7 +23,7 @@ export const queries = createQueryKeyStore({
     rewardInviteSignUp: (inviteCode: string) => ({
       queryKey: [inviteCode],
       queryFn: () => REQUEST.auth.rewardInviteSignUp({ inviteCode }),
-      enabled: !!inviteCode,
+      enabled: !!inviteCode && inviteCode !== '',
     }),
     checkInviteSignUp: (isChecked: boolean) => ({
       queryKey: [isChecked],
