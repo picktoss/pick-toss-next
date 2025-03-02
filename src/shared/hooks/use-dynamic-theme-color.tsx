@@ -18,14 +18,8 @@ export const useDynamicThemeColor = (
       }
 
       return () => {
-        if (metaTag) {
-          if (unmountColor) {
-            metaTag.setAttribute('content', unmountColor)
-            return
-          }
-          if (prevColor) {
-            metaTag.setAttribute('content', prevColor)
-          }
+        if (metaTag && unmountColor) {
+          metaTag.setAttribute('content', unmountColor)
         }
       }
     } else {
@@ -45,17 +39,3 @@ export const useDynamicThemeColor = (
     }
   }, [mountColor, unmountColor, condition, prevColor])
 }
-// export const useDynamicThemeColor = (mountColor: string, unmountColor: string) => {
-//   useEffect(() => {
-//     const metaTag = document.querySelector('meta[name="theme-color"]')
-//     if (metaTag) {
-//       metaTag.setAttribute('content', mountColor)
-//     }
-
-//     return () => {
-//       if (metaTag) {
-//         metaTag.setAttribute('content', unmountColor)
-//       }
-//     }
-//   }, [mountColor, unmountColor])
-// }
