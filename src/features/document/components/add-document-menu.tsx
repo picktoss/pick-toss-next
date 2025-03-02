@@ -5,20 +5,24 @@ import DimmedBackground from './dimmed-background'
 import AnimatedButtons from './animate-buttons'
 import { cn } from '@/shared/lib/utils'
 import { useDocumentContext } from '../contexts/document-context'
-import { useDynamicThemeColor } from '@/shared/hooks/use-dynamic-theme-color'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
 const AddDocumentMenu = () => {
-  const metaTag = document.querySelector('meta[name="theme-color"]')
+  const { isExpandedBtns } = useDocumentContext()
 
+  const metaTag = document.querySelector('meta[name="theme-color"]')
   const prevColorRef = useRef<string | null>(null)
   if (!prevColorRef.current) {
     prevColorRef.current = metaTag?.getAttribute('content') ?? '#ffffff'
   }
 
-  const { isExpandedBtns } = useDocumentContext()
-
-  useDynamicThemeColor('#000000', prevColorRef.current, isExpandedBtns)
+  useEffect(() => {
+    if (isExpandedBtns) {
+      metaTag?.setAttribute('content', '#000000')
+    } else {
+      metaTag?.setAttribute('content', prevColorRef.current ?? '#ffffff')
+    }
+  }, [isExpandedBtns])
 
   return (
     <div
