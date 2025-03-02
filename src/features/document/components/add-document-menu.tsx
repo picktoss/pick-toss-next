@@ -21,13 +21,6 @@ const AddDocumentMenu = () => {
     setCurrentPageColor(currentPageColor)
   }, [])
 
-  // const currentPageColor = metaTag?.getAttribute('content')
-
-  // const prevColorRef = useRef<string | null>(null)
-  // if (!prevColorRef.current) {
-  //   prevColorRef.current = metaTag?.getAttribute('content') ?? '#ffffff'
-  // }
-
   useEffect(() => {
     // 첫 렌더링인 경우 아무 작업도 하지 않고 첫 렌더링 플래그만 false로 변경
     if (isFirstRender.current) {
