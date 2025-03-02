@@ -22,11 +22,12 @@ import Cookies from 'js-cookie'
 import { useUserStore } from '@/store/user'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useToast } from '@/shared/hooks/use-toast'
-import { useEffect, useId } from 'react'
+import { useEffect, useId, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import InviteRewardDialog from '../invite/components/invite-reward-dialog'
 import HomeBannerAd from '../advertisement/components/home-banner-ad'
+import { useRewardInviteSignUp } from '@/requests/auth/hooks'
 
 type RewardType = 'TODAY_QUIZ' | 'EVENT'
 
@@ -41,7 +42,9 @@ const Home = () => {
   const reward = searchParams.get('reward')
 
   const inviteCode = searchParams.get('invite-code') ?? ''
-  const { data: isInvited } = useQuery(queries.auth.rewardInviteSignUp(inviteCode))
+  const { mutate: rewardInviteMutate } = useRewardInviteSignUp()
+  const [isInvited, setIsInvited] = useState(false)
+  // const { data: isInvited } = useQuery(queries.auth.rewardInviteSignUp(inviteCode))
 
   const toastId = useId()
   const { toast } = useToast()
@@ -65,6 +68,19 @@ const Home = () => {
 
   const isChecked = !!Cookies.get('check-invited')
   const { data: isSuccessInvite } = useQuery(queries.auth.checkInviteSignUp(isChecked))
+
+  useEffect(() => {
+    if (session?.user && session.user.isNewUser) {
+      rewardInviteMutate(
+        { inviteCode },
+        {
+          onSuccess: () => {
+            setIsInvited(true)
+          },
+        }
+      )
+    }
+  }, [session, inviteCode, rewardInviteMutate])
 
   useEffect(() => {
     if (reward && rewardType === 'TODAY_QUIZ') {
