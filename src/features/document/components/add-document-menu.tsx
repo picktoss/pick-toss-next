@@ -30,7 +30,7 @@ const AddDocumentMenu = () => {
 
     // 첫 렌더링이 아닌 경우에만 아래 로직 실행
     if (isExpandedBtns) {
-      metaTag?.setAttribute('content', '#000000')
+      metaTag?.setAttribute('content', '#3D3E3E')
     } else {
       metaTag?.setAttribute('content', currentPageColor ?? '#ffffff')
     }
