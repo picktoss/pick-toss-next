@@ -3,8 +3,8 @@ import { createQueryKeyStore } from '@lukemorales/query-key-factory'
 
 export const queries = createQueryKeyStore({
   auth: {
-    inviteLink: () => ({
-      queryKey: [''],
+    inviteLink: (key: string) => ({
+      queryKey: [key],
       queryFn: () => REQUEST.auth.getInviteLink(),
       enabled: false,
       refetchOnWindowFocus: false, // 윈도우 포커스시 자동 리페치 방지
@@ -14,7 +14,7 @@ export const queries = createQueryKeyStore({
     verifyInvite: (requestBody: Auth.Request.VerifyInviteCode) => ({
       queryKey: [requestBody],
       queryFn: () => REQUEST.auth.verifyInviteCode(requestBody),
-      enabled: requestBody.inviteCode !== '',
+      enabled: Boolean(requestBody.inviteCode),
     }),
     inviteCreator: (inviteCode: string) => ({
       queryKey: [inviteCode],
@@ -23,7 +23,7 @@ export const queries = createQueryKeyStore({
     rewardInviteSignUp: (inviteCode: string) => ({
       queryKey: [inviteCode],
       queryFn: () => REQUEST.auth.rewardInviteSignUp({ inviteCode }),
-      enabled: !!inviteCode && inviteCode !== '',
+      enabled: Boolean(inviteCode),
     }),
     checkInviteSignUp: (isChecked: boolean) => ({
       queryKey: [isChecked],
@@ -40,7 +40,7 @@ export const queries = createQueryKeyStore({
     item: (directoryId: number) => ({
       queryKey: [directoryId],
       queryFn: () => REQUEST.directory.getDirectory(directoryId),
-      enabled: !!directoryId,
+      enabled: directoryId != null,
     }),
   },
 
@@ -52,7 +52,7 @@ export const queries = createQueryKeyStore({
     item: (documentId?: number) => ({
       queryKey: [documentId],
       queryFn: () => REQUEST.document.getDocumentDetail(documentId),
-      enabled: !!documentId,
+      enabled: documentId != null,
     }),
     search: (requestBody: Document.Request.SearchDocuments) => ({
       queryKey: [requestBody],
@@ -70,7 +70,7 @@ export const queries = createQueryKeyStore({
     listByDocument: (params: { documentId: number; quizType?: Quiz.Type }) => ({
       queryKey: [params],
       queryFn: () => REQUEST.quiz.getDocumentQuizzes(params),
-      enabled: !!params.documentId,
+      enabled: params.documentId != null,
     }),
     allRecords: () => ({
       queryKey: [''],
@@ -79,17 +79,17 @@ export const queries = createQueryKeyStore({
     dateRecords: (date: string) => ({
       queryKey: [date],
       queryFn: () => REQUEST.quiz.getQuizRecordsByDate(date),
-      enabled: !!date,
+      enabled: Boolean(date),
     }),
     recordsConsecutiveDays: (date: string) => ({
       queryKey: [date],
       queryFn: () => REQUEST.quiz.getRecordsConsecutiveDays(date),
-      enabled: !!date,
+      enabled: Boolean(date),
     }),
     setRecord: (params: { quizSetId: string; quizSetType: Quiz.Set.Type }) => ({
       queryKey: [params],
       queryFn: () => REQUEST.quiz.getQuizSetRecord(params),
-      enabled: !!params.quizSetId,
+      enabled: Boolean(params.quizSetId),
     }),
     bomb: (key?: Date) => ({
       queryKey: [key],
@@ -106,12 +106,12 @@ export const queries = createQueryKeyStore({
     weeklyAnalysis: (startDate: string, endDate: string, directoryId?: number) => ({
       queryKey: [directoryId, startDate, endDate],
       queryFn: () => REQUEST.quiz.getWeeklyAnalysis(startDate, endDate, directoryId),
-      enabled: !!directoryId || !!startDate || !endDate,
+      enabled: directoryId != null && Boolean(startDate) && Boolean(endDate),
     }),
     monthlyAnalysis: (month: string, directoryId?: number) => ({
       queryKey: [directoryId, month],
       queryFn: () => REQUEST.quiz.getMonthlyAnalysis(month, directoryId),
-      enabled: !!directoryId || !!month,
+      enabled: directoryId != null && Boolean(month),
     }),
     solvedQuizCount: () => ({
       queryKey: [''],
@@ -131,7 +131,7 @@ export const queries = createQueryKeyStore({
     info: (collectionId: number) => ({
       queryKey: [collectionId],
       queryFn: () => REQUEST.collection.getCollectionInfo({ collectionId }),
-      enabled: !!collectionId,
+      enabled: collectionId != null,
     }),
     interestedCategory: () => ({
       queryKey: [''],
@@ -147,7 +147,7 @@ export const queries = createQueryKeyStore({
     integrated: (requestBody: { keyword: string }) => ({
       queryKey: [requestBody],
       queryFn: () => REQUEST.search.getIntegratedSearches(requestBody),
-      enabled: requestBody.keyword.trim() !== '',
+      enabled: Boolean(requestBody.keyword.trim()),
       initialData: { documents: [], quizzes: [], collections: [] },
     }),
   },

@@ -35,12 +35,14 @@ interface Props {
 }
 
 const InviteRewardDrawer = ({ triggerComponent, open, onOpenChange }: Props) => {
+  const inviteLinkKey = useId()
+
   // 외부 제어 여부 확인 (controlled vs uncontrolled)
   const isControlled = open !== undefined
   const [internalOpen, setInternalOpen] = useState(false) // 내부 상태는 uncontrolled 모드에서만 사용
   const isOpen = isControlled ? open : internalOpen
 
-  const { data, refetch } = useQuery(queries.auth.inviteLink())
+  const { data, refetch } = useQuery(queries.auth.inviteLink(inviteLinkKey))
 
   const [inviteLink, setInviteLink] = useState('')
   const { isLoaded: isKakaoSDKLoaded, error: kakaoSDKError } = useKakaoSDK()
