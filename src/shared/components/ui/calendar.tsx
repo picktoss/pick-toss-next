@@ -134,9 +134,9 @@ function Calendar({
       modifiers={modifiers}
       modifiersClassNames={{
         day_range_start:
-          'day-range-start rounded-l-full bg-background-container-02 hover:bg-button-fill-primary',
+          'day-range-start rounded-l-full bg-background-container-02 hover:bg-button-fill-primary after:h-full after:w-[8px] after:bg-background-container-02 after:absolute after:top-0 after:right-[-4px]',
         day_range_end:
-          'day-range-end rounded-r-full bg-background-container-02 hover:bg-button-fill-primary',
+          'day-range-end rounded-r-full bg-background-container-02 hover:bg-button-fill-primary before:h-full before:w-[8px] before:bg-background-container-02 before:absolute before:top-0 before:left-[-4px]',
         day_range_middle:
           'day-range-middle bg-background-container-02 hover:bg-button-fill-primary before:h-full before:w-[8px] before:bg-background-container-02 before:absolute before:top-0 before:left-[-4px] after:h-full after:w-[8px] after:bg-background-container-02 after:absolute after:top-0 after:right-[-4px]',
         single_solved_day: 'rounded-full bg-background-container-02 hover:bg-button-fill-primary',
