@@ -4,6 +4,7 @@ import * as React from 'react'
 import { Drawer as DrawerPrimitive } from 'vaul'
 
 import { cn } from '@/shared/lib/utils'
+import { useDynamicThemeColor } from '@/shared/hooks/use-dynamic-theme-color'
 
 const DrawerContext = React.createContext<{ direction: 'top' | 'bottom' | 'left' | 'right' }>({
   direction: 'bottom',
@@ -35,13 +36,27 @@ const DrawerClose = DrawerPrimitive.Close
 const DrawerOverlay = React.forwardRef<
   React.ElementRef<typeof DrawerPrimitive.Overlay>,
   React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Overlay>
->(({ className, ...props }, ref) => (
-  <DrawerPrimitive.Overlay
-    ref={ref}
-    className={cn('fixed inset-0 z-50 bg-black/80', className)}
-    {...props}
-  />
-))
+>(({ className, ...props }, ref) => {
+  const { direction } = React.useContext(DrawerContext)
+  const metaTag = document.querySelector('meta[name="theme-color"]')
+
+  const prevColorRef = React.useRef<string | null>(null)
+  if (!prevColorRef.current) {
+    prevColorRef.current = metaTag?.getAttribute('content') ?? '#ffffff'
+  }
+
+  const statusBarColor = direction === 'bottom' ? '#000000' : null
+
+  useDynamicThemeColor(statusBarColor, prevColorRef.current)
+
+  return (
+    <DrawerPrimitive.Overlay
+      ref={ref}
+      className={cn('fixed inset-0 z-50 bg-black/80', className)}
+      {...props}
+    />
+  )
+})
 DrawerOverlay.displayName = DrawerPrimitive.Overlay.displayName
 
 const DrawerContent = React.forwardRef<
