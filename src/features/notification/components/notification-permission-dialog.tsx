@@ -1,11 +1,11 @@
 'use client'
 
-import Icon from '@/shared/components/custom/icon'
 import { Button } from '@/shared/components/ui/button'
 import { Dialog, DialogContent } from '@/shared/components/ui/dialog'
 import Text from '@/shared/components/ui/text'
 import { useIsPWA } from '@/shared/hooks/use-pwa'
 import { useSession } from 'next-auth/react'
+import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
 const NotificationPermissionDialog = () => {
@@ -64,9 +64,7 @@ const NotificationPermissionDialog = () => {
           e.preventDefault()
         }}
       >
-        <Icon name="today-quiz-and-blue-speech-bubble" className="mb-[24px] w-[212px]" />
-
-        <div className="flex-center mb-[36px] flex-col gap-[8px]">
+        <div className="flex-center mb-[24px] flex-col gap-[8px]">
           <Text typography="title3" className="font-suit">
             푸시 알림 허용 안내
           </Text>
@@ -76,9 +74,11 @@ const NotificationPermissionDialog = () => {
           </Text>
         </div>
 
+        <Image src={'/images/push-notification.png'} alt="" width={212} height={132} />
+
         <Button
           onClick={handleClick}
-          className="w-full min-w-[260px]"
+          className="mt-[36px] w-full min-w-[260px]"
           id="notification-permission-button"
         >
           설정하기
