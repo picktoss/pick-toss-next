@@ -46,7 +46,7 @@ const DrawerOverlay = React.forwardRef<
     prevColorRef.current = metaTag?.getAttribute('content') ?? '#ffffff'
   }
 
-  const statusBarColor = direction === 'bottom' ? '#3D3E3E' : null
+  const statusBarColor = direction === 'bottom' ? '#313132' : null
   const unmountColor = direction === 'bottom' ? prevColorRef.current : null
 
   useDynamicThemeColor(statusBarColor, unmountColor)

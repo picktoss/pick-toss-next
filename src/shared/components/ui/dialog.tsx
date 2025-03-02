@@ -25,7 +25,7 @@ const DialogOverlay = React.forwardRef<
     prevColorRef.current = metaTag?.getAttribute('content') ?? '#ffffff'
   }
 
-  useDynamicThemeColor('#3D3E3E', prevColorRef.current)
+  useDynamicThemeColor('#313132', prevColorRef.current)
 
   return (
     <DialogPrimitive.Overlay
