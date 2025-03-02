@@ -70,7 +70,7 @@ const Home = () => {
   const { data: isSuccessInvite } = useQuery(queries.auth.checkInviteSignUp(isChecked))
 
   useEffect(() => {
-    if (session?.user && session.user.isNewUser) {
+    if (inviteCode && session?.user && session.user.isNewUser) {
       rewardInviteMutate(
         { inviteCode },
         {
