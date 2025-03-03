@@ -25,6 +25,11 @@ export const useBombQuiz = (key: Date) => {
     currentIndex: currentIndex,
   })
 
+  useEffect(() => {
+    // eslint-disable-next-line no-console
+    console.log(leftQuizCount)
+  }, [leftQuizCount])
+
   const { mutate: updateWrongQuizResultMutate } = useUpdateWrongQuizResult()
   // 무한 오답 터뜨리기 구현을 위한 쿼리 분리
   // 남은 퀴즈 수가 3개 or 1개일 때, 미리 서버에서 오답 리스트 불러와서 현재 리스트에 추가
@@ -54,19 +59,27 @@ export const useBombQuiz = (key: Date) => {
   // leftQuizCount가 3 혹은 1이 되면 추가 데이터를 가져오는 효과
   useEffect(() => {
     const fetchMoreQuizzes = () => {
-      if ((leftQuizCount === 3 || leftQuizCount === 1) && !isLoadingMore) {
+      // 이미 로딩 중이거나 조건에 맞지 않으면 실행하지 않음
+      if (!(leftQuizCount === 3 || leftQuizCount === 1) || isLoadingMore) {
+        return
+      }
+
+      setIsLoadingMore(true)
+
+      try {
         const results = prepareQuizResults(quizResults)
 
         updateWrongQuizResultMutate(
           { quizzes: results },
           {
             onSuccess: async () => {
-              setIsLoadingMore(true)
               const result = await refetchAdditionalData()
 
               if (result.data?.quizzes) {
-                // 기존 bombQuizList에서 현재 보여주는 3개의 퀴즈 ID 저장
-                const lastThreeQuizIds = bombQuizList
+                setIsLoadingMore(true)
+
+                // 기존 bombQuizList에서 현재 보여주는 1~3개의 퀴즈 ID 저장
+                const currentVisibleQuizIds = bombQuizList
                   .map((quiz, index) =>
                     index === currentIndex ||
                     index === currentIndex + 1 ||
@@ -77,22 +90,17 @@ export const useBombQuiz = (key: Date) => {
                   .filter(Boolean) // null 제거
 
                 const totalQuizzes = result.data.quizzes.length
+                const numToExclude = leftQuizCount === 3 ? 2 : 0
+
+                if (totalQuizzes - numToExclude === 0) {
+                  return
+                }
 
                 // ✅ leftQuizCount === 3 → 마지막 3개를 제외한 리스트 추가
                 // ✅ leftQuizCount === 1 → 마지막 1개를 제외한 리스트 추가
-                const numToExclude = leftQuizCount === 3 ? 3 : 1
                 const addList = result.data.quizzes
                   .slice(0, totalQuizzes - numToExclude)
-                  .filter((quiz) => !lastThreeQuizIds.includes(quiz.id))
-
-                // 중복 데이터 확인 후 추가
-                if (
-                  result.data?.quizzes.length === 1 &&
-                  result.data?.quizzes[0]?.id === currentQuizInfo?.id
-                ) {
-                  setIsLoadingMore(false)
-                  return
-                }
+                  .filter((quiz) => !currentVisibleQuizIds.includes(quiz.id))
 
                 setBombQuizList((prevList) => [...prevList, ...addList])
                 // quizResults 배열도 확장
@@ -100,11 +108,16 @@ export const useBombQuiz = (key: Date) => {
                   ...prev,
                   ...(new Array(addList.length).fill(null) as null[]),
                 ])
+
+                setIsLoadingMore(false)
               }
-              setIsLoadingMore(false)
             },
           }
         )
+      } catch (error) {
+        console.error('추가 퀴즈 로딩 실패:', error)
+      } finally {
+        setIsLoadingMore(false)
       }
     }
 

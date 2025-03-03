@@ -1,7 +1,7 @@
 import { QUIZ_ANIMATION_DURATION, UNTIL_EXPLANATION_DRAWER_OPEN } from '@/features/quiz/config'
 import { isQuizSolved } from '@/features/quiz/utils'
 import { useTimer } from '@/shared/hooks/use-timer'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 interface UseQuizStateProps {
   quizCount: number
@@ -33,8 +33,10 @@ export const useQuizState = ({ quizCount, currentIndex }: UseQuizStateProps) => 
     }
   }, [currentIndex, quizResults, runTimer, stopTimer])
 
+  const leftQuizCount = useMemo(() => quizCount - currentIndex, [quizCount, currentIndex])
+
   return {
-    leftQuizCount: quizCount - currentIndex,
+    leftQuizCount,
     quizResults,
     setQuizResults,
     showExplanation,
