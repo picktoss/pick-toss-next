@@ -32,7 +32,9 @@ const CustomCalendar = ({ className }: Props) => {
   const [showLoading, setShowLoading] = useState(false)
   const [currentMonth, setCurrentMonth] = useState(selectedDate) // 📌 현재 달을 추적
 
-  const { data } = useQuery(queries.quiz.recordsConsecutiveDays(formatToYYYYMMDD(currentMonth)))
+  const { data, isPending } = useQuery(
+    queries.quiz.recordsConsecutiveDays(formatToYYYYMMDD(currentMonth))
+  )
 
   useEffect(() => {
     setShowLoading(false)
@@ -55,7 +57,7 @@ const CustomCalendar = ({ className }: Props) => {
 
   return (
     <>
-      {showLoading && (
+      {(showLoading || isPending) && (
         <div className="absolute right-1/2 top-[150px] z-50 h-[316px] w-[398px] translate-x-1/2">
           <div className="size-full bg-white opacity-50" />
           <Loading center />
