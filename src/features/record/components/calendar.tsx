@@ -56,6 +56,8 @@ const CustomCalendar = ({ className }: Props) => {
   }
 
   const modifiers = useMemo(() => {
+    const defaultDate = today
+
     if (data?.solvedQuizDateRecords) {
       const solvedDates = data.solvedQuizDateRecords
         .filter((record) => record.isSolved)
@@ -65,14 +67,14 @@ const CustomCalendar = ({ className }: Props) => {
       let start: Date | null = null
 
       for (let i = 0; i < solvedDates.length; i++) {
-        if (!start) start = solvedDates[i] ?? today // 시작점 저장
+        if (!start) start = solvedDates[i] ?? defaultDate // 시작점 저장
 
         // 다음 날짜가 현재 날짜 +1 이 아니라면, 범위 종료
         if (
           i === solvedDates.length - 1 ||
-          addDays(solvedDates[i] ?? today, 1).getTime() !== solvedDates[i + 1]?.getTime()
+          addDays(solvedDates[i] ?? defaultDate, 1).getTime() !== solvedDates[i + 1]?.getTime()
         ) {
-          ranges.push({ start: start, end: solvedDates[i] ?? today })
+          ranges.push({ start: start, end: solvedDates[i] ?? defaultDate })
           start = null
         }
       }
@@ -93,8 +95,8 @@ const CustomCalendar = ({ className }: Props) => {
       )
 
       return {
-        day_range_start: filteredRanges.map((r) => startOfDay(r.start)),
-        day_range_end: filteredRanges.map((r) => startOfDay(r.end)),
+        day_range_start: filteredRanges.map((range) => startOfDay(range.start)),
+        day_range_end: filteredRanges.map((range) => startOfDay(range.end)),
         day_range_middle: solvedDates.filter(
           (date) =>
             !filteredRanges.some(
