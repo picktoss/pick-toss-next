@@ -56,7 +56,7 @@ const CustomCalendar = ({ className }: Props) => {
   }
 
   return (
-    <div className="relative">
+    <div className="relative w-full">
       {(showLoading || isPending) && (
         <div className="absolute right-1/2 top-0 z-50 h-[316px] w-[398px] translate-x-1/2">
           <div className="size-full bg-white opacity-50" />
