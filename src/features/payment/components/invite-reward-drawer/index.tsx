@@ -14,12 +14,11 @@ import Text from '@/shared/components/ui/text'
 // import InviteRewardInfo from '../invite-reward-info'
 import Image from 'next/image'
 import { useEffect, useId, useState } from 'react'
-import { useQuery } from '@tanstack/react-query'
-import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import { useKakaoSDK } from '@/shared/hooks/use-kakao-sdk'
 import { shareToKakao } from '@/shared/utils/kakao'
 import { nativeShare } from '@/shared/utils/share'
 import { useToast } from '@/shared/hooks/use-toast'
+import { useInviteLink } from '@/requests/auth/hooks'
 
 // TODO: PRO버전으로 변경 시 내용 수정
 const inviteText = {
@@ -35,14 +34,12 @@ interface Props {
 }
 
 const InviteRewardDrawer = ({ triggerComponent, open, onOpenChange }: Props) => {
-  const inviteLinkKey = useId()
-
   // 외부 제어 여부 확인 (controlled vs uncontrolled)
   const isControlled = open !== undefined
   const [internalOpen, setInternalOpen] = useState(false) // 내부 상태는 uncontrolled 모드에서만 사용
   const isOpen = isControlled ? open : internalOpen
 
-  const { data, refetch } = useQuery(queries.auth.inviteLink(inviteLinkKey))
+  const { mutate: inviteLinkMutate } = useInviteLink()
 
   const [inviteLink, setInviteLink] = useState('')
   const { isLoaded: isKakaoSDKLoaded, error: kakaoSDKError } = useKakaoSDK()
@@ -110,26 +107,16 @@ const InviteRewardDrawer = ({ triggerComponent, open, onOpenChange }: Props) => 
     }
   }
 
-  // Drawer가 열릴 때마다 쿼리 강제 리페치
+  // Drawer가 열릴 때마다 링크 발급
   useEffect(() => {
     if (isOpen) {
-      const inviteLinkRefetch = async () => {
-        try {
-          await refetch()
-        } catch (error) {
-          console.error('리페치 중 오류 발생:', error)
-        }
-      }
-
-      void inviteLinkRefetch()
+      inviteLinkMutate(undefined, {
+        onSuccess: (data) => {
+          setInviteLink(data.inviteLink)
+        },
+      })
     }
-  }, [isOpen, refetch])
-
-  useEffect(() => {
-    if (data) {
-      setInviteLink(data.inviteLink)
-    }
-  }, [data])
+  }, [isOpen])
 
   return (
     <Drawer open={isOpen} onOpenChange={handleOpenChange}>
