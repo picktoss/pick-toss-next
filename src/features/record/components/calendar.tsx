@@ -56,9 +56,9 @@ const CustomCalendar = ({ className }: Props) => {
   }
 
   return (
-    <>
+    <div className="relative">
       {(showLoading || isPending) && (
-        <div className="absolute right-1/2 top-[150px] z-50 h-[316px] w-[398px] translate-x-1/2">
+        <div className="absolute right-1/2 top-0 z-50 h-[316px] w-[398px] translate-x-1/2">
           <div className="size-full bg-white opacity-50" />
           <Loading center />
         </div>
@@ -82,7 +82,7 @@ const CustomCalendar = ({ className }: Props) => {
         onMonthChange={(month) => setCurrentMonth(month)} // 📌 월 변경 감지
         solvedQuizDateRecords={data?.solvedQuizDateRecords}
       />
-    </>
+    </div>
   )
 }
 
