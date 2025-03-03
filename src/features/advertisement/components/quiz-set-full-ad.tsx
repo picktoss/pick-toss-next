@@ -8,7 +8,7 @@ const QuizSetFullAd = () => {
       ins.className = 'kakao_ad_area'
       ins.style.display = 'none'
       ins.setAttribute('data-ad-unit', AD_ID.QUIZ_SET)
-      ins.setAttribute('data-ad-width', '320')
+      ins.setAttribute('data-ad-width', '300')
       ins.setAttribute('data-ad-height', '250')
 
       const script = document.createElement('script')
@@ -26,7 +26,7 @@ const QuizSetFullAd = () => {
   return (
     <div
       id="adfit-full-quiz"
-      className="flex-center h-[250px] w-[320px] overflow-hidden rounded-[24px]"
+      className="flex-center h-[250px] w-[300px] overflow-hidden rounded-[24px]"
     ></div>
   )
 }

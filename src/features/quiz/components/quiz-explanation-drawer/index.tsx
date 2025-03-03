@@ -14,7 +14,7 @@ interface QuizExplanationDrawerProps {
 }
 
 const MIN_HEIGHT = '125px'
-const MAX_HEIGHT = '86vh'
+const MAX_HEIGHT = '85dvh'
 
 const QuizExplanationDrawer = ({
   isRight,
