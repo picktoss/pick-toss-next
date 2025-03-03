@@ -14,6 +14,7 @@ import Image from 'next/image'
 import BombDefaultState from '../../components/bomb-default-state'
 import { setLocalStorage } from '@/shared/utils/storage'
 import { LOCAL_KEY } from '@/constants'
+import { useDynamicThemeColor } from '@/shared/hooks/use-dynamic-theme-color'
 
 const BombTutorial = () => {
   const router = useRouter()
@@ -188,6 +189,8 @@ const FirstStep = ({
   leftQuizCount: number
   onClickNext: () => void
 }) => {
+  useDynamicThemeColor('#313132', '#ffffff')
+
   return (
     <div className="fixed z-40 flex h-dvh w-screen max-w-mobile flex-col">
       <div className="absolute size-full bg-black opacity-80"></div>
@@ -228,6 +231,8 @@ const NextStep = ({
   currentAnswerState: boolean | undefined
   onClickNext: () => void
 }) => {
+  useDynamicThemeColor('#313132', '#ffffff')
+
   return (
     <div className="fixed z-40 flex h-dvh w-screen max-w-mobile flex-col">
       <div className="absolute size-full bg-black opacity-80"></div>
@@ -274,6 +279,8 @@ const FinalStep = ({
   currentAnswerState: boolean | undefined
   onClickNext: () => void
 }) => {
+  useDynamicThemeColor('#313132', '#ffffff')
+
   return (
     <div className="fixed z-40 flex h-dvh w-screen max-w-mobile flex-col">
       <div className="absolute size-full bg-black opacity-80"></div>

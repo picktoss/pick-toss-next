@@ -3,6 +3,7 @@
 import Icon from '@/shared/components/custom/icon'
 import { Button } from '@/shared/components/ui/button'
 import Text from '@/shared/components/ui/text'
+import { useDynamicThemeColor } from '@/shared/hooks/use-dynamic-theme-color'
 import { NextPageContext } from 'next'
 import Image from 'next/image'
 import React from 'react'
@@ -12,6 +13,8 @@ interface Props {
 }
 
 function Error({ statusCode }: Props) {
+  useDynamicThemeColor('#F5F7F9', '#FFFFFF')
+
   if (statusCode === 500)
     return (
       <div className="center flex-center h-dvh w-dvw max-w-mobile flex-col bg-background-base-02">
