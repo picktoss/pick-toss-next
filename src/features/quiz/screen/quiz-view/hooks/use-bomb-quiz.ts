@@ -25,11 +25,6 @@ export const useBombQuiz = (key: Date) => {
     currentIndex: currentIndex,
   })
 
-  useEffect(() => {
-    // eslint-disable-next-line no-console
-    console.log(leftQuizCount)
-  }, [leftQuizCount])
-
   const { mutate: updateWrongQuizResultMutate } = useUpdateWrongQuizResult()
   // 무한 오답 터뜨리기 구현을 위한 쿼리 분리
   // 남은 퀴즈 수가 3개 or 1개일 때, 미리 서버에서 오답 리스트 불러와서 현재 리스트에 추가
