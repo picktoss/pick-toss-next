@@ -6,7 +6,7 @@ import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import { cn } from '@/shared/lib/utils'
 import { formatToYYYYMMDD } from '@/shared/utils/date'
 import { useQuery } from '@tanstack/react-query'
-import { format } from 'date-fns'
+import { addDays, format, isSameDay, parseISO, startOfDay } from 'date-fns'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
 
@@ -30,7 +30,7 @@ const CustomCalendar = ({ className }: Props) => {
   }, [selectedDateString, today])
 
   const [showLoading, setShowLoading] = useState(false)
-  const [currentMonth, setCurrentMonth] = useState(selectedDate) // 📌 현재 달을 추적
+  const [currentMonth, setCurrentMonth] = useState(selectedDate)
 
   const { data, isPending } = useQuery(
     queries.quiz.recordsConsecutiveDays(formatToYYYYMMDD(currentMonth))
@@ -55,6 +55,59 @@ const CustomCalendar = ({ className }: Props) => {
     }
   }
 
+  const modifiers = useMemo(() => {
+    if (data?.solvedQuizDateRecords) {
+      const solvedDates = data.solvedQuizDateRecords
+        .filter((record) => record.isSolved)
+        .map((record) => startOfDay(parseISO(record.date)))
+
+      const ranges: { start: Date; end: Date }[] = []
+      let start: Date | null = null
+
+      for (let i = 0; i < solvedDates.length; i++) {
+        if (!start) start = solvedDates[i] ?? today // 시작점 저장
+
+        // 다음 날짜가 현재 날짜 +1 이 아니라면, 범위 종료
+        if (
+          i === solvedDates.length - 1 ||
+          addDays(solvedDates[i] ?? today, 1).getTime() !== solvedDates[i + 1]?.getTime()
+        ) {
+          ranges.push({ start: start, end: solvedDates[i] ?? today })
+          start = null
+        }
+      }
+
+      const singleSolvedDates = solvedDates.filter((date, index, arr) => {
+        const prevDate = index > 0 ? arr[index - 1] : null
+        const nextDate = index < arr.length - 1 ? arr[index + 1] : null
+
+        const hasPrev = prevDate && isSameDay(addDays(prevDate, 1), date)
+        const hasNext = nextDate && isSameDay(addDays(date, 1), nextDate)
+
+        return !hasPrev && !hasNext
+      })
+
+      const filteredRanges = ranges.filter(
+        ({ start, end }) =>
+          !singleSolvedDates.some((date) => isSameDay(date, start) || isSameDay(date, end))
+      )
+
+      return {
+        day_range_start: filteredRanges.map((r) => startOfDay(r.start)),
+        day_range_end: filteredRanges.map((r) => startOfDay(r.end)),
+        day_range_middle: solvedDates.filter(
+          (date) =>
+            !filteredRanges.some(
+              ({ start, end }) =>
+                isSameDay(startOfDay(date), startOfDay(start)) ||
+                isSameDay(startOfDay(date), startOfDay(end))
+            ) && !singleSolvedDates.includes(date)
+        ),
+        single_solved_day: singleSolvedDates,
+      }
+    }
+  }, [today, data])
+
   return (
     <div className="relative w-full">
       {(showLoading || isPending) && (
@@ -78,9 +131,9 @@ const CustomCalendar = ({ className }: Props) => {
         className={cn('w-full', className)}
         selected={selectedDate}
         onSelect={(date?: Date) => handleSelect(date)}
-        selectedMonth={currentMonth} // 📌 현재 선택된 월
-        onMonthChange={(month) => setCurrentMonth(month)} // 📌 월 변경 감지
-        solvedQuizDateRecords={data?.solvedQuizDateRecords}
+        selectedMonth={currentMonth}
+        onMonthChange={(month) => setCurrentMonth(month)}
+        modifiers={modifiers}
       />
     </div>
   )

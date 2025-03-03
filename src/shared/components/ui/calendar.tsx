@@ -5,12 +5,11 @@ import { DayPicker } from 'react-day-picker'
 
 import { cn } from '@/shared/lib/utils'
 import Icon from '../custom/icon'
-import { addDays, isSameDay, isSameMonth, parseISO, startOfDay } from 'date-fns'
+import { isSameMonth } from 'date-fns'
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker> & {
   today: Date
   selectedMonth: Date
-  solvedQuizDateRecords?: { date: string; isSolved: boolean }[]
 }
 
 function Calendar({
@@ -20,63 +19,9 @@ function Calendar({
   selectedMonth,
   onMonthChange,
   today,
-  solvedQuizDateRecords = [],
   ...props
 }: CalendarProps) {
-  const defaultDate = React.useMemo(() => new Date(), [])
-  // const [month, setMonth] = React.useState<Date>(selectedMonth || today)
   const isCurrentMonth = (month: Date) => isSameMonth(month, today)
-
-  const modifiers = React.useMemo(() => {
-    const solvedDates = solvedQuizDateRecords
-      .filter((record) => record.isSolved)
-      .map((record) => startOfDay(parseISO(record.date)))
-
-    const ranges: { start: Date; end: Date }[] = []
-    let start: Date | null = null
-
-    for (let i = 0; i < solvedDates.length; i++) {
-      if (!start) start = solvedDates[i] ?? defaultDate // 시작점 저장
-
-      // 다음 날짜가 현재 날짜 +1 이 아니라면, 범위 종료
-      if (
-        i === solvedDates.length - 1 ||
-        addDays(solvedDates[i] ?? defaultDate, 1).getTime() !== solvedDates[i + 1]?.getTime()
-      ) {
-        ranges.push({ start: start, end: solvedDates[i] ?? defaultDate })
-        start = null
-      }
-    }
-
-    const singleSolvedDates = solvedDates.filter((date, index, arr) => {
-      const prevDate = index > 0 ? arr[index - 1] : null
-      const nextDate = index < arr.length - 1 ? arr[index + 1] : null
-
-      const hasPrev = prevDate && isSameDay(addDays(prevDate, 1), date)
-      const hasNext = nextDate && isSameDay(addDays(date, 1), nextDate)
-
-      return !hasPrev && !hasNext
-    })
-
-    const filteredRanges = ranges.filter(
-      ({ start, end }) =>
-        !singleSolvedDates.some((date) => isSameDay(date, start) || isSameDay(date, end))
-    )
-
-    return {
-      day_range_start: filteredRanges.map((r) => startOfDay(r.start)),
-      day_range_end: filteredRanges.map((r) => startOfDay(r.end)),
-      day_range_middle: solvedDates.filter(
-        (date) =>
-          !filteredRanges.some(
-            ({ start, end }) =>
-              isSameDay(startOfDay(date), startOfDay(start)) ||
-              isSameDay(startOfDay(date), startOfDay(end))
-          ) && !singleSolvedDates.includes(date)
-      ),
-      single_solved_day: singleSolvedDates,
-    }
-  }, [defaultDate, solvedQuizDateRecords])
 
   return (
     <DayPicker
@@ -131,7 +76,6 @@ function Calendar({
         day_hidden: 'invisible',
         ...classNames,
       }}
-      modifiers={modifiers}
       modifiersClassNames={{
         day_range_start:
           'day-range-start rounded-l-full bg-background-container-02 hover:bg-button-fill-primary after:h-full after:w-[8px] after:bg-background-container-02 after:absolute after:top-0 after:right-[-4px]',
