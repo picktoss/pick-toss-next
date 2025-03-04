@@ -44,7 +44,6 @@ const Home = () => {
   const inviteCode = searchParams.get('invite-code') ?? ''
   const { mutate: rewardInviteMutate } = useRewardInviteSignUp()
   const [isInvited, setIsInvited] = useState(false)
-  // const { data: isInvited } = useQuery(queries.auth.rewardInviteSignUp(inviteCode))
 
   const toastId = useId()
   const { toast } = useToast()
@@ -173,8 +172,12 @@ const Home = () => {
         <InterestedCategoryCollections interestedCategories={userInfo?.interestCategories} />
 
         {/* 픽토스 이용 가이드 */}
-        {/* 추후 외부 노션 페이지로 연결 */}
-        <div className="mb-[20px] mt-[32px] flex h-fit w-full items-center justify-between rounded-[16px] bg-background-base-03 py-[16px] pl-[15px] pr-[17px]">
+        <Link
+          href="https://picktoss.notion.site/1209d818f5608088a977c9ee5f70061f"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mb-[20px] mt-[32px] flex h-fit w-full items-center justify-between rounded-[16px] bg-background-base-03 py-[16px] pl-[15px] pr-[17px]"
+        >
           <div className="flex items-center gap-[12px]">
             <div className="flex-center size-[32px] rounded-[8px] bg-background-base-01">
               <Image
@@ -191,7 +194,7 @@ const Home = () => {
           </div>
 
           <Icon name="chevron-right" className="text-icon-tertiary" />
-        </div>
+        </Link>
 
         <div className="flex-center">
           <HomeBannerAd />
