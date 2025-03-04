@@ -14,6 +14,7 @@ import SelectQuizTypeDrawer from './select-quiz-type-drawer'
 import SelectCategoryDrawer from './select-category-drawer'
 import { SortCollectionDropdown } from './sort-collection-dropdown'
 import { useState } from 'react'
+import CollectionBannerAd from '@/features/advertisement/components/collection-banner-ad'
 
 const Exploration = () => {
   const searchParams = useSearchParams()
@@ -32,6 +33,42 @@ const Exploration = () => {
 
   const scrollContainerRef = useScrollPosition({ pageKey: 'exploration' })
 
+  // 컬렉션 데이터를 렌더링하면서 6개(3행)마다 광고 컴포넌트를 삽입
+  const renderCollectionsWithAds = () => {
+    const items: React.ReactNode[] = []
+    const collections = collectionsData?.collections || []
+
+    collections.forEach((collection, index) => {
+      items.push(
+        <Link key={collection.id} href={`/collections/${collection.id}`}>
+          <Collection
+            collectionId={collection.id}
+            emoji={collection.emoji}
+            title={collection.name}
+            category={collection.collectionCategory}
+            problemCount={0}
+            lastUpdated="2일 전"
+            isOwner={user?.id === collection.member.creatorId}
+            isBookMarked={collection.bookmarked}
+            bookMarkCount={collection.bookmarkCount}
+            creatorName={collection.member.creatorName}
+          />
+        </Link>
+      )
+
+      // 6번째(인덱스 5, 11, 17 등) 항목 후에 광고 삽입 (마지막 그룹이 아닐 경우)
+      if ((index + 1) % 6 === 0 && index !== collections.length - 1) {
+        items.push(
+          <div key={`ad-${index}`} className="col-span-2 mx-auto">
+            <CollectionBannerAd />
+          </div>
+        )
+      }
+    })
+
+    return items
+  }
+
   return (
     <>
       <div className="flex h-[60px] items-center justify-between px-[16px]">
@@ -46,26 +83,7 @@ const Exploration = () => {
       </div>
 
       <CollectionList ref={scrollContainerRef}>
-        {isLoading ? (
-          <Loading center />
-        ) : (
-          collectionsData?.collections.map((collection) => (
-            <Link key={collection.id} href={`/collections/${collection.id}`}>
-              <Collection
-                collectionId={collection.id}
-                emoji={collection.emoji}
-                title={collection.name}
-                category={collection.collectionCategory}
-                problemCount={0}
-                lastUpdated="2일 전"
-                isOwner={user?.id === collection.member.creatorId}
-                isBookMarked={collection.bookmarked}
-                bookMarkCount={collection.bookmarkCount}
-                creatorName={collection.member.creatorName}
-              />
-            </Link>
-          ))
-        )}
+        {isLoading ? <Loading center /> : renderCollectionsWithAds()}
       </CollectionList>
     </>
   )
