@@ -132,7 +132,7 @@ const EditCollectionQuiz = () => {
           toast({
             title: '컬렉션이 수정되었습니다.',
           })
-          router.push(`/collections/${collectionId}`)
+          router.replace(`/collections/${collectionId}`)
           router.refresh()
         },
       }
