@@ -81,7 +81,7 @@ export const useMoveDocument = (listOption: {
 /**
  * 문서 삭제 Hook
  */
-export const useDeleteDocument = (listOption?: {
+export const useDeleteDocument = (listOption: {
   directoryId?: string
   sortOption: Document.Sort
 }) => {
@@ -91,7 +91,8 @@ export const useDeleteDocument = (listOption?: {
     mutationFn: async (documentIds: number[]) => deleteDocument({ documentIds }),
     onSuccess: async () => {
       // 문서 목록 갱신
-      listOption && (await queryClient.invalidateQueries(queries.document.list(listOption)))
+      await queryClient.invalidateQueries(queries.directory.list())
+      await queryClient.invalidateQueries(queries.document.list(listOption))
     },
   })
 }
