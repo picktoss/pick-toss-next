@@ -47,9 +47,22 @@ const WriteDocumentPage = () => {
   const toastId = useId()
   const { toast } = useToast()
 
-  if (!selectedDirectory) {
-    selectDirectoryId(globalDirectoryId)
-  }
+  useEffect(() => {
+    if (!selectedDirectory) {
+      selectDirectoryId(globalDirectoryId)
+    }
+  }, [selectedDirectory, globalDirectoryId])
+
+  useEffect(() => {
+    if (validationError) {
+      toast({}).update({
+        id: toastId,
+        title: validationError,
+      })
+
+      setValidationError(null)
+    }
+  }, [validationError])
 
   const validateCreateDocument = (data: unknown) => {
     const result = CreateDocumentSchema.safeParse(data)
@@ -96,17 +109,6 @@ const WriteDocumentPage = () => {
       },
     })
   }
-
-  useEffect(() => {
-    if (validationError) {
-      toast({}).update({
-        id: toastId,
-        title: validationError,
-      })
-
-      setValidationError(null)
-    }
-  }, [validationError])
 
   if (documentId !== null && showCreatePopup) {
     return (

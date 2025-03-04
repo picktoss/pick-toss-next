@@ -44,9 +44,11 @@ const CreateWithFile = () => {
     [fileInfo]
   )
 
-  if (!selectedDirectory) {
-    selectDirectoryId(globalDirectoryId)
-  }
+  useEffect(() => {
+    if (!selectedDirectory) {
+      selectDirectoryId(globalDirectoryId)
+    }
+  }, [selectedDirectory, globalDirectoryId])
 
   useEffect(() => {
     if (validationError) {

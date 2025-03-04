@@ -35,7 +35,7 @@ export function DirectoryProvider({ children }: PropsWithChildren) {
         0
       ),
     }),
-    [data, selectedDirectoryId, selectDirectoryId]
+    [data, selectedDirectoryId]
   )
 
   return <DirectoryContext.Provider value={values}>{children}</DirectoryContext.Provider>
