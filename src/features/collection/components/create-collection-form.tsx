@@ -121,7 +121,6 @@ const CreateCollectionForm = () => {
     const quizzes = form.getValues('quizzes')
     if (quizzes.length < 5) {
       toast({
-        variant: 'destructive',
         description: '최소 5개의 문제를 선택해주세요.',
       })
       return
@@ -136,7 +135,6 @@ const CreateCollectionForm = () => {
     const quizzes = form.getValues('quizzes')
     if (quizzes.length < 5) {
       toast({
-        variant: 'destructive',
         description: '최소 5개의 문제를 선택해주세요.',
       })
       router.replace('/collections/create')
@@ -148,7 +146,6 @@ const CreateCollectionForm = () => {
 
     if (!result.success) {
       toast({
-        variant: 'destructive',
         description: result.error.errors[0]?.message,
       })
       return

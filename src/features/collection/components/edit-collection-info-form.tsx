@@ -93,7 +93,6 @@ const EditCollectionInfoForm = () => {
         },
         onError: () => {
           toast({
-            variant: 'destructive',
             title: '컬렉션 수정에 실패했습니다.',
             description: '다시 시도해주세요.',
           })
@@ -190,7 +189,7 @@ const EditCollectionInfoForm = () => {
                           />
                         </div>
                       </DrawerTrigger>
-                      <DrawerContent className="max-w-mobile mx-auto">
+                      <DrawerContent className="mx-auto max-w-mobile">
                         <DrawerHeader>
                           <DrawerTitle>카테고리를 선택해주세요.</DrawerTitle>
                         </DrawerHeader>

@@ -6,7 +6,6 @@ import Text from '@/shared/components/ui/text'
 import { useCollectionInfo, useUpdateCollectionQuizzes } from '@/requests/collection/hooks'
 import { useParams, useRouter } from 'next/navigation'
 import Loading from '@/shared/components/custom/loading'
-import { toast } from '@/shared/hooks/use-toast'
 import EditQuizCard from './edit-quiz-card'
 import { useEffect, useState } from 'react'
 import DirectorySelect from '../../directory/components/directory-select'
@@ -19,6 +18,7 @@ import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Form } from '@/shared/components/ui/form'
+import { toast } from '@/shared/hooks/use-toast'
 
 const formSchema = z.object({
   quizzes: z.array(z.number()),
@@ -53,7 +53,6 @@ const EditCollectionQuiz = () => {
     const currentQuizzes = form.getValues('quizzes')
     if (currentQuizzes.length <= 5) {
       toast({
-        variant: 'destructive',
         title: '최소 5개의 문제가 필요합니다',
         description: '더 이상 문제를 삭제할 수 없습니다.',
       })
@@ -85,7 +84,6 @@ const EditCollectionQuiz = () => {
 
     if (remainingQuizzes.length < 5) {
       toast({
-        variant: 'destructive',
         title: '최소 5개의 문제가 필요합니다',
         description: '더 이상 문제를 삭제할 수 없습니다.',
       })
@@ -100,7 +98,6 @@ const EditCollectionQuiz = () => {
     if (currentQuizzes.includes(quizId)) {
       if (currentQuizzes.length <= 5) {
         toast({
-          variant: 'destructive',
           title: '최소 5개의 문제가 필요합니다',
           description: '더 이상 문제를 삭제할 수 없습니다.',
         })
@@ -118,7 +115,6 @@ const EditCollectionQuiz = () => {
   const handleSubmit = (values: FormValues) => {
     if (values.quizzes.length < 5) {
       toast({
-        variant: 'destructive',
         title: '최소 5개의 문제가 필요합니다',
       })
       return
@@ -272,9 +268,11 @@ const EditCollectionQuiz = () => {
 
         <div className="mt-3 pb-[120px]">
           <ul className="mt-[23px] flex flex-col gap-[8px]">
-            {collectionInfoData.quizzes.map((quiz) => (
-              <EditQuizCard key={quiz.id} quiz={quiz} onDelete={handleDeleteQuiz} />
-            ))}
+            {collectionInfoData.quizzes
+              .filter((quiz) => form.watch('quizzes').includes(quiz.id))
+              .map((quiz) => (
+                <EditQuizCard key={quiz.id} quiz={quiz} onDelete={handleDeleteQuiz} />
+              ))}
           </ul>
 
           <FixedBottom>
