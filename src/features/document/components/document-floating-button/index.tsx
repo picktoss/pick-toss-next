@@ -12,7 +12,11 @@ interface Props {
   documentName: string
   directoryEmoji: string
   savedQuizCount: number
-  startAddQuizzes: (quizCount: number, quizType: Quiz.Type) => void
+  startAddQuizzes: (
+    quizCount: number,
+    quizType: Quiz.Type,
+    handleSpinner?: (value: boolean) => void
+  ) => void
   quizTypes: Quiz.Type[]
 }
 

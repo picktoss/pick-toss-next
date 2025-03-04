@@ -10,6 +10,7 @@ import { cn } from '@/shared/lib/utils'
 import { useReplayDocumentQuiz } from '@/requests/quiz/hooks'
 import { useRouter } from 'next/navigation'
 import { useDocumentDetailContext } from '@/features/document/contexts/document-detail-context'
+import { BeatLoader } from 'react-spinners'
 
 interface Props {
   triggerComponent: React.ReactNode
@@ -34,6 +35,7 @@ const ReplayQuizDrawer = ({
   const { mutate: replayDocumentQuizMutate } = useReplayDocumentQuiz()
   const [quizType, setQuizType] = useState<Quiz.ReplayType>('RANDOM')
   const [quizCount, setQuizCount] = useState(savedQuizCount)
+  const [loadingSpinner, setLoadingSpinner] = useState(false)
 
   const minQuizCount = savedQuizCount > 5 ? 5 : 1
 
@@ -43,6 +45,8 @@ const ReplayQuizDrawer = ({
   const { isReplayQuizOpen, setIsReplayQuizOpen } = useDocumentDetailContext()
 
   const handleClickStart = () => {
+    setLoadingSpinner(true)
+
     // 퀴즈 다시 풀기 세트 생성하는 api 호출해 quiz set id 얻어
     // /quiz/id?quizType=document로 이동
     replayDocumentQuizMutate(
@@ -51,7 +55,7 @@ const ReplayQuizDrawer = ({
         requestBody: { quizType, quizCount },
       },
       {
-        onSuccess: (data) =>
+        onSuccess: (data) => {
           router.replace(
             `/quiz/${data.quizSetId}?` +
               'quizSetType=DOCUMENT_QUIZ_SET' +
@@ -60,7 +64,9 @@ const ReplayQuizDrawer = ({
               '&' +
               'redirectUrl=' +
               `/document/${documentId}`
-          ),
+          )
+          setLoadingSpinner(false)
+        },
       }
     )
   }
@@ -186,7 +192,11 @@ const ReplayQuizDrawer = ({
                 colors={'primary'}
                 className="mt-[5px] w-[335px] max-w-full text-button1 text-text-primary-inverse"
               >
-                퀴즈 시작하기
+                {loadingSpinner ? (
+                  <BeatLoader size={12} margin={3} speedMultiplier={0.7} color="#F5F7F9" />
+                ) : (
+                  '퀴즈 시작하기'
+                )}
               </Button>
             </div>
           </div>

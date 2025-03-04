@@ -149,7 +149,15 @@ const CreateWithFile = () => {
     }
   }
 
-  const handleCreateDocument = ({ quizType, star }: { quizType: Quiz.Type; star: number }) => {
+  const handleCreateDocument = ({
+    quizType,
+    star,
+    handleSpinner,
+  }: {
+    quizType: Quiz.Type
+    star: number
+    handleSpinner?: (value: boolean) => void
+  }) => {
     if (!selectedDirectory || !fileInfo) {
       setValidationError('노트를 생성할 문서 파일을 첨부해주세요')
       return
@@ -170,6 +178,7 @@ const CreateWithFile = () => {
 
     createDocumentMutate(createDocumentData, {
       onSuccess: ({ id }) => {
+        handleSpinner && handleSpinner(false)
         setDocumentId(id)
         setShowCreatePopup(true)
       },

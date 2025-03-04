@@ -43,7 +43,11 @@ const DocumentDetailView = ({ documentId, activeTab }: Props) => {
     handleCreateError,
   } = useCreateQuiz(documentId)
 
-  const startAddQuizzes = (quizCount: number, quizType: Quiz.Type) => {
+  const startAddQuizzes = (
+    quizCount: number,
+    quizType: Quiz.Type,
+    handleSpinner?: (value: boolean) => void
+  ) => {
     const requestBody = {
       star: quizCount,
       quizType,
@@ -54,6 +58,7 @@ const DocumentDetailView = ({ documentId, activeTab }: Props) => {
       { documentId, requestBody },
       {
         onSuccess: () => {
+          handleSpinner && handleSpinner(false)
           setShowCreatePopup(true)
         },
       }

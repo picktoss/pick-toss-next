@@ -13,13 +13,18 @@ import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import { calculateAvailableQuizCount } from '@/features/document/utils'
 import { useUserStore } from '@/store/user'
 import { useDocumentDetailContext } from '@/features/document/contexts/document-detail-context'
+import { BeatLoader } from 'react-spinners'
 
 interface Props {
   triggerComponent: React.ReactNode
   documentId: number
   documentName: string
   directoryEmoji: string
-  startAddQuizzes: (quizCount: number, quizType: Quiz.Type) => void
+  startAddQuizzes: (
+    quizCount: number,
+    quizType: Quiz.Type,
+    handleSpinner?: (value: boolean) => void
+  ) => void
 }
 
 // NewQuizDrawer 컴포넌트
@@ -38,6 +43,7 @@ const NewQuizDrawer = ({ triggerComponent, documentId, startAddQuizzes }: Props)
   const [quizType, setQuizType] = useState<Quiz.Type>('MULTIPLE_CHOICE')
   const [quizCount, setQuizCount] = useState(DEFAULT_QUIZ_COUNT)
   const [isOpenMoreStar, setIsOpenMoreStar] = useState(false)
+  const [loadingSpinner, setLoadingSpinner] = useState(false)
 
   const { isNewQuizOpen, setIsNewQuizOpen } = useDocumentDetailContext()
 
@@ -46,14 +52,17 @@ const NewQuizDrawer = ({ triggerComponent, documentId, startAddQuizzes }: Props)
   }
 
   const handleClickStart = (quizCount: number, quizType: Quiz.Type) => {
+    setLoadingSpinner(true)
+
     const notEnoughStars = (user?.star ?? 0) < quizCount
 
     if (notEnoughStars) {
       setIsOpenMoreStar(true)
+      setLoadingSpinner(false)
       return
     }
 
-    startAddQuizzes(quizCount, quizType)
+    startAddQuizzes(quizCount, quizType, setLoadingSpinner)
   }
 
   return (
@@ -150,11 +159,17 @@ const NewQuizDrawer = ({ triggerComponent, documentId, startAddQuizzes }: Props)
                 className="mt-[5px] w-[335px] max-w-full text-button1 text-text-primary-inverse"
                 onClick={() => handleClickStart(quizCount, quizType)} // 임시
               >
-                퀴즈 시작하기
-                <div className="flex-center size-[fit] rounded-full bg-[#D3DCE4]/[0.2] px-[8px]">
-                  <Icon name="star" className="mr-[4px] size-[16px]" />
-                  <Text typography="text1-medium">{quizCount}</Text>
-                </div>
+                {loadingSpinner ? (
+                  <BeatLoader size={12} margin={3} speedMultiplier={0.7} color="#F5F7F9" />
+                ) : (
+                  <>
+                    퀴즈 시작하기
+                    <div className="flex-center size-[fit] rounded-full bg-[#D3DCE4]/[0.2] px-[8px]">
+                      <Icon name="star" className="mr-[4px] size-[16px]" />
+                      <Text typography="text1-medium">{quizCount}</Text>
+                    </div>
+                  </>
+                )}
               </Button>
             </div>
           </div>

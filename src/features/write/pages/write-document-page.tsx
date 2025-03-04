@@ -61,7 +61,15 @@ const WriteDocumentPage = () => {
     return true
   }
 
-  const handleCreateDocument = ({ quizType, star }: { quizType: Quiz.Type; star: number }) => {
+  const handleCreateDocument = ({
+    quizType,
+    star,
+    handleSpinner,
+  }: {
+    quizType: Quiz.Type
+    star: number
+    handleSpinner?: (value: boolean) => void
+  }) => {
     if (!selectedDirectory) {
       setValidationError('폴더 선택은 필수입니다')
       return
@@ -82,6 +90,7 @@ const WriteDocumentPage = () => {
 
     createDocumentMutate(createDocumentData, {
       onSuccess: ({ id }) => {
+        handleSpinner && handleSpinner(false)
         setDocumentId(id)
         setShowCreatePopup(true)
       },
