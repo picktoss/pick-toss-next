@@ -10,7 +10,7 @@ import { Checkbox } from '@/shared/components/ui/checkbox'
 import Label from '@/shared/components/ui/label'
 import { useDirectories } from '@/requests/directory/hooks'
 import { useDirectoryQuizzes } from '@/requests/quiz/hooks'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import EmojiPicker from 'emoji-picker-react'
 import {
   DropdownMenu,
@@ -36,6 +36,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Input } from '@/shared/components/ui/input'
 import { toast } from '@/shared/hooks/use-toast'
+import GoBackButton from '@/shared/components/custom/go-back-button'
 
 const CategoryId = z.enum([
   'IT',
@@ -65,10 +66,7 @@ type FormValues = z.infer<typeof formSchema>
 
 const CreateCollectionForm = () => {
   const router = useRouter()
-  const stepValue = useSearchParams().get('step') as 'select-document' | 'create-form'
-  const step = ['select-document', 'create-form'].includes(stepValue)
-    ? stepValue
-    : 'select-document'
+  const [step, setStep] = useState<'select-document' | 'create-form'>('select-document')
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -126,7 +124,7 @@ const CreateCollectionForm = () => {
       return
     }
 
-    router.push('/collections/create?step=create-form')
+    setStep('create-form')
   }
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -137,7 +135,7 @@ const CreateCollectionForm = () => {
       toast({
         description: '최소 5개의 문제를 선택해주세요.',
       })
-      router.replace('/collections/create')
+      setStep('select-document')
       return
     }
 
@@ -183,7 +181,7 @@ const CreateCollectionForm = () => {
   if (step === 'select-document') {
     return (
       <Form {...form}>
-        <form onSubmit={handleNextStep}>
+        <form onSubmit={handleNextStep} className="px-[20px]">
           <div className="mt-[27px]">
             <Text typography="title3" className="text-text-primary">
               컬렉션으로 만들 문제를 선택해주세요
@@ -265,126 +263,136 @@ const CreateCollectionForm = () => {
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={handleSubmit} className="mt-3">
-        <div>
-          <div className="flex items-center gap-[20px]">
-            <FormField
-              control={form.control}
-              name="emoji"
-              render={({ field }) => (
-                <FormItem>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger className="outline-none">
-                      <div className="flex-center size-[48px] rounded-[12px] bg-background-base-02 text-3xl">
-                        {field.value}
-                      </div>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                      <EmojiPicker
-                        skinTonesDisabled
-                        height="60vh"
-                        onEmojiClick={(emojiData) => field.onChange(emojiData.emoji)}
-                      />
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="title"
-              render={({ field }) => (
-                <FormItem className="flex-1">
-                  <FormControl>
-                    <Input
-                      {...field}
-                      placeholder="새로운 컬렉션"
-                      className="flex-1 bg-transparent text-title2 placeholder:text-text-placeholder-02 focus:outline-none"
-                      autoFocus
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-          </div>
-
-          <div className="mt-[25px] flex items-center gap-[5px]">
-            <Text typography="text1-medium" color="secondary">
-              분야<span className="text-text-accent">*</span>
-            </Text>
-            <FormField
-              control={form.control}
-              name="categoryCode"
-              render={({ field }) => (
-                <FormItem>
-                  <Drawer>
-                    <DrawerTrigger>
-                      <div className="rounded-full bg-background-base-02 px-[14px] py-[5px]">
-                        <CategoryTag
-                          title={
-                            CATEGORIES.find((category) => category.id === field.value)?.name ?? ''
-                          }
-                        />
-                      </div>
-                    </DrawerTrigger>
-                    <DrawerContent>
-                      <DrawerHeader>
-                        <DrawerTitle>카테고리를 선택해주세요.</DrawerTitle>
-                      </DrawerHeader>
-                      <div className="flex flex-col gap-2 p-4">
-                        {CATEGORIES.map((category) => (
-                          <DrawerClose key={category.id}>
-                            <CategoryTag
-                              title={category.name}
-                              onClick={() => field.onChange(category.id)}
-                            />
-                          </DrawerClose>
-                        ))}
-                      </div>
-                    </DrawerContent>
-                  </Drawer>
-                </FormItem>
-              )}
-            />
-          </div>
-
-          <div className="mt-[27px]">
-            <Text typography="text1-medium" color="secondary">
-              컬렉션 설명<span className="text-text-accent">*</span>
-            </Text>
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Textarea
-                      {...field}
-                      className="mt-2 min-h-[130px] rounded-[8px] border-none bg-background-base-02"
-                    />
-                  </FormControl>
-                  <Text typography="text2-medium" color="caption" className="mt-2">
-                    200자 이내로 입력해주세요 ({field.value.length}/200)
-                  </Text>
-                </FormItem>
-              )}
-            />
-          </div>
+    <>
+      <header className="fixed top-0 z-50 flex h-[54px] w-full max-w-mobile shrink-0 items-center bg-white px-[16px]">
+        <GoBackButton onClick={() => setStep('select-document')} />
+        <div className="absolute right-1/2 translate-x-1/2">
+          <Text as="h1" typography="subtitle2-medium">
+            컬렉션 만들기
+          </Text>
         </div>
-        <FixedBottom className="flex gap-[6px]">
-          <Button
-            type="submit"
-            variant="largeRound"
-            className="w-full"
-            disabled={isCreateCollectionPending}
-          >
-            만들기
-          </Button>
-        </FixedBottom>
-      </form>
-    </Form>
+      </header>
+      <Form {...form}>
+        <form onSubmit={handleSubmit} className="mt-3 px-[20px]">
+          <div>
+            <div className="flex items-center gap-[20px]">
+              <FormField
+                control={form.control}
+                name="emoji"
+                render={({ field }) => (
+                  <FormItem>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger className="outline-none">
+                        <div className="flex-center size-[48px] rounded-[12px] bg-background-base-02 text-3xl">
+                          {field.value}
+                        </div>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent>
+                        <EmojiPicker
+                          skinTonesDisabled
+                          height="60vh"
+                          onEmojiClick={(emojiData) => field.onChange(emojiData.emoji)}
+                        />
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="title"
+                render={({ field }) => (
+                  <FormItem className="flex-1">
+                    <FormControl>
+                      <Input
+                        {...field}
+                        placeholder="새로운 컬렉션"
+                        className="flex-1 bg-transparent text-title2 placeholder:text-text-placeholder-02 focus:outline-none"
+                        autoFocus
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <div className="mt-[25px] flex items-center gap-[5px]">
+              <Text typography="text1-medium" color="secondary">
+                분야<span className="text-text-accent">*</span>
+              </Text>
+              <FormField
+                control={form.control}
+                name="categoryCode"
+                render={({ field }) => (
+                  <FormItem>
+                    <Drawer>
+                      <DrawerTrigger>
+                        <div className="rounded-full bg-background-base-02 px-[14px] py-[5px]">
+                          <CategoryTag
+                            title={
+                              CATEGORIES.find((category) => category.id === field.value)?.name ?? ''
+                            }
+                          />
+                        </div>
+                      </DrawerTrigger>
+                      <DrawerContent>
+                        <DrawerHeader>
+                          <DrawerTitle>카테고리를 선택해주세요.</DrawerTitle>
+                        </DrawerHeader>
+                        <div className="flex flex-col gap-2 p-4">
+                          {CATEGORIES.map((category) => (
+                            <DrawerClose key={category.id}>
+                              <CategoryTag
+                                title={category.name}
+                                onClick={() => field.onChange(category.id)}
+                              />
+                            </DrawerClose>
+                          ))}
+                        </div>
+                      </DrawerContent>
+                    </Drawer>
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <div className="mt-[27px]">
+              <Text typography="text1-medium" color="secondary">
+                컬렉션 설명<span className="text-text-accent">*</span>
+              </Text>
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Textarea
+                        {...field}
+                        className="mt-2 min-h-[130px] rounded-[8px] border-none bg-background-base-02"
+                      />
+                    </FormControl>
+                    <Text typography="text2-medium" color="caption" className="mt-2">
+                      200자 이내로 입력해주세요 ({field.value.length}/200)
+                    </Text>
+                  </FormItem>
+                )}
+              />
+            </div>
+          </div>
+          <FixedBottom className="flex gap-[6px]">
+            <Button
+              type="submit"
+              variant="largeRound"
+              className="w-full"
+              disabled={isCreateCollectionPending}
+            >
+              만들기
+            </Button>
+          </FixedBottom>
+        </form>
+      </Form>
+    </>
   )
 }
 

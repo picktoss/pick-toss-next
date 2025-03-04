@@ -2,7 +2,7 @@ import CreateCollectionForm from '@/features/collection/components/create-collec
 
 const CreateCollectionPage = () => {
   return (
-    <div className="px-[20px]">
+    <div>
       <CreateCollectionForm />
     </div>
   )
