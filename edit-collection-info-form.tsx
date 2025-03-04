@@ -27,7 +27,6 @@ import { Form, FormControl, FormField, FormItem } from '@/shared/components/ui/f
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Input } from '@/shared/components/ui/input'
 import { toast } from '@/shared/hooks/use-toast'
 import { useEffect } from 'react'
 
@@ -95,7 +94,6 @@ const EditCollectionInfoForm = () => {
         },
         onError: () => {
           toast({
-            variant: 'destructive',
             title: '컬렉션 수정에 실패했습니다.',
             description: '다시 시도해주세요.',
           })
@@ -161,7 +159,7 @@ const EditCollectionInfoForm = () => {
                     <input
                       {...field}
                       placeholder="새로운 컬렉션"
-                      className="flex-1 w-full bg-transparent text-title2 placeholder:text-text-placeholder-02 focus:outline-none"
+                      className="w-full flex-1 bg-transparent text-title2 placeholder:text-text-placeholder-02 focus:outline-none"
                       autoFocus
                     />
                   </FormControl>

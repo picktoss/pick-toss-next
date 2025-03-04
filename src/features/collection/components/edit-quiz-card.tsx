@@ -41,7 +41,7 @@ const EditQuizCard = ({ quiz, onDelete }: Props) => {
       </div>
 
       <div className="flex-none">
-        <button className="py-3 pl-3" onClick={() => onDelete(quiz.id)}>
+        <button type="button" className="py-3 pl-3" onClick={() => onDelete(quiz.id)}>
           <Text typography="text1-medium" color="wrong">
             제거
           </Text>

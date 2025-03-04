@@ -15,7 +15,7 @@ import {
 import Text from '@/shared/components/ui/text'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { cn } from '@/shared/lib/utils'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { CATEGORIES } from '@/features/category/config'
 import { Checkbox } from '@/shared/components/ui/checkbox'
 import Label from '@/shared/components/ui/label'
@@ -34,6 +34,14 @@ const SelectCategoryDrawer = ({ categories }: Props) => {
     const categoryOrder = CATEGORIES.map((category) => category.id)
     return categories.sort((a, b) => categoryOrder.indexOf(a) - categoryOrder.indexOf(b))
   }
+
+  useEffect(() => {
+    const newQueryString = QS.stringify({
+      ...QS.parse(searchParamsString),
+      'collection-category': innerCategories.length > 0 ? innerCategories.join(',') : undefined,
+    })
+    router.replace(`${pathname}?${newQueryString}`)
+  }, [innerCategories, pathname, searchParamsString, router])
 
   return (
     <Drawer>
@@ -76,13 +84,14 @@ const SelectCategoryDrawer = ({ categories }: Props) => {
                 value={category.id}
                 checked={innerCategories.includes(category.id)}
                 onCheckedChange={() => {
+                  let newInnerCategories = [...innerCategories]
                   if (innerCategories.includes(category.id)) {
-                    setInnerCategories(
-                      sortByCategories(innerCategories.filter((c) => c !== category.id))
-                    )
+                    newInnerCategories = newInnerCategories.filter((c) => c !== category.id)
                   } else {
-                    setInnerCategories(sortByCategories([...innerCategories, category.id]))
+                    newInnerCategories = [...innerCategories, category.id]
                   }
+
+                  setInnerCategories(sortByCategories(newInnerCategories))
                 }}
               />
               <Label htmlFor={category.id} className="py-2.5">
@@ -95,20 +104,11 @@ const SelectCategoryDrawer = ({ categories }: Props) => {
         </div>
 
         <FixedBottom className="flex gap-1.5">
+          <Button colors="tertiary" onClick={() => setInnerCategories([])}>
+            초기화
+          </Button>
           <DrawerClose className="w-full">
-            <Button
-              className="w-full"
-              onClick={() => {
-                const newQueryString = QS.stringify({
-                  ...QS.parse(searchParamsString),
-                  'collection-category':
-                    innerCategories.length > 0 ? innerCategories.join(',') : undefined,
-                })
-                router.replace(`${pathname}?${newQueryString}`)
-              }}
-            >
-              적용하기
-            </Button>
+            <Button className="w-full">적용하기</Button>
           </DrawerClose>
         </FixedBottom>
       </DrawerContent>
