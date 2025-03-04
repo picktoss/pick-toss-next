@@ -3,12 +3,12 @@
 import { Button } from '@/shared/components/ui/button'
 import { useRouter, useSearchParams } from 'next/navigation'
 
-export type NotificationTab = 'all' | 'quiz' | 'general'
+export type NotificationTab = 'ALL' | 'QUIZ' | 'GENERAL'
 
 const NotificationTab = () => {
   const router = useRouter()
   const tab = useSearchParams().get('tab') ?? ''
-  const activeTab = ['all', 'quiz', 'general'].includes(tab) ? tab : 'all'
+  const activeTab = ['ALL', 'QUIZ', 'GENERAL'].includes(tab) ? tab : 'ALL'
 
   return (
     <div
@@ -23,7 +23,7 @@ const NotificationTab = () => {
       <Button
         id="all"
         variant={'smallRound'}
-        colors={activeTab === 'all' ? 'selected' : 'outlined'}
+        colors={activeTab === 'ALL' ? 'selected' : 'outlined'}
         className="py-[7.5px]"
       >
         전체
@@ -31,7 +31,7 @@ const NotificationTab = () => {
       <Button
         id="quiz"
         variant={'smallRound'}
-        colors={activeTab === 'quiz' ? 'selected' : 'outlined'}
+        colors={activeTab === 'QUIZ' ? 'selected' : 'outlined'}
         className="py-[7.5px]"
       >
         퀴즈
@@ -39,7 +39,7 @@ const NotificationTab = () => {
       <Button
         id="general"
         variant={'smallRound'}
-        colors={activeTab === 'general' ? 'selected' : 'outlined'}
+        colors={activeTab === 'GENERAL' ? 'selected' : 'outlined'}
         className="py-[7.5px]"
       >
         일반

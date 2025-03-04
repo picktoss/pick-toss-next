@@ -7,14 +7,14 @@ interface Props {
     id: string
   }
   searchParams: {
-    tab?: 'document-content' | 'quiz'
+    tab?: 'DOCUMENT_CONTENT' | 'QUIZ'
   }
 }
 
 const DocumentDetailPage = async ({ params, searchParams }: Props) => {
   const id = params.id
-  const tab = searchParams.tab ?? 'document-content'
-  const activeTab = ['document-content', 'quiz'].includes(tab) ? tab : 'document-content'
+  const tab = searchParams.tab ?? 'DOCUMENT_CONTENT'
+  const activeTab = ['DOCUMENT_CONTENT', 'QUIZ'].includes(tab) ? tab : 'DOCUMENT_CONTENT'
 
   const data = await getDocumentDetail(Number(id))
 

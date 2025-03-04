@@ -3,20 +3,20 @@
 import Text from '@/shared/components/ui/text'
 import { cn } from '@/shared/lib/utils'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { SearchTab } from '../screens/integrated-search'
+import { SearchTab } from '../config'
 
 const tabs = [
-  { key: 'all', label: '전체' },
-  { key: 'quiz-note', label: '퀴즈노트' },
-  { key: 'collection', label: '컬렉션' },
+  { key: 'ALL', label: '전체' },
+  { key: 'QUIZ_NOTE', label: '퀴즈노트' },
+  { key: 'COLLECTION', label: '컬렉션' },
 ] as const
 
 const SearchTabController = () => {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const tab = searchParams.get('tab') || ('all' as SearchTab)
+  const tab = searchParams.get('tab') || ('ALL' as SearchTab)
   const keyword = searchParams.get('keyword')
-  const activeTab = ['all', 'quiz-note', 'collection'].includes(tab) ? tab : 'all'
+  const activeTab = ['ALL', 'QUIZ_NOTE', 'COLLECTION'].includes(tab) ? tab : 'ALL'
 
   const handleTabChange = (newTab: SearchTab) => {
     if (newTab !== activeTab) {

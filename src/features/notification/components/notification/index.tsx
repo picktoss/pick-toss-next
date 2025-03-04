@@ -12,7 +12,7 @@ import Loading from '@/shared/components/custom/loading'
 const Notification = () => {
   const tab = useSearchParams().get('tab') ?? ''
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const activeTab = ['all', 'quiz', 'general'].includes(tab) ? tab : 'all'
+  const activeTab = ['ALL', 'QUIZ', 'GENERAL'].includes(tab) ? tab : 'ALL'
   const { data, isPending } = useQuery(queries.notification.all())
   const notificationList = useMemo(() => data?.notifications || [], [data])
 

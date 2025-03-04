@@ -38,10 +38,10 @@ const Home = () => {
   const router = useRouter()
   const searchParams = useSearchParams()
 
-  const rewardType = searchParams.get('reward-type') as RewardType | null
+  const rewardType = searchParams.get('rewardType') as RewardType | null
   const reward = searchParams.get('reward')
 
-  const inviteCode = searchParams.get('invite-code') ?? ''
+  const inviteCode = searchParams.get('inviteCode') ?? ''
   const { mutate: rewardInviteMutate } = useRewardInviteSignUp()
   const [isInvited, setIsInvited] = useState(false)
 

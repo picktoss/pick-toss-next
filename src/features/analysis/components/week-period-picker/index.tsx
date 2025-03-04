@@ -29,7 +29,7 @@ const WeekPeriodPicker = ({ today }: { today: Date }) => {
         type="button"
         onClick={() =>
           router.replace(
-            `?tab=week&startDate=${justBeforePeriod[0]}&endDate=${justBeforePeriod[1]}`
+            `?tab=WEEK&startDate=${justBeforePeriod[0]}&endDate=${justBeforePeriod[1]}`
           )
         }
       >
@@ -45,7 +45,7 @@ const WeekPeriodPicker = ({ today }: { today: Date }) => {
         disabled={nextBtnDisabled}
         onClick={() =>
           router.replace(
-            `?tab=week&startDate=${rightAfterPeriod[0]}&endDate=${rightAfterPeriod[1]}`
+            `?tab=WEEK&startDate=${rightAfterPeriod[0]}&endDate=${rightAfterPeriod[1]}`
           )
         }
       >

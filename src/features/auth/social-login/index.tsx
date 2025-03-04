@@ -15,7 +15,7 @@ const SocialLogin = ({ className, inviteCode }: Props) => {
   // 소셜 로그인 처리 함수
   const handleSocialLogin = async (provider: 'google' | 'kakao') => {
     const options = inviteCode
-      ? { callbackUrl: `/main?invite-code=${inviteCode}` }
+      ? { callbackUrl: `/main?inviteCode=${inviteCode}` }
       : { callbackUrl: '/' }
 
     await signIn(provider, options)

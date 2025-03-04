@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 
 const AnalysisTab = () => {
   const router = useRouter()
-  const tab = useSearchParams().get('tab') ?? 'week'
+  const tab = useSearchParams().get('tab') ?? 'WEEK'
 
   return (
     <div className="w-full px-[16px] pt-[12px]">
@@ -16,10 +16,10 @@ const AnalysisTab = () => {
         onValueChange={(value) => router.replace(`?tab=${value}`)}
       >
         <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="week" className="h-[40px]">
+          <TabsTrigger value="WEEK" className="h-[40px]">
             <Text typography="button2">주</Text>
           </TabsTrigger>
-          <TabsTrigger value="month" className="h-[40px]">
+          <TabsTrigger value="MONTH" className="h-[40px]">
             <Text typography="button2">월</Text>
           </TabsTrigger>
         </TabsList>

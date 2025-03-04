@@ -19,7 +19,7 @@ import { useMemo } from 'react'
 
 interface Props {
   documentId: number
-  activeTab: 'document-content' | 'quiz'
+  activeTab: 'DOCUMENT_CONTENT' | 'QUIZ'
 }
 
 const DocumentDetailView = ({ documentId, activeTab }: Props) => {
@@ -97,10 +97,10 @@ const DocumentDetailView = ({ documentId, activeTab }: Props) => {
 
         <PickDrawer documentId={documentId} />
 
-        {activeTab === 'document-content' && (
+        {activeTab === 'DOCUMENT_CONTENT' && (
           <DocumentContent formattedContent={formattedContent} />
         )}
-        {activeTab === 'quiz' && <Quiz />}
+        {activeTab === 'QUIZ' && <Quiz />}
       </QuizListProvider>
 
       <DocumentFloatingButton
