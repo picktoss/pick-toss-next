@@ -26,7 +26,7 @@ const CollectionBannerAd = () => {
   return (
     <div
       id="adfit-banner-collection"
-      className="flex-center h-[50px] w-[320px] overflow-hidden rounded-[20px]"
+      className="flex-center h-[48px] w-[319px] overflow-hidden rounded-[12px]"
     ></div>
   )
 }

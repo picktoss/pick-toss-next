@@ -167,7 +167,7 @@ const Home = () => {
       {/* 복습 필수 노트 TOP5 */}
       <ReviewTop5Container />
 
-      <div className="mb-[20px] flex flex-col">
+      <div className="mb-[80px] flex flex-col">
         {/* 픽토스님의 관심분야 컬렉션 */}
         <InterestedCategoryCollections interestedCategories={userInfo?.interestCategories} />
 

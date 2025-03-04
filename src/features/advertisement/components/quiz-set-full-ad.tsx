@@ -26,7 +26,7 @@ const QuizSetFullAd = () => {
   return (
     <div
       id="adfit-full-quiz"
-      className="flex-center h-[250px] w-[300px] overflow-hidden rounded-[24px]"
+      className="flex-center h-[248px] w-[298px] overflow-hidden rounded-[20px]"
     ></div>
   )
 }
