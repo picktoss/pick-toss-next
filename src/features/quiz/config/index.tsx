@@ -53,6 +53,7 @@ export const reportOptions = [
 
 export const QUIZ_ANIMATION_DURATION = 1
 export const UNTIL_EXPLANATION_DRAWER_OPEN = 800
+export const SKIP_EXPLANATION_DRAWER_DELAY = 800
 
 export const todayQuizCheckList = [
   { day: 1, isComplete: false },
