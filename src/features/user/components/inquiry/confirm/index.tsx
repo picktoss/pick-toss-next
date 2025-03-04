@@ -13,6 +13,7 @@ import { http } from '@/shared/lib/axios/http'
 import { API_ENDPOINTS } from '@/shared/configs/endpoint'
 import { useAuthStore } from '@/store/auth'
 import { useRouter } from 'next/navigation'
+import { BeatLoader } from 'react-spinners'
 
 const InquiryConfirm = () => {
   const router = useRouter()
@@ -90,9 +91,13 @@ const InquiryConfirm = () => {
         onClick={handleSubmit(onSubmit)}
         colors={'primary'}
         className="mt-[9px] w-full"
-        disabled={!isValid || isSubmitting}
+        disabled={!isValid}
       >
-        문의 보내기
+        {isSubmitting ? (
+          <BeatLoader size={12} margin={3} speedMultiplier={0.7} color="#F5F7F9" />
+        ) : (
+          '문의 보내기'
+        )}
       </Button>
     </div>
   )
