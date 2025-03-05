@@ -11,12 +11,15 @@ const tabs = [
 
 const DocumentDetailController = () => {
   const router = useRouter()
-  const tab = useSearchParams().get('tab') ?? ''
+  const searchParams = useSearchParams()
+  const tab = searchParams.get('tab') ?? ''
   const activeTab = ['DOCUMENT_CONTENT', 'QUIZ'].includes(tab) ? tab : 'DOCUMENT_CONTENT'
 
   const handleTabChange = (newTab: 'DOCUMENT_CONTENT' | 'QUIZ') => {
     if (newTab !== activeTab) {
-      router.replace(`?tab=${newTab}`)
+      const currentSearchParams = new URLSearchParams(searchParams)
+      currentSearchParams.set('tab', newTab)
+      router.replace(`?${currentSearchParams.toString()}`)
     }
   }
 

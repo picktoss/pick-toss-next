@@ -51,7 +51,9 @@ const CustomCalendar = ({ className }: Props) => {
         return
       }
 
-      router.replace(`?selectedDate=${formattedDate}`)
+      const currentSearchParams = new URLSearchParams(searchParams)
+      currentSearchParams.set('selectedDate', formattedDate)
+      router.replace(`?${currentSearchParams.toString()}`)
     }
   }
 

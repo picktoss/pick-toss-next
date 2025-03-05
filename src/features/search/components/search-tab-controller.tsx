@@ -20,9 +20,14 @@ const SearchTabController = () => {
 
   const handleTabChange = (newTab: SearchTab) => {
     if (newTab !== activeTab) {
-      keyword
-        ? router.replace(`?tab=${newTab}` + `&keyword=${keyword}`)
-        : router.replace(`?tab=${newTab}`)
+      const currentSearchParams = new URLSearchParams(searchParams)
+
+      if (keyword) {
+        currentSearchParams.set('keyword', keyword)
+      }
+      currentSearchParams.set('tab', newTab)
+
+      router.replace(`?${currentSearchParams.toString()}`)
     }
   }
 
