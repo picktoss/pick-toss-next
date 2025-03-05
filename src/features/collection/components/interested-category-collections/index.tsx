@@ -25,7 +25,7 @@ const InterestedCategoryCollections = ({ interestedCategories }: Props) => {
         <Text typography="title3">{userInfo?.name}님의 관심분야 컬렉션</Text>
         {interestedCategories && (
           // 더보기 클릭 - '분야'필터에 관심분야 설정된 상태의 컬렉션 gnb로 이동
-          <Link href={`/collections?collection-category=${interestedCategories.join('%2C')}`}>
+          <Link href={`/collections?collection-category=${interestedCategories.join(',')}`}>
             <Text typography="text1-medium" color="sub">
               더보기
             </Text>

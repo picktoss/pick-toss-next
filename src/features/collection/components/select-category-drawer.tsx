@@ -25,10 +25,21 @@ interface Props {
 }
 
 const SelectCategoryDrawer = ({ categories }: Props) => {
-  const [innerCategories, setInnerCategories] = useState<Collection.Field[]>(categories)
-  const searchParamsString = useSearchParams().toString()
   const router = useRouter()
   const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const searchParamsString = searchParams.toString()
+  const initialCategoryParam = searchParams.get('collection-category')
+
+  const [innerCategories, setInnerCategories] = useState<Collection.Field[]>(
+    initialCategoryParam
+      ? (decodeURIComponent(initialCategoryParam)
+          .split(',')
+          .filter((category) =>
+            CATEGORIES.some((cat) => cat.id === category)
+          ) as Collection.Field[])
+      : categories
+  )
 
   const sortByCategories = (categories: Collection.Field[]) => {
     const categoryOrder = CATEGORIES.map((category) => category.id)
