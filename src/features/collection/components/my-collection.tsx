@@ -79,7 +79,7 @@ const MyCollection = () => {
                     emoji={collection.emoji}
                     title={collection.name}
                     category={collection.collectionCategory}
-                    problemCount={0}
+                    problemCount={collection.totalQuizCount}
                     lastUpdated="2일 전"
                     isOwner={true}
                     bookMarkCount={collection.bookmarkCount}
@@ -100,7 +100,7 @@ const MyCollection = () => {
                     emoji={collection.emoji}
                     title={collection.name}
                     category={collection.collectionCategory}
-                    problemCount={0}
+                    problemCount={collection.totalQuizCount}
                     lastUpdated="2일 전"
                     isBookMarked={collection.bookmarked}
                     bookMarkCount={collection.bookmarkCount}
