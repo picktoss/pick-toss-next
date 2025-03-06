@@ -19,6 +19,7 @@ import { shareToKakao } from '@/shared/utils/kakao'
 import { nativeShare } from '@/shared/utils/share'
 import { useToast } from '@/shared/hooks/use-toast'
 import { useInviteLink } from '@/requests/auth/hooks'
+import { BeatLoader } from 'react-spinners'
 
 // TODO: PRO버전으로 변경 시 내용 수정
 const inviteText = {
@@ -154,17 +155,29 @@ const InviteRewardDrawer = ({ triggerComponent, open, onOpenChange }: Props) => 
           </DrawerHeader>
 
           <div className="flex flex-col gap-[20px]">
-            <Input
-              label="내 링크"
-              value={inviteLink}
-              right={
-                <Button variant={'tinySquare'} colors={'outlined'} onClick={handleCopy}>
-                  복사하기
-                </Button>
-              }
-              className="mx-[8px]"
-              disabled
-            />
+            <div className="relative">
+              <Input
+                label="내 링크"
+                value={inviteLink}
+                right={
+                  <Button variant={'tinySquare'} colors={'outlined'} onClick={handleCopy}>
+                    복사하기
+                  </Button>
+                }
+                className="mx-[8px]"
+                disabled
+              />
+
+              {!inviteLink && (
+                <BeatLoader
+                  size={8}
+                  margin={2}
+                  speedMultiplier={0.7}
+                  color="#b6c1c9"
+                  className="center z-50 !translate-y-[27px]"
+                />
+              )}
+            </div>
 
             <div className="flex flex-col gap-[8px]">
               <Button
