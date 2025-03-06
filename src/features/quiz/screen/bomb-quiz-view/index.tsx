@@ -57,7 +57,7 @@ const BombQuizView = () => {
         <div className="fixed h-dvh w-screen max-w-mobile bg-gray-700"></div>
 
         <div className="fixed z-10 flex h-dvh w-screen max-w-mobile flex-col">
-          <div className="h-[70dvh] min-h-fit w-full rounded-b-[24px] bg-white px-[16px]">
+          <div className="h-[75dvh] min-h-fit w-full rounded-b-[24px] bg-white px-[16px]">
             <EmptyBombList />
           </div>
 
@@ -76,7 +76,7 @@ const BombQuizView = () => {
 
       <div className="fixed z-10 flex h-dvh w-screen max-w-mobile flex-col">
         {/* 문제 영역 */}
-        <div className="h-[70dvh] min-h-fit w-full rounded-b-[24px] bg-white px-[16px]">
+        <div className="h-[75dvh] max-h-[610px] min-h-fit w-full rounded-b-[24px] bg-white px-[16px]">
           <BombQuiz
             quizzes={bombQuizList}
             currentIndex={currentIndex}
