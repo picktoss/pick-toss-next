@@ -22,6 +22,7 @@ import CreateQuizError from '@/features/quiz/screen/create-quiz-error'
 import { CreateDocumentSchema, DOCUMENT_CONSTRAINTS, FileInfo, FileInfoSchema } from '../config'
 import { useToast } from '@/shared/hooks/use-toast'
 import ExitDialog from '@/features/quiz/screen/quiz-view/components/exit-dialog'
+import Loading from '@/shared/components/custom/loading'
 
 const CreateWithFile = () => {
   const router = useRouter()
@@ -32,6 +33,7 @@ const CreateWithFile = () => {
   const [createError, setCreateError] = useState<string | null>(null)
   const [validationError, setValidationError] = useState<string | null>(null)
   const [fileInfo, setFileInfo] = useState<FileInfo | null>(null)
+  const [isProcessing, setIsProcessing] = useState(false)
   const [openExitDialog, setOpenExitDialog] = useState(false)
 
   const { mutate: createDocumentMutate } = useCreateDocument()
@@ -103,6 +105,8 @@ const CreateWithFile = () => {
   }
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsProcessing(true)
+
     if (fileInfo) {
       setFileInfo(null)
       setValidationError(null)
@@ -111,6 +115,7 @@ const CreateWithFile = () => {
     const file = e.target.files?.[0]
 
     if (!file || !isValidFileType(file)) {
+      setIsProcessing(false)
       setValidationError('PDF, DOCX, TXT 파일만 업로드할 수 있습니다.')
       if (e.target) {
         e.target.value = ''
@@ -148,6 +153,8 @@ const CreateWithFile = () => {
     } catch (err) {
       console.error('파일 처리 중 오류 발생:', err)
       setValidationError('파일 처리 중 문제가 발생했습니다.')
+    } finally {
+      setIsProcessing(false)
     }
   }
 
@@ -216,6 +223,10 @@ const CreateWithFile = () => {
 
   if (documentId !== null && createError !== null) {
     return <CreateQuizError documentId={documentId} setCreateError={setCreateError} />
+  }
+
+  if (isProcessing) {
+    return <Loading center />
   }
 
   return (
