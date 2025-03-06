@@ -49,7 +49,7 @@ const Exploration = () => {
             emoji={collection.emoji}
             title={collection.name}
             category={collection.collectionCategory}
-            problemCount={0}
+            problemCount={collection.totalQuizCount}
             lastUpdated="2일 전"
             isOwner={user?.id === collection.member.creatorId}
             isBookMarked={collection.bookmarked}
