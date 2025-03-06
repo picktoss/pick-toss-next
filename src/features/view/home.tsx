@@ -63,6 +63,10 @@ const Home = () => {
 
   const { isMobile } = useScreenSize()
   const isPWA = useIsPWA()
+  // const isIPad =
+  //   /iPad/i.test(navigator.userAgent) ||
+  //   (navigator.userAgent.includes('Mac') && 'ontouchend' in document)
+
   const interestedCategoryCompleted = Cookies.get('interested-category-complete')
 
   const isChecked = !!Cookies.get('check-invited')

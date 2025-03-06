@@ -6,6 +6,7 @@
   "mobile-web-app-capable": "yes",
   "apple-mobile-web-app-capable": "yes",
   "apple-mobile-web-app-status-bar-style": "black-translucent",
+  "apple-mobile-web-app-title": "picktoss",
   "orientation": "portrait",
   "scope": "/",
   "start_url": "/",
@@ -33,6 +34,15 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable any"
+    },
+    {
+      "src": "favicons/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "favicons/favicon.svg",
+      "type": "image/svg+xml"
     }
   ],
   "splash_pages": null,
