@@ -9,7 +9,7 @@ interface QuizQuestionProps {
 
 const QuizQuestion = ({ index, question }: QuizQuestionProps) => (
   <motion.div
-    className="mt-[23px]"
+    className="mt-[45px]"
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
     transition={{ duration: QUIZ_ANIMATION_DURATION }}
