@@ -56,7 +56,9 @@ const RecordDetailPage = async ({ params, searchParams }: Props) => {
             <Text typography="text2-medium" color="sub" className="mb-[2px]">
               소요시간
             </Text>
-            <Text typography="subtitle2-bold">{msToElapsedTimeKorean(totalElapsedTimeMs)}</Text>
+            <Text typography="subtitle2-bold">
+              {msToElapsedTimeKorean(totalElapsedTimeMs) || '-'}
+            </Text>
           </div>
           <div className="flex-center flex-col px-[30px]">
             <div className="flex-center mb-[6px] size-[40px]">
