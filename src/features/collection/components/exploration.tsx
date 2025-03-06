@@ -8,15 +8,18 @@ import { useUser } from '@/shared/hooks/use-user'
 import Link from 'next/link'
 import { useScrollPosition } from '@/shared/hooks/use-scroll-position'
 import SelectMinQuizCountDrawer from './select-min-quiz-count-drawer'
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { DEFAULT_COLLECTION_QUIZ_COUNT } from '../config'
 import SelectQuizTypeDrawer from './select-quiz-type-drawer'
 import SelectCategoryDrawer from './select-category-drawer'
 import { SortCollectionDropdown } from './sort-collection-dropdown'
 import { useState } from 'react'
 import CollectionBannerAd from '@/features/advertisement/components/collection-banner-ad'
+import Text from '@/shared/components/ui/text'
+import { Button } from '@/shared/components/ui/button'
 
 const Exploration = () => {
+  const router = useRouter()
   const searchParams = useSearchParams()
   const categories = searchParams.getAll('collection-category') as Collection.Field[]
   const quizType = searchParams.get('quiz-type') as Quiz.Type
@@ -73,9 +76,9 @@ const Exploration = () => {
     <>
       <div className="flex h-[60px] items-center justify-between px-[16px]">
         <div className="flex gap-[8px]">
-          <SelectCategoryDrawer categories={categories} />
-          <SelectQuizTypeDrawer quizType={quizType} />
-          <SelectMinQuizCountDrawer count={minQuizCount} />
+          <SelectCategoryDrawer key={JSON.stringify(categories)} categories={categories} />
+          <SelectQuizTypeDrawer key={quizType} quizType={quizType} />
+          <SelectMinQuizCountDrawer key={minQuizCount} count={minQuizCount} />
         </div>
         <SortCollectionDropdown
           sort={(option: 'POPULARITY' | 'UPDATED') => setSortOption(option)}
@@ -83,7 +86,35 @@ const Exploration = () => {
       </div>
 
       <CollectionList ref={scrollContainerRef}>
-        {isLoading ? <Loading center /> : renderCollectionsWithAds()}
+        {isLoading ? (
+          <Loading center />
+        ) : collectionsData?.collections.length ? (
+          renderCollectionsWithAds()
+        ) : (
+          <div className="center flex flex-col items-center gap-6">
+            <div>
+              <Text typography="subtitle1-bold" className="text-center">
+                설정한 조건에 맞는 컬렉션이 없어요
+              </Text>
+              <Text
+                typography="subtitle2-medium"
+                color="sub"
+                className="mt-1 text-center text-[14px]"
+              >
+                필터를 조정하거나 초기화 해보세요
+              </Text>
+            </div>
+            <Button
+              variant="mediumRound"
+              colors="tertiary"
+              onClick={() => {
+                router.replace('/collections')
+              }}
+            >
+              필터 초기화하기
+            </Button>
+          </div>
+        )}
       </CollectionList>
     </>
   )
