@@ -9,6 +9,7 @@ import Collection from '../collection'
 import { useUserStore } from '@/store/user'
 import { useQuery } from '@tanstack/react-query'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
+import { useMemo } from 'react'
 
 interface Props {
   interestedCategories?: string[]
@@ -19,12 +20,20 @@ const InterestedCategoryCollections = ({ interestedCategories }: Props) => {
   const { userInfo } = useUserStore()
   const { data } = useQuery(queries.collection.interestedCategory())
 
+  const noInterests = useMemo(
+    () => !interestedCategories || interestedCategories.length === 0,
+    [interestedCategories]
+  )
+  const hasCollectionResults = useMemo(
+    () => interestedCategories && data && data.collections.length > 0,
+    [interestedCategories, data]
+  )
+
   return (
     <div className="flex w-full flex-col">
       <div className="mb-[20px] flex items-center justify-between">
         <Text typography="title3">{userInfo?.name}님의 관심분야 컬렉션</Text>
         {interestedCategories && (
-          // 더보기 클릭 - '분야'필터에 관심분야 설정된 상태의 컬렉션 gnb로 이동
           <Link href={`/collections?collection-category=${interestedCategories.join(',')}`}>
             <Text typography="text1-medium" color="sub">
               더보기
@@ -33,7 +42,16 @@ const InterestedCategoryCollections = ({ interestedCategories }: Props) => {
         )}
       </div>
 
-      {interestedCategories && data ? (
+      {noInterests ? (
+        <div className="flex-center flex-col gap-[20px] pb-[81px] pt-[76px]">
+          <Text typography="text1-medium" color="sub">
+            내가 좋아할만한 퀴즈를 보고 싶다면?
+          </Text>
+          <SetInterestedCategoryDrawer
+            triggerComponent={<Button variant={'mediumRound'}>관심분야 설정하기</Button>}
+          />
+        </div>
+      ) : data && hasCollectionResults ? (
         <SwipeableCardList
           cardComponents={data.collections.map((item) => (
             <Link href={`/collections/${item.id}`} key={item.id}>
@@ -52,13 +70,10 @@ const InterestedCategoryCollections = ({ interestedCategories }: Props) => {
           ))}
         />
       ) : (
-        <div className="flex-center flex-col gap-[20px] pb-[81px] pt-[76px]">
+        <div className="flex-center pb-[81px] pt-[76px]">
           <Text typography="text1-medium" color="sub">
-            내가 좋아할만한 퀴즈를 보고 싶다면?
+            아직 컬렉션이 없어요
           </Text>
-          <SetInterestedCategoryDrawer
-            triggerComponent={<Button variant={'mediumRound'}>관심분야 설정하기</Button>}
-          />
         </div>
       )}
     </div>
