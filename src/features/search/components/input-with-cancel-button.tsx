@@ -2,7 +2,7 @@
 
 import Icon from '@/shared/components/custom/icon'
 import { Input } from '@/shared/components/ui/input'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { ChangeEventHandler, RefObject } from 'react'
 
 interface Props {
@@ -24,6 +24,15 @@ const InputWithCancelButton = ({
   onSubmit,
 }: Props) => {
   const router = useRouter()
+  const pathname = usePathname()
+  const placeholder =
+    pathname === '/search'
+      ? '노트, 퀴즈, 컬렉션 검색'
+      : pathname === '/document/search'
+      ? '노트명, 노트, 퀴즈 검색'
+      : pathname === '/collections/search'
+      ? '컬렉션 검색'
+      : '검색어를 입력해주세요'
 
   const handleCancel = () => {
     router.back()
@@ -38,7 +47,7 @@ const InputWithCancelButton = ({
           onFocus={() => setIsSearchFocused(true)}
           value={inputValue}
           onChange={onChangeInputValue}
-          placeholder="노트명, 노트, 퀴즈 검색"
+          placeholder={placeholder}
           className="h-[40px] placeholder:text-text-placeholder-01"
           variant={'round'}
           left={<Icon name="search-bar" className="size-[20px] text-icon-secondary" />}

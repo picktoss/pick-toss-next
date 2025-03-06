@@ -5,6 +5,7 @@ import { useCreateCheckQuizSet } from '@/requests/quiz/hooks'
 import Loading from '@/shared/components/custom/loading'
 import { Button } from '@/shared/components/ui/button'
 import Text from '@/shared/components/ui/text'
+import { useDynamicThemeColor } from '@/shared/hooks/use-dynamic-theme-color'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -17,6 +18,8 @@ interface Props {
 }
 
 const AiCreatingQuiz = ({ documentId, documentName, directoryEmoji, onError }: Props) => {
+  useDynamicThemeColor('#fff7ed', '#ffffff')
+
   const router = useRouter()
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0)
   const [quizIsReady, setQuizIsReady] = useState(false)

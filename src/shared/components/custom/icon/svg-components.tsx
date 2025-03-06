@@ -3062,3 +3062,38 @@ export const RightSparkleGroup = ({ ...props }) => {
     </svg>
   )
 }
+
+export const ArrowDownColor = ({ ...props }) => {
+  const paintId = useId()
+
+  return (
+    <svg
+      width="26"
+      height="38"
+      viewBox="0 0 26 38"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M18.0003 0H8.00033V24.5H0.875977L13.0003 38L25.1247 24.5H18.0003V0Z"
+        fill={`url(#${paintId})`}
+      />
+      <defs>
+        <linearGradient
+          id={paintId}
+          x1="13.0003"
+          y1="0"
+          x2="13.0003"
+          y2="38"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#FFF1D5" />
+          <stop offset="1" stopColor="#FB8320" />
+        </linearGradient>
+      </defs>
+    </svg>
+  )
+}

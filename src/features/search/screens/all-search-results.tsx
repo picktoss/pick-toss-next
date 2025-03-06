@@ -29,8 +29,8 @@ const AllSearchResults = ({
             keyword={keyword}
           />
 
-          {/* 퀴즈 노트 전체보기 버튼 : 클릭 시 tab = quiz-note로 변경 */}
-          <Link href={`?tab=quiz-note&keyword=${keyword}`} className="mx-[16px]" replace>
+          {/* 퀴즈 노트 전체보기 버튼 : 클릭 시 tab = QUIZ_NOTE로 변경 */}
+          <Link href={`?tab=QUIZ_NOTE&keyword=${keyword}`} className="mx-[16px]" replace>
             <Button
               variant={'smallSquare'}
               colors={'tertiary'}
@@ -50,8 +50,8 @@ const AllSearchResults = ({
             searchResults={previewCollectionResults}
           />
 
-          {/* 컬렉션 전체보기 버튼 : : 클릭 시 tab = collection으로 변경 */}
-          <Link href={`?tab=collection&keyword=${keyword}`} className="mx-[16px]" replace>
+          {/* 컬렉션 전체보기 버튼 : : 클릭 시 tab = COLLECTION으로 변경 */}
+          <Link href={`?tab=COLLECTION&keyword=${keyword}`} className="mx-[16px]" replace>
             <Button
               variant={'smallSquare'}
               colors={'tertiary'}

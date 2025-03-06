@@ -19,7 +19,7 @@ import { useMemo } from 'react'
 
 interface Props {
   documentId: number
-  activeTab: 'document-content' | 'quiz'
+  activeTab: 'DOCUMENT_CONTENT' | 'QUIZ'
 }
 
 const DocumentDetailView = ({ documentId, activeTab }: Props) => {
@@ -43,7 +43,11 @@ const DocumentDetailView = ({ documentId, activeTab }: Props) => {
     handleCreateError,
   } = useCreateQuiz(documentId)
 
-  const startAddQuizzes = (quizCount: number, quizType: Quiz.Type) => {
+  const startAddQuizzes = (
+    quizCount: number,
+    quizType: Quiz.Type,
+    handleSpinner?: (value: boolean) => void
+  ) => {
     const requestBody = {
       star: quizCount,
       quizType,
@@ -54,6 +58,7 @@ const DocumentDetailView = ({ documentId, activeTab }: Props) => {
       { documentId, requestBody },
       {
         onSuccess: () => {
+          handleSpinner && handleSpinner(false)
           setShowCreatePopup(true)
         },
       }
@@ -97,10 +102,10 @@ const DocumentDetailView = ({ documentId, activeTab }: Props) => {
 
         <PickDrawer documentId={documentId} />
 
-        {activeTab === 'document-content' && (
+        {activeTab === 'DOCUMENT_CONTENT' && (
           <DocumentContent formattedContent={formattedContent} />
         )}
-        {activeTab === 'quiz' && <Quiz />}
+        {activeTab === 'QUIZ' && <Quiz />}
       </QuizListProvider>
 
       <DocumentFloatingButton

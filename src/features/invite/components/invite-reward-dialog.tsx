@@ -5,9 +5,20 @@ import { Button } from '@/shared/components/ui/button'
 import { Dialog, DialogClose, DialogContent, DialogTitle } from '@/shared/components/ui/dialog'
 import Text from '@/shared/components/ui/text'
 import { useRouter } from 'next/navigation'
+import Cookies from 'js-cookie'
 
 const InviteRewardDialog = () => {
   const router = useRouter()
+
+  const handleClickConfirm = () => {
+    const checkInvited = Cookies.get('check-invited')
+
+    if (checkInvited) {
+      Cookies.remove('check-invited')
+    }
+
+    router.replace('/')
+  }
 
   return (
     <Dialog defaultOpen>
@@ -35,7 +46,7 @@ const InviteRewardDialog = () => {
         </Text>
 
         <DialogClose className="mt-[36px] w-full focus:outline-none">
-          <Button onClick={() => router.replace('/')} className="w-full">
+          <Button onClick={handleClickConfirm} className="w-full">
             별 50개 받기
           </Button>
         </DialogClose>

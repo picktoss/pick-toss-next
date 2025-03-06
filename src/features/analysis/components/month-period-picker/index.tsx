@@ -18,7 +18,7 @@ const MonthPeriodPicker = ({ today }: { today: Date }) => {
 
   return (
     <div className="flex-center flex h-fit w-full px-[16px] py-[32px]">
-      <button type="button" onClick={() => router.replace(`?tab=month&month=${justBeforeMonth}`)}>
+      <button type="button" onClick={() => router.replace(`?tab=MONTH&month=${justBeforeMonth}`)}>
         <Icon name="triangle-left" className="size-[16px]" />
       </button>
 
@@ -29,7 +29,7 @@ const MonthPeriodPicker = ({ today }: { today: Date }) => {
       <button
         type="button"
         disabled={nextBtnDisabled}
-        onClick={() => router.replace(`?tab=month&month=${rightAfterMonth}`)}
+        onClick={() => router.replace(`?tab=MONTH&month=${rightAfterMonth}`)}
       >
         <Icon
           name="triangle-right"

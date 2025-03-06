@@ -47,9 +47,22 @@ const WriteDocumentPage = () => {
   const toastId = useId()
   const { toast } = useToast()
 
-  if (!selectedDirectory) {
-    selectDirectoryId(globalDirectoryId)
-  }
+  useEffect(() => {
+    if (!selectedDirectory) {
+      selectDirectoryId(globalDirectoryId)
+    }
+  }, [selectedDirectory, globalDirectoryId])
+
+  useEffect(() => {
+    if (validationError) {
+      toast({}).update({
+        id: toastId,
+        title: validationError,
+      })
+
+      setValidationError(null)
+    }
+  }, [validationError])
 
   const validateCreateDocument = (data: unknown) => {
     const result = CreateDocumentSchema.safeParse(data)
@@ -61,7 +74,15 @@ const WriteDocumentPage = () => {
     return true
   }
 
-  const handleCreateDocument = ({ quizType, star }: { quizType: Quiz.Type; star: number }) => {
+  const handleCreateDocument = ({
+    quizType,
+    star,
+    handleSpinner,
+  }: {
+    quizType: Quiz.Type
+    star: number
+    handleSpinner?: (value: boolean) => void
+  }) => {
     if (!selectedDirectory) {
       setValidationError('폴더 선택은 필수입니다')
       return
@@ -82,22 +103,12 @@ const WriteDocumentPage = () => {
 
     createDocumentMutate(createDocumentData, {
       onSuccess: ({ id }) => {
+        handleSpinner && handleSpinner(false)
         setDocumentId(id)
         setShowCreatePopup(true)
       },
     })
   }
-
-  useEffect(() => {
-    if (validationError) {
-      toast({}).update({
-        id: toastId,
-        title: validationError,
-      })
-
-      setValidationError(null)
-    }
-  }, [validationError])
 
   if (documentId !== null && showCreatePopup) {
     return (

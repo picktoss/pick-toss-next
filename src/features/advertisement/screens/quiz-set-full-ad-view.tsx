@@ -16,6 +16,9 @@ const QuizSetFullAdView = ({ onClose }: Props) => {
   const [count, setCount] = useState(3)
 
   useEffect(() => {
+    const adContainer = document.getElementById('adfit-full-quiz')
+    if (!adContainer) return // adContainer가 없으면 실행 안 함
+
     const interval = setInterval(() => {
       setCount((prev) => {
         if (prev === 1) {

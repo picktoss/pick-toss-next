@@ -5,18 +5,21 @@ import { cn } from '@/shared/lib/utils'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 const tabs = [
-  { key: 'document-content', label: '노트' },
-  { key: 'quiz', label: '퀴즈' },
+  { key: 'DOCUMENT_CONTENT', label: '노트' },
+  { key: 'QUIZ', label: '퀴즈' },
 ] as const
 
 const DocumentDetailController = () => {
   const router = useRouter()
-  const tab = useSearchParams().get('tab') ?? ''
-  const activeTab = ['document-content', 'quiz'].includes(tab) ? tab : 'document-content'
+  const searchParams = useSearchParams()
+  const tab = searchParams.get('tab') ?? ''
+  const activeTab = ['DOCUMENT_CONTENT', 'QUIZ'].includes(tab) ? tab : 'DOCUMENT_CONTENT'
 
-  const handleTabChange = (newTab: 'document-content' | 'quiz') => {
+  const handleTabChange = (newTab: 'DOCUMENT_CONTENT' | 'QUIZ') => {
     if (newTab !== activeTab) {
-      router.replace(`?tab=${newTab}`)
+      const currentSearchParams = new URLSearchParams(searchParams)
+      currentSearchParams.set('tab', newTab)
+      router.replace(`?${currentSearchParams.toString()}`)
     }
   }
 

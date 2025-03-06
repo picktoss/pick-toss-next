@@ -11,9 +11,14 @@ import Text from '@/shared/components/ui/text'
 import { cn } from '@/shared/lib/utils'
 import { useUserStore } from '@/store/user'
 import { useEffect, useState } from 'react'
+import { BeatLoader } from 'react-spinners'
 
 interface Props {
-  handleCreateDocument: (params: { quizType: Quiz.Type; star: number }) => void
+  handleCreateDocument: (params: {
+    quizType: Quiz.Type
+    star: number
+    handleSpinner: (value: boolean) => void
+  }) => void
   maxQuizCount: number
   disabled: boolean
 }
@@ -30,6 +35,7 @@ const CreateQuizDrawer = ({ handleCreateDocument, maxQuizCount, disabled }: Prop
 
   const [isOpenDrawer, setIsOpenDrawer] = useState(false)
   const [isOpenMoreStar, setIsOpenMoreStar] = useState(false)
+  const [loadingSpinner, setLoadingSpinner] = useState(false)
   // const [isOpenPayment, setIsOpenPayment] = useState(false)
 
   // TODO: 결제 기능 구현 후 아래 코드 삭제
@@ -44,14 +50,21 @@ const CreateQuizDrawer = ({ handleCreateDocument, maxQuizCount, disabled }: Prop
   }
 
   const handleClickStart = () => {
+    setLoadingSpinner(true)
+
     const notEnoughStars = (user?.star ?? 0) < selectedQuizCount
 
     if (notEnoughStars) {
       setIsOpenMoreStar(true)
+      setLoadingSpinner(false)
       return
     }
 
-    handleCreateDocument({ quizType: selectedQuizType, star: selectedQuizCount })
+    handleCreateDocument({
+      quizType: selectedQuizType,
+      star: selectedQuizCount,
+      handleSpinner: setLoadingSpinner,
+    })
   }
 
   return (
@@ -150,11 +163,17 @@ const CreateQuizDrawer = ({ handleCreateDocument, maxQuizCount, disabled }: Prop
                 className="mt-[5px] w-full text-button1 text-text-primary-inverse"
                 onClick={handleClickStart}
               >
-                퀴즈 만들기
-                <div className="flex-center size-[fit] rounded-full bg-[#D3DCE4]/[0.2] px-[8px]">
-                  <Icon name="star" className="mr-[4px] size-[16px]" />
-                  <Text typography="text1-medium">{selectedQuizCount}</Text>
-                </div>
+                {loadingSpinner ? (
+                  <BeatLoader size={12} margin={3} speedMultiplier={0.7} color="#F5F7F9" />
+                ) : (
+                  <>
+                    퀴즈 만들기
+                    <div className="flex-center size-[fit] rounded-full bg-[#D3DCE4]/[0.2] px-[8px]">
+                      <Icon name="star" className="mr-[4px] size-[16px]" />
+                      <Text typography="text1-medium">{selectedQuizCount}</Text>
+                    </div>
+                  </>
+                )}
               </Button>
             </div>
           </div>

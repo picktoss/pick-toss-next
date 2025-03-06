@@ -133,7 +133,7 @@ const BombTutorial = () => {
 
       <div className="fixed z-10 flex h-dvh w-screen max-w-mobile flex-col">
         {/* 문제 영역 */}
-        <div className="h-[70dvh] min-h-fit w-full rounded-b-[24px] bg-white px-[16px]">
+        <div className="h-[75dvh] max-h-[610px] min-h-fit w-full rounded-b-[24px] bg-white px-[16px]">
           <BombQuiz
             quizzes={bombQuizList}
             currentIndex={currentIndex}
@@ -195,7 +195,7 @@ const FirstStep = ({
     <div className="fixed z-40 flex h-dvh w-screen max-w-mobile flex-col">
       <div className="absolute size-full bg-black opacity-80"></div>
 
-      <div className="relative z-40 flex h-[70dvh] min-h-[550px] w-full flex-col items-center justify-end">
+      <div className="relative z-40 flex h-[75dvh] max-h-[610px] min-h-[556px] w-full flex-col items-center justify-end">
         <Text typography="text1-medium" color="primary-inverse" className="absolute bottom-[65px]">
           남은 오답 수가 표시돼요
         </Text>
@@ -237,7 +237,7 @@ const NextStep = ({
     <div className="fixed z-40 flex h-dvh w-screen max-w-mobile flex-col">
       <div className="absolute size-full bg-black opacity-80"></div>
 
-      <div className="h-[70dvh] min-h-[550px] w-full"></div>
+      <div className="h-[75dvh] max-h-[610px] min-h-[550px] w-full"></div>
 
       <div className="flex-center relative z-40 max-h-[30dvh] w-full grow">
         <Text
@@ -285,7 +285,7 @@ const FinalStep = ({
     <div className="fixed z-40 flex h-dvh w-screen max-w-mobile flex-col">
       <div className="absolute size-full bg-black opacity-80"></div>
 
-      <div className="h-[70dvh] w-full"></div>
+      <div className="h-[75dvh] max-h-[610px] w-full"></div>
 
       <div className="flex-center relative z-40 h-[30dvh] w-full grow">
         <Text

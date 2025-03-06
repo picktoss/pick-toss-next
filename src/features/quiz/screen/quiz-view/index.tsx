@@ -18,6 +18,8 @@ import TodayQuizReward from '../today-quiz-reward'
 import QuizResult from '../quiz-result'
 import QuizSetFullAdView from '@/features/advertisement/screens/quiz-set-full-ad-view'
 import useTodayQuizInfo from './hooks/use-today-quiz-info'
+import { setTimeout } from 'timers'
+import { SKIP_EXPLANATION_DRAWER_DELAY } from '../../config'
 
 interface Props {
   quizzes: Quiz.Item[]
@@ -28,9 +30,12 @@ interface Props {
 const QuizView = ({ quizzes, isFirst, exitRedirectUrl }: Props) => {
   const router = useRouter()
   const { id } = useParams()
-  const redirectUrl = useSearchParams().get('redirectUrl')
-  const quizSetType = useSearchParams().get('quizSetType')
-  const documentId = useSearchParams().get('documentId') ?? '0'
+  const searchParams = useSearchParams()
+  const redirectUrl = searchParams.get('redirectUrl')
+  const quizSetType = searchParams.get('quizSetType')
+  const documentId = searchParams.get('documentId') ?? '0'
+  const hideTimer = searchParams.get('hideTimer') === 'true'
+  const skipExplanation = searchParams.get('skipExplanation') === 'true'
 
   const { mutate: updateQuizResultMutate, isPending: isUpdatingQuizResult } = useUpdateQuizResult(
     Number(documentId)
@@ -45,9 +50,11 @@ const QuizView = ({ quizzes, isFirst, exitRedirectUrl }: Props) => {
     runTimer,
     stopTimer,
     isRunning,
+    activeAutoNext,
   } = useQuizState({
     quizCount: quizzes.length,
     currentIndex,
+    skipExplanation,
   })
 
   const {
@@ -85,14 +92,6 @@ const QuizView = ({ quizzes, isFirst, exitRedirectUrl }: Props) => {
       updateQuizResultMutate(quizResultPayload, {
         onSuccess: (data) => {
           if (quizSetType === 'TODAY_QUIZ_SET') {
-            // eslint-disable-next-line no-console
-            console.log(
-              'reward: ',
-              data.reward,
-              ' / currentConsecutiveDays: ',
-              data.currentConsecutiveTodayQuizDate
-            )
-
             setTodayQuizInfo({
               reward: data.reward,
               currentConsecutiveDays: data.currentConsecutiveTodayQuizDate,
@@ -153,7 +152,7 @@ const QuizView = ({ quizzes, isFirst, exitRedirectUrl }: Props) => {
   const handleCloseAd = () => {
     if (quizSetType === 'TODAY_QUIZ_SET') {
       router.replace(
-        '/main?' + 'reward-type=TODAY_QUIZ' + `&reward=${todayQuizInfo?.reward ?? defaultReward}`
+        '/main?' + 'rewardType=TODAY_QUIZ' + `&reward=${todayQuizInfo?.reward ?? defaultReward}`
       )
       return
     }
@@ -170,6 +169,13 @@ const QuizView = ({ quizzes, isFirst, exitRedirectUrl }: Props) => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     runTimer()
   }, [runTimer])
+
+  // 퀴즈 설정의 '문제 바로 넘기기'
+  useEffect(() => {
+    if (activeAutoNext) {
+      setTimeout(() => onNext(), SKIP_EXPLANATION_DRAWER_DELAY)
+    }
+  }, [activeAutoNext])
 
   const correctQuizCount = quizResults.reduce((acc, cur) => acc + (cur?.answer ? 1 : 0), 0)
 
@@ -206,8 +212,11 @@ const QuizView = ({ quizzes, isFirst, exitRedirectUrl }: Props) => {
   return (
     <div className="fixed h-dvh max-h-[700px] w-full max-w-mobile">
       <QuizHeader
+        hideTimer={hideTimer}
         isRunning={isRunning}
         totalElapsedTime={totalElapsedTime}
+        runTimer={runTimer}
+        stopTimer={stopTimer}
         handleClickExit={() => setExitDialogOpen(true)}
       />
 

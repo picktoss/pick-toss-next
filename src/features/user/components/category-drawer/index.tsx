@@ -19,7 +19,6 @@ import * as z from 'zod'
 import { useUpdateCollectionCategories } from '@/requests/user/hooks'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useRouter } from 'next/navigation'
 import { Form, FormControl, FormField, FormItem } from '@/shared/components/ui/form'
 import { CATEGORIES } from '@/features/category/config'
 
@@ -37,9 +36,8 @@ const CategoryDrawer = ({
 }: {
   interestedCategories?: (User.InterestedCategory | '관심 분야 없음')[]
 }) => {
-  const router = useRouter()
-
   const [open, setOpen] = useState(false)
+  const [newCategories, setNewCategories] = useState<User.InterestedCategory[]>([])
   const [completeOpen, setCompleteOpen] = useState(false)
   const { mutate, isPending } = useUpdateCollectionCategories()
 
@@ -59,12 +57,13 @@ const CategoryDrawer = ({
   })
 
   const onSubmit = (values: FormValues) => {
+    setNewCategories(values.categories as User.InterestedCategory[])
+
     mutate(
       { interestCollectionCategories: values.categories as NonNullable<User.InterestedCategory>[] },
       {
         onSuccess: () => {
           setCompleteOpen(true)
-          router.refresh()
         },
       }
     )
@@ -194,6 +193,7 @@ const CategoryDrawer = ({
             setOpen(false)
           }
         }}
+        newCategories={newCategories}
       />
     </>
   )

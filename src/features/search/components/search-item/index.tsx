@@ -27,7 +27,7 @@ const SearchItem = ({
   const hrefString =
     documentId !== null
       ? resultType === 'quiz'
-        ? `/document/${documentId}?tab=quiz`
+        ? `/document/${documentId}?tab=QUIZ`
         : `/document/${documentId}`
       : '#'
 

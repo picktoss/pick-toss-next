@@ -6,6 +6,7 @@ import Text from '@/shared/components/ui/text'
 import ConfirmDialogWidget from '@/widget/confirm-dialog'
 import { useDocumentContext } from '../../contexts/document-context'
 import { useDeleteDocument } from '@/requests/document/hooks'
+import { useRouter } from 'next/navigation'
 
 interface Props {
   documentId: number
@@ -13,6 +14,8 @@ interface Props {
 }
 
 const DeleteDocumentSwipeButton = ({ documentId, quizCount }: Props) => {
+  const router = useRouter()
+
   const { selectedDirectoryId } = useDirectoryContext()
   const { sortOption } = useDocumentContext()
 
@@ -23,7 +26,7 @@ const DeleteDocumentSwipeButton = ({ documentId, quizCount }: Props) => {
 
   const handleClickDelete = () => {
     deleteDocumentMutation([documentId], {
-      onSuccess: () => window.location.reload(),
+      onSuccess: () => router.refresh(),
     })
   }
 

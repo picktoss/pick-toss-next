@@ -1,13 +1,15 @@
 import { Button } from '@/shared/components/ui/button'
 import { Dialog, DialogClose, DialogContent, DialogTitle } from '@/shared/components/ui/dialog'
 import Text from '@/shared/components/ui/text'
+import Link from 'next/link'
 
 interface Props {
   isOpen: boolean
   setIsOpen: (value: boolean) => void
+  newCategories?: User.InterestedCategory[]
 }
 
-const SetCategoryCompleteDialog = ({ isOpen, setIsOpen }: Props) => {
+const SetCategoryCompleteDialog = ({ isOpen, setIsOpen, newCategories }: Props) => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent
@@ -24,9 +26,9 @@ const SetCategoryCompleteDialog = ({ isOpen, setIsOpen }: Props) => {
           픽토스님이 좋아하실 컬렉션을 <br /> 지금 확인하러 갈까요?
         </Text>
 
-        <Button className="mb-[16px] px-[74px] py-[15px]" onClick={() => setIsOpen(false)}>
-          컬렉션 보러가기
-        </Button>
+        <Link href={`/collections?collection-category=${newCategories?.join(',')}`}>
+          <Button className="mb-[16px] px-[74px] py-[15px]">컬렉션 보러가기</Button>
+        </Link>
 
         <DialogClose>
           <Text typography="button4" className="text-button-text-tertiary">

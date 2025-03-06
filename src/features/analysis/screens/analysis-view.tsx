@@ -14,7 +14,7 @@ import CollectionCategoryContainer from '../components/collection-category-conta
 import { useMemo } from 'react'
 import Loading from '@/shared/components/custom/loading'
 
-type Tab = 'week' | 'month'
+type Tab = 'WEEK' | 'MONTH'
 
 const AnalysisView = () => {
   const today = new Date()
@@ -22,7 +22,7 @@ const AnalysisView = () => {
   const paramsTab = searchParams.get('tab') ?? ''
   const { selectedDirectoryId, globalDirectoryId } = useDirectoryContext()
 
-  const tab = (['week', 'month'].includes(paramsTab) ? paramsTab : 'week') as Tab
+  const tab = (['WEEK', 'MONTH'].includes(paramsTab) ? paramsTab : 'WEEK') as Tab
   const startDate = searchParams.get('startDate') ?? formatToYYYYMMDD(getSixDaysAgo())
   const endDate = searchParams.get('endDate') ?? formatToYYYYMMDD(today)
   const selectedMonth = searchParams.get('month') ?? formatToYYYYMM(today)
@@ -51,7 +51,7 @@ const AnalysisView = () => {
 
   const collectionsAnalysis = useMemo(
     () =>
-      tab === 'week'
+      tab === 'WEEK'
         ? weeklyAnalysisData?.collectionsAnalysis
         : monthlyAnalysisData?.collectionsAnalysis,
     [tab, weeklyAnalysisData, monthlyAnalysisData]
@@ -62,8 +62,8 @@ const AnalysisView = () => {
     [isWeeklyDataLoading, isMonthlyDataLoading]
   )
 
-  const thisWeek = tab === 'week' && endDate === formatToYYYYMMDD(today)
-  const thisMonth = tab === 'month' && selectedMonth === formatToYYYYMM(today)
+  const thisWeek = tab === 'WEEK' && endDate === formatToYYYYMMDD(today)
+  const thisMonth = tab === 'MONTH' && selectedMonth === formatToYYYYMM(today)
   const thisPeriod = thisWeek || thisMonth
 
   return (
@@ -71,13 +71,13 @@ const AnalysisView = () => {
       {isLoading && <Loading center />}
 
       <AnalysisTab />
-      {tab === 'week' && <WeekPeriodPicker today={today} />}
-      {tab === 'month' && <MonthPeriodPicker today={today} />}
+      {tab === 'WEEK' && <WeekPeriodPicker today={today} />}
+      {tab === 'MONTH' && <MonthPeriodPicker today={today} />}
 
-      {tab === 'week' && (
+      {tab === 'WEEK' && (
         <WeekGraphContainer data={weeklyAnalysisData} today={today} isThisWeek={thisWeek} />
       )}
-      {tab === 'month' && (
+      {tab === 'MONTH' && (
         <MonthGraphContainer data={monthlyAnalysisData} today={today} isThisMonth={thisMonth} />
       )}
 

@@ -91,6 +91,7 @@ export const useDeleteDocument = (listOption?: {
     mutationFn: async (documentIds: number[]) => deleteDocument({ documentIds }),
     onSuccess: async () => {
       // 문서 목록 갱신
+      await queryClient.invalidateQueries(queries.directory.list())
       listOption && (await queryClient.invalidateQueries(queries.document.list(listOption)))
     },
   })

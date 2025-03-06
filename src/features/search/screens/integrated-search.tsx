@@ -13,13 +13,11 @@ import AllSearchResults from './all-search-results'
 import CollectionSearchList from '../components/collection-search-list'
 import { useSearch } from '../hooks/use-search'
 import SearchHeader from '../components/search-header'
-import { SEARCH_TABS } from '../config'
-
-export type SearchTab = 'all' | 'quiz-note' | 'collection'
+import { SEARCH_TABS, SearchTab } from '../config'
 
 const IntegratedSearch = () => {
   const searchParams = useSearchParams()
-  const tab = (searchParams.get('tab') || 'all') as SearchTab
+  const tab = (searchParams.get('tab') || 'ALL') as SearchTab
 
   usePreviousPath()
   const {

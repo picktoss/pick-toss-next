@@ -1,11 +1,11 @@
 export const SEARCH_TABS = {
-  ALL: 'all',
-  QUIZ_NOTE: 'quiz-note',
-  COLLECTION: 'collection',
+  ALL: 'ALL',
+  QUIZ_NOTE: 'QUIZ_NOTE',
+  COLLECTION: 'COLLECTION',
 } as const
 
 // 통합검색 탭 타입
-export type SearchTab = 'all' | 'quiz-note' | 'collection'
+export type SearchTab = 'ALL' | 'QUIZ_NOTE' | 'COLLECTION'
 
 export const mockCollectionList = [
   {
