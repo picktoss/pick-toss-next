@@ -32,7 +32,7 @@ const SetNameDialog = ({ userName }: { userName: string }) => {
   const router = useRouter()
   const [open, setOpen] = useState(false)
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false)
-  const [onAutoFocus, setOnAutoFocus] = useState(false)
+
   const inputRef = useRef<HTMLInputElement | null>(null)
 
   const toastId = useId()
@@ -71,18 +71,10 @@ const SetNameDialog = ({ userName }: { userName: string }) => {
       if (window.visualViewport) {
         const keyboardOpen = window.visualViewport.height < window.innerHeight
         setIsKeyboardOpen(keyboardOpen)
-
-        if (!keyboardOpen) {
-          setOnAutoFocus(false)
-        }
       }
     }
 
     window.visualViewport?.addEventListener('resize', handleResize)
-
-    if (isMobile) {
-      setOnAutoFocus(true)
-    }
 
     return () => {
       window.visualViewport?.removeEventListener('resize', handleResize)
@@ -97,7 +89,10 @@ const SetNameDialog = ({ userName }: { userName: string }) => {
         if (!open) {
           form.reset()
           setIsKeyboardOpen(false)
-          setOnAutoFocus(false)
+        } else {
+          setTimeout(() => {
+            inputRef.current?.focus()
+          }, 100)
         }
       }}
     >
@@ -117,7 +112,6 @@ const SetNameDialog = ({ userName }: { userName: string }) => {
         displayCloseButton={false}
         className={cn(
           'h-fit w-[280px] rounded-[16px] bg-background-base-01 p-[24px] pb-[32px]',
-          onAutoFocus && 'top-0 translate-y-0',
           isKeyboardOpen && 'top-[50%] translate-y-[-50%]'
         )}
         onPointerDownOutside={(e) => {
@@ -142,6 +136,8 @@ const SetNameDialog = ({ userName }: { userName: string }) => {
                       <input
                         {...field}
                         ref={inputRef}
+                        autoFocus={false}
+                        tabIndex={-1}
                         disabled={isPending}
                         className="size-full border-b border-border-divider py-[5px] text-subtitle2-medium focus-visible:outline-none disabled:cursor-not-allowed disabled:bg-background-disabled disabled:opacity-50 disabled:placeholder:text-text-disabled"
                       />
