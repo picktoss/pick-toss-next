@@ -11,13 +11,14 @@ import {
 } from '@/shared/components/ui/dialog'
 import Text from '@/shared/components/ui/text'
 import { useRouter } from 'next/navigation'
-import { useEffect, useId, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { Form, FormControl, FormField, FormItem } from '@/shared/components/ui/form'
 import { useToast } from '@/shared/hooks/use-toast'
 import { cn } from '@/shared/lib/utils'
+import { useScreenSize } from '@/shared/hooks/use-screen-size'
 
 const formSchema = z.object({
   name: z.string().min(1, '이름을 입력해주세요'),
@@ -26,9 +27,13 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>
 
 const SetNameDialog = ({ userName }: { userName: string }) => {
+  const { isMobile } = useScreenSize()
+
   const router = useRouter()
   const [open, setOpen] = useState(false)
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false)
+  const [onAutoFocus, setOnAutoFocus] = useState(false)
+  const inputRef = useRef<HTMLInputElement | null>(null)
 
   const toastId = useId()
   const { toast } = useToast()
@@ -64,15 +69,25 @@ const SetNameDialog = ({ userName }: { userName: string }) => {
   useEffect(() => {
     const handleResize = () => {
       if (window.visualViewport) {
-        setIsKeyboardOpen(window.visualViewport.height < window.innerHeight)
+        const keyboardOpen = window.visualViewport.height < window.innerHeight
+        setIsKeyboardOpen(keyboardOpen)
+
+        if (!keyboardOpen) {
+          setOnAutoFocus(false)
+        }
       }
     }
 
     window.visualViewport?.addEventListener('resize', handleResize)
+
+    if (isMobile) {
+      setOnAutoFocus(true)
+    }
+
     return () => {
       window.visualViewport?.removeEventListener('resize', handleResize)
     }
-  }, [])
+  }, [isMobile])
 
   return (
     <Dialog
@@ -81,6 +96,8 @@ const SetNameDialog = ({ userName }: { userName: string }) => {
         setOpen(open)
         if (!open) {
           form.reset()
+          setIsKeyboardOpen(false)
+          setOnAutoFocus(false)
         }
       }}
     >
@@ -100,7 +117,8 @@ const SetNameDialog = ({ userName }: { userName: string }) => {
         displayCloseButton={false}
         className={cn(
           'h-fit w-[280px] rounded-[16px] bg-background-base-01 p-[24px] pb-[32px]',
-          isKeyboardOpen ? 'top-[50%] translate-y-[-50%]' : 'top-[50%] translate-y-[-50%]'
+          onAutoFocus && 'top-[10%] translate-y-0',
+          isKeyboardOpen && 'top-[50%] translate-y-[-50%]'
         )}
         onPointerDownOutside={(e) => {
           if (isPending) {
@@ -123,9 +141,8 @@ const SetNameDialog = ({ userName }: { userName: string }) => {
                     <FormControl>
                       <input
                         {...field}
+                        ref={inputRef}
                         disabled={isPending}
-                        onFocus={() => setIsKeyboardOpen(true)}
-                        onBlur={() => setIsKeyboardOpen(false)}
                         className="size-full border-b border-border-divider py-[5px] text-subtitle2-medium focus-visible:outline-none disabled:cursor-not-allowed disabled:bg-background-disabled disabled:opacity-50 disabled:placeholder:text-text-disabled"
                       />
                     </FormControl>
