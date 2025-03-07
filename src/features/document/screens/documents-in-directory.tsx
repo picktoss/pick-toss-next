@@ -12,10 +12,16 @@ import { useQuery } from '@tanstack/react-query'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import { useDocumentContext } from '../contexts/document-context'
 import { useEffect } from 'react'
+import { useScreenSize } from '@/shared/hooks/use-screen-size'
+import { useIsPWA } from '@/shared/hooks/use-pwa'
+import WebInstallView from '@/features/view/web-install'
 
 const DocumentsInDirectory = () => {
   const { selectedDirectoryId } = useDirectoryContext()
   const { checkDoc, sortOption } = useDocumentContext()
+
+  const { isMobile } = useScreenSize()
+  const isPWA = useIsPWA()
 
   const params =
     selectedDirectoryId !== null
@@ -31,6 +37,10 @@ const DocumentsInDirectory = () => {
       checkDoc.set(documentCheckList)
     }
   }, [data])
+
+  if (isMobile && !isPWA) {
+    return <WebInstallView />
+  }
 
   if (isPending) {
     return <Loading center />

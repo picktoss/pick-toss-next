@@ -11,17 +11,12 @@ export const useScreenSize = () => {
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth
-      // 모바일 기기 감지 (터치 기기 및 사용자 에이전트 확인)
-      const isMobileDevice =
-        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-          navigator.userAgent
-        ) || 'ontouchstart' in window
 
       setScreenSize({
         width,
         height: window.innerHeight,
-        isMobile: width <= 900 || isMobileDevice,
-        isDesktop: width > 900 && !isMobileDevice,
+        isMobile: width <= 768,
+        isDesktop: width > 768,
       })
     }
 

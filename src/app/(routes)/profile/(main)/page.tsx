@@ -11,6 +11,7 @@ import Image from 'next/image'
 import { getGravatarUrl } from '@/features/user/utils'
 import { PROFILE_MENU_LIST } from '@/features/user/config'
 import LogoutDialog from '@/features/user/components/logout-dialog'
+import InaccessibleView from '@/features/common/inaccessible-view'
 
 const ProfilePage = async () => {
   const user = await getUserInfo()
@@ -40,6 +41,8 @@ const ProfilePage = async () => {
 
   return (
     <main className="h-[calc(100dvh-54px-88px)] w-full overflow-y-auto">
+      <InaccessibleView />
+
       <div className="w-full px-[16px] pb-[54px]">
         <Link
           href={'profile/account'}
