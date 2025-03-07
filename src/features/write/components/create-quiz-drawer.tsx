@@ -8,6 +8,7 @@ import { Button } from '@/shared/components/ui/button'
 import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from '@/shared/components/ui/drawer'
 import { Slider } from '@/shared/components/ui/slider'
 import Text from '@/shared/components/ui/text'
+import useDrawerScrollLock from '@/shared/hooks/use-drawer-scroll-lock'
 import { cn } from '@/shared/lib/utils'
 import { useUserStore } from '@/store/user'
 import { useEffect, useState } from 'react'
@@ -40,6 +41,9 @@ const CreateQuizDrawer = ({ handleCreateDocument, maxQuizCount, disabled }: Prop
 
   // TODO: 결제 기능 구현 후 아래 코드 삭제
   const [isOpenInvite, setIsOpenInvite] = useState(false)
+
+  // iOS Safari Drawer & Scroll 관련 버그 해결
+  useDrawerScrollLock(isOpenDrawer)
 
   useEffect(() => {
     setSelectedQuizCount(DEFAULT_QUIZ_COUNT)
