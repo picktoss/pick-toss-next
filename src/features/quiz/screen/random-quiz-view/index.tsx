@@ -147,13 +147,15 @@ const RandomQuizView = ({ directories }: Props) => {
   const slideItems = repository === 'directory' ? directories : CATEGORIES
 
   useEffect(() => {
-    if (repository === 'directory') {
-      setRandomQuizList(randomDirectoryQuizzes)
-    } else {
-      setRandomQuizList(randomCollectionQuizzes)
+    if (typeof window !== 'undefined') {
+      if (repository === 'directory') {
+        setRandomQuizList(randomDirectoryQuizzes)
+      } else {
+        setRandomQuizList(randomCollectionQuizzes)
+      }
+      router.replace('/quiz/random')
+      setQuizResults([])
     }
-    router.replace('/quiz/random')
-    setQuizResults([])
   }, [repository, randomDirectoryQuizzes, randomCollectionQuizzes])
 
   if (session?.user.isNewUser && !getLocalStorage(LOCAL_KEY.RANDOM_TUTORIAL_COMPLETE)) {

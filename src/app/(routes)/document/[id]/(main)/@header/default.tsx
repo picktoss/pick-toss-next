@@ -110,10 +110,10 @@ const Header = () => {
           )}
         >
           <div className="flex size-full items-center justify-between">
-            <div className="flex items-center">
+            <div className="flex items-center w-[calc(100%-130px)]">
               <GoBackButton icon="cancel" onClick={handleClickCancel} />
               {isTitleHidden && (
-                <Text as="h2" typography="text1-medium" className="ml-[16px]">
+                <Text as="h2" typography="text1-medium" className="ml-[16px] w-full truncate">
                   {data?.documentName}
                 </Text>
               )}

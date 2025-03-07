@@ -47,11 +47,14 @@ const SelectCategoryDrawer = ({ categories }: Props) => {
   }
 
   useEffect(() => {
-    const newQueryString = QS.stringify({
-      ...QS.parse(searchParamsString),
-      'collection-category': innerCategories.length > 0 ? innerCategories.join(',') : undefined,
-    })
-    router.replace(`${pathname}?${newQueryString}`)
+    if (typeof window !== 'undefined') {
+      const newQueryString = QS.stringify({
+        ...QS.parse(searchParamsString),
+        'collection-category': innerCategories.length > 0 ? innerCategories.join(',') : undefined,
+      })
+
+      router.replace(`${pathname}?${newQueryString}`)
+    }
   }, [innerCategories, pathname, searchParamsString, router])
 
   return (
