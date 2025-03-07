@@ -11,12 +11,13 @@ import {
 } from '@/shared/components/ui/dialog'
 import Text from '@/shared/components/ui/text'
 import { useRouter } from 'next/navigation'
-import { useId, useState } from 'react'
+import { useEffect, useId, useState } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { Form, FormControl, FormField, FormItem } from '@/shared/components/ui/form'
 import { useToast } from '@/shared/hooks/use-toast'
+import { cn } from '@/shared/lib/utils'
 
 const formSchema = z.object({
   name: z.string().min(1, '이름을 입력해주세요'),
@@ -27,6 +28,7 @@ type FormValues = z.infer<typeof formSchema>
 const SetNameDialog = ({ userName }: { userName: string }) => {
   const router = useRouter()
   const [open, setOpen] = useState(false)
+  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false)
 
   const toastId = useId()
   const { toast } = useToast()
@@ -58,6 +60,20 @@ const SetNameDialog = ({ userName }: { userName: string }) => {
     )
   }
 
+  // 모바일 키보드 감지
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.visualViewport) {
+        setIsKeyboardOpen(window.visualViewport.height < window.innerHeight)
+      }
+    }
+
+    window.visualViewport?.addEventListener('resize', handleResize)
+    return () => {
+      window.visualViewport?.removeEventListener('resize', handleResize)
+    }
+  }, [])
+
   return (
     <Dialog
       open={open}
@@ -82,7 +98,10 @@ const SetNameDialog = ({ userName }: { userName: string }) => {
 
       <DialogContent
         displayCloseButton={false}
-        className="h-fit w-[280px] rounded-[16px] bg-background-base-01 p-[24px] pb-[32px]"
+        className={cn(
+          'h-fit w-[280px] rounded-[16px] bg-background-base-01 p-[24px] pb-[32px]',
+          isKeyboardOpen ? 'top-[10vh] translate-y-0' : 'top-[50%] translate-y-[-50%]'
+        )}
         onPointerDownOutside={(e) => {
           if (isPending) {
             e.preventDefault()

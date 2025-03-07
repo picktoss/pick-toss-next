@@ -69,7 +69,21 @@ const CreateQuizDrawer = ({ handleCreateDocument, maxQuizCount, disabled }: Prop
 
   return (
     <>
-      <Drawer open={isOpenDrawer} onOpenChange={setIsOpenDrawer}>
+      {/* iOS Safari Drawer & Scroll 관련 버그 해결: Overlay 직접 구현 */}
+      {isOpenDrawer && (
+        <div
+          className="fixed bottom-0 right-1/2 z-[9999] h-dvh w-dvw translate-x-1/2 "
+          onClick={() => {
+            if (isOpenDrawer) {
+              setIsOpenDrawer(false)
+            }
+          }}
+        >
+          <div className="mx-auto h-dvh max-w-mobile bg-black opacity-80" />
+        </div>
+      )}
+
+      <Drawer open={isOpenDrawer} onOpenChange={setIsOpenDrawer} modal={false}>
         <DrawerTrigger asChild disabled={disabled}>
           <Button
             variant={'largeRound'}

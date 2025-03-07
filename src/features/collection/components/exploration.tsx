@@ -91,7 +91,7 @@ const Exploration = () => {
         ) : collectionsData?.collections.length ? (
           renderCollectionsWithAds()
         ) : (
-          <div className="center flex flex-col items-center gap-6">
+          <div className="center flex w-full max-w-mobile flex-col items-center gap-6">
             <div>
               <Text typography="subtitle1-bold" className="text-center">
                 설정한 조건에 맞는 컬렉션이 없어요

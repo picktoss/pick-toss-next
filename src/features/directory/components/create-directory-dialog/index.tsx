@@ -10,7 +10,7 @@ import {
 import Text from '@/shared/components/ui/text'
 import { cn } from '@/shared/lib/utils'
 import EmojiPicker from 'emoji-picker-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 interface Props {
   open: boolean
@@ -20,6 +20,7 @@ interface Props {
 const CreateDirectoryDialog = ({ open, onOpenChange }: Props) => {
   const [name, setName] = useState('')
   const [emoji, setEmoji] = useState('📁')
+  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false)
 
   const { mutate: createDirectoryMutate } = useCreateDirectory()
 
@@ -36,6 +37,20 @@ const CreateDirectoryDialog = ({ open, onOpenChange }: Props) => {
     onOpenChange(false)
   }
 
+  // 모바일 키보드 감지
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.visualViewport) {
+        setIsKeyboardOpen(window.visualViewport.height < window.innerHeight)
+      }
+    }
+
+    window.visualViewport?.addEventListener('resize', handleResize)
+    return () => {
+      window.visualViewport?.removeEventListener('resize', handleResize)
+    }
+  }, [])
+
   return (
     <Dialog
       open={open}
@@ -46,7 +61,10 @@ const CreateDirectoryDialog = ({ open, onOpenChange }: Props) => {
       }}
     >
       <DialogContent
-        className="flex min-h-[190px] w-[280px] flex-col items-center justify-between rounded-[16px] bg-background-base-01"
+        className={cn(
+          'flex min-h-[190px] w-[280px] flex-col items-center justify-between rounded-[16px] bg-background-base-01',
+          isKeyboardOpen ? 'top-[10vh] translate-y-0' : 'top-[50%] translate-y-[-50%]'
+        )}
         displayCloseButton={false}
       >
         <DialogTitle className="mb-[32px] w-full">

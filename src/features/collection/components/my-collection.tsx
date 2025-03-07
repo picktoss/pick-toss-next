@@ -38,7 +38,7 @@ const MyCollection = () => {
 
   return (
     <>
-      <div className="flex border-b border-border-divider text-text-sub transition-all">
+      <div className="flex h-[54px] border-b border-border-divider text-text-sub transition-all">
         {sort.map((tab) => (
           <button
             key={tab.key}
@@ -67,7 +67,7 @@ const MyCollection = () => {
             <CollectionList ref={scrollContainerRef}>
               <Link
                 href="/collections/create"
-                className="flex flex-col items-center gap-[12px] rounded-[16px] border-[3px] border-dashed border-border-default pt-[70px]"
+                className="flex-center h-[200px] min-w-[166px] flex-col items-center gap-[12px] rounded-[16px] border-[3px] border-dashed border-border-default"
               >
                 <Icon name="plus-circle" className="size-[24px]" />
                 <Text typography="subtitle2-bold">만들기</Text>

@@ -266,12 +266,16 @@ const CreateWithFile = () => {
       {fileInfo && (
         <>
           <div className="sticky top-[54px] z-10 flex items-center justify-between bg-background-base-02 px-[16px] py-[11px]">
-            <div className="flex items-center">
+            <div className="flex w-[calc(100%-56px)] items-center">
               <Icon name="info" className="mr-[4px] size-[16px]" />
-              <Text as="span" typography="text2-medium" className="mr-[4px] text-text-secondary">
+              <Text
+                typography="text2-medium"
+                className="mr-[4px] w-fit max-w-full truncate text-text-secondary"
+              >
                 {fileInfo?.name || '새로운 노트'}
               </Text>
-              <Text as="span" typography="text2-medium" color="caption">
+
+              <Text as="span" typography="text2-medium" color="caption" className="shrink-0">
                 ({formatFileSize(fileInfo?.size ?? 0)},{' '}
                 <Text
                   as={'span'}
@@ -296,7 +300,7 @@ const CreateWithFile = () => {
             />
             <label
               htmlFor="filePdf"
-              className="cursor-pointer text-text1-medium text-button-text-tertiary"
+              className="shrink-0 cursor-pointer text-text1-medium text-button-text-tertiary"
             >
               <Text typography="text1-medium" className="text-text-secondary">
                 변경

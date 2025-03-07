@@ -7,7 +7,7 @@ import {
 } from '@/shared/components/ui/dropdown-menu'
 import { cn } from '@/shared/lib/utils'
 import EmojiPicker from 'emoji-picker-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 interface Props {
   open: boolean
@@ -20,6 +20,7 @@ interface Props {
 const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prevEmoji }: Props) => {
   const [name, setName] = useState(prevName ?? '')
   const [emoji, setEmoji] = useState(prevEmoji ?? '📁')
+  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false)
 
   const { mutate: updateDirectoryMutate } = useUpdateDirectoryInfo()
 
@@ -37,10 +38,27 @@ const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prev
     onOpenChange(false)
   }
 
+  // 모바일 키보드 감지
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.visualViewport) {
+        setIsKeyboardOpen(window.visualViewport.height < window.innerHeight)
+      }
+    }
+
+    window.visualViewport?.addEventListener('resize', handleResize)
+    return () => {
+      window.visualViewport?.removeEventListener('resize', handleResize)
+    }
+  }, [])
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
-        className="flex min-h-[190px] w-[280px] flex-col items-center justify-between rounded-[16px] bg-background-base-01"
+        className={cn(
+          'flex min-h-[190px] w-[280px] flex-col items-center justify-between rounded-[16px] bg-background-base-01',
+          isKeyboardOpen ? 'top-[10vh] translate-y-0' : 'top-[50%] translate-y-[-50%]'
+        )}
         displayCloseButton={false}
       >
         <DialogTitle className="mb-[32px] w-full text-subtitle2-bold">폴더 이름 바꾸기</DialogTitle>
