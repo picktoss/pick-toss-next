@@ -5,9 +5,7 @@ export const useIsPWA = () => {
 
   useEffect(() => {
     const checkPWA = () => {
-      const isStandalone =
-        window.matchMedia('(display-mode: standalone)').matches ||
-        document.referrer.startsWith('ios-app://')
+      const isStandalone = window.matchMedia('(display-mode: standalone)').matches
 
       setIsPWA(isStandalone)
     }
