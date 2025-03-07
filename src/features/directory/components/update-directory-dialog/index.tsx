@@ -57,7 +57,7 @@ const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prev
       <DialogContent
         className={cn(
           'flex min-h-[190px] w-[280px] flex-col items-center justify-between rounded-[16px] bg-background-base-01',
-          isKeyboardOpen ? 'top-[10vh] translate-y-0' : 'top-[50%] translate-y-[-50%]'
+          isKeyboardOpen ? 'top-[50%] translate-y-[-50%]' : 'top-[50%] translate-y-[-50%]'
         )}
         displayCloseButton={false}
       >
