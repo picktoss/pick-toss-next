@@ -110,7 +110,7 @@ const Header = () => {
           )}
         >
           <div className="flex size-full items-center justify-between">
-            <div className="flex items-center w-[calc(100%-130px)]">
+            <div className="flex w-[calc(100%-130px)] items-center">
               <GoBackButton icon="cancel" onClick={handleClickCancel} />
               {isTitleHidden && (
                 <Text as="h2" typography="text1-medium" className="ml-[16px] w-full truncate">
@@ -120,10 +120,12 @@ const Header = () => {
             </div>
 
             <div className="flex">
-              <Icon name="star" className="mr-[4px] size-[16px]" />
-              <Text as="span" typography="subtitle2-medium">
-                {user?.star}
-              </Text>
+              <div className="flex items-center">
+                <Icon name="star" className="mr-[4px] size-[16px]" />
+                <Text as="span" typography="subtitle2-medium">
+                  {user?.star}
+                </Text>
+              </div>
 
               <Link href={String(id) + '/modify'} className="ml-[14px]">
                 <Icon name="write-line" className="size-[24px]" />

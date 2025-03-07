@@ -117,7 +117,7 @@ const SetNameDialog = ({ userName }: { userName: string }) => {
         displayCloseButton={false}
         className={cn(
           'h-fit w-[280px] rounded-[16px] bg-background-base-01 p-[24px] pb-[32px]',
-          onAutoFocus && 'top-[10%] translate-y-0',
+          onAutoFocus && 'top-0 translate-y-0',
           isKeyboardOpen && 'top-[50%] translate-y-[-50%]'
         )}
         onPointerDownOutside={(e) => {
