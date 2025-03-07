@@ -8,7 +8,7 @@ export const useCreateQuiz = (documentId: number | null) => {
   const [createError, setCreateError] = useState<string | null>(null)
   const [openExitDialog, setOpenExitDialog] = useState(false)
 
-  const handleCreateError = (response: string) => {
+  const handleCreateError = (response: string | null) => {
     setShowCreatePopup(false)
     setCreateError(response)
   }

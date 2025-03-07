@@ -194,7 +194,7 @@ const CreateWithFile = () => {
     })
   }
 
-  const handleCreateError = (response: string) => {
+  const handleCreateError = (response: string | null) => {
     setShowCreatePopup(false)
     setCreateError(response)
   }
@@ -222,7 +222,7 @@ const CreateWithFile = () => {
   }
 
   if (documentId !== null && createError !== null) {
-    return <CreateQuizError documentId={documentId} setCreateError={setCreateError} />
+    return <CreateQuizError documentId={documentId} setCreateError={handleCreateError} />
   }
 
   if (isProcessing) {

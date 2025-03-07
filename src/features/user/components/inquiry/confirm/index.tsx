@@ -37,9 +37,12 @@ const InquiryConfirm = () => {
       formData.append('content', data.content)
       formData.append('email', data.email)
 
-      data.files.forEach((file) => {
-        formData.append(`files`, file)
-      })
+      // files 배열이 비어있지 않을 때만 추가
+      if (data.files.length > 0) {
+        data.files.forEach((file) => {
+          formData.append('files', file)
+        })
+      }
 
       await http.post(API_ENDPOINTS.FEEDBACK.CREATE, formData, {
         headers: {

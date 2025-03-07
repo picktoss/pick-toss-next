@@ -761,23 +761,6 @@ export interface paths {
         patch: operations["updateNotification"];
         trace?: never;
     };
-    "/api/v2/admin/collections/{collection_id}/info/update": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        /** 컬렉션 공개여부 수정 */
-        patch: operations["modifyCollectionInfo"];
-        trace?: never;
-    };
     "/api/v2/today-quiz-info": {
         parameters: {
             query?: never;
@@ -1759,13 +1742,13 @@ export interface components {
             buyerName?: string;
             buyerEmail?: string;
             buyerTel?: string;
-            buyerPostcode?: string;
             buyerAddr?: string;
+            buyerPostcode?: string;
             customData?: string;
             customerUid?: string;
-            cardNumber?: string;
             /** Format: int32 */
             cardQuota?: number;
+            cardNumber?: string;
         };
         PaymentCancelDetail: {
             amount?: number;
@@ -1843,7 +1826,6 @@ export interface components {
             collections?: components["schemas"]["IntegratedSearchCollectionDto"][];
         };
         CreateFeedbackRequest: {
-            files?: string[];
             title?: string;
             content?: string;
             /** @enum {string} */
@@ -2074,9 +2056,6 @@ export interface components {
             memo?: string;
             repeatDays?: ("MONDAY" | "TUESDAY" | "WEDNESDAY" | "THURSDAY" | "FRIDAY" | "SATURDAY" | "SUNDAY")[];
             isActive?: boolean;
-        };
-        CreateCollectionForAdminRequest: {
-            isPublic?: boolean;
         };
         GetCurrentTodayQuizInfo: {
             /** Format: int32 */
@@ -2340,14 +2319,14 @@ export interface components {
             is3xxRedirection?: boolean;
         };
         JspConfigDescriptor: {
-            taglibs?: components["schemas"]["TaglibDescriptor"][];
             jspPropertyGroups?: components["schemas"]["JspPropertyGroupDescriptor"][];
+            taglibs?: components["schemas"]["TaglibDescriptor"][];
         };
         JspPropertyGroupDescriptor: {
             defaultContentType?: string;
-            isXml?: string;
-            deferredSyntaxAllowedAsLiteral?: string;
             elIgnored?: string;
+            deferredSyntaxAllowedAsLiteral?: string;
+            isXml?: string;
             errorOnELNotFound?: string;
             pageEncoding?: string;
             scriptingInvalid?: string;
@@ -2413,16 +2392,15 @@ export interface components {
             majorVersion?: number;
             /** Format: int32 */
             minorVersion?: number;
+            initParameterNames?: Record<string, never>;
             attributeNames?: Record<string, never>;
             contextPath?: string;
-            initParameterNames?: Record<string, never>;
             sessionTrackingModes?: ("COOKIE" | "URL" | "SSL")[];
             /** Format: int32 */
             sessionTimeout?: number;
             servletRegistrations?: {
                 [key: string]: components["schemas"]["ServletRegistration"];
             };
-            defaultSessionTrackingModes?: ("COOKIE" | "URL" | "SSL")[];
             /** Format: int32 */
             effectiveMajorVersion?: number;
             /** Format: int32 */
@@ -2432,6 +2410,7 @@ export interface components {
             filterRegistrations?: {
                 [key: string]: components["schemas"]["FilterRegistration"];
             };
+            defaultSessionTrackingModes?: ("COOKIE" | "URL" | "SSL")[];
             effectiveSessionTrackingModes?: ("COOKIE" | "URL" | "SSL")[];
             jspConfigDescriptor?: components["schemas"]["JspConfigDescriptor"];
             requestCharacterEncoding?: string;
@@ -2737,7 +2716,6 @@ export interface components {
             /** Format: int64 */
             id?: number;
             name?: string;
-            isDeleted?: boolean;
         };
         GetCollectionCategoriesDto: {
             /** @enum {string} */
@@ -2812,7 +2790,6 @@ export interface components {
             description?: string;
             /** Format: int32 */
             complaintCount?: number;
-            isDeleted?: boolean;
         };
         GetCollectionsForAdminResponse: {
             collections?: components["schemas"]["GetCollectionsForAdminCollectionDto"][];
@@ -3125,7 +3102,10 @@ export interface operations {
         };
         requestBody?: {
             content: {
-                "multipart/form-data": components["schemas"]["CreateFeedbackRequest"];
+                "multipart/form-data": {
+                    request: components["schemas"]["CreateFeedbackRequest"];
+                    files?: string[];
+                };
             };
         };
         responses: {
@@ -4128,38 +4108,6 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
-            };
-        };
-    };
-    modifyCollectionInfo: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                collection_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json;charset=UTF-8": components["schemas"]["CreateCollectionForAdminRequest"];
-            };
-        };
-        responses: {
-            /** @description No Content */
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": unknown;
-                };
             };
         };
     };

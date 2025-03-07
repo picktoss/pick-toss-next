@@ -6,8 +6,8 @@ import Text from '@/shared/components/ui/text'
 import Image from 'next/image'
 
 interface Props {
-  documentId?: number
   setCreateError: (error: string | null) => void
+  documentId?: number
 }
 
 // 에러 테스트

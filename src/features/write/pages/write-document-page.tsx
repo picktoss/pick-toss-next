@@ -31,7 +31,6 @@ const WriteDocumentPage = () => {
     showCreatePopup,
     setShowCreatePopup,
     createError,
-    setCreateError,
     openExitDialog,
     setOpenExitDialog,
 
@@ -133,7 +132,7 @@ const WriteDocumentPage = () => {
   }
 
   if (documentId !== null && createError !== null) {
-    return <CreateQuizError documentId={documentId} setCreateError={setCreateError} />
+    return <CreateQuizError documentId={documentId} setCreateError={handleCreateError} />
   }
 
   return (
