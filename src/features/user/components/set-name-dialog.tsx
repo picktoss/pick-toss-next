@@ -124,6 +124,8 @@ const SetNameDialog = ({ userName }: { userName: string }) => {
                       <input
                         {...field}
                         disabled={isPending}
+                        onFocus={() => setIsKeyboardOpen(true)}
+                        onBlur={() => setIsKeyboardOpen(false)}
                         className="size-full border-b border-border-divider py-[5px] text-subtitle2-medium focus-visible:outline-none disabled:cursor-not-allowed disabled:bg-background-disabled disabled:opacity-50 disabled:placeholder:text-text-disabled"
                       />
                     </FormControl>
