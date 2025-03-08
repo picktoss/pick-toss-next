@@ -42,8 +42,10 @@ const BombQuiz = ({
         </header>
 
         <div className="flex flex-col items-center">
-          <Tag colors={'secondary'} className="px-[8px] py-[4px]">
-            <Text typography="text2-bold">{currentQuiz.document.name}</Text>
+          <Tag colors={'tertiary'} className="px-[8px] py-[4px]">
+            <Text typography="text2-bold" className="max-w-[95px] truncate">
+              {currentQuiz.document.name}
+            </Text>
           </Tag>
 
           <Text
