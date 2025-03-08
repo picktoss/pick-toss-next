@@ -22,6 +22,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useUserStore } from '@/store/user'
 import { useDownloadQuiz } from '@/requests/quiz/hooks'
 import { useDocumentDetailContext } from '@/features/document/contexts/document-detail-context'
+import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
 
 // Header 컴포넌트
 const Header = () => {
@@ -39,6 +40,8 @@ const Header = () => {
   const { data } = useQuery(queries.document.item(Number(id)))
   const { mutate: downloadQuizMutation } = useDownloadQuiz()
   const { mutate: deleteDocumentMutation } = useDeleteDocument()
+
+  const { noteCloseClickEvent } = useAmplitudeContext()
 
   useEffect(() => {
     if (!observerRef.current) {
@@ -65,8 +68,20 @@ const Header = () => {
     }
   }, [isDrawerOpen])
 
+  useEffect(() => {
+    const handleNoteCloseClickEvent = () => {
+      noteCloseClickEvent()
+    }
+    window.addEventListener('popstate', handleNoteCloseClickEvent)
+
+    return () => {
+      window.removeEventListener('popstate', handleNoteCloseClickEvent)
+    }
+  }, [])
+
   const handleClickCancel = () => {
     if (prev && prev === 'created') {
+      noteCloseClickEvent()
       router.replace('/document')
     } else {
       router.back()

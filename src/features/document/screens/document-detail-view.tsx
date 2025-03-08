@@ -15,7 +15,8 @@ import DocumentFloatingButton from '../components/document-floating-button'
 import { useAddQuizzes } from '@/requests/document/hooks'
 import { useCreateQuiz } from '@/features/quiz/hooks/use-create-quiz'
 import PickDrawer from '@/features/quiz/components/pick-drawer'
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
+import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
 
 interface Props {
   documentId: number
@@ -31,6 +32,8 @@ const DocumentDetailView = ({ documentId, activeTab }: Props) => {
     () => Array.from(new Set(documentDetail?.quizzes.map((quiz) => quiz.quizType))) as Quiz.Type[],
     [documentDetail]
   )
+
+  const { noteDetailViewEvent } = useAmplitudeContext()
 
   const { selectedDirectory } = useDirectoryContext()
   const {
@@ -64,6 +67,10 @@ const DocumentDetailView = ({ documentId, activeTab }: Props) => {
       }
     )
   }
+
+  useEffect(() => {
+    noteDetailViewEvent()
+  }, [])
 
   if (isPending) {
     return <Loading center />

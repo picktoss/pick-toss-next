@@ -148,7 +148,7 @@ export interface Values {
   /* -------------------------- [온보딩] -------------------------- */
   accountCreateEvent: (props: AccountCreateProps) => void
   onboardStartEvent: () => void
-  onboardInterestSaveEvent: () => void
+  onboardInterestSaveClickEvent: () => void
 
   /* -------------------------- [홈] -------------------------- */
   dailyquizClickEvent: (props: DailyquizClickProps) => void
@@ -166,11 +166,11 @@ export interface Values {
   /* -------------------------- [퀴즈노트] -------------------------- */
   noteClickEvent: () => void
   noteAddClickEvent: (props: NoteAddClickProps) => void
-  noteViewEvent: () => void
-  noteCloseEvent: () => void
-  noteEditEvent: () => void
-  quizCreateEvent: (props: QuizCreateProps) => void
-  quizReplayEvent: (props: QuizReplayProps) => void
+  noteDetailViewEvent: () => void
+  noteCloseClickEvent: () => void
+  noteEditClickEvent: () => void
+  quizCreateClickEvent: (props: QuizCreateProps) => void
+  quizReplayClickEvent: (props: QuizReplayProps) => void
   reviewClickEvent: () => void
   quizTabClickEvent: () => void
   noteTabClickEvent: () => void
@@ -194,7 +194,7 @@ export interface Values {
 
   /* -------------------------- [마이] -------------------------- */
   quickmenuClickEvent: (props: QuickmenuClickProps) => void
-  interestSaveEvent: () => void
+  interestSaveClickEvent: () => void
 
   /* -------------------------- [PRO 구독] -------------------------- */
   proPurchaseViewEvent: () => void
@@ -246,7 +246,8 @@ export const AmplitudeContextProvider = ({ children }: PropsWithChildren) => {
       /* ---------------------- [온보딩] ---------------------- */
       accountCreateEvent: (props) => trackAmplitudeEvent('account_create', { ...props, pathname }),
       onboardStartEvent: () => trackAmplitudeEvent('onboard_start', { pathname }),
-      onboardInterestSaveEvent: () => trackAmplitudeEvent('onboard_interest_save', { pathname }),
+      onboardInterestSaveClickEvent: () =>
+        trackAmplitudeEvent('onboard_interest_save', { pathname }),
 
       /* ---------------------- [홈] ---------------------- */
       dailyquizClickEvent: (props) =>
@@ -267,11 +268,11 @@ export const AmplitudeContextProvider = ({ children }: PropsWithChildren) => {
       /* ---------------------- [퀴즈노트] ---------------------- */
       noteClickEvent: () => trackAmplitudeEvent('note_click', { pathname }),
       noteAddClickEvent: (props) => trackAmplitudeEvent('note_add_click', { ...props, pathname }),
-      noteViewEvent: () => trackAmplitudeEvent('note_view', { pathname }),
-      noteCloseEvent: () => trackAmplitudeEvent('note_close', { pathname }),
-      noteEditEvent: () => trackAmplitudeEvent('note_edit', { pathname }),
-      quizCreateEvent: (props) => trackAmplitudeEvent('quiz_create', { ...props, pathname }),
-      quizReplayEvent: (props) => trackAmplitudeEvent('quiz_replay', { ...props, pathname }),
+      noteDetailViewEvent: () => trackAmplitudeEvent('note_view', { pathname }),
+      noteCloseClickEvent: () => trackAmplitudeEvent('note_close', { pathname }),
+      noteEditClickEvent: () => trackAmplitudeEvent('note_edit', { pathname }),
+      quizCreateClickEvent: (props) => trackAmplitudeEvent('quiz_create', { ...props, pathname }),
+      quizReplayClickEvent: (props) => trackAmplitudeEvent('quiz_replay', { ...props, pathname }),
       reviewClickEvent: () => trackAmplitudeEvent('review_click', { pathname }),
       quizTabClickEvent: () => trackAmplitudeEvent('quiz_tab_click', { pathname }),
       noteTabClickEvent: () => trackAmplitudeEvent('note_tab_click', { pathname }),
@@ -305,7 +306,7 @@ export const AmplitudeContextProvider = ({ children }: PropsWithChildren) => {
       /* ---------------------- [마이] ---------------------- */
       quickmenuClickEvent: (props) =>
         trackAmplitudeEvent('quickmenu_click', { ...props, pathname }),
-      interestSaveEvent: () => trackAmplitudeEvent('interest_save', { pathname }),
+      interestSaveClickEvent: () => trackAmplitudeEvent('interest_save', { pathname }),
 
       /* ---------------------- [PRO 구독] ---------------------- */
       proPurchaseViewEvent: () => trackAmplitudeEvent('pro_purchase_view', { pathname }),

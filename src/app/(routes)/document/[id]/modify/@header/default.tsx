@@ -5,6 +5,7 @@ import { UpdateDocumentSchema } from '@/features/document/config'
 import EditCancelDialog from '@/features/modify/components/edit-cancel-dialog'
 import { useEditDocumentContext } from '@/features/modify/context/edit-document-context'
 import { useUpdateDocument } from '@/requests/document/hooks'
+import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
 import { useToast } from '@/shared/hooks/use-toast'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import { cn } from '@/shared/lib/utils'
@@ -25,6 +26,8 @@ const Header = () => {
 
   const { documentTitle: title, editorMarkdownContent: content } = useEditDocumentContext()
   const { globalDirectoryId } = useDirectoryContext()
+
+  const { noteEditClickEvent } = useAmplitudeContext()
 
   useEffect(() => {
     if (validationError) {
@@ -48,6 +51,8 @@ const Header = () => {
   }
 
   const handleClickSave = (id: number, title: string, content: string) => {
+    noteEditClickEvent()
+
     const updateDocumentData: Document.Request.UpdateContent = {
       name: title,
       file: content,

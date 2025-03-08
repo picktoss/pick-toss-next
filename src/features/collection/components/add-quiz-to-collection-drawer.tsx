@@ -7,6 +7,7 @@ import CategoryTag from '@/shared/components/custom/category-tag'
 import { useAddQuizToCollection } from '@/requests/collection/hooks'
 import { useQuery } from '@tanstack/react-query'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
+import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
 
 interface Props {
   selectedQuizId: number
@@ -19,8 +20,12 @@ const AddQuizToCollectionDrawer = ({ selectedQuizId, isOpen, onOpenChange }: Pro
   const { data } = useQuery(queries.collection.myListForAddQuiz(selectedQuizId))
   const { mutate: addQuizMutate } = useAddQuizToCollection(selectedQuizId)
 
+  const { addToCollectionClickEvent } = useAmplitudeContext()
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const addQuiz = (collectionId: number) => {
+    addToCollectionClickEvent()
+
     const payload = {
       collectionId,
       requestBody: { quizId: selectedQuizId },

@@ -13,6 +13,7 @@ import MoveDocumentDrawer from '@/features/document/components/move-document-dra
 import DeleteDocumentSwipeButton from '../delete-document-swipe-button'
 import { useDocumentContext } from '../../contexts/document-context'
 import { extractPlainText } from '../../utils'
+import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
 
 interface DocumentProps {
   id: number
@@ -38,6 +39,7 @@ const SwipeableDocumentCard = ({
   reviewCount,
 }: DocumentProps) => {
   const { isSelectMode, checkDoc } = useDocumentContext()
+  const { noteClickEvent } = useAmplitudeContext()
 
   const [isSwiped, setIsSwiped] = useState(false)
   const [isDragging, setIsDragging] = useState(false)
@@ -65,6 +67,8 @@ const SwipeableDocumentCard = ({
   }
 
   const handleClickCard = () => {
+    noteClickEvent()
+
     if (isSelectMode) {
       handleCheckedChange(!isChecked)
       return

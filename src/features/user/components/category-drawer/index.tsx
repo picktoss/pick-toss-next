@@ -21,6 +21,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Form, FormControl, FormField, FormItem } from '@/shared/components/ui/form'
 import { CATEGORIES } from '@/features/category/config'
+import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
 
 const formSchema = z.object({
   categories: z
@@ -41,6 +42,8 @@ const CategoryDrawer = ({
   const [completeOpen, setCompleteOpen] = useState(false)
   const { mutate, isPending } = useUpdateCollectionCategories()
 
+  const { interestSaveClickEvent } = useAmplitudeContext()
+
   const isExistInterestedCategory = useMemo(
     () =>
       interestedCategories &&
@@ -57,6 +60,7 @@ const CategoryDrawer = ({
   })
 
   const onSubmit = (values: FormValues) => {
+    interestSaveClickEvent()
     setNewCategories(values.categories as User.InterestedCategory[])
 
     mutate(

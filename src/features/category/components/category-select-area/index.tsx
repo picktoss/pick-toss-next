@@ -23,7 +23,7 @@ type FormValues = z.infer<typeof formSchema>
 const MAX_CATEGORY = 2
 
 const CategorySelectArea = () => {
-  const { onboardInterestSaveEvent } = useAmplitudeContext()
+  const { onboardInterestSaveClickEvent } = useAmplitudeContext()
   const router = useRouter()
   const { mutate, isPending } = useUpdateCollectionCategories()
 
@@ -67,7 +67,7 @@ const CategorySelectArea = () => {
       { interestCollectionCategories: values.categories as NonNullable<User.InterestedCategory>[] },
       {
         onSuccess: () => {
-          onboardInterestSaveEvent()
+          onboardInterestSaveClickEvent()
           // 쿠키 설정
           Cookies.set('interested-category-complete', 'true', { expires: 7 })
           router.replace('/main')

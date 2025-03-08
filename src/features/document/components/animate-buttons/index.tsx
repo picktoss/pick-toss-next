@@ -9,6 +9,7 @@ import Text from '@/shared/components/ui/text'
 import { useRouter } from 'next/navigation'
 import { addDocumentButtons } from '../../config'
 import { useDocumentContext } from '../../contexts/document-context'
+import { NoteAddClickProps, useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
 
 type Custom = number | 'plus' | 'cancel'
 
@@ -17,6 +18,8 @@ const AnimatedButtons = () => {
   const router = useRouter()
   const [isFirstRender, setIsFirstRender] = useState(true)
   const { buttonHidden, isExpandedBtns, setIsExpandedBtns } = useDocumentContext()
+
+  const { noteAddClickEvent } = useAmplitudeContext()
 
   useEffect(() => {
     setIsFirstRender(false)
@@ -128,7 +131,12 @@ const AnimatedButtons = () => {
                   variant: 'mediumIcon',
                   colors: 'outlined',
                 },
-                () => router.push(button.href),
+                () => {
+                  const method = button.key === 'clip' ? '파일' : '작성'
+                  const noteAddClickProps: NoteAddClickProps = { method }
+                  noteAddClickEvent(noteAddClickProps)
+                  router.push(button.href)
+                },
                 button.text
               )
             )}

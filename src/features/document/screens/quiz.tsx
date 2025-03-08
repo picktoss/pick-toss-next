@@ -1,7 +1,7 @@
 'use client'
 
 import { Button } from '@/shared/components/ui/button'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Switch } from '@/shared/components/ui/switch'
 import Text from '@/shared/components/ui/text'
 import QuizList from '@/features/quiz/components/quiz-list'
@@ -12,16 +12,23 @@ import { useQuery } from '@tanstack/react-query'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import { useParams } from 'next/navigation'
 import Loading from '@/shared/components/custom/loading'
+import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
 
 const Quiz = () => {
   const { id } = useParams()
   const [quizType, setQuizType] = useState<Quiz.Type | 'ALL'>('ALL')
   const [answerMode, setAnswerMode] = useState(false)
 
+  const { answerViewChangeEvent } = useAmplitudeContext()
+
   const params =
     quizType === 'ALL' ? { documentId: Number(id) } : { documentId: Number(id), quizType }
 
   const { data, isPending } = useQuery(queries.quiz.listByDocument(params))
+
+  useEffect(() => {
+    answerViewChangeEvent({ status: answerMode })
+  }, [answerMode])
 
   if (isPending) {
     return (

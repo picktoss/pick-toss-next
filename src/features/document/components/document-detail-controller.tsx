@@ -1,6 +1,7 @@
 'use client'
 
 import Text from '@/shared/components/ui/text'
+import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
 import { cn } from '@/shared/lib/utils'
 import { useRouter, useSearchParams } from 'next/navigation'
 
@@ -15,8 +16,16 @@ const DocumentDetailController = () => {
   const tab = searchParams.get('tab') ?? ''
   const activeTab = ['DOCUMENT_CONTENT', 'QUIZ'].includes(tab) ? tab : 'DOCUMENT_CONTENT'
 
+  const { quizTabClickEvent, noteTabClickEvent } = useAmplitudeContext()
+
   const handleTabChange = (newTab: 'DOCUMENT_CONTENT' | 'QUIZ') => {
     if (newTab !== activeTab) {
+      if (newTab === 'DOCUMENT_CONTENT') {
+        noteTabClickEvent()
+      } else if (newTab === 'QUIZ') {
+        quizTabClickEvent()
+      }
+
       const currentSearchParams = new URLSearchParams(searchParams)
       currentSearchParams.set('tab', newTab)
       router.replace(`?${currentSearchParams.toString()}`)

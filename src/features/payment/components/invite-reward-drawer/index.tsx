@@ -20,6 +20,7 @@ import { nativeShare } from '@/shared/utils/share'
 import { useToast } from '@/shared/hooks/use-toast'
 import { useInviteLink } from '@/requests/auth/hooks'
 import { BeatLoader } from 'react-spinners'
+import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
 
 // TODO: PRO버전으로 변경 시 내용 수정
 const inviteText = {
@@ -48,6 +49,8 @@ const InviteRewardDrawer = ({ triggerComponent, open, onOpenChange }: Props) => 
   const toastId = useId()
   const { toast } = useToast()
 
+  const { shareClickEvent } = useAmplitudeContext()
+
   const handleOpenChange = (value: boolean) => {
     // uncontrolled 모드일 때만 내부 상태 업데이트
     if (!isControlled) {
@@ -62,6 +65,8 @@ const InviteRewardDrawer = ({ triggerComponent, open, onOpenChange }: Props) => 
 
   // 카카오톡에 공유
   const handleKakaoShare = async () => {
+    shareClickEvent({ method: '카카오톡' })
+
     if (!isKakaoSDKLoaded || kakaoSDKError) {
       console.error('Kakao SDK 로드 실패:', kakaoSDKError)
       return
@@ -83,6 +88,8 @@ const InviteRewardDrawer = ({ triggerComponent, open, onOpenChange }: Props) => 
 
   // 기본 공유하기
   const handleNativeShare = async () => {
+    shareClickEvent({ method: '일반 공유' })
+
     const content = {
       title: inviteText.title,
       text: inviteText.description,
@@ -94,6 +101,8 @@ const InviteRewardDrawer = ({ triggerComponent, open, onOpenChange }: Props) => 
   }
 
   const handleCopy = async () => {
+    shareClickEvent({ method: '복사' })
+
     if (!inviteLink) return
 
     try {

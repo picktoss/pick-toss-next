@@ -8,14 +8,20 @@ import Tag from '@/shared/components/ui/tag'
 import QuizCardMenu from './quiz-card-menu'
 import { useQuery } from '@tanstack/react-query'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
+import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
 
 const PickDrawer = ({ documentId }: { documentId: number }) => {
   const { data } = useQuery(queries.quiz.reviewPicks(documentId))
 
+  const { reviewClickEvent } = useAmplitudeContext()
+
   return (
     <Drawer>
       <DrawerTrigger asChild>
-        <div className="flex-center mb-[14px] h-[44px] w-full cursor-pointer gap-[4px] bg-background-container-03">
+        <div
+          onClick={reviewClickEvent}
+          className="flex-center mb-[14px] h-[44px] w-full cursor-pointer gap-[4px] bg-background-container-03"
+        >
           <Text typography="text1-medium" className="flex-center gap-[16px] text-text-info">
             <Text className="flex items-center">
               <Icon name="pin" className="mr-[2.5px] size-[16px]" />

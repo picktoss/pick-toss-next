@@ -8,6 +8,7 @@ import { Button } from '@/shared/components/ui/button'
 import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from '@/shared/components/ui/drawer'
 import { Slider } from '@/shared/components/ui/slider'
 import Text from '@/shared/components/ui/text'
+import { QuizCreateProps, useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
 import useDrawerScrollLock from '@/shared/hooks/use-drawer-scroll-lock'
 import { cn } from '@/shared/lib/utils'
 import { useUserStore } from '@/store/user'
@@ -42,6 +43,8 @@ const CreateQuizDrawer = ({ handleCreateDocument, maxQuizCount, disabled }: Prop
   // TODO: 결제 기능 구현 후 아래 코드 삭제
   const [isOpenInvite, setIsOpenInvite] = useState(false)
 
+  const { quizCreateClickEvent } = useAmplitudeContext()
+
   // iOS Safari Drawer & Scroll 관련 버그 해결
   useDrawerScrollLock(isOpenDrawer)
 
@@ -54,6 +57,10 @@ const CreateQuizDrawer = ({ handleCreateDocument, maxQuizCount, disabled }: Prop
   }
 
   const handleClickStart = () => {
+    const type = selectedQuizType === 'MIX_UP' ? 'OX' : '객관식'
+    const noteAddClickProps: QuizCreateProps = { type }
+    quizCreateClickEvent(noteAddClickProps)
+
     setLoadingSpinner(true)
 
     const notEnoughStars = (user?.star ?? 0) < selectedQuizCount
