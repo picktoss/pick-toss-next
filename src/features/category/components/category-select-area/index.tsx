@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation'
 import { ControllerRenderProps, useForm } from 'react-hook-form'
 import * as z from 'zod'
 import Cookies from 'js-cookie'
+import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
 
 const formSchema = z.object({
   categories: z
@@ -22,6 +23,7 @@ type FormValues = z.infer<typeof formSchema>
 const MAX_CATEGORY = 2
 
 const CategorySelectArea = () => {
+  const { onboardInterestSaveEvent } = useAmplitudeContext()
   const router = useRouter()
   const { mutate, isPending } = useUpdateCollectionCategories()
 
@@ -65,6 +67,7 @@ const CategorySelectArea = () => {
       { interestCollectionCategories: values.categories as NonNullable<User.InterestedCategory>[] },
       {
         onSuccess: () => {
+          onboardInterestSaveEvent()
           // 쿠키 설정
           Cookies.set('interested-category-complete', 'true', { expires: 7 })
           router.replace('/main')
