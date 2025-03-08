@@ -36,6 +36,8 @@ interface Props {
 }
 
 const InviteRewardDrawer = ({ triggerComponent, open, onOpenChange }: Props) => {
+  const { shareClickEvent } = useAmplitudeContext()
+
   // 외부 제어 여부 확인 (controlled vs uncontrolled)
   const isControlled = open !== undefined
   const [internalOpen, setInternalOpen] = useState(false) // 내부 상태는 uncontrolled 모드에서만 사용
@@ -48,8 +50,6 @@ const InviteRewardDrawer = ({ triggerComponent, open, onOpenChange }: Props) => 
 
   const toastId = useId()
   const { toast } = useToast()
-
-  const { shareClickEvent } = useAmplitudeContext()
 
   const handleOpenChange = (value: boolean) => {
     // uncontrolled 모드일 때만 내부 상태 업데이트

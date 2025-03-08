@@ -31,6 +31,7 @@ interface Props {
 // NewQuizDrawer 컴포넌트
 const NewQuizDrawer = ({ triggerComponent, documentId, startAddQuizzes }: Props) => {
   const { quizStartClickEvent: quizStartEvent } = useAmplitudeContext()
+
   const { userInfo: user } = useUserStore()
 
   const { data } = useQuery(queries.document.item(documentId))

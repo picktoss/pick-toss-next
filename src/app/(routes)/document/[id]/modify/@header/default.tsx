@@ -14,6 +14,8 @@ import { useParams, useRouter } from 'next/navigation'
 import { useEffect, useId, useState } from 'react'
 
 const Header = () => {
+  const { noteEditClickEvent } = useAmplitudeContext()
+
   const { id } = useParams()
   const router = useRouter()
   const [validationError, setValidationError] = useState<string | null>(null)
@@ -26,8 +28,6 @@ const Header = () => {
 
   const { documentTitle: title, editorMarkdownContent: content } = useEditDocumentContext()
   const { globalDirectoryId } = useDirectoryContext()
-
-  const { noteEditClickEvent } = useAmplitudeContext()
 
   useEffect(() => {
     if (validationError) {

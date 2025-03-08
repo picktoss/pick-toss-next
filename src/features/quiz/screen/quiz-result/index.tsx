@@ -10,7 +10,6 @@ import FixedBottom from '@/shared/components/custom/fixed-bottom'
 import { motion } from 'framer-motion'
 import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
 import { useEffect } from 'react'
-import { useSearchParams } from 'next/navigation'
 
 interface Props {
   correctQuizCount: number

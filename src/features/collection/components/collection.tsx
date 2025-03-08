@@ -2,7 +2,6 @@ import { useBookmarkMutation } from '@/requests/collection/hooks'
 import CategoryTag from '@/shared/components/custom/category-tag'
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
-import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
 import { cn } from '@/shared/lib/utils'
 import { HTMLAttributes } from 'react'
 

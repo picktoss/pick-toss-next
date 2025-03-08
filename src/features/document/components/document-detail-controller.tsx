@@ -11,12 +11,12 @@ const tabs = [
 ] as const
 
 const DocumentDetailController = () => {
+  const { quizTabClickEvent, noteTabClickEvent } = useAmplitudeContext()
+
   const router = useRouter()
   const searchParams = useSearchParams()
   const tab = searchParams.get('tab') ?? ''
   const activeTab = ['DOCUMENT_CONTENT', 'QUIZ'].includes(tab) ? tab : 'DOCUMENT_CONTENT'
-
-  const { quizTabClickEvent, noteTabClickEvent } = useAmplitudeContext()
 
   const handleTabChange = (newTab: 'DOCUMENT_CONTENT' | 'QUIZ') => {
     if (newTab !== activeTab) {

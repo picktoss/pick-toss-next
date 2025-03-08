@@ -26,6 +26,8 @@ import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
 
 // Header 컴포넌트
 const Header = () => {
+  const { noteCloseClickEvent } = useAmplitudeContext()
+
   const router = useRouter()
   const { id } = useParams()
   const prev = useSearchParams().get('prev')
@@ -40,8 +42,6 @@ const Header = () => {
   const { data } = useQuery(queries.document.item(Number(id)))
   const { mutate: downloadQuizMutation } = useDownloadQuiz()
   const { mutate: deleteDocumentMutation } = useDeleteDocument()
-
-  const { noteCloseClickEvent } = useAmplitudeContext()
 
   useEffect(() => {
     if (!observerRef.current) {

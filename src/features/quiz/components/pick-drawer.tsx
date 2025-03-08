@@ -11,9 +11,9 @@ import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
 
 const PickDrawer = ({ documentId }: { documentId: number }) => {
-  const { data } = useQuery(queries.quiz.reviewPicks(documentId))
-
   const { reviewClickEvent } = useAmplitudeContext()
+
+  const { data } = useQuery(queries.quiz.reviewPicks(documentId))
 
   return (
     <Drawer>

@@ -11,7 +11,7 @@ import {
 } from '@/shared/components/ui/dialog'
 import Text from '@/shared/components/ui/text'
 import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 
 interface ExitDialogProps {

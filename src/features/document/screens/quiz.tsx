@@ -15,11 +15,11 @@ import Loading from '@/shared/components/custom/loading'
 import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
 
 const Quiz = () => {
+  const { answerViewChangeEvent } = useAmplitudeContext()
+
   const { id } = useParams()
   const [quizType, setQuizType] = useState<Quiz.Type | 'ALL'>('ALL')
   const [answerMode, setAnswerMode] = useState(false)
-
-  const { answerViewChangeEvent } = useAmplitudeContext()
 
   const params =
     quizType === 'ALL' ? { documentId: Number(id) } : { documentId: Number(id), quizType }

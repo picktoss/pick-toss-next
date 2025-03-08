@@ -15,11 +15,11 @@ type Custom = number | 'plus' | 'cancel'
 
 // AnimatedButtons 컴포넌트
 const AnimatedButtons = () => {
+  const { noteAddClickEvent } = useAmplitudeContext()
+
   const router = useRouter()
   const [isFirstRender, setIsFirstRender] = useState(true)
   const { buttonHidden, isExpandedBtns, setIsExpandedBtns } = useDocumentContext()
-
-  const { noteAddClickEvent } = useAmplitudeContext()
 
   useEffect(() => {
     setIsFirstRender(false)

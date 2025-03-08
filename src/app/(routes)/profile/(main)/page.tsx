@@ -14,7 +14,7 @@ import { CATEGORIES } from '@/features/category/config'
 import { PROFILE_MENU_LIST } from '@/features/user/config'
 import MyCollectionLink from '@/features/user/components/my-collection-link'
 import { AnalysisLink } from '@/features/user/components/analysis-link'
-import QuizRecordLink from '@/features/user/components/history-link'
+import QuizRecordLink from '@/features/user/components/quiz-record-link'
 
 const ProfilePage = async () => {
   const user = await getUserInfo()

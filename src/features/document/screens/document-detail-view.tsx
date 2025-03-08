@@ -24,6 +24,8 @@ interface Props {
 }
 
 const DocumentDetailView = ({ documentId, activeTab }: Props) => {
+  const { noteDetailViewEvent } = useAmplitudeContext()
+
   const { data: documentDetail, isPending } = useQuery(queries.document.item(documentId))
   const { mutate: addQuizzesMutate } = useAddQuizzes()
   const formattedContent = documentDetail?.content.replace(/\n/g, '\n\n')
@@ -32,8 +34,6 @@ const DocumentDetailView = ({ documentId, activeTab }: Props) => {
     () => Array.from(new Set(documentDetail?.quizzes.map((quiz) => quiz.quizType))) as Quiz.Type[],
     [documentDetail]
   )
-
-  const { noteDetailViewEvent } = useAmplitudeContext()
 
   const { selectedDirectory } = useDirectoryContext()
   const {
