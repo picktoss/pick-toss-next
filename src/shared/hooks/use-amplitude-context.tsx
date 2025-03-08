@@ -22,7 +22,7 @@ export interface AccountCreateProps {
 /** [홈] dailyquiz_click */
 export interface DailyquizClickProps {
   /** 1~24 (오늘의 퀴즈 시작 시간대) */
-  Date: Date
+  Date: number
 }
 
 /** [홈] randomquiz_change */
@@ -146,7 +146,7 @@ export interface Values {
   ) => void
 
   /* -------------------------- [온보딩] -------------------------- */
-  accountCreateEvent: (props: AccountCreateProps) => void
+  // accountCreateEvent: (props: AccountCreateProps) => void
   onboardStartEvent: () => void
   onboardInterestSaveEvent: () => void
 
@@ -181,8 +181,8 @@ export interface Values {
   collectionAddClickEvent: (props: CollectionAddClickProps) => void
   collectionCreateEvent: (props: CollectionCreateProps) => void
   collectionItemClickEvent: (props: CollectionItemClickProps) => void
-  filterCategoryApplyEvent: (props: FilterCategoryApplyProps) => void
-  filterQuiztypeApplyEvent: (props: FilterQuiztypeApplyProps) => void
+  // filterCategoryApplyEvent: (props: FilterCategoryApplyProps) => void
+  // filterQuiztypeApplyEvent: (props: FilterQuiztypeApplyProps) => void
   collectionSortChangeEvent: (props: CollectionSortChangeProps) => void
 
   /* -------------------------- [퀴즈] -------------------------- */
@@ -244,7 +244,7 @@ export const AmplitudeContextProvider = ({ children }: PropsWithChildren) => {
       trackAmplitudeEvent,
 
       /* ---------------------- [온보딩] ---------------------- */
-      accountCreateEvent: (props) => trackAmplitudeEvent('account_create', { ...props, pathname }),
+      // accountCreateEvent: (props) => trackAmplitudeEvent('account_create', { ...props, pathname }),
       onboardStartEvent: () => trackAmplitudeEvent('onboard_start', { pathname }),
       onboardInterestSaveEvent: () => trackAmplitudeEvent('onboard_interest_save', { pathname }),
 
@@ -286,10 +286,10 @@ export const AmplitudeContextProvider = ({ children }: PropsWithChildren) => {
         trackAmplitudeEvent('collection_create', { ...props, pathname }),
       collectionItemClickEvent: (props) =>
         trackAmplitudeEvent('collection_item_click', { ...props, pathname }),
-      filterCategoryApplyEvent: (props) =>
-        trackAmplitudeEvent('filter_category_apply', { ...props, pathname }),
-      filterQuiztypeApplyEvent: (props) =>
-        trackAmplitudeEvent('filter_quiztype_apply', { ...props, pathname }),
+      // filterCategoryApplyEvent: (props) =>
+      //   trackAmplitudeEvent('filter_category_apply', { ...props, pathname }),
+      // filterQuiztypeApplyEvent: (props) =>
+      //   trackAmplitudeEvent('filter_quiztype_apply', { ...props, pathname }),
       collectionSortChangeEvent: (props) =>
         trackAmplitudeEvent('collection_sort_change', { ...props, pathname }),
 

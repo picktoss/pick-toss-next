@@ -1,6 +1,9 @@
+'use client'
+
 import Icon from '@/shared/components/custom/icon'
 import Tag from '@/shared/components/ui/tag'
 import Text from '@/shared/components/ui/text'
+import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
 import Link from 'next/link'
 
 interface Props {
@@ -12,10 +15,17 @@ interface Props {
 }
 
 const ReviewTop5Item = ({ ranking, documentId, documentTitle, directory, reviewCount }: Props) => {
+  const { top5NoteClickEvent } = useAmplitudeContext()
+
   return (
     <Link
       href={`/document/${documentId}`}
       className="flex h-fit w-full items-center justify-between px-[20px] py-[16px]"
+      onClick={() => {
+        top5NoteClickEvent({
+          rank: ranking,
+        })
+      }}
     >
       <div className="flex items-center gap-[20px]">
         <Text typography="text1-bold" color="accent">

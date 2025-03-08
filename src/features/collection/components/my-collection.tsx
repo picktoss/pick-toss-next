@@ -11,6 +11,7 @@ import Loading from '@/shared/components/custom/loading'
 import { SwitchCase } from '@/shared/components/custom/react/switch-case'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useScrollPosition } from '@/shared/hooks/use-scroll-position'
+import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
 
 const sort = [
   { key: 'create-collection', label: '만든 컬렉션' },
@@ -20,6 +21,7 @@ const sort = [
 type TabType = (typeof sort)[number]['key']
 
 const MyCollection = () => {
+  const { collectionAddClickEvent, collectionItemClickEvent } = useAmplitudeContext()
   const router = useRouter()
   const searchParams = useSearchParams()
   const activeTab = (searchParams.get('sort') as TabType) || 'create-collection'
@@ -68,12 +70,26 @@ const MyCollection = () => {
               <Link
                 href="/collections/create"
                 className="flex-center h-[200px] min-w-[166px] flex-col items-center gap-[12px] rounded-[16px] border-[3px] border-dashed border-border-default"
+                onClick={(e) => {
+                  e.preventDefault()
+                  collectionAddClickEvent({
+                    option: '내 컬렉션',
+                  })
+                }}
               >
                 <Icon name="plus-circle" className="size-[24px]" />
                 <Text typography="subtitle2-bold">만들기</Text>
               </Link>
               {myCollectionsData?.collections.map((collection) => (
-                <Link key={collection.id} href={`/collections/${collection.id}`}>
+                <Link
+                  key={collection.id}
+                  href={`/collections/${collection.id}`}
+                  onClick={() =>
+                    collectionItemClickEvent({
+                      type: '만든 컬렉션',
+                    })
+                  }
+                >
                   <Collection
                     collectionId={collection.id}
                     emoji={collection.emoji}
@@ -94,7 +110,15 @@ const MyCollection = () => {
           ) : (
             <CollectionList ref={scrollContainerRef}>
               {bookmarkedCollectionsData?.collections.map((collection) => (
-                <Link key={collection.id} href={`/collections/${collection.id}`}>
+                <Link
+                  key={collection.id}
+                  href={`/collections/${collection.id}`}
+                  onClick={() =>
+                    collectionItemClickEvent({
+                      type: '보관한 컬렉션',
+                    })
+                  }
+                >
                   <Collection
                     collectionId={collection.id}
                     emoji={collection.emoji}

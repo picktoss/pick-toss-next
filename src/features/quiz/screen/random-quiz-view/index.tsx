@@ -28,12 +28,14 @@ import { getLocalStorage } from '@/shared/utils/storage'
 import { LOCAL_KEY } from '@/constants'
 import RandomTutorial from '../random-tutorial'
 import { useDirectory } from '@/requests/directory/hooks'
+import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
 
 interface Props {
   directories: DeepRequired<components['schemas']['GetAllDirectoriesDirectoryDto']>[]
 }
 
 const RandomQuizView = ({ directories }: Props) => {
+  const { randomquizChangeEvent, randomquizExitEvent } = useAmplitudeContext()
   const router = useRouter()
   const { data: session } = useSession()
 
@@ -175,7 +177,13 @@ const RandomQuizView = ({ directories }: Props) => {
         <div className="relative h-[70dvh] min-h-fit w-full rounded-b-[24px] bg-white px-[16px]">
           {/* 헤더 영역 */}
           <div className="flex h-[54px] w-full items-center">
-            <GoBackButton icon="cancel" onClick={() => router.back()} />
+            <GoBackButton
+              icon="cancel"
+              onClick={() => {
+                randomquizExitEvent()
+                router.back()
+              }}
+            />
           </div>
 
           {/* 문제 영역 */}
@@ -222,7 +230,12 @@ const RandomQuizView = ({ directories }: Props) => {
           <Tabs
             defaultValue="directory"
             className="absolute bottom-4 right-1/2 h-[36px] w-[210px] translate-x-1/2 rounded-[12px] bg-background-base-02 p-[3px]"
-            onValueChange={(value) => setRepository(value as 'directory' | 'collection')}
+            onValueChange={(value) => {
+              randomquizChangeEvent({
+                option: value === 'directory' ? '퀴즈노트' : '컬렉션',
+              })
+              setRepository(value as 'directory' | 'collection')
+            }}
           >
             <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger value="directory" className="h-[30px]">

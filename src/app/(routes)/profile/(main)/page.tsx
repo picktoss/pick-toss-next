@@ -12,6 +12,8 @@ import { getGravatarUrl } from '@/features/user/utils'
 import { PROFILE_MENU_LIST } from '@/features/user/config'
 import LogoutDialog from '@/features/user/components/logout-dialog'
 import InaccessibleView from '@/features/common/inaccessible-view'
+import { AnalysisLink } from './components/analysis-link'
+import { HistoryLink } from './components/history-link'
 
 const ProfilePage = async () => {
   const user = await getUserInfo()
@@ -117,19 +119,9 @@ const ProfilePage = async () => {
             <Text typography="text2-medium">내 컬렉션</Text>
           </Link>
 
-          <Link href={'/analysis'} className="flex-center flex-col gap-2">
-            <div className="rounded-[20px] bg-[#f8f8f8] p-[16px]">
-              <Icon name="graph" className="w-[32px]" />
-            </div>
-            <Text typography="text2-medium">퀴즈 분석</Text>
-          </Link>
+          <AnalysisLink />
 
-          <Link href={'/record'} className="flex-center flex-col gap-2">
-            <div className="rounded-[20px] bg-[#f8f8f8] p-[16px]">
-              <Icon name="calendar" className="size-[32px]" />
-            </div>
-            <Text typography="text2-medium">퀴즈 기록</Text>
-          </Link>
+          <HistoryLink />
         </div>
 
         <Link

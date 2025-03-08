@@ -10,6 +10,7 @@ import { useUserStore } from '@/store/user'
 import { useQuery } from '@tanstack/react-query'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import { useMemo } from 'react'
+import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
 
 interface Props {
   interestedCategories?: string[]
@@ -17,6 +18,7 @@ interface Props {
 
 // 메인페이지의 유저 관심분야 컬렉션
 const InterestedCategoryCollections = ({ interestedCategories }: Props) => {
+  const { interestItemClickEvent, interestItemMoreClickEvent } = useAmplitudeContext()
   const { userInfo } = useUserStore()
   const { data } = useQuery(queries.collection.interestedCategory())
 
@@ -34,7 +36,10 @@ const InterestedCategoryCollections = ({ interestedCategories }: Props) => {
       <div className="mb-[20px] flex items-center justify-between">
         <Text typography="title3">{userInfo?.name}님의 관심분야 컬렉션</Text>
         {interestedCategories && (
-          <Link href={`/collections?collection-category=${interestedCategories.join(',')}`}>
+          <Link
+            href={`/collections?collection-category=${interestedCategories.join(',')}`}
+            onClick={() => interestItemMoreClickEvent()}
+          >
             <Text typography="text1-medium" color="sub">
               더보기
             </Text>
@@ -54,7 +59,11 @@ const InterestedCategoryCollections = ({ interestedCategories }: Props) => {
       ) : data && hasCollectionResults ? (
         <SwipeableCardList
           cardComponents={data.collections.map((item) => (
-            <Link href={`/collections/${item.id}`} key={item.id}>
+            <Link
+              href={`/collections/${item.id}`}
+              key={item.id}
+              onClick={() => interestItemClickEvent()}
+            >
               <Collection
                 collectionId={item.id}
                 emoji={item.emoji}
