@@ -26,6 +26,8 @@ interface Props {
 }
 
 const CreateQuizDrawer = ({ handleCreateDocument, maxQuizCount, disabled }: Props) => {
+  const { quizCreateClickEvent } = useAmplitudeContext()
+
   const MAXIMUM_QUIZ_COUNT = 40
   const DOCUMENT_MIN_QUIZ_COUNT = maxQuizCount < 5 ? maxQuizCount : 5
   const DOCUMENT_MAX_QUIZ_COUNT = Math.min(maxQuizCount, MAXIMUM_QUIZ_COUNT)
@@ -42,8 +44,6 @@ const CreateQuizDrawer = ({ handleCreateDocument, maxQuizCount, disabled }: Prop
 
   // TODO: 결제 기능 구현 후 아래 코드 삭제
   const [isOpenInvite, setIsOpenInvite] = useState(false)
-
-  const { quizCreateClickEvent } = useAmplitudeContext()
 
   // iOS Safari Drawer & Scroll 관련 버그 해결
   useDrawerScrollLock(isOpenDrawer)

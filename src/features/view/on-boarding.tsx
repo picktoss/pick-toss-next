@@ -10,10 +10,11 @@ import { useEffect } from 'react'
 import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
 
 const OnBoarding = () => {
+  const { onboardStartEvent } = useAmplitudeContext()
+
   useDynamicThemeColor('#FFFFFF', '#F5F7F9')
   const { isMobile } = useScreenSize()
   const isPWA = useIsPWA()
-  const { onboardStartEvent } = useAmplitudeContext()
 
   useEffect(() => {
     if (isPWA) {

@@ -37,12 +37,12 @@ const CategoryDrawer = ({
 }: {
   interestedCategories?: (User.InterestedCategory | '관심 분야 없음')[]
 }) => {
+  const { interestSaveClickEvent } = useAmplitudeContext()
+
   const [open, setOpen] = useState(false)
   const [newCategories, setNewCategories] = useState<User.InterestedCategory[]>([])
   const [completeOpen, setCompleteOpen] = useState(false)
   const { mutate, isPending } = useUpdateCollectionCategories()
-
-  const { interestSaveClickEvent } = useAmplitudeContext()
 
   const isExistInterestedCategory = useMemo(
     () =>
