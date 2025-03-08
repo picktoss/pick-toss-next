@@ -20,41 +20,46 @@ const publicOnlyUrls: Routes = {
 const PUBLIC_FILE = /\.(.*)$/
 
 export async function middleware(request: NextRequest) {
-  const session = await auth()
-  const { pathname } = request.nextUrl
+  try {
+    const session = await auth()
+    const { pathname } = request.nextUrl
 
-  const isPublicFile = PUBLIC_FILE.test(pathname)
-  const isPublicUrl = Object.entries(publicUrls).some(([path, matcher]) => {
-    if (matcher instanceof RegExp) {
-      return matcher.test(pathname)
+    const isPublicFile = PUBLIC_FILE.test(pathname)
+    const isPublicUrl = Object.entries(publicUrls).some(([path, matcher]) => {
+      if (matcher instanceof RegExp) {
+        return matcher.test(pathname)
+      }
+      return path === pathname
+    })
+    const isPublicOnlyUrl = publicOnlyUrls[pathname]
+
+    // 1. Public files는 처리하지 않음
+    if (isPublicFile) {
+      return
     }
-    return path === pathname
-  })
-  const isPublicOnlyUrl = publicOnlyUrls[pathname]
 
-  // 1. Public files는 처리하지 않음
-  if (isPublicFile) {
-    return
-  }
-
-  // 2. 로그인되지 않은 상태
-  if (!session?.user?.id) {
-    if (pathname !== '/' && !isPublicOnlyUrl && !isPublicUrl) {
-      return NextResponse.redirect(new URL('/', request.url))
+    // 2. 로그인되지 않은 상태
+    if (!session?.user?.id) {
+      if (pathname !== '/' && !isPublicOnlyUrl && !isPublicUrl) {
+        return NextResponse.redirect(new URL('/', request.url))
+      }
     }
-  }
 
-  // 3. 로그인된 상태
-  if (session?.user?.id) {
-    // Public-only URL 접근 시 리디렉션 처리
-    if (isPublicOnlyUrl) {
-      // 로그인한 사용자는 '/main'으로 이동
-      return NextResponse.redirect(new URL('/main', request.url))
+    // 3. 로그인된 상태
+    if (session?.user?.id) {
+      // Public-only URL 접근 시 리디렉션 처리
+      if (isPublicOnlyUrl) {
+        // 로그인한 사용자는 '/main'으로 이동
+        return NextResponse.redirect(new URL('/main', request.url))
+      }
     }
-  }
 
-  // default
-  return NextResponse.next()
+    // default
+    return NextResponse.next()
+  } catch (error) {
+    console.error('Auth error:', error)
+    return NextResponse.next()
+  }
 }
 
 export const config = {
