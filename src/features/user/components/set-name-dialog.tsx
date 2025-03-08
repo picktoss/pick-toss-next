@@ -83,16 +83,15 @@ const SetNameDialog = ({ userName }: { userName: string }) => {
   useEffect(() => {
     if (!open) return
 
-    const focusTimer = setTimeout(() => {
+    const focusTimer = requestAnimationFrame(() => {
       const userNameInput = document.getElementById('userNameInput') as HTMLInputElement | null
       if (userNameInput) {
-        const valueLength = userNameInput.value.length
         userNameInput.focus()
-        userNameInput.setSelectionRange(0, valueLength)
+        userNameInput.setSelectionRange(0, userNameInput.value.length)
       }
-    }, 300)
+    })
 
-    return () => clearTimeout(focusTimer)
+    return () => cancelAnimationFrame(focusTimer)
   }, [open])
 
   return (
