@@ -31,7 +31,7 @@ const ReplayQuizDrawer = ({
   savedQuizCount,
   quizTypes,
 }: Props) => {
-  const { quizStartClickEvent: quizStartEvent } = useAmplitudeContext()
+  const { quizStartClickEvent: quizStartEvent, quizReplayClickEvent } = useAmplitudeContext()
   const router = useRouter()
 
   const { mutate: replayDocumentQuizMutate } = useReplayDocumentQuiz()
@@ -45,8 +45,6 @@ const ReplayQuizDrawer = ({
   const isIncludeMixUp = quizTypes.find((type) => type === 'MIX_UP')
 
   const { isReplayQuizOpen, setIsReplayQuizOpen } = useDocumentDetailContext()
-
-  const { quizReplayClickEvent } = useAmplitudeContext()
 
   const handleClickStart = () => {
     const type = quizType === 'RANDOM' ? '전체' : quizType === 'MIX_UP' ? 'OX' : '객관식'
