@@ -11,7 +11,7 @@ import {
 } from '@/shared/components/ui/dialog'
 import Text from '@/shared/components/ui/text'
 import { useRouter } from 'next/navigation'
-import { useEffect, useId, useRef, useState } from 'react'
+import { useEffect, useId, useState } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
@@ -32,8 +32,6 @@ const SetNameDialog = ({ userName }: { userName: string }) => {
   const router = useRouter()
   const [open, setOpen] = useState(false)
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false)
-
-  const inputRef = useRef<HTMLInputElement | null>(null)
 
   const toastId = useId()
   const { toast } = useToast()
@@ -81,6 +79,22 @@ const SetNameDialog = ({ userName }: { userName: string }) => {
     }
   }, [isMobile])
 
+  // focus시 화면 resize를 위해 직접 구현
+  useEffect(() => {
+    if (!open) return
+
+    const focusTimer = setTimeout(() => {
+      const userNameInput = document.getElementById('userNameInput') as HTMLInputElement | null
+      if (userNameInput) {
+        const valueLength = userNameInput.value.length
+        userNameInput.focus()
+        userNameInput.setSelectionRange(0, valueLength)
+      }
+    }, 300)
+
+    return () => clearTimeout(focusTimer)
+  }, [open])
+
   return (
     <Dialog
       open={open}
@@ -89,10 +103,6 @@ const SetNameDialog = ({ userName }: { userName: string }) => {
         if (!open) {
           form.reset()
           setIsKeyboardOpen(false)
-        } else {
-          setTimeout(() => {
-            inputRef.current?.focus()
-          }, 100)
         }
       }}
     >
@@ -135,10 +145,8 @@ const SetNameDialog = ({ userName }: { userName: string }) => {
                     <FormControl>
                       <input
                         {...field}
-                        ref={inputRef}
-                        autoFocus={false}
-                        tabIndex={-1}
                         disabled={isPending}
+                        id="userNameInput"
                         className="size-full border-b border-border-divider py-[5px] text-subtitle2-medium focus-visible:outline-none disabled:cursor-not-allowed disabled:bg-background-disabled disabled:opacity-50 disabled:placeholder:text-text-disabled"
                       />
                     </FormControl>

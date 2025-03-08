@@ -7,7 +7,7 @@ import {
 } from '@/shared/components/ui/dropdown-menu'
 import { cn } from '@/shared/lib/utils'
 import EmojiPicker from 'emoji-picker-react'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 interface Props {
   open: boolean
@@ -21,8 +21,6 @@ const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prev
   const [name, setName] = useState(prevName ?? '')
   const [emoji, setEmoji] = useState(prevEmoji ?? '📁')
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false)
-
-  const inputRef = useRef<HTMLInputElement | null>(null)
 
   const { mutate: updateDirectoryMutate } = useUpdateDirectoryInfo()
 
@@ -47,19 +45,28 @@ const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prev
         setIsKeyboardOpen(window.visualViewport.height < window.innerHeight)
       }
     }
-
     window.visualViewport?.addEventListener('resize', handleResize)
+
     return () => {
       window.visualViewport?.removeEventListener('resize', handleResize)
     }
   }, [])
 
   useEffect(() => {
-    if (open) {
-      setTimeout(() => {
-        inputRef.current?.focus()
-      }, 100)
-    }
+    if (!open) return
+
+    const focusTimer = setTimeout(() => {
+      const directoryNameInput = document.getElementById(
+        'directoryNameInput'
+      ) as HTMLInputElement | null
+      if (directoryNameInput) {
+        const valueLength = directoryNameInput.value.length
+        directoryNameInput.focus()
+        directoryNameInput.setSelectionRange(0, valueLength)
+      }
+    }, 300)
+
+    return () => clearTimeout(focusTimer)
   }, [open])
 
   return (
@@ -94,7 +101,7 @@ const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prev
           </DropdownMenu>
 
           <input
-            ref={inputRef}
+            id="directoryNameInput"
             className="w-full border-b border-border-divider py-[10px] outline-none"
             value={name}
             onChange={(e) => setName(e.target.value)}
