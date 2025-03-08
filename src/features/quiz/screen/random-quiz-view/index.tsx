@@ -35,7 +35,10 @@ interface Props {
 }
 
 const RandomQuizView = ({ directories }: Props) => {
-  const { randomquizChangeEvent, randomquizExitEvent } = useAmplitudeContext()
+  const {
+    randomquizChangeClickEvent: randomquizChangeEvent,
+    randomquizCloseClickEvent: randomquizExitEvent,
+  } = useAmplitudeContext()
   const router = useRouter()
   const { data: session } = useSession()
 

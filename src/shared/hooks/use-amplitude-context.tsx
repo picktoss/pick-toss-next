@@ -19,14 +19,8 @@ export interface AccountCreateProps {
   type: '구글' | '카카오'
 }
 
-/** [홈] dailyquiz_click */
-export interface DailyquizClickProps {
-  /** 1~24 (오늘의 퀴즈 시작 시간대) */
-  Date: number
-}
-
 /** [홈] randomquiz_change */
-export interface RandomquizChangeProps {
+export interface RandomquizChangeClickProps {
   /** '퀴즈노트', '컬렉션' */
   option: '퀴즈노트' | '컬렉션'
 }
@@ -65,7 +59,7 @@ export interface CollectionAddClickProps {
 }
 
 /** [컬렉션] collection_create */
-export interface CollectionCreateProps {
+export interface CollectionCreateClickProps {
   /** 'IT·프로그래밍', '경영·경제' 등 */
   category: (typeof CATEGORIES)[number]['name']
 }
@@ -92,24 +86,10 @@ export interface CollectionSortChangeProps {
 }
 
 /** [퀴즈] quiz_start, quiz_complete, quiz_exit */
-export interface QuizStartProps {
+export interface QuizStartClickProps {
   type: '오늘의 퀴즈' | '퀴즈노트' | '컬렉션'
-}
-export interface QuizCompleteProps {
-  type: '오늘의 퀴즈' | '퀴즈노트' | '컬렉션'
-}
-export interface QuizExitProps {
-  type: '오늘의 퀴즈' | '퀴즈노트' | '컬렉션'
-}
-
-/** [퀴즈] stopwatch_view_change, comment_view_change */
-export interface StopwatchViewChangeProps {
-  /** True, False (소요시간 보기 토글) */
-  status: boolean
-}
-export interface CommentViewChangeProps {
-  /** True, False (해설 보기 토글) */
-  status: boolean
+  /** 1~24 (오늘의 퀴즈 시작 시간대) */
+  time?: number
 }
 
 /** [마이] quickmenu_click */
@@ -151,14 +131,13 @@ export interface Values {
   onboardInterestSaveEvent: () => void
 
   /* -------------------------- [홈] -------------------------- */
-  dailyquizClickEvent: (props: DailyquizClickProps) => void
   analysisClickEvent: () => void
   historyClickEvent: () => void
-  bombquizStartEvent: () => void
-  bombquizExitEvent: () => void
-  randomquizStartEvent: () => void
-  randomquizChangeEvent: (props: RandomquizChangeProps) => void
-  randomquizExitEvent: () => void
+  bombquizClickEvent: () => void
+  bombquizCloseEvent: () => void
+  randomquizClickEvent: () => void
+  randomquizChangeClickEvent: (props: RandomquizChangeClickProps) => void
+  randomquizCloseClickEvent: () => void
   top5NoteClickEvent: (props: Top5NoteClickProps) => void
   interestItemClickEvent: () => void
   interestItemMoreClickEvent: () => void
@@ -179,18 +158,16 @@ export interface Values {
 
   /* -------------------------- [컬렉션] -------------------------- */
   collectionAddClickEvent: (props: CollectionAddClickProps) => void
-  collectionCreateEvent: (props: CollectionCreateProps) => void
+  collectionCreateClickEvent: (props: CollectionCreateClickProps) => void
   collectionItemClickEvent: (props: CollectionItemClickProps) => void
   // filterCategoryApplyEvent: (props: FilterCategoryApplyProps) => void
   // filterQuiztypeApplyEvent: (props: FilterQuiztypeApplyProps) => void
   collectionSortChangeEvent: (props: CollectionSortChangeProps) => void
 
   /* -------------------------- [퀴즈] -------------------------- */
-  quizStartEvent: (props: QuizStartProps) => void
-  quizCompleteEvent: (props: QuizCompleteProps) => void
-  quizExitEvent: (props: QuizExitProps) => void
-  stopwatchViewChangeEvent: (props: StopwatchViewChangeProps) => void
-  commentViewChangeEvent: (props: CommentViewChangeProps) => void
+  quizStartClickEvent: (props: QuizStartClickProps) => void
+  quizCompleteViewEvent: () => void
+  quizExitClickEvent: () => void
 
   /* -------------------------- [마이] -------------------------- */
   quickmenuClickEvent: (props: QuickmenuClickProps) => void
@@ -249,16 +226,14 @@ export const AmplitudeContextProvider = ({ children }: PropsWithChildren) => {
       onboardInterestSaveEvent: () => trackAmplitudeEvent('onboard_interest_save', { pathname }),
 
       /* ---------------------- [홈] ---------------------- */
-      dailyquizClickEvent: (props) =>
-        trackAmplitudeEvent('dailyquiz_click', { ...props, pathname }),
       analysisClickEvent: () => trackAmplitudeEvent('analysis_click', { pathname }),
       historyClickEvent: () => trackAmplitudeEvent('history_click', { pathname }),
-      bombquizStartEvent: () => trackAmplitudeEvent('bombquiz_start', { pathname }),
-      bombquizExitEvent: () => trackAmplitudeEvent('bombquiz_exit', { pathname }),
-      randomquizStartEvent: () => trackAmplitudeEvent('randomquiz_start', { pathname }),
-      randomquizChangeEvent: (props) =>
+      bombquizClickEvent: () => trackAmplitudeEvent('bombquiz_start', { pathname }),
+      bombquizCloseEvent: () => trackAmplitudeEvent('bombquiz_exit', { pathname }),
+      randomquizClickEvent: () => trackAmplitudeEvent('randomquiz_start', { pathname }),
+      randomquizChangeClickEvent: (props) =>
         trackAmplitudeEvent('randomquiz_change', { ...props, pathname }),
-      randomquizExitEvent: () => trackAmplitudeEvent('randomquiz_exit', { pathname }),
+      randomquizCloseClickEvent: () => trackAmplitudeEvent('randomquiz_exit', { pathname }),
       top5NoteClickEvent: (props) => trackAmplitudeEvent('top5_note_click', { ...props, pathname }),
       interestItemClickEvent: () => trackAmplitudeEvent('interest_item_click', { pathname }),
       interestItemMoreClickEvent: () =>
@@ -282,7 +257,7 @@ export const AmplitudeContextProvider = ({ children }: PropsWithChildren) => {
       /* ---------------------- [컬렉션] ---------------------- */
       collectionAddClickEvent: (props) =>
         trackAmplitudeEvent('collection_add_click', { ...props, pathname }),
-      collectionCreateEvent: (props) =>
+      collectionCreateClickEvent: (props) =>
         trackAmplitudeEvent('collection_create', { ...props, pathname }),
       collectionItemClickEvent: (props) =>
         trackAmplitudeEvent('collection_item_click', { ...props, pathname }),
@@ -294,13 +269,9 @@ export const AmplitudeContextProvider = ({ children }: PropsWithChildren) => {
         trackAmplitudeEvent('collection_sort_change', { ...props, pathname }),
 
       /* ---------------------- [퀴즈] ---------------------- */
-      quizStartEvent: (props) => trackAmplitudeEvent('quiz_start', { ...props, pathname }),
-      quizCompleteEvent: (props) => trackAmplitudeEvent('quiz_complete', { ...props, pathname }),
-      quizExitEvent: (props) => trackAmplitudeEvent('quiz_exit', { ...props, pathname }),
-      stopwatchViewChangeEvent: (props) =>
-        trackAmplitudeEvent('stopwatch_view_change', { ...props, pathname }),
-      commentViewChangeEvent: (props) =>
-        trackAmplitudeEvent('comment_view_change', { ...props, pathname }),
+      quizStartClickEvent: (props) => trackAmplitudeEvent('quiz_start', { ...props, pathname }),
+      quizCompleteViewEvent: () => trackAmplitudeEvent('quiz_complete', { pathname }),
+      quizExitClickEvent: () => trackAmplitudeEvent('quiz_exit', { pathname }),
 
       /* ---------------------- [마이] ---------------------- */
       quickmenuClickEvent: (props) =>

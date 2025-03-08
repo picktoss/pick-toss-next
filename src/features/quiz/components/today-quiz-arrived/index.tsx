@@ -13,7 +13,7 @@ interface Props {
 }
 
 const TodayQuizArrived = ({ quizSetId, createdAt }: Props) => {
-  const { dailyquizClickEvent } = useAmplitudeContext()
+  const { quizStartClickEvent: quizStartEvent } = useAmplitudeContext()
   const MonthDateDay = formatDateKorean(createdAt, { month: true, day: true, dayOfWeek: true })
 
   return (
@@ -38,11 +38,12 @@ const TodayQuizArrived = ({ quizSetId, createdAt }: Props) => {
         <Button
           variant={'largeRound'}
           className="w-full"
-          onClick={() =>
-            dailyquizClickEvent({
-              Date: new Date().getHours(),
+          onClick={() => {
+            quizStartEvent({
+              type: '오늘의 퀴즈',
+              time: new Date().getHours(),
             })
-          }
+          }}
         >
           퀴즈 시작하기
         </Button>

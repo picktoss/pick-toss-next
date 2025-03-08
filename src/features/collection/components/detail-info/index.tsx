@@ -9,6 +9,7 @@ import Icon from '@/shared/components/custom/icon'
 import Loading from '@/shared/components/custom/loading'
 import { Button } from '@/shared/components/ui/button'
 import Text from '@/shared/components/ui/text'
+import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
 import { useUser } from '@/shared/hooks/use-user'
 import { usePathname, useRouter } from 'next/navigation'
 import { useMemo } from 'react'
@@ -18,6 +19,7 @@ interface Props {
 }
 
 const DetailInfo = ({ id }: Props) => {
+  const { quizStartClickEvent: quizStartEvent } = useAmplitudeContext()
   const router = useRouter()
   const pathname = usePathname()
 
@@ -166,7 +168,15 @@ const DetailInfo = ({ id }: Props) => {
       )}
 
       <FixedBottom>
-        <Button className="w-full" onClick={handleQuizStart}>
+        <Button
+          className="w-full"
+          onClick={() => {
+            quizStartEvent({
+              type: '컬렉션',
+            })
+            handleQuizStart()
+          }}
+        >
           퀴즈 시작하기
         </Button>
       </FixedBottom>

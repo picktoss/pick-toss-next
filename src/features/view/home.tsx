@@ -33,7 +33,8 @@ import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
 type RewardType = 'TODAY_QUIZ' | 'EVENT'
 
 const Home = () => {
-  const { bombquizStartEvent, randomquizStartEvent } = useAmplitudeContext()
+  const { bombquizClickEvent: bombquizStartEvent, randomquizClickEvent: randomquizStartEvent } =
+    useAmplitudeContext()
   const { data: session } = useSession()
   const { userInfo } = useUserStore()
 

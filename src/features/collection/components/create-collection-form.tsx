@@ -66,7 +66,7 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>
 
 const CreateCollectionForm = () => {
-  const { collectionCreateEvent } = useAmplitudeContext()
+  const { collectionCreateClickEvent: collectionCreateEvent } = useAmplitudeContext()
   const router = useRouter()
   const [step, setStep] = useState<'select-document' | 'create-form'>('select-document')
 

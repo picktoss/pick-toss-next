@@ -8,6 +8,9 @@ import QuizCard from '../../components/quiz-card'
 import { Button } from '@/shared/components/ui/button'
 import FixedBottom from '@/shared/components/custom/fixed-bottom'
 import { motion } from 'framer-motion'
+import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
+import { useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
 
 interface Props {
   correctQuizCount: number
@@ -33,6 +36,12 @@ const QuizResult = ({
   quizResults,
   onClick,
 }: Props) => {
+  const { quizCompleteViewEvent: quizCompleteEvent } = useAmplitudeContext()
+
+  useEffect(() => {
+    quizCompleteEvent()
+  }, [])
+
   return (
     <div className="relative min-h-dvh bg-background-base-02 px-4 pb-[100px]">
       <motion.div

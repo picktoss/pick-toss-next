@@ -10,7 +10,8 @@ import {
   DialogTitle,
 } from '@/shared/components/ui/dialog'
 import Text from '@/shared/components/ui/text'
-import { useRouter } from 'next/navigation'
+import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect } from 'react'
 
 interface ExitDialogProps {
@@ -23,6 +24,8 @@ interface ExitDialogProps {
 
 const ExitDialog = ({ open, onOpenChange, index, isFirst, redirectUrl }: ExitDialogProps) => {
   const router = useRouter()
+
+  const { quizExitClickEvent: quizExitEvent } = useAmplitudeContext()
 
   useEffect(() => {
     // 현재 페이지를 history stack에 추가
@@ -85,7 +88,10 @@ const ExitDialog = ({ open, onOpenChange, index, isFirst, redirectUrl }: ExitDia
           <Button
             variant="mediumRound"
             className="w-full"
-            onClick={() => router.replace(redirectUrl || '/main')}
+            onClick={() => {
+              quizExitEvent()
+              router.replace(redirectUrl || '/main')
+            }}
           >
             나가기
           </Button>

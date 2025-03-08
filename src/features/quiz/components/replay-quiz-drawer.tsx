@@ -11,6 +11,7 @@ import { useReplayDocumentQuiz } from '@/requests/quiz/hooks'
 import { useRouter } from 'next/navigation'
 import { useDocumentDetailContext } from '@/features/document/contexts/document-detail-context'
 import { BeatLoader } from 'react-spinners'
+import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
 
 interface Props {
   triggerComponent: React.ReactNode
@@ -30,6 +31,7 @@ const ReplayQuizDrawer = ({
   savedQuizCount,
   quizTypes,
 }: Props) => {
+  const { quizStartClickEvent: quizStartEvent } = useAmplitudeContext()
   const router = useRouter()
 
   const { mutate: replayDocumentQuizMutate } = useReplayDocumentQuiz()
@@ -56,6 +58,9 @@ const ReplayQuizDrawer = ({
       },
       {
         onSuccess: (data) => {
+          quizStartEvent({
+            type: '퀴즈노트',
+          })
           router.replace(
             `/quiz/${data.quizSetId}?` +
               'quizSetType=DOCUMENT_QUIZ_SET' +

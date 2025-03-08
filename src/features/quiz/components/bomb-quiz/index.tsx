@@ -31,7 +31,7 @@ const BombQuiz = ({
   leftQuizCount,
   handleExit,
 }: Props) => {
-  const { bombquizExitEvent } = useAmplitudeContext()
+  const { bombquizCloseEvent: bombquizExitEvent } = useAmplitudeContext()
   // 자명한가?
   const currentQuiz = quizzes[currentIndex] as Quiz.Item
   const currentResult = quizResults[currentIndex] ?? null
