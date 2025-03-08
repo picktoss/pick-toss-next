@@ -28,10 +28,13 @@ import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import InviteRewardDialog from '../invite/components/invite-reward-dialog'
 import HomeBannerAd from '../advertisement/components/home-banner-ad'
 import { useRewardInviteSignUp } from '@/requests/auth/hooks'
+import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
 
 type RewardType = 'TODAY_QUIZ' | 'EVENT'
 
 const Home = () => {
+  const { bombquizClickEvent: bombquizStartEvent, randomquizClickEvent: randomquizStartEvent } =
+    useAmplitudeContext()
   const { data: session } = useSession()
   const { userInfo } = useUserStore()
 
@@ -129,6 +132,7 @@ const Home = () => {
           <Link
             href={'/quiz/bomb'}
             className="flex w-1/2 flex-col rounded-[20px] bg-background-base-01 px-[20px] pb-[7px] pt-[16px]"
+            onClick={() => bombquizStartEvent()}
           >
             <Text typography="subtitle1-bold" className="mb-[2px]">
               오답 터뜨리기
@@ -143,6 +147,7 @@ const Home = () => {
           <Link
             href={'/quiz/random'}
             className="flex w-1/2 flex-col rounded-[20px] bg-background-base-01 px-[20px] pb-[7px] pt-[16px]"
+            onClick={() => randomquizStartEvent()}
           >
             <Text typography="subtitle1-bold" className="mb-[2px]">
               랜덤 퀴즈

@@ -31,6 +31,7 @@ const ReplayQuizDrawer = ({
   savedQuizCount,
   quizTypes,
 }: Props) => {
+  const { quizStartClickEvent: quizStartEvent } = useAmplitudeContext()
   const router = useRouter()
 
   const { mutate: replayDocumentQuizMutate } = useReplayDocumentQuiz()
@@ -63,6 +64,9 @@ const ReplayQuizDrawer = ({
       },
       {
         onSuccess: (data) => {
+          quizStartEvent({
+            type: '퀴즈노트',
+          })
           router.replace(
             `/quiz/${data.quizSetId}?` +
               'quizSetType=DOCUMENT_QUIZ_SET' +

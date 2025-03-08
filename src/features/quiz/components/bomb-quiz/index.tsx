@@ -4,6 +4,7 @@ import { useQuizState } from '../../screen/quiz-view/hooks/use-quiz-state'
 import Tag from '@/shared/components/ui/tag'
 import GoBackButton from '@/shared/components/custom/go-back-button'
 import Image from 'next/image'
+import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
 
 interface Props {
   quizzes: Quiz.Item[]
@@ -30,6 +31,7 @@ const BombQuiz = ({
   leftQuizCount,
   handleExit,
 }: Props) => {
+  const { bombquizCloseEvent: bombquizExitEvent } = useAmplitudeContext()
   // 자명한가?
   const currentQuiz = quizzes[currentIndex] as Quiz.Item
   const currentResult = quizResults[currentIndex] ?? null
@@ -38,7 +40,13 @@ const BombQuiz = ({
     return (
       <div className="flex h-[70dvh] min-h-fit w-full flex-col items-center justify-between">
         <header className="h-[54px] w-full py-[16px]">
-          <GoBackButton icon="cancel" onClick={handleExit} />
+          <GoBackButton
+            icon="cancel"
+            onClick={() => {
+              bombquizExitEvent()
+              handleExit()
+            }}
+          />
         </header>
 
         <div className="flex flex-col items-center">

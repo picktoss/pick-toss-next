@@ -14,6 +14,7 @@ import { calculateAvailableQuizCount } from '@/features/document/utils'
 import { useUserStore } from '@/store/user'
 import { useDocumentDetailContext } from '@/features/document/contexts/document-detail-context'
 import { BeatLoader } from 'react-spinners'
+import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
 
 interface Props {
   triggerComponent: React.ReactNode
@@ -29,6 +30,7 @@ interface Props {
 
 // NewQuizDrawer 컴포넌트
 const NewQuizDrawer = ({ triggerComponent, documentId, startAddQuizzes }: Props) => {
+  const { quizStartClickEvent: quizStartEvent } = useAmplitudeContext()
   const { userInfo: user } = useUserStore()
 
   const { data } = useQuery(queries.document.item(documentId))
@@ -62,6 +64,9 @@ const NewQuizDrawer = ({ triggerComponent, documentId, startAddQuizzes }: Props)
       return
     }
 
+    quizStartEvent({
+      type: '퀴즈노트',
+    })
     startAddQuizzes(quizCount, quizType, setLoadingSpinner)
   }
 

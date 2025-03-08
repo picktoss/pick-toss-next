@@ -18,8 +18,10 @@ import CollectionBannerAd from '@/features/advertisement/components/collection-b
 import Text from '@/shared/components/ui/text'
 import { Button } from '@/shared/components/ui/button'
 import { AD_ID } from '@/features/advertisement/config'
+import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
 
 const Exploration = () => {
+  const { collectionItemClickEvent } = useAmplitudeContext()
   const router = useRouter()
   const searchParams = useSearchParams()
   const categories = searchParams.getAll('collection-category') as Collection.Field[]
@@ -44,7 +46,15 @@ const Exploration = () => {
 
     collections.forEach((collection, index) => {
       items.push(
-        <Link key={collection.id} href={`/collections/${collection.id}`}>
+        <Link
+          key={collection.id}
+          href={`/collections/${collection.id}`}
+          onClick={() =>
+            collectionItemClickEvent({
+              type: '탐색',
+            })
+          }
+        >
           <Collection
             collectionId={collection.id}
             emoji={collection.emoji}

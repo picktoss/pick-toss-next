@@ -19,6 +19,7 @@ import { useEffect, useState } from 'react'
 import { CATEGORIES } from '@/features/category/config'
 import { Checkbox } from '@/shared/components/ui/checkbox'
 import Label from '@/shared/components/ui/label'
+import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
 
 interface Props {
   categories: Collection.Field[]

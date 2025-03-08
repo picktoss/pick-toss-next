@@ -5,6 +5,7 @@ import Text from '@/shared/components/ui/text'
 import { formatDateKorean } from '@/shared/utils/date'
 import QuizArrivedAnimation from '../quiz-arrived-animation'
 import Link from 'next/link'
+import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
 
 interface Props {
   quizSetId: string
@@ -12,6 +13,7 @@ interface Props {
 }
 
 const TodayQuizArrived = ({ quizSetId, createdAt }: Props) => {
+  const { quizStartClickEvent: quizStartEvent } = useAmplitudeContext()
   const MonthDateDay = formatDateKorean(createdAt, { month: true, day: true, dayOfWeek: true })
 
   return (
@@ -33,7 +35,16 @@ const TodayQuizArrived = ({ quizSetId, createdAt }: Props) => {
       <Link
         href={'/quiz/' + quizSetId + '?quizSetType=TODAY_QUIZ_SET' + '&' + `createdAt=${createdAt}`}
       >
-        <Button variant={'largeRound'} className="w-full">
+        <Button
+          variant={'largeRound'}
+          className="w-full"
+          onClick={() => {
+            quizStartEvent({
+              type: '오늘의 퀴즈',
+              time: new Date().getHours(),
+            })
+          }}
+        >
           퀴즈 시작하기
         </Button>
       </Link>

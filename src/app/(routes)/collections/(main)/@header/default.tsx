@@ -3,11 +3,13 @@
 import { tabs } from '@/features/quiz/config'
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
+import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
 import { cn } from '@/shared/lib/utils'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 
 const Header = () => {
+  const { collectionAddClickEvent } = useAmplitudeContext()
   const tab = useSearchParams().get('tab') ?? ''
   const activeTab = ['exploration', 'my-collection'].includes(tab) ? tab : 'exploration'
 
@@ -35,7 +37,14 @@ const Header = () => {
           <Link href="/collections/search">
             <Icon name="search" className="size-[24px]" />
           </Link>
-          <Link href="/collections/create">
+          <Link
+            href="/collections/create"
+            onClick={() =>
+              collectionAddClickEvent({
+                option: '헤더',
+              })
+            }
+          >
             <Icon name="write-document" className="size-[24px]" />
           </Link>
         </div>

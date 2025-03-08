@@ -37,6 +37,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Input } from '@/shared/components/ui/input'
 import { toast } from '@/shared/hooks/use-toast'
 import GoBackButton from '@/shared/components/custom/go-back-button'
+import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
 
 const CategoryId = z.enum([
   'IT',
@@ -65,6 +66,7 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>
 
 const CreateCollectionForm = () => {
+  const { collectionCreateClickEvent: collectionCreateEvent } = useAmplitudeContext()
   const router = useRouter()
   const [step, setStep] = useState<'select-document' | 'create-form'>('select-document')
 
@@ -159,6 +161,10 @@ const CreateCollectionForm = () => {
       },
       {
         onSuccess: (data) => {
+          collectionCreateEvent({
+            category:
+              CATEGORIES.find((category) => category.id === values.categoryCode)?.name ?? '',
+          })
           router.replace(`/collections/${data.collectionId}`)
         },
       }
