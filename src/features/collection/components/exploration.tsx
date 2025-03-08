@@ -17,6 +17,7 @@ import { useState } from 'react'
 import CollectionBannerAd from '@/features/advertisement/components/collection-banner-ad'
 import Text from '@/shared/components/ui/text'
 import { Button } from '@/shared/components/ui/button'
+import { AD_ID } from '@/features/advertisement/config'
 
 const Exploration = () => {
   const router = useRouter()
@@ -59,11 +60,13 @@ const Exploration = () => {
         </Link>
       )
 
-      // 6번째(인덱스 5, 11, 17 등) 항목 후에 광고 삽입 (마지막 그룹이 아닐 경우)
-      if ((index + 1) % 6 === 0 && index !== collections.length - 1) {
+      // 8번째(인덱스 7, 15, 23 등) 항목 후에 광고 삽입 (마지막 그룹이 아닐 경우)
+      if ((index + 1) % 8 === 0 && index !== collections.length - 1) {
         items.push(
           <div key={`ad-${index}`} className="col-span-2 mx-auto">
-            <CollectionBannerAd />
+            <CollectionBannerAd
+              adId={AD_ID[`COLLECTION${index + 1}` as keyof typeof AD_ID] ?? ''}
+            />
           </div>
         )
       }
