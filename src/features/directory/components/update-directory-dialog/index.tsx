@@ -52,25 +52,6 @@ const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prev
     }
   }, [])
 
-  useEffect(() => {
-    if (!open) return
-
-    const focusTimer = requestAnimationFrame(() => {
-      const directoryNameInput = document.getElementById(
-        'directoryNameInput'
-      ) as HTMLInputElement | null
-      if (directoryNameInput) {
-        directoryNameInput.focus()
-        directoryNameInput.setSelectionRange(
-          directoryNameInput.value.length,
-          directoryNameInput.value.length
-        )
-      }
-    })
-
-    return () => cancelAnimationFrame(focusTimer)
-  }, [open])
-
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
@@ -107,8 +88,6 @@ const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prev
             className="w-full border-b border-border-divider py-[10px] outline-none"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            autoFocus={false}
-            tabIndex={-1}
             placeholder="폴더 이름"
           />
         </div>

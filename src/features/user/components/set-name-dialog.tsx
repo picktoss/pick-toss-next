@@ -79,21 +79,6 @@ const SetNameDialog = ({ userName }: { userName: string }) => {
     }
   }, [isMobile])
 
-  // focus시 화면 resize를 위해 직접 구현
-  useEffect(() => {
-    if (!open) return
-
-    const focusTimer = requestAnimationFrame(() => {
-      const userNameInput = document.getElementById('userNameInput') as HTMLInputElement | null
-      if (userNameInput) {
-        userNameInput.focus()
-        userNameInput.setSelectionRange(0, userNameInput.value.length)
-      }
-    })
-
-    return () => cancelAnimationFrame(focusTimer)
-  }, [open])
-
   return (
     <Dialog
       open={open}
@@ -106,7 +91,21 @@ const SetNameDialog = ({ userName }: { userName: string }) => {
       }}
     >
       <DialogTrigger asChild>
-        <div className="flex w-full cursor-pointer items-center justify-between">
+        <div
+          onClick={() => {
+            // 다이얼로그가 열린 후 약간의 지연 시간을 두고 포커스 시도
+            setTimeout(() => {
+              const userNameInput = document.getElementById(
+                'userNameInput'
+              ) as HTMLInputElement | null
+              if (userNameInput) {
+                userNameInput.focus()
+                userNameInput.setSelectionRange(0, userNameInput.value.length)
+              }
+            }, 300)
+          }}
+          className="flex w-full cursor-pointer items-center justify-between"
+        >
           <div className="flex flex-col items-start gap-[4px]">
             <Text typography="text2-medium" className="text-text-sub">
               이름

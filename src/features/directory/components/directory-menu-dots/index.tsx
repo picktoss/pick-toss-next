@@ -69,6 +69,15 @@ const DirectoryMenuDots = () => {
                     onClick={() => {
                       setOpenUpdateDirectory(true)
                       setOpenDropdown(false)
+                      setTimeout(() => {
+                        const directoryNameInput = document.getElementById(
+                          'directoryNameInput'
+                        ) as HTMLInputElement | null
+                        if (directoryNameInput) {
+                          directoryNameInput.focus()
+                          directoryNameInput.setSelectionRange(0, directoryNameInput.value.length)
+                        }
+                      }, 300)
                     }}
                     className="w-[240px] cursor-pointer border-t border-border-divider px-[20px] py-[16px]"
                   >
