@@ -5,6 +5,7 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from '@/shared/components/ui/dropdown-menu'
+import { useScreenSize } from '@/shared/hooks/use-screen-size'
 import { cn } from '@/shared/lib/utils'
 import EmojiPicker from 'emoji-picker-react'
 import { useEffect, useState } from 'react'
@@ -18,6 +19,8 @@ interface Props {
 }
 
 const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prevEmoji }: Props) => {
+  const { isMobile } = useScreenSize()
+
   const [name, setName] = useState(prevName ?? '')
   const [emoji, setEmoji] = useState(prevEmoji ?? '📁')
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false)
@@ -72,7 +75,7 @@ const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prev
       <DialogContent
         className={cn(
           'flex min-h-[190px] w-[280px] flex-col items-center justify-between rounded-[16px] bg-background-base-01',
-          isFirstContentRender && 'top-[3dvh], translate-y-0',
+          isMobile && isFirstContentRender && 'top-[-3dvh], translate-y-0',
           isKeyboardOpen && 'top-[50%] translate-y-[-50%]'
         )}
         displayCloseButton={false}

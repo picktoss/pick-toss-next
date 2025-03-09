@@ -78,7 +78,7 @@ const SetNameDialog = ({ userName }: { userName: string }) => {
     return () => {
       window.visualViewport?.removeEventListener('resize', handleResize)
     }
-  }, [isMobile])
+  }, [])
 
   useEffect(() => {
     setIsFirstContentRender(open)
@@ -117,7 +117,7 @@ const SetNameDialog = ({ userName }: { userName: string }) => {
         displayCloseButton={false}
         className={cn(
           'h-fit w-[280px] rounded-[16px] bg-background-base-01 p-[24px] pb-[32px]',
-          isFirstContentRender && 'top-[3dvh], translate-y-0',
+          isMobile && isFirstContentRender && 'top-[-3dvh], translate-y-0',
           isKeyboardOpen && 'top-[50%] translate-y-[-50%]'
         )}
         onPointerDownOutside={(e) => {
