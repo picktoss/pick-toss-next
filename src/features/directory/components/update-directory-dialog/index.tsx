@@ -24,7 +24,7 @@ const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prev
   const [name, setName] = useState(prevName ?? '')
   const [emoji, setEmoji] = useState(prevEmoji ?? '📁')
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false)
-  const [isFirstContentRender, setIsFirstContentRender] = useState(false)
+  const [isFirstContentRender, setIsFirstContentRender] = useState(true)
 
   const { mutate: updateDirectoryMutate } = useUpdateDirectoryInfo()
 
