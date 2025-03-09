@@ -13,12 +13,14 @@ import ConfirmDialogWidget from '@/widget/confirm-dialog'
 import { useDirectoryContext } from '../../contexts/directory-context'
 import { useDeleteDirectory } from '@/requests/directory/hooks'
 import UpdateDirectoryDialog from '../update-directory-dialog'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
 const DirectoryMenuDots = () => {
   const [openUpdateDirectory, setOpenUpdateDirectory] = useState(false)
   const [openDropdown, setOpenDropdown] = useState(false)
   const [openDeleteDirectory, setOpenDeleteDirectory] = useState(false)
+
+  const directoryNameInput = useRef<HTMLInputElement | null>(null)
 
   const { selectedDirectory, selectedDirectoryId } = useDirectoryContext()
   const { setIsSelectMode } = useDocumentContext()
@@ -35,6 +37,17 @@ const DirectoryMenuDots = () => {
     if (!open) {
       setOpenDropdown(false)
     }
+  }
+
+  const handleFocus = () => {
+    setTimeout(() => {
+      if (directoryNameInput.current) {
+        directoryNameInput.current?.focus()
+        if (directoryNameInput.current.value.length > 0) {
+          directoryNameInput.current.setSelectionRange(0, directoryNameInput.current.value.length)
+        }
+      }
+    }, 500)
   }
 
   return (
@@ -69,6 +82,7 @@ const DirectoryMenuDots = () => {
                     onClick={() => {
                       setOpenUpdateDirectory(true)
                       setOpenDropdown(false)
+                      handleFocus()
                     }}
                     className="w-[240px] cursor-pointer border-t border-border-divider px-[20px] py-[16px]"
                   >
@@ -112,6 +126,7 @@ const DirectoryMenuDots = () => {
             directoryId={selectedDirectoryId}
             prevName={selectedDirectory.name}
             prevEmoji={selectedDirectory.emoji}
+            directoryNameInputRef={directoryNameInput}
           />
 
           <ConfirmDialogWidget

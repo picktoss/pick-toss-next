@@ -7,7 +7,7 @@ import {
 } from '@/shared/components/ui/dropdown-menu'
 import { cn } from '@/shared/lib/utils'
 import EmojiPicker from 'emoji-picker-react'
-import { useEffect, useRef, useState } from 'react'
+import { MutableRefObject, useEffect, useState } from 'react'
 
 interface Props {
   open: boolean
@@ -15,14 +15,20 @@ interface Props {
   directoryId: number | null
   prevName: string
   prevEmoji: string
+  directoryNameInputRef: MutableRefObject<HTMLInputElement | null>
 }
 
-const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prevEmoji }: Props) => {
+const UpdateDirectoryDialog = ({
+  open,
+  onOpenChange,
+  directoryId,
+  prevName,
+  prevEmoji,
+  directoryNameInputRef,
+}: Props) => {
   const [name, setName] = useState(prevName ?? '')
   const [emoji, setEmoji] = useState(prevEmoji ?? '📁')
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false)
-
-  const directoryNameInput = useRef<HTMLInputElement | null>(null)
 
   const { mutate: updateDirectoryMutate } = useUpdateDirectoryInfo()
 
@@ -53,25 +59,6 @@ const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prev
       window.visualViewport?.removeEventListener('resize', handleResize)
     }
   }, [])
-
-  useEffect(() => {
-    if (!open) return
-
-    const focusTimer = setTimeout(() => {
-      if (directoryNameInput.current) {
-        directoryNameInput.current.setAttribute('autofocus', 'true')
-        // directoryNameInput.current?.click()
-        // directoryNameInput.current?.focus()
-        // if (directoryNameInput.current.value.length > 0) {
-        //   directoryNameInput.current.setSelectionRange(0, directoryNameInput.current.value.length)
-        // }
-      }
-    }, 300)
-
-    return () => {
-      clearTimeout(focusTimer)
-    }
-  }, [open])
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -105,7 +92,7 @@ const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prev
           </DropdownMenu>
 
           <input
-            ref={directoryNameInput}
+            ref={directoryNameInputRef}
             className="w-full border-b border-border-divider py-[10px] outline-none"
             value={name}
             onChange={(e) => setName(e.target.value)}

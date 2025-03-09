@@ -65,6 +65,17 @@ const SetNameDialog = ({ userName }: { userName: string }) => {
     )
   }
 
+  const handleFocus = () => {
+    setTimeout(() => {
+      if (nameInput.current) {
+        nameInput.current?.focus()
+        if (nameInput.current.value.length > 0) {
+          nameInput.current.setSelectionRange(0, nameInput.current.value.length)
+        }
+      }
+    }, 500)
+  }
+
   // 모바일 키보드 감지
   useEffect(() => {
     const handleResize = () => {
@@ -81,25 +92,6 @@ const SetNameDialog = ({ userName }: { userName: string }) => {
     }
   }, [isMobile])
 
-  useEffect(() => {
-    if (!open) return
-
-    const focusTimer = setTimeout(() => {
-      if (nameInput.current) {
-        nameInput.current.setAttribute('autofocus', 'true')
-        // nameInput.current?.click()
-        // nameInput.current?.focus()
-        // if (nameInput.current.value.length > 0) {
-        //   nameInput.current.setSelectionRange(0, nameInput.current.value.length)
-        // }
-      }
-    }, 300)
-
-    return () => {
-      clearTimeout(focusTimer)
-    }
-  }, [open])
-
   return (
     <Dialog
       open={open}
@@ -112,7 +104,10 @@ const SetNameDialog = ({ userName }: { userName: string }) => {
       }}
     >
       <DialogTrigger asChild>
-        <div className="flex w-full cursor-pointer items-center justify-between">
+        <div
+          onClick={handleFocus}
+          className="flex w-full cursor-pointer items-center justify-between"
+        >
           <div className="flex flex-col items-start gap-[4px]">
             <Text typography="text2-medium" className="text-text-sub">
               이름
@@ -152,7 +147,6 @@ const SetNameDialog = ({ userName }: { userName: string }) => {
                         {...field}
                         ref={nameInput}
                         autoFocus={false}
-                        tabIndex={-1}
                         disabled={isPending}
                         className="size-full border-b border-border-divider py-[5px] text-subtitle2-medium focus-visible:outline-none disabled:cursor-not-allowed disabled:bg-background-disabled disabled:opacity-50 disabled:placeholder:text-text-disabled"
                       />
