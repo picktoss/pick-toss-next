@@ -86,7 +86,7 @@ const QuizView = ({ quizzes, isFirst, exitRedirectUrl }: Props) => {
       const quizResultPayload = {
         quizSetId: id,
         quizSetType,
-        quizzes: quizResults,
+        quizzes: quizResults.filter((result) => result != null), // 퀴즈 문제 보고 시 결과값에 담기지 않는 걸 필터링
       } as Quiz.Request.UpdateQuizResult
 
       updateQuizResultMutate(quizResultPayload, {
@@ -234,7 +234,7 @@ const QuizView = ({ quizzes, isFirst, exitRedirectUrl }: Props) => {
 
       {isFirst && (
         <div className="mt-[40px] px-[16px]">
-          <ReportQuizErrorDialog />
+          <ReportQuizErrorDialog id={quizzes[currentIndex]?.id} onNext={onNext} />
         </div>
       )}
 

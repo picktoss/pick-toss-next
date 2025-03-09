@@ -12,26 +12,47 @@ import Text from '@/shared/components/ui/text'
 import { useState } from 'react'
 import { reportOptions } from '../../config'
 import { cn } from '@/shared/lib/utils'
+import { useDeleteInvalidQuiz } from '@/requests/quiz/hooks'
 
-const ReportQuizErrorDialog = () => {
-  const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null)
+interface Props {
+  onNext: () => void
+  id?: number
+}
+
+type QuizErrorType = Quiz.Request.DeleteInvalidQuiz['quizErrorType']
+
+const ReportQuizErrorDialog = ({ id, onNext }: Props) => {
+  const [selectedOption, setSelectedOption] = useState<QuizErrorType | null>(null)
   const [isOpen, setIsOpen] = useState(false)
 
-  const handleOptionClick = (id: string) => {
-    setSelectedOptionId(id)
+  const { mutate: deleteInvalidQuiz } = useDeleteInvalidQuiz()
+
+  const handleOptionClick = (key: QuizErrorType) => {
+    setSelectedOption(key)
   }
 
   const handleNextQuestion = () => {
-    if (selectedOptionId) {
-      // TODO: 여기에 선택된 옵션 처리 로직 추가
+    // TODO: 여기에 선택된 옵션 처리 로직 추가
+    if (id != null && selectedOption) {
+      const payload = {
+        quizId: id,
+        requestBody: { quizErrorType: selectedOption },
+      }
+      deleteInvalidQuiz(payload, {
+        onSuccess: () => {
+          onNext()
+        },
+      })
       setIsOpen(false)
-      setSelectedOptionId(null)
+      setSelectedOption(null)
+    } else {
+      console.error('quiz id가 존재하지 않습니다')
     }
   }
 
   const handleCancel = () => {
     setIsOpen(false)
-    setSelectedOptionId(null)
+    setSelectedOption(null)
   }
 
   return (
@@ -68,16 +89,16 @@ const ReportQuizErrorDialog = () => {
         <div className="flex flex-col gap-[12px] px-[9px] py-[32px] *:text-center">
           {reportOptions.map((option) => (
             <button
-              key={option.id}
-              onClick={() => handleOptionClick(option.id)}
+              key={option.key}
+              onClick={() => handleOptionClick(option.key)}
               className={cn(
                 'w-full rounded-[10px] border py-[9.5px] transition-colors',
-                selectedOptionId === option.id
+                selectedOption === option.key
                   ? 'border-border-selected bg-button-fill-secondary text-button-label-secondary'
                   : 'text-button-label-tertiary'
               )}
             >
-              <Text typography={selectedOptionId === option.id ? 'button3' : 'button4'}>
+              <Text typography={selectedOption === option.key ? 'button3' : 'button4'}>
                 {option.label}
               </Text>
             </button>
@@ -89,7 +110,7 @@ const ReportQuizErrorDialog = () => {
             variant="mediumRound"
             className="w-full"
             onClick={handleNextQuestion}
-            disabled={!(selectedOptionId != null)}
+            disabled={!(selectedOption != null)}
           >
             다음 문제 보기
           </Button>

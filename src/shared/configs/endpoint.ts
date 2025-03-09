@@ -250,8 +250,8 @@ export const API_ENDPOINTS = {
     DELETE: {
       /** DELETE /quizzes/{quiz_id}/delete-quiz - 퀴즈 삭제 */
       QUIZ: (quizId: number) => `/quizzes/${quizId}/delete-quiz`,
-      /** DELETE /quizzes/{quiz_id}/delete-invalid-quiz - 잘못된 퀴즈 삭제 */
-      INVALID_QUIZ: (quizId: number) => `/quizzes/${quizId}/delete-invalid-quiz`,
+      /** DELETE /quizzes/{quiz_id}/invalid - 잘못된 퀴즈 삭제 */
+      INVALID_QUIZ: (quizId: number) => `/quizzes/${quizId}/invalid`,
     },
     POST: {
       /** POST /quizzes/documents/{document_id}/custom-quiz-set - 사용자가 생성한 기존 문서에서 직접 퀴즈 세트 (다시)생성 */

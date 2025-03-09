@@ -5,6 +5,7 @@ import {
   collectionQuizzesInfo,
   createQuizSetForCheck,
   createReplayDocumentQuizSet,
+  deleteInvalidQuiz,
   deleteQuiz,
   getDirectoryQuizzes,
   getDownloadQuizzes,
@@ -14,14 +15,6 @@ import {
 import { getQueryClient } from '@/shared/lib/tanstack-query/client'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import { useUserInfo } from '../user/hooks'
-
-// 아직 사용처 없음 - 검토 필요
-// export const useTodayQuizSetId = () => {
-//   return useQuery({
-//     queryKey: ['todayQuizSetId'],
-//     queryFn: async () => fetchTodayQuizSetId(),
-//   })
-// }
 
 export const useDirectoryQuizzes = (directoryId: number | null) => {
   return useQuery({
@@ -94,5 +87,12 @@ export const useDeleteQuiz = (params: { documentId: number; quizType?: Quiz.Type
 export const useDownloadQuiz = () => {
   return useMutation({
     mutationFn: async (documentId: number) => getDownloadQuizzes(documentId),
+  })
+}
+
+export const useDeleteInvalidQuiz = () => {
+  return useMutation({
+    mutationFn: async (payload: { quizId: number; requestBody: Quiz.Request.DeleteInvalidQuiz }) =>
+      deleteInvalidQuiz(payload),
   })
 }

@@ -46,9 +46,9 @@ export const tabs = [
 ] as const
 
 export const reportOptions = [
-  { id: '1', label: '선지 혹은 질문이 보이지 않아요' },
-  { id: '2', label: '퀴즈 유형과 질문이 맞지 않아요' },
-  { id: '3', label: '퀴즈가 노트와 관련 없는 내용이에요' },
+  { key: 'CHOICE_OR_QUESTION_MISSING', label: '선지 혹은 질문이 보이지 않아요' },
+  { key: 'QUIZ_TYPE_MISMATCH', label: '퀴즈 유형과 질문이 맞지 않아요' },
+  { key: 'UNRELATED_QUIZ', label: '퀴즈가 노트와 관련 없는 내용이에요' },
 ] as const
 
 export const QUIZ_ANIMATION_DURATION = 1

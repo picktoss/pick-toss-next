@@ -85,6 +85,13 @@ declare global {
       type UpdateWrongQuizResult = DeepRequired<
         paths['/api/v2/wrong-quiz/result']['patch']['requestBody']['content']['application/json;charset=UTF-8']
       >
+
+      /** DELETE /api/v2/quizzes/{quiz_id}/invalid
+       * 오류가 발생한 퀴즈 삭제
+       */
+      type DeleteInvalidQuiz = DeepRequired<
+        paths['/api/v2/quizzes/{quiz_id}/invalid']['delete']['requestBody']['content']['application/json;charset=UTF-8']
+      >
     }
 
     declare namespace Response {

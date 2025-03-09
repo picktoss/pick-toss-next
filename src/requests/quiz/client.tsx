@@ -291,3 +291,20 @@ export const getConsecutiveDays = async () => {
     throw error
   }
 }
+
+/** DELETE /quizzes/{quiz_id}/invalid - 오류가 발생한 퀴즈 삭제 */
+export const deleteInvalidQuiz = async ({
+  quizId,
+  requestBody,
+}: {
+  quizId: number
+  requestBody: Quiz.Request.DeleteInvalidQuiz
+}) => {
+  try {
+    await http.delete(API_ENDPOINTS.QUIZ.DELETE.INVALID_QUIZ(quizId), {
+      data: requestBody,
+    })
+  } catch (error: unknown) {
+    throw error
+  }
+}
