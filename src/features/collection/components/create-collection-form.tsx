@@ -294,11 +294,11 @@ const CreateCollectionForm = () => {
                         </div>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent>
-                        <div className="max-h-[60dvh] w-[95dvw] max-w-mobile overflow-y-auto">
+                        <div className="h-[60dvh] w-[95dvw] max-w-mobile overflow-y-auto">
                           <EmojiPicker
                             skinTonesDisabled
                             width={'100%'}
-                            height="auto"
+                            height="100%"
                             onEmojiClick={(emojiData) => field.onChange(emojiData.emoji)}
                           />
                         </div>

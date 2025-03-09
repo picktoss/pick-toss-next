@@ -90,11 +90,11 @@ const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prev
             </DropdownMenuTrigger>
 
             <DropdownMenuContent>
-              <div className="max-h-[45vh] w-[95dvw] max-w-mobile overflow-y-auto">
+              <div className="h-[45dvh] w-[95dvw] max-w-mobile overflow-y-auto">
                 <EmojiPicker
                   skinTonesDisabled
                   width={'100%'}
-                  height={'auto'}
+                  height={'100%'}
                   onEmojiClick={(emojiData) => {
                     setEmoji(emojiData.emoji)
                   }}
