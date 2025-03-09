@@ -80,16 +80,15 @@ const CreateDirectoryDialog = ({ open, onOpenChange }: Props) => {
             </DropdownMenuTrigger>
 
             <DropdownMenuContent>
-              <div className="h-[45dvh] w-[95dvw] max-w-mobile overflow-y-auto">
-                <EmojiPicker
-                  skinTonesDisabled
-                  width={'100%'}
-                  height={'100%'}
-                  onEmojiClick={(emojiData) => {
-                    setEmoji(emojiData.emoji)
-                  }}
-                />
-              </div>
+              <EmojiPicker
+                skinTonesDisabled
+                width="95vw"
+                height="40vh"
+                onEmojiClick={(emojiData) => {
+                  setEmoji(emojiData.emoji)
+                }}
+                className="max-w-mobile"
+              />
             </DropdownMenuContent>
           </DropdownMenu>
 
