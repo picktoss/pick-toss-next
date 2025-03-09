@@ -117,7 +117,7 @@ const SetNameDialog = ({ userName }: { userName: string }) => {
         displayCloseButton={false}
         className={cn(
           'h-fit w-[280px] rounded-[16px] bg-background-base-01 p-[24px] pb-[32px]',
-          isMobile && isFirstContentRender && 'bottom-[5dvh], translate-y-0'
+          isMobile && isFirstContentRender && 'top-[3dvh], translate-y-0'
         )}
         onPointerDownOutside={(e) => {
           if (isPending) {

@@ -75,7 +75,7 @@ const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prev
       <DialogContent
         className={cn(
           'flex min-h-[190px] w-[280px] flex-col items-center justify-between rounded-[16px] bg-background-base-01',
-          isMobile && isFirstContentRender && 'bottom-[5dvh], translate-y-0'
+          isMobile && isFirstContentRender && 'top-[3dvh], translate-y-0'
         )}
         displayCloseButton={false}
       >
@@ -108,6 +108,7 @@ const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prev
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="폴더 이름"
+            autoFocus={true}
           />
         </div>
 
