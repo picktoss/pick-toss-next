@@ -59,11 +59,12 @@ const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prev
 
     const focusTimer = setTimeout(() => {
       if (directoryNameInput.current) {
-        directoryNameInput.current?.click()
-        directoryNameInput.current?.focus()
-        if (directoryNameInput.current.value.length > 0) {
-          directoryNameInput.current.setSelectionRange(0, directoryNameInput.current.value.length)
-        }
+        directoryNameInput.current.setAttribute('autofocus', 'true')
+        // directoryNameInput.current?.click()
+        // directoryNameInput.current?.focus()
+        // if (directoryNameInput.current.value.length > 0) {
+        //   directoryNameInput.current.setSelectionRange(0, directoryNameInput.current.value.length)
+        // }
       }
     }, 300)
 
