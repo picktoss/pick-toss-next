@@ -28,8 +28,12 @@ const SelectableQuizCard = ({ quiz, onSelect, order, selected }: Props) => {
         </Text>
         <Text as="span" typography="text1-bold" className={cn(selected && 'text-text-accent')}>
           {quiz.question}{' '}
-          <Text as="span" typography="text2-medium" className="text-text-caption">
-            중간고사
+          <Text
+            typography="text2-medium"
+            color="caption"
+            className="inline-block max-w-[95px] truncate align-middle"
+          >
+            {quiz.document.name}
           </Text>
         </Text>
       </div>
