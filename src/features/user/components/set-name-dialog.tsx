@@ -85,7 +85,13 @@ const SetNameDialog = ({ userName }: { userName: string }) => {
     if (!open) return
 
     const focusTimer = setTimeout(() => {
-      nameInput.current?.click()
+      if (nameInput.current) {
+        nameInput.current?.click()
+        nameInput.current?.focus()
+        if (nameInput.current.value.length > 0) {
+          nameInput.current.setSelectionRange(0, nameInput.current.value.length)
+        }
+      }
     }, 300)
 
     return () => {
