@@ -1,14 +1,9 @@
 import { useUpdateDirectoryInfo } from '@/requests/directory/hooks'
 import { Dialog, DialogClose, DialogContent, DialogTitle } from '@/shared/components/ui/dialog'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from '@/shared/components/ui/dropdown-menu'
 import { useScreenSize } from '@/shared/hooks/use-screen-size'
 import { cn } from '@/shared/lib/utils'
 import EmojiPicker from 'emoji-picker-react'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 interface Props {
   open: boolean
@@ -23,8 +18,11 @@ const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prev
 
   const [name, setName] = useState(prevName ?? '')
   const [emoji, setEmoji] = useState(prevEmoji ?? '📁')
+  const [emojiOpen, setEmojiOpen] = useState(false)
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false)
   const [isFirstContentRender, setIsFirstContentRender] = useState(true)
+
+  const emojiPickerRef = useRef<HTMLDivElement>(null)
 
   const { mutate: updateDirectoryMutate } = useUpdateDirectoryInfo()
 
@@ -70,6 +68,22 @@ const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prev
     }
   }, [isKeyboardOpen])
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (emojiPickerRef.current && !emojiPickerRef.current.contains(event.target as Node)) {
+        setEmojiOpen(false)
+      }
+    }
+
+    if (emojiOpen) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [emojiOpen])
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
@@ -82,27 +96,27 @@ const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prev
         <DialogTitle className="mb-[32px] w-full text-subtitle2-bold">폴더 이름 바꾸기</DialogTitle>
 
         <div className="flex h-[40px] w-full">
-          <DropdownMenu>
-            <DropdownMenuTrigger className="outline-none">
-              <div className="flex-center mr-[10px] size-[40px] rounded-[8px] bg-background-base-02 text-xl">
-                {emoji}
-              </div>
-            </DropdownMenuTrigger>
+          <button onClick={() => setEmojiOpen(!emojiOpen)} type="button" className="outline-none">
+            <div className="flex-center mr-[10px] size-[40px] rounded-[8px] bg-background-base-02 text-xl">
+              {emoji}
+            </div>
+          </button>
 
-            <DropdownMenuContent>
-              <div className="h-[45dvh] w-[95dvw] max-w-mobile overflow-y-auto">
-                <EmojiPicker
-                  skinTonesDisabled
-                  width="95vw"
-                  height="40vh"
-                  onEmojiClick={(emojiData) => {
-                    setEmoji(emojiData.emoji)
-                  }}
-                  className="max-w-mobile"
-                />
-              </div>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          {emojiOpen && (
+            <div ref={emojiPickerRef} className="fixed right-1/2 top-[120px] translate-x-1/2">
+              <EmojiPicker
+                skinTonesDisabled
+                width="95vw"
+                height="40vh"
+                onEmojiClick={(emojiData, e) => {
+                  e.preventDefault()
+                  setEmoji(emojiData.emoji)
+                  setEmojiOpen(false)
+                }}
+                className="max-w-mobile"
+              />
+            </div>
+          )}
 
           <input
             className="w-full border-b border-border-divider py-[10px] outline-none"

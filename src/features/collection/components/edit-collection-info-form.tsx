@@ -14,11 +14,6 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '@/shared/components/ui/drawer'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from '@/shared/components/ui/dropdown-menu'
 import { Form, FormControl, FormField, FormItem } from '@/shared/components/ui/form'
 import Text from '@/shared/components/ui/text'
 import { Textarea } from '@/shared/components/ui/textarea'
@@ -26,7 +21,7 @@ import { toast } from '@/shared/hooks/use-toast'
 import { zodResolver } from '@hookform/resolvers/zod'
 import EmojiPicker from 'emoji-picker-react'
 import { useParams, useRouter } from 'next/navigation'
-import { useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -59,6 +54,9 @@ const EditCollectionInfoForm = () => {
   const router = useRouter()
   const { id } = useParams()
   const { data } = useCollectionInfo(Number(id))
+
+  const [emojiOpen, setEmojiOpen] = useState(false)
+  const emojiPickerRef = useRef<HTMLDivElement>(null)
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -112,6 +110,22 @@ const EditCollectionInfoForm = () => {
     })
   }, [data, form])
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (emojiPickerRef.current && !emojiPickerRef.current.contains(event.target as Node)) {
+        setEmojiOpen(false)
+      }
+    }
+
+    if (emojiOpen) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [emojiOpen])
+
   if (!data) {
     return <Loading center />
   }
@@ -128,25 +142,34 @@ const EditCollectionInfoForm = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger className="outline-none">
-                        <div className="flex-center size-[48px] rounded-[12px] bg-background-base-02 text-3xl">
-                          {field.value}
-                        </div>
-                      </DropdownMenuTrigger>
+                    <button
+                      onClick={() => setEmojiOpen(!emojiOpen)}
+                      type="button"
+                      className="outline-none"
+                    >
+                      <div className="flex-center size-[48px] rounded-[12px] bg-background-base-02 text-3xl">
+                        {field.value}
+                      </div>
+                    </button>
 
-                      <DropdownMenuContent>
+                    {emojiOpen && (
+                      <div
+                        ref={emojiPickerRef}
+                        className="fixed right-1/2 top-[120px] translate-x-1/2"
+                      >
                         <EmojiPicker
                           skinTonesDisabled
                           width="95vw"
                           height="60vh"
-                          onEmojiClick={(emojiData) => {
+                          onEmojiClick={(emojiData, e) => {
+                            e.preventDefault()
                             field.onChange(emojiData.emoji)
+                            setEmojiOpen(false)
                           }}
                           className="max-w-mobile"
                         />
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+                      </div>
+                    )}
                   </FormControl>
                 </FormItem>
               )}

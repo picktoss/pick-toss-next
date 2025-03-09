@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import DirectorySelect from '../../directory/components/directory-select'
 import FixedBottom from '@/shared/components/custom/fixed-bottom'
 import { Button } from '@/shared/components/ui/button'
@@ -12,11 +12,6 @@ import { useDirectories } from '@/requests/directory/hooks'
 import { useDirectoryQuizzes } from '@/requests/quiz/hooks'
 import { useRouter } from 'next/navigation'
 import EmojiPicker from 'emoji-picker-react'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from '@/shared/components/ui/dropdown-menu'
 import { Textarea } from '@/shared/components/ui/textarea'
 import CategoryTag from '@/shared/components/custom/category-tag'
 import {
@@ -69,6 +64,9 @@ const CreateCollectionForm = () => {
   const { collectionCreateClickEvent: collectionCreateEvent } = useAmplitudeContext()
   const router = useRouter()
   const [step, setStep] = useState<'select-document' | 'create-form'>('select-document')
+
+  const [emojiOpen, setEmojiOpen] = useState(false)
+  const emojiPickerRef = useRef<HTMLDivElement>(null)
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -182,6 +180,22 @@ const CreateCollectionForm = () => {
     setAllChecked(currentQuizzes.length === directoryQuizzesData.quizzes.length)
   }, [directoryQuizzesData, form])
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (emojiPickerRef.current && !emojiPickerRef.current.contains(event.target as Node)) {
+        setEmojiOpen(false)
+      }
+    }
+
+    if (emojiOpen) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [emojiOpen])
+
   const selectedQuizCount = form.watch('quizzes').length
 
   if (step === 'select-document') {
@@ -287,22 +301,34 @@ const CreateCollectionForm = () => {
                 name="emoji"
                 render={({ field }) => (
                   <FormItem>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger className="outline-none">
-                        <div className="flex-center size-[48px] rounded-[12px] bg-background-base-02 text-3xl">
-                          {field.value}
-                        </div>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent>
+                    <button
+                      onClick={() => setEmojiOpen(!emojiOpen)}
+                      type="button"
+                      className="outline-none"
+                    >
+                      <div className="flex-center size-[48px] rounded-[12px] bg-background-base-02 text-3xl">
+                        {field.value}
+                      </div>
+                    </button>
+
+                    {emojiOpen && (
+                      <div
+                        ref={emojiPickerRef}
+                        className="fixed right-1/2 top-[120px] translate-x-1/2"
+                      >
                         <EmojiPicker
                           skinTonesDisabled
                           width="95vw"
                           height="60vh"
-                          onEmojiClick={(emojiData) => field.onChange(emojiData.emoji)}
+                          onEmojiClick={(emojiData, e) => {
+                            e.preventDefault()
+                            field.onChange(emojiData.emoji)
+                            setEmojiOpen(false)
+                          }}
                           className="max-w-mobile"
                         />
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+                      </div>
+                    )}
                   </FormItem>
                 )}
               />
