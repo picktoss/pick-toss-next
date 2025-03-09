@@ -68,7 +68,7 @@ const AnalysisView = () => {
 
   return (
     <main className="h-[calc(100dvh-54px)] w-full flex-col overflow-y-auto overflow-x-hidden">
-      {isLoading && <Loading center />}
+      {isLoading && <Loading className="absolute right-1/2 top-[325px] translate-x-1/2" />}
 
       <AnalysisTab />
       {tab === 'WEEK' && <WeekPeriodPicker today={today} />}

@@ -11,7 +11,7 @@ import {
 } from '@/shared/components/ui/dialog'
 import Text from '@/shared/components/ui/text'
 import { useRouter } from 'next/navigation'
-import { useEffect, useId, useRef, useState } from 'react'
+import { useEffect, useId, useState } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
@@ -32,8 +32,7 @@ const SetNameDialog = ({ userName }: { userName: string }) => {
   const router = useRouter()
   const [open, setOpen] = useState(false)
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false)
-
-  const nameInput = useRef<HTMLInputElement | null>(null)
+  const [isFirstContentRender, setIsFirstContentRender] = useState(false)
 
   const toastId = useId()
   const { toast } = useToast()
@@ -65,17 +64,6 @@ const SetNameDialog = ({ userName }: { userName: string }) => {
     )
   }
 
-  const handleFocus = () => {
-    setTimeout(() => {
-      if (nameInput.current) {
-        nameInput.current?.focus()
-        if (nameInput.current.value.length > 0) {
-          nameInput.current.setSelectionRange(0, nameInput.current.value.length)
-        }
-      }
-    }, 500)
-  }
-
   // 모바일 키보드 감지
   useEffect(() => {
     const handleResize = () => {
@@ -92,6 +80,16 @@ const SetNameDialog = ({ userName }: { userName: string }) => {
     }
   }, [isMobile])
 
+  useEffect(() => {
+    setIsFirstContentRender(open)
+  }, [open])
+
+  useEffect(() => {
+    if (!isKeyboardOpen) {
+      setIsFirstContentRender(false)
+    }
+  }, [isKeyboardOpen])
+
   return (
     <Dialog
       open={open}
@@ -104,10 +102,7 @@ const SetNameDialog = ({ userName }: { userName: string }) => {
       }}
     >
       <DialogTrigger asChild>
-        <div
-          onClick={handleFocus}
-          className="flex w-full cursor-pointer items-center justify-between"
-        >
+        <div className="flex w-full cursor-pointer items-center justify-between">
           <div className="flex flex-col items-start gap-[4px]">
             <Text typography="text2-medium" className="text-text-sub">
               이름
@@ -122,7 +117,8 @@ const SetNameDialog = ({ userName }: { userName: string }) => {
         displayCloseButton={false}
         className={cn(
           'h-fit w-[280px] rounded-[16px] bg-background-base-01 p-[24px] pb-[32px]',
-          isKeyboardOpen && 'top-[50%] translate-y-[-50%]'
+          isKeyboardOpen && 'top-[50%] translate-y-[-50%]',
+          isFirstContentRender && 'top-[3dvh], translate-y-0'
         )}
         onPointerDownOutside={(e) => {
           if (isPending) {
@@ -145,8 +141,6 @@ const SetNameDialog = ({ userName }: { userName: string }) => {
                     <FormControl>
                       <input
                         {...field}
-                        ref={nameInput}
-                        autoFocus={false}
                         disabled={isPending}
                         className="size-full border-b border-border-divider py-[5px] text-subtitle2-medium focus-visible:outline-none disabled:cursor-not-allowed disabled:bg-background-disabled disabled:opacity-50 disabled:placeholder:text-text-disabled"
                       />

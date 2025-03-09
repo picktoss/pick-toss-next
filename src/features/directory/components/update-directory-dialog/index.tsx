@@ -7,7 +7,7 @@ import {
 } from '@/shared/components/ui/dropdown-menu'
 import { cn } from '@/shared/lib/utils'
 import EmojiPicker from 'emoji-picker-react'
-import { MutableRefObject, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 interface Props {
   open: boolean
@@ -15,20 +15,13 @@ interface Props {
   directoryId: number | null
   prevName: string
   prevEmoji: string
-  directoryNameInputRef: MutableRefObject<HTMLInputElement | null>
 }
 
-const UpdateDirectoryDialog = ({
-  open,
-  onOpenChange,
-  directoryId,
-  prevName,
-  prevEmoji,
-  directoryNameInputRef,
-}: Props) => {
+const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prevEmoji }: Props) => {
   const [name, setName] = useState(prevName ?? '')
   const [emoji, setEmoji] = useState(prevEmoji ?? '📁')
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false)
+  const [isFirstContentRender, setIsFirstContentRender] = useState(false)
 
   const { mutate: updateDirectoryMutate } = useUpdateDirectoryInfo()
 
@@ -60,12 +53,27 @@ const UpdateDirectoryDialog = ({
     }
   }, [])
 
+  useEffect(() => {
+    if (!open) {
+      setIsKeyboardOpen(false)
+    }
+
+    setIsFirstContentRender(open)
+  }, [open])
+
+  useEffect(() => {
+    if (!isKeyboardOpen) {
+      setIsFirstContentRender(false)
+    }
+  }, [isKeyboardOpen])
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
         className={cn(
           'flex min-h-[190px] w-[280px] flex-col items-center justify-between rounded-[16px] bg-background-base-01',
-          isKeyboardOpen && 'top-[50%] translate-y-[-50%]'
+          isKeyboardOpen && 'top-[50%] translate-y-[-50%]',
+          isFirstContentRender && 'top-[3dvh], translate-y-0'
         )}
         displayCloseButton={false}
       >
@@ -92,7 +100,7 @@ const UpdateDirectoryDialog = ({
           </DropdownMenu>
 
           <input
-            ref={directoryNameInputRef}
+            autoFocus
             className="w-full border-b border-border-divider py-[10px] outline-none"
             value={name}
             onChange={(e) => setName(e.target.value)}
