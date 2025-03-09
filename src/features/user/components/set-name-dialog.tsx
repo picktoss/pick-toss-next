@@ -11,7 +11,7 @@ import {
 } from '@/shared/components/ui/dialog'
 import Text from '@/shared/components/ui/text'
 import { useRouter } from 'next/navigation'
-import { useEffect, useId, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
@@ -32,6 +32,8 @@ const SetNameDialog = ({ userName }: { userName: string }) => {
   const router = useRouter()
   const [open, setOpen] = useState(false)
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false)
+
+  const nameInput = useRef<HTMLInputElement | null>(null)
 
   const toastId = useId()
   const { toast } = useToast()
@@ -79,6 +81,18 @@ const SetNameDialog = ({ userName }: { userName: string }) => {
     }
   }, [isMobile])
 
+  useEffect(() => {
+    if (!open) return
+
+    const focusTimer = setTimeout(() => {
+      nameInput.current?.click()
+    }, 300)
+
+    return () => {
+      clearTimeout(focusTimer)
+    }
+  }, [open])
+
   return (
     <Dialog
       open={open}
@@ -91,21 +105,7 @@ const SetNameDialog = ({ userName }: { userName: string }) => {
       }}
     >
       <DialogTrigger asChild>
-        <div
-          onClick={() => {
-            // 다이얼로그가 열린 후 약간의 지연 시간을 두고 포커스 시도
-            setTimeout(() => {
-              const userNameInput = document.getElementById(
-                'userNameInput'
-              ) as HTMLInputElement | null
-              if (userNameInput) {
-                userNameInput.focus()
-                userNameInput.setSelectionRange(0, userNameInput.value.length)
-              }
-            }, 300)
-          }}
-          className="flex w-full cursor-pointer items-center justify-between"
-        >
+        <div className="flex w-full cursor-pointer items-center justify-between">
           <div className="flex flex-col items-start gap-[4px]">
             <Text typography="text2-medium" className="text-text-sub">
               이름
@@ -143,8 +143,10 @@ const SetNameDialog = ({ userName }: { userName: string }) => {
                     <FormControl>
                       <input
                         {...field}
+                        ref={nameInput}
+                        autoFocus={false}
+                        tabIndex={-1}
                         disabled={isPending}
-                        id="userNameInput"
                         className="size-full border-b border-border-divider py-[5px] text-subtitle2-medium focus-visible:outline-none disabled:cursor-not-allowed disabled:bg-background-disabled disabled:opacity-50 disabled:placeholder:text-text-disabled"
                       />
                     </FormControl>

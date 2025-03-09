@@ -7,7 +7,7 @@ import {
 } from '@/shared/components/ui/dropdown-menu'
 import { cn } from '@/shared/lib/utils'
 import EmojiPicker from 'emoji-picker-react'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 interface Props {
   open: boolean
@@ -21,6 +21,8 @@ const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prev
   const [name, setName] = useState(prevName ?? '')
   const [emoji, setEmoji] = useState(prevEmoji ?? '📁')
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false)
+
+  const directoryNameInput = useRef<HTMLInputElement | null>(null)
 
   const { mutate: updateDirectoryMutate } = useUpdateDirectoryInfo()
 
@@ -51,6 +53,18 @@ const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prev
       window.visualViewport?.removeEventListener('resize', handleResize)
     }
   }, [])
+
+  useEffect(() => {
+    if (!open) return
+
+    const focusTimer = setTimeout(() => {
+      directoryNameInput.current?.click()
+    }, 300)
+
+    return () => {
+      clearTimeout(focusTimer)
+    }
+  }, [open])
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -84,7 +98,7 @@ const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prev
           </DropdownMenu>
 
           <input
-            id="directoryNameInput"
+            ref={directoryNameInput}
             className="w-full border-b border-border-divider py-[10px] outline-none"
             value={name}
             onChange={(e) => setName(e.target.value)}
