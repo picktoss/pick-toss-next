@@ -72,8 +72,8 @@ const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prev
       <DialogContent
         className={cn(
           'flex min-h-[190px] w-[280px] flex-col items-center justify-between rounded-[16px] bg-background-base-01',
-          isKeyboardOpen && 'top-[50%] translate-y-[-50%]',
-          isFirstContentRender && 'top-[3dvh], translate-y-0'
+          isFirstContentRender && 'top-[3dvh], translate-y-0',
+          isKeyboardOpen && 'top-[50%] translate-y-[-50%]'
         )}
         displayCloseButton={false}
       >
@@ -88,14 +88,16 @@ const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prev
             </DropdownMenuTrigger>
 
             <DropdownMenuContent>
-              <EmojiPicker
-                skinTonesDisabled
-                width={'95vw'}
-                height={'45vh'}
-                onEmojiClick={(emojiData) => {
-                  setEmoji(emojiData.emoji)
-                }}
-              />
+              <div className="w-[95dvw] max-w-mobile">
+                <EmojiPicker
+                  skinTonesDisabled
+                  width={'100%'}
+                  height={'45vh'}
+                  onEmojiClick={(emojiData) => {
+                    setEmoji(emojiData.emoji)
+                  }}
+                />
+              </div>
             </DropdownMenuContent>
           </DropdownMenu>
 

@@ -136,13 +136,16 @@ const EditCollectionInfoForm = () => {
                       </DropdownMenuTrigger>
 
                       <DropdownMenuContent>
-                        <EmojiPicker
-                          skinTonesDisabled
-                          height={'60vh'}
-                          onEmojiClick={(emojiData) => {
-                            field.onChange(emojiData.emoji)
-                          }}
-                        />
+                        <div className="w-[95dvw] max-w-mobile">
+                          <EmojiPicker
+                            skinTonesDisabled
+                            width={'100%'}
+                            height={'60vh'}
+                            onEmojiClick={(emojiData) => {
+                              field.onChange(emojiData.emoji)
+                            }}
+                          />
+                        </div>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </FormControl>
