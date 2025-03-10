@@ -70,8 +70,7 @@ const MyCollection = () => {
               <Link
                 href="/collections/create"
                 className="flex-center h-[200px] min-w-[166px] flex-col items-center gap-[12px] rounded-[16px] border-[3px] border-dashed border-border-default"
-                onClick={(e) => {
-                  e.preventDefault()
+                onClick={() => {
                   collectionAddClickEvent({
                     option: '내 컬렉션',
                   })
