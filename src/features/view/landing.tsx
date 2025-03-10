@@ -3,7 +3,7 @@
 import { useEffect } from 'react'
 import AppStartView from './app-start'
 import { useSession } from 'next-auth/react'
-// import Splash from './splash'
+import Splash from './splash'
 
 // TODO: Splash 애니메이션 삽입 후 애니메이션 끝나면 AppStartView가 노출되도록
 const Landing = () => {
@@ -15,9 +15,11 @@ const Landing = () => {
     }
   }, [session])
 
-  return <AppStartView />
+  if (!session?.user) {
+    return <AppStartView />
+  }
 
-  // return <Splash />
+  return <Splash />
 }
 
 export default Landing

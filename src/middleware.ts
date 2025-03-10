@@ -45,6 +45,9 @@ export async function middleware(request: NextRequest) {
       }
     }
 
+    // iPadOS 18.x버전 PWA에서 미들웨어 리디렉션을 제대로 처리하지 못하는 현상 발생
+    // 임시로 클라이언트에서 처리하는 방식으로 바꿔두었습니다
+
     // // 3. 로그인된 상태
     // if (session?.user?.id) {
     //   // Public-only URL 접근 시 리디렉션 처리
