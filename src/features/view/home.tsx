@@ -83,10 +83,10 @@ const Home = () => {
     if (typeof window !== 'undefined' && !sessionStorage.getItem('ipadOSredirected')) {
       if (isIPadOS()) {
         sessionStorage.setItem('ipadOSredirected', 'true') // 리디렉션 완료 표시
-        window.location.href = '/main' // 리디렉션
+        router.replace('/main')
       }
     }
-  }, [])
+  }, [router])
 
   useEffect(() => {
     if (inviteCode && session?.user && session.user.isNewUser) {
