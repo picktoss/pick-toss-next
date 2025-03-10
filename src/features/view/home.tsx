@@ -22,7 +22,7 @@ import Cookies from 'js-cookie'
 import { useUserStore } from '@/store/user'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useToast } from '@/shared/hooks/use-toast'
-import { useEffect, useId, useLayoutEffect, useState } from 'react'
+import { useEffect, useId, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import InviteRewardDialog from '../invite/components/invite-reward-dialog'
@@ -71,22 +71,6 @@ const Home = () => {
 
   const isChecked = !!Cookies.get('check-invited')
   const { data: isSuccessInvite } = useQuery(queries.auth.checkInviteSignUp(isChecked))
-
-  useLayoutEffect(() => {
-    if (typeof window !== 'undefined') {
-      const userAgent = window.navigator.userAgent
-      const isIPadOS = /iPad|Macintosh.*Mac OS.*(CPU.*OS\s[1-9]{1,}[A-Za-z]{0,1}[0-9]{0,})/i.test(
-        userAgent
-      )
-
-      if (isIPadOS) {
-        if (!sessionStorage.getItem('ipadOSredirected')) {
-          sessionStorage.setItem('ipadOSredirected', 'true') // 리디렉션 완료 표시
-          window.location.href = '/main'
-        }
-      }
-    }
-  }, [])
 
   useEffect(() => {
     if (inviteCode && session?.user && session.user.isNewUser) {
