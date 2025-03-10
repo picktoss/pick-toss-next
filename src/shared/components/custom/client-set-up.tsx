@@ -19,6 +19,21 @@ const ClientSetUp = () => {
   const { isReadyNotification } = useMessaging()
 
   useEffect(() => {
+    const handleBeforeUnload = async () => {
+      await navigator.serviceWorker.getRegistrations().then((registrations) => {
+        registrations.forEach(async (registration) => {
+          await registration.unregister()
+        })
+      })
+    }
+
+    window.addEventListener('beforeunload', handleBeforeUnload)
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload)
+    }
+  }, [])
+
+  useEffect(() => {
     // eslint-disable-next-line no-console
     console.log('알림 준비: ' + isReadyNotification)
   }, [isReadyNotification])
