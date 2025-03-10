@@ -15,6 +15,7 @@ import BombDefaultState from '../../components/bomb-default-state'
 import { setLocalStorage } from '@/shared/utils/storage'
 import { LOCAL_KEY } from '@/constants'
 import { useDynamicThemeColor } from '@/shared/hooks/use-dynamic-theme-color'
+import GoBackButton from '@/shared/components/custom/go-back-button'
 
 const BombTutorial = () => {
   const router = useRouter()
@@ -132,16 +133,28 @@ const BombTutorial = () => {
       <div className="fixed h-dvh w-screen max-w-mobile bg-gray-700"></div>
 
       <div className="fixed z-10 flex h-dvh w-screen max-w-mobile flex-col">
-        {/* 문제 영역 */}
+        {/* 헤더 + 문제 영역 */}
         <div className="h-[75dvh] max-h-[610px] min-h-fit w-full rounded-b-[24px] bg-white px-[16px]">
-          <BombQuiz
-            quizzes={bombQuizList}
-            currentIndex={currentIndex}
-            onAnswer={onAnswer}
-            quizResults={quizResults}
-            leftQuizCount={leftQuizCount}
-            handleExit={handleExit}
-          />
+          <div className="flex h-[70dvh] min-h-fit w-full flex-col items-center justify-between">
+            {/* 헤더 */}
+            <header className="h-[54px] w-full py-[16px]">
+              <GoBackButton
+                icon="cancel"
+                onClick={() => {
+                  handleExit()
+                }}
+              />
+            </header>
+
+            {/* 문제 */}
+            <BombQuiz
+              quizzes={bombQuizList}
+              currentIndex={currentIndex}
+              onAnswer={onAnswer}
+              quizResults={quizResults}
+              leftQuizCount={leftQuizCount}
+            />
+          </div>
         </div>
 
         {/* bomb 영역 */}
