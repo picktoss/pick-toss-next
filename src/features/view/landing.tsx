@@ -9,6 +9,7 @@ import Splash from './splash'
 const Landing = () => {
   const { data: session } = useSession()
 
+  // ipadOS용 route재설정
   useEffect(() => {
     if (session?.user) {
       window.location.href = '/main'
