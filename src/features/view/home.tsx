@@ -66,14 +66,26 @@ const Home = () => {
 
   const { isMobile } = useScreenSize()
   const isPWA = useIsPWA()
-  // const isIPad =
-  //   /iPad/i.test(navigator.userAgent) ||
-  //   (navigator.userAgent.includes('Mac') && 'ontouchend' in document)
+  const isIPadOS = () => {
+    if (typeof window !== 'undefined') {
+      const userAgent = window.navigator.userAgent
+      return /iPad|Macintosh.*Mac OS.*(CPU.*OS\s[1-9]{1,}[A-Za-z]{0,1}[0-9]{0,})/i.test(userAgent)
+    }
+    return false
+  }
 
   const interestedCategoryCompleted = Cookies.get('interested-category-complete')
 
   const isChecked = !!Cookies.get('check-invited')
   const { data: isSuccessInvite } = useQuery(queries.auth.checkInviteSignUp(isChecked))
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if (isIPadOS()) {
+        window.location.href = '/main'
+      }
+    }
+  }, [])
 
   useEffect(() => {
     if (inviteCode && session?.user && session.user.isNewUser) {
