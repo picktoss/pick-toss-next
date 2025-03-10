@@ -80,13 +80,13 @@ const Home = () => {
   const { data: isSuccessInvite } = useQuery(queries.auth.checkInviteSignUp(isChecked))
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && !sessionStorage.getItem('ipadOSredirected')) {
+    if (!sessionStorage.getItem('ipadOSredirected')) {
       if (isIPadOS()) {
         sessionStorage.setItem('ipadOSredirected', 'true') // 리디렉션 완료 표시
-        router.replace('/main')
+        window.location.href = '/main'
       }
     }
-  }, [router])
+  }, [])
 
   useEffect(() => {
     if (inviteCode && session?.user && session.user.isNewUser) {
