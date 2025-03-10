@@ -15,10 +15,15 @@ const Landing = () => {
     }
   }, [session])
 
+  if (!session) {
+    return <Splash />
+  }
+
   if (!session?.user) {
     return <AppStartView />
   }
 
+  // default
   return <Splash />
 }
 
