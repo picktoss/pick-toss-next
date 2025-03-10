@@ -37,13 +37,13 @@ export default function RootLayout({
         <meta name="theme-color" content="#ffffff" />
       </head>
       <body className={cn(suit.variable, 'font-suit bg-gray-01')}>
-        <Suspense fallback={<Splash />}>
-          <Providers>
-            <ClientSetUp />
-            <div className="mx-auto min-h-dvh max-w-mobile shadow-lg">{children}</div>
-          </Providers>
-          <Toaster />
-        </Suspense>
+        {/* <Suspense fallback={<Splash />}> */}
+        <Providers>
+          <ClientSetUp />
+          <div className="mx-auto min-h-dvh max-w-mobile shadow-lg">{children}</div>
+        </Providers>
+        <Toaster />
+        {/* </Suspense> */}
       </body>
     </html>
   )
