@@ -35,6 +35,7 @@ type RewardType = 'TODAY_QUIZ' | 'EVENT'
 const Home = () => {
   const { bombquizClickEvent: bombquizStartEvent, randomquizClickEvent: randomquizStartEvent } =
     useAmplitudeContext()
+
   const { data: session } = useSession()
   const { userInfo } = useUserStore()
 

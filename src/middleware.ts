@@ -24,9 +24,6 @@ export async function middleware(request: NextRequest) {
     const session = await auth()
     const { pathname } = request.nextUrl
 
-    const userAgent = request.headers.get('user-agent') || ''
-    const isIPadOS = /iPad|Macintosh.*OS\s([\d_]+)/i.test(userAgent)
-
     const isPublicFile = PUBLIC_FILE.test(pathname)
     const isPublicUrl = Object.entries(publicUrls).some(([path, matcher]) => {
       if (matcher instanceof RegExp) {
@@ -48,22 +45,14 @@ export async function middleware(request: NextRequest) {
       }
     }
 
-    // 3. 로그인된 상태
-    if (session?.user?.id) {
-      // Public-only URL 접근 시 리디렉션 처리
-      if (isPublicOnlyUrl) {
-        if (isIPadOS) {
-          return new NextResponse(null, {
-            status: 302,
-            headers: {
-              Location: '/main',
-            },
-          })
-        }
-        // 로그인한 사용자는 '/main'으로 이동
-        return NextResponse.redirect(new URL('/main', request.url))
-      }
-    }
+    // // 3. 로그인된 상태
+    // if (session?.user?.id) {
+    //   // Public-only URL 접근 시 리디렉션 처리
+    //   if (isPublicOnlyUrl) {
+    //     // 로그인한 사용자는 '/main'으로 이동
+    //     return NextResponse.redirect(new URL('/main', request.url))
+    //   }
+    // }
 
     // default
     return NextResponse.next()
