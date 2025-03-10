@@ -266,7 +266,8 @@ const RandomQuizView = ({ directories }: Props) => {
               key={repository}
               width={SwiperContainerWidth}
               // slidesPerView={slideItems.length > 2 ? 3 : slideItems.length}
-              slidesPerView={slideItems.length > 4 ? 4.15 : slideItems.length === 4 ? 3.93 : 'auto'}
+              // slidesPerView={slideItems.length > 4 ? 4.15 : slideItems.length === 4 ? 3.93 : 'auto'}
+              slidesPerView={'auto'}
               loop={slideItems.length > 2 ? true : false}
               centeredSlides={true}
               centerInsufficientSlides={slideItems.length > 3 ? true : false}
