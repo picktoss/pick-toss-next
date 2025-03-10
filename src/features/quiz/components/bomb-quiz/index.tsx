@@ -2,9 +2,7 @@ import Text from '@/shared/components/ui/text'
 import QuizOptions from '../../screen/quiz-view/components/quiz-option'
 import { useQuizState } from '../../screen/quiz-view/hooks/use-quiz-state'
 import Tag from '@/shared/components/ui/tag'
-import GoBackButton from '@/shared/components/custom/go-back-button'
 import Image from 'next/image'
-import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
 
 interface Props {
   quizzes: Quiz.Item[]
@@ -20,38 +18,18 @@ interface Props {
   }) => void
   quizResults: ReturnType<typeof useQuizState>['quizResults']
   leftQuizCount: number
-  handleExit: () => void
 }
 
-const BombQuiz = ({
-  quizzes,
-  currentIndex,
-  onAnswer,
-  quizResults,
-  leftQuizCount,
-  handleExit,
-}: Props) => {
-  const { bombquizCloseEvent: bombquizExitEvent } = useAmplitudeContext()
-  // 자명한가?
+const BombQuiz = ({ quizzes, currentIndex, onAnswer, quizResults, leftQuizCount }: Props) => {
   const currentQuiz = quizzes[currentIndex] as Quiz.Item
   const currentResult = quizResults[currentIndex] ?? null
 
   if (currentQuiz) {
     return (
-      <div className="flex h-[70dvh] min-h-fit w-full flex-col items-center justify-between">
-        <header className="h-[54px] w-full py-[16px]">
-          <GoBackButton
-            icon="cancel"
-            onClick={() => {
-              bombquizExitEvent()
-              handleExit()
-            }}
-          />
-        </header>
-
+      <>
         <div className="flex flex-col items-center">
           <Tag colors={'tertiary'} className="px-[8px] py-[4px]">
-            <Text typography="text2-bold" className="max-w-[95px] truncate">
+            <Text typography="text2-bold" color="sub" className="max-w-[95px] truncate">
               {currentQuiz.document.name}
             </Text>
           </Tag>
@@ -78,7 +56,7 @@ const BombQuiz = ({
           </Text>
           <Image src={'/images/count-device.png'} alt="" width={79} height={38} />
         </div>
-      </div>
+      </>
     )
   }
 

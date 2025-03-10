@@ -15,8 +15,12 @@ import { useSession } from 'next-auth/react'
 import { getLocalStorage } from '@/shared/utils/storage'
 import BombTutorial from '../bomb-tutorial'
 import { LOCAL_KEY } from '@/constants'
+import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
+import GoBackButton from '@/shared/components/custom/go-back-button'
 
 const BombQuizView = () => {
+  const { bombquizCloseEvent: bombquizExitEvent } = useAmplitudeContext()
+
   const [key] = useState(new Date())
   const { data: session } = useSession()
 
@@ -75,16 +79,29 @@ const BombQuizView = () => {
       <div className="fixed h-dvh w-screen max-w-mobile bg-gray-700"></div>
 
       <div className="fixed z-10 flex h-dvh w-screen max-w-mobile flex-col">
-        {/* 문제 영역 */}
+        {/* 헤더 + 문제 영역 */}
         <div className="h-[75dvh] max-h-[610px] min-h-fit w-full rounded-b-[24px] bg-white px-[16px]">
-          <BombQuiz
-            quizzes={bombQuizList}
-            currentIndex={currentIndex}
-            onAnswer={onAnswer}
-            quizResults={quizResults}
-            leftQuizCount={leftQuizCount}
-            handleExit={handleExit}
-          />
+          <div className="flex h-[70dvh] min-h-fit w-full flex-col items-center justify-between">
+            {/* 헤더 */}
+            <header className="h-[54px] w-full py-[16px]">
+              <GoBackButton
+                icon="cancel"
+                onClick={() => {
+                  bombquizExitEvent()
+                  handleExit()
+                }}
+              />
+            </header>
+
+            {/* 문제 */}
+            <BombQuiz
+              quizzes={bombQuizList}
+              currentIndex={currentIndex}
+              onAnswer={onAnswer}
+              quizResults={quizResults}
+              leftQuizCount={leftQuizCount}
+            />
+          </div>
         </div>
 
         {/* bomb 영역 */}

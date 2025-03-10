@@ -15,6 +15,8 @@ export const useScreenSize = () => {
       setScreenSize({
         width,
         height: window.innerHeight,
+        // isMobile: width <= 200, // 테스트용
+        // isDesktop: width > 200, // 테스트용
         isMobile: width <= 768,
         isDesktop: width > 768,
       })

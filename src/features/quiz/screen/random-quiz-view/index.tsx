@@ -29,6 +29,7 @@ import { LOCAL_KEY } from '@/constants'
 import RandomTutorial from '../random-tutorial'
 import { useDirectory } from '@/requests/directory/hooks'
 import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
+import ResultIcon from '../../components/result-icon'
 
 interface Props {
   directories: DeepRequired<components['schemas']['GetAllDirectoriesDirectoryDto']>[]
@@ -176,95 +177,110 @@ const RandomQuizView = ({ directories }: Props) => {
           repository === 'directory' ? 'bg-orange-100' : 'bg-blue-100'
         )}
       />
-      <div className="fixed z-10 flex w-screen max-w-mobile flex-col">
-        <div className="relative h-[70dvh] min-h-fit w-full rounded-b-[24px] bg-white px-[16px]">
-          {/* 헤더 영역 */}
-          <div className="flex h-[54px] w-full items-center">
-            <GoBackButton
-              icon="cancel"
-              onClick={() => {
-                randomquizExitEvent()
-                router.back()
-              }}
-            />
-          </div>
-
-          {/* 문제 영역 */}
-          {currentQuiz ? (
-            <div className="flex flex-col items-center">
-              <Tag className="rounded-[8px] bg-background-base-02 px-[8px] py-[4px] hover:bg-background-base-02">
-                <Text typography="text2-bold" color="sub">
-                  {currentQuiz.document?.name || currentQuiz.collection?.name}
-                </Text>
-              </Tag>
-
-              <Text
-                key={currentIndex}
-                typography="question"
-                className="mt-[12px] animate-fadeIn px-[30px] text-center"
-              >
-                {currentQuiz.question}
-              </Text>
-
-              <QuizOptions
-                quiz={currentQuiz}
-                currentResult={currentResult ?? null}
-                onAnswer={onAnswer}
-                className="my-[16px] mt-[4dvh]"
+      <div className="fixed z-10 flex h-dvh w-screen max-w-mobile flex-col">
+        <div className="h-[75dvh] max-h-[610px] min-h-fit w-full rounded-b-[24px] bg-white px-[16px]">
+          <div className="flex h-[70dvh] min-h-fit w-full flex-col items-center justify-between">
+            {/* 헤더 영역 */}
+            <div className="flex h-[54px] w-full items-center">
+              <GoBackButton
+                icon="cancel"
+                onClick={() => {
+                  randomquizExitEvent()
+                  router.back()
+                }}
               />
             </div>
-          ) : isLoading ? (
-            <Loading center />
-          ) : repository === 'collection' ? (
-            <EmptyState
-              description="컬렉션을 만들거나, 다음에 드는 컬렉션을 담아보세요"
-              buttonText="컬렉션 보러가기"
-              onClick={() => router.push('/collections')}
-            />
-          ) : (
-            <EmptyState
-              description="내 노트를 추가하고 랜덤 퀴즈를 풀어보세요"
-              buttonText="노트 추가하러 가기"
-              onClick={() => router.push('/document')}
-            />
-          )}
 
-          {/* 탭 영역 */}
-          <Tabs
-            defaultValue="directory"
-            className="absolute bottom-4 right-1/2 h-[36px] w-[210px] translate-x-1/2 rounded-[12px] bg-background-base-02 p-[3px]"
-            onValueChange={(value) => {
-              randomquizChangeEvent({
-                option: value === 'directory' ? '퀴즈노트' : '컬렉션',
-              })
-              setRepository(value as 'directory' | 'collection')
-            }}
-          >
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="directory" className="h-[30px]">
-                퀴즈노트
-              </TabsTrigger>
-              <TabsTrigger value="collection" className="h-[30px]">
-                컬렉션
-              </TabsTrigger>
-            </TabsList>
-          </Tabs>
+            {/* 문제 영역 */}
+            {currentQuiz ? (
+              <div className="relative flex w-full flex-col items-center">
+                <Tag
+                  colors={'tertiary'}
+                  className="rounded-[8px] bg-background-base-02 px-[8px] py-[4px] hover:bg-background-base-02"
+                >
+                  <Text typography="text2-bold" color="sub" className="max-w-[95px] truncate">
+                    {currentQuiz.document?.name || currentQuiz.collection?.name}
+                  </Text>
+                </Tag>
+
+                <Text
+                  key={currentIndex}
+                  typography="question"
+                  className="mt-[12px] animate-fadeIn px-[30px] text-center"
+                >
+                  {currentQuiz.question}
+                </Text>
+
+                <QuizOptions
+                  quiz={currentQuiz}
+                  currentResult={currentResult ?? null}
+                  onAnswer={onAnswer}
+                  className="my-[16px] mt-[4dvh]"
+                />
+
+                {currentResult && <ResultIcon isRight={currentResult?.answer} />}
+              </div>
+            ) : isLoading ? (
+              <Loading />
+            ) : repository === 'collection' ? (
+              <EmptyState
+                description="컬렉션을 만들거나, 다음에 드는 컬렉션을 담아보세요"
+                buttonText="컬렉션 보러가기"
+                onClick={() => router.push('/collections')}
+              />
+            ) : (
+              <EmptyState
+                description="내 노트를 추가하고 랜덤 퀴즈를 풀어보세요"
+                buttonText="노트 추가하러 가기"
+                onClick={() => router.push('/document')}
+              />
+            )}
+
+            {/* 탭 영역 */}
+            <Tabs
+              defaultValue="directory"
+              className="relative mb-[16px] h-[36px] w-[210px] rounded-[12px] bg-background-base-02 p-[3px]"
+              onValueChange={(value) => {
+                randomquizChangeEvent({
+                  option: value === 'directory' ? '퀴즈노트' : '컬렉션',
+                })
+                setRepository(value as 'directory' | 'collection')
+              }}
+            >
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="directory" className="h-[30px]">
+                  퀴즈노트
+                </TabsTrigger>
+                <TabsTrigger value="collection" className="h-[30px]">
+                  컬렉션
+                </TabsTrigger>
+              </TabsList>
+            </Tabs>
+          </div>
         </div>
 
         {/* Swiper 영역 */}
         <div ref={swiperContainerRef} className="flex-center size-full grow">
-          <div className="flex-center mb-[10px] mt-[24px] size-full">
+          <div className="flex-center my-[10px] size-full">
             <Swiper
               key={repository}
               width={SwiperContainerWidth}
-              slidesPerView={slideItems.length > 2 ? 3 : slideItems.length}
-              loop={true}
+              // slidesPerView={slideItems.length > 2 ? 3 : slideItems.length}
+              slidesPerView={slideItems.length > 4 ? 4.15 : slideItems.length === 4 ? 3.93 : 'auto'}
+              loop={slideItems.length > 2 ? true : false}
               centeredSlides={true}
+              centerInsufficientSlides={slideItems.length > 3 ? true : false}
+              watchSlidesProgress={true}
+              loopAddBlankSlides={slideItems.length > 2 ? true : false}
+              loopPreventsSliding={false}
               pagination={{
                 clickable: true,
               }}
               initialSlide={repository === 'directory' ? activeDirectoryIndex : activeCategoryIndex}
-              onSlideChange={(data) => handleSlideChange(data.realIndex)}
+              onSlideChange={(data) => {
+                handleSlideChange(data.realIndex)
+              }}
+              className="w-full"
             >
               {slideItems.map((item, index) => {
                 const isActive =
@@ -273,13 +289,16 @@ const RandomQuizView = ({ directories }: Props) => {
                     : index === activeCategoryIndex
 
                 return (
-                  <SwiperSlide key={index} className="!flex items-center justify-center">
+                  <SwiperSlide
+                    key={index}
+                    className={cn('!flex !items-center !justify-center !mx-[6px] !w-fit')}
+                  >
                     <SlideItem
                       isActive={isActive}
                       data={{
                         id: item.id,
                         name: item.name,
-                        emoji: item.emoji,
+                        emoji: item.emoji ?? '📁',
                       }}
                       variant={repository === 'directory' ? 'directory' : 'collection'}
                       quizCount={randomQuizList.length}
@@ -315,7 +334,7 @@ interface EmptyStateProps {
 
 const EmptyState = ({ description, buttonText, onClick }: EmptyStateProps) => {
   return (
-    <div className="center flex w-full flex-col items-center justify-center">
+    <div className="flex grow flex-col items-center justify-center">
       <svg
         width="81"
         height="98"
@@ -386,10 +405,10 @@ const SlideItem = ({ isActive, data, variant, quizCount }: SlideItemProps) => {
     <div
       className={cn(
         'rounded-[16px] p-[12px_14px_15px_14px] h-[12svh] aspect-[90/108]',
-        'flex flex-col items-center justify-between text-center min-h-[106px] max-h-[140px]',
+        'flex flex-col items-center justify-between text-center min-h-[96px] max-h-[140px]',
         currentStyle.background.base,
         isActive && [
-          'h-[16svh] max-h-[160px] min-h-[130px]',
+          'h-[16svh] max-h-[160px] min-h-[115px]',
           // currentStyle.shadow,
           currentStyle.background.active,
         ]
