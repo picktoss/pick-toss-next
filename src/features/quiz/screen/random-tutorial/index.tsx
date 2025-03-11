@@ -2,7 +2,6 @@
 
 import 'swiper/css'
 import { useState, useLayoutEffect, useRef } from 'react'
-import { useRouter } from 'next/navigation'
 import Text from '@/shared/components/ui/text'
 import { setLocalStorage } from '@/shared/utils/storage'
 import { LOCAL_KEY } from '@/constants'
@@ -14,15 +13,15 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { cn } from '@/shared/lib/utils'
 import { useDynamicThemeColor } from '@/shared/hooks/use-dynamic-theme-color'
 import { isMobile } from 'react-device-detect'
+import { useRouter } from 'next/navigation'
 
 const RandomTutorial = () => {
   useDynamicThemeColor(isMobile, '#313132', '#ffffff')
-
   const router = useRouter()
 
   const exitTutorial = () => {
     setLocalStorage(LOCAL_KEY.RANDOM_TUTORIAL_COMPLETE, true)
-    router.replace('/quiz/random')
+    router.refresh()
   }
 
   return (
