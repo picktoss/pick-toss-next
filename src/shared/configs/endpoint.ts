@@ -77,6 +77,8 @@ export const API_ENDPOINTS = {
       CREATE_BOOKMARK: (collectionId: number) => `/collections/${collectionId}/create-bookmark`,
       /** POST /collections/{collection_id}/collection-quizzes - 컬렉션 퀴즈 시작 */
       START_QUIZ: (collectionId: number) => `/collections/${collectionId}/collection-quizzes`,
+      /** POST /collections/{collection_id}/complaint - 컬렉션 신고 */
+      COMPLAINT: (collectionId: number) => `/collections/${collectionId}/complaint`,
     },
     PATCH: {
       /** PATCH /collections/{collection_id}/update-quizzes - 컬렉션 문제 편집 */

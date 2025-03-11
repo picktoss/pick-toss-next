@@ -6,6 +6,7 @@ import {
   DropdownMenuTrigger,
 } from '@/shared/components/ui/dropdown-menu'
 import Text from '@/shared/components/ui/text'
+import Link from 'next/link'
 
 interface Props {
   collectionId: number
@@ -18,10 +19,12 @@ const CollectionInfoDropdownMenu = ({ collectionId }: Props) => {
       <DropdownMenuTrigger>
         <Icon name="menu-dots" className="size-[24px]" />
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="min-w-[240px] bg-white p-0 *:cursor-pointer">
-        <DropdownMenuItem className="flex justify-between px-5 py-4 hover:bg-gray-100">
-          <Text typography="subtitle2-medium">컬렉션 신고</Text>
-        </DropdownMenuItem>
+      <DropdownMenuContent className="min-w-[240px] bg-white p-0 *:cursor-pointer" align="end">
+        <Link href={`/collections/complaint/${collectionId}`}>
+          <DropdownMenuItem className="flex justify-between px-5 py-4 hover:bg-gray-100">
+            <Text typography="subtitle2-medium">컬렉션 신고</Text>
+          </DropdownMenuItem>
+        </Link>
       </DropdownMenuContent>
     </DropdownMenu>
   )

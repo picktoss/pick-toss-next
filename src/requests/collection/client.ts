@@ -176,3 +176,31 @@ export const addQuizToCollection = async (payload: {
     throw error
   }
 }
+
+/** POST /collections/{collection_id}/complaint - 컬렉션 신고 */
+export const complaintCollection = async ({
+  collectionId,
+  content,
+  images = [],
+}: {
+  collectionId: number
+  content: string
+  images?: File[]
+}) => {
+  const formData = new FormData()
+  formData.append('content', content)
+  images.forEach((file) => {
+    // 백엔드 스펙상 필드명이 'files'라면 아래와 같이 지정
+    formData.append('files', file)
+  })
+
+  try {
+    await http.post(API_ENDPOINTS.COLLECTION.POST.COMPLAINT(collectionId), formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+  } catch (error) {
+    throw error
+  }
+}

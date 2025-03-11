@@ -14,6 +14,7 @@ import {
   updateCollectionQuizzes,
   searchCollections,
   addQuizToCollection,
+  complaintCollection,
 } from './client'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
 
@@ -295,5 +296,11 @@ export const useAddQuizToCollection = (quizId: number) => {
         queryClient.invalidateQueries({ queryKey: ['collectionInfo'] }),
       ])
     },
+  })
+}
+
+export const useComplaintCollection = () => {
+  return useMutation({
+    mutationFn: complaintCollection,
   })
 }
