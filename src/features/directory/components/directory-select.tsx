@@ -16,14 +16,14 @@ const DirectorySelect = ({ directories, selectedDirectoryId, selectDirectoryId }
     >
       <SelectTrigger className="flex w-fit items-center gap-2 border-none px-0 outline-none">
         <span>{curDirectory?.emoji ?? '📁'}</span>
-        <span>{curDirectory?.name}</span>
+        <span>{curDirectory?.name === '기본 폴더' ? '전체 노트' : curDirectory?.name}</span>
       </SelectTrigger>
       <SelectContent className="rounded-[8px] bg-white">
         {directories.map((directory) => (
           <SelectItem key={directory.id} value={String(directory.id)}>
             <div className="flex gap-2">
               <span>{directory.emoji ?? '📁'}</span>
-              <span>{directory.name}</span>
+              <span>{directory.name === '기본 폴더' ? '전체 노트' : directory.name}</span>
             </div>
           </SelectItem>
         ))}
