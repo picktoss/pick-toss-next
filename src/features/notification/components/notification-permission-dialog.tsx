@@ -4,6 +4,7 @@ import { Button } from '@/shared/components/ui/button'
 import { Dialog, DialogContent } from '@/shared/components/ui/dialog'
 import Text from '@/shared/components/ui/text'
 import { useIsPWA } from '@/shared/hooks/use-pwa'
+import { isIOS } from 'react-device-detect'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
@@ -17,8 +18,6 @@ const NotificationPermissionDialog = () => {
     const checkNotificationPermission = async () => {
       if (typeof window === 'undefined') return
       if (!session?.user.accessToken || !isPWA) return
-
-      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
 
       // iOS에서는 시스템에서 알림을 차단해도 'default'로 나올 수 있으므로 추가 검사 필요
       if (Notification.permission === 'default' && isIOS) {

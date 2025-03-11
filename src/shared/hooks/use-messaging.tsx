@@ -8,6 +8,7 @@ import { usePostFcmToken } from '@/requests/fcm/hooks'
 import { getFCMToken } from '@/firebase/messaging/get-token'
 import { useIsPWA } from './use-pwa'
 import { requestNotificationPermission } from '../utils/notification'
+import { isIOS } from 'react-device-detect'
 
 export const useMessaging = () => {
   const { data: session } = useSession()
@@ -22,7 +23,6 @@ export const useMessaging = () => {
       try {
         const isBrowser = typeof window !== 'undefined'
         const isGranted = Notification.permission === 'granted'
-        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
 
         if (!isBrowser) return
 
