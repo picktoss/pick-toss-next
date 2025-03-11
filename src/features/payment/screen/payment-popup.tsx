@@ -9,6 +9,7 @@ import GoBackButton from '@/shared/components/custom/go-back-button'
 import Tag from '@/shared/components/ui/tag'
 import InviteRewardDrawer from '@/features/payment/components/invite-reward-drawer'
 import { useDynamicThemeColor } from '@/shared/hooks/use-dynamic-theme-color'
+import { isMobile } from 'react-device-detect'
 
 interface Props {
   isProUser: boolean
@@ -16,7 +17,7 @@ interface Props {
 }
 
 const PaymentPopup = ({ isProUser, onClose }: Props) => {
-  useDynamicThemeColor('#000000', '#FFFFFF')
+  useDynamicThemeColor(isMobile, '#000000', '#FFFFFF')
 
   return (
     <div

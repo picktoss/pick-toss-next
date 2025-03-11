@@ -5,6 +5,7 @@ import * as DialogPrimitive from '@radix-ui/react-dialog'
 
 import { cn } from '@/shared/lib/utils'
 import { useDynamicThemeColor } from '@/shared/hooks/use-dynamic-theme-color'
+import { isMobile } from 'react-device-detect'
 
 const Dialog = DialogPrimitive.Root
 
@@ -25,7 +26,7 @@ const DialogOverlay = React.forwardRef<
     prevColorRef.current = metaTag?.getAttribute('content') ?? '#ffffff'
   }
 
-  useDynamicThemeColor('#313132', prevColorRef.current)
+  useDynamicThemeColor(isMobile, '#313132', prevColorRef.current)
 
   return (
     <DialogPrimitive.Overlay

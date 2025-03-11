@@ -5,6 +5,7 @@ import { Drawer as DrawerPrimitive } from 'vaul'
 
 import { cn } from '@/shared/lib/utils'
 import { useDynamicThemeColor } from '@/shared/hooks/use-dynamic-theme-color'
+import { isMobile } from 'react-device-detect'
 
 const DrawerContext = React.createContext<{ direction: 'top' | 'bottom' | 'left' | 'right' }>({
   direction: 'bottom',
@@ -49,7 +50,7 @@ const DrawerOverlay = React.forwardRef<
   const statusBarColor = direction === 'bottom' ? '#313132' : null
   const unmountColor = direction === 'bottom' ? prevColorRef.current : null
 
-  useDynamicThemeColor(statusBarColor, unmountColor)
+  useDynamicThemeColor(isMobile, statusBarColor, unmountColor)
 
   return (
     <DrawerPrimitive.Overlay

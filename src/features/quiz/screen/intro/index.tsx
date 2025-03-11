@@ -6,6 +6,7 @@ import DocumentQuizIntro from './components/document-quiz-intro'
 import CollectionQuizIntro from './components/collection-quiz-intro'
 import { formatDateKorean } from '@/shared/utils/date'
 import { useDynamicThemeColor } from '@/shared/hooks/use-dynamic-theme-color'
+import { isMobile } from 'react-device-detect'
 
 interface Props {
   quizSetType: Quiz.Set.Type
@@ -22,7 +23,7 @@ const QuizIntro = ({
   collectionInfo,
   onAnimationComplete,
 }: Props) => {
-  useDynamicThemeColor('#F5F7F9', '#FFFFFF')
+  useDynamicThemeColor(isMobile, '#F5F7F9', '#FFFFFF')
   const createDateText = formatDateKorean(createdAt, { month: true, day: true, dayOfWeek: true })
 
   return (

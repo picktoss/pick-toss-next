@@ -9,9 +9,10 @@ import UnavailableInviteView from './unavailable-invite'
 import Loading from '@/shared/components/custom/loading'
 import { useDynamicThemeColor } from '@/shared/hooks/use-dynamic-theme-color'
 import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
+import { isMobile } from 'react-device-detect'
 
 const InviteLink = () => {
-  useDynamicThemeColor('#F5F7F9', '#FFFFFF')
+  useDynamicThemeColor(isMobile, '#F5F7F9', '#FFFFFF')
 
   const { inviteViewEvent } = useAmplitudeContext()
 

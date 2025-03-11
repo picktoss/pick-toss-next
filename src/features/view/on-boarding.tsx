@@ -12,7 +12,7 @@ import { useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
 const OnBoarding = () => {
   const { onboardStartEvent } = useAmplitudeContext()
 
-  useDynamicThemeColor('#FFFFFF', '#F5F7F9')
+  useDynamicThemeColor(isMobile, '#FFFFFF', '#F5F7F9')
   const isPWA = useIsPWA()
 
   useEffect(() => {

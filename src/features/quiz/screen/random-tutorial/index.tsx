@@ -13,9 +13,10 @@ import { Tabs, TabsList, TabsTrigger } from '@/shared/components/ui/tabs'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { cn } from '@/shared/lib/utils'
 import { useDynamicThemeColor } from '@/shared/hooks/use-dynamic-theme-color'
+import { isMobile } from 'react-device-detect'
 
 const RandomTutorial = () => {
-  useDynamicThemeColor('#313132', '#ffffff')
+  useDynamicThemeColor(isMobile, '#313132', '#ffffff')
 
   const router = useRouter()
 

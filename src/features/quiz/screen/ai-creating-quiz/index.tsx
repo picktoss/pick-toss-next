@@ -9,6 +9,7 @@ import { useDynamicThemeColor } from '@/shared/hooks/use-dynamic-theme-color'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { isMobile } from 'react-device-detect'
 
 interface Props {
   documentId: number
@@ -18,7 +19,7 @@ interface Props {
 }
 
 const AiCreatingQuiz = ({ documentId, documentName, directoryEmoji, onError }: Props) => {
-  useDynamicThemeColor('#fff7ed', '#ffffff')
+  useDynamicThemeColor(isMobile, '#fff7ed', '#ffffff')
 
   const router = useRouter()
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0)

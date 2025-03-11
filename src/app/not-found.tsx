@@ -5,9 +5,10 @@ import Text from '@/shared/components/ui/text'
 import { useDynamicThemeColor } from '@/shared/hooks/use-dynamic-theme-color'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import { isMobile } from 'react-device-detect'
 
 export default function NotFound() {
-  useDynamicThemeColor('#F5F7F9', '#FFFFFF')
+  useDynamicThemeColor(isMobile, '#F5F7F9', '#FFFFFF')
 
   const router = useRouter()
 

@@ -5,13 +5,14 @@ import Text from '@/shared/components/ui/text'
 import { useDynamicThemeColor } from '@/shared/hooks/use-dynamic-theme-color'
 import QuizSetFullAd from '../components/quiz-set-full-ad'
 import { useEffect, useState } from 'react'
+import { isMobile } from 'react-device-detect'
 
 interface Props {
   onClose: () => void
 }
 
 const QuizSetFullAdView = ({ onClose }: Props) => {
-  useDynamicThemeColor('#FFFFFF', '#FFFFFF')
+  useDynamicThemeColor(isMobile, '#FFFFFF', '#FFFFFF')
 
   const [count, setCount] = useState(3)
 

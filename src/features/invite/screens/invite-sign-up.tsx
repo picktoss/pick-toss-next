@@ -8,9 +8,10 @@ import UnavailableInviteView from './unavailable-invite'
 import Text from '@/shared/components/ui/text'
 import SocialLogin from '@/features/auth/social-login'
 import ClearBrowserData from '@/features/user/components/clear-browser-data'
+import { isMobile } from 'react-device-detect'
 
 const InviteSignUp = () => {
-  useDynamicThemeColor('#F5F7F9', '#FFFFFF')
+  useDynamicThemeColor(isMobile, '#F5F7F9', '#FFFFFF')
 
   const code = useSearchParams().get('code') ?? ''
   const { data: isValid } = useQuery(queries.auth.verifyInvite({ inviteCode: code }))
