@@ -1,3 +1,5 @@
+'use client'
+
 import { useSession } from 'next-auth/react'
 import Splash from './splash'
 import AppStartView from './app-start'
