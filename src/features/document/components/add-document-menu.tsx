@@ -32,7 +32,7 @@ const AddDocumentMenu = () => {
     if (isExpandedBtns) {
       metaTag?.setAttribute('content', '#3D3E3E')
     } else {
-      metaTag?.setAttribute('content', currentPageColor ?? '#ffffff')
+      metaTag?.setAttribute('content', '#F5F7F9')
     }
   }, [isFirstRender, currentPageColor, isExpandedBtns])
 
