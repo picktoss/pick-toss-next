@@ -92,7 +92,7 @@ const Home = () => {
           id: toastId,
           title: `별 ${reward}개가 추가되었어요`,
         })
-        setTimeout(() => router.replace('/'), 10)
+        setTimeout(() => router.replace('/main'), 10)
       }
     }
   }, [toast, toastId, rewardType, reward, router])

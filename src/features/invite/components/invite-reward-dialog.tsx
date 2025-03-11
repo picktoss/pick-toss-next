@@ -17,7 +17,7 @@ const InviteRewardDialog = () => {
       Cookies.remove('check-invited')
     }
 
-    router.replace('/')
+    router.replace('/main')
   }
 
   return (

@@ -15,6 +15,7 @@ const publicUrls: Routes = {
 const publicOnlyUrls: Routes = {
   '/': true,
   '/sign-in': true,
+  '/login': true,
 }
 
 const PUBLIC_FILE = /\.(.*)$/

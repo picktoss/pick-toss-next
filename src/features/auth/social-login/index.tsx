@@ -16,7 +16,7 @@ const SocialLogin = ({ className, inviteCode }: Props) => {
   const handleSocialLogin = async (provider: 'google' | 'kakao') => {
     const options = inviteCode
       ? { callbackUrl: `/main?inviteCode=${inviteCode}` }
-      : { callbackUrl: '/' }
+      : { callbackUrl: '/main' }
 
     await signIn(provider, options)
   }

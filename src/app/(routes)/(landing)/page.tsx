@@ -1,10 +1,10 @@
-import Landing from '@/features/view/landing'
 import Splash from '@/features/view/splash'
+import StartView from '@/features/view/start-view'
 
 export default function LandingPage() {
   return (
     <>
-      <Landing />
+      <StartView />
       <Splash />
     </>
   )
