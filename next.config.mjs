@@ -50,24 +50,23 @@ export default withPWA({
   // iPad에서의 안정성을 위한 추가 설정
   runtimeCaching: [
     {
-      urlPattern: ({ request }) => request.mode === 'navigate', // 모든 페이지 요청에 적용
-      handler: 'CacheFirst', // ✅ 오프라인에서도 실행 가능하도록 설정
+      urlPattern: /^https?.*/,
+      handler: 'NetworkFirst',
       options: {
-        cacheName: 'pages-cache',
+        cacheName: 'offlineCache',
         expiration: {
-          maxEntries: 50,
-          maxAgeSeconds: 7 * 24 * 60 * 60, // 7일간 유지
+          maxEntries: 200,
         },
       },
     },
     // {
-    //   urlPattern: /^https?.*/,
-    //   handler: 'StaleWhileRevalidate', // 최신 데이터 로드하면서 빠르게 표시
+    //   urlPattern: ({ request }) => request.mode === 'navigate', // 모든 페이지 요청에 적용
+    //   handler: 'CacheFirst', // ✅ 오프라인에서도 실행 가능하도록 설정
     //   options: {
-    //     cacheName: 'api-cache',
+    //     cacheName: 'pages-cache',
     //     expiration: {
-    //       maxEntries: 200,
-    //       maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
+    //       maxEntries: 50,
+    //       maxAgeSeconds: 7 * 24 * 60 * 60, // 7일간 유지
     //     },
     //   },
     // },
