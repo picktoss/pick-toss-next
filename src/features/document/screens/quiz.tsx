@@ -71,7 +71,11 @@ const Quiz = () => {
                 <Text typography="title3" className="text-text-accent">
                   Q.
                 </Text>
-                <QuizCardMenu documentId={Number(id)} quizId={quiz.id} />
+                <QuizCardMenu
+                  documentId={Number(id)}
+                  quizId={quiz.id}
+                  isLastQuiz={data.quizzes.length === 1}
+                />
               </div>
             }
             key={quiz.id}
