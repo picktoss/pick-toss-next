@@ -162,7 +162,7 @@ const QuizView = ({ quizzes, isFirst, exitRedirectUrl }: Props) => {
       return
     }
 
-    router.replace('/')
+    router.replace('/main')
   }
 
   useEffect(() => {

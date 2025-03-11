@@ -1,10 +1,10 @@
 'use client'
 
-import AppStartView from './app-start'
 import { useSession } from 'next-auth/react'
 import Splash from './splash'
+import AppStartView from './app-start'
 
-const Landing = () => {
+const LoginForLanding = () => {
   const { status } = useSession()
 
   if (status === 'loading') {
@@ -14,4 +14,4 @@ const Landing = () => {
   return <AppStartView />
 }
 
-export default Landing
+export default LoginForLanding
