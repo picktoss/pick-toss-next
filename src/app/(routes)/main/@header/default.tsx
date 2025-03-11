@@ -17,7 +17,7 @@ const Header = () => {
       const metaTag = document.querySelector('meta[name="theme-color"]')
 
       if (metaTag) {
-        setTimeout(() => metaTag.setAttribute('content', '#F5F7F9'), 300)
+        setTimeout(() => metaTag.setAttribute('content', '#F5F7F9'), 100)
       }
 
       return () => {
