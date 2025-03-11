@@ -13,13 +13,9 @@ import { useDirectories } from '@/requests/directory/hooks'
 import CreateDirectoryDialog from '@/features/directory/components/create-directory-dialog'
 import { useDocumentContext } from '@/features/document/contexts/document-context'
 import { useDirectoryContext } from '@/features/directory/contexts/directory-context'
-import { useDynamicThemeColor } from '@/shared/hooks/use-dynamic-theme-color'
-import { isMobile } from 'react-device-detect'
 
 // Header 컴포넌트
 const Header = () => {
-  useDynamicThemeColor(isMobile, '#F5F7F9', '#FFFFFF')
-
   const { data } = useDirectories()
   const { selectedDirectory } = useDirectoryContext()
   const { isSelectMode, setIsSelectMode, checkDoc } = useDocumentContext()
@@ -38,6 +34,22 @@ const Header = () => {
       checkDoc.checkAll()
     }
   }
+
+  useEffect(() => {
+    if (typeof window !== undefined) {
+      const metaTag = document.querySelector('meta[name="theme-color"]')
+
+      if (metaTag) {
+        metaTag.setAttribute('content', '#F5F7F9')
+      }
+
+      return () => {
+        if (metaTag) {
+          metaTag.setAttribute('content', '#FFFFFF')
+        }
+      }
+    }
+  }, [])
 
   useEffect(() => {
     const metaTag = document.querySelector('meta[name="theme-color"]')

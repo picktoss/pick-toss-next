@@ -3,16 +3,30 @@
 import InviteRewardDrawer from '@/features/payment/components/invite-reward-drawer'
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
-import { useDynamicThemeColor } from '@/shared/hooks/use-dynamic-theme-color'
 import usePreviousPath from '@/shared/hooks/use-previous-path'
 import { useUserStore } from '@/store/user'
 import Link from 'next/link'
-import { isMobile } from 'react-device-detect'
+import { useEffect } from 'react'
 
 const Header = () => {
-  useDynamicThemeColor(isMobile, '#F5F7F9', '#FFFFFF')
   usePreviousPath()
   const { userInfo: user } = useUserStore()
+
+  useEffect(() => {
+    if (typeof window !== undefined) {
+      const metaTag = document.querySelector('meta[name="theme-color"]')
+
+      if (metaTag) {
+        metaTag.setAttribute('content', '#F5F7F9')
+      }
+
+      return () => {
+        if (metaTag) {
+          metaTag.setAttribute('content', '#FFFFFF')
+        }
+      }
+    }
+  }, [])
 
   return (
     <header className="flex h-[54px] w-full max-w-mobile items-center justify-between bg-background-base-02 px-[18px]">
