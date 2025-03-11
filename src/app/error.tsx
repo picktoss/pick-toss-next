@@ -7,13 +7,14 @@ import { useDynamicThemeColor } from '@/shared/hooks/use-dynamic-theme-color'
 import { NextPageContext } from 'next'
 import Image from 'next/image'
 import React from 'react'
+import { isMobile } from 'react-device-detect'
 
 interface Props {
   statusCode: number
 }
 
 function Error({ statusCode }: Props) {
-  useDynamicThemeColor('#F5F7F9', '#FFFFFF')
+  useDynamicThemeColor(isMobile, '#F5F7F9', '#FFFFFF')
 
   if (statusCode === 500)
     return (

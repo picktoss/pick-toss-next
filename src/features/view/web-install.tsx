@@ -7,9 +7,10 @@ import Text from '@/shared/components/ui/text'
 import { useDynamicThemeColor } from '@/shared/hooks/use-dynamic-theme-color'
 import Image from 'next/image'
 import Link from 'next/link'
+import { isMobile } from 'react-device-detect'
 
 const WebInstallView = () => {
-  useDynamicThemeColor('#000000', '#FFFFFF')
+  useDynamicThemeColor(isMobile, '#000000', '#FFFFFF')
 
   return (
     <div

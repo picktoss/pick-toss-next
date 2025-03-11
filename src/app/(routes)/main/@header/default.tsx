@@ -7,9 +7,10 @@ import { useDynamicThemeColor } from '@/shared/hooks/use-dynamic-theme-color'
 import usePreviousPath from '@/shared/hooks/use-previous-path'
 import { useUserStore } from '@/store/user'
 import Link from 'next/link'
+import { isMobile } from 'react-device-detect'
 
 const Header = () => {
-  useDynamicThemeColor('#F5F7F9', '#FFFFFF')
+  useDynamicThemeColor(isMobile, '#F5F7F9', '#FFFFFF')
   usePreviousPath()
   const { userInfo: user } = useUserStore()
 

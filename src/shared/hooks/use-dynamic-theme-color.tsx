@@ -1,16 +1,19 @@
 'use client'
 
 import { useEffect } from 'react'
-import { isMobile } from 'react-device-detect'
 
-export const useDynamicThemeColor = (mountColor: string | null, unmountColor?: string | null) => {
+export const useDynamicThemeColor = (
+  isMobile: boolean,
+  mountColor: string | null,
+  unmountColor?: string | null
+) => {
   useEffect(() => {
+    if (!isMobile) return
+
     const metaTag = document.querySelector('meta[name="theme-color"]')
 
-    if (isMobile) {
-      if (metaTag && mountColor) {
-        metaTag.setAttribute('content', mountColor)
-      }
+    if (metaTag && mountColor) {
+      metaTag.setAttribute('content', mountColor)
     }
 
     return () => {
@@ -18,5 +21,5 @@ export const useDynamicThemeColor = (mountColor: string | null, unmountColor?: s
         metaTag.setAttribute('content', unmountColor)
       }
     }
-  }, [mountColor, unmountColor])
+  }, [isMobile, mountColor, unmountColor])
 }
