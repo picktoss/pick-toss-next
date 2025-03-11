@@ -34,6 +34,7 @@ export const useCollectionInfo = (collectionId: number) => {
   return useQuery({
     queryKey: ['collectionInfo', collectionId],
     queryFn: async () => getCollectionInfo({ collectionId }),
+    retry: false,
   })
 }
 
@@ -234,6 +235,7 @@ export const useDeleteCollection = () => {
 
   return useMutation({
     mutationFn: deleteCollection,
+    mutationKey: ['deleteCollection'],
     onSettled: async () => {
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: ['collections'] }),
