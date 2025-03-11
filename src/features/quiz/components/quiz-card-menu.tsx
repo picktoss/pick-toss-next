@@ -8,14 +8,17 @@ import ConfirmDialogWidget from '@/widget/confirm-dialog'
 import { useMyCollections } from '@/requests/collection/hooks'
 import { useDeleteQuiz } from '@/requests/quiz/hooks'
 import AddQuizToCollectionDrawer from '@/features/collection/components/add-quiz-to-collection-drawer'
+import { useRouter } from 'next/navigation'
 
 interface Props {
   documentId: number
   quizId: number
+  isLastQuiz: boolean
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const QuizCardMenu = ({ documentId, quizId }: Props) => {
+const QuizCardMenu = ({ documentId, quizId, isLastQuiz }: Props) => {
+  const router = useRouter()
   const [isAddCollectionOpen, setIsAddCollectionOpen] = useState(false)
   const [isOpenNoCollection, setIsOpenNoCollection] = useState(false)
 
@@ -39,8 +42,13 @@ const QuizCardMenu = ({ documentId, quizId }: Props) => {
     return false
   }
 
+  // 마지막 남은 퀴즈를 삭제할 경우 문서 자체도 삭제됨
   const handleDeleteQuiz = () => {
     deleteQuizMutate(quizId)
+
+    if (isLastQuiz) {
+      router.replace('/document')
+    }
   }
 
   return (
