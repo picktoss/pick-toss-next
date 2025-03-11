@@ -10,7 +10,10 @@
     "*.css",
     "*.md",
     "*.svg",
-    "public"
+    "public",
+    "src/types/schema.d.ts",
+    "src/features/advertisement/config/index.ts",
+    "src/shared/hooks/use-amplitude-context.tsx"
   ],
   "files": ["src/**/*.tsx", "src/**/*.ts"],
   "words": [
@@ -55,6 +58,9 @@
     "vaul",
     "wordprocessingml",
     "yxxx",
-    "zustand"
+    "zustand",
+    "favicons",
+    "bombquiz",
+    "randomquiz"
   ]
 }
