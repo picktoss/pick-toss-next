@@ -1,6 +1,8 @@
+'use client'
+
 import { useUpdateDirectoryInfo } from '@/requests/directory/hooks'
 import { Dialog, DialogClose, DialogContent, DialogTitle } from '@/shared/components/ui/dialog'
-import { useScreenSize } from '@/shared/hooks/use-screen-size'
+import { isMobile } from 'react-device-detect'
 import { cn } from '@/shared/lib/utils'
 import EmojiPicker from 'emoji-picker-react'
 import { useEffect, useRef, useState } from 'react'
@@ -14,8 +16,6 @@ interface Props {
 }
 
 const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prevEmoji }: Props) => {
-  const { isMobile } = useScreenSize()
-
   const [name, setName] = useState(prevName ?? '')
   const [emoji, setEmoji] = useState(prevEmoji ?? '📁')
   const [emojiOpen, setEmojiOpen] = useState(false)

@@ -69,6 +69,7 @@
     "react": "^18",
     "react-canvas-confetti": "^2.0.7",
     "react-day-picker": "^8.10.1",
+    "react-device-detect": "^2.2.3",
     "react-div-100vh": "^0.7.0",
     "react-dom": "^18",
     "react-hook-form": "^7.52.0",

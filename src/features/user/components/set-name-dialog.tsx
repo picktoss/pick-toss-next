@@ -18,7 +18,7 @@ import * as z from 'zod'
 import { Form, FormControl, FormField, FormItem } from '@/shared/components/ui/form'
 import { useToast } from '@/shared/hooks/use-toast'
 import { cn } from '@/shared/lib/utils'
-import { useScreenSize } from '@/shared/hooks/use-screen-size'
+import { isMobile } from 'react-device-detect'
 
 const formSchema = z.object({
   name: z.string().min(1, '이름을 입력해주세요'),
@@ -27,8 +27,6 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>
 
 const SetNameDialog = ({ userName }: { userName: string }) => {
-  const { isMobile } = useScreenSize()
-
   const router = useRouter()
   const [open, setOpen] = useState(false)
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false)

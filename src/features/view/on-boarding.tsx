@@ -3,7 +3,7 @@
 import CategorySelectArea from '@/features/category/components/category-select-area'
 import Text from '@/shared/components/ui/text'
 import { useIsPWA } from '@/shared/hooks/use-pwa'
-import { useScreenSize } from '@/shared/hooks/use-screen-size'
+import { isMobile } from 'react-device-detect'
 import WebInstallView from './web-install'
 import { useDynamicThemeColor } from '@/shared/hooks/use-dynamic-theme-color'
 import { useEffect } from 'react'
@@ -13,7 +13,6 @@ const OnBoarding = () => {
   const { onboardStartEvent } = useAmplitudeContext()
 
   useDynamicThemeColor('#FFFFFF', '#F5F7F9')
-  const { isMobile } = useScreenSize()
   const isPWA = useIsPWA()
 
   useEffect(() => {

@@ -1,7 +1,7 @@
 'use client'
 
 import { useIsPWA } from '@/shared/hooks/use-pwa'
-import { useScreenSize } from '@/shared/hooks/use-screen-size'
+import { isMobile } from 'react-device-detect'
 import MainTodayQuizArea from '../quiz/components/main-today-quiz-area'
 import Link from 'next/link'
 import Text from '@/shared/components/ui/text'
@@ -65,7 +65,6 @@ const Home = () => {
   const isEmpty = !documents || documents.length === 0
   const todayQuizState = isEmpty ? 'EMPTY' : type === 'READY' ? 'ARRIVED' : 'NOT_ARRIVED'
 
-  const { isMobile } = useScreenSize()
   const isPWA = useIsPWA()
 
   const interestedCategoryCompleted = Cookies.get('interested-category-complete')
