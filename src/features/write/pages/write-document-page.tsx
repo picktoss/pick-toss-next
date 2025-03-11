@@ -16,9 +16,11 @@ import { calculateAvailableQuizCount } from '@/features/document/utils'
 import { useToast } from '@/shared/hooks/use-toast'
 import ExitDialog from '@/features/quiz/screen/quiz-view/components/exit-dialog'
 import { useCreateQuiz } from '@/features/quiz/hooks/use-create-quiz'
+import Loading from '@/shared/components/custom/loading'
 
 const Editor = dynamic(() => import('../components/editor'), {
   ssr: false,
+  loading: () => <Loading center />,
 })
 
 const WriteDocumentPage = () => {
