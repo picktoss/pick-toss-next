@@ -13,7 +13,7 @@ import { useRouter } from 'next/navigation'
 interface Props {
   documentId: number
   quizId: number
-  isLastQuiz: boolean
+  isLastQuiz?: boolean
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
