@@ -73,8 +73,12 @@ const StartView = () => {
     }
   }, [])
 
+  const handleSplashEnd = () => {
+    setShowSplash(false)
+  }
+
   if (status === 'loading' || showSplash) {
-    return <Splash setShowSplash={setShowSplash} />
+    return <Splash onSplashEnd={handleSplashEnd} />
   }
 
   return <AppStartView />
