@@ -3063,37 +3063,29 @@ export const RightSparkleGroup = ({ ...props }) => {
   )
 }
 
-export const ArrowDownColor = ({ ...props }) => {
-  const paintId = useId()
-
+export const IosShare = ({ ...props }) => {
   return (
     <svg
-      width="26"
-      height="38"
-      viewBox="0 0 26 38"
+      width="24"
+      height="26"
+      viewBox="0 0 24 26"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
       <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M18.0003 0H8.00033V24.5H0.875977L13.0003 38L25.1247 24.5H18.0003V0Z"
-        fill={`url(#${paintId})`}
+        d="M15.15 8C16.3224 8 17.1258 8 17.9998 8C19.6567 8 21 9.34315 21 11V22C21 23.6569 19.6569 25 18 25H6C4.34315 25 3 23.6569 3 22V11C3 9.34315 4.34332 8 6.00018 8C6.974 8 7.88256 8 8.85 8"
+        stroke="currentColor"
+        strokeWidth="2"
       />
-      <defs>
-        <linearGradient
-          id={paintId}
-          x1="13.0003"
-          y1="0"
-          x2="13.0003"
-          y2="38"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor="#FFF1D5" />
-          <stop offset="1" stopColor="#FB8320" />
-        </linearGradient>
-      </defs>
+      <path d="M12 17V2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path
+        d="M8 5L12 1L16 5"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   )
 }

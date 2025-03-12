@@ -16,22 +16,47 @@ const AppInstallIos = () => {
 
       <Icon name="logo" className="mt-[12px] w-[110px] shrink-0" />
 
-      <div className="mt-[54px] flex w-[271px] flex-col items-center gap-[18px]">
+      <div className="mt-[40px] flex w-[271px] flex-col items-center gap-[32px]">
         <div className="flex w-full items-center gap-[8px]">
           <div className="flex-center size-[24px] rounded-[4px] bg-[var(--color-orange-200)]">
             <Text as={'span'} typography="text1-bold" color="accent">
               1
             </Text>
           </div>
-          <Text typography="subtitle2-bold" color="secondary">
-            브라우저 하단 공유 버튼 누르기
-          </Text>
+          <div className="flex items-center">
+            <Icon name="ios-share" className="mr-[4px] size-[24px] text-[#4C5052]" />
+            <Text typography="subtitle2-bold" color="secondary">
+              버튼 누르기
+            </Text>
+          </div>
         </div>
 
-        <Image src={'/images/ios-install-info-browser-button.png'} alt="" width={207} height={56} />
+        <div className="flex-center flex-col gap-[13px]">
+          <Text typography="text1-medium" color="sub">
+            Safari: 브라우저 하단
+          </Text>
+          <Image
+            src={'/images/ios-install-info-browser-button-safari.png'}
+            alt=""
+            width={261}
+            height={46}
+          />
+        </div>
+
+        <div className="flex-center flex-col gap-[13px]">
+          <Text typography="text1-medium" color="sub">
+            Chrome: 브라우저 우측 상단
+          </Text>
+          <Image
+            src={'/images/ios-install-info-browser-button-chrome.png'}
+            alt=""
+            width={245}
+            height={51}
+          />
+        </div>
       </div>
 
-      <div className="mt-[37px] flex w-[271px] flex-col items-center gap-[27px]">
+      <div className="mt-[63px] flex w-[271px] flex-col items-center gap-[27px]">
         <div className="flex w-full items-center gap-[8px]">
           <div className="flex-center size-[24px] rounded-[4px] bg-[var(--color-orange-200)]">
             <Text as={'span'} typography="text1-bold" color="accent">
@@ -46,7 +71,7 @@ const AppInstallIos = () => {
         <Image src={'/images/ios-install-info-add-home.png'} alt="" width={276} height={121} />
       </div>
 
-      <div className="mt-[43px] flex w-[271px] flex-col items-center gap-[27px]">
+      <div className="mt-[48px] flex w-[271px] flex-col items-center gap-[27px]">
         <div className="flex w-full items-center gap-[8px]">
           <div className="flex-center size-[24px] rounded-[4px] bg-[var(--color-orange-200)]">
             <Text as={'span'} typography="text1-bold" color="accent">
@@ -64,14 +89,6 @@ const AppInstallIos = () => {
           width={255}
           height={80}
         />
-      </div>
-
-      <div className="flex-center mt-[54px] flex-col">
-        <Text typography="subtitle2-bold" color="accent">
-          바로 시작하기
-        </Text>
-
-        <Icon name="arrow-down-color" className="mt-[8px] h-[38px]" />
       </div>
     </main>
   )
