@@ -8,12 +8,10 @@ import { checkPWAAppLaunched, setPWAAppLaunched } from '@/shared/utils/pwa'
 
 const StartView = () => {
   const { status } = useSession()
-  const [isRedirecting, setIsRedirecting] = useState(false)
+  const [isRedirecting, setIsRedirecting] = useState(true)
   const hasRedirected = useRef(false)
 
   useEffect(() => {
-    // let hasRedirected = false
-
     // eslint-disable-next-line @typescript-eslint/require-await
     const detectPWA = async () => {
       if (typeof window === 'undefined') return false
@@ -42,9 +40,6 @@ const StartView = () => {
     }
 
     const handleRedirection = async () => {
-      // 리디렉션 시작 표시
-      setIsRedirecting(true)
-
       const isPWA = await detectPWA()
 
       // 1차 pwa 판별
