@@ -182,7 +182,7 @@ const handlePdfFile = async (file: File): Promise<string> => {
 
   const loadingTask = pdfjs.getDocument({
     data: fileBuffer,
-    cMapUrl: '/cmaps/',
+    cMapUrl: 'https://unpkg.com/pdfjs-dist@3.4.120/cmaps/',
     cMapPacked: true,
   })
 
