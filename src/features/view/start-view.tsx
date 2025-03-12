@@ -53,7 +53,7 @@ const StartView = () => {
 
       // 약간의 지연 후 리디렉션 실행
       setTimeout(() => {
-        if (!isPWA) {
+        if (isPWA) {
           window.location.href = '/login'
         } else {
           window.location.href = 'https://picktoss.framer.website/'
