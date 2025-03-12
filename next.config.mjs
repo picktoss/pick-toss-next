@@ -39,6 +39,13 @@ const nextConfig = {
           { key: 'Content-Type', value: 'application/octet-stream' },
         ],
       },
+      {
+        source: '/pdf.worker.min.js',
+        headers: [
+          { key: 'Content-Type', value: 'application/javascript' },
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+        ],
+      },
     ]
   },
   experimental: {
