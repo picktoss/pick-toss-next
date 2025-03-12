@@ -8,7 +8,7 @@ import { checkPWAAppLaunched, setPWAAppLaunched } from '@/shared/utils/pwa'
 
 const StartView = () => {
   const { status } = useSession()
-  const [isRedirecting, setIsRedirecting] = useState(true)
+  const [isRedirecting, setIsRedirecting] = useState(false)
 
   useEffect(() => {
     let hasRedirected = false
@@ -45,7 +45,12 @@ const StartView = () => {
       setIsRedirecting(true)
 
       const isPWA = await detectPWA()
-      if (isPWA) return
+
+      // 1차 pwa 판별
+      if (isPWA) {
+        setIsRedirecting(false)
+        return
+      }
 
       // 이미 리디렉션된 경우 중복 실행 방지
       if (hasRedirected) return
