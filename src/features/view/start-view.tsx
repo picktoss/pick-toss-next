@@ -8,7 +8,8 @@ import { checkPWAAppLaunched, setPWAAppLaunched } from '@/shared/utils/pwa'
 
 const StartView = () => {
   const { status } = useSession()
-  const [isRedirecting, setIsRedirecting] = useState(true)
+  const [showSplash, setShowSplash] = useState(false)
+  // const [isRedirecting, setIsRedirecting] = useState(false)
 
   useEffect(() => {
     let hasRedirected = false
@@ -41,11 +42,15 @@ const StartView = () => {
     }
 
     const handleRedirection = async () => {
-      // 리디렉션 시작 표시
-      setIsRedirecting(true)
-
       const isPWA = await detectPWA()
-      if (isPWA) return
+      if (isPWA) {
+        setShowSplash(true)
+        // setIsRedirecting(false)
+        return
+      }
+
+      // // 리디렉션 시작 표시
+      // setIsRedirecting(true)
 
       // 이미 리디렉션된 경우 중복 실행 방지
       if (hasRedirected) return
@@ -58,7 +63,7 @@ const StartView = () => {
         } else {
           window.location.href = 'https://picktoss.framer.website/'
         }
-      }, 200)
+      }, 100)
     }
 
     // 약간의 지연을 두고 감지 및 리디렉션 실행
@@ -66,30 +71,18 @@ const StartView = () => {
       await handleRedirection()
     }, 100)
 
-    // 리디렉션이 실패하는 경우를 대비해 타임아웃 설정
-    const failsafeTimeout = setTimeout(() => {
-      setIsRedirecting(false)
-    }, 2000)
+    // // 리디렉션이 실패하는 경우를 대비해 타임아웃 설정
+    // const failsafeTimeout = setTimeout(() => {
+    //   setIsRedirecting(false)
+    // }, 2000)
 
     return () => {
       clearTimeout(timeoutId)
-      clearTimeout(failsafeTimeout)
+      // clearTimeout(failsafeTimeout)
     }
   }, [])
 
-  // useEffect(() => {
-  //   if (typeof window !== undefined) {
-  //     const isPWA = window.matchMedia('(display-mode: standalone)').matches
-
-  //     if (isPWA) {
-  //       window.location.href = '/login'
-  //     } else {
-  //       window.location.href = 'https://picktoss.framer.website/'
-  //     }
-  //   }
-  // }, [])
-
-  if (status === 'loading' || isRedirecting) {
+  if (status === 'loading' || showSplash) {
     return <Splash />
   }
 
