@@ -17,7 +17,7 @@ import Loading from '@/shared/components/custom/loading'
 import { useHomeData } from '@/shared/hooks/use-home-data-fetching'
 import WebInstallView from './web-install'
 import { useSession } from 'next-auth/react'
-import OnBoarding from './on-boarding'
+// import OnBoarding from './on-boarding'
 import Cookies from 'js-cookie'
 import { useUserStore } from '@/store/user'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -67,11 +67,21 @@ const Home = () => {
 
   const isPWA = useIsPWA()
 
-  const interestedCategoryCompleted = Cookies.get('interested-category-complete')
-
   const isChecked = !!Cookies.get('check-invited')
   const { data: isSuccessInvite } = useQuery(queries.auth.checkInviteSignUp(isChecked))
 
+  // 온보딩 처리
+  useEffect(() => {
+    const interestedCategoryCompleted = Cookies.get('interested-category-complete')
+
+    if (typeof window !== undefined) {
+      if (session?.user.isNewUser && isPWA && interestedCategoryCompleted !== 'true') {
+        window.location.href = '/on-boarding'
+      }
+    }
+  }, [session?.user, isPWA])
+
+  // 초대 코드로 가입 후 접근 처리
   useEffect(() => {
     if (inviteCode && session?.user && session.user.isNewUser) {
       rewardInviteMutate(
@@ -99,10 +109,6 @@ const Home = () => {
 
   if (isMobile && !isPWA) {
     return <WebInstallView />
-  }
-
-  if (session?.user.isNewUser && isPWA && interestedCategoryCompleted !== 'true') {
-    return <OnBoarding />
   }
 
   if (loading) {

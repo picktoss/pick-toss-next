@@ -4,17 +4,17 @@ import AppStartView from './app-start'
 import { useSession } from 'next-auth/react'
 import Splash from './splash'
 import { useIsPWA } from '@/shared/hooks/use-pwa'
-import { useLayoutEffect } from 'react'
+import { useEffect } from 'react'
 
 const StartView = () => {
   const { status } = useSession()
   const isPWA = useIsPWA()
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!isPWA) {
       window.location.href = 'https://picktoss.framer.website/'
     }
-  }, [])
+  }, [isPWA])
 
   if (status === 'loading') {
     return <Splash />
