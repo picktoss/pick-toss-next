@@ -4,6 +4,7 @@ import Google from 'next-auth/providers/google'
 import { getUser } from '@/actions/fetchers/user/get-user'
 import { UserDTO } from '@/actions/types/dto/user.dto'
 import { signIn as signInApi } from '@/requests/auth/server'
+import { ServerEnv } from '@/actions/api-client/server-env'
 
 declare module 'next-auth' {
   interface Account {
@@ -56,7 +57,7 @@ export const {
         // 회원가입 했을 때만 첫 사용자인지 알 수 있다
         try {
           // httpServer를 사용할 수 없음. 그 안에서 auth 를 통해 session을 호출하는데, 현 시점에서는 session이 없음
-          const response = await fetch(process.env.NEXT_PUBLIC_DEV_API_URL + '/members/info', {
+          const response = await fetch(ServerEnv.apiUrl() + '/members/info', {
             headers: {
               Authorization: `Bearer ${token.accessToken as string}`,
               'Content-Type': 'application/json',
