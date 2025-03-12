@@ -68,7 +68,6 @@ const StartView = () => {
       await handleRedirection()
     }, 100)
 
-
     return () => {
       clearTimeout(timeoutId)
     }
