@@ -42,6 +42,7 @@ const Exploration = () => {
   // 컬렉션 데이터를 렌더링하면서 6개(3행)마다 광고 컴포넌트를 삽입
   const renderCollectionsWithAds = () => {
     const items: React.ReactNode[] = []
+    let adCounter = 0
     const collections = collectionsData?.collections || []
 
     collections.forEach((collection, index) => {
@@ -70,12 +71,12 @@ const Exploration = () => {
         </Link>
       )
 
-      // 8번째(인덱스 7, 15, 23 등) 항목 후에 광고 삽입 (마지막 그룹이 아닐 경우)
       if ((index + 1) % 8 === 0 && index !== collections.length - 1) {
+        adCounter++
         items.push(
-          <div key={`ad-${index}`} className="col-span-2 mx-auto">
+          <div key={`ad-${adCounter}`} className="col-span-2 mx-auto">
             <CollectionBannerAd
-              adId={AD_ID[`COLLECTION${index + 1}` as keyof typeof AD_ID] ?? ''}
+              adId={AD_ID[`COLLECTION${adCounter}` as keyof typeof AD_ID] ?? ''}
             />
           </div>
         )
