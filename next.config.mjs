@@ -32,6 +32,13 @@ const nextConfig = {
           },
         ],
       },
+      {
+        source: '/cmaps/:path*',
+        headers: [
+          { key: 'Access-Control-Allow-Origin', value: '*' },
+          { key: 'Content-Type', value: 'application/octet-stream' },
+        ],
+      },
     ]
   },
   experimental: {

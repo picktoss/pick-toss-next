@@ -182,7 +182,7 @@ const handlePdfFile = async (file: File): Promise<string> => {
 
   const loadingTask = pdfjs.getDocument({
     data: fileBuffer,
-    cMapUrl: '/cmaps/',
+    cMapUrl: `${window.location.origin}/cmaps/`,
     cMapPacked: true,
   })
 
