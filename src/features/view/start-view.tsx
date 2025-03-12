@@ -11,8 +11,12 @@ const StartView = () => {
   const isPWA = useIsPWA()
 
   useEffect(() => {
-    if (!isPWA) {
-      window.location.href = 'https://picktoss.framer.website/'
+    if (isPWA) return
+
+    if (typeof window !== undefined) {
+      if (!isPWA) {
+        window.location.href = 'https://picktoss.framer.website/'
+      }
     }
   }, [isPWA])
 
