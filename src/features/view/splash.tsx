@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 
 const Splash = () => {
   return (
-    <div className="fixed right-1/2 z-50 h-dvh w-screen max-w-mobile translate-x-1/2 overflow-hidden bg-background-base-01">
+    <div className="fixed left-0 top-0 z-50 h-dvh w-screen overflow-hidden bg-background-base-01">
       <motion.div
         className="center"
         initial={{ x: 200, y: -120, opacity: 0 }}
@@ -17,5 +17,4 @@ const Splash = () => {
     </div>
   )
 }
-
 export default Splash

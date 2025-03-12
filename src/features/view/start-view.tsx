@@ -3,16 +3,15 @@
 import AppStartView from './app-start'
 import { useSession } from 'next-auth/react'
 import Splash from './splash'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { checkPWAAppLaunched, setPWAAppLaunched } from '@/shared/utils/pwa'
 
 const StartView = () => {
   const { status } = useSession()
   const [isRedirecting, setIsRedirecting] = useState(true)
+  const hasRedirected = useRef(false)
 
   useEffect(() => {
-    let hasRedirected = false
-
     // eslint-disable-next-line @typescript-eslint/require-await
     const detectPWA = async () => {
       if (typeof window === 'undefined') return false
@@ -41,19 +40,21 @@ const StartView = () => {
     }
 
     const handleRedirection = async () => {
-      // 리디렉션 시작 표시
-      setIsRedirecting(true)
-
       const isPWA = await detectPWA()
-      if (isPWA) return
+
+      // 1차 pwa 판별
+      if (isPWA) {
+        setIsRedirecting(false)
+        return
+      }
 
       // 이미 리디렉션된 경우 중복 실행 방지
-      if (hasRedirected) return
-      hasRedirected = true
+      if (hasRedirected.current) return
+      hasRedirected.current = true
 
       // 약간의 지연 후 리디렉션 실행
       setTimeout(() => {
-        if (!isPWA) {
+        if (isPWA) {
           window.location.href = '/login'
         } else {
           window.location.href = 'https://picktoss.framer.website/'
@@ -74,20 +75,9 @@ const StartView = () => {
     return () => {
       clearTimeout(timeoutId)
       clearTimeout(failsafeTimeout)
+      setIsRedirecting(false)
     }
   }, [])
-
-  // useEffect(() => {
-  //   if (typeof window !== undefined) {
-  //     const isPWA = window.matchMedia('(display-mode: standalone)').matches
-
-  //     if (isPWA) {
-  //       window.location.href = '/login'
-  //     } else {
-  //       window.location.href = 'https://picktoss.framer.website/'
-  //     }
-  //   }
-  // }, [])
 
   if (status === 'loading' || isRedirecting) {
     return <Splash />
