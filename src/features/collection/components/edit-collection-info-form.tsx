@@ -53,7 +53,7 @@ type FormValues = z.infer<typeof formSchema>
 const EditCollectionInfoForm = () => {
   const router = useRouter()
   const { id } = useParams()
-  const { data } = useCollectionInfo(Number(id))
+  const { data, isLoading } = useCollectionInfo(Number(id))
 
   const [emojiOpen, setEmojiOpen] = useState(false)
   const emojiPickerRef = useRef<HTMLDivElement>(null)
@@ -106,7 +106,9 @@ const EditCollectionInfoForm = () => {
       title: data.name,
       description: data.description,
       emoji: data.emoji,
-      categoryCode: CATEGORIES.find((category) => category.name === data.collectionCategory)!.id,
+      categoryCode:
+        CATEGORIES.find((category) => category.name === data.collectionCategory)?.id ??
+        CATEGORIES[0]?.id,
     })
   }, [data, form])
 
@@ -126,7 +128,7 @@ const EditCollectionInfoForm = () => {
     }
   }, [emojiOpen])
 
-  if (!data) {
+  if (isLoading) {
     return <Loading center />
   }
 
@@ -142,34 +144,36 @@ const EditCollectionInfoForm = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <button
-                      onClick={() => setEmojiOpen(!emojiOpen)}
-                      type="button"
-                      className="outline-none"
-                    >
-                      <div className="flex-center size-[48px] rounded-[12px] bg-background-base-02 text-3xl">
-                        {field.value}
-                      </div>
-                    </button>
-
-                    {emojiOpen && (
-                      <div
-                        ref={emojiPickerRef}
-                        className="fixed right-1/2 top-[120px] translate-x-1/2"
+                    <>
+                      <button
+                        onClick={() => setEmojiOpen(!emojiOpen)}
+                        type="button"
+                        className="outline-none"
                       >
-                        <EmojiPicker
-                          skinTonesDisabled
-                          width="95vw"
-                          height="60vh"
-                          onEmojiClick={(emojiData, e) => {
-                            e.preventDefault()
-                            field.onChange(emojiData.emoji)
-                            setEmojiOpen(false)
-                          }}
-                          className="max-w-mobile"
-                        />
-                      </div>
-                    )}
+                        <div className="flex-center size-[48px] rounded-[12px] bg-background-base-02 text-3xl">
+                          {field.value}
+                        </div>
+                      </button>
+
+                      {emojiOpen && (
+                        <div
+                          ref={emojiPickerRef}
+                          className="fixed right-1/2 top-[120px] translate-x-1/2"
+                        >
+                          <EmojiPicker
+                            skinTonesDisabled
+                            width="95vw"
+                            height="60vh"
+                            onEmojiClick={(emojiData, e) => {
+                              e.preventDefault()
+                              field.onChange(emojiData.emoji)
+                              setEmojiOpen(false)
+                            }}
+                            className="max-w-mobile"
+                          />
+                        </div>
+                      )}
+                    </>
                   </FormControl>
                 </FormItem>
               )}

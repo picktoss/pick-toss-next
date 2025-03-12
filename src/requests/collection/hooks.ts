@@ -17,6 +17,7 @@ import {
   complaintCollection,
 } from './client'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
+import { useUser } from '@/shared/hooks/use-user'
 
 export const useCollections = (props?: {
   collectionSortOption: 'POPULARITY' | 'UPDATED'
@@ -31,10 +32,13 @@ export const useCollections = (props?: {
 }
 
 export const useCollectionInfo = (collectionId: number) => {
+  const { user } = useUser()
+
   return useQuery({
     queryKey: ['collectionInfo', collectionId],
     queryFn: async () => getCollectionInfo({ collectionId }),
     retry: false,
+    enabled: !!user?.id,
   })
 }
 
