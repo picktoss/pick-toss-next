@@ -9,7 +9,6 @@ import { checkPWAAppLaunched, setPWAAppLaunched } from '@/shared/utils/pwa'
 const StartView = () => {
   const { status } = useSession()
   const [showSplash, setShowSplash] = useState(false)
-  // const [isRedirecting, setIsRedirecting] = useState(false)
 
   useEffect(() => {
     let hasRedirected = false
@@ -43,14 +42,12 @@ const StartView = () => {
 
     const handleRedirection = async () => {
       const isPWA = await detectPWA()
+
+      // 1차 pwa 판단 후 화면 렌더링
       if (isPWA) {
         setShowSplash(true)
-        // setIsRedirecting(false)
         return
       }
-
-      // // 리디렉션 시작 표시
-      // setIsRedirecting(true)
 
       // 이미 리디렉션된 경우 중복 실행 방지
       if (hasRedirected) return
@@ -71,19 +68,13 @@ const StartView = () => {
       await handleRedirection()
     }, 100)
 
-    // // 리디렉션이 실패하는 경우를 대비해 타임아웃 설정
-    // const failsafeTimeout = setTimeout(() => {
-    //   setIsRedirecting(false)
-    // }, 2000)
-
     return () => {
       clearTimeout(timeoutId)
-      // clearTimeout(failsafeTimeout)
     }
   }, [])
 
   if (status === 'loading' || showSplash) {
-    return <Splash />
+    return <Splash setShowSplash={setShowSplash} />
   }
 
   return <AppStartView />
