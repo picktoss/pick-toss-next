@@ -40,7 +40,7 @@ const nextConfig = {
         ],
       },
       {
-        source: '/pdf.worker.min.mjs',
+        source: '/pdf.worker.min.js',
         headers: [
           { key: 'Content-Type', value: 'application/javascript' },
           { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
