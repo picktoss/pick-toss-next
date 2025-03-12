@@ -58,13 +58,13 @@ const StartView = () => {
         } else {
           window.location.href = 'https://picktoss.framer.website/'
         }
-      }, 100)
+      }, 200)
     }
 
     // 리디렉션이 실패하는 경우를 대비해 타임아웃 설정
     const failsafeTimeout = setTimeout(() => {
       setIsRedirecting(false)
-    }, 1000)
+    }, 2000)
 
     // 약간의 지연을 두고 감지 및 리디렉션 실행
     const timeoutId = setTimeout(async () => {
