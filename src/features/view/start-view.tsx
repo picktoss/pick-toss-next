@@ -3,15 +3,16 @@
 import AppStartView from './app-start'
 import { useSession } from 'next-auth/react'
 import Splash from './splash'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { checkPWAAppLaunched, setPWAAppLaunched } from '@/shared/utils/pwa'
 
 const StartView = () => {
   const { status } = useSession()
   const [isRedirecting, setIsRedirecting] = useState(false)
+  const hasRedirected = useRef(false)
 
   useEffect(() => {
-    let hasRedirected = false
+    // let hasRedirected = false
 
     // eslint-disable-next-line @typescript-eslint/require-await
     const detectPWA = async () => {
@@ -53,8 +54,8 @@ const StartView = () => {
       }
 
       // 이미 리디렉션된 경우 중복 실행 방지
-      if (hasRedirected) return
-      hasRedirected = true
+      if (hasRedirected.current) return
+      hasRedirected.current = true
 
       // 약간의 지연 후 리디렉션 실행
       setTimeout(() => {
@@ -66,19 +67,20 @@ const StartView = () => {
       }, 200)
     }
 
-    // 리디렉션이 실패하는 경우를 대비해 타임아웃 설정
-    const failsafeTimeout = setTimeout(() => {
-      setIsRedirecting(false)
-    }, 2000)
-
     // 약간의 지연을 두고 감지 및 리디렉션 실행
     const timeoutId = setTimeout(async () => {
       await handleRedirection()
     }, 100)
 
+    // 리디렉션이 실패하는 경우를 대비해 타임아웃 설정
+    const failsafeTimeout = setTimeout(() => {
+      setIsRedirecting(false)
+    }, 2000)
+
     return () => {
       clearTimeout(timeoutId)
       clearTimeout(failsafeTimeout)
+      setIsRedirecting(false)
     }
   }, [])
 
