@@ -64,11 +64,7 @@ const StartView = () => {
     // 리디렉션이 실패하는 경우를 대비해 타임아웃 설정
     const failsafeTimeout = setTimeout(() => {
       setIsRedirecting(false)
-<<<<<<< HEAD
     }, 2000)
-=======
-    }, 1000)
->>>>>>> b226606226c2a0681f1b536b5c4b0aed56437e0b
 
     // 약간의 지연을 두고 감지 및 리디렉션 실행
     const timeoutId = setTimeout(async () => {
