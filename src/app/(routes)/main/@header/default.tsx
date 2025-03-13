@@ -3,13 +3,11 @@
 import InviteRewardDrawer from '@/features/payment/components/invite-reward-drawer'
 import Icon from '@/shared/components/custom/icon'
 import Text from '@/shared/components/ui/text'
-import usePreviousPath from '@/shared/hooks/use-previous-path'
 import { useUserStore } from '@/store/user'
 import Link from 'next/link'
 import { useEffect } from 'react'
 
 const Header = () => {
-  usePreviousPath()
   const { userInfo: user } = useUserStore()
 
   useEffect(() => {

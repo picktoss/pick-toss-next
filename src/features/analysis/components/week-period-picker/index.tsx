@@ -23,16 +23,26 @@ const WeekPeriodPicker = ({ today }: { today: Date }) => {
   const justBeforePeriod = getPastDatesFromGivenDate(startDate)
   const rightAfterPeriod = getFutureDatesFromGivenDate(endDate)
 
+  const handlePrevPeriod = () => {
+    const currentSearchParams = new URLSearchParams(searchParams)
+    currentSearchParams.set('tab', 'WEEK')
+    currentSearchParams.set('startDate', justBeforePeriod[0] ?? '')
+    currentSearchParams.set('endDate', justBeforePeriod[1] ?? '')
+
+    router.replace(`?${currentSearchParams.toString()}`)
+  }
+  const handleNextPeriod = () => {
+    const currentSearchParams = new URLSearchParams(searchParams)
+    currentSearchParams.set('tab', 'WEEK')
+    currentSearchParams.set('startDate', rightAfterPeriod[0] ?? '')
+    currentSearchParams.set('endDate', rightAfterPeriod[1] ?? '')
+
+    router.replace(`?${currentSearchParams.toString()}`)
+  }
+
   return (
     <div className="flex-center flex h-fit w-full px-[16px] py-[32px]">
-      <button
-        type="button"
-        onClick={() =>
-          router.replace(
-            `?tab=WEEK&startDate=${justBeforePeriod[0]}&endDate=${justBeforePeriod[1]}`
-          )
-        }
-      >
+      <button type="button" onClick={handlePrevPeriod}>
         <Icon name="triangle-left" className="size-[16px]" />
       </button>
 
@@ -40,15 +50,7 @@ const WeekPeriodPicker = ({ today }: { today: Date }) => {
         {formatToMD(startDate)} ~ {formatToMD(endDate)}
       </Text>
 
-      <button
-        type="button"
-        disabled={nextBtnDisabled}
-        onClick={() =>
-          router.replace(
-            `?tab=WEEK&startDate=${rightAfterPeriod[0]}&endDate=${rightAfterPeriod[1]}`
-          )
-        }
-      >
+      <button type="button" disabled={nextBtnDisabled} onClick={handleNextPeriod}>
         <Icon
           name="triangle-right"
           className={cn('size-[16px]', nextBtnDisabled && 'text-icon-disabled')}

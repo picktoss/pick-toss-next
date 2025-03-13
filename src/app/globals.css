@@ -52,6 +52,7 @@ html {
 }
 
 body {
+  overscroll-behavior-x: none;
   overflow-y: auto;
   -ms-overflow-style: none; /* IE, Edge */
 }

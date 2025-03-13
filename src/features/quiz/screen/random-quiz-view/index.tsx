@@ -186,7 +186,7 @@ const RandomQuizView = ({ directories }: Props) => {
                 icon="cancel"
                 onClick={() => {
                   randomquizExitEvent()
-                  router.back()
+                  router.replace('/main')
                 }}
               />
             </div>

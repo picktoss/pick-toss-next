@@ -16,9 +16,24 @@ const MonthPeriodPicker = ({ today }: { today: Date }) => {
   const justBeforeMonth = getPreviousMonth(selectedMonth)
   const rightAfterMonth = getNextMonth(selectedMonth)
 
+  const handlePrevMonth = () => {
+    const currentSearchParams = new URLSearchParams(searchParams)
+    currentSearchParams.set('tab', 'MONTH')
+    currentSearchParams.set('month', justBeforeMonth)
+
+    router.replace(`?${currentSearchParams.toString()}`)
+  }
+  const handleNextMonth = () => {
+    const currentSearchParams = new URLSearchParams(searchParams)
+    currentSearchParams.set('tab', 'MONTH')
+    currentSearchParams.set('month', rightAfterMonth)
+
+    router.replace(`?${currentSearchParams.toString()}`)
+  }
+
   return (
     <div className="flex-center flex h-fit w-full px-[16px] py-[32px]">
-      <button type="button" onClick={() => router.replace(`?tab=MONTH&month=${justBeforeMonth}`)}>
+      <button type="button" onClick={handlePrevMonth}>
         <Icon name="triangle-left" className="size-[16px]" />
       </button>
 
@@ -26,11 +41,7 @@ const MonthPeriodPicker = ({ today }: { today: Date }) => {
         {Number(selectedMonth.split('-')[1])}월
       </Text>
 
-      <button
-        type="button"
-        disabled={nextBtnDisabled}
-        onClick={() => router.replace(`?tab=MONTH&month=${rightAfterMonth}`)}
-      >
+      <button type="button" disabled={nextBtnDisabled} onClick={handleNextMonth}>
         <Icon
           name="triangle-right"
           className={cn('size-[16px]', nextBtnDisabled && 'text-icon-disabled')}

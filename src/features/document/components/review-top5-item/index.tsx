@@ -19,7 +19,7 @@ const ReviewTop5Item = ({ ranking, documentId, documentTitle, directory, reviewC
 
   return (
     <Link
-      href={`/document/${documentId}`}
+      href={`/document/${documentId}?prev=home`}
       className="flex h-fit w-full items-center justify-between px-[20px] py-[16px]"
       onClick={() => {
         top5NoteClickEvent({
