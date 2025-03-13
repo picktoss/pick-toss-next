@@ -31,12 +31,7 @@ const CollectionBannerAd = ({ adId }: { adId?: string }) => {
     }
   }, [])
 
-  return (
-    <div
-      id={`adfit-banner-collection-${id}`}
-      className="flex-center h-[48px] w-[319px] overflow-hidden rounded-[12px]"
-    ></div>
-  )
+  return <div id={`adfit-banner-collection-${id}`} className="flex-center h-[50px] w-[320px]"></div>
 }
 
 export default CollectionBannerAd
