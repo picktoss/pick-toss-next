@@ -6,6 +6,7 @@ on:
 
 jobs:
   build:
+    if: github.ref != 'refs/heads/main' # ✅ main 브랜치에서는 실행 제외
     runs-on: ubuntu-latest
 
     steps:
