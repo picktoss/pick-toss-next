@@ -12,21 +12,17 @@ import { useMemo } from 'react'
 
 const TodayQuizInfo = () => {
   const { data } = useQuery(queries.quiz.todayQuizInfo())
+  const currentConsecutiveDays = useMemo(() => data?.currentConsecutiveDays ?? 0, [data])
 
   const todayCheckData = useMemo(
     () =>
       todayQuizCheckList.map((checkItem) => {
-        const currentConsecutiveDays = data?.currentConsecutiveDays ?? 0
-
-        // eslint-disable-next-line no-console
-        console.log(currentConsecutiveDays)
-
         if (checkItem.day <= currentConsecutiveDays) {
           return { ...checkItem, isComplete: true }
         }
         return { ...checkItem }
       }),
-    [data]
+    [currentConsecutiveDays]
   )
 
   return (
@@ -35,7 +31,7 @@ const TodayQuizInfo = () => {
         <Icon name="today-quiz" className="ml-[12px] size-[100px]" />
         <div className="flex-center mt-[20.38px] flex-col gap-[12px]">
           <Text typography="title1" className="text-text-accent">
-            연속 {data?.currentConsecutiveDays}일 완료
+            연속 {currentConsecutiveDays}일 완료
           </Text>
           <Text typography="text1-medium" className="text-center text-text-secondary">
             오늘의 퀴즈를 완료할 때마다 별 5개를 드리고, <br />
