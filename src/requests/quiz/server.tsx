@@ -50,7 +50,7 @@ export const getQuizRecords = async () => {
   }
 }
 
-/** GET /quizzes/{solved_date}/quiz-record - 날짜별 퀴즈 기록록 */
+/** GET /quizzes/{solved_date}/quiz-record - 날짜별 퀴즈 기록 */
 export const getQuizRecordsByDate = async (date: string) => {
   try {
     const { data } = await httpServer.get<Quiz.Response.GetQuizRecordsByDate>(
