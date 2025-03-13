@@ -4,6 +4,7 @@ import InviteRewardDrawer from '@/features/payment/components/invite-reward-draw
 import DayCheck from '@/features/quiz/components/today-quiz-check/day-check'
 import { todayQuizCheckList } from '@/features/quiz/config'
 import Icon from '@/shared/components/custom/icon'
+import Loading from '@/shared/components/custom/loading'
 import Tag from '@/shared/components/ui/tag'
 import Text from '@/shared/components/ui/text'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
@@ -24,6 +25,14 @@ const TodayQuizInfo = () => {
       }),
     [currentConsecutiveDays]
   )
+
+  if (data?.currentConsecutiveDays === undefined) {
+    return (
+      <div className="flex-center h-[calc(100dvh-54px-88px)] w-full">
+        <Loading />
+      </div>
+    )
+  }
 
   return (
     <main className="h-[calc(100dvh-54px-88px)] w-full overflow-y-auto px-[16px]">
