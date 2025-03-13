@@ -10,10 +10,10 @@ interface LayoutProps extends PropsWithChildren {
 
 const Layout: FunctionComponent<LayoutProps> = ({ children, header }) => {
   return (
-    <Suspense fallback={<RootLoading />}>
+    <>
       {header}
-      {children}
-    </Suspense>
+      <Suspense fallback={<RootLoading />}>{children}</Suspense>
+    </>
   )
 }
 

@@ -3,7 +3,7 @@ import Text from '@/shared/components/ui/text'
 
 export default function RootLoading() {
   return (
-    <div className="center flex flex-col items-center lg:gap-[34px]">
+    <div className="flex-center fixed right-1/2 top-0 h-dvh w-screen max-w-mobile translate-x-1/2 flex-col bg-background-base-01 lg:gap-[34px]">
       <Loading />
 
       <div className="hidden flex-col items-center gap-[16px] lg:flex">
