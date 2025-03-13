@@ -42,8 +42,9 @@ const InputWithCancelButton = ({
       if (prev === 'home') {
         router.replace('/main')
       }
+    } else {
+      router.back()
     }
-    router.back()
   }
 
   return (
