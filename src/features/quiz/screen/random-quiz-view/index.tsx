@@ -260,7 +260,7 @@ const RandomQuizView = ({ directories }: Props) => {
         </div>
 
         {/* Swiper 영역 */}
-        <div ref={swiperContainerRef} className="flex-center size-full grow">
+        <div ref={swiperContainerRef} className="allow-swipe flex-center size-full grow">
           <div className="flex-center my-[10px] size-full">
             <Swiper
               key={repository}
