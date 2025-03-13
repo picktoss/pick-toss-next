@@ -119,7 +119,7 @@ const Home = () => {
   }
 
   return (
-    <main className="flex h-[calc(100dvh-54px-88px)] w-full flex-col gap-[64px] overflow-y-auto overflow-x-hidden bg-background-base-02 px-[16px] scrollbar-hide">
+    <main className="flex h-[calc(100dvh-54px-88px)] w-full flex-col gap-[64px] overflow-y-auto overflow-x-hidden bg-background-base-02 px-[16px] pb-[88px] scrollbar-hide">
       <div className="w-full">
         {/* 오늘의 퀴즈 영역 */}
         <MainTodayQuizArea
@@ -180,7 +180,7 @@ const Home = () => {
       {/* 복습 필수 노트 TOP5 */}
       <ReviewTop5Container />
 
-      <div className="mb-[80px] flex flex-col">
+      <div className="flex flex-col">
         {/* 픽토스님의 관심분야 컬렉션 */}
         <InterestedCategoryCollections interestedCategories={userInfo?.interestCategories} />
 
