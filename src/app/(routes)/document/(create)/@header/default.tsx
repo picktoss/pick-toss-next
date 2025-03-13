@@ -4,8 +4,13 @@ import DirectorySelectDrawer from '@/features/directory/components/directory-sel
 import { useDirectoryContext } from '@/features/directory/contexts/directory-context'
 import GoBackButton from '@/shared/components/custom/go-back-button'
 import Text from '@/shared/components/ui/text'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 const Header = () => {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const prev = searchParams.get('prev')
+
   const { selectedDirectory } = useDirectoryContext()
 
   const directoryName = !selectedDirectory?.name
@@ -14,11 +19,21 @@ const Header = () => {
     ? '전체 노트'
     : selectedDirectory.name
 
+  const handleClickBack = () => {
+    if (prev) {
+      if (prev === 'home') {
+        router.replace('/main')
+      }
+    } else {
+      router.back()
+    }
+  }
+
   return (
     <header className="fixed right-1/2 top-0 z-20 flex h-[54px] w-full max-w-mobile translate-x-1/2 border-b border-border-divider bg-background-base-01 px-[16px] transition-all">
       <div className="flex size-full items-center justify-between">
         <div className="flex items-center">
-          <GoBackButton icon="cancel" />
+          <GoBackButton icon="cancel" onClick={handleClickBack} />
         </div>
         <div className="flex items-center text-text1-medium">
           <Text className="mr-[12px] text-text-sub">폴더</Text>

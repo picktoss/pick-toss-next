@@ -48,15 +48,26 @@ const IntegratedSearch = () => {
   }
 
   const onDeleteKeyword = () => {
-    handleDeleteKeyword('/search' + `?tab=${tab}`)
+    const currentSearchParams = new URLSearchParams(searchParams)
+    currentSearchParams.set('tab', tab)
+
+    handleDeleteKeyword('/search' + `?${currentSearchParams.toString()}`)
   }
 
   const onUpdateKeyword = (keyword: string) => {
-    handleUpdateKeyword(keyword, `?tab=${tab}` + `&keyword=${keyword}`)
+    const currentSearchParams = new URLSearchParams(searchParams)
+    currentSearchParams.set('tab', tab)
+    currentSearchParams.set('keyword', keyword)
+
+    handleUpdateKeyword(keyword, `?${currentSearchParams.toString()}`)
   }
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    handleSubmit(e, `?tab=${tab}` + `&keyword=${keyword}`)
+    const currentSearchParams = new URLSearchParams(searchParams)
+    currentSearchParams.set('tab', tab)
+    currentSearchParams.set('keyword', keyword)
+
+    handleSubmit(e, `?${currentSearchParams.toString()}`)
   }
 
   const tabContentMap = {
