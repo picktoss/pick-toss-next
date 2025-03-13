@@ -2,7 +2,7 @@
 
 import Icon from '@/shared/components/custom/icon'
 import { Input } from '@/shared/components/ui/input'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { ChangeEventHandler, RefObject } from 'react'
 
 interface Props {
@@ -23,8 +23,11 @@ const InputWithCancelButton = ({
   onDeleteKeyword,
   onSubmit,
 }: Props) => {
+  const searchParams = useSearchParams()
+  const prev = searchParams.get('prev')
   const router = useRouter()
   const pathname = usePathname()
+
   const placeholder =
     pathname === '/search'
       ? '노트, 퀴즈, 컬렉션 검색'
@@ -35,6 +38,11 @@ const InputWithCancelButton = ({
       : '검색어를 입력해주세요'
 
   const handleCancel = () => {
+    if (prev) {
+      if (prev === 'home') {
+        router.replace('/main')
+      }
+    }
     router.back()
   }
 

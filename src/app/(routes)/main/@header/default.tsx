@@ -46,10 +46,10 @@ const Header = () => {
             {user?.star}
           </Text>
         </Link> */}
-        <Link href={'/search'}>
+        <Link href={'/search?prev=home'}>
           <Icon name="search" className="size-[24px]" />
         </Link>
-        <Link href={'/notification'}>
+        <Link href={'/notification?prev=home'}>
           <Icon name="notification" className="size-[24px]" />
         </Link>
       </div>

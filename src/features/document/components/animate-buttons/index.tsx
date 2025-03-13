@@ -6,7 +6,7 @@ import Icon, { IconProps } from '@/shared/components/custom/icon'
 import { useEffect, useState } from 'react'
 import { cn } from '@/shared/lib/utils'
 import Text from '@/shared/components/ui/text'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { addDocumentButtons } from '../../config'
 import { useDocumentContext } from '../../contexts/document-context'
 import { NoteAddClickProps, useAmplitudeContext } from '@/shared/hooks/use-amplitude-context'
@@ -18,6 +18,8 @@ const AnimatedButtons = () => {
   const { noteAddClickEvent } = useAmplitudeContext()
 
   const router = useRouter()
+  const pathname = usePathname()
+
   const [isFirstRender, setIsFirstRender] = useState(true)
   const { buttonHidden, isExpandedBtns, setIsExpandedBtns } = useDocumentContext()
 
@@ -135,7 +137,7 @@ const AnimatedButtons = () => {
                   const method = button.key === 'clip' ? '파일' : '작성'
                   const noteAddClickProps: NoteAddClickProps = { method }
                   noteAddClickEvent(noteAddClickProps)
-                  router.push(button.href)
+                  router.push(button.href + (pathname === '/main' ? '?prev=home' : ''))
                 },
                 button.text
               )
