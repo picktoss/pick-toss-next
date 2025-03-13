@@ -1,0 +1,50 @@
+name: Vercel Deployment Notification
+
+on:
+  deployment_status:
+
+jobs:
+  notify:
+    if: github.ref != 'refs/heads/main' # ✅ main 브랜치에서는 실행 제외
+    runs-on: ubuntu-latest
+    steps:
+      - name: Discord Notification
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          STATUS: ${{ github.event.deployment_status.state }}
+          DESCRIPTION: ${{ github.event.deployment_status.description || 'No description available' }}
+          COMMIT: ${{ github.sha }}
+          LOG_URL: ${{ github.event.deployment_status.log_url || 'Not available' }}
+        run: |
+          COLOR="16711680"  # 기본값: 빨간색 (실패)
+          if [[ "$STATUS" == "success" ]]; then
+            COLOR="65280"  # 초록색 (성공)
+          fi
+
+          curl -H "Content-Type: application/json" -X POST "$DISCORD_WEBHOOK_URL" -d '{
+            "username": "Vercel Deploy Bot",
+            "avatar_url": "https://vercel.com/favicon.ico",
+            "embeds": [
+              {
+                "title": "Vercel Deployment Status",
+                "description": "'"$STATUS: $DESCRIPTION"'",
+                "color": '"$COLOR"',
+                "fields": [
+                  {
+                    "name": "Commit",
+                    "value": "'"$COMMIT"'",
+                    "inline": true
+                  },
+                  {
+                    "name": "Status",
+                    "value": "'"$STATUS"'",
+                    "inline": true
+                  },
+                  {
+                    "name": "Log URL",
+                    "value": "'"$LOG_URL"'"
+                  }
+                ]
+              }
+            ]
+          }'

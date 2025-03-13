@@ -10,26 +10,31 @@ import CategoryDrawer from '../components/category-drawer'
 import Text from '@/shared/components/ui/text'
 import { cn } from '@/shared/lib/utils'
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 
 const UserAccount = () => {
   const { userInfo } = useUserStore()
   const { data: session } = useSession()
+  const [imageUrl, setImageUrl] = useState<string | null>(null)
 
   const interestCategories = userInfo?.interestCategories?.length
     ? userInfo.interestCategories
     : ['관심 분야 없음']
 
-  const getProfileImage = (): string | null => {
-    if (session?.user?.image) {
-      return session.user.image
+  useEffect(() => {
+    const fetchProfileImage = async () => {
+      if (session?.user?.image) {
+        setImageUrl(session.user.image)
+      } else if (session?.user?.email) {
+        const gravatarUrl = await getGravatarUrl(session.user.email)
+        setImageUrl(gravatarUrl)
+      } else {
+        setImageUrl(null)
+      }
     }
-    if (session?.user?.email) {
-      return getGravatarUrl(session.user.email)
-    }
-    return null
-  }
 
-  const imageUrl = getProfileImage()
+    void fetchProfileImage()
+  }, [session?.user?.email, session?.user?.image])
 
   return (
     <main className="relative h-[calc(100dvh-54px)] w-full overflow-y-auto px-[16px]">
