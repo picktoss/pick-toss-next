@@ -4,7 +4,6 @@ import { ChangeEvent } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import Loading from '@/shared/components/custom/loading'
-import usePreviousPath from '@/shared/hooks/use-previous-path'
 import DocumentQuizSearchList from '../components/document-quiz-search-list'
 import NoResults from './no-results'
 import { useSearch } from '../hooks/use-search'
@@ -12,7 +11,6 @@ import SearchHeader from '../components/search-header'
 
 // 퀴즈노트 탭 내 검색창 화면
 const SearchInDocument = () => {
-  usePreviousPath()
   const {
     initialKeyword,
     keyword,

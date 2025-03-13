@@ -7,7 +7,6 @@ import { Providers } from '@/providers'
 import { Toaster } from '@/shared/components/ui/toaster'
 import ClientSetUp from '@/shared/components/custom/client-set-up'
 import '@/../../firebase'
-import PreventSwipeBack from '@/shared/components/custom/prevent-swipe-back'
 
 export const metadata: Metadata = Metadatas.root()
 
@@ -41,7 +40,6 @@ export default function RootLayout({
           <div className="mx-auto min-h-dvh max-w-mobile shadow-lg">{children}</div>
         </Providers>
         <Toaster />
-        <PreventSwipeBack />
       </body>
     </html>
   )

@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 const QuizSolvedToday = ({ quizCount }: { quizCount: number }) => {
   return (
-    <Link href={'/analysis'} className="flex px-[15px]">
+    <Link href={'/analysis?prev=home'} className="flex px-[15px]">
       <Icon name="graph" className="mr-[12.6px] size-[70px]" fill="var(--color-orange-400)" />
       <div className="flex flex-col">
         <Text typography="text1-medium" color="secondary">

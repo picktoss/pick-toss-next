@@ -6,7 +6,6 @@ import { useSearchParams } from 'next/navigation'
 import { useQuery } from '@tanstack/react-query'
 import { queries } from '@/shared/lib/tanstack-query/query-keys'
 import Loading from '@/shared/components/custom/loading'
-import usePreviousPath from '@/shared/hooks/use-previous-path'
 import SearchTabController from '../components/search-tab-controller'
 import NoResults from './no-results'
 import AllSearchResults from './all-search-results'
@@ -19,7 +18,6 @@ const IntegratedSearch = () => {
   const searchParams = useSearchParams()
   const tab = (searchParams.get('tab') || 'ALL') as SearchTab
 
-  usePreviousPath()
   const {
     initialKeyword,
     keyword,

@@ -60,7 +60,7 @@ const InterestedCategoryCollections = ({ interestedCategories }: Props) => {
         <SwipeableCardList
           cardComponents={data.collections.map((item) => (
             <Link
-              href={`/collections/${item.id}`}
+              href={`/collections/${item.id}?prev=home`}
               key={item.id}
               onClick={() => interestItemClickEvent()}
             >

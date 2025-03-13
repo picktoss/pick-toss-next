@@ -165,7 +165,7 @@ const Home = () => {
 
         {/* 연속으로 푸는 중 */}
         <Link
-          href={'/record'}
+          href={'/record?prev=home'}
           className="mt-[16px] flex h-fit w-full items-center gap-[20px] rounded-[20px] bg-background-base-01 px-[24px] py-[19px]"
         >
           <Icon name="calendar" className="size-[40px] p-[4px]" />

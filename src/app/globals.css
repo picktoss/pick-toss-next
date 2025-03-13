@@ -52,6 +52,7 @@ html {
 }
 
 body {
+  overscroll-behavior-x: none;
   overflow-y: auto;
   -ms-overflow-style: none; /* IE, Edge */
 }
@@ -94,8 +95,5 @@ body::-webkit-scrollbar {
   }
   .input-basic {
     @apply rounded-[8px] bg-background-base-02 p-[12px] text-text1-medium text-text-primary ring-offset-transparent placeholder:text-text1-medium placeholder:text-text-caption focus:bg-background-base-01 focus:ring-1 focus:ring-border-focused focus-visible:outline-none disabled:cursor-not-allowed disabled:bg-background-disabled disabled:opacity-50 disabled:placeholder:text-text-disabled;
-  }
-  .allow-swipe {
-    /* ios에서 오른쪽에서 왼쪽으로 swipe시 페이지 이동을 막고 swipe요소에서만 가능하게 하도록 하기 위한 클래스명*/
   }
 }

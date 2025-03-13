@@ -30,7 +30,8 @@ const Header = () => {
 
   const router = useRouter()
   const { id } = useParams()
-  const prev = useSearchParams().get('prev')
+  const searchParams = useSearchParams()
+  const prev = searchParams.get('prev')
 
   const { userInfo: user } = useUserStore()
   const { isDrawerOpen } = useDocumentDetailContext()
@@ -80,9 +81,15 @@ const Header = () => {
   }, [])
 
   const handleClickCancel = () => {
-    if (prev && prev === 'created') {
-      noteCloseClickEvent()
-      router.replace('/document')
+    noteCloseClickEvent()
+
+    if (prev) {
+      if (prev === 'created') {
+        router.replace('/document')
+      }
+      if (prev === 'home') {
+        router.replace('/main')
+      }
     } else {
       router.back()
     }
