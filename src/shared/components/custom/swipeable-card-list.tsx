@@ -62,6 +62,7 @@ const SwipeableCardList = ({ cardComponents }: { cardComponents: React.ReactNode
       setIsMoving(false)
     }, 100) // 100ms 후에 클릭 가능하도록 설정
   }
+
   // 스크롤 방향에 따라 컨테이너 크기만큼 이동하고 끝을 감지
   const handleDirection = (direction: 'next' | 'prev') => {
     setCurrentOffset((prevOffset) => {
@@ -86,46 +87,103 @@ const SwipeableCardList = ({ cardComponents }: { cardComponents: React.ReactNode
     })
   }
 
-  // 드래그 시작 핸들러
-  const handleDragStart = () => {
-    handleMoveStart()
+  // // 드래그 시작 핸들러
+  // const handleDragStart = () => {
+  //   handleMoveStart()
+  // }
+
+  // // 드래그 종료 시 방향에 따라 이동
+  // // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // const handleDragEnd = (_: any, info: PanInfo) => {
+  //   const threshold = 10
+
+  //   if (info.offset.x < -threshold) {
+  //     handleDirection('next')
+  //   } else if (info.offset.x > threshold) {
+  //     handleDirection('prev')
+  //   } else {
+  //     handleMoveEnd()
+  //   }
+  // }
+
+  // 드래그 시작
+  const handlePanStart = (event: PointerEvent) => {
+    event.preventDefault()
+    setIsMoving(true) // 드래그 시작
+  }
+
+  // 드래그 중
+  const handlePan = (event: PointerEvent) => {
+    event.preventDefault()
+    setIsMoving(true)
   }
 
   // 드래그 종료 시 방향에 따라 이동
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleDragEnd = (_: any, info: PanInfo) => {
-    const threshold = 10
+  const handlePanEnd = (event: PointerEvent, info: PanInfo) => {
+    event.preventDefault()
+
+    const threshold = 2 // 감지 민감도 조정
     if (info.offset.x < -threshold) {
       handleDirection('next')
     } else if (info.offset.x > threshold) {
       handleDirection('prev')
+    } else {
+      handleMoveEnd()
     }
   }
 
   // 휠 이벤트 처리: 휠을 통해 좌우 이동
   const handleWheel = debounce((event: React.WheelEvent | WheelEvent) => {
+    event.preventDefault()
+
     if (isMoving) return
 
-    if (containerRef.current && containerRef.current.contains(event.target as Node)) {
-      if (Math.abs(event.deltaY) > 1) {
-        event.preventDefault()
+    const threshold = 50 // 이동 방향 감지 임계값
+
+    requestAnimationFrame(() => {
+      if (containerRef.current) {
+        if (event.deltaY < -threshold) {
+          handleMoveStart()
+          handleDirection('prev')
+        } else if (event.deltaY > threshold) {
+          handleMoveStart()
+          handleDirection('next')
+        }
       }
 
-      const threshold = 100 // 이동 방향 감지 임계값
-
-      requestAnimationFrame(() => {
-        if (containerRef.current) {
-          if (event.deltaY < -threshold) {
-            handleMoveStart()
-            handleDirection('prev')
-          } else if (event.deltaY > threshold) {
-            handleMoveStart()
-            handleDirection('next')
-          }
+      // 트랙패드용
+      if (event.deltaX !== 0) {
+        const threshold = 1
+        if (event.deltaX < -threshold) {
+          handleMoveStart()
+          handleDirection('prev')
+        } else if (event.deltaX > threshold) {
+          handleMoveStart()
+          handleDirection('next')
         }
-      })
-    }
-  }, 50)
+      }
+    })
+
+    // if (containerRef.current && containerRef.current.contains(event.target as Node)) {
+    //   if (Math.abs(event.deltaY) > 1) {
+    //     event.preventDefault()
+    //   }
+
+    //   const threshold = 100 // 이동 방향 감지 임계값
+
+    //   requestAnimationFrame(() => {
+    //     if (containerRef.current) {
+    //       if (event.deltaY < -threshold) {
+    //         handleMoveStart()
+    //         handleDirection('prev')
+    //       } else if (event.deltaY > threshold) {
+    //         handleMoveStart()
+    //         handleDirection('next')
+    //       }
+    //     }
+    //   })
+    // }
+  }, 30)
 
   return (
     <motion.div
@@ -144,8 +202,11 @@ const SwipeableCardList = ({ cardComponents }: { cardComponents: React.ReactNode
           drag="x"
           dragConstraints={constraints}
           style={{ x }}
-          onDragStart={handleDragStart}
-          onDragEnd={handleDragEnd}
+          onPanStart={handlePanStart}
+          onPan={handlePan}
+          onPanEnd={handlePanEnd}
+          // onDragStart={handleDragStart}
+          // onDragEnd={handleDragEnd}
           animate={controls}
         >
           {cardComponent}
