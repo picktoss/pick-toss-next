@@ -104,6 +104,8 @@ const SwipeableCardList = ({ cardComponents }: { cardComponents: React.ReactNode
 
   // 휠 이벤트 처리: 휠을 통해 좌우 이동
   const handleWheel = debounce((event: React.WheelEvent | WheelEvent) => {
+    event.preventDefault()
+
     if (isMoving) return
 
     if (containerRef.current && containerRef.current.contains(event.target as Node)) {
