@@ -185,7 +185,9 @@ const ReplayQuizDrawer = ({
                 max={savedQuizCount} // 저장된 문제 수
                 step={1}
                 defaultValue={[savedQuizCount]} // 저장된 문제 수
+                value={[quizCount]}
                 onValueChange={(value) => setQuizCount(value[0] || 0)}
+                minMaxisSame={minQuizCount === savedQuizCount}
               />
 
               <div className="mt-[10px] flex w-full items-center justify-between text-text2-medium text-text-sub">

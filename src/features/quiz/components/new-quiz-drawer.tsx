@@ -144,7 +144,9 @@ const NewQuizDrawer = ({ triggerComponent, documentId, startAddQuizzes }: Props)
                 max={DOCUMENT_MAX_QUIZ_COUNT}
                 step={1}
                 defaultValue={[DEFAULT_QUIZ_COUNT]}
+                value={[quizCount]}
                 onValueChange={(value) => setQuizCount(value[0] || DEFAULT_QUIZ_COUNT)}
+                minMaxisSame={DOCUMENT_MIN_QUIZ_COUNT === DOCUMENT_MAX_QUIZ_COUNT}
               />
 
               <div className="mt-[10px] flex w-full items-center justify-between text-text2-medium text-text-sub">

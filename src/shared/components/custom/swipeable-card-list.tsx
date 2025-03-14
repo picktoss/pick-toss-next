@@ -36,16 +36,18 @@ const SwipeableCardList = ({ cardComponents }: { cardComponents: React.ReactNode
 
   // containerRef에서는 수직 스크롤을 막기 위한 코드
   useEffect(() => {
-    const container = containerRef.current
-
-    if (container) {
-      container.addEventListener('wheel', handleWheel, { passive: false })
+    const handleWheelEvent = (event: WheelEvent) => {
+      if (containerRef.current && containerRef.current.contains(event.target as Node)) {
+        event.preventDefault() // 수직 스크롤 차단
+        event.stopPropagation() // 이벤트 버블링 방지
+        handleWheel(event)
+      }
     }
 
+    window.addEventListener('wheel', handleWheelEvent, { passive: false })
+
     return () => {
-      if (container) {
-        container.removeEventListener('wheel', handleWheel)
-      }
+      window.removeEventListener('wheel', handleWheelEvent)
     }
   }, [])
 
@@ -60,7 +62,6 @@ const SwipeableCardList = ({ cardComponents }: { cardComponents: React.ReactNode
       setIsMoving(false)
     }, 100) // 100ms 후에 클릭 가능하도록 설정
   }
-
   // 스크롤 방향에 따라 컨테이너 크기만큼 이동하고 끝을 감지
   const handleDirection = (direction: 'next' | 'prev') => {
     setCurrentOffset((prevOffset) => {
@@ -79,6 +80,8 @@ const SwipeableCardList = ({ cardComponents }: { cardComponents: React.ReactNode
         transition: { type: 'tween', duration: 0.5, ease: 'easeInOut' },
       })
 
+      handleMoveEnd()
+
       return newOffset
     })
   }
@@ -91,18 +94,18 @@ const SwipeableCardList = ({ cardComponents }: { cardComponents: React.ReactNode
   // 드래그 종료 시 방향에 따라 이동
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleDragEnd = (_: any, info: PanInfo) => {
-    const threshold = 1
+    const threshold = 10
     if (info.offset.x < -threshold) {
       handleDirection('next')
     } else if (info.offset.x > threshold) {
       handleDirection('prev')
     }
-
-    handleMoveEnd()
   }
 
   // 휠 이벤트 처리: 휠을 통해 좌우 이동
   const handleWheel = debounce((event: React.WheelEvent | WheelEvent) => {
+    if (isMoving) return
+
     if (containerRef.current && containerRef.current.contains(event.target as Node)) {
       if (Math.abs(event.deltaY) > 1) {
         event.preventDefault()
@@ -113,8 +116,10 @@ const SwipeableCardList = ({ cardComponents }: { cardComponents: React.ReactNode
       requestAnimationFrame(() => {
         if (containerRef.current) {
           if (event.deltaY < -threshold) {
+            handleMoveStart()
             handleDirection('prev')
           } else if (event.deltaY > threshold) {
+            handleMoveStart()
             handleDirection('next')
           }
         }
@@ -126,7 +131,7 @@ const SwipeableCardList = ({ cardComponents }: { cardComponents: React.ReactNode
     <motion.div
       ref={containerRef}
       onWheel={handleWheel}
-      className="flex h-fit w-dvw max-w-mobile select-none gap-[8px] overflow-y-hidden overflow-x-scroll scroll-smooth scrollbar-hide"
+      className="flex h-fit w-dvw max-w-mobile select-none gap-[8px] overflow-hidden scrollbar-hide"
     >
       {cardComponents.map((cardComponent, index) => (
         <motion.div
