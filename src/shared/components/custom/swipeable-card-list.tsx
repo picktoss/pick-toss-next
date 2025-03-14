@@ -12,7 +12,6 @@ const SwipeableCardList = ({ cardComponents }: { cardComponents: React.ReactNode
   const x = useMotionValue(0)
   const controls = useAnimation()
   const [constraints, setConstraints] = useState({ left: 0, right: 0 })
-  // const [touchStartX, setTouchStartX] = useState(0)
 
   const [moveAtOnceWidth, setMoveAtOnceWidth] = useState(0)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -63,31 +62,6 @@ const SwipeableCardList = ({ cardComponents }: { cardComponents: React.ReactNode
       setIsMoving(false)
     }, 100) // 100ms 후에 클릭 가능하도록 설정
   }
-
-  // 스크롤 방향에 따라 컨테이너 크기만큼 이동하고 끝을 감지
-  // const handleDirection = async (direction: 'next' | 'prev') => {
-  //   // if (isMoving) return // 이미 움직이고 있다면 중복 실행 방지
-
-  //   // handleMoveStart()
-
-  //   let newOffset = currentOffset
-
-  //   if (direction === 'next' && currentOffset > constraints.left) {
-  //     const remainingContentWidth = Math.abs(currentOffset - constraints.left)
-  //     newOffset = currentOffset - Math.min(remainingContentWidth, moveAtOnceWidth)
-  //   } else if (direction === 'prev' && currentOffset < 0) {
-  //     const remainingContentWidth = constraints.right - currentOffset
-  //     newOffset = currentOffset + Math.min(remainingContentWidth, moveAtOnceWidth)
-  //   }
-
-  //   await controls.start({
-  //     x: newOffset,
-  //     transition: { type: 'tween', duration: 0.5, ease: 'easeInOut' },
-  //   })
-
-  //   setCurrentOffset(newOffset) // 애니메이션이 끝난 후 상태 업데이트
-  //   handleMoveEnd()
-  // }
   // 스크롤 방향에 따라 컨테이너 크기만큼 이동하고 끝을 감지
   const handleDirection = (direction: 'next' | 'prev') => {
     setCurrentOffset((prevOffset) => {
@@ -123,10 +97,8 @@ const SwipeableCardList = ({ cardComponents }: { cardComponents: React.ReactNode
     const threshold = 10
     if (info.offset.x < -threshold) {
       handleDirection('next')
-      // await handleDirection('next')
     } else if (info.offset.x > threshold) {
       handleDirection('prev')
-      // await handleDirection('prev')
     }
   }
 
@@ -146,48 +118,19 @@ const SwipeableCardList = ({ cardComponents }: { cardComponents: React.ReactNode
           if (event.deltaY < -threshold) {
             handleMoveStart()
             handleDirection('prev')
-            // await handleDirection('prev')
           } else if (event.deltaY > threshold) {
             handleMoveStart()
             handleDirection('next')
-            // await handleDirection('next')
           }
         }
       })
     }
   }, 50)
 
-  // // 모바일 터치 이벤트 처리
-  // const handleTouchStart = (event: React.TouchEvent) => {
-  //   setTouchStartX(event.touches[0]?.clientX ?? 0)
-  // }
-
-  // const handleTouchMove = debounce((event: React.TouchEvent) => {
-  //   if (isMoving) return
-
-  //   if (containerRef.current && containerRef.current.contains(event.target as Node)) {
-  //     event.preventDefault()
-
-  //     const touchEndX = event.touches[0]?.clientX ?? 0
-  //     const deltaX = touchEndX - touchStartX
-
-  //     const threshold = 50 // 이동 감지 임계값
-  //     if (deltaX < -threshold) {
-  //       handleMoveStart()
-  //       handleDirection('next')
-  //     } else if (deltaX > threshold) {
-  //       handleMoveStart()
-  //       handleDirection('prev')
-  //     }
-  //   }
-  // }, 50)
-
   return (
     <motion.div
       ref={containerRef}
       onWheel={handleWheel}
-      // onTouchStart={handleTouchStart}
-      // onTouchMove={handleTouchMove}
       className="flex h-fit w-dvw max-w-mobile select-none gap-[8px] overflow-hidden scrollbar-hide"
     >
       {cardComponents.map((cardComponent, index) => (
