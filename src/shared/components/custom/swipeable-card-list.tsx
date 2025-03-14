@@ -111,14 +111,15 @@ const SwipeableCardList = ({ cardComponents }: { cardComponents: React.ReactNode
         event.preventDefault()
       }
 
-      handleMoveStart()
       const threshold = 100 // 이동 방향 감지 임계값
 
       requestAnimationFrame(() => {
         if (containerRef.current) {
           if (event.deltaY < -threshold) {
+            handleMoveStart()
             handleDirection('prev')
           } else if (event.deltaY > threshold) {
+            handleMoveStart()
             handleDirection('next')
           }
         }
