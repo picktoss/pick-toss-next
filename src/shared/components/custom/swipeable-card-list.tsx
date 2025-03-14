@@ -12,6 +12,7 @@ const SwipeableCardList = ({ cardComponents }: { cardComponents: React.ReactNode
   const x = useMotionValue(0)
   const controls = useAnimation()
   const [constraints, setConstraints] = useState({ left: 0, right: 0 })
+  const [touchStartX, setTouchStartX] = useState(0)
 
   const [moveAtOnceWidth, setMoveAtOnceWidth] = useState(0)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -36,16 +37,18 @@ const SwipeableCardList = ({ cardComponents }: { cardComponents: React.ReactNode
 
   // containerRef에서는 수직 스크롤을 막기 위한 코드
   useEffect(() => {
-    const container = containerRef.current
-
-    if (container) {
-      container.addEventListener('wheel', handleWheel, { passive: false })
+    const handleWheelEvent = (event: WheelEvent) => {
+      if (containerRef.current && containerRef.current.contains(event.target as Node)) {
+        event.preventDefault() // 수직 스크롤 차단
+        event.stopPropagation() // 이벤트 버블링 방지
+        handleWheel(event)
+      }
     }
 
+    window.addEventListener('wheel', handleWheelEvent, { passive: false })
+
     return () => {
-      if (container) {
-        container.removeEventListener('wheel', handleWheel)
-      }
+      window.removeEventListener('wheel', handleWheelEvent)
     }
   }, [])
 
@@ -91,7 +94,7 @@ const SwipeableCardList = ({ cardComponents }: { cardComponents: React.ReactNode
   // 드래그 종료 시 방향에 따라 이동
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleDragEnd = (_: any, info: PanInfo) => {
-    const threshold = 1
+    const threshold = 10
     if (info.offset.x < -threshold) {
       handleDirection('next')
     } else if (info.offset.x > threshold) {
@@ -108,6 +111,7 @@ const SwipeableCardList = ({ cardComponents }: { cardComponents: React.ReactNode
         event.preventDefault()
       }
 
+      handleMoveStart()
       const threshold = 100 // 이동 방향 감지 임계값
 
       requestAnimationFrame(() => {
@@ -119,6 +123,36 @@ const SwipeableCardList = ({ cardComponents }: { cardComponents: React.ReactNode
           }
         }
       })
+
+      handleMoveEnd()
+    }
+  }, 50)
+
+  // 모바일 터치 이벤트 처리
+  const handleTouchStart = (event: React.TouchEvent) => {
+    setTouchStartX(event.touches[0]?.clientX ?? 0)
+    handleMoveStart()
+  }
+
+  const handleTouchMove = debounce((event: React.TouchEvent) => {
+    if (isMoving) return
+
+    if (containerRef.current && containerRef.current.contains(event.target as Node)) {
+      event.preventDefault()
+
+      const touchEndX = event.touches[0]?.clientX ?? 0
+      const deltaX = touchEndX - touchStartX
+
+      const threshold = 50 // 이동 감지 임계값
+      if (deltaX < -threshold) {
+        handleMoveStart()
+        handleDirection('next')
+      } else if (deltaX > threshold) {
+        handleMoveStart()
+        handleDirection('prev')
+      }
+
+      handleMoveEnd()
     }
   }, 50)
 
@@ -126,7 +160,9 @@ const SwipeableCardList = ({ cardComponents }: { cardComponents: React.ReactNode
     <motion.div
       ref={containerRef}
       onWheel={handleWheel}
-      className="flex h-fit w-dvw max-w-mobile select-none gap-[8px] overflow-y-hidden overflow-x-scroll scroll-smooth scrollbar-hide"
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      className="flex h-fit w-dvw max-w-mobile select-none gap-[8px] overflow-hidden scrollbar-hide"
     >
       {cardComponents.map((cardComponent, index) => (
         <motion.div
