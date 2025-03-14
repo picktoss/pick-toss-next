@@ -43,6 +43,21 @@ const QuizExplanationDrawer = ({
     await controls.start({ height: MIN_HEIGHT, y: 0 })
   }
 
+  const handleDrag = (e: MouseEvent | TouchEvent, info: { offset: { y: number } }) => {
+    let newHeight
+
+    if (info.offset.y > 0) {
+      // 아래로 드래그
+      newHeight = window.innerHeight * 0.85 - info.offset.y * 0.5
+    } else if (info.offset.y < 0) {
+      // 위로 드래그
+      y.set(-info.offset.y)
+      newHeight = parseFloat(MIN_HEIGHT) - info.offset.y * 1.5
+    }
+
+    height.set(`${newHeight}px`)
+  }
+
   const handleDragEnd = async (
     _: MouseEvent,
     info: { velocity: { y: number }; offset: { y: number } }
@@ -65,6 +80,7 @@ const QuizExplanationDrawer = ({
       drag="y"
       dragConstraints={{ top: 0, bottom: 0 }}
       dragElastic={0.3}
+      onDrag={handleDrag}
       onDragEnd={handleDragEnd}
       style={{
         backgroundColor,

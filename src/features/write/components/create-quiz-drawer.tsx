@@ -1,10 +1,7 @@
 'use client'
 
-// import { DOCUMENT_CONSTRAINTS } from '@/features/document/config'
-// import { calculateAvailableQuizCount } from '@/features/document/utils'
 import InviteRewardDrawer from '@/features/payment/components/invite-reward-drawer'
 import MoreStarDialog from '@/features/payment/components/more-star-dialog'
-// import PaymentPopup from '@/features/payment/screen/payment-popup'
 import Icon from '@/shared/components/custom/icon'
 import { Button } from '@/shared/components/ui/button'
 import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from '@/shared/components/ui/drawer'
@@ -49,11 +46,6 @@ const CreateQuizDrawer = ({ handleCreateDocument, maxQuizCount, disabled }: Prop
 
   // iOS Safari Drawer & Scroll 관련 버그 해결
   useDrawerScrollLock(isOpenDrawer)
-
-  useEffect(() => {
-    // eslint-disable-next-line no-console
-    console.log(maxQuizCount)
-  }, [maxQuizCount])
 
   useEffect(() => {
     setSelectedQuizCount(DEFAULT_QUIZ_COUNT)
