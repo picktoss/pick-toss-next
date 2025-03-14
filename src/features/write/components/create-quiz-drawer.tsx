@@ -4,7 +4,6 @@
 // import { calculateAvailableQuizCount } from '@/features/document/utils'
 import InviteRewardDrawer from '@/features/payment/components/invite-reward-drawer'
 import MoreStarDialog from '@/features/payment/components/more-star-dialog'
-// import PaymentPopup from '@/features/payment/screen/payment-popup'
 import Icon from '@/shared/components/custom/icon'
 import { Button } from '@/shared/components/ui/button'
 import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from '@/shared/components/ui/drawer'
