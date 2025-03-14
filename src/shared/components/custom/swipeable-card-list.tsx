@@ -77,10 +77,12 @@ const SwipeableCardList = ({ cardComponents }: { cardComponents: React.ReactNode
         newOffset = prevOffset + Math.min(remainingContentWidth, moveAtOnceWidth)
       }
 
-      void controls.start({
-        x: newOffset,
-        transition: { type: 'tween', duration: 0.5, ease: 'easeInOut' },
-      })
+      void controls
+        .start({
+          x: newOffset,
+          transition: { type: 'tween', duration: 0.5, ease: 'easeInOut' },
+        })
+        .then(() => handleMoveEnd())
 
       return newOffset
     })
@@ -100,8 +102,6 @@ const SwipeableCardList = ({ cardComponents }: { cardComponents: React.ReactNode
     } else if (info.offset.x > threshold) {
       handleDirection('prev')
     }
-
-    handleMoveEnd()
   }
 
   // 휠 이벤트 처리: 휠을 통해 좌우 이동
@@ -123,15 +123,12 @@ const SwipeableCardList = ({ cardComponents }: { cardComponents: React.ReactNode
           }
         }
       })
-
-      handleMoveEnd()
     }
   }, 50)
 
   // 모바일 터치 이벤트 처리
   const handleTouchStart = (event: React.TouchEvent) => {
     setTouchStartX(event.touches[0]?.clientX ?? 0)
-    handleMoveStart()
   }
 
   const handleTouchMove = debounce((event: React.TouchEvent) => {
@@ -151,8 +148,6 @@ const SwipeableCardList = ({ cardComponents }: { cardComponents: React.ReactNode
         handleMoveStart()
         handleDirection('prev')
       }
-
-      handleMoveEnd()
     }
   }, 50)
 
