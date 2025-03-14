@@ -103,6 +103,7 @@ export const useBookmarkMutation = () => {
         queryClient.cancelQueries({ queryKey: ['collections'] }),
         queryClient.cancelQueries({ queryKey: ['bookmarkedCollections'] }),
         queryClient.cancelQueries({ queryKey: ['collectionInfo', collectionId] }),
+        queryClient.cancelQueries(queries.collection.interestedCategory()),
       ])
 
       const collectionsQueries = queryClient.getQueriesData<Collection.Response.GetAllCollections>({
@@ -205,7 +206,17 @@ export const useBookmarkMutation = () => {
         )
       }
 
-      return { previousDataMap, previousBookmarkedCollections, previousCollectionInfo }
+      // 관심 카테고리 컬렉션 데이터 저장
+      const previousInterestedCategory = queryClient.getQueryData(
+        queries.collection.interestedCategory().queryKey
+      )
+
+      return {
+        previousDataMap,
+        previousBookmarkedCollections,
+        previousCollectionInfo,
+        previousInterestedCategory,
+      }
     },
     onError: (_, __, context) => {
       // 에러 발생 시 이전 데이터로 복구
@@ -223,12 +234,20 @@ export const useBookmarkMutation = () => {
           context.previousCollectionInfo
         )
       }
+      // 관심 카테고리 데이터 복구
+      if (context?.previousInterestedCategory) {
+        queryClient.setQueryData(
+          queries.collection.interestedCategory().queryKey,
+          context.previousInterestedCategory
+        )
+      }
     },
     onSettled: async () => {
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: ['collections'] }),
         queryClient.invalidateQueries({ queryKey: ['bookmarkedCollections'] }),
         queryClient.invalidateQueries({ queryKey: ['collectionInfo'] }),
+        queryClient.invalidateQueries(queries.collection.interestedCategory()),
       ])
     },
   })
