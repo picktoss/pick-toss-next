@@ -12,7 +12,7 @@ const SwipeableCardList = ({ cardComponents }: { cardComponents: React.ReactNode
   const x = useMotionValue(0)
   const controls = useAnimation()
   const [constraints, setConstraints] = useState({ left: 0, right: 0 })
-  const [touchStartX, setTouchStartX] = useState(0)
+  // const [touchStartX, setTouchStartX] = useState(0)
 
   const [moveAtOnceWidth, setMoveAtOnceWidth] = useState(0)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -126,37 +126,37 @@ const SwipeableCardList = ({ cardComponents }: { cardComponents: React.ReactNode
     }
   }, 50)
 
-  // 모바일 터치 이벤트 처리
-  const handleTouchStart = (event: React.TouchEvent) => {
-    setTouchStartX(event.touches[0]?.clientX ?? 0)
-  }
+  // // 모바일 터치 이벤트 처리
+  // const handleTouchStart = (event: React.TouchEvent) => {
+  //   setTouchStartX(event.touches[0]?.clientX ?? 0)
+  // }
 
-  const handleTouchMove = debounce((event: React.TouchEvent) => {
-    if (isMoving) return
+  // const handleTouchMove = debounce((event: React.TouchEvent) => {
+  //   if (isMoving) return
 
-    if (containerRef.current && containerRef.current.contains(event.target as Node)) {
-      event.preventDefault()
+  //   if (containerRef.current && containerRef.current.contains(event.target as Node)) {
+  //     event.preventDefault()
 
-      const touchEndX = event.touches[0]?.clientX ?? 0
-      const deltaX = touchEndX - touchStartX
+  //     const touchEndX = event.touches[0]?.clientX ?? 0
+  //     const deltaX = touchEndX - touchStartX
 
-      const threshold = 50 // 이동 감지 임계값
-      if (deltaX < -threshold) {
-        handleMoveStart()
-        handleDirection('next')
-      } else if (deltaX > threshold) {
-        handleMoveStart()
-        handleDirection('prev')
-      }
-    }
-  }, 50)
+  //     const threshold = 50 // 이동 감지 임계값
+  //     if (deltaX < -threshold) {
+  //       handleMoveStart()
+  //       handleDirection('next')
+  //     } else if (deltaX > threshold) {
+  //       handleMoveStart()
+  //       handleDirection('prev')
+  //     }
+  //   }
+  // }, 50)
 
   return (
     <motion.div
       ref={containerRef}
       onWheel={handleWheel}
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
+      // onTouchStart={handleTouchStart}
+      // onTouchMove={handleTouchMove}
       className="flex h-fit w-dvw max-w-mobile select-none gap-[8px] overflow-hidden scrollbar-hide"
     >
       {cardComponents.map((cardComponent, index) => (
