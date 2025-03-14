@@ -42,8 +42,11 @@ const CreateWithFile = () => {
   const { toast } = useToast()
 
   const availableQuizCount = useMemo(
-    () => calculateAvailableQuizCount(fileInfo?.charCount ?? DOCUMENT_CONSTRAINTS.CONTENT.MIN),
-    [fileInfo]
+    () =>
+      calculateAvailableQuizCount(
+        fileInfo?.content.trim().length ?? DOCUMENT_CONSTRAINTS.CONTENT.MIN
+      ),
+    [fileInfo?.content]
   )
 
   useEffect(() => {
