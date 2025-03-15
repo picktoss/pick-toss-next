@@ -10,7 +10,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { Form, FormControl, FormField, FormItem } from '@/shared/components/ui/form'
-import { isMobile } from 'react-device-detect'
 
 const formSchema = z.object({
   name: z.string().min(1, '폴더 이름을 입력해주세요'),
@@ -26,10 +25,6 @@ interface Props {
 
 const CreateDirectoryDialog = ({ open, onOpenChange }: Props) => {
   const [emojiOpen, setEmojiOpen] = useState(false)
-  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false)
-  const [isFirstContentRender, setIsFirstContentRender] = useState(true)
-  const [isInitialFocus, setIsInitialFocus] = useState(true)
-
   const emojiPickerRef = useRef<HTMLDivElement>(null)
 
   const { mutate: createDirectoryMutate, isPending } = useCreateDirectory()
@@ -55,38 +50,23 @@ const CreateDirectoryDialog = ({ open, onOpenChange }: Props) => {
     onOpenChange(false)
   }
 
-  // 모바일 키보드 감지
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.visualViewport) {
-        setIsKeyboardOpen(window.visualViewport.height < window.innerHeight)
-      }
-    }
-    window.visualViewport?.addEventListener('resize', handleResize)
-
-    return () => {
-      window.visualViewport?.removeEventListener('resize', handleResize)
-    }
-  }, [])
-
   useEffect(() => {
     if (!open) {
-      setIsKeyboardOpen(false)
-      setIsInitialFocus(true)
       form.reset({
         name: '',
         emoji: '📁',
       })
     }
-
-    setIsFirstContentRender(open)
   }, [open, form])
 
   useEffect(() => {
-    if (!isKeyboardOpen) {
-      setIsFirstContentRender(false)
+    if (!open) {
+      form.reset({
+        name: '',
+        emoji: '📁',
+      })
     }
-  }, [isKeyboardOpen])
+  }, [open, form])
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -108,8 +88,7 @@ const CreateDirectoryDialog = ({ open, onOpenChange }: Props) => {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
         className={cn(
-          'flex min-h-[190px] w-[280px] flex-col items-center justify-between rounded-[16px] bg-background-base-01',
-          isMobile && isFirstContentRender && '!top-[10%] !translate-y-0'
+          'flex min-h-[190px] w-[280px] flex-col items-center justify-between rounded-[16px] bg-background-base-01'
         )}
         displayCloseButton={false}
         onPointerDownOutside={(e) => {
@@ -134,7 +113,7 @@ const CreateDirectoryDialog = ({ open, onOpenChange }: Props) => {
                       <button
                         onClick={() => setEmojiOpen(!emojiOpen)}
                         type="button"
-                        className="outline-none"
+                        className="focus:outline-none"
                       >
                         <div className="flex-center mr-[10px] size-[40px] rounded-[8px] bg-background-base-02 text-xl">
                           {field.value}
@@ -168,22 +147,10 @@ const CreateDirectoryDialog = ({ open, onOpenChange }: Props) => {
                   <FormItem className="w-full">
                     <FormControl>
                       <input
-                        className="w-full border-b border-border-divider py-[10px] outline-none"
+                        className="w-full border-b border-border-divider py-[10px] focus-visible:outline-none disabled:cursor-not-allowed disabled:bg-background-disabled disabled:opacity-50 disabled:placeholder:text-text-disabled"
                         placeholder="폴더 이름"
                         disabled={isPending}
                         {...field}
-                        ref={(e) => {
-                          field.ref(e)
-                          // 다이얼로그가 열릴 때 focus
-                          if (e && open && isInitialFocus) {
-                            setTimeout(() => {
-                              e.focus()
-                              e.select()
-                            }, 0)
-
-                            setIsInitialFocus(false)
-                          }
-                        }}
                       />
                     </FormControl>
                   </FormItem>
