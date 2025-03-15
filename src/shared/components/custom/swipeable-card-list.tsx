@@ -87,25 +87,6 @@ const SwipeableCardList = ({ cardComponents }: { cardComponents: React.ReactNode
     })
   }
 
-  // // 드래그 시작 핸들러
-  // const handleDragStart = () => {
-  //   handleMoveStart()
-  // }
-
-  // // 드래그 종료 시 방향에 따라 이동
-  // // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  // const handleDragEnd = (_: any, info: PanInfo) => {
-  //   const threshold = 10
-
-  //   if (info.offset.x < -threshold) {
-  //     handleDirection('next')
-  //   } else if (info.offset.x > threshold) {
-  //     handleDirection('prev')
-  //   } else {
-  //     handleMoveEnd()
-  //   }
-  // }
-
   // 드래그 시작
   const handlePanStart = (event: PointerEvent) => {
     event.preventDefault()
@@ -163,26 +144,6 @@ const SwipeableCardList = ({ cardComponents }: { cardComponents: React.ReactNode
         }
       }
     })
-
-    // if (containerRef.current && containerRef.current.contains(event.target as Node)) {
-    //   if (Math.abs(event.deltaY) > 1) {
-    //     event.preventDefault()
-    //   }
-
-    //   const threshold = 100 // 이동 방향 감지 임계값
-
-    //   requestAnimationFrame(() => {
-    //     if (containerRef.current) {
-    //       if (event.deltaY < -threshold) {
-    //         handleMoveStart()
-    //         handleDirection('prev')
-    //       } else if (event.deltaY > threshold) {
-    //         handleMoveStart()
-    //         handleDirection('next')
-    //       }
-    //     }
-    //   })
-    // }
   }, 30)
 
   return (
@@ -205,8 +166,6 @@ const SwipeableCardList = ({ cardComponents }: { cardComponents: React.ReactNode
           onPanStart={handlePanStart}
           onPan={handlePan}
           onPanEnd={handlePanEnd}
-          // onDragStart={handleDragStart}
-          // onDragEnd={handleDragEnd}
           animate={controls}
         >
           {cardComponent}
