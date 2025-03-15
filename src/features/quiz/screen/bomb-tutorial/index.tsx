@@ -9,14 +9,14 @@ import BombQuiz from '../../components/bomb-quiz'
 import Icon from '@/shared/components/custom/icon'
 import BombAnimation from '../../components/bomb-animation'
 import { cn } from '@/shared/lib/utils'
-import Text from '@/shared/components/ui/text'
-import Image from 'next/image'
-import BombDefaultState from '../../components/bomb-default-state'
 import { setLocalStorage } from '@/shared/utils/storage'
 import { LOCAL_KEY } from '@/constants'
-import { useDynamicThemeColor } from '@/shared/hooks/use-dynamic-theme-color'
 import GoBackButton from '@/shared/components/custom/go-back-button'
-import { isMobile } from 'react-device-detect'
+import {
+  BombTutorialFinalStep,
+  BombTutorialFirstStep,
+  BombTutorialNextStep,
+} from '../../components/bomb-tutorial-steps'
 
 const BombTutorial = () => {
   const router = useRouter()
@@ -34,6 +34,7 @@ const BombTutorial = () => {
 
   const currentAnswerState = quizResults[currentIndex]?.answer
 
+  // 조건에 따라 timer로 선택지 요소 클릭
   useEffect(() => {
     let clickMultipleTimer: NodeJS.Timeout, clickMixupTimer: NodeJS.Timeout
 
@@ -56,12 +57,8 @@ const BombTutorial = () => {
     if (!openFirst && !openNext && !openStart) {
       if (currentIndex === 0) {
         clickMultipleTimer = setTimeout(() => clickMultiple(), 500)
-
-        // return () => clearTimeout(clickMultipleTimer)
       } else if (currentIndex === 1) {
         clickMixupTimer = setTimeout(() => clickMixup(), 1000)
-
-        // return () => clearTimeout(clickMixupTimer)
       }
     }
 
@@ -71,6 +68,7 @@ const BombTutorial = () => {
     }
   }, [currentIndex, openFirst, openNext, openStart])
 
+  // onAnswer
   const onAnswer = ({
     id,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -105,6 +103,7 @@ const BombTutorial = () => {
     })
   }
 
+  // onNext
   const onNext = () => {
     const hasNextQuiz = handleNext(currentIndex, bombQuizList.length)
 
@@ -115,19 +114,23 @@ const BombTutorial = () => {
     }
   }
 
+  // handleExit
   const handleExit = () => {
     router.replace('/main')
   }
 
+  // handleClickFirstStep
   const handleClickFirstStep = () => {
     setOpenFirst(false)
   }
 
+  // handleClickNextStep
   const handleClickNextStep = () => {
     setOpenNext(false)
     navigateToNext(currentIndex)
   }
 
+  // handleClickFinalStep
   const handleClickFinalStep = () => {
     setLocalStorage(LOCAL_KEY.BOMB_TUTORIAL_COMPLETE, true)
     router.replace('/quiz/bomb')
@@ -187,155 +190,31 @@ const BombTutorial = () => {
         </div>
       </div>
 
-      {openFirst && <FirstStep leftQuizCount={leftQuizCount} onClickNext={handleClickFirstStep} />}
+      {openFirst && (
+        <BombTutorialFirstStep
+          leftQuizCount={leftQuizCount}
+          onClickNext={handleClickFirstStep}
+          quizData={{ bombQuizList, currentIndex, onAnswer, quizResults }}
+        />
+      )}
 
       {openNext && (
-        <NextStep currentAnswerState={currentAnswerState} onClickNext={handleClickNextStep} />
+        <BombTutorialNextStep
+          currentAnswerState={currentAnswerState}
+          onClickNext={handleClickNextStep}
+          quizData={{ bombQuizList, currentIndex, onAnswer, quizResults, leftQuizCount }}
+        />
       )}
 
       {openStart && (
-        <FinalStep currentAnswerState={currentAnswerState} onClickNext={handleClickFinalStep} />
+        <BombTutorialFinalStep
+          currentAnswerState={currentAnswerState}
+          onClickNext={handleClickFinalStep}
+          quizData={{ bombQuizList, currentIndex, onAnswer, quizResults, leftQuizCount }}
+        />
       )}
     </div>
   )
 }
 
 export default BombTutorial
-
-// 튜토리얼 진행 화면 - 1
-const FirstStep = ({
-  leftQuizCount,
-  onClickNext,
-}: {
-  leftQuizCount: number
-  onClickNext: () => void
-}) => {
-  useDynamicThemeColor(isMobile, '#313132', '#ffffff')
-
-  return (
-    <div className="fixed z-40 flex h-dvh w-screen max-w-mobile flex-col">
-      <div className="absolute size-full bg-black opacity-80"></div>
-
-      <div className="relative z-40 flex h-[75dvh] max-h-[610px] min-h-[556px] w-full flex-col items-center justify-end">
-        <Text typography="text1-medium" color="primary-inverse" className="absolute bottom-[65px]">
-          남은 오답 수가 표시돼요
-        </Text>
-
-        <div className="relative mb-[11px] w-fit">
-          <Text typography="subtitle1-bold" color="primary-inverse" className="center">
-            {leftQuizCount}
-          </Text>
-          <Image src={'/images/count-device.png'} alt="" width={79} height={38} />
-        </div>
-      </div>
-
-      <div className="flex-center relative z-40 max-h-[30dvh] w-full grow">
-        <button
-          type="button"
-          onClick={onClickNext}
-          className="absolute right-1/2 top-[30px] translate-x-1/2"
-        >
-          <Text typography="button1" color="accent">
-            다음
-          </Text>
-        </button>
-      </div>
-    </div>
-  )
-}
-
-// 튜토리얼 진행 화면 - 2
-const NextStep = ({
-  currentAnswerState,
-  onClickNext,
-}: {
-  currentAnswerState: boolean | undefined
-  onClickNext: () => void
-}) => {
-  useDynamicThemeColor(isMobile, '#313132', '#ffffff')
-
-  return (
-    <div className="fixed z-40 flex h-dvh w-screen max-w-mobile flex-col">
-      <div className="absolute size-full bg-black opacity-80"></div>
-
-      <div className="h-[75dvh] max-h-[610px] min-h-[550px] w-full"></div>
-
-      <div className="flex-center relative z-40 max-h-[30dvh] w-full grow">
-        <Text
-          typography="text1-medium"
-          color="primary-inverse"
-          className="absolute bottom-[22dvh] right-1/2 z-50 w-full translate-x-1/2 text-center"
-        >
-          문제를 맞추면, 오답을 터뜨릴 수 있어요
-        </Text>
-
-        <button type="button" onClick={onClickNext} className="z-50 mb-[10px]">
-          <Text typography="button1" color="accent">
-            다음
-          </Text>
-        </button>
-
-        <div className="flex-center absolute z-40 mb-[10px] w-full">
-          <Icon
-            name="focus-box"
-            className={cn(
-              'center z-40 size-[100px] transition-transform',
-              currentAnswerState === false && 'scale-[0.82]'
-            )}
-            fill={currentAnswerState === false ? '#f4502c' : '#EFC364'}
-          />
-
-          <BombDefaultState leftQuizCount={1} isTutorial />
-        </div>
-      </div>
-    </div>
-  )
-}
-
-// 튜토리얼 진행 화면 - 3
-const FinalStep = ({
-  currentAnswerState,
-  onClickNext,
-}: {
-  currentAnswerState: boolean | undefined
-  onClickNext: () => void
-}) => {
-  useDynamicThemeColor(isMobile, '#313132', '#ffffff')
-
-  return (
-    <div className="fixed z-40 flex h-dvh w-screen max-w-mobile flex-col">
-      <div className="absolute size-full bg-black opacity-80"></div>
-
-      <div className="h-[75dvh] max-h-[610px] w-full"></div>
-
-      <div className="flex-center relative z-40 h-[30dvh] w-full grow">
-        <Text
-          typography="text1-medium"
-          color="primary-inverse"
-          className="absolute bottom-[22dvh] right-1/2 z-50 w-full translate-x-1/2 text-center"
-        >
-          틀렸다면, 다음 기회를 노려보세요!
-        </Text>
-
-        <button type="button" onClick={onClickNext} className="z-50 mb-[10px]">
-          <Text typography="button1" color="accent">
-            시작!
-          </Text>
-        </button>
-
-        <div className="flex-center absolute z-40 mb-[10px] w-full">
-          <Icon
-            name="focus-box"
-            className={cn(
-              'center z-40 size-[100px] transition-transform',
-              currentAnswerState === false && 'scale-[0.82]'
-            )}
-            fill={currentAnswerState === false ? '#f4502c' : '#EFC364'}
-          />
-
-          <BombDefaultState leftQuizCount={0} isTutorial />
-        </div>
-      </div>
-    </div>
-  )
-}
