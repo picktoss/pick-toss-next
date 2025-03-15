@@ -60,6 +60,15 @@ const CreateDirectoryDialog = ({ open, onOpenChange }: Props) => {
   }, [open, form])
 
   useEffect(() => {
+    if (!open) {
+      form.reset({
+        name: '',
+        emoji: '📁',
+      })
+    }
+  }, [open, form])
+
+  useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (emojiPickerRef.current && !emojiPickerRef.current.contains(event.target as Node)) {
         setEmojiOpen(false)
