@@ -1,54 +1,30 @@
 'use client'
 
-import GoBackButton from '@/shared/components/custom/go-back-button'
 import { useDynamicThemeColor } from '@/shared/hooks/use-dynamic-theme-color'
-import { QuizItem } from '@/types/quiz'
 import { isMobile } from 'react-device-detect'
-import BombQuiz from './bomb-quiz'
 import Text from '@/shared/components/ui/text'
 import Image from 'next/image'
 import Icon from '@/shared/components/custom/icon'
 import { cn } from '@/shared/lib/utils'
 import BombDefaultState from './bomb-default-state'
 
-type QuizDataForTutorial = {
-  bombQuizList: QuizItem[]
-  currentIndex: number
-  onAnswer: ({
-    id,
-    isRight,
-    choseAnswer,
-  }: {
-    id: number
-    isRight: boolean
-    choseAnswer: string
-  }) => void
-  quizResults: ({
-    id: number
-    answer: NonNullable<boolean | undefined>
-    choseAnswer: string
-    elapsedTime: number
-  } | null)[]
-  leftQuizCount?: number
-}
-
 interface FirstTutorialProps {
   leftQuizCount: number
   onClickNext: () => void
-  quizData: QuizDataForTutorial
+  quizAreaHeight: number
 }
 
 interface TutorialProps {
   currentAnswerState: boolean | undefined
   onClickNext: () => void
-  quizData: QuizDataForTutorial
+  quizAreaHeight: number
 }
 
 // 튜토리얼 진행 화면 - 1
 export const BombTutorialFirstStep = ({
   leftQuizCount,
   onClickNext,
-  quizData,
+  quizAreaHeight,
 }: FirstTutorialProps) => {
   useDynamicThemeColor(isMobile, '#313132', '#ffffff')
 
@@ -56,23 +32,8 @@ export const BombTutorialFirstStep = ({
     <div className="fixed z-40 flex h-dvh w-screen max-w-mobile flex-col">
       <div className="absolute size-full bg-black opacity-80"></div>
 
-      {/* 튜토리얼 안내와 퀴즈 위치를 일치시키기 위해 퀴즈 요소를 opacity-0으로 넣음 */}
       <div className="relative z-40 flex h-[75dvh] max-h-[610px] min-h-fit w-full flex-col items-center justify-end px-[16px]">
-        <div className="pointer-events-none flex h-[70dvh] min-h-fit w-full flex-col items-center justify-between opacity-0">
-          {/* 헤더 */}
-          <header className="h-[54px] w-full py-[16px]">
-            <GoBackButton icon="cancel" />
-          </header>
-
-          {/* 문제 */}
-          <BombQuiz
-            quizzes={quizData.bombQuizList}
-            currentIndex={quizData.currentIndex}
-            onAnswer={quizData.onAnswer}
-            quizResults={quizData.quizResults}
-            leftQuizCount={leftQuizCount}
-          />
-        </div>
+        <div style={{ height: quizAreaHeight }} className="w-full" />
 
         <Text typography="text1-medium" color="primary-inverse" className="absolute bottom-[65px]">
           남은 오답 수가 표시돼요
@@ -101,7 +62,7 @@ export const BombTutorialFirstStep = ({
 export const BombTutorialNextStep = ({
   currentAnswerState,
   onClickNext,
-  quizData,
+  quizAreaHeight,
 }: TutorialProps) => {
   useDynamicThemeColor(isMobile, '#313132', '#ffffff')
 
@@ -109,23 +70,8 @@ export const BombTutorialNextStep = ({
     <div className="fixed z-40 flex h-dvh w-screen max-w-mobile flex-col">
       <div className="absolute size-full bg-black opacity-80"></div>
 
-      {/* 튜토리얼 안내와 퀴즈 위치를 일치시키기 위해 퀴즈 요소를 opacity-0으로 넣음 */}
       <div className="h-[75dvh] max-h-[610px] min-h-fit w-full px-[16px]">
-        <div className="pointer-events-none flex h-[70dvh] min-h-fit w-full flex-col items-center justify-between opacity-0">
-          {/* 헤더 */}
-          <header className="h-[54px] w-full py-[16px]">
-            <GoBackButton icon="cancel" />
-          </header>
-
-          {/* 문제 */}
-          <BombQuiz
-            quizzes={quizData.bombQuizList}
-            currentIndex={quizData.currentIndex}
-            onAnswer={quizData.onAnswer}
-            quizResults={quizData.quizResults}
-            leftQuizCount={quizData.leftQuizCount ?? 0}
-          />
-        </div>
+        <div style={{ height: quizAreaHeight }} className="w-full" />
       </div>
 
       <div className="flex-center relative z-40 size-full grow">
@@ -164,7 +110,7 @@ export const BombTutorialNextStep = ({
 export const BombTutorialFinalStep = ({
   currentAnswerState,
   onClickNext,
-  quizData,
+  quizAreaHeight,
 }: TutorialProps) => {
   useDynamicThemeColor(isMobile, '#313132', '#ffffff')
 
@@ -172,23 +118,8 @@ export const BombTutorialFinalStep = ({
     <div className="fixed z-40 flex h-dvh w-screen max-w-mobile flex-col">
       <div className="absolute size-full bg-black opacity-80"></div>
 
-      {/* 튜토리얼 안내와 퀴즈 위치를 일치시키기 위해 퀴즈 요소를 opacity-0으로 넣음 */}
       <div className="h-[75dvh] max-h-[610px] min-h-fit w-full px-[16px]">
-        <div className="pointer-events-none flex h-[70dvh] min-h-fit w-full flex-col items-center justify-between opacity-0">
-          {/* 헤더 */}
-          <header className="h-[54px] w-full py-[16px]">
-            <GoBackButton icon="cancel" />
-          </header>
-
-          {/* 문제 */}
-          <BombQuiz
-            quizzes={quizData.bombQuizList}
-            currentIndex={quizData.currentIndex}
-            onAnswer={quizData.onAnswer}
-            quizResults={quizData.quizResults}
-            leftQuizCount={quizData.leftQuizCount ?? 0}
-          />
-        </div>
+        <div style={{ height: quizAreaHeight }} className="w-full" />
       </div>
 
       <div className="flex-center relative z-40 h-[30dvh] w-full grow">

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { quizzes } from '../../config'
 import { useQuizNavigation } from '../quiz-view/hooks/use-quiz-navigation'
 import { useQuizState } from '../quiz-view/hooks/use-quiz-state'
@@ -25,6 +25,9 @@ const BombTutorial = () => {
   const [openNext, setOpenNext] = useState(false)
   const [openStart, setOpenStart] = useState(false)
 
+  const [quizAreaHeight, setQuizAreaHeight] = useState(0)
+  const quizAreaRef = useRef<HTMLDivElement | null>(null)
+
   const bombQuizList = quizzes
   const { currentIndex, navigateToNext } = useQuizNavigation()
   const { handleNext, quizResults, setQuizResults, leftQuizCount } = useQuizState({
@@ -33,6 +36,26 @@ const BombTutorial = () => {
   })
 
   const currentAnswerState = quizResults[currentIndex]?.answer
+
+  // 퀴즈 영역 높이 체크
+  useEffect(() => {
+    if (quizAreaRef.current) {
+      setQuizAreaHeight(quizAreaRef.current.clientHeight)
+    }
+
+    // 리사이즈 이벤트에 대응하기 위한 핸들러
+    const handleResize = () => {
+      if (quizAreaRef.current) {
+        setQuizAreaHeight(quizAreaRef.current.clientHeight)
+      }
+    }
+
+    window.addEventListener('resize', handleResize)
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
 
   // 조건에 따라 timer로 선택지 요소 클릭
   useEffect(() => {
@@ -146,7 +169,10 @@ const BombTutorial = () => {
       <div className="fixed z-10 flex h-dvh w-screen max-w-mobile flex-col">
         {/* 헤더 + 문제 영역 */}
         <div className="h-[75dvh] max-h-[610px] min-h-fit w-full rounded-b-[24px] bg-white px-[16px]">
-          <div className="flex h-[70dvh] min-h-fit w-full flex-col items-center justify-between">
+          <div
+            ref={quizAreaRef}
+            className="flex h-[70dvh] min-h-fit w-full flex-col items-center justify-between"
+          >
             {/* 헤더 */}
             <header className="h-[54px] w-full py-[16px]">
               <GoBackButton
@@ -194,7 +220,7 @@ const BombTutorial = () => {
         <BombTutorialFirstStep
           leftQuizCount={leftQuizCount}
           onClickNext={handleClickFirstStep}
-          quizData={{ bombQuizList, currentIndex, onAnswer, quizResults }}
+          quizAreaHeight={quizAreaHeight}
         />
       )}
 
@@ -202,7 +228,7 @@ const BombTutorial = () => {
         <BombTutorialNextStep
           currentAnswerState={currentAnswerState}
           onClickNext={handleClickNextStep}
-          quizData={{ bombQuizList, currentIndex, onAnswer, quizResults, leftQuizCount }}
+          quizAreaHeight={quizAreaHeight}
         />
       )}
 
@@ -210,7 +236,7 @@ const BombTutorial = () => {
         <BombTutorialFinalStep
           currentAnswerState={currentAnswerState}
           onClickNext={handleClickFinalStep}
-          quizData={{ bombQuizList, currentIndex, onAnswer, quizResults, leftQuizCount }}
+          quizAreaHeight={quizAreaHeight}
         />
       )}
     </div>
