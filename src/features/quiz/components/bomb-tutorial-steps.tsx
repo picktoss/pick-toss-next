@@ -86,8 +86,8 @@ export const BombTutorialFirstStep = ({
         </div>
       </div>
 
-      <div className="flex-center relative z-40 size-full grow">
-        <button type="button" onClick={onClickNext} className="mb-[10px]">
+      <div className="relative z-40 flex size-full grow justify-center">
+        <button type="button" onClick={onClickNext} className="mb-[10px] mt-[25px] size-fit">
           <Text typography="button1" color="accent">
             다음
           </Text>
