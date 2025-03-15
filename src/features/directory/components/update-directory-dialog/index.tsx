@@ -6,6 +6,17 @@ import { isMobile } from 'react-device-detect'
 import { cn } from '@/shared/lib/utils'
 import EmojiPicker from 'emoji-picker-react'
 import { useEffect, useRef, useState } from 'react'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import * as z from 'zod'
+import { Form, FormControl, FormField, FormItem } from '@/shared/components/ui/form'
+
+const formSchema = z.object({
+  name: z.string().min(1, '폴더 이름을 입력해주세요'),
+  emoji: z.string().default('📁'),
+})
+
+type FormValues = z.infer<typeof formSchema>
 
 interface Props {
   open: boolean
@@ -16,25 +27,32 @@ interface Props {
 }
 
 const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prevEmoji }: Props) => {
-  const [name, setName] = useState(prevName ?? '')
-  const [emoji, setEmoji] = useState(prevEmoji ?? '📁')
   const [emojiOpen, setEmojiOpen] = useState(false)
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false)
   const [isFirstContentRender, setIsFirstContentRender] = useState(true)
+  const [isInitialFocus, setIsInitialFocus] = useState(true)
 
   const emojiPickerRef = useRef<HTMLDivElement>(null)
 
-  const { mutate: updateDirectoryMutate } = useUpdateDirectoryInfo()
+  const { mutate: updateDirectoryMutate, isPending } = useUpdateDirectoryInfo()
 
-  const handleUpdateDirectory = () => {
-    if (name.trim() === '' || !directoryId) {
+  const form = useForm<FormValues>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: prevName ?? '',
+      emoji: prevEmoji ?? '📁',
+    },
+  })
+
+  const onSubmit = (values: FormValues) => {
+    if (!directoryId) {
       return
     }
 
     updateDirectoryMutate({
       directoryId,
-      name,
-      emoji,
+      name: values.name,
+      emoji: values.emoji,
     })
 
     onOpenChange(false)
@@ -57,10 +75,15 @@ const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prev
   useEffect(() => {
     if (!open) {
       setIsKeyboardOpen(false)
+      setIsInitialFocus(true)
+      form.reset({
+        name: prevName ?? '',
+        emoji: prevEmoji ?? '📁',
+      })
     }
 
     setIsFirstContentRender(open)
-  }, [open])
+  }, [open, form, prevName, prevEmoji])
 
   useEffect(() => {
     if (!isKeyboardOpen) {
@@ -92,52 +115,96 @@ const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prev
           isMobile && isFirstContentRender && '!top-[10%] !translate-y-0'
         )}
         displayCloseButton={false}
+        onPointerDownOutside={(e) => {
+          if (isPending) {
+            e.preventDefault()
+          }
+        }}
       >
         <DialogTitle className="mb-[32px] w-full text-subtitle2-bold">폴더 이름 바꾸기</DialogTitle>
 
-        <div className="flex h-[40px] w-full">
-          <button onClick={() => setEmojiOpen(!emojiOpen)} type="button" className="outline-none">
-            <div className="flex-center mr-[10px] size-[40px] rounded-[8px] bg-background-base-02 text-xl">
-              {emoji}
-            </div>
-          </button>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
+            <div className="flex h-[40px] w-full">
+              <FormField
+                control={form.control}
+                name="emoji"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <button
+                        onClick={() => setEmojiOpen(!emojiOpen)}
+                        type="button"
+                        className="outline-none"
+                      >
+                        <div className="flex-center mr-[10px] size-[40px] rounded-[8px] bg-background-base-02 text-xl">
+                          {field.value}
+                        </div>
+                      </button>
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
 
-          {emojiOpen && (
-            <div ref={emojiPickerRef} className="fixed right-1/2 top-[120px] translate-x-1/2">
-              <EmojiPicker
-                skinTonesDisabled
-                width="95vw"
-                height="40vh"
-                onEmojiClick={(emojiData, e) => {
-                  e.preventDefault()
-                  setEmoji(emojiData.emoji)
-                  setEmojiOpen(false)
-                }}
-                className="max-w-mobile"
+              {emojiOpen && (
+                <div ref={emojiPickerRef} className="fixed right-1/2 top-[120px] translate-x-1/2">
+                  <EmojiPicker
+                    skinTonesDisabled
+                    width="95vw"
+                    height="40vh"
+                    onEmojiClick={(emojiData, e) => {
+                      e.preventDefault()
+                      form.setValue('emoji', emojiData.emoji)
+                      setEmojiOpen(false)
+                    }}
+                    className="max-w-mobile"
+                  />
+                </div>
+              )}
+
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormControl>
+                      <input
+                        autoFocus
+                        className="w-full border-b border-border-divider py-[10px] outline-none"
+                        placeholder="폴더 이름"
+                        disabled={isPending}
+                        {...field}
+                        ref={(e) => {
+                          field.ref(e)
+                          // 다이얼로그가 열릴 때 focus 및 텍스트 전체 선택
+                          if (e && open && isInitialFocus) {
+                            setTimeout(() => {
+                              e.focus()
+                              e.select()
+                            }, 0)
+
+                            setIsInitialFocus(false)
+                          }
+                        }}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
               />
             </div>
-          )}
 
-          <input
-            className="w-full border-b border-border-divider py-[10px] outline-none"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="폴더 이름"
-            autoFocus={true}
-          />
-        </div>
-
-        <div className="mt-[40px] flex w-full justify-end text-button2">
-          <DialogClose asChild>
-            <button className="p-[4px] text-button-text-tertiary">취소</button>
-          </DialogClose>
-          <button
-            onClick={handleUpdateDirectory}
-            className={cn('ml-[21px] p-[4px] text-button-text-primary')}
-          >
-            저장
-          </button>
-        </div>
+            <div className="mt-[40px] flex w-full justify-end text-button2">
+              <DialogClose asChild>
+                <button type="button" className="p-[4px] text-button-text-tertiary">
+                  취소
+                </button>
+              </DialogClose>
+              <button type="submit" className={cn('ml-[21px] p-[4px] text-button-text-primary')}>
+                저장
+              </button>
+            </div>
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
   )
