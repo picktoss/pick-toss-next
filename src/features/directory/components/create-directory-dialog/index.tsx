@@ -16,7 +16,7 @@ const CreateDirectoryDialog = ({ open, onOpenChange }: Props) => {
   const [name, setName] = useState('')
   const [emoji, setEmoji] = useState('📁')
   const [emojiOpen, setEmojiOpen] = useState(false)
-  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false)
+  // const [isKeyboardOpen, setIsKeyboardOpen] = useState(false)
 
   const emojiPickerRef = useRef<HTMLDivElement>(null)
 
@@ -35,19 +35,19 @@ const CreateDirectoryDialog = ({ open, onOpenChange }: Props) => {
     onOpenChange(false)
   }
 
-  // 모바일 키보드 감지
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.visualViewport) {
-        setIsKeyboardOpen(window.visualViewport.height < window.innerHeight)
-      }
-    }
+  // // 모바일 키보드 감지
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     if (window.visualViewport) {
+  //       setIsKeyboardOpen(window.visualViewport.height < window.innerHeight)
+  //     }
+  //   }
 
-    window.visualViewport?.addEventListener('resize', handleResize)
-    return () => {
-      window.visualViewport?.removeEventListener('resize', handleResize)
-    }
-  }, [])
+  //   window.visualViewport?.addEventListener('resize', handleResize)
+  //   return () => {
+  //     window.visualViewport?.removeEventListener('resize', handleResize)
+  //   }
+  // }, [])
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -76,8 +76,8 @@ const CreateDirectoryDialog = ({ open, onOpenChange }: Props) => {
     >
       <DialogContent
         className={cn(
-          'flex min-h-[190px] w-[280px] flex-col items-center justify-between rounded-[16px] bg-background-base-01',
-          isKeyboardOpen && 'top-[50%] translate-y-[-50%]'
+          'flex min-h-[190px] w-[280px] flex-col items-center justify-between rounded-[16px] bg-background-base-01'
+          // isKeyboardOpen && 'top-[50%] translate-y-[-50%]'
         )}
         displayCloseButton={false}
       >
