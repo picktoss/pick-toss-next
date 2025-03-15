@@ -35,6 +35,8 @@ const BombTutorial = () => {
   const currentAnswerState = quizResults[currentIndex]?.answer
 
   useEffect(() => {
+    let clickMultipleTimer: NodeJS.Timeout, clickMixupTimer: NodeJS.Timeout
+
     const clickMultiple = () => {
       const targetElement = Array.from(document.querySelectorAll('*')).find(
         (element) => element.innerHTML === '특정한 이미지 또는 감정을 불러일으키는 이름이어야 한다'
@@ -53,14 +55,19 @@ const BombTutorial = () => {
 
     if (!openFirst && !openNext && !openStart) {
       if (currentIndex === 0) {
-        const clickMultipleTimer = setTimeout(() => clickMultiple(), 500)
+        clickMultipleTimer = setTimeout(() => clickMultiple(), 500)
 
-        return () => clearTimeout(clickMultipleTimer)
+        // return () => clearTimeout(clickMultipleTimer)
       } else if (currentIndex === 1) {
-        const clickMixupTimer = setTimeout(() => clickMixup(), 1000)
+        clickMixupTimer = setTimeout(() => clickMixup(), 1000)
 
-        return () => clearTimeout(clickMixupTimer)
+        // return () => clearTimeout(clickMixupTimer)
       }
+    }
+
+    return () => {
+      clearTimeout(clickMultipleTimer)
+      clearTimeout(clickMixupTimer)
     }
   }, [currentIndex, openFirst, openNext, openStart])
 
@@ -262,7 +269,7 @@ const NextStep = ({
           문제를 맞추면, 오답을 터뜨릴 수 있어요
         </Text>
 
-        <button type="button" onClick={onClickNext} className="z-50">
+        <button type="button" onClick={onClickNext} className="z-50 mb-[10px]">
           <Text typography="button1" color="accent">
             다음
           </Text>
@@ -310,7 +317,7 @@ const FinalStep = ({
           틀렸다면, 다음 기회를 노려보세요!
         </Text>
 
-        <button type="button" onClick={onClickNext} className="z-50">
+        <button type="button" onClick={onClickNext} className="z-50 mb-[10px]">
           <Text typography="button1" color="accent">
             시작!
           </Text>
