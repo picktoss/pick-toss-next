@@ -2,7 +2,6 @@
 
 import { useUpdateDirectoryInfo } from '@/requests/directory/hooks'
 import { Dialog, DialogClose, DialogContent, DialogTitle } from '@/shared/components/ui/dialog'
-import { isMobile } from 'react-device-detect'
 import { cn } from '@/shared/lib/utils'
 import EmojiPicker from 'emoji-picker-react'
 import { useEffect, useRef, useState } from 'react'
@@ -10,6 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { Form, FormControl, FormField, FormItem } from '@/shared/components/ui/form'
+import { isMobile } from 'react-device-detect'
 
 const formSchema = z.object({
   name: z.string().min(1, '폴더 이름을 입력해주세요'),
@@ -28,10 +28,10 @@ interface Props {
 
 const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prevEmoji }: Props) => {
   const [emojiOpen, setEmojiOpen] = useState(false)
-  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false)
-  const [isFirstContentRender, setIsFirstContentRender] = useState(true)
-
   const emojiPickerRef = useRef<HTMLDivElement>(null)
+
+  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false)
+  const [isFirstContentRender, setIsFirstContentRender] = useState(false)
 
   const { mutate: updateDirectoryMutate, isPending } = useUpdateDirectoryInfo()
 
@@ -61,19 +61,11 @@ const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prev
   useEffect(() => {
     const handleResize = () => {
       if (window.visualViewport) {
-        setIsKeyboardOpen(window.visualViewport.height < window.innerHeight)
-      }
-
-      const inputElement = document.getElementById('update-directory-input') as HTMLInputElement
-
-      if (inputElement) {
-        setTimeout(() => {
-          inputElement.focus()
-          inputElement.select()
-        }, 100) // 뷰포트 변동 이후 포커스 다시 적용
+        const keyboardOpen = window.visualViewport.height < window.innerHeight
+        setIsKeyboardOpen(keyboardOpen)
       }
     }
-    
+
     window.visualViewport?.addEventListener('resize', handleResize)
 
     return () => {
@@ -82,16 +74,14 @@ const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prev
   }, [])
 
   useEffect(() => {
-    if (open) {
-      setTimeout(() => {
-        const inputElement = document.getElementById('update-directory-input') as HTMLInputElement
-        if (inputElement) {
-          inputElement.focus()
-          inputElement.select()
-        }
-      }, 300) // iOS에서 안정적으로 적용되도록 300ms 딜레이 추가
-    }
+    setIsFirstContentRender(open)
   }, [open])
+
+  useEffect(() => {
+    if (!isKeyboardOpen) {
+      setIsFirstContentRender(false)
+    }
+  }, [isKeyboardOpen])
 
   useEffect(() => {
     if (!open) {
@@ -101,19 +91,10 @@ const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prev
         emoji: prevEmoji ?? '📁',
       })
     }
-
     setIsFirstContentRender(open)
   }, [open, form, prevName, prevEmoji])
 
   useEffect(() => {
-    if (!isKeyboardOpen) {
-      setIsFirstContentRender(false)
-    }
-  }, [isKeyboardOpen])
-
-  useEffect(() => {
-    let previousFocus: HTMLElement
-
     const handleClickOutside = (event: MouseEvent) => {
       if (emojiPickerRef.current && !emojiPickerRef.current.contains(event.target as Node)) {
         setEmojiOpen(false)
@@ -122,15 +103,10 @@ const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prev
 
     if (emojiOpen) {
       document.addEventListener('mousedown', handleClickOutside)
-      // EmojiPicker가 열릴 때 이전 포커스 위치 저장
-      previousFocus = document.activeElement as HTMLElement
     }
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside)
-      if (previousFocus) {
-        previousFocus.focus()
-      }
     }
   }, [emojiOpen])
 
@@ -204,10 +180,18 @@ const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prev
                     <FormControl>
                       <input
                         {...field}
-                        id="update-directory-input"
                         disabled={isPending}
                         className="w-full border-b border-border-divider py-[10px] focus-visible:outline-none disabled:cursor-not-allowed disabled:bg-background-disabled disabled:opacity-50 disabled:placeholder:text-text-disabled"
                         placeholder="폴더 이름"
+                        ref={(e) => {
+                          field.ref(e)
+                          if (e && open) {
+                            setTimeout(() => {
+                              e.focus()
+                              e.select()
+                            }, 100)
+                          }
+                        }}
                       />
                     </FormControl>
                   </FormItem>
