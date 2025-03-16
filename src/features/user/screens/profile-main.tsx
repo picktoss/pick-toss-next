@@ -55,7 +55,7 @@ const ProfileMain = () => {
         {noInterests && <CategoryTooltip />}
 
         <div className="flex-center gap-[16px]">
-          <div className="flex-center relative size-[48px] overflow-hidden rounded-full bg-background-base-03">
+          <div className="flex-center relative size-[48px] shrink-0 overflow-hidden rounded-full bg-background-base-03">
             {imageUrl ? (
               <Image src={imageUrl} alt="" fill className="object-cover" />
             ) : (
@@ -63,9 +63,14 @@ const ProfileMain = () => {
             )}
           </div>
 
-          <div className="flex flex-col gap-1">
+          <div className="flex w-fit flex-col gap-1">
             <div className="flex items-center gap-[12px]">
-              <Text typography="subtitle1-bold">{user?.name}</Text>
+              <Text
+                typography="subtitle1-bold"
+                className="w-[calc(100vw-290px)] max-w-[calc(430px-290px)] truncate"
+              >
+                {user?.name}
+              </Text>
 
               {noInterests ? (
                 <Text typography="text2-medium" className="text-text-caption">
@@ -77,7 +82,7 @@ const ProfileMain = () => {
                     <CategoryTag
                       key={category}
                       title={CATEGORIES.find((value) => value.id === category)?.name ?? ''}
-                      className="flex-center"
+                      className="flex-center inline-block shrink-0"
                     />
                   ))}
                 </div>

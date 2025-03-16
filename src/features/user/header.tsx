@@ -11,7 +11,9 @@ const Header = () => {
 
   return (
     <header className="flex h-[54px] w-full max-w-mobile items-center justify-between bg-background-base-01 px-[18px]">
-      <Text typography="title2">{user?.name}님</Text>
+      <Text typography="title2" className="w-full truncate">
+        {user?.name}님
+      </Text>
       <div className="flex-center gap-[16px]">
         <InviteRewardDrawer
           triggerComponent={

@@ -34,7 +34,12 @@ const InterestedCategoryCollections = ({ interestedCategories }: Props) => {
   return (
     <div className="flex w-full flex-col">
       <div className="mb-[20px] flex items-center justify-between">
-        <Text typography="title3">{userInfo?.name}님의 관심분야 컬렉션</Text>
+        <Text typography="title3" className="flex w-[calc(100%-40px)] items-center">
+          <Text className="inline-block w-fit max-w-[calc(100%-180px)] truncate">
+            {userInfo?.name}
+          </Text>
+          님의 관심분야 컬렉션
+        </Text>
         {interestedCategories && (
           <Link
             href={`/collections?collection-category=${interestedCategories.join(',')}`}

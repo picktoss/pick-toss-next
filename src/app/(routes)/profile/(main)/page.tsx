@@ -6,7 +6,7 @@ import ProfileMain from '@/features/user/screens/profile-main'
 
 const ProfilePage = () => {
   return (
-    <main className="h-[calc(100dvh-54px-88px)] w-full overflow-y-auto">
+    <main className="h-[calc(100dvh-54px-88px)] w-full overflow-y-auto scrollbar-hide">
       <InaccessibleView />
 
       <ProfileMain />
