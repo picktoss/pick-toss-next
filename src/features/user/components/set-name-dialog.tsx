@@ -13,7 +13,7 @@ import Text from '@/shared/components/ui/text'
 import { useRouter } from 'next/navigation'
 import { useEffect, useId, useState } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
+import { FieldErrors, useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { Form, FormControl, FormField, FormItem } from '@/shared/components/ui/form'
 import { useToast } from '@/shared/hooks/use-toast'
@@ -21,7 +21,7 @@ import { cn } from '@/shared/lib/utils'
 import { isMobile } from 'react-device-detect'
 
 const formSchema = z.object({
-  name: z.string().min(1, '이름을 입력해주세요'),
+  name: z.string().min(1, '이름을 입력해주세요').max(20, '이름은 20자까지 가능합니다'),
 })
 
 type FormValues = z.infer<typeof formSchema>
@@ -60,6 +60,12 @@ const SetNameDialog = ({ userName }: { userName: string }) => {
         },
       }
     )
+  }
+
+  const onInvalid = (errors: FieldErrors<FormValues>) => {
+    const validationError = (errors.name?.message as string) || '잘못된 입력입니다.'
+
+    alert(validationError)
   }
 
   // 모바일 키보드 감지
@@ -129,7 +135,7 @@ const SetNameDialog = ({ userName }: { userName: string }) => {
           </DialogTitle>
 
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
+            <form onSubmit={form.handleSubmit(onSubmit, onInvalid)}>
               <FormField
                 control={form.control}
                 name="name"

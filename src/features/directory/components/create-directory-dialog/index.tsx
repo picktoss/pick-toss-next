@@ -5,12 +5,11 @@ import { Dialog, DialogClose, DialogContent, DialogTitle } from '@/shared/compon
 import Text from '@/shared/components/ui/text'
 import { cn } from '@/shared/lib/utils'
 import EmojiPicker from 'emoji-picker-react'
-import { useEffect, useId, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FieldErrors, useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { Form, FormControl, FormField, FormItem } from '@/shared/components/ui/form'
-import { useToast } from '@/shared/hooks/use-toast'
 
 const formSchema = z.object({
   name: z.string().min(1, '폴더 이름을 입력해주세요').max(20, '폴더 이름은 20자까지 가능합니다'),
@@ -27,9 +26,6 @@ interface Props {
 const CreateDirectoryDialog = ({ open, onOpenChange }: Props) => {
   const [emojiOpen, setEmojiOpen] = useState(false)
   const emojiPickerRef = useRef<HTMLDivElement>(null)
-
-  const { toast } = useToast()
-  const toastId = useId()
 
   const { mutate: createDirectoryMutate, isPending } = useCreateDirectory()
 
@@ -57,10 +53,7 @@ const CreateDirectoryDialog = ({ open, onOpenChange }: Props) => {
   const onInvalid = (errors: FieldErrors<FormValues>) => {
     const validationError = (errors.name?.message as string) || '잘못된 입력입니다.'
 
-    toast({}).update({
-      id: toastId,
-      title: validationError,
-    })
+    alert(validationError)
   }
 
   useEffect(() => {
