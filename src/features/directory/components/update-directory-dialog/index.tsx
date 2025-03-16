@@ -30,7 +30,7 @@ const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prev
   const [emojiOpen, setEmojiOpen] = useState(false)
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false)
   const [isFirstContentRender, setIsFirstContentRender] = useState(true)
-  // const [isInitialFocus, setIsInitialFocus] = useState(true)
+  const [isInitialFocus, setIsInitialFocus] = useState(true)
 
   const emojiPickerRef = useRef<HTMLDivElement>(null)
 
@@ -75,7 +75,7 @@ const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prev
   useEffect(() => {
     if (!open) {
       setIsKeyboardOpen(false)
-      // setIsInitialFocus(true)
+      setIsInitialFocus(true)
       form.reset({
         name: prevName ?? '',
         emoji: prevEmoji ?? '📁',
@@ -92,6 +92,8 @@ const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prev
   }, [isKeyboardOpen])
 
   useEffect(() => {
+    let previousFocus: HTMLElement
+
     const handleClickOutside = (event: MouseEvent) => {
       if (emojiPickerRef.current && !emojiPickerRef.current.contains(event.target as Node)) {
         setEmojiOpen(false)
@@ -100,15 +102,27 @@ const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prev
 
     if (emojiOpen) {
       document.addEventListener('mousedown', handleClickOutside)
+      // EmojiPicker가 열릴 때 이전 포커스 위치 저장
+      previousFocus = document.activeElement as HTMLElement
     }
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside)
+      if (previousFocus) {
+        previousFocus.focus()
+      }
     }
   }, [emojiOpen])
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog
+      open={open}
+      onOpenChange={(newOpen) => {
+        // EmojiPicker가 열려있으면 Dialog를 닫지 않음
+        if (emojiOpen && !newOpen) return
+        onOpenChange(newOpen)
+      }}
+    >
       <DialogContent
         className={cn(
           'flex min-h-[190px] w-[280px] flex-col items-center justify-between rounded-[16px] bg-background-base-01',
@@ -173,19 +187,19 @@ const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prev
                         autoFocus
                         disabled={isPending}
                         className="w-full border-b border-border-divider py-[10px] focus-visible:outline-none disabled:cursor-not-allowed disabled:bg-background-disabled disabled:opacity-50 disabled:placeholder:text-text-disabled"
-                        // placeholder="폴더 이름"
-                        // ref={(e) => {
-                        //   field.ref(e)
-                        //   // 다이얼로그가 열릴 때 focus 및 텍스트 전체 선택
-                        //   if (e && open && isInitialFocus) {
-                        //     setTimeout(() => {
-                        //       e.focus()
-                        //       e.select()
-                        //     }, 0)
+                        placeholder="폴더 이름"
+                        ref={(e) => {
+                          field.ref(e)
+                          // 다이얼로그가 열릴 때 focus 및 텍스트 전체 선택
+                          if (e && open && isInitialFocus) {
+                            setTimeout(() => {
+                              e.focus()
+                              e.select()
+                            }, 0)
 
-                        //     setIsInitialFocus(false)
-                        //   }
-                        // }}
+                            setIsInitialFocus(false)
+                          }
+                        }}
                       />
                     </FormControl>
                   </FormItem>

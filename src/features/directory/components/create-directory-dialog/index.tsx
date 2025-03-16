@@ -76,7 +76,14 @@ const CreateDirectoryDialog = ({ open, onOpenChange }: Props) => {
   }, [emojiOpen])
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog
+      open={open}
+      onOpenChange={(newOpen) => {
+        // EmojiPicker가 열려있으면 Dialog를 닫지 않음
+        if (emojiOpen && !newOpen) return
+        onOpenChange(newOpen)
+      }}
+    >
       <DialogContent
         className={cn(
           'flex min-h-[190px] w-[280px] flex-col items-center justify-between rounded-[16px] bg-background-base-01'
