@@ -184,7 +184,6 @@ const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prev
                     <FormControl>
                       <input
                         {...field}
-                        autoFocus
                         disabled={isPending}
                         className="w-full border-b border-border-divider py-[10px] focus-visible:outline-none disabled:cursor-not-allowed disabled:bg-background-disabled disabled:opacity-50 disabled:placeholder:text-text-disabled"
                         placeholder="폴더 이름"
@@ -195,7 +194,7 @@ const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prev
                             setTimeout(() => {
                               e.focus()
                               e.select()
-                            }, 0)
+                            }, 100)
 
                             setIsInitialFocus(false)
                           }
