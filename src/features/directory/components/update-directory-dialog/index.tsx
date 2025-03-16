@@ -30,7 +30,6 @@ const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prev
   const [emojiOpen, setEmojiOpen] = useState(false)
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false)
   const [isFirstContentRender, setIsFirstContentRender] = useState(true)
-  const [isInitialFocus, setIsInitialFocus] = useState(true)
 
   const emojiPickerRef = useRef<HTMLDivElement>(null)
 
@@ -64,7 +63,17 @@ const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prev
       if (window.visualViewport) {
         setIsKeyboardOpen(window.visualViewport.height < window.innerHeight)
       }
+
+      const inputElement = document.getElementById('update-directory-input') as HTMLInputElement
+
+      if (inputElement) {
+        setTimeout(() => {
+          inputElement.focus()
+          inputElement.select()
+        }, 100) // 뷰포트 변동 이후 포커스 다시 적용
+      }
     }
+    
     window.visualViewport?.addEventListener('resize', handleResize)
 
     return () => {
@@ -73,9 +82,20 @@ const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prev
   }, [])
 
   useEffect(() => {
+    if (open) {
+      setTimeout(() => {
+        const inputElement = document.getElementById('update-directory-input') as HTMLInputElement
+        if (inputElement) {
+          inputElement.focus()
+          inputElement.select()
+        }
+      }, 300) // iOS에서 안정적으로 적용되도록 300ms 딜레이 추가
+    }
+  }, [open])
+
+  useEffect(() => {
     if (!open) {
       setIsKeyboardOpen(false)
-      setIsInitialFocus(true)
       form.reset({
         name: prevName ?? '',
         emoji: prevEmoji ?? '📁',
@@ -184,21 +204,10 @@ const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prev
                     <FormControl>
                       <input
                         {...field}
+                        id="update-directory-input"
                         disabled={isPending}
                         className="w-full border-b border-border-divider py-[10px] focus-visible:outline-none disabled:cursor-not-allowed disabled:bg-background-disabled disabled:opacity-50 disabled:placeholder:text-text-disabled"
                         placeholder="폴더 이름"
-                        ref={(e) => {
-                          field.ref(e)
-                          // 다이얼로그가 열릴 때 focus 및 텍스트 전체 선택
-                          if (e && open && isInitialFocus) {
-                            setTimeout(() => {
-                              e.focus()
-                              e.select()
-                            }, 100)
-
-                            setIsInitialFocus(false)
-                          }
-                        }}
                       />
                     </FormControl>
                   </FormItem>
