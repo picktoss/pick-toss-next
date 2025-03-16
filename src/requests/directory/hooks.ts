@@ -109,6 +109,7 @@ export const useUpdateDirectoryInfo = () => {
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: ['directories'] }),
         queryClient.invalidateQueries({ queryKey: ['directory', directoryId] }),
+        queryClient.invalidateQueries(queries.document.list({ directoryId: String(directoryId) })),
       ])
     },
   })
