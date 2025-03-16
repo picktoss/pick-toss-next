@@ -135,7 +135,7 @@ const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prev
                       <button
                         onClick={() => setEmojiOpen(!emojiOpen)}
                         type="button"
-                        className="outline-none"
+                        className="focus:outline-none"
                       >
                         <div className="flex-center mr-[10px] size-[40px] rounded-[8px] bg-background-base-02 text-xl">
                           {field.value}
@@ -169,6 +169,7 @@ const UpdateDirectoryDialog = ({ open, onOpenChange, directoryId, prevName, prev
                   <FormItem className="w-full">
                     <FormControl>
                       <input
+                        autoFocus
                         className="w-full border-b border-border-divider py-[10px] focus-visible:outline-none disabled:cursor-not-allowed disabled:bg-background-disabled disabled:opacity-50 disabled:placeholder:text-text-disabled"
                         placeholder="폴더 이름"
                         disabled={isPending}
