@@ -5,14 +5,15 @@ import { Dialog, DialogClose, DialogContent, DialogTitle } from '@/shared/compon
 import Text from '@/shared/components/ui/text'
 import { cn } from '@/shared/lib/utils'
 import EmojiPicker from 'emoji-picker-react'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
+import { FieldErrors, useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { Form, FormControl, FormField, FormItem } from '@/shared/components/ui/form'
+import { useToast } from '@/shared/hooks/use-toast'
 
 const formSchema = z.object({
-  name: z.string().min(1, '폴더 이름을 입력해주세요'),
+  name: z.string().min(1, '폴더 이름을 입력해주세요').max(20, '폴더 이름은 20자까지 가능합니다'),
   emoji: z.string().default('📁'),
 })
 
@@ -26,6 +27,9 @@ interface Props {
 const CreateDirectoryDialog = ({ open, onOpenChange }: Props) => {
   const [emojiOpen, setEmojiOpen] = useState(false)
   const emojiPickerRef = useRef<HTMLDivElement>(null)
+
+  const { toast } = useToast()
+  const toastId = useId()
 
   const { mutate: createDirectoryMutate, isPending } = useCreateDirectory()
 
@@ -48,6 +52,15 @@ const CreateDirectoryDialog = ({ open, onOpenChange }: Props) => {
     })
 
     onOpenChange(false)
+  }
+
+  const onInvalid = (errors: FieldErrors<FormValues>) => {
+    const validationError = (errors.name?.message as string) || '잘못된 입력입니다.'
+
+    toast({}).update({
+      id: toastId,
+      title: validationError,
+    })
   }
 
   useEffect(() => {
@@ -100,43 +113,44 @@ const CreateDirectoryDialog = ({ open, onOpenChange }: Props) => {
         </DialogTitle>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
+          <form onSubmit={form.handleSubmit(onSubmit, onInvalid)} className="w-full">
             <div className="flex h-[40px] w-full">
               <FormField
                 control={form.control}
                 name="emoji"
                 render={({ field }) => (
                   <FormItem>
-                    <FormControl>
-                      <button
-                        onClick={() => setEmojiOpen(!emojiOpen)}
-                        type="button"
-                        className="focus:outline-none"
+                    <button
+                      onClick={() => setEmojiOpen(!emojiOpen)}
+                      type="button"
+                      className="focus:outline-none"
+                    >
+                      <div className="flex-center mr-[10px] size-[40px] rounded-[8px] bg-background-base-02 text-xl">
+                        {field.value}
+                      </div>
+                    </button>
+
+                    {emojiOpen && (
+                      <div
+                        ref={emojiPickerRef}
+                        className="fixed right-1/2 top-[120px] translate-x-1/2"
                       >
-                        <div className="flex-center mr-[10px] size-[40px] rounded-[8px] bg-background-base-02 text-xl">
-                          {field.value}
-                        </div>
-                      </button>
-                    </FormControl>
+                        <EmojiPicker
+                          skinTonesDisabled
+                          width="95vw"
+                          height="40vh"
+                          onEmojiClick={(emojiData, e) => {
+                            e.preventDefault()
+                            form.setValue('emoji', emojiData.emoji)
+                            setEmojiOpen(false)
+                          }}
+                          className="max-w-mobile"
+                        />
+                      </div>
+                    )}
                   </FormItem>
                 )}
               />
-
-              {emojiOpen && (
-                <div ref={emojiPickerRef} className="fixed right-1/2 top-[120px] translate-x-1/2">
-                  <EmojiPicker
-                    skinTonesDisabled
-                    width="95vw"
-                    height="40vh"
-                    onEmojiClick={(emojiData, e) => {
-                      e.preventDefault()
-                      form.setValue('emoji', emojiData.emoji)
-                      setEmojiOpen(false)
-                    }}
-                    className="max-w-mobile"
-                  />
-                </div>
-              )}
 
               <FormField
                 control={form.control}
