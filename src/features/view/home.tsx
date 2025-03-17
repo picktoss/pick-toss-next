@@ -95,14 +95,20 @@ const Home = () => {
   }, [session, inviteCode, rewardInviteMutate])
 
   useEffect(() => {
+    let refreshTimer: NodeJS.Timeout
+
     if (typeof window !== 'undefined') {
       if (reward && rewardType === 'TODAY_QUIZ') {
         toast({}).update({
           id: toastId,
           title: `별 ${reward}개가 추가되었어요`,
         })
-        setTimeout(() => router.replace('/main'), 10)
+        refreshTimer = setTimeout(() => router.replace('/main'), 300)
       }
+    }
+
+    return () => {
+      clearTimeout(refreshTimer)
     }
   }, [toast, toastId, rewardType, reward, router])
 
